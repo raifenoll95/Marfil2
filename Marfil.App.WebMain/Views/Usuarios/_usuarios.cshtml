@@ -1,0 +1,31 @@
+﻿@using Marfil.Dom.ControlsUI.Toolbar
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.UsuariosModel
+
+<script src="@Url.Content("~/Scripts/Model/Usuarios/UsuariosController.js")"></script>
+
+
+<div  ng-controller="UsuariosCtrl" ng-init="init('@Model.Email','@Model.Smtp','@Model.Usuariomail','@Model.Passwordmail','@Model.Puerto',@Model.Ssl.ToString().ToLower(),'@Model.Nombre','@Url.Action("EmailTestApi","Api")')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#email">@Usuarios.ConfiguracionEmail</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="email" class="tab-pane fade margin-bottom">
+            @Html.Partial("_email", Model)
+        </div>
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>
+
+

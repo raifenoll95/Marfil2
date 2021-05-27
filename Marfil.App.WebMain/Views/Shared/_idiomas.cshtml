@@ -1,0 +1,29 @@
+﻿@using System.Threading
+
+
+
+    <ul class="list-inline">
+        <li >
+            <a @Html.Raw(Thread.CurrentThread.CurrentUICulture.ToString().ToLower() == "es" ? "class=\"idiomaSeleccionado\"": "")   href="@Url.Action("Index", "ChangeCulture", new {id = "es", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery})">
+                <img src="@Url.Content("~/Content/blank.gif")" class="flag flag-es" alt="es" title="ES" />
+            </a>
+        </li>
+        <li>
+            <a @Html.Raw(Thread.CurrentThread.CurrentUICulture.ToString().ToLower() == "en" ? "class=\"idiomaSeleccionado\"": "")  href="@Url.Action("Index", "ChangeCulture", new {id = "en", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery})">
+                <img src="@Url.Content("~/Content/blank.gif")" class="flag flag-en" alt="en" title="EN"/>
+            </a>
+        </li>
+        <li>
+            <a @Html.Raw(Thread.CurrentThread.CurrentUICulture.ToString().ToLower() == "fr" ? "class=\"idiomaSeleccionado\"": "")   href="@Url.Action("Index", "ChangeCulture", new {id = "fr", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery})">
+                <img src="@Url.Content("~/Content/blank.gif")" class="flag flag-fr" alt="fr" title="FR"/>
+            </a>
+        </li>
+    </ul>
+
+
+
+
+
+
+
+

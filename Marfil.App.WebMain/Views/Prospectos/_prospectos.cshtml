@@ -1,0 +1,50 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model ProspectosModel
+
+<div>
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#clasificacion">@Prospectos.Clasificacion</a></li>
+            <li><a data-toggle="tab" href="#comercial">@Prospectos.Comercial</a></li>
+            <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
+            <li><a data-toggle="tab" href="#contactos">@General.LblContactos</a></li>
+            <li><a data-toggle="tab" href="#oportunidades">Oportunidades</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @{
+                ViewData["tipocuenta"] = (int)TiposCuentas.Prospectos;
+            }
+            @Html.EditorFor(f => Model.Cuentas, "_cabeceracuentasterceros")
+        </div>
+        <div id="clasificacion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_clasificacion", Model)
+        </div>
+        <div id="comercial" class="tab-pane fade margin-bottom">
+            @Html.Partial("_comercial", Model)
+        </div>
+        <div id="direcciones" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/UserControls/Direcciones/DireccionesController.js")"></script>
+            @Html.Partial("_direcciones", Model)
+        </div>
+        <div id="contactos" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/Scripts/UserControls/Contactos/ContactosController.js")"></script>
+            @Html.Partial("_contactos", Model)
+        </div>
+        <div id="oportunidades" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/Scripts/UserControls/Oportunidades/OportunidadesController.js")"></script>
+            @Html.Partial("_oportunidades", Model)
+        </div>
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>
+

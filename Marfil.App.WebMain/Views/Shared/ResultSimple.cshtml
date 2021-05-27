@@ -1,0 +1,59 @@
+﻿@using System.Data
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.Base.ListadoResultado
+@{
+    ViewBag.Title = Model.TituloListado;
+    var size = Model.Filtros.Count() > 5 ? 5 : Model.Filtros.Count();
+}
+<h3>@Model.TituloListado</h3>
+<hr />
+@if (Model.Filtros.Any())
+{
+    <div class="row">
+        <div class="list-group">
+            <span href="#" class="list-group-item active">
+                Filtros
+            </span>
+            @foreach (var item in Model.Filtros)
+                {
+                <span class="list-group-item">@item</span>
+            }
+        </div>
+    </div>
+
+}
+<div class="row margin-top margin-bottom">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                @foreach (DataColumn col in Model.Listado.Columns)
+                {
+                    <th>
+                        @col.ColumnName
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Listado.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn col in Model.Listado.Columns)
+                {
+                        <td>
+                            @if (col.DataType == typeof(bool))
+                    {
+                                <input type="checkbox" @Html.Raw(Funciones.Qbool(row[col.ColumnName])) />
+                            }
+                            else
+                            {
+                                @Funciones.Qnull(row[col.ColumnName])
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

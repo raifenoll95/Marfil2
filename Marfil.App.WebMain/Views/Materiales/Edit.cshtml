@@ -1,0 +1,40 @@
+﻿@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var user = HttpContext.Current.User as ICustomPrincipal;
+}
+
+@using (Html.BeginForm("EditOperacion", "Materiales", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_materiales", Model as MaterialesModel)
+
+        <div class="margin-top">
+            <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+        </div>
+    </div>
+}
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}

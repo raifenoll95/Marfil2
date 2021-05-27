@@ -1,0 +1,93 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.Iva.TiposRetencionesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+@Html.HiddenFor(f => Model.Empresa)
+@if (iseditable)
+{
+    @Html.HiddenFor(f => Model.Id)
+}
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = "", @ng_blur = "existePk(4,TipoRellenacod.Generico,\"" + Url.Action("Exists", "TiposRetenciones") + "\",\"" + Url.Action("Edit", "TiposRetenciones") + "\")", @ng_model = "codigo", @id = "idcontrol"})
+        @Html.ValidationMessageFor(f => Model.Id, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajeretencion, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Porcentajeretencion, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Porcentajeretencion, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentarecargo, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Fkcuentarecargo";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.Fkcuentarecargo;
+            campoverificacion.Titulo = "Cuenta de recargo";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentarecargo, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentaabono, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Fkcuentaabono";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.Fkcuentaabono;
+            campoverificacion.Titulo = "Cuenta de abono";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentaabono, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tiporendimiento, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(f => Model.Tiporendimiento, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Tiporendimiento, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

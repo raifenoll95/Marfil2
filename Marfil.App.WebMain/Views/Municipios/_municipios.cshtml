@@ -1,0 +1,80 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model MunicipiosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var paises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor });
+    var provincias = WebHelper.GetApplicationHelper().GetListProvincias(Model.Codigopais).Select(f => new SelectListItem() { Text = f.Nombre, Value = f.Id });
+}
+
+@Html.HiddenFor(f => Model.Cod)
+@Html.HiddenFor(f => Model.DescripcionPais)
+@Html.HiddenFor(f => Model.DescripcionProvincia)
+@Html.HiddenFor(f => Model.CustomId)
+@Html.HiddenFor(f => Model.codigoMunicipioCompleto)
+
+
+@*Para desabilitar el dropdown, hay que poner HiddenFor*@
+@if (isreadonly || iseditable)
+{
+    @Html.HiddenFor(f => Model.Codigopais)
+    @Html.HiddenFor(f => Model.Codigoprovincia)
+}
+
+
+<input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+<div class="form-horizontal">
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Codigopais, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Codigopais, paises, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Codigopais, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Codigoprovincia, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Codigoprovincia, provincias, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Codigoprovincia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Nombre, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Nombre, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = ""})
+            @Html.ValidationMessageFor(f => Model.Nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    // Recargar el combo de provincias al cambiar el de países
+    $("#Codigopais").on('change', function () {
+        $.get("/api/ProvinciasPaisesApi/" + this.value).success(function (result) {
+
+            var select = document.getElementById("Codigoprovincia")
+
+            // Clear Dropdown
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+
+            for (var i = 0; i < result.length; i++) {
+                var option = document.createElement("option")
+                option.value = result[i].Id
+                option.text = result[i].Nombre
+                select.appendChild(option)
+            }
+        });
+    });
+
+</script>

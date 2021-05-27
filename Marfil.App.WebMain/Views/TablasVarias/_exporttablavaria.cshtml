@@ -1,0 +1,12 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias
+@using Resources
+@model BaseTablasVariasModel
+ 
+@using (Html.BeginForm("ExportDetailsTo", "TablasVarias", FormMethod.Post,new {@id="exportartablavaria"}))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="excludedform" value="true" />
+    <input type="hidden" id="formatoexportacion" name="OutputFormat"/>
+}
+ 
+

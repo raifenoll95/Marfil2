@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ContadorModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Descripcion>Contador de documentos</Descripcion>
+  <Empresa>0001</Empresa>
+  <Id>DOCS</Id>
+  <Lineas>
+    <ContadoresLinModel>
+      <Id>1</Id>
+      <Tiposegmento>Serie</Tiposegmento>
+      <Longitud>3</Longitud>
+    </ContadoresLinModel>
+    <ContadoresLinModel>
+      <Id>2</Id>
+      <Tiposegmento>Constante</Tiposegmento>
+      <Longitud>1</Longitud>
+      <Valor>-</Valor>
+    </ContadoresLinModel>
+    <ContadoresLinModel>
+      <Id>3</Id>
+      <Tiposegmento>Año</Tiposegmento>
+      <Longitud>2</Longitud>
+    </ContadoresLinModel>
+    <ContadoresLinModel>
+      <Id>4</Id>
+      <Tiposegmento>Constante</Tiposegmento>
+      <Longitud>1</Longitud>
+      <Valor>-</Valor>
+    </ContadoresLinModel>
+    <ContadoresLinModel>
+      <Id>5</Id>
+      <Tiposegmento>Secuencia</Tiposegmento>
+      <Longitud>4</Longitud>
+    </ContadoresLinModel>
+  </Lineas>
+  <Primerdocumento>1</Primerdocumento>
+  <Tipocontador>Multidocumento</Tipocontador>
+  <Tipoinicio>Anual</Tipoinicio>
+</ContadorModel>

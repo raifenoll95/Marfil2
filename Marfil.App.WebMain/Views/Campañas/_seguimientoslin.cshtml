@@ -1,0 +1,187 @@
+﻿@using System.Drawing
+@using System.Text
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.CRM.SeguimientosModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewSeguimientos";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Oportunidades", Action = "Seguimientos" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.CustomActionRouteValues = new { Controller = "Oportunidades", Action = "GridViewSeguimientos" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.Visible = false;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fechadocumento";
+            c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+        });
+
+        settings.Columns.Add("Usuario");
+        settings.Columns.Add("Fketapa");
+        settings.Columns.Add("Fkaccion");
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Notas";
+            c.Width = 600;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fkdocumentorelacionado";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "#";
+            column.ColumnType = MVCxGridViewColumnType.TokenBox;
+
+            column.Width = Unit.Pixel(150);
+            column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+
+            column.SetDataItemTemplateContent(container =>
+            {
+                var idSeguimiento = string.Format("{0}", DataBinder.Eval(container.DataItem, "Id"));
+                var url = Url.Action("Details", "Seguimientos", new { id = idSeguimiento });
+
+                if (!idSeguimiento.IsEmpty() && idSeguimiento != "0")
+                {
+                    var sb = new StringBuilder();
+                    sb.AppendLine(string.Format("<a href='{0}' class=\"btn-xs btn btn-info\">", url));
+                    sb.AppendLine("<i class=\"fa fa-eye\"></i>");
+                    sb.AppendLine(General.LblVer + " " + CRM.VerSeguimiento);
+                    sb.AppendLine("</a>");
+
+                    ViewContext.Writer.Write(sb.ToString());
+
+                }
+            });
+
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Idrelacionado";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "#";
+            column.ColumnType = MVCxGridViewColumnType.TokenBox;
+
+            column.Width = Unit.Pixel(200);
+            column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+
+            column.SetDataItemTemplateContent(container =>
+            {
+                if (!string.IsNullOrEmpty(DataBinder.Eval(container.DataItem, "Fkreferenciadocumentorelacionado")?.ToString()))
+                {
+                    var url = "";
+                    var tipoDocumento = string.Format("{0}", DataBinder.Eval(container.DataItem, "Fkdocumentorelacionado"));
+                    var idDocumento = string.Format("{0}", DataBinder.Eval(container.DataItem, "Idrelacionado"));
+
+                    switch (tipoDocumento)
+                    {
+                        case "PRE": url = Url.Action("Details", "Presupuestos", new { id = idDocumento });
+                            break;
+                        case "PRC": url = Url.Action("Details", "PresupuestosCompras", new { id = idDocumento });
+                            break;
+                        case "PED": url = Url.Action("Details", "Pedidos", new { id = idDocumento });
+                            break;
+                        case "PEC": url = Url.Action("Details", "PedidosCompras", new { id = idDocumento });
+                            break;
+                        case "ALB": url = Url.Action("Details", "EntregasStock", new { id = idDocumento });
+                            break;
+                        case "ALC": url = Url.Action("Details", "RecepcionesStock", new { id = idDocumento });
+                            break;
+                        case "FRA": url = Url.Action("Details", "Facturas", new { id = idDocumento });
+                            break;
+                        case "FRC": url = Url.Action("Details", "FacturasCompras", new { id = idDocumento });
+                            break;
+                    }
+
+                    if (!idDocumento.IsEmpty() && idDocumento != "0")
+                    {
+                        //var referencia = DataBinder.Eval(container.DataItem, "idAlbaranDevuelto").ToString();
+                        var sb = new StringBuilder();
+                        //sb.Append("[");
+                        sb.AppendLine(string.Format("<a href='{0}' class=\"btn-xs btn btn-info\">", url));
+                        sb.AppendLine("<i class=\"fa fa-eye\"></i>");
+                        sb.AppendLine(General.LblVer + " " + Seguimientos.Documentorelacionado);
+                        sb.AppendLine("</a>");
+
+                        ViewContext.Writer.Write(sb.ToString());
+                    }
+                }
+            });
+
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()

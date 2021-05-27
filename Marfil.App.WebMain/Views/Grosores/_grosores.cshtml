@@ -1,0 +1,141 @@
+﻿@using System.Globalization
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model GrosoresModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var configuracion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    var espesordisco = configuracion.Espesordisco;
+    var espesortelar = configuracion.Espesorfleje;
+    var formatounidad = configuracion.Formatounidad;
+    var formatodescripcion = configuracion.Formatogrosor;
+}
+
+@Html.HiddenFor(f => f.Empresa)
+
+<script type="text/javascript">
+    var customFunction = function (scope,property) {
+        @{
+
+            switch (formatodescripcion)
+            {
+                case TipoFormatoGrosor.Codigo:
+                    @Html.Raw("scope[property]=$(\"#idcontrol\").val();");
+                    break;
+                case TipoFormatoGrosor.CodigoyUnidad:
+                    @Html.Raw("scope[property]=$(\"#idcontrol\").val() + ' ' + '" + formatounidad.ToString() + "';");
+                    break;
+                case TipoFormatoGrosor.Grosorcm:
+                    @Html.Raw("scope[property]=(scope.grosor * 100.0).toFixed(2);");
+                    break;
+                case TipoFormatoGrosor.GrosorcmyUnidad:
+                    @Html.Raw("scope[property]=(scope.grosor * 100.0).toFixed(2)+ ' ' + '" + formatounidad.ToString() + "';");
+                    break;
+                case TipoFormatoGrosor.Grosorm:
+                    @Html.Raw("scope[property]=scope.grosor.toFixed(2);");
+                    break;
+                case TipoFormatoGrosor.GrosormyUnidad:
+                    var unidadMetros = "m";
+                    switch (formatounidad)
+                    {
+                        case TipoFormatoUnidad.Cm:
+                        case TipoFormatoUnidad.CM:
+                            unidadMetros = "M";
+                            break;
+
+                    }
+                    @Html.Raw("scope[property]=scope.grosor + ' ' + '" + unidadMetros + "';");
+                    break;
+            }
+        }
+    }
+</script>
+
+<div ng-controller="GrosoresCtrl" ng-init="init('@Model.Id',@espesordisco.ToString(CultureInfo.InvariantCulture),@espesortelar.ToString(CultureInfo.InvariantCulture), @Html.Raw((Model.Grosor??0).ToString(CultureInfo.InvariantCulture)),'@Model.Descripcion','@Model.Descripcion2','@Model.Descripcionabreviada')">
+
+    <div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @aria_label= "@Html.Raw((Model.Grosor??0).ToString(CultureInfo.InvariantCulture))", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "@Html.Raw((Model.Grosor??0).ToString(CultureInfo.InvariantCulture))", @class = "form-control", @autofocus = "", @ng_blur = "existePk(2,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Grosores") + "\",\"" + Url.Action("Edit", "Grosores") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Grosor, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Grosor, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "", @ng_model = "grosor",@ng_blur= "CalculateNames()" })
+            @Html.ValidationMessageFor(f => Model.Grosor, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "", @ng_model = "descripcion" })
+            @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion2, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion2, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "", @ng_model = "descripcion2" })
+            @Html.ValidationMessageFor(f => Model.Descripcion2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcionabreviada, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcionabreviada, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "", @ng_model = "descripcionabreviada" })
+            @Html.ValidationMessageFor(f => Model.Descripcionabreviada, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <h3>@General.LblCoeficientes</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Coeficientetelares, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <label class="control-label bolder">
+                {{coeficientetelar}}
+            </label>
+
+            <label class="control-label ">
+               @Html.Raw(string.Format(Grosores.LblParaEspesorFleje, espesortelar.ToString(CultureInfo.InvariantCulture)))
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Coficientecortabloques, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <label class="control-label bolder">
+                {{coeficientebloque}}
+            </label>
+
+            <label class="control-label">
+                @Html.Raw(string.Format(Grosores.LblParaEspesorDisco, espesordisco.ToString(CultureInfo.InvariantCulture)))
+            </label>
+        </div>
+    </div>
+    @{
+        if (isNuevo)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+
+        <script src="@Url.Content("~/Scripts/Model/Grosores/GrosoresController.js")"></script>
+    }
+
+</div>

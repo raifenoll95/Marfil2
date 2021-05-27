@@ -1,0 +1,15 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Listados.Base.ListadoResultado
+@using (Html.BeginForm("ExportTo", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()))
+{
+    <input type="hidden" id="excludedform" value="true"/>
+    <div class="form-group">
+    @Html.Partial("_listResult", Model)    
+    </div>
+    <div class="form-group">
+        @Html.Partial("_gridViewListadoExport", Model)
+    </div>
+
+    
+}
+

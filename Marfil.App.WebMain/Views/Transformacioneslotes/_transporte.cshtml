@@ -1,0 +1,104 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes.TransformacioneslotesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var incoterm = WebHelper.GetApplicationHelper().GetListIncoterm().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    incoterm.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listunidadnegocio.Insert(0, new SelectListItem() { Text = "", Value = "" });
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+<div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fktransportista, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fktransportista";
+                campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                campoverificacion.Valor = Model.Fktransportista;
+                campoverificacion.Titulo = "Transportista";
+                campoverificacion.SoloLectura = isreadonly;
+                campoverificacion.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Transportistas + "\"}";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fktransportista, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Nombretransportista, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Nombretransportista, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-12"></div>
+
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Nombretransportista, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Conductor, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Conductor, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-12"></div>
+
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Conductor, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Matricula, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Matricula, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-12"></div>
+
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Matricula, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkoperariostransporte, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkoperariostransporte";
+                campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                campoverificacion.Valor = Model.Fkoperariostransporte;
+                campoverificacion.Titulo = "Operador de transporte";
+                campoverificacion.SoloLectura = isreadonly;
+                campoverificacion.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Transportistas + "\"}";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkoperariostransporte, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+</div>
+

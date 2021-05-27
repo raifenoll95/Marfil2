@@ -1,0 +1,55 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as TraspasosalmacenModel;
+    var modelImprimir = modelview.GetListFormatos();
+    
+}
+
+
+@using (Html.BeginForm("EditOperacion", "Traspasosalmacen", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_Traspasosalmacen", Model as TraspasosalmacenModel)
+
+        <div class="margin-top">
+
+
+            <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+
+        </div>
+
+    </div>
+            }
+
+@Html.Partial("_envioemails")
+@Html.Partial("_nuevoregistro")
+@Html.Partial("UsersControls/_ultimoprecioModal")
+@Html.Partial("UsersControls/_importarlineasModal")
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

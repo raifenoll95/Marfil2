@@ -1,0 +1,204 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.ListadosAlbaranesCompras
+@{
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvAlbaranes = FCampoverificacion.Instance.GetModel<AlbaranesComprasModel>(WebHelper.ContextService);
+    var series = Model.SeriesListado;
+    var paisdefecto = "";
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listpaises.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList(); ;
+    var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+}
+<script src="@Url.Content("~/Scripts/UserControls/Provincias/ProvinciasController.js")"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function() {
+        
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+    
+</script>
+@Html.HiddenFor(f => Model.Empresa)
+<div class="col-md-10">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Series, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            <select id="Series" class="form-control" name="Series" multiple="multiple">
+                @foreach (var item in series)
+                {
+                    <option value="@item.Id" @Html.Raw(Model.Series.Any(f => f == item.Id) ? "selected=\"selected\"" : string.Empty)>@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Series, "", new {@class = "text-danger"})</div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estado, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estado, Model.Estados.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}), new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaDesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaHasta, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaDesde, "", new {@class = "text-danger"})
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaHasta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaDesde";
+                cvclientes.Url = Url.Action("CuentasTiposProveedoresAcreedoresExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaDesde;
+                cvclientes.CampoIdentificador = "Fkcuentas";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaHasta, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaHasta";
+                cvclientes.Url = Url.Action("CuentasTiposProveedoresAcreedoresExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaHasta;
+                cvclientes.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkfamiliacliente, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fkfamiliacliente, listfamiliaproveedor, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.Fkfamiliacliente, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkzonacliente, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fkzonacliente, listzonaclienteproveedor, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.Fkzonacliente, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Agente, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Agente";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.Agente;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Agentes + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.Agente, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comercial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Comercial";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.Comercial;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Comerciales + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.Comercial, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkpais, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fkpais, listpaises, new {@class = "form-control", @ng_model = "Fkpais"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmonedas, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvmonedas.Name = "Fkmonedas";
+                cvmonedas.Url = Url.Action("MonedasApi", "Api");
+                cvmonedas.Valor = Model.Fkmonedas;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvmonedas)
+            @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new {@class = "text-danger"})
+        </div>
+    </div>
+</div>
+
+    <div class="col-md-2">
+        <ul class="list-group" id="Ordenarpor">
+            <li class="list-group-item active">@General.LblOrdernar</li>
+            <li class="list-group-item"><input type="radio" aria-label="Orden" aria-labelledby="Ordenarpor" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "1" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Order) ? "checked=\"checked\"" : string.Empty) value="1" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Referencia</li>
+            <li class="list-group-item"><input type="radio" aria-label="Orden" aria-labelledby="Ordenarpor" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Fechadocumento</li>
+            <li class="list-group-item"><input type="radio" aria-label="Orden" aria-labelledby="Ordenarpor" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "3" ? "checked=\"checked\"" : string.Empty) value="3" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Fkclientes</li>
+            <li class="list-group-item"><input type="radio" aria-label="Orden" aria-labelledby="Ordenarpor" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "4" ? "checked=\"checked\"" : string.Empty) value="4" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes.RazonSocial</li>
+            <li class="list-group-item"><input type="radio" aria-label="Orden" aria-labelledby="Ordenarpor" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "5" ? "checked=\"checked\"" : string.Empty) value="5" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.FkPais, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones.Fkprovincia, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones.Poblacion, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.Descripcion</li>
+        </ul>
+        <ul class="list-group" id="Agrupadopor">
+            <li class="list-group-item active">@General.LblAgrupacion</li>
+            <li class="list-group-item"><input type="radio" aria-label="Agrupacion" aria-labelledby="Agrupadopor" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "1" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Agrupacion) ? "checked=\"checked\"" : string.Empty) value="1" /> @General.LblDetallado</li>
+            <li class="list-group-item"><input type="radio" aria-label="Agrupacion" aria-labelledby="Agrupadopor" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @General.LblAgrupadoporcliente</li>
+
+        </ul>
+    </div>
+

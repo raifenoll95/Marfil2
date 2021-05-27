@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-16"?>
+<RegimenIvaModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Empresa>0001</Empresa>
+  <Id>INVSP</Id>
+  <Descripcion>INVERSION SUJETO PASIVO</Descripcion>
+  <Normal>false</Normal>
+  <Recargo>false</Recargo>
+  <ExentoTasa>false</ExentoTasa>
+  <OperacionUe>false</OperacionUe>
+  <InversionSujetoPasivo>true</InversionSujetoPasivo>
+  <OperacionesNoSujetas>false</OperacionesNoSujetas>
+  <ZonasEspeciales>false</ZonasEspeciales>
+  <CanariasIgic>false</CanariasIgic>
+  <Extranjero>false</Extranjero>
+  <IvaDiferido>false</IvaDiferido>
+  <IvaImportacion>false</IvaImportacion>
+  <IncompatibleCriterioCaja>Ambos</IncompatibleCriterioCaja>
+  <SoportableRepercutidoAmbos>Ambos</SoportableRepercutidoAmbos>
+  <BienInversion>false</BienInversion>
+  <ExentoVentas>false</ExentoVentas>
+  <ClaveOperacion340>I</ClaveOperacion340>
+  <Exportacion>false</Exportacion>
+  <Incluirmodelo347>false</Incluirmodelo347>
+</RegimenIvaModel>

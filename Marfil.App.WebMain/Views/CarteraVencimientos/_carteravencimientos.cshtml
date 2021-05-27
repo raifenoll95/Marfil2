@@ -1,0 +1,59 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+
+@model CarteraVencimientosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Monedabase)
+@Html.HiddenFor(f => Model.Monedagiro)
+@Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Cambioaplicado)
+
+<div ng-controller="VencimientosCtrl" ng-init="init('@Url.Action("BancosMandatosApi","Api")', @Model.Fkcuentas)">
+
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#gestion">@General.LblGestion</a></li>
+            <li><a data-toggle="tab" href="#seguimiento">@General.LblVencimientosSeguimientos</a></li>
+            <li><a data-toggle="tab" href="#previsiones">@General.LblPrevisiones</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="gestion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_gestion", Model)
+        </div>
+        <div id="seguimiento" class="tab-pane fade margin-bottom">
+            @Html.Partial("_seguimiento", Model)
+        </div>
+        <div id="previsiones" class="tab-pane fade margin-bottom">
+            @Html.Partial("_previsiones", Model)
+        </div>
+    </div>
+</div>
+
+    @{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }

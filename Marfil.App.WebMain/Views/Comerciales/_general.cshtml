@@ -1,0 +1,148 @@
+﻿@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.Iva
+
+@model Marfil.Dom.Persistencia.Model.Terceros.ComercialesModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    var cvformaspago = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var cvtiposretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
+}
+@Html.HiddenFor(f=>Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcuentas,new {id="Fkcuentas"})
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktipoirpf, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvtiposretencion.Name = "Fktipoirpf";
+            cvtiposretencion.Url = Url.Action("TiporetencionApi", "Api");
+            cvtiposretencion.Valor = Model.Fktipoirpf;
+            cvtiposretencion.SoloLectura = isreadonly;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvtiposretencion)
+       
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fktipoirpf, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkregimeniva, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Fkregimeniva";
+            campoverificacion.Url = Url.Action("RegimenIvaApi", "Api");
+            campoverificacion.Valor = Model.Fkregimeniva;
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = true;
+
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkformapago, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvformaspago.Name = "Fkformapago";
+            cvformaspago.Url = Url.Action("FormasPagoApi", "Api");
+            cvformaspago.Valor = Model.Fkformapago;
+            cvformaspago.SoloLectura = isreadonly;
+        }
+        @Html.Partial("CampoverificacionUI", cvformaspago)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajecomision, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Porcentajecomision, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Porcentajecomision, "", new {@class = "text-danger"})
+    </div>
+
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Comisionporm2, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Comisionporm2, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+    </div>
+    @Html.LabelFor(f => Model.Comisionporm3, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Comisionporm3, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+    </div>
+    <div class="col-md-12">
+        
+    </div>
+        <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Comisionporm2, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Comisionporm3, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajeincrementosobreptb, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Porcentajeincrementosobreptb, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+    </div>
+    @Html.LabelFor(f => Model.Primaincrementosobreptb, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Primaincrementosobreptb, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+    </div>
+    <div class="col-md-12">
+
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Porcentajeincrementosobreptb, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Primaincrementosobreptb, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajedecrementosobreptb, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Porcentajedecrementosobreptb, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    @Html.LabelFor(f => Model.Primadecrementosobreptb, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Primadecrementosobreptb, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-12">
+
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Porcentajedecrementosobreptb, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Primadecrementosobreptb, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<script type="text/javascript">
+  
+    $("form").submit(function(event) {
+        $("#Fkcuentas").val(document.getElementById("Cuentas.Id").value);
+        
+    });
+
+</script>

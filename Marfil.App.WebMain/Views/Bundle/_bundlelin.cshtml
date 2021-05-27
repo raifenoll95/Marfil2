@@ -1,0 +1,214 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using DevExpress.Web.ASPxHtmlEditor.Internal
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@model List<Marfil.Dom.Persistencia.Model.Stock.BundleLinModel>
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+    var list = WebHelper.GetApplicationHelper().GetListTiposUbicacion();
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Bundle", Action = "BundleLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Bundle", Action = "BundleLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Bundle", Action = "BundleLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Bundle", Action = "BundleLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Lote";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Loteid";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fkarticulos";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cantidad";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Largo";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Ancho";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Grueso";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Metros";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fkunidades";
+            c.Visible = false;
+        });
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Decimalesunidades";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Decimalesprecio";
+            c.Visible = false;
+        });
+
+        settings.CustomJSProperties = (s, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)s;
+            e.Properties["cpFkunidades"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "Fkunidades");
+            e.Properties["cpDecimalesunidades"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "Decimalesunidades");
+            e.Properties["cpDecimalesprecio"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "Decimalesprecio");
+        };
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Longitud");
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 0;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+
+        //settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { if(s.cpFkunidades) e.customArgs['Fkunidades'] =  s.cpFkunidades; if(s.cpDecimalesunidades) e.customArgs['Decimalesunidades'] =  s.cpDecimalesunidades;if(s.cpDecimalesprecio) e.customArgs['Decimalesprecio'] =  s.cpDecimalesprecio; }";
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+            case 113://editar
+                if (!GridView.IsEditing()) {
+
+                  //  GridView.StartEditRow(index);
+                }
+                break;
+            case 46://Eliminar
+                if (!GridView.IsEditing()) {
+                    GridView.DeleteRow(index);
+                }
+                break;
+            case 27://escape
+                if (GridView.IsEditing()) {
+                    GridView.CancelEdit();
+                    GridView.Focus();
+                }
+                break;
+            case 13://enter
+                if (GridView.IsEditing()) {
+                    GridView.Focus();
+                    GridView.UpdateEdit();
+                }
+                break;
+            case 107://mas
+                CreateRow();
+                break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        eventAggregator.Publish("buscarlote", "");
+    }
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
+</script>

@@ -1,0 +1,65 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@using ViewType = DevExpress.XtraCharts.ViewType
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.GraficasModel
+@{
+        var idgrafico ="grafico" + (Guid.NewGuid()).ToString().Replace("-", "");
+}
+
+
+
+
+    @Html.DevExpress().Chart(settings =>
+{
+    settings.Name = idgrafico;
+
+    settings.ControlStyle.CssClass = "col-md-12";
+    settings.Titles.Add(new ChartTitle()
+    {
+        Text = Model.Titulo
+    });
+    Series series = new Series(string.Empty, Model.Tipografica);
+    series.ArgumentDataMember = Model.Agruparpor;
+    series.ValueDataMembers[0] = Model.Valores;
+    series.LegendTextPattern = "{A}: {V}";
+    series.LabelsVisibility = DefaultBoolean.True;
+    series.Label.TextPattern = "{A}: {VP:P0}";
+
+    settings.Series.Add(series);
+    settings.Legends.Default(l =>
+    {
+        l.AlignmentHorizontal = LegendAlignmentHorizontal.Center;
+        l.AlignmentVertical = LegendAlignmentVertical.BottomOutside;
+        l.Direction = LegendDirection.LeftToRight;
+        l.MaxHorizontalPercentage = 50;
+        l.Border.Visibility = DefaultBoolean.False;
+    });
+
+    settings.Width = Unit.Pixel(600);
+    settings.Height = Unit.Pixel(600);
+
+    if (ConfiguraciongraficasService.GraficaXy(Model.Tipografica))
+    {
+        settings.XYDiagram(d =>
+        {
+            d.AxisX.Title.Text = Model.Agruparpor;
+            d.AxisY.Title.Text = Model.Valores;
+            d.AxisY.Title.Visibility = DefaultBoolean.True;
+        });
+    }
+
+}).Bind(Model.Datos).GetHtml()
+
+<script>
+    $("@("#" +idgrafico + "_IMG")").addClass("img-responsive inline");
+    $("@("#" +idgrafico)").attr('style','');
+</script>
+      
+    
+    
+
+

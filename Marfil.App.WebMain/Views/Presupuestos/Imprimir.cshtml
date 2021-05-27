@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+    var rnd=new Random();
+}
+<html>
+<head>
+    <style>
+        .pagenum:before {
+            content: counter(page);
+        }
+        .pnlHeader {
+           
+        }
+
+        .pnlDetail {
+            
+        }
+        
+        .pnlFooter {
+           
+        }
+    </style>
+</head>
+
+<body>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th >
+                    Hola
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <div class="pnlDetail">
+                    <table>
+                        @for (int i = 0; i < 1000; i++)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@rnd.NextDouble()</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>
+                <div class="pnlFooter">
+                    <div class="footer">Page: <span class="pagenum"></span></div>                    
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+
+
+
+
+   
+</body>
+</html>

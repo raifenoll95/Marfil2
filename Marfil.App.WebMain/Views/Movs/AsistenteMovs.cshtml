@@ -1,0 +1,84 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Contabilidad.Movs.AsistenteMovsModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+
+<script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
+<div>
+    <h3 class="green center">Seleccionar fichero y delimitador de contenido</h3>
+    <br />
+
+    <div class="alert alert-info" align="center">
+        <p>Contenido del fichero: </p>
+        <table border="1" align="center">
+            <thead>
+                <tr>
+                    <th class="bolder center" style="min-width:100px">Referencia</th>
+                    <th class="bolder center" style="min-width:100px">Fecha</th>
+                    <th class="bolder center" style="min-width:100px">Esdebe</th>
+                    <th class="bolder center" style="min-width:100px">Cuenta</th>
+                    <th class="bolder center" style="min-width:100px">Importe</th>
+                    <th class="bolder center" style="min-width:100px">Comentario</th>
+                    <th class="bolder center" style="min-width:100px">Sección</th>
+                    <th class="bolder center" style="min-width:100px">Tipo Asiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="center"></td>
+                    <td class="center">dd/mm/aaaa</td>
+                    <td class="center">T/F, 1/-1</td>
+                    <td class="center">1-4 o 8 dígitos</td>
+                    <td class="center"></td>
+                    <td class="center"></td>                                        
+                    <td class="center">Ficheros generales/Secciones</td>
+                    <td class="center">T.V. 72</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+
+        @using (Html.BeginForm("AsistenteMovs", "Movs", new { AsistenteMovsModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.LabelFor(f => Model.Fichero, new { @class = "control-label col-md-4", @style = "text-align: right" })
+            @Html.TextBoxFor(f => Model.Fichero, new { @type = "file" })
+            <br />
+            @Html.LabelFor(f => Model.Cabecera, new { @class = "control-label col-md-4", @style = "text-align: right" })
+            @Html.CheckBoxFor(f => Model.Cabecera)
+            <br />
+            <br />
+            @Html.LabelFor(f => Model.Delimitador, new { @class = "control-label col-md-4", @style = "text-align: right" })
+            @Html.TextBoxFor(f => Model.Delimitador, new { @Value = ';' })
+            <br />
+            <br />
+            @Html.LabelFor(f => Model.Seriecontable, new { @class = "control-label col-md-4", @style = "text-align: right" })
+            @Html.TextBoxFor(f => Model.Seriecontable, new { @Value = "AST", @readonly = "readonly" })
+            <br />
+            <br />
+            <label class="control-label col-md-4" align="right"></label>
+            <input type="submit" value="Importar" class="btn btn-default" />
+        }
+
+        <br />
+
+        @if (TempData["Success"] != null && TempData["Errors"] == null)
+        {
+            <p class="alert alert-success" id="successMessage" align="center">@TempData["Success"]</p>
+        }
+        @if (TempData["Errors"] != null)
+        {
+            <pre class="alert alert-danger" id="divErrorMessage" align="center">@TempData["Errors"]</pre>
+        }
+    </div>
+</div>
+  

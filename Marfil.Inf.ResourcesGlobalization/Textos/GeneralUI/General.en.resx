@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BtnEntrar" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="BtnVolver" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="LblConfiguracion" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="LblBienvenido" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="LblDesconectar" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LblEmpresas" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="LblGestionGrupos" xml:space="preserve">
+    <value>Groups management</value>
+  </data>
+  <data name="LblGestionUsuarios" xml:space="preserve">
+    <value>Users management</value>
+  </data>
+  <data name="LblPerfil" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="LblSeguridad" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="LblSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="BtnNuevoRegistro" xml:space="preserve">
+    <value>New item</value>
+  </data>
+  <data name="LblVolverALaLista" xml:space="preserve">
+    <value>Return to list</value>
+  </data>
+  <data name="LblEditar" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="LblCrear" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="LblVer" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="LblBorrar" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="LblMensajeConfirmacionBorrado" xml:space="preserve">
+    <value>You are about to delete the item. Do you want to continue?</value>
+  </data>
+  <data name="LblContinuar" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="LblCancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="LblFormaPago" xml:space="preserve">
+    <value>Payment method</value>
+  </data>
+  <data name="BtnGuardar" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="LblEfectivo" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="LblPorcentajeTotal" xml:space="preserve">
+    <value>Total percentage</value>
+  </data>
+  <data name="LblGestionDe" xml:space="preserve">
+    <value>Management of</value>
+  </data>
+  <data name="LblPersonalizado" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="LblInicio" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="LblCambiarEmpresa" xml:space="preserve">
+    <value>Change the current company</value>
+  </data>
+  <data name="LblNoExistenMasEmpresas" xml:space="preserve">
+    <value>There are not more companies</value>
+  </data>
+  <data name="LblUltimaModificacion" xml:space="preserve">
+    <value>Last update</value>
+  </data>
+  <data name="LblGestionCambios" xml:space="preserve">
+    <value>Currency changes management</value>
+  </data>
+  <data name="LblHistoricoCambios" xml:space="preserve">
+    <value>Currency changes Log</value>
+  </data>
+  <data name="LblNoConfiguracionMonedaAdicional" xml:space="preserve">
+    <value>There is not an additional currency</value>
+  </data>
+  <data name="LblGestionCambioMonedas" xml:space="preserve">
+    <value>Currency changes management</value>
+  </data>
+  <data name="LblNivel" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="LblInformacionSubcuenta" xml:space="preserve">
+    <value>Subaccount information</value>
+  </data>
+  <data name="LblCuentasNivelSuperior" xml:space="preserve">
+    <value>Accounts of superior level</value>
+  </data>
+  <data name="LblDescripcion" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="LblId" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="LblNoExistenCuentas" xml:space="preserve">
+    <value>There are not accounts of superior level</value>
+  </data>
+  <data name="LblBuscar" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="LblNuevo" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="LblBusquedas" xml:space="preserve">
+    <value>Searchs</value>
+  </data>
+  <data name="LblAceptar" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="LblCerrar" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="LblIndicaMotivoBloqueo" xml:space="preserve">
+    <value>Why do you want to block </value>
+  </data>
+  <data name="LblBloqueoConfirmacionParte1" xml:space="preserve">
+    <value>You are about to unblock the current register, Do you want to continue?</value>
+  </data>
+  <data name="LblDesbloqueo" xml:space="preserve">
+    <value>Unblock</value>
+  </data>
+  <data name="LblBloqueo" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="LblBloqueada" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="LblNoBloqueada" xml:space="preserve">
+    <value>Unblocked</value>
+  </data>
+  <data name="LblAtencion" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="LblConfigureloDesde" xml:space="preserve">
+    <value>Configure it from</value>
+  </data>
+  <data name="LblAqui" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="LblGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="LblDirecciones" xml:space="preserve">
+    <value>Addresses</value>
+  </data>
+  <data name="LblBancos" xml:space="preserve">
+    <value>Banks</value>
+  </data>
+  <data name="LblContactos" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="LblNoHayRegistros" xml:space="preserve">
+    <value>There is no data to display</value>
+  </data>
+  <data name="LblActividad" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="LblContabilidad" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="LblAdministrador" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="LblAñadir" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="LblUsuarios" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="LblQuitarSeleccionados" xml:space="preserve">
+    <value>Remove selected</value>
+  </data>
+  <data name="MensajeExitoOperacion" xml:space="preserve">
+    <value>The operation has been done succesfully</value>
+  </data>
+  <data name="LblBien" xml:space="preserve">
+    <value>Great</value>
+  </data>
+  <data name="ErrorModificarRegistroBloqueado" xml:space="preserve">
+    <value>It is not possible to change a blocked entity</value>
+  </data>
+  <data name="ErrorTipoCuentaIncorrecto" xml:space="preserve">
+    <value>The type of account is not rigth</value>
+  </data>
+  <data name="ErrorCuentaObligatoria" xml:space="preserve">
+    <value>The field account is required</value>
+  </data>
+  <data name="ErrorTipoCuentaConfiguracion" xml:space="preserve">
+    <value>There is not configuration for the {0} type of account</value>
+  </data>
+  <data name="ErrorCampoObligatorio" xml:space="preserve">
+    <value>The field {0} is required</value>
+  </data>
+  <data name="ErrorFormatoCampo" xml:space="preserve">
+    <value>The format of the field {0} is not fine</value>
+  </data>
+  <data name="ErrorRegistroExistente" xml:space="preserve">
+    <value>There is an entity with the same code</value>
+  </data>
+  <data name="LblOperario" xml:space="preserve">
+    <value>Worker</value>
+  </data>
+  <data name="LblDiferencia" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="ErrorIdAcreedor" xml:space="preserve">
+    <value>The id creditor {0} is not valid</value>
+  </data>
+  <data name="LblCoeficientes" xml:space="preserve">
+    <value>Coefficient</value>
+  </data>
+  <data name="LblProduccion" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="LblLoading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="LblValidar" xml:space="preserve">
+    <value>Validations</value>
+  </data>
+  <data name="LblGenerarDescripcion" xml:space="preserve">
+    <value>Order of description generation</value>
+  </data>
+  <data name="LblUnidades" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="LblGestion" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="LblLongitudTotal" xml:space="preserve">
+    <value>Total length</value>
+  </data>
+  <data name="LblExportar" xml:space="preserve">
+    <value>Export to</value>
+  </data>
+  <data name="LblFiltros" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="LblOrdernar" xml:space="preserve">
+    <value>Order by</value>
+  </data>
+  <data name="LblBloquear" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="LblErrorBloqueoNoPermitido" xml:space="preserve">
+    <value>Is not allowed to block the current entity</value>
+  </data>
+  <data name="LblTarifasVentas" xml:space="preserve">
+    <value>Sale rates</value>
+  </data>
+  <data name="LblTarifasCompras" xml:space="preserve">
+    <value>Buy rates</value>
+  </data>
+  <data name="LblTarifasEspecificasVentas" xml:space="preserve">
+    <value>Custom rate sale</value>
+  </data>
+  <data name="LblTarifasEspecificasCompras" xml:space="preserve">
+    <value>Custom rate buy</value>
+  </data>
+  <data name="LblCerrarSesion" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LblMenuSuperusuario" xml:space="preserve">
+    <value>Admin menu</value>
+  </data>
+  <data name="LblOtros" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="LblDesglose" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="ErrorClonarGeneral" xml:space="preserve">
+    <value>Ups! Seems that is not possible to clone de document</value>
+  </data>
+  <data name="MensajeExitoClonar" xml:space="preserve">
+    <value>The register has been cloned properly</value>
+  </data>
+  <data name="LblGuardar" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ErrorValorMinimo" xml:space="preserve">
+    <value>The value must be greater or equal than {1}</value>
+  </data>
+  <data name="ConfiguradorDocumentos" xml:space="preserve">
+    <value>Documents configurer: {0}</value>
+  </data>
+  <data name="EnumPresupuestosVentas" xml:space="preserve">
+    <value>Sell estimation</value>
+  </data>
+  <data name="EnumPedidosVentas" xml:space="preserve">
+    <value>Sell order</value>
+  </data>
+  <data name="EnumAlbaranesVentas" xml:space="preserve">
+    <value>Sell packing list</value>
+  </data>
+  <data name="EnumFacturasVentas" xml:space="preserve">
+    <value>Sell invoice</value>
+  </data>
+  <data name="LblPresupuestos" xml:space="preserve">
+    <value>Estimations</value>
+  </data>
+  <data name="ErrorCampo1MayorCampo2" xml:space="preserve">
+    <value>The field {0} can not be greater than {1}</value>
+  </data>
+  <data name="LblEjercicio" xml:space="preserve">
+    <value>Management exercices</value>
+  </data>
+  <data name="LblNoExistenMasEjercicios" xml:space="preserve">
+    <value>There are no more exercices</value>
+  </data>
+  <data name="LblCambiarEjercicio" xml:space="preserve">
+    <value>Change exercice</value>
+  </data>
+  <data name="LblClonar" xml:space="preserve">
+    <value>Clone</value>
+  </data>
+  <data name="LblUltimosPrecios" xml:space="preserve">
+    <value>Last prices</value>
+  </data>
+  <data name="LblNoExistenBancos" xml:space="preserve">
+    <value>There are any bank for the current client</value>
+  </data>
+  <data name="ErrorBorradoArticulosUsados" xml:space="preserve">
+    <value>Is not possible to delete the article because it has been already used in some document</value>
+  </data>
+  <data name="LblGenerarPedido" xml:space="preserve">
+    <value>Create order</value>
+  </data>
+  <data name="ErrorIntegridadReferencial" xml:space="preserve">
+    <value>It's not possible to remove the {1} because there are associated registers in {1}</value>
+  </data>
+  <data name="LblImportar" xml:space="preserve">
+    <value>Lines importation process</value>
+  </data>
+  <data name="BtnBuscarLineas" xml:space="preserve">
+    <value>Search for lines</value>
+  </data>
+  <data name="EnumAlbaranesCompras" xml:space="preserve">
+    <value>Purchase packing list</value>
+  </data>
+  <data name="EnumFacturasCompras" xml:space="preserve">
+    <value>Purchase invoice</value>
+  </data>
+  <data name="EnumPedidosCompras" xml:space="preserve">
+    <value>Purchase order</value>
+  </data>
+  <data name="EnumPresupuestosCompras" xml:space="preserve">
+    <value>Purchase estimation</value>
+  </data>
+  <data name="EnumTodos" xml:space="preserve">
+    <value>All documents</value>
+  </data>
+  <data name="EnumDiseno" xml:space="preserve">
+    <value>In design</value>
+  </data>
+  <data name="EnumCurso" xml:space="preserve">
+    <value>In progress</value>
+  </data>
+  <data name="EnumFinalizado" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="EnumAnulado" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="EnumCaducado" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="ErrorModificacionNoValidaPorElEstadoActual" xml:space="preserve">
+    <value>The documents in state {0} can not be modified</value>
+  </data>
+  <data name="ErrorBorradoUnidadesUsadas" xml:space="preserve">
+    <value>Is not possible to delete the unite mesure because it has been already used in some article</value>
+  </data>
+  <data name="LblUltimo" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="LblPrimero" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="LblAnterior" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="LblSiguiente" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="LblImprimir" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="LblCambiarEstado" xml:space="preserve">
+    <value>Change state</value>
+  </data>
+  <data name="LblDividir" xml:space="preserve">
+    <value>Split</value>
+  </data>
+  <data name="LblNoExistenDirecciones" xml:space="preserve">
+    <value>There are not related addresses</value>
+  </data>
+  <data name="Agruparpor" xml:space="preserve">
+    <value>Group by</value>
+  </data>
+  <data name="BtnAñadirLinea" xml:space="preserve">
+    <value>Create new line</value>
+  </data>
+  <data name="LblListar" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="LblLimpiar" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="LblBloqueado" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="LblAyuda" xml:space="preserve">
+    <value>Online help</value>
+  </data>
+  <data name="AsuntoEmailTest" xml:space="preserve">
+    <value>Test email configuration</value>
+  </data>
+  <data name="CuerpoEmailTest" xml:space="preserve">
+    <value>Test done at {0}</value>
+  </data>
+  <data name="LblEnviaremail" xml:space="preserve">
+    <value>Send email</value>
+  </data>
+  <data name="LblEnviar" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="LblEnviandoMail" xml:space="preserve">
+    <value>Sending email...</value>
+  </data>
+  <data name="LblDescargar" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="GestionFicheros" xml:space="preserve">
+    <value>Attached files</value>
+  </data>
+  <data name="LblMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="LblCambiarAlmacen" xml:space="preserve">
+    <value>Change store</value>
+  </data>
+  <data name="LblAmpliar" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="LblPropiedades" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="lblFacturasRecibidas" xml:space="preserve">
+    <value>Received invoices</value>
+  </data>
+  <data name="lblFacturasEmitidas" xml:space="preserve">
+    <value>Emited invoices</value>
+  </data>
+  <data name="LblTipoFactura" xml:space="preserve">
+    <value>Invoice type</value>
+  </data>
+  <data name="LblRegimenEspecial" xml:space="preserve">
+    <value>Special regime</value>
+  </data>
+  <data name="ErrorDocumentoSinLineas" xml:space="preserve">
+    <value>The document doesn't have lines</value>
+  </data>
+  <data name="Si" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ErrorFechaNoValida" xml:space="preserve">
+    <value>Invalid date</value>
+  </data>
+  <data name="LblFichero" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="AsignarCartera" xml:space="preserve">
+    <value>Asignar a cartera</value>
+  </data>
+</root>

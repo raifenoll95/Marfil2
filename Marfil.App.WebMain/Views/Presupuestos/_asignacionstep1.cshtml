@@ -1,0 +1,23 @@
+﻿@using Resources
+
+@*Rai*@
+
+@model Marfil.Dom.Persistencia.Model.Documentos.Presupuestos.PresupuestosAsistenteModel
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+
+<form class="form-horizontal" id="step1-form">
+</form>
+
+<div style="margin-top:40px !important">
+    <h4 style="text-align: left !important">Artículos</h4>
+
+    <span class="field-validation-valid text-danger" id="articulosseleccionadoserror"></span>
+
+    <span ng-show="loading">@General.LblLoading</span>
+    <input type="hidden" value="{{cantidadarticulos}}" name="articulosseleccionados" />
+    <div ng-if="!refresh" ui-grid="gridOptionsarticulos" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+
+</div>

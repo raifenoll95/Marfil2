@@ -1,0 +1,36 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
+@using Resources
+
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+<div>
+    
+    @using (Html.BeginForm(new {@class = "form-horizontal"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @{
+                ViewData["readonly"] = true;
+            }
+            @Html.Partial("_grupomateriales", Model as GrupoMaterialesModel)
+
+        </div>
+    }
+
+</div>
+
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info margin-top" href="@Url.Action("Edit", new {id = ((GrupoMaterialesModel)Model).Cod})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}

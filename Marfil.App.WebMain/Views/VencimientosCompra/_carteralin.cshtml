@@ -1,0 +1,90 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
+@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IEnumerable<CarteraVencimientosModel>
+
+@{
+    var usuario = HttpContext.Current.User as ICustomPrincipal;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+<style>
+
+    .myButton {
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	background-color:#79bbff;
+	border-radius:7px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	background-color:#378de5;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+</style>
+
+@if (!Model.Any())
+{
+    <h2>No se ha asignado en cartera todavía</h2>
+}
+
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Referencia</th>
+                <th>Tercero</th>
+                <th>Importe vto.</th>
+                <th>Fecha vto.</th>
+                <th>Fecha documento</th>
+                <th>Situación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model)
+            {
+                <tr>
+                    <th scope="row">@item.Referencia</th>
+                    <td>@item.Fkcuentas</td>
+                    <td>@item.Importegiro</td>
+                    <td>@item.Fechavencimiento.ToString().Split(' ')[0]</td>
+                    <td>@item.Fecha</td>
+                    <td>@item.Situacion</td>
+                    <td>
+                        <a class="myButton" align="right" href=@item.urlDocumento target="_blank">
+                            <i class="fa fa-eye">
+                                Ver Cartera
+                            </i>
+                        </a>
+                    </td>
+                </tr>  }
+        </tbody>
+    </table>
+}
+

@@ -1,0 +1,368 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
+@using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.Transformaciones.TransformacionesCostesadicionalesModel>
+
+@{
+    var usuario = HttpContext.Current.User as ICustomPrincipal;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewCosteAdicional";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Transformaciones", Action = "TransformacionesCostesAdicionales" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Transformaciones", Action = "CostesadicionalesNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Transformaciones", Action = "CostesadicionalesUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Transformaciones", Action = "CostesadicionalesDelete" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.HorizontalScrollBarMode=ScrollBarMode.Auto;
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tipodocumento";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (var i in Enum.GetValues(typeof(TipoCosteAdicional)))
+                comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+            comboBoxProperties.ClientSideEvents.Init = "function(s, e){   s.Focus();GridViewCosteAdicional.GetEditor(\"Referenciadocumento\").SetEnabled(s.GetValue()!=\"Importefijo\"); }";
+            comboBoxProperties.ClientSideEvents.SelectedIndexChanged = "OnTipodocumentoChanged";
+            comboBoxProperties.ValueType = typeof(int);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            c.Width = Unit.Pixel(150);
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Referenciadocumento";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Pixel(150);
+           
+            var p = j.PropertiesEdit as ButtonEditProperties;
+
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            
+            p.ClientSideEvents.TextChanged = "OnReferenciaChanged";
+            p.ClientSideEvents.KeyDown = "OnKeyPressReferencia";
+            p.ClientInstanceName = j.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchReferencia(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SImporte";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnValoresChanged";
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Porcentaje";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnValoresChanged";
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "STotal";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.SpinButtons.ShowIncrementButtons = false;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tipocoste";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (var i in Enum.GetValues(typeof(TipoCoste)))
+                comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+            comboBoxProperties.ValueType = typeof(int);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            c.Width = Unit.Pixel(150);
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tiporeparto";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (var i in Enum.GetValues(typeof(TipoReparto)))
+                comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+            comboBoxProperties.ValueType = typeof(int);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            c.Width = Unit.Pixel(150);
+        } );
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Notas";
+            c.ColumnType =MVCxGridViewColumnType.Memo;
+            c.Width = Unit.Pixel(150);
+        } );
+
+
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+            if (col.FieldName == "STotal")
+            {
+
+                var model = c.Grid.DataSource as IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.Transformaciones.TransformacionesCostesadicionalesModel>;
+                var decimalesmonedas = 2;
+                var sum = model.Sum(f => f.Total);
+                ViewContext.Writer.Write("<h4 class=\"pull-right\">" + @Albaranes.Importetotaldoc + ": <span class=\"green bigger\">" + (sum ?? 0)+ "</span></h4>");
+            }
+        });
+
+        settings.CommandColumn.Visible = !isreadonly;
+        if (!isreadonly)
+        {
+            settings.CommandColumn.ButtonRenderMode = GridCommandButtonRenderMode.Button;
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblEditar + " - (F2)\"></i></span>";
+            settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i></span>";
+            settings.SettingsCommandButton.UpdateButton.Text = "<span tabindex=\"-1\" class=\"fa fa-save\" title=\"" + General.LblGuardar + " - (Enter)\"></i></span>";
+            settings.SettingsCommandButton.CancelButton.Text = "<span tabindex=\"-1\" class=\"fa fa-close\" title=\"" + General.LblCancelar + " - (Ctlr + '+')\"></i></span>";
+
+            settings.CommandColumn.Width = Unit.Pixel(150);
+            settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+            settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+            settings.CommandColumn.VisibleIndex = 0;
+            settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+        }
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.ClientSideEvents.EndCallback = "function(s, e){  if(s.cp_resetScroll!=null){ GridViewCosteAdicional.Focus(); delete(s.cp_resetScroll); window.setTimeout(function(){ s.SetHorizontalScrollPosition(0); },0); } }";
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+          
+                ((MVCxGridView)sender).JSProperties["cp_resetScroll"] = true;
+            
+        };
+
+        settings.ClientSideEvents.RowDblClick = null;
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowLineasCostesChanged(s, e);} ";
+    });
+}
+@grid.Bind(Model).GetHtml()
+<script type="text/javascript">
+
+    function FunOnFocusedRowLineasCostesChanged(s, e) {
+
+
+        $("#GridViewCosteAdicional").unbind("keydown");
+        $('#GridViewCosteAdicional').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113: //editar
+                    if (!GridViewCosteAdicional.IsEditing()) {
+
+                        GridViewCosteAdicional.StartEditRow(index);
+                    }
+                    break;
+                case 46: //Eliminar
+                    if (!GridViewCosteAdicional.IsEditing()) {
+                        GridViewCosteAdicional.DeleteRow(index);
+                    }
+                    break;
+                case 27: //escape
+                    if (GridViewCosteAdicional.IsEditing()) {
+                        GridViewCosteAdicional.CancelEdit();
+                        GridViewCosteAdicional.Focus();
+                    }
+                    break;
+                case 13:
+
+                    if (GridViewCosteAdicional.IsEditing()) {
+                        event.preventDefault();
+                        GridViewCosteAdicional.UpdateEdit();
+
+                    }
+                    break;
+                case 107: //mas
+                    if (!GridViewCosteAdicional.IsEditing()) {
+                        if (event.ctrlKey) {
+                            event.preventDefault();
+                            rowKeyValueToCopy = s.GetRowKey(GridViewCosteAdicional.GetFocusedRowIndex());
+                            s.PerformCallback();
+
+                        } else {
+                            CreateRowCostes();
+                        }
+                    }
+                    break;
+            }
+
+        });
+    }
+
+    function OnTipodocumentoChanged(s, e) {
+        var valor = s.GetValue();
+        var cReferencia = GridViewCosteAdicional.GetEditor("Referenciadocumento");
+        var cPorcentaje = GridViewCosteAdicional.GetEditor("Porcentaje");
+        cReferencia.SetEnabled(valor != "Importefijo");
+        cPorcentaje.SetEnabled(valor != "Importefijo");
+        if (valor == "Importefijo") {
+            cPorcentaje.SetValue(100);
+        }
+    }
+
+    function OnValoresChanged(s, e) {
+        Globalize.cultureSelector = $("meta[name='accept-language']").prop("content");
+        cImporte = GridViewCosteAdicional.GetEditor("SImporte");
+        cPorcentaje = GridViewCosteAdicional.GetEditor("Porcentaje");
+        cTotal = GridViewCosteAdicional.GetEditor("STotal");
+
+
+        var importevalue = cImporte.GetValue();
+        var porcentajevalue = cPorcentaje.GetValue();
+
+
+       cTotal.SetValue((importevalue * (porcentajevalue / 100.0).toFixed(2)));
+    }
+
+    //Start search articulos
+    function OnKeyPressReferencia(s, e) {
+        var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+        if (keycode == 66 && e.htmlEvent.ctrlKey) {
+            SearchReferencia();
+        }
+
+    }
+
+    function SearchReferencia() {
+
+        var obj = {
+            campoIdentificador: "Referencia",
+            IdComponenteasociado: "Referenciadocumento",
+            IdFormulariomodal: "BusquedaGlobal",
+            Url: '@Url.Action("ReferenciasDocumentosComprasApi", "Api")',
+            Titulo: "Busqueda de Albaranes / Facturas  de compra",
+            Params: ""
+        };
+
+        eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("Referenciadocumento-Buscarfocus", function (obj) {
+
+        Referenciadocumento.SetValue(obj);
+       
+        GridViewCosteAdicional.SetEnabled(false);
+
+        pedirReferencia(obj, '@Url.Action("ReferenciasDocumentosComprasApi", "Api")', GridViewCosteAdicional, true);
+    });
+
+
+    function OnReferenciaChanged(s, e) {
+
+        
+        GridViewCosteAdicional.SetEnabled(false);
+
+        pedirReferencia(s.GetValue(), '@Url.Action("ReferenciasDocumentosComprasApi", "Api")', GridViewCosteAdicional, true);
+
+    }
+
+    var pedirReferencia = function (codigoarticulo, urlarticulos, lineas, setvaloresdefecto) {
+        $.get(urlarticulos + "/" + codigoarticulo).success(function (result) {
+
+            articuloActual = result;
+
+            var escomentario = result.Articulocomentario;
+            var cImporte = lineas.GetEditor("SImporte");
+            cImporte.SetValue(result.Base);
+            
+            lineas.SetEnabled(true);
+            
+
+            GridViewCosteAdicional.FocusEditor("Porcentaje");
+
+            Globalize.cultureSelector = $("meta[name='accept-language']").prop("content");
+            
+            cPorcentaje = GridViewCosteAdicional.GetEditor("Porcentaje");
+            cTotal = GridViewCosteAdicional.GetEditor("STotal");
+
+
+            var importevalue = cImporte.GetValue();
+            var porcentajevalue = cPorcentaje.GetValue();
+
+
+            cTotal.SetValue((importevalue * (porcentajevalue / 100.0).toFixed(2)));
+
+        }).error(function (jqXHR, textStatus, errorThrown) {
+            lineas.SetEnabled(true);
+            var cReferencia = lineas.GetEditor("Referenciadocumento");
+            cReferencia.SetValue("");
+            cReferencia.Focus();
+
+        });
+    }
+    //end search articulos
+
+</script>

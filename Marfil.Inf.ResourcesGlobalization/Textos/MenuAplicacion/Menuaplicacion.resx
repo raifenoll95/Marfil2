@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ficheros" xml:space="preserve">
+    <value>Ficheros generales</value>
+  </data>
+  <data name="mantformaspago" xml:space="preserve">
+    <value>Formas de pago</value>
+  </data>
+  <data name="bancos" xml:space="preserve">
+    <value>Bancos</value>
+  </data>
+  <data name="monedas" xml:space="preserve">
+    <value>Monedas</value>
+  </data>
+  <data name="cambiosmonedas" xml:space="preserve">
+    <value>Gestión de cambios de monedas</value>
+  </data>
+  <data name="provincias" xml:space="preserve">
+    <value>Provincias</value>
+  </data>
+  <data name="puertos" xml:space="preserve">
+    <value>Puertos</value>
+  </data>
+  <data name="configuracion" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="tablasvarias" xml:space="preserve">
+    <value>Tablas varias</value>
+  </data>
+  <data name="unidades" xml:space="preserve">
+    <value>Unidades de medida</value>
+  </data>
+  <data name="contabilidad" xml:space="preserve">
+    <value>Contabilidad</value>
+  </data>
+  <data name="cuentas" xml:space="preserve">
+    <value>Cuentas</value>
+  </data>
+  <data name="tiposiva" xml:space="preserve">
+    <value>Tipos de IVA</value>
+  </data>
+  <data name="gruposiva" xml:space="preserve">
+    <value>Grupos de IVA</value>
+  </data>
+  <data name="regimeniva" xml:space="preserve">
+    <value>Régimen de IVA</value>
+  </data>
+  <data name="manttiposretenciones" xml:space="preserve">
+    <value>Tipos de retenciones</value>
+  </data>
+  <data name="terceros" xml:space="preserve">
+    <value>Terceros</value>
+  </data>
+  <data name="tiposcuentas" xml:space="preserve">
+    <value>Tipos de cuentas</value>
+  </data>
+  <data name="aseguradoras" xml:space="preserve">
+    <value>Compañías de seguros</value>
+  </data>
+  <data name="agentes" xml:space="preserve">
+    <value>Agentes</value>
+  </data>
+  <data name="proveedores" xml:space="preserve">
+    <value>Proveedores</value>
+  </data>
+  <data name="acreedores" xml:space="preserve">
+    <value>Acreedores</value>
+  </data>
+  <data name="operarios" xml:space="preserve">
+    <value>Operarios</value>
+  </data>
+  <data name="clientes" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="produccion" xml:space="preserve">
+    <value>Gestión</value>
+  </data>
+  <data name="acabados" xml:space="preserve">
+    <value>Acabados</value>
+  </data>
+  <data name="grosores" xml:space="preserve">
+    <value>Grosores</value>
+  </data>
+  <data name="guiascontables" xml:space="preserve">
+    <value>Guías contables</value>
+  </data>
+  <data name="familiasproductos" xml:space="preserve">
+    <value>Familias</value>
+  </data>
+  <data name="productos" xml:space="preserve">
+    <value>Artículos</value>
+  </data>
+  <data name="materiales" xml:space="preserve">
+    <value>Materiales</value>
+  </data>
+  <data name="caracteristicas" xml:space="preserve">
+    <value>Características</value>
+  </data>
+  <data name="articulos" xml:space="preserve">
+    <value>Artículos</value>
+  </data>
+  <data name="contadores" xml:space="preserve">
+    <value>Contadores de documentos</value>
+  </data>
+  <data name="series" xml:space="preserve">
+    <value>Series</value>
+  </data>
+  <data name="listado" xml:space="preserve">
+    <value>Listados</value>
+  </data>
+  <data name="comerciales" xml:space="preserve">
+    <value>Comerciales</value>
+  </data>
+  <data name="tarifas" xml:space="preserve">
+    <value>Tarifas</value>
+  </data>
+  <data name="headerpresupuestos" xml:space="preserve">
+    <value>Presupuestos</value>
+  </data>
+  <data name="presupuestos" xml:space="preserve">
+    <value>Gestión de presupuestos</value>
+  </data>
+  <data name="listadogeneralpresupuestos" xml:space="preserve">
+    <value>Listado general</value>
+  </data>
+  <data name="compras" xml:space="preserve">
+    <value>Compras</value>
+  </data>
+  <data name="ventas" xml:space="preserve">
+    <value>Ventas</value>
+  </data>
+  <data name="listadodetalladopresupuestos" xml:space="preserve">
+    <value>Listado detallado</value>
+  </data>
+  <data name="configurardocumentos" xml:space="preserve">
+    <value>Configurador de documentos</value>
+  </data>
+  <data name="transportistas" xml:space="preserve">
+    <value>Transportistas</value>
+  </data>
+  <data name="cuentastesoreria" xml:space="preserve">
+    <value>Cuentas de tesorería</value>
+  </data>
+  <data name="headerpedidos" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="pedidos" xml:space="preserve">
+    <value>Gestión de pedidos</value>
+  </data>
+  <data name="listadogeneralpedidos" xml:space="preserve">
+    <value>Listado general</value>
+  </data>
+  <data name="listadodetalladopedidos" xml:space="preserve">
+    <value>Listado detallado</value>
+  </data>
+  <data name="estados" xml:space="preserve">
+    <value>Estados de documentos</value>
+  </data>
+  <data name="headeralbaranes" xml:space="preserve">
+    <value>Albaranes</value>
+  </data>
+  <data name="albaranes" xml:space="preserve">
+    <value>Gestión de albaranes de taller</value>
+  </data>
+  <data name="listadogeneralalbaranes" xml:space="preserve">
+    <value>Listado general</value>
+  </data>
+  <data name="listadodetalladoalbaranes" xml:space="preserve">
+    <value>Listado detallado</value>
+  </data>
+  <data name="albaranesdevolucion" xml:space="preserve">
+    <value>Gestión de devoluciones</value>
+  </data>
+  <data name="obras" xml:space="preserve">
+    <value>Obras</value>
+  </data>
+  <data name="criteriosagrupacion" xml:space="preserve">
+    <value>Criterios de agrupación</value>
+  </data>
+  <data name="headerfacturas" xml:space="preserve">
+    <value>Facturas</value>
+  </data>
+  <data name="facturas" xml:space="preserve">
+    <value>Gestión de facturas</value>
+  </data>
+  <data name="listadogeneralfacturas" xml:space="preserve">
+    <value>Listado general</value>
+  </data>
+  <data name="listadodetalladofacturas" xml:space="preserve">
+    <value>Listado detallado</value>
+  </data>
+  <data name="procesofacturacion" xml:space="preserve">
+    <value>Asistente de facturación</value>
+  </data>
+  <data name="prospectos" xml:space="preserve">
+    <value>Prospectos</value>
+  </data>
+  <data name="ayuda" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="listadoproductospresupuestos" xml:space="preserve">
+    <value>Productos en Presupuestos</value>
+  </data>
+  <data name="listadoproductospedidos" xml:space="preserve">
+    <value>Productos en Pedidos</value>
+  </data>
+  <data name="listadoproductosalbaranes" xml:space="preserve">
+    <value>Productos en Albaranes</value>
+  </data>
+  <data name="listadoproductosfacturas" xml:space="preserve">
+    <value>Productos en Facturas</value>
+  </data>
+  <data name="listadoterceros" xml:space="preserve">
+    <value>Listado de terceros</value>
+  </data>
+  <data name="listadoarticulos" xml:space="preserve">
+    <value>Listado de artículos</value>
+  </data>
+  <data name="gestiondocumental" xml:space="preserve">
+    <value>Gestión documental</value>
+  </data>
+  <data name="headercomisiones" xml:space="preserve">
+    <value>Gestión de comisiones</value>
+  </data>
+  <data name="listadoscomision" xml:space="preserve">
+    <value>Listados de comisiones</value>
+  </data>
+  <data name="stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="almacen" xml:space="preserve">
+    <value>Gestión de almacenes</value>
+  </data>
+  <data name="listadostock" xml:space="preserve">
+    <value>Listado de stock</value>
+  </data>
+  <data name="listadostockalbaranes" xml:space="preserve">
+    <value>Listado entradas almacén</value>
+  </data>
+  <data name="recepcionesstock" xml:space="preserve">
+    <value>Recepciones de stock</value>
+  </data>
+  <data name="cambioubicacion" xml:space="preserve">
+    <value>Cambiar lote de zona</value>
+  </data>
+  <data name="kit" xml:space="preserve">
+    <value>Gestión de kits</value>
+  </data>
+  <data name="bundle" xml:space="preserve">
+    <value>Gestión de bundles</value>
+  </data>
+  <data name="incidencias" xml:space="preserve">
+    <value>Gestión de incidencias</value>
+  </data>
+  <data name="configurardocumentoskit" xml:space="preserve">
+    <value>Conf. de documentos: Kits</value>
+  </data>
+  <data name="configurardocumentosbundle" xml:space="preserve">
+    <value>Conf. de documentos: Bundles</value>
+  </data>
+  <data name="facturascompras" xml:space="preserve">
+    <value>Gestión de facturas</value>
+  </data>
+  <data name="asistenteremedir" xml:space="preserve">
+    <value>Asistente de modificación de lotes</value>
+  </data>
+  <data name="diariostock" xml:space="preserve">
+    <value>Diario de stock</value>
+  </data>
+  <data name="entregasstock" xml:space="preserve">
+    <value>Gestión de entregas de stock</value>
+  </data>
+  <data name="reservas" xml:space="preserve">
+    <value>Gestión de reservas</value>
+  </data>
+  <data name="traspasosalmacen" xml:space="preserve">
+    <value>Gestión de traspasos de almacén</value>
+  </data>
+  <data name="configurardocumentostraspasos" xml:space="preserve">
+    <value>Conf. de documentos: traspasos</value>
+  </data>
+  <data name="configurardocumentospedidos" xml:space="preserve">
+    <value>Conf. de documentos: pedidos</value>
+  </data>
+  <data name="configurardocumentosreservas" xml:space="preserve">
+    <value>Conf. de documentos: reservas</value>
+  </data>
+  <data name="inventarios" xml:space="preserve">
+    <value>Gestión de Inventarios</value>
+  </data>
+  <data name="configurardocumentosinventarios" xml:space="preserve">
+    <value>Conf. de documentos: inventarios</value>
+  </data>
+  <data name="albaranescompras" xml:space="preserve">
+    <value>Albaranes de taller</value>
+  </data>
+  <data name="lotes" xml:space="preserve">
+    <value>Centro de control de lotes</value>
+  </data>
+  <data name="asistentepedidoscompras" xml:space="preserve">
+    <value>Asistente: Generar pedidos de compra</value>
+  </data>
+  <data name="transformaciones" xml:space="preserve">
+    <value>Gestión de transformaciones</value>
+  </data>
+  <data name="configurardocumentostransformaciones" xml:space="preserve">
+    <value>Conf. de docs: transformaciones</value>
+  </data>
+  <data name="listadosbundles" xml:space="preserve">
+    <value>Listado de bundles</value>
+  </data>
+  <data name="listadoskits" xml:space="preserve">
+    <value>Listado de kits</value>
+  </data>
+  <data name="listadoreservasmaterial" xml:space="preserve">
+    <value>Listado de reserv. material</value>
+  </data>
+  <data name="listadostockdisponible" xml:space="preserve">
+    <value>Listado existencias disponibles</value>
+  </data>
+  <data name="trabajos" xml:space="preserve">
+    <value>Trabajos</value>
+  </data>
+  <data name="transformacioneslotes" xml:space="preserve">
+    <value>Transformaciones de acabados</value>
+  </data>
+  <data name="seccionesanaliticas" xml:space="preserve">
+    <value>Secciones analíticas</value>
+  </data>
+  <data name="entradasvarias" xml:space="preserve">
+    <value>Entradas varias</value>
+  </data>
+  <data name="salidasvarias" xml:space="preserve">
+    <value>Salidas varias</value>
+  </data>
+  <data name="seriescontables" xml:space="preserve">
+    <value>Series contables</value>
+  </data>
+  <data name="seriesdocumentos" xml:space="preserve">
+    <value>Series documentos</value>
+  </data>
+  <data name="listadostockvalorado" xml:space="preserve">
+    <value>Listado de stock valorado</value>
+  </data>
+  <data name="movs" xml:space="preserve">
+    <value>Diario contable</value>
+  </data>
+  <data name="listadolotes" xml:space="preserve">
+    <value>Informe de lotes</value>
+  </data>
+  <data name="tareas" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <data name="listadodiariocontable" xml:space="preserve">
+    <value>Diario contable</value>
+  </data>
+  <data name="listadosstocksalidas" xml:space="preserve">
+    <value>Listado de salidas de stock</value>
+  </data>
+  <data name="municipios" xml:space="preserve">
+    <value>Municipios</value>
+  </data>
+  <data name="configurardocumentosdiario" xml:space="preserve">
+    <value>Conf. de documentos: Diario</value>
+  </data>
+  <data name="listadomayor" xml:space="preserve">
+    <value>Mayor</value>
+  </data>
+  <data name="listadobalancesumasysaldos" xml:space="preserve">
+    <value>Balance de sumas y saldos</value>
+  </data>
+  <data name="configurardocumentosmayor" xml:space="preserve">
+    <value>Conf. de documentos: Mayor</value>
+  </data>
+  <data name="configurardocumentossumas" xml:space="preserve">
+    <value>Conf. de docs: Sumas y Saldos</value>
+  </data>
+  <data name="configurardocumentosbalancepedidos" xml:space="preserve">
+    <value>Conf. Doc. Balance Pedidos</value>
+  </data>
+  <data name="listadosbalancepedidos" xml:space="preserve">
+    <value>Listados Balance Pedidos</value>
+  </data>
+  <data name="imagenlote" xml:space="preserve">
+    <value>Gestión imágenes de lotes</value>
+  </data>
+  <data name="CRM" xml:space="preserve">
+    <value>CRM</value>
+  </data>
+  <data name="oportunidades" xml:space="preserve">
+    <value>Oportunidades</value>
+  </data>
+  <data name="configurardocumentoslistadomargen" xml:space="preserve">
+    <value>Conf. Docum. Margen</value>
+  </data>
+  <data name="seguimientos" xml:space="preserve">
+    <value>Seguimientos</value>
+  </data>
+  <data name="listadomargen" xml:space="preserve">
+    <value>Listado de margen</value>
+  </data>
+  <data name="campañas" xml:space="preserve">
+    <value>Campañas</value>
+  </data>
+  <data name="incidenciascrm" xml:space="preserve">
+    <value>Incidencias</value>
+  </data>
+  <data name="proyectos" xml:space="preserve">
+    <value>Proyectos</value>
+  </data>
+  <data name="listadocrm" xml:space="preserve">
+    <value>Listado CRM</value>
+  </data>
+  <data name="costesvariablesperiodo" xml:space="preserve">
+    <value>Costes Variables Periodo</value>
+  </data>
+  <data name="divisionlotes" xml:space="preserve">
+    <value>Gestión de división de lotes</value>
+  </data>
+  <data name="grupomateriales" xml:space="preserve">
+    <value>Grupos de Materiales</value>
+  </data>
+  <data name="imputacioncostes" xml:space="preserve">
+    <value>Lotes Imputación Costes</value>
+  </data>
+  <data name="consultavisual" xml:space="preserve">
+    <value>Consulta Visual</value>
+  </data>
+  <data name="situacionestesoreria" xml:space="preserve">
+    <value>Situaciones de Tesorería</value>
+  </data>
+  <data name="tesoreria" xml:space="preserve">
+    <value>Tesorería</value>
+  </data>
+  <data name="vencimientosventa" xml:space="preserve">
+    <value>Previsión de cobros</value>
+  </data>
+  <data name="vencimientoscompra" xml:space="preserve">
+    <value>Previsión de pagos</value>
+  </data>
+  <data name="circuitotesoreriacobros" xml:space="preserve">
+    <value>Circuitos de tesorería</value>
+  </data>
+  <data name="carteravencimientos" xml:space="preserve">
+    <value>Cartera</value>
+  </data>
+  <data name="asignacioncartera" xml:space="preserve">
+    <value>Asignación de cartera</value>
+  </data>
+  <data name="movimientostesoreria" xml:space="preserve">
+    <value>Movimientos de tesorería</value>
+  </data>
+  <data name="configurardocumentoscartera" xml:space="preserve">
+    <value>Conf. de documentos: Cartera</value>
+  </data>
+  <data name="listadoguiasbalances" xml:space="preserve">
+    <value>Guias de Balances</value>
+  </data>
+  <data name="listadosacomuladorperiodos" xml:space="preserve">
+    <value>Listado Acomulado de Periodos</value>
+  </data>
+  <data name="listadosconsultatesoreria" xml:space="preserve">
+    <value>Listados de consulta de tesorería</value>
+  </data>
+  <data name="configurardocumentostransformacionesacabados" xml:space="preserve">
+    <value>Conf. de docs: transformaciones de acabados</value>
+  </data>
+</root>

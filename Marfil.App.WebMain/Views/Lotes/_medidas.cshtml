@@ -1,0 +1,124 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.LotesModel
+@{
+    var isreadonly = true;
+    ViewData["readonly"] = true;
+
+}
+<h3>@General.Entrada</h3>
+<div class="form-group">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th id="ecantidad" class="text-center col-md-2">@Albaranes.Cantidad </th>
+                    <th id="elargo" class="text-center">@Albaranes.Largo</th>
+                    <th id="eancho" class="text-center">@Albaranes.Ancho </th>
+                    <th id="egrueso" class="text-center">@Albaranes.Grueso</th>
+                    <th id="emetros" class="text-center">@Albaranes.Total (@Model.Unidades)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td headers="ecantidad" class="text-right">@Model.CantidadEntrada</td>
+                    <td headers="elargo" class="text-right">@Model.SLargoEntrada</td>
+                    <td headers="eancho" class="text-right">@Model.SAnchoEntrada</td>
+                    <td headers="egrueso" class="text-right">@Model.SGruesoEntrada</td>
+                    <td headers="emetros" class="text-right">@Model.SMetrosEntrada</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+
+</div>
+
+<h3>@General.Produccion</h3>
+<div class="form-group">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th id="ecantidad" class="text-center col-md-2">@Albaranes.Cantidad</th>
+                    <th id="plargo" class="text-center">@Albaranes.Largo </th>
+                    <th id="pancho" class="text-center">@Albaranes.Ancho </th>
+                    <th id="pgrueso" class="text-center">@Albaranes.Grueso </th>
+                    <th id="pmetros" class="text-center">@Albaranes.Total (@Model.Unidades)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td headers="pcantidad" class="text-right"></td>
+                    <td headers="plargo" class="text-right">@Model.SLargoProduccion</td>
+                    <td headers="pancho" class="text-right">@Model.SAnchoProduccion</td>
+                    <td headers="pgrueso" class="text-right">@Model.SGruesoProduccion</td>
+                    <td headers="pmetros" class="text-right">@Model.SMetrosProduccion</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<h3>@General.Salida</h3>
+<div class="form-group">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th id="scantidad" class="text-center col-md-2">@Albaranes.Cantidad </th>
+                    <th id="slargo" class="text-center">@Albaranes.Largo </th>
+                    <th id="sancho" class="text-center">@Albaranes.Ancho </th>
+                    <th id="sgrueso" class="text-center">@Albaranes.Grueso </th>
+                    <th id="smetros" class="text-center">@Albaranes.Total (@Model.Unidades)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td headers="scantidad" class="text-right">@Model.CantidadSalida</td>
+                    <td headers="slargo" class="text-right">@Model.SLargoSalida</td>
+                    <td headers="sancho" class="text-right">@Model.SAnchoSalida</td>
+                    <td headers="sgrueso" class="text-right">@Model.SGruesoSalida</td>
+                    <td headers="smetros" class="text-right">@Model.SMetrosSalida</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<h3>@General.StockActual</h3>
+<div class="form-group">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th id="pcantidad" class="text-center col-md-2">@Albaranes.Cantidad</th>
+                    <th id="plargo" class="text-center">@Albaranes.Largo </th>
+                    <th id="pancho" class="text-center">@Albaranes.Ancho </th>
+                    <th id="pgrueso" class="text-center">@Albaranes.Grueso </th>
+                    <th id="pmetros" class="text-center">@Albaranes.Total (@Model.Unidades)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td headers="pcantidad" class="text-right">@Model.CantidadProduccion</td>
+                    <td headers="plargo" class="text-right">@Model.SLargoProduccion</td>
+                    <td headers="pancho" class="text-right">@Model.SAnchoProduccion</td>
+                    <td headers="pgrueso" class="text-right">@Model.SGruesoProduccion</td>
+                    <td headers="pmetros" class="text-right">@Model.SMetrosDisponibles</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

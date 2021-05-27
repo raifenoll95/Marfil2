@@ -1,0 +1,17 @@
+﻿@using Marfil.App.WebMain.Misc;
+@using Resources
+@{
+
+    if (!string.IsNullOrEmpty(TempData[Constantes.VariableMensajeWarning]?.ToString()))
+    {
+
+        <text>
+            <script>
+                $(document).ready(function() {
+                    messagesService.show(TipoMensaje.Warning, "@General.LblAtencion!", "@Html.Raw(TempData[Constantes.VariableMensajeWarning])");
+                });
+            </script>
+        </text>
+
+    }
+}

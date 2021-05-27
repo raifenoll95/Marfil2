@@ -1,0 +1,46 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.Empresa.EmpresaModel
+@{
+    ViewBag.Title = "Nueva empresa";
+    Layout = "~/Views/Shared/_layoutInitial.cshtml";
+}
+
+<h2>Nueva empresa</h2>
+<hr />
+
+@if (Model.EstadoImportacion == 1)
+{
+    <p>
+        Espere un momento, aún estamos cargando los datos por defecto.
+    </p>
+}
+else if(Model.EstadoImportacion == 2)
+{
+    <p>
+        No existe ninguna empresa configurada en la aplicación. <br />
+        Con nuestro asistente podrá crear una empresa de forma rápida y empezar a trabajar inmediatamente.
+    </p>
+
+    using (Html.BeginForm("Empresa","Startup",FormMethod.Post,new { @id = "formEmpresa"}))
+    {
+        <div class="form-horizontal">
+            <input type="hidden" name="database" value="@ViewBag.database"/>
+            @Html.Partial("UsersControls/_empresa",Model)
+
+            <div class="form-group">
+                <div class="col-md-10 margin-top">
+                    <button class="btn btn-info" type="Submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        @General.BtnGuardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>
+        Error al cargar los datos por defecto.
+    </p>
+}

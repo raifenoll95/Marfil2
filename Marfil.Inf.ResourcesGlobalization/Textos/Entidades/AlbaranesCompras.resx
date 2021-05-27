@@ -1,0 +1,906 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Albaranes de taller</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>Albarán de compra</value>
+  </data>
+  <data name="Comisionagente" xml:space="preserve">
+    <value>% Com.</value>
+  </data>
+  <data name="Vencimientocartacredito" xml:space="preserve">
+    <value>Vto. C. Crédito</value>
+  </data>
+  <data name="Volumen" xml:space="preserve">
+    <value>Volumen</value>
+  </data>
+  <data name="Fkunidades" xml:space="preserve">
+    <value>Unidad medida</value>
+  </data>
+  <data name="Unidadnegocio" xml:space="preserve">
+    <value>Unidad de negocio</value>
+  </data>
+  <data name="Fkzonas" xml:space="preserve">
+    <value>Zona</value>
+  </data>
+  <data name="Fktransportista" xml:space="preserve">
+    <value>Transportista</value>
+  </data>
+  <data name="Importetotalmonedabase" xml:space="preserve">
+    <value>Total (Moneda base)</value>
+  </data>
+  <data name="Importetotaldoc" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Fktiposalbaranes" xml:space="preserve">
+    <value>Tipo de albarán</value>
+  </data>
+  <data name="Tiempooficinatecnica" xml:space="preserve">
+    <value>Tiempo oficina</value>
+  </data>
+  <data name="Fkcuentastesoreria" xml:space="preserve">
+    <value>Tesoreria</value>
+  </data>
+  <data name="Clientetelefono" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="Proveedortelefono" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="Tabla" xml:space="preserve">
+    <value>Tabla</value>
+  </data>
+  <data name="ImporteBase" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="SeriesListado" xml:space="preserve">
+    <value>Series</value>
+  </data>
+  <data name="Fkseries" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="Sello" xml:space="preserve">
+    <value>Sello</value>
+  </data>
+  <data name="Seccion" xml:space="preserve">
+    <value>Sección</value>
+  </data>
+  <data name="Revision" xml:space="preserve">
+    <value>Revisión</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Regimen IVA</value>
+  </data>
+  <data name="Numerodocumentoproveedor" xml:space="preserve">
+    <value>Referencia documento proveedor</value>
+  </data>
+  <data name="Referencia" xml:space="preserve">
+    <value>Referencia</value>
+  </data>
+  <data name="RefereciaHasta" xml:space="preserve">
+    <value>Ref. Hasta</value>
+  </data>
+  <data name="RefereciaDesde" xml:space="preserve">
+    <value>Ref. Desde</value>
+  </data>
+  <data name="Referenciadocumento" xml:space="preserve">
+    <value>Ref. de documento</value>
+  </data>
+  <data name="TipoAlbaranReclamacion" xml:space="preserve">
+    <value>Reclamación</value>
+  </data>
+  <data name="Clienteprovincia" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="Proveedorprovincia" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="ProveedorHasta" xml:space="preserve">
+    <value>Proveedor hasta</value>
+  </data>
+  <data name="ProveedorDesde" xml:space="preserve">
+    <value>Proveedor desde</value>
+  </data>
+  <data name="Fkproveedores" xml:space="preserve">
+    <value>Proveedor</value>
+  </data>
+  <data name="Precioanterior" xml:space="preserve">
+    <value>Precio anterior</value>
+  </data>
+  <data name="Precio" xml:space="preserve">
+    <value>Precio</value>
+  </data>
+  <data name="Clientepoblacion" xml:space="preserve">
+    <value>Población</value>
+  </data>
+  <data name="Proveedorpoblacion" xml:space="preserve">
+    <value>Población</value>
+  </data>
+  <data name="Pesoneto" xml:space="preserve">
+    <value>Peso neto</value>
+  </data>
+  <data name="Pesobruto" xml:space="preserve">
+    <value>Peso bruto</value>
+  </data>
+  <data name="Peso" xml:space="preserve">
+    <value>Peso</value>
+  </data>
+  <data name="Clientepais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Proveedorpais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Fkoperarios" xml:space="preserve">
+    <value>Operario</value>
+  </data>
+  <data name="Fkoperariostransporte" xml:space="preserve">
+    <value>Operador de transporte</value>
+  </data>
+  <data name="Envio" xml:space="preserve">
+    <value>Observaciones envío</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Observaciones</value>
+  </data>
+  <data name="Fkobras" xml:space="preserve">
+    <value>Obra</value>
+  </data>
+  <data name="Nombretransportista" xml:space="preserve">
+    <value>Nombre transportista</value>
+  </data>
+  <data name="Nombrecliente" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Nombreproveedor" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="ErrorLineasAsociadasAAlbaranes" xml:space="preserve">
+    <value>No se puede modificar el pedido porque tiene líneas asociadas a uno o varios albaranes</value>
+  </data>
+  <data name="ErrorAlbaranFacturado" xml:space="preserve">
+    <value>No se puede modificar el albarán porque ya está facturado</value>
+  </data>
+  <data name="ErrorSinCantidadPendiente" xml:space="preserve">
+    <value>No se puede importar el pedido porque no tiene líneas pendientes de servir</value>
+  </data>
+  <data name="Bultos" xml:space="preserve">
+    <value>Nº de bultos</value>
+  </data>
+  <data name="Clientenif" xml:space="preserve">
+    <value>NIF / CIF</value>
+  </data>
+  <data name="Proveedornif" xml:space="preserve">
+    <value>NIF / CIF</value>
+  </data>
+  <data name="Fkmotivosdevolucion" xml:space="preserve">
+    <value>Motivo de devolución</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Moneda</value>
+  </data>
+  <data name="Metros" xml:space="preserve">
+    <value>Metros</value>
+  </data>
+  <data name="Matricula" xml:space="preserve">
+    <value>Matrícula</value>
+  </data>
+  <data name="MaterialesHasta" xml:space="preserve">
+    <value>Material hastas</value>
+  </data>
+  <data name="MaterialesDesde" xml:space="preserve">
+    <value>Material desde</value>
+  </data>
+  <data name="LoteAutomatico" xml:space="preserve">
+    <value>Lote Automático</value>
+  </data>
+  <data name="Lote" xml:space="preserve">
+    <value>Lote</value>
+  </data>
+  <data name="Lineas" xml:space="preserve">
+    <value>Líneas del presupuesto</value>
+  </data>
+  <data name="Largo" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="ErrorMonedaClienteSerie" xml:space="preserve">
+    <value>La moneda de la serie no coincide con la del cliente</value>
+  </data>
+  <data name="ErrorFechaEjercicio" xml:space="preserve">
+    <value>La fecha del documento no corresponde con la fecha del ejercicio del documento</value>
+  </data>
+  <data name="ErrorDividirLineaCantidadCero" xml:space="preserve">
+    <value>La cantidad de nueva línea no puede ser igual o superior a la de la línea que vamos a dividir</value>
+  </data>
+  <data name="Fktiposiva" xml:space="preserve">
+    <value>IVA</value>
+  </data>
+  <data name="Descripcionincoterm" xml:space="preserve">
+    <value>Incoterm</value>
+  </data>
+  <data name="Importeportes" xml:space="preserve">
+    <value>Importe portes</value>
+  </data>
+  <data name="Importenetolinea" xml:space="preserve">
+    <value>Importe neto linea</value>
+  </data>
+  <data name="Importedescuento" xml:space="preserve">
+    <value>Importe descuento</value>
+  </data>
+  <data name="Importebruto" xml:space="preserve">
+    <value>Importe bruto</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Importe</value>
+  </data>
+  <data name="LblImportar" xml:space="preserve">
+    <value>Importar líneas de pedidos</value>
+  </data>
+  <data name="Importedescuentoprontopago" xml:space="preserve">
+    <value>Imp. Dtp. P.P.</value>
+  </data>
+  <data name="Importedescuentocomercial" xml:space="preserve">
+    <value>Imp. Dto. Cial.</value>
+  </data>
+  <data name="TipoAlbaranHabitual" xml:space="preserve">
+    <value>Habitual</value>
+  </data>
+  <data name="Grueso" xml:space="preserve">
+    <value>Grueso</value>
+  </data>
+  <data name="GrosoresHasta" xml:space="preserve">
+    <value>Grosor hasta</value>
+  </data>
+  <data name="GrosoresDesde" xml:space="preserve">
+    <value>Grosor desde</value>
+  </data>
+  <data name="LblGestionDevoluciones" xml:space="preserve">
+    <value>Generar devolución</value>
+  </data>
+  <data name="LblGenerarDevolucion" xml:space="preserve">
+    <value>Generar albarán de devolución</value>
+  </data>
+  <data name="Fkformaspago" xml:space="preserve">
+    <value>Forma de pago</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>Fecha hasta</value>
+  </data>
+  <data name="Fechadocumentoproveedor" xml:space="preserve">
+    <value>Fecha documento proveedor</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>Fecha desde</value>
+  </data>
+  <data name="Fechadocumento" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="Clientefax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="Proveedorfax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="FamiliaMateriales" xml:space="preserve">
+    <value>Familia material</value>
+  </data>
+  <data name="FamiliaHasta" xml:space="preserve">
+    <value>Familia hasta</value>
+  </data>
+  <data name="FamiliaDesde" xml:space="preserve">
+    <value>Familia desde</value>
+  </data>
+  <data name="Fkfamilias" xml:space="preserve">
+    <value>Familia artículo</value>
+  </data>
+  <data name="Fechavalidez" xml:space="preserve">
+    <value>F. Validez</value>
+  </data>
+  <data name="Fecharevision" xml:space="preserve">
+    <value>F. Revisión</value>
+  </data>
+  <data name="Fechaentrega" xml:space="preserve">
+    <value>F. Entrega</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="EntradaStock" xml:space="preserve">
+    <value>Entrada de stock</value>
+  </data>
+  <data name="Clienteemail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Proveedoremail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Fkejercicio" xml:space="preserve">
+    <value>Ejercicio</value>
+  </data>
+  <data name="Fkdireccionfacturacion" xml:space="preserve">
+    <value>Dirección de facturación</value>
+  </data>
+  <data name="Clientedireccion" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="Proveedordireccion" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="TipoAlbaranDevolucion" xml:space="preserve">
+    <value>Devolución</value>
+  </data>
+  <data name="LblDescuentosCabeceras" xml:space="preserve">
+    <value>Descuentos de cabecera</value>
+  </data>
+  <data name="Cuotarecargoequivalencia" xml:space="preserve">
+    <value>Cuota R.E.</value>
+  </data>
+  <data name="Cuotaiva" xml:space="preserve">
+    <value>Cuota de IVA</value>
+  </data>
+  <data name="Costeportes" xml:space="preserve">
+    <value>Coste portes</value>
+  </data>
+  <data name="Costemateriales" xml:space="preserve">
+    <value>Coste materiales</value>
+  </data>
+  <data name="Costeadicionalvariable" xml:space="preserve">
+    <value>Coste adicional: variable</value>
+  </data>
+  <data name="Costeadicionalportes" xml:space="preserve">
+    <value>Coste adicional: portes</value>
+  </data>
+  <data name="Costeadicionalotro" xml:space="preserve">
+    <value>Coste adicional: otro</value>
+  </data>
+  <data name="Costeadicionalmaterial" xml:space="preserve">
+    <value>Coste adicional: material</value>
+  </data>
+  <data name="Contenedores" xml:space="preserve">
+    <value>Contenedores</value>
+  </data>
+  <data name="Contenedor" xml:space="preserve">
+    <value>Contenedor</value>
+  </data>
+  <data name="Conductor" xml:space="preserve">
+    <value>Conductor</value>
+  </data>
+  <data name="Fkcomerciales" xml:space="preserve">
+    <value>Comercial</value>
+  </data>
+  <data name="Identificadorsegmento" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Fkcontadores" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="CodigoLote" xml:space="preserve">
+    <value>Cód. Lote</value>
+  </data>
+  <data name="Incoterm" xml:space="preserve">
+    <value>Cód. Incoterm</value>
+  </data>
+  <data name="Fkarticulos" xml:space="preserve">
+    <value>Cód. artículo</value>
+  </data>
+  <data name="Fkclientesreserva" xml:space="preserve">
+    <value>Cliente reserva</value>
+  </data>
+  <data name="ClienteHasta" xml:space="preserve">
+    <value>Cliente hasta</value>
+  </data>
+  <data name="ClienteDesde" xml:space="preserve">
+    <value>Cliente desde</value>
+  </data>
+  <data name="Fkclientes" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Cartacredito" xml:space="preserve">
+    <value>Carta de crédito</value>
+  </data>
+  <data name="CaracteristicasHasta" xml:space="preserve">
+    <value>Característica hasta</value>
+  </data>
+  <data name="CaracteristicasDesde" xml:space="preserve">
+    <value>Característica desde</value>
+  </data>
+  <data name="Cantidad" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="Canal" xml:space="preserve">
+    <value>Canal</value>
+  </data>
+  <data name="Cambioadicional" xml:space="preserve">
+    <value>Cambio adicional</value>
+  </data>
+  <data name="Tipocambio" xml:space="preserve">
+    <value>Cambio</value>
+  </data>
+  <data name="Caja" xml:space="preserve">
+    <value>Caja</value>
+  </data>
+  <data name="Clientecp" xml:space="preserve">
+    <value>C.P.</value>
+  </data>
+  <data name="Proveedorcp" xml:space="preserve">
+    <value>C.P.</value>
+  </data>
+  <data name="Cantidadpedida" xml:space="preserve">
+    <value>C. servida</value>
+  </data>
+  <data name="LblBuscarDireccionProveedor" xml:space="preserve">
+    <value>Buscar direcciones asociadas al Proveedor</value>
+  </data>
+  <data name="LblBuscarDireccion" xml:space="preserve">
+    <value>Buscar direcciones asociadas al Cliente</value>
+  </data>
+  <data name="Bundle" xml:space="preserve">
+    <value>Bundle</value>
+  </data>
+  <data name="BrutoTotal" xml:space="preserve">
+    <value>Bruto</value>
+  </data>
+  <data name="Basetotal" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="Importebaseimponible" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="Fkbancosmandatos" xml:space="preserve">
+    <value>Banco</value>
+  </data>
+  <data name="TipoAlbaranAutocomsumo" xml:space="preserve">
+    <value>Autoconsumo</value>
+  </data>
+  <data name="FkarticulosHasta" xml:space="preserve">
+    <value>Artículo hasta</value>
+  </data>
+  <data name="FkarticulosDesde" xml:space="preserve">
+    <value>Artículo desde</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="Ancho" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Almacén</value>
+  </data>
+  <data name="Fkagentes" xml:space="preserve">
+    <value>Agente</value>
+  </data>
+  <data name="AcabadosHasta" xml:space="preserve">
+    <value>Acabado hasta</value>
+  </data>
+  <data name="AcabadosDesde" xml:space="preserve">
+    <value>Acabado desde</value>
+  </data>
+  <data name="Porcentajerecargoequivalencia" xml:space="preserve">
+    <value>% R.E.</value>
+  </data>
+  <data name="Porcentajeiva" xml:space="preserve">
+    <value>% IVA</value>
+  </data>
+  <data name="Porcentajedescuentoprontopago" xml:space="preserve">
+    <value>% Dto. P.P.</value>
+  </data>
+  <data name="Porcentajedescuentocomercial" xml:space="preserve">
+    <value>% Dto. Cial.</value>
+  </data>
+  <data name="Porcentajedescuento" xml:space="preserve">
+    <value>% Desc.</value>
+  </data>
+  <data name="Confianza" xml:space="preserve">
+    <value>% Confianza venta</value>
+  </data>
+  <data name="Comisioncomercial" xml:space="preserve">
+    <value>% Com.</value>
+  </data>
+  <data name="LblSinAgrupar" xml:space="preserve">
+    <value>Sin agrupar</value>
+  </data>
+  <data name="LblAgrupadoArticulo" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="LblAgrupadoArticuloLote" xml:space="preserve">
+    <value>Artículo, Lote</value>
+  </data>
+  <data name="LblAgrupadoArticuloLoteMedidas" xml:space="preserve">
+    <value>Artículo, Lote, Medidas</value>
+  </data>
+  <data name="LblAgrupadoArticuloMedidas" xml:space="preserve">
+    <value>Artículo, Medidas</value>
+  </data>
+  <data name="LblDetallepor" xml:space="preserve">
+    <value>Detallado por</value>
+  </data>
+  <data name="LblSindetallar" xml:space="preserve">
+    <value>Sin detallar</value>
+  </data>
+  <data name="ErrorGestionLotes" xml:space="preserve">
+    <value>Generación de lotes fallida</value>
+  </data>
+  <data name="ErrorLoteRepetido" xml:space="preserve">
+    <value>No se puede agregar el artículo porque ya existe uno con el mismo numero de Lote</value>
+  </data>
+  <data name="Remedirlotes" xml:space="preserve">
+    <value>Remedir / Propiedades</value>
+  </data>
+  <data name="AsistenteRemedir" xml:space="preserve">
+    <value>Asistente Remedir / Propiedades</value>
+  </data>
+  <data name="Desderecepcionstock" xml:space="preserve">
+    <value>Desde recep. stock</value>
+  </data>
+  <data name="Hastarecepcionstock" xml:space="preserve">
+    <value>Hasta recep. stock</value>
+  </data>
+  <data name="DesdeLote" xml:space="preserve">
+    <value>Desde lote</value>
+  </data>
+  <data name="HastaLote" xml:space="preserve">
+    <value>Hasta lote</value>
+  </data>
+  <data name="Nuevolargo" xml:space="preserve">
+    <value>Nuevo largo (m)</value>
+  </data>
+  <data name="Sumarlargo" xml:space="preserve">
+    <value>Sumar (cm)</value>
+  </data>
+  <data name="Nuevoancho" xml:space="preserve">
+    <value>Nuevo ancho (m)</value>
+  </data>
+  <data name="Sumarancho" xml:space="preserve">
+    <value>Sumar (cm)</value>
+  </data>
+  <data name="Nuevogrueso" xml:space="preserve">
+    <value>Nuevo grueso (m)</value>
+  </data>
+  <data name="Sumargrueso" xml:space="preserve">
+    <value>Sumar (cm)</value>
+  </data>
+  <data name="Loteproveedor" xml:space="preserve">
+    <value>Lote proveedor</value>
+  </data>
+  <data name="Zona" xml:space="preserve">
+    <value>Zona</value>
+  </data>
+  <data name="Fkcalificacioncomercial" xml:space="preserve">
+    <value>Calificación comercial</value>
+  </data>
+  <data name="Fktipograno" xml:space="preserve">
+    <value>Tipo de grano</value>
+  </data>
+  <data name="Fktonomaterial" xml:space="preserve">
+    <value>Tono de material</value>
+  </data>
+  <data name="Fkincidenciasmaterial" xml:space="preserve">
+    <value>Incidencias material</value>
+  </data>
+  <data name="Fkvariedades" xml:space="preserve">
+    <value>Variedades de material</value>
+  </data>
+  <data name="Tipodocumento" xml:space="preserve">
+    <value>Tipo de documento</value>
+  </data>
+  <data name="Porcentaje" xml:space="preserve">
+    <value>Porcentaje</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Tipocoste" xml:space="preserve">
+    <value>Tipo de coste</value>
+  </data>
+  <data name="Tiporeparto" xml:space="preserve">
+    <value>Reparto</value>
+  </data>
+  <data name="Importefijo" xml:space="preserve">
+    <value>Importe fijo</value>
+  </data>
+  <data name="Documento" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="Material" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="Portes" xml:space="preserve">
+    <value>Portes</value>
+  </data>
+  <data name="Otros" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="CostesAdicionales" xml:space="preserve">
+    <value>Costes adicionales</value>
+  </data>
+  <data name="Hora" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="Tipooperacion" xml:space="preserve">
+    <value>Operación</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="TipoOperacionServiceRemedir" xml:space="preserve">
+    <value>Remedir</value>
+  </data>
+  <data name="TipoOperacionServiceInsertar" xml:space="preserve">
+    <value>Crear recepción de stock</value>
+  </data>
+  <data name="TipoOperacionServiceActualizar" xml:space="preserve">
+    <value>Actualizar recepción de stock</value>
+  </data>
+  <data name="TipoOperacionServiceEliminar" xml:space="preserve">
+    <value>Eliminar recepción de stock</value>
+  </data>
+  <data name="TipoOperacionServiceMovimientoAlmacen" xml:space="preserve">
+    <value>Movimiento de almacén</value>
+  </data>
+  <data name="TipoOperacionServiceKit" xml:space="preserve">
+    <value>Kit</value>
+  </data>
+  <data name="TipoOperacionServiceBundle" xml:space="preserve">
+    <value>Bundle</value>
+  </data>
+  <data name="TipoOperacionServiceEntregaInsertar" xml:space="preserve">
+    <value>Crear albarán de entrega</value>
+  </data>
+  <data name="TipoOperacionServiceEntregaActualizar" xml:space="preserve">
+    <value>Actualizar albarán de entrega</value>
+  </data>
+  <data name="TipoOperacionServiceEntregaEliminar" xml:space="preserve">
+    <value>Eliminar albarán de entrega</value>
+  </data>
+  <data name="TipoOperacionServiceReservaInsertar" xml:space="preserve">
+    <value>Crear reserva</value>
+  </data>
+  <data name="TipoOperacionServiceReservaActualizar" xml:space="preserve">
+    <value>Actualizar reserva</value>
+  </data>
+  <data name="TipoOperacionServiceReservaEliminar" xml:space="preserve">
+    <value>Eliminar reserva</value>
+  </data>
+  <data name="TipoOperacionServiceTraspasosalmacenInsertar" xml:space="preserve">
+    <value>Insertar traspaso almacén</value>
+  </data>
+  <data name="TipoOperacionServiceTraspasosalmacenActualizar" xml:space="preserve">
+    <value>Salida traspaso almacén</value>
+  </data>
+  <data name="TipoOperacionServiceTraspasosalmacenEliminar" xml:space="preserve">
+    <value>Eliminar traspaso almacén</value>
+  </data>
+  <data name="albaranescompras" xml:space="preserve">
+    <value>Albarán de compra</value>
+  </data>
+  <data name="CantidadProduccion" xml:space="preserve">
+    <value>Cantidad Prod.</value>
+  </data>
+  <data name="LargoProduccion" xml:space="preserve">
+    <value>Largo Prod.</value>
+  </data>
+  <data name="AnchoProduccion" xml:space="preserve">
+    <value>Ancho Prod.</value>
+  </data>
+  <data name="GruesoProduccion" xml:space="preserve">
+    <value>Grueso Prod.</value>
+  </data>
+  <data name="MetrosProduccion" xml:space="preserve">
+    <value>Metros Prod.</value>
+  </data>
+  <data name="CantidadEntrada" xml:space="preserve">
+    <value>Cantidad Entrada</value>
+  </data>
+  <data name="LargoEntrada" xml:space="preserve">
+    <value>Largo Entrada</value>
+  </data>
+  <data name="AnchoEntrada" xml:space="preserve">
+    <value>Ancho Entrada</value>
+  </data>
+  <data name="GruesoEntrada" xml:space="preserve">
+    <value>Grueso Entrada</value>
+  </data>
+  <data name="MetrosEntrada" xml:space="preserve">
+    <value>Metros Entrada</value>
+  </data>
+  <data name="CantidadSalida" xml:space="preserve">
+    <value>Cantidad Salida</value>
+  </data>
+  <data name="LargoSalida" xml:space="preserve">
+    <value>Largo Salida</value>
+  </data>
+  <data name="AnchoSalida" xml:space="preserve">
+    <value>Ancho Salida</value>
+  </data>
+  <data name="GruesoSalida" xml:space="preserve">
+    <value>Grueso Salida</value>
+  </data>
+  <data name="MetrosSalida" xml:space="preserve">
+    <value>Metros Salida</value>
+  </data>
+  <data name="Vendido" xml:space="preserve">
+    <value>En stock</value>
+  </data>
+  <data name="Variables" xml:space="preserve">
+    <value>Variable</value>
+  </data>
+  <data name="Netocompra" xml:space="preserve">
+    <value>Precio neto de compra</value>
+  </data>
+  <data name="CosteNeto" xml:space="preserve">
+    <value>Coste total</value>
+  </data>
+  <data name="Costeumproduccion" xml:space="preserve">
+    <value>Costes x UM (Metros producción)</value>
+  </data>
+  <data name="Costeumentrada" xml:space="preserve">
+    <value>Costes x UM (Metros entrada)</value>
+  </data>
+  <data name="TipoOperacionServiceTransformacionInsertar" xml:space="preserve">
+    <value>Realizar transformación de pieza</value>
+  </data>
+  <data name="TipoOperacionServiceTransformacionActualizar" xml:space="preserve">
+    <value>Actualizar transformación de pieza</value>
+  </data>
+  <data name="TipoOperacionServiceTransformacionEliminar" xml:space="preserve">
+    <value>Eliminar transformación de pieza</value>
+  </data>
+  <data name="Pesoum" xml:space="preserve">
+    <value>Peso</value>
+  </data>
+  <data name="TipoAlmacenLote" xml:space="preserve">
+    <value>Tipo de lote</value>
+  </data>
+  <data name="TipoAlmacenLoteMercaderia" xml:space="preserve">
+    <value>Mercadería</value>
+  </data>
+  <data name="TipoAlmacenLotePropio" xml:space="preserve">
+    <value>Propio</value>
+  </data>
+  <data name="TipoAlmacenLoteGestionado" xml:space="preserve">
+    <value>Gestionado</value>
+  </data>
+  <data name="LoteDesde" xml:space="preserve">
+    <value>Lote desde</value>
+  </data>
+  <data name="LoteHasta" xml:space="preserve">
+    <value>Lote hasta</value>
+  </data>
+  <data name="Costexm2" xml:space="preserve">
+    <value>Coste x m2</value>
+  </data>
+  <data name="Costexm3" xml:space="preserve">
+    <value>Coste x m3</value>
+  </data>
+  <data name="Preciovaloracion" xml:space="preserve">
+    <value>Precio valoración stock</value>
+  </data>
+  <data name="CantidadDisponible" xml:space="preserve">
+    <value>Cantidad Disponible</value>
+  </data>
+  <data name="MetrosDisponibles" xml:space="preserve">
+    <value>Metros Disp.</value>
+  </data>
+</root>

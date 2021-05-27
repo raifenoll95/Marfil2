@@ -1,0 +1,34 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model ObrasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+}
+<script src="@Url.Content("~/Scripts/UserControls/Obras/ObrasController.js")"></script>
+<div ng-controller="ObrasCtrl" ng-init="init('@Model.Fkclientes','@(Model.Fkdirecciones?.ToString())','@Url.Action("DireccionesContacto","Api")')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#gestion">@Obras.TituloEntidadSingular</a></li>
+
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="gestion" class="tab-pane fade in">
+            @Html.Partial("_gestion", Model)
+        </div>
+
+    </div>
+</div>
+
+
+
+

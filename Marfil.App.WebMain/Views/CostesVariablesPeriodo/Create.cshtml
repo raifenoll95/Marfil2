@@ -1,0 +1,40 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.CRM;
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+
+}
+
+@using (Html.BeginForm("CreateOperacion", "CostesVariablesPeriodo", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+    <div class="form-horizontal">
+
+        @Html.Partial("_Costesvariablesperiodo", Model as CostesVariablesPeriodoModel)
+
+        <div class="form-group margin-top">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

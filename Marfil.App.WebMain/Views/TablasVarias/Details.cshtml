@@ -1,0 +1,55 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias
+@using Resources
+@model BaseTablasVariasModel
+@{
+    ViewBag.Title = "Gestión de " + Model.Nombre;
+}
+<script src="@Url.Content("~/Scripts/TablasVarias/tablasvarias.js")"></script>
+@Html.Partial("_exporttablavaria")
+    
+    <div class="col-md-12 margin-top">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+
+                <span class="pull-left">
+                    <button class="btn @Html.Raw(WebHelper.DevexpressAA ? "btn-primary btn-sm" : "btn-link")" type="button" name="OutputFormat" onclick="exportar('CSV')" value="CSV">
+                        <i class="fa fa-file-text-o"></i>
+                        Csv
+                    </button>
+                    |
+                    <button class="btn @Html.Raw(WebHelper.DevexpressAA ? "btn-primary btn-sm" : "btn-link")" type="button" name="OutputFormat" onclick="exportar('PDF')" value="PDF">
+                        <i class="fa fa-file-pdf-o"></i> Pdf
+                    </button>
+                    |
+                    <button class="btn @Html.Raw(WebHelper.DevexpressAA ? "btn-primary btn-sm" : "btn-link")" type="button" name="OutputFormat" onclick="exportar('XLS')" value="XLS">
+                        <i class="fa fa-file-excel-o"></i> Xls
+                    </button>
+                </span>
+            </div>
+
+            <div class="row">
+                @Html.HiddenFor(f => Model.Clase)
+                @Html.Partial("TablasvariasLinView",Model)
+            </div>
+        }
+    </div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+
+        new StyleSheet {ExtensionSuite = ExtensionSuite.GridView}
+
+        )
+    @Html.DevExpress().GetScripts(
+
+        new Script {ExtensionSuite = ExtensionSuite.GridView}
+
+        )
+
+}
+
+
+

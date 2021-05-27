@@ -1,0 +1,773 @@
+﻿@using System.Drawing
+@using System.Text
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Contabilidad.Movs
+@using  Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Contabilidad.Maes
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model IEnumerable<MovsLinModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewLineas";
+        settings.KeyFieldName =  "Id";
+        settings.CallbackRouteValues = new { Controller = "Movs", Action = "MovsLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Movs", Action = "MovsLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Movs", Action = "MovsLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Movs", Action = "MovsLinDelete" };
+        settings.CustomActionRouteValues = new { Controller = "Movs", Action = "CustomGridViewEditingPartial" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+        #region Columns
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fkcuentas";
+            c.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            c.Width = Unit.Percentage(15);
+            c.VisibleIndex = 1;
+            c.ReadOnly = false;
+            c.SetDataItemTemplateContent(cell =>
+            {
+                ViewContext.Writer.Write("<b style=\"font-style:italic\">" + cell.Text + "</b>");
+            });
+            var p = c.PropertiesEdit as ButtonEditProperties;
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.Init = "function(s, e){ s.Focus(); }";
+            p.ClientSideEvents.ValueChanged = "OnFkcuentasChanged";
+            p.ClientSideEvents.KeyDown = "OnKeyPressCuentas";
+            p.ClientInstanceName = c.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchCuenta(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fkseccionesanaliticas";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Percentage(10);// .Pixel(150);
+            j.VisibleIndex = 2;
+            var p = j.PropertiesEdit as ButtonEditProperties;
+
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.TextChanged = "OnFkseccionesanaliticasChanged";
+            p.ClientSideEvents.KeyDown = "OnKeyPressseccionesanaliticas";
+            p.ClientInstanceName = j.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchSeccionanalitica(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Importe";
+            c.Visible = false;
+            var p = c.PropertiesEdit as SpinEditProperties;
+        });
+
+        settings.Columns.Add("Esdebe");
+        settings.Columns["Esdebe"].Visible = false;
+
+        settings.Columns.Add(c =>
+        {
+            c.VisibleIndex = 3;
+            c.FieldName = "SDebe";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.Width = Unit.Percentage(15);
+            c.CellStyle.ForeColor = Color.Blue;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.SpinButtons.ShowIncrementButtons = false;
+
+            p.ClientSideEvents.LostFocus = "OnDebeLostFocus";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.VisibleIndex = 4;
+            c.FieldName = "SHaber";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.Width = Unit.Percentage(15);
+            c.CellStyle.ForeColor = Color.DarkViolet;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.SpinButtons.ShowIncrementButtons = false;
+
+            p.ClientSideEvents.LostFocus = "OnHaberLostFocus";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Codigocomentario";
+            c.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            c.Width = Unit.Percentage(10);
+            c.VisibleIndex = 5;
+            c.ReadOnly = false;
+            var p = c.PropertiesEdit as ButtonEditProperties;
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.TextChanged = "OnCodigocomentarioChanged";
+            p.ClientSideEvents.KeyDown = "OnKeyPresscodigocomentario";
+            p.ClientInstanceName = c.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchCodigoComentario(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Comentario";
+            c.ColumnType = MVCxGridViewColumnType.Memo;
+            c.CellStyle.Wrap = DefaultBoolean.True;
+            c.Width = Unit.Percentage(40);// Unit.Pixel(500);
+            c.VisibleIndex = 6;
+            c.AllowTextTruncationInAdaptiveMode = true;
+            var p = c.PropertiesEdit as MemoProperties;
+            p.ClientSideEvents.LostFocus = "OnComentarioLostFocus";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Orden";
+            c.VisibleIndex = 7;
+            c.Width = Unit.Percentage(10);           
+            c.ColumnType = MVCxGridViewColumnType.Default;
+            c.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        });
+
+        #endregion Columns
+
+        #region Footer
+
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var model = c.Grid.DataSource as IEnumerable<MovsLinModel>;
+            var decimalesmonedas = model.FirstOrDefault()?.Decimalesmonedas ?? 2;
+            var sumdebe = (double)model.Sum(f => f.Debe);
+            var sumhaber = (double)model.Sum(f => f.Haber);
+            var saldo = sumdebe - sumhaber;
+
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+
+            if(col.FieldName == "Comentario")
+                ViewContext.Writer.Write("<h4 class=\"pull-right\"><span id=\"Saldo\" class=\"" + (saldo != 0 ? "red" : "green") + " bigger\">" + Movs.Saldo + ": " + (saldo).ToString("N" + decimalesmonedas) + "</span></h4>");
+            if (col.FieldName == "SDebe")
+                ViewContext.Writer.Write("<h4 class=\"pull-right\"><span class=\"blue bigger\">" + (sumdebe).ToString("N" + decimalesmonedas) + "</span></h4>");
+            if (col.FieldName == "SHaber")
+                ViewContext.Writer.Write("<h4 class=\"pull-right\"><span class=\"purple bigger\">" + (sumhaber).ToString("N" + decimalesmonedas) + "</span></h4>");
+        });
+
+        #endregion Footer
+
+        settings.CommandColumn.Visible = isreadonly;
+        if (!isreadonly)
+        {
+            settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblEditar + " - (F2)\"></i>";
+            settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
+            settings.SettingsCommandButton.UpdateButton.Text = "<span tabindex=\"-1\" class=\"fa fa-save\" title=\"" + General.LblGuardar + " - (Enter)\"></i>";
+            settings.SettingsCommandButton.CancelButton.Text = "<span tabindex=\"-1\" class=\"fa fa-close\" title=\"" + General.LblCancelar + " - (Ctlr + '+')\"></i>";
+
+            settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton()
+            { ID = "btnCopy", Text = "<span tabindex=\"-1\" class=\"fa fa-copy\" title=\"" + General.LblClonar + " - (Ctlr + '+')\"></i>" });
+
+            settings.CommandColumn.Width = Unit.Pixel(150);
+            settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+            settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+            settings.CommandColumn.VisibleIndex = 6;
+            settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+        }
+
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+        #region InitNewRow
+
+        settings.InitNewRow += (s, e) =>
+        {
+            e.NewValues["SImporte"] = 0;
+            e.NewValues["SDebe"] = 0;
+            e.NewValues["SHaber"] = 0;
+            e.NewValues["Esdebe"] = 1;
+
+            if (needCreatCopy)
+            {
+                object keyValue = ViewData["key"];
+
+                MVCxGridView gridView = (MVCxGridView)s;
+                object[] rowValues = (object[])gridView.GetRowValuesByKeyValue(keyValue,
+                    new string[] {  "Codigocomentario", "Comentario"});
+                e.NewValues["Codigocomentario"] = rowValues[0];
+                e.NewValues["Comentario"] = rowValues[1];
+            }
+        };
+
+        #endregion InitNewRow
+
+        #region BeforeGetCallbackResult
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            if (needCreatCopy)
+            {
+                MVCxGridView gridView = (MVCxGridView)sender;
+                gridView.AddNewRow();
+            }
+        };
+        #endregion BeforeGetCallbackResult
+
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowLineasChanged(s, e);} ";
+        if (!isreadonly)
+        {
+            settings.ClientSideEvents.CustomButtonClick = "function(s,e) { OnCustomButtonClick(s,e);}";
+            settings.ClientSideEvents.EndCallback = "function(s,e) { OnEndEditing(s,e);}";
+            settings.ClientSideEvents.BeginCallback = "function(s,e) { OnStartEditing(s,e);}";
+            settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+            settings.ClientSideEvents.Init = "function(s,e) { GridViewLineas.Focus();  }";            
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;        
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+@if (!isreadonly)
+{
+    <script src="@Url.Content("~/Scripts/Model/Cuentas/Cuentas.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Contabilidad/MovsController.js")"></script>
+    <script type="text/javascript">
+
+        var rowKeyValueToCopy;
+
+
+        function OnCustomButtonClick(s, e) {
+            if (e.buttonID=="btnCopy"){
+                rowKeyValueToCopy = s.GetRowKey(e.visibleIndex);
+                s.PerformCallback();
+            }
+        }
+
+
+        function OnKeyPressCuentas(s, e) {
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchCuenta();
+            }
+        }
+
+
+
+        function SearchCuenta() {
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Fkcuentas",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("CuentasApi","Api")',
+                Titulo: "Busqueda de cuentas",
+                Params: "{\"nivel\":\"0\"}"
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Fkcuentas-Buscarfocus", function (obj) {
+            Fkcuentas.SetValue(obj);
+            GridViewLineas.SetEnabled(false);
+            mostrarCuenta(obj, '@Url.Action("MaesApi","Api")', GridViewLineas);
+        });
+
+        //Raimundo Fenoll Albaladejo. Cambia el contenido -> al angular controller helper que va
+        function OnFkcuentasChanged(s, e) {
+            console.log(s.GetValue());
+            eventAggregator.Publish("InputCodCuenta", s.GetValue());
+            s.Focus();
+        }
+
+
+        //Nos suscribimos a la publicacion que nos ha dado el angular mode
+        eventAggregator.RegisterEvent("CodigoArticulo", function (obj) {
+            Fkcuentas.SetValue(obj);
+            mostrarCuenta(obj, '@Url.Action("MaesApi","Api")', GridViewLineas);
+        });
+
+
+        // script cogido de _cabeceracuentasterceros.cshtml
+        //   corrige si formato nn.nn lo actualiza a nn0000nn
+        var rellenacod = function Rellenacodcuentas(valor) {
+            var maxLength = @WebHelper.GetApplicationHelper().DigitosCuentas();
+            var autofillNumero = /^[0-9]*\.[0-9]*$/;
+            if (valor.length > maxLength) {
+                valor = "";
+                return valor;
+            }
+            valor = valor.toUpperCase();
+            if (autofillNumero.test(valor)) {
+                var vector = valor.split('.');
+                if (vector.length === 2) {
+                    if (vector[1].length === 1 && vector[1] === "*")
+                        vector[1] = "";
+                    var totalZeros = maxLength - (vector[0].length + vector[1].length);
+                    var zeros = "";
+                    for (var i = 0; i < totalZeros; i++)
+                        zeros += "0";
+                    valor = vector[0] + zeros + vector[1];
+                    valor = valor.substring(0, maxLength);
+                    return valor;
+                } else
+                    return "";
+            }
+            return valor;
+        }
+
+
+        //end cuentas
+
+        //Codigo comentario
+        function OnKeyPresscodigocomentario(s, e) {
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchCodigocomentario();
+            }
+        }
+
+        function SearchCodigoComentario() {
+            var obj = {
+                campoIdentificador: "Valor",
+                IdComponenteasociado: "Codigocomentario",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("ComentariosAsientosApi","Api")',
+                Titulo: "Busqueda de comentarios de asientos",
+                Params: ""
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Codigocomentario-Buscarfocus", function (obj) {
+            obtenerComentario(obj, '@Url.Action("ComentariosAsientosApi","Api")', GridViewLineas);
+        });
+
+        function OnCodigocomentarioChanged(s, e) {
+            obtenerComentario(s.GetValue(), '@Url.Action("ComentariosAsientosApi","Api")', GridViewLineas);
+        }
+        //end Codigo comentario
+
+        //Secciones analíticas
+        function OnKeyPressseccionesanaliticas(s, e) {
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchSeccionanalitica();
+            }
+        }
+
+        function SearchSeccionanalitica() {
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Fkseccionesanaliticas",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("SeccionesAnaliticasApi","Api")',
+                Titulo: "Busqueda de secciones analíticas",
+                Params: ""
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Fkseccionesanaliticas-Buscarfocus", function (obj) {
+            Fkseccionesanaliticas.SetValue(obj);
+            obtenerSeccionanalitica(obj, '@Url.Action("SeccionesAnaliticasApi","Api")', GridViewLineas);
+        });
+
+        function OnFkseccionesanaliticasChanged(s, e) {
+            obtenerSeccionanalitica(s.GetValue(), '@Url.Action("SeccionesAnaliticasApi","Api")', GridViewLineas);
+        }
+
+        //end Secciones analíticas
+
+
+        // Cambio de linea seleccionada
+        function FunOnFocusedRowLineasChanged(s, e) {
+
+            var rowIndex = s.GetFocusedRowIndex();
+
+            // actualizacion datos pie
+            /*
+                Código javaScript para obtener los valores de cuenta y código de sección necesarios para
+                llamar a la API y rellenar los inputs que hay debajo de la grid.
+                Solución propuesta al no encontrar forma de solucionar el problema con los métodos
+                encontrados en la documentación de DevExpress
+
+                Explicación:
+                    Se obtiene la fila, los id's de la fila serán "GridViewLineas_DXDataRowX" siendo X
+                    el índice de la fila que obtenemos con el método GetFocusedRowIndex()
+                    De ese elemento se obtienen sus hijos haciendo .childNodes
+                    Sus hijos corresponden a las diferentes celdas de la tabla
+                    Es posible que en cambios futuros fuese necesario cambiar el indice de nodes[x]
+                    al añadir o cambiar de posición las columnas
+
+                El primer if es para evitar el error de childNodes de null al crear la primera
+                línea de un diario nuevo
+            */
+            if(rowIndex != -1) {
+                $(document).ready(function () {
+                    var nodes = document.getElementById("GridViewLineas_DXDataRow" + rowIndex).childNodes;
+
+                    var cuenta = nodes[2].innerText;
+                    var codSean = nodes[3].innerText;
+
+                    /*
+                        Validación con una expresión regular de que se obtiene un valor númerico de la celda
+                        que contiene la sección analítica
+                        No se ha podido resolver comprobando el valor vacío que se obtenía de la celda
+                    */
+
+                    var re = new RegExp("^[0-9]*$");
+
+                    if (re.test(cuenta)) {
+                        mostrarCuenta(cuenta, '@Url.Action("MaesApi","Api")', GridViewLineas);
+                    } else {
+                        document.getElementById("maesfkcuentas").value = "";
+                        document.getElementById("maesdescripcion").value = "";
+                        document.getElementById("maesdebe").value = "";
+                        document.getElementById("maeshaber").value = "";
+                        document.getElementById("maessaldo").value = "";
+                    }
+
+                    if (re.test(codSean)) {
+                        obtenerSeccionanalitica(codSean, '@Url.Action("SeccionesAnaliticasApi","Api")', GridViewLineas);
+                    } else {
+                        document.getElementById("seannombre").value = "";
+                        document.getElementById("seangrupo").value = "";
+                    }
+                });
+            }
+
+            $("#GridViewLineas").unbind("keydown");
+            $('#GridViewLineas').keydown(function (event) {
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+
+                switch (keycode) {
+                    case 113: //F2 editar
+                        if (!GridViewLineas.IsEditing()) {
+
+                            GridViewLineas.StartEditRow(index);
+                        }
+                        break;
+                    case 46: //Delete eliminar
+                        if (!GridViewLineas.IsEditing()) {
+                            GridViewLineas.DeleteRow(index);
+                        }
+                        break;
+                    case 27: //escape
+                        if (GridViewLineas.IsEditing()) {
+                            GridViewLineas.CancelEdit();
+                            GridViewLineas.Focus();
+                        }
+                        break;
+                    case 13: //enter
+                        if (GridViewLineas.IsEditing() && !GridViewLineas.GetEditor("Comentario").focused) {
+                            event.preventDefault();
+                            GridViewLineas.UpdateEdit();
+                        }
+                        break;
+                    case 107: //mas
+                        if (!GridViewLineas.IsEditing()) {
+                            if (event.ctrlKey) {
+                                event.preventDefault();
+                                rowKeyValueToCopy = s.GetRowKey(GridViewLineas.GetFocusedRowIndex());
+                                s.PerformCallback();
+                            } else {
+                                CreateRow();
+                            }
+                        }
+                        break;
+                }
+            });
+        }
+
+        function onGetRowValues(Value) {
+            // Right code
+            alert(Value);
+            // This code will cause an error
+            alert(Value[0]);
+        }
+
+        function CreateLineasRow() {
+            if ($("[name='Fkseriescontables']").val() && $("[name='Fkseriescontables']").val() !== "") {
+                if (!GridViewLineas.IsEditing()) {
+
+                    GridViewLineas.Focus();
+                    var rowIndex = GridViewLineas.GetFocusedRowIndex();
+                    GridViewLineas.AddNewRow();
+
+
+                } else {
+                    bootbox.alert("El campo serie contable es obligatorio");
+                }
+            }
+        }
+            var operation = "";
+            function OnStartEditing(s, e) {
+
+                operation = e.command;
+                if (operation === "UPDATEEDIT" || operation === "DELETEROW" || operation === "ADDNEWROW") {
+                    e.customArgs['fkmonedas'] = $("[name='Fkmonedas']").val();
+                }
+                else if (operation === "CUSTOMCALLBACK") {
+                    e.customArgs["key"] = rowKeyValueToCopy;
+                }
+            }
+
+            function OnEndEditing(s, e) {
+                if (operation === 'STARTEDIT') {
+                    var cCuentas = Fkcuentas;
+
+                    /*
+                        Código para bloquear el campo Debe o Haber al editar una fila del grid
+                        Leer comentario del método: OnDebeLostFocus
+                        Es posible que en cambios futuros fuese necesario cambiar el número
+                        de GridViewLineas_DXEditor5_I al añadir o cambiar de posición las columnas
+                    */
+                    var Debe = GridViewLineas.GetEditor("SDebe").GetValue();
+                    var Haber = GridViewLineas.GetEditor("SHaber").GetValue();
+
+                    if (Debe != 0) {
+                        $(document).ready(function () {
+                            document.getElementById("GridViewLineas_DXEditor6_I").setAttribute("disabled", true);
+                        });
+                    }
+                    else if (Haber != 0) {
+                        $(document).ready(function () {
+                            document.getElementById("GridViewLineas_DXEditor5_I").setAttribute("disabled", true);
+                        });
+                    }
+
+                }
+                else if (operation === "UPDATEEDIT" || operation === "DELETEROW") {
+                    // GridViewTotales.Refresh();
+                    GridViewLineas.Focus();
+                    //window.setTimeout(function () {
+                    //    GridViewLineas.SetHorizontalScrollPosition(0); GridViewTotales.SetHorizontalScrollPosition(0);
+
+
+                    //}, 0);
+                    if (GridViewLineas.GetVisibleRowsOnPage() > 0) {
+                        GridViewLineas.SetFocusedRowIndex(GridViewLineas.GetVisibleRowsOnPage() - 1);
+                    }
+                }
+                else if (operation === "ADDNEWROW") {
+
+                    //Fkcuentas.Focus();
+                    if (s.IsNewRowEditing()) {
+                        $(document).ready(function () {
+                            var rowCount = document.getElementById("GridViewLineas_DXMainTable").childNodes[1].childNodes.length;
+
+                            if (rowCount > 5) {
+                                var nodes = document.getElementById("GridViewLineas_DXDataRow" + (rowCount - 6)).childNodes;
+                                var cSaldo = document.getElementById("Saldo").innerText;
+                                var saldo = parseFloat(cSaldo.replace('.','').replace(',', '.').split(' ')[1]);
+
+                                // length > 1 para comprobar que el campo a copiar no está vacío
+
+                                if(nodes[6].innerText.length > 1) {
+                                    s.SetEditValue('Codigocomentario', nodes[6].innerText);
+                                }
+                                if(nodes[7].innerText.length > 1) {
+                                    s.SetEditValue('Comentario', nodes[7].innerText);
+                                }
+
+                                if(saldo > 0) {
+                                    s.SetEditValue('SHaber', saldo);
+                                }
+                                if(saldo < 0) {
+                                    s.SetEditValue('SDebe', saldo*-1);
+                                }
+                            }
+                        })
+                    }
+                }
+                if (operation === "CUSTOMCALLBACK") {
+                    var cCuentas = Fkcuentas;
+                    if (cCuentas.GetValue() !== "")
+                        mostrarCuenta(cCuentas.GetValue(), '@Url.Action("CuentasApi", "Api")', GridViewLineas);//, false);
+                }
+            }
+
+            function CreateRow() {
+                GridViewLineas.AddNewRow();
+            }
+
+            /*
+                Métodos para bloquear el Debe o el Haber
+                Solución propuesta al no encontrar forma de solucionar el problema con los métodos
+                encontrados en la documentación de DevExpress
+
+                Explicación:
+                    Se busca el elemento correspondiente a la casilla que se desea bloquear, las casillas que
+                    se están editando tendrán un id similar a "GridViewLineas_DXEditor6_I" siendo 8
+                    el valor de celda/ o elemento HTML correspondiente
+                    Es posible que en cambios futuros fuese necesario cambiar el número de la celda
+                    al añadir o cambiar de posición las columnas
+            */
+            function OnDebeLostFocus(s, e) {
+                if (s.GetValue() != 0 && s.GetValue() != null) {
+                    $(document).ready(function () {
+                        document.getElementById("GridViewLineas_DXEditor6_I").value = "0";
+                        document.getElementById("GridViewLineas_DXEditor6_I").setAttribute("disabled", true);
+                        //document.getElementById("GridViewLineas_DXEditor7_I").focus();
+                    });
+                } else {
+                    $(document).ready(function () {
+                        document.getElementById("GridViewLineas_DXEditor6_I").removeAttribute('disabled');
+                        //document.getElementById("GridViewLineas_DXEditor6_I").focus();
+                    });
+                }
+            }
+
+            function OnHaberLostFocus(s, e) {
+                if (s.GetValue() != 0 && s.GetValue() != null) {
+                    $(document).ready(function () {
+                        document.getElementById("GridViewLineas_DXEditor5_I").value = "0";
+                        document.getElementById("GridViewLineas_DXEditor5_I").setAttribute("disabled", true);
+                    });
+                } else {
+                    $(document).ready(function () {
+                        document.getElementById("GridViewLineas_DXEditor5_I").removeAttribute('disabled');
+                        //document.getElementById("GridViewLineas_DXEditor5_I").focus();
+                    });
+                }
+            }
+
+            function OnComentarioLostFocus (s, e) {
+                GridViewLineas.Focus();
+            }
+
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+                // Cambio de linea seleccionada
+                function FunOnFocusedRowLineasChanged(s, e) {
+
+                var rowIndex = s.GetFocusedRowIndex();
+
+                // actualizacion datos pie
+                /*
+                    Código javaScript para obtener los valores de cuenta y código de sección necesarios para
+                    llamar a la API y rellenar los inputs que hay debajo de la grid.
+                    Solución propuesta al no encontrar forma de solucionar el problema con los métodos
+                    encontrados en la documentación de DevExpress
+
+                    Explicación:
+                        Se obtiene la fila, los id's de la fila serán "GridViewLineas_DXDataRowX" siendo X
+                        el índice de la fila que obtenemos con el método GetFocusedRowIndex()
+                        De ese elemento se obtienen sus hijos haciendo .childNodes
+                        Sus hijos corresponden a las diferentes celdas de la tabla
+                        Es posible que en cambios futuros fuese necesario cambiar el indice de nodes[x]
+                        al añadir o cambiar de posición las columnas
+
+                    El primer if es para evitar el error de childNodes de null al crear la primera
+                    línea de un diario nuevo
+                */
+                if (rowIndex != -1)
+                {
+                $(document).ready(function() {
+                        var nodes = document.getElementById("GridViewLineas_DXDataRow" + rowIndex).childNodes;
+
+                        var cuenta = nodes[2].innerText;
+                        var codSean = nodes[3].innerText;
+
+                        /*
+                            Validación con una expresión regular de que se obtiene un valor númerico de la celda
+                            que contiene la sección analítica
+                            No se ha podido resolver comprobando el valor vacío que se obtenía de la celda
+                        */
+
+                        var re = new RegExp("^[0-9]*$");
+
+                        if (re.test(cuenta))
+                        {
+                            mostrarCuenta(cuenta, '@Url.Action("MaesApi","Api")', GridViewLineas);
+                        }
+                        else
+                        {
+                            document.getElementById("maesfkcuentas").value = "";
+                            document.getElementById("maesdescripcion").value = "";
+                            document.getElementById("maesdebe").value = "";
+                            document.getElementById("maeshaber").value = "";
+                            document.getElementById("maessaldo").value = "";
+                        }
+
+
+                        if (re.test(codSean))
+                        {
+                            obtenerSeccionanalitica(codSean, '@Url.Action("SeccionesAnaliticasApi","Api")',GridViewLineas);
+                        }
+                        else
+                        {
+                            document.getElementById("seannombre").value = "";
+                            document.getElementById("seangrupo").value = "";
+                        }
+                    });
+            }
+            $("#GridViewLineas").unbind("keydown");
+        }
+    </script>
+}

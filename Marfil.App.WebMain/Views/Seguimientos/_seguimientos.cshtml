@@ -1,0 +1,43 @@
+﻿@using System.Globalization
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Marfil.App.WebMain.Controllers
+@model Marfil.Dom.Persistencia.Model.CRM.SeguimientosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Seguimientos/SeguimientosController.js")"></script>
+
+<div ng-controller="SeguimientosCtrl" ng-init="init('@Url.Action("CuentasTiposClientesProspectosExclusiveApi", "Api")','@Url.Action("CuentasApi", "Api")','@Url.Action("ContactoContactosApi", "Api")','@Url.Action("Edit","Seguimientos")','@Url.Action("crearCorreosEnviados","Seguimientos")','@Url.Action("costeAccionCRM","Seguimientos")')">
+    @*<div style="padding: 10px;">*@
+        <div id="tabs">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+                <li><a data-toggle="tab" href="#gestion">@General.LblGestion</a></li>
+                <li><a data-toggle="tab" href="#cierre">@General.LblCierre</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="general" class="tab-pane fade in active">
+                @Html.Partial("_general", Model)
+            </div>
+            <div id="gestion" class="tab-pane fade">
+                @Html.Partial("_gestion", Model)
+            </div>
+            <div id="cierre" class="tab-pane fade">
+                @Html.Partial("_cierre", Model)
+            </div>
+        </div>
+    </div>
+@*</div>*@
+
+@Html.Partial("_envioemails")
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>

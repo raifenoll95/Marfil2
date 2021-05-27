@@ -1,0 +1,79 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.CRM;
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.Helpers;
+@using Marfil.Dom.Persistencia.Model.Configuracion;
+@using Resources
+
+@model CostesVariablesPeriodoModel
+
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var valores = WebHelper.GetApplicationHelper().GetCRMValores().Select(f => new SelectListItem() { Text = f.Valor, Value = f.Descripcion }).ToList();
+
+}
+@Html.HiddenFor(f => Model.Empresa)
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkejercicio, new { @class = "control-label col-md-2" })      @*Esto pone a la izquierda del dropdownlist lo que quieres mostrar (en este caso Ejercicio)*@
+    <div class="col-md-10">
+        @if (isreadonly || iseditable)
+            {
+            @Html.HiddenFor(f => Model.Fkejercicio)
+            <label class="control-label margin-left-10" for="Fkejercicio">@Model.Descripcion_ejercicio</label>
+
+        }
+        else
+        {
+            var service = FService.Instance.GetService(typeof(EjerciciosModel), WebHelper.ContextService) as EjerciciosService;
+            var list = service.getAll().OfType<EjerciciosModel>().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList();
+            @Html.DropDownListFor(f => Model.Fkejercicio, list, "--Ejercicio--", new { @aria_label = "costesvariablesperiodo", @class = "form-control", @autofocus = "" });
+        }
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkejercicio, "", new { @class = "text-danger" })
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+        <span class="fa-2x">
+            @CostesVariablesPeriodo.TituloEntidad
+        </span>
+        @if (!isreadonly)
+        {
+        <span class="pull-right">
+            <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                <i class="fa fa-plus"></i>
+                @General.BtnNuevoRegistro
+            </a>
+        </span>
+        }
+    </div>
+
+
+    <div class="col-md-10 col-md-offset-2">
+    </div>
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.Partial("_costesvariablesperiodolin", Model._costes)
+    </div>
+
+</div>
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

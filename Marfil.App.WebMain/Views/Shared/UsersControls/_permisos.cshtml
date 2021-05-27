@@ -1,0 +1,201 @@
+﻿@model PermisosModel
+@using System.Collections
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Resources
+
+<div>
+    @{
+        var menuAplicacion = WebHelper.GetApplicationHelper().getMenuAplicacionModels(WebHelper.DevexpressAA);
+        ViewBag.contador = 0;
+    }
+
+    <div class="row">
+
+        @foreach (var item in menuAplicacion)
+        {
+
+            if (item.items.Any())
+            {
+                <div class="col-xs-12 col-sm-6">
+
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-flat widget-header-small">
+                            <h5 class="widget-title">
+                                <i class="ace-icon fa fa-file-archive-o"></i>
+                                @item.texto
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-horizontal">
+                                    <table class="table">
+                                        <tr>
+                                            <th id="@Html.Raw((General.LblMenu + item.texto).Replace(" ",""))">@General.LblMenu</th>
+                                            <th id="@Html.Raw((General.LblCrear + item.texto).Replace(" ",""))" style="width:75px">@General.LblCrear</th>
+                                            <th id="@Html.Raw((General.LblEditar + item.texto).Replace(" ",""))" style="width:75px">@General.LblEditar</th>
+                                            <th id="@Html.Raw((General.LblBorrar + item.texto).Replace(" ",""))" style="width: 75px">@General.LblBorrar</th>
+                                            <th id="@Html.Raw((General.LblBloquear + item.texto).Replace(" ",""))" style="width:75px">@General.LblBloquear</th>
+                                        </tr>
+                                        @ShowMenu(item.items,item.texto)
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+
+
+</div>
+@helper ShowMenu(IEnumerable<MenuItemsAplicacionModel> menus,string texto)
+{
+
+
+foreach (var subitem in menus)
+{
+    if (subitem.isSeparator)
+    {
+        continue;
+    }
+
+        var isChecked = true;
+        var canCreate = subitem.AllowCreate;
+        var canUpdate = subitem.AllowUpdate;
+        var canDelete = subitem.AllowDelete;
+        var canBlock = subitem.AllowBlock;
+
+        if (Model.Items.Any(f => f.Nombre == subitem.name))
+        {
+            var permisoItem = Model.Items.First(f => f.Nombre == subitem.name);
+            isChecked = permisoItem.Visible;
+            canCreate = permisoItem.Crear && subitem.AllowCreate;
+            canUpdate = permisoItem.Modificar && subitem.AllowUpdate;
+            canDelete = permisoItem.Eliminar && subitem.AllowDelete;
+            canBlock = permisoItem.Bloquear && subitem.AllowDelete;
+        }
+
+    <tr @Html.Raw(subitem.items.Any() ? "style=\"background-color:#CCC\"": string.Empty)>
+        <td headers="@Html.Raw((General.LblMenu + texto).Replace(" ",""))">
+            <div >
+                <span>
+                    <input type="hidden"  name="@Html.Raw(string.Format("Permisos.Items[{0}].Nombre", ViewBag.contador))" value="@subitem.name" />
+                    <input onchange="clickVisible(this)" aria-labelledby="@Html.Raw((General.LblMenu + texto).Replace(" ",""))" aria-label="Permisos @Html.Raw(string.Format("Permisos.Items[{0}].Visible", ViewBag.contador))" id="@Html.Raw(string.Format("Permisos.Items[{0}].Visible", ViewBag.contador))" name="@Html.Raw(string.Format("Permisos.Items[{0}].Visible", ViewBag.contador))" value="@isChecked.ToString()" type="checkbox" @Html.Raw(isChecked ? "checked=\"checked\"" : "") class="ace"/>
+                    @if (!subitem.items.Any())
+                    {
+                        <label class="lbl"> @subitem.texto</label>
+                    }
+                    else
+                    {
+                        <label class="lbl"><strong> @subitem.texto</strong></label>
+                    }
+                </span>
+            </div>
+        </td>
+        <td headers="@Html.Raw((General.LblCrear + texto).Replace(" ",""))" style="width:75px">
+            <div class="center" style="margin-top: 5px">
+                @if (subitem.AllowCreate)
+                {
+                    if (!subitem.items.Any())
+                    {
+                        <input onchange="changeValue(this)" aria-label="@General.LblCrear" aria-labelledby="@Html.Raw((General.LblCrear + texto).Replace(" ",""))" name="@Html.Raw(string.Format("Permisos.Items[{0}].Crear", ViewBag.contador))" @Html.Raw(subitem.AllowCreate ? "" : "data-never-enable='true'") value="@canCreate.ToString()" @Html.Raw(canCreate ? "checked=\"checked\"" : "") @Html.Raw(subitem.AllowCreate ? "" : "disabled=\"disabled\"") type="checkbox" />
+                    }
+
+                }
+                else
+                {
+                    <i class="fa fa-ban red"></i>
+                }
+
+            </div>
+
+        </td>
+        <td headers="@Html.Raw((General.LblEditar + texto).Replace(" ",""))" style="width:75px">
+            <div class="center" style="margin-top: 5px">
+                @if (subitem.AllowUpdate)
+                {
+                    if (!subitem.items.Any())
+                    {
+                        <input onchange="changeValue(this)" aria-label="@General.LblEditar" aria-labelledby="@Html.Raw((General.LblEditar + texto).Replace(" ",""))" name="@Html.Raw(string.Format("Permisos.Items[{0}].Modificar",  ViewBag.contador))" @Html.Raw(subitem.AllowUpdate ? "" : "data-never-enable='true'") value="@canUpdate.ToString()" @Html.Raw(canUpdate ? "checked=\"checked\"" : "") @Html.Raw(subitem.AllowUpdate ? "" : "disabled=\"disabled\"") type="checkbox" />
+                    }
+                }
+                else
+                {
+                    <i class="fa fa-ban red"></i>
+                }
+
+            </div>
+
+        </td>
+        <td headers="@Html.Raw((General.LblBorrar + texto).Replace(" ",""))" style="width: 75px">
+
+            <div class="center" style="margin-top: 5px">
+                @if (subitem.AllowDelete)
+                {
+                    if (!subitem.items.Any())
+                    {
+                        <input onchange="changeValue(this)" aria-label="@General.LblBorrar" aria-labelledby="@Html.Raw((General.LblBorrar + texto).Replace(" ",""))" name="@Html.Raw(string.Format("Permisos.Items[{0}].Eliminar", ViewBag.contador))" @Html.Raw(subitem.AllowDelete ? "" : "data-never-enable='true'") value="@canDelete.ToString()" @Html.Raw(canDelete ? "checked=\"checked\"" : "") @Html.Raw(subitem.AllowDelete ? "" : "disabled=\"disabled\"") type="checkbox"/>
+                    }
+                }
+                else
+                {
+                    <i class="fa fa-ban red"></i>
+                }
+
+            </div>
+        </td>
+        <td headers="@Html.Raw((General.LblBloquear + texto).Replace(" ",""))" style="width:75px">
+
+            <div class="center" style="margin-top: 5px">
+                @if (subitem.AllowBlock)
+                {
+                    if (!subitem.items.Any())
+                    {
+                        <input onchange="changeValue(this)" aria-label="@General.LblBloquear" aria-labelledby="@Html.Raw((General.LblBloquear + texto).Replace(" ",""))"  name="@Html.Raw(string.Format("Permisos.Items[{0}].Bloquear", ViewBag.contador))" @Html.Raw(subitem.AllowBlock ? "" : "data-never-enable='true'") value="@canBlock.ToString()" @Html.Raw(canBlock ? "checked=\"checked\"" : "") @Html.Raw(subitem.AllowBlock ? "" : "disabled=\"disabled\"") type="checkbox" />
+                    }
+                }
+                else
+                {
+                    <i class="fa fa-ban red"></i>
+                }
+
+            </div>
+        </td>
+    </tr>
+    ViewBag.contador++;
+    if (subitem.items.Any())
+    {
+           @ShowMenu(subitem.items,texto)
+
+
+    }
+
+}
+}
+
+<script type="text/javascript">
+    function clickVisible(obj) {
+        if (!$(obj).is(':checked')) {
+            var name = obj.name;
+            changeValue(obj);
+            name = name.replace('.Visible', '');
+            $("input[name ^='" + name + "']").prop('checked', false);
+
+        } else {
+            $(obj).val(true);
+        }
+    }
+    function changeValue(obj) {
+        if ($(obj).is(':checked')) {
+            $(obj).val(true);
+        } else {
+            $(obj).val(false);
+        }
+    }
+</script>

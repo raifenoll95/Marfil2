@@ -1,0 +1,85 @@
+﻿@using System.ComponentModel
+@using System.ComponentModel.DataAnnotations
+@using System.Reflection
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IEnumerable<IModelView>
+@{
+    IEnumerable<ViewProperty> columnas = ViewBag.Columnas as IEnumerable<ViewProperty>;
+    ViewBag.Title = $"Gestión de {ViewBag.TituloMantenimiento}";
+}
+
+<h2>
+    @ViewBag.TituloMantenimiento
+    @if (ViewBag.Crear)
+    {
+        <span class="pull-right">
+            <a class="btn btn-success" href="@Url.Action("Create", new {mantenimiento = ViewBag.Mantenimiento})">
+                <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+            </a>
+        </span>
+    }
+
+</h2>
+
+
+<table class="table  table-bordered table-hover margin-top">
+    <thead>
+    <tr>
+        @foreach (var item in columnas)
+        {
+            var displayName = item.attributes?.OfType<DisplayAttribute>().FirstOrDefault()?.Name;
+            <th>
+                @Html.Raw(displayName ?? item.property.Name)
+            </th>
+        }
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @foreach (var col in columnas)
+                {
+                    <td>
+                        @Html.Raw(item.get(col.property.Name))
+                    </td>
+                }
+                <td>
+
+                    <a class="btn btn-xs btn-info" title="Ver" href="@Url.Content(string.Format("~/Gestion/Details/{1}?mantenimiento={0}", ViewBag.Mantenimiento, item.get(((IModelViewExtension) item).primaryKey.First().Name)))">
+                        <i class="ace-icon fa fa-search "></i>
+                        Ver
+                    </a>
+@if (ViewBag.Modificar)
+{
+    <a class="btn btn-xs btn-info" title="Editar" href="@Url.Content(string.Format("~/Gestion/Edit/{1}?mantenimiento={0}", ViewBag.Mantenimiento, item.get(((IModelViewExtension)item).primaryKey.First().Name)))">
+        <i class="ace-icon fa fa-pencil"></i>
+        Editar
+    </a>
+}
+                        
+
+@if (ViewBag.Eliminar)
+{
+    <a class="btn btn-xs btn-info" title="Eliminar" href="@Url.Content(string.Format("~/Gestion/Delete/{1}?mantenimiento={0}", ViewBag.Mantenimiento, item.get(((IModelViewExtension)item).primaryKey.First().Name)))">
+        <i class="ace-icon fa fa-trash"></i>
+        Eliminar
+    </a>
+}
+                        
+                    
+
+                    
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

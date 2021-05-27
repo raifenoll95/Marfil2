@@ -1,0 +1,49 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+@using (Html.BeginForm("ExportTo", "Tarifas", FormMethod.Post, new { @id = "exportartarifas" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="excludedform" value="true" />
+    <input type="hidden" id="formatoexportacion" name="OutputFormat" />
+}
+
+<div>
+    
+    @{
+        ViewData["readonly"] = true;
+    }
+    <div class="form-horizontal">
+
+
+        @Html.Partial("_Tarifas", Model as TarifasModel)
+    </div>
+</div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info margin-top" href="@Url.Action("Edit", new {id = ((TarifasModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}

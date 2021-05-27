@@ -1,0 +1,165 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@using Marfil.Dom.Persistencia.Model.Interfaces
+
+@model Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.AsistenteAsignacionModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Vencimientos/Asistenteasignaciontesoreriacontroller.js")"></script>
+
+<div ng-controller="AsistenteAsignacionTesoreriaCtrl" ng-init="init('@Url.Action("obtenerUltimaSituacionCircuito","SituacionesTesoreria")','@Url.Action("obtenerCuentaTesoreria","Cuentastesoreria")', '@Url.Action("obtenerSerieContable","SeriesContables")', '@Url.Action("obtenerFormaPago","FormasPago")')">
+    <div id="fuelux-wizard-container">
+        <div>
+            <!-- #section:plugins/fuelux.wizard.steps -->
+            <ul class="steps">
+                <li data-step="1" class="active">
+                    <span class="step">1</span>
+                    <span class="title">Seleccionar filtros de la búsqueda</span>
+                </li>
+
+                <li data-step="2">
+                    <span class="step">2</span>
+                    <span class="title">Seleccionar los vencimientos</span>
+                </li>
+
+                <li data-step="3">
+                    <span class="step">3</span>
+                    <span class="title">Fin</span>
+                </li>
+            </ul>
+            <!-- /section:plugins/fuelux.wizard.steps -->
+        </div>
+
+        <hr />
+
+       
+
+        <!-- #section:plugins/fuelux.wizard.container -->
+        <div class="step-content pos-rel">
+            <div class="step-pane" data-step="1">
+                <div>
+                    <h3 font face="verdana" style="font-size:20px" class="blue center"><b>Seleccionar filtros de la búsqueda</b></h3>
+                    <br />
+                    @Html.Partial("_asignacionstep1", Model)
+                </div>
+            </div>
+
+            <div class="step-pane" data-step="2">
+                <div>
+                    <h3 font face="verdana" style="font-size:20px" class="blue center"><b>Seleccionar Vencimientos</b></h3>
+                    <br />
+                    @Html.Partial("_asignacionstep2", Model)
+                </div>
+            </div>
+
+            <div class="step-pane" data-step="3">
+                <div class="center">
+                    <h3 font face="verdana" style="font-size:20px" class="blue center"><b>Seleccionar atributos de cartera</b></h3>
+                    <br />
+                    @Html.Partial("_asignacionstep3", Model)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- /section:plugins/fuelux.wizard.container -->
+    </div>
+
+    <hr />
+    <div class="wizard-actions">
+        <!-- #section:plugins/fuelux.wizard.buttons -->
+        <button class="btn btn-prev ">
+            <i class="ace-icon fa fa-arrow-left"></i>
+            @General.LblAnterior
+        </button>
+
+        <button class="btn btn-success btn-next" data-last="@General.AsignarCartera">
+            @General.LblSiguiente
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+        <!-- /section:plugins/fuelux.wizard.buttons -->
+    </div>
+
+
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            var $validation = false;
+            $('#fuelux-wizard-container').ace_wizard().on('actionclicked.fu.wizard', function(e, info) {
+                if (info.step == 1) {
+                    var flag = false;
+                    if (!$("#step1-form").validate().form()) {
+                        if ($("#Importe").val() == "" || $("#Importe").val() == null) {
+                            $("#Importe").val("0");
+                        }
+                        e.preventDefault();
+                    }
+
+                    //2. Cogemos los valores de la primera pantalla y se los pasamos a la segunda
+                    else {
+                        var data = {
+                            Url: "@Url.Action("AsistenteVencimientosApi", "Api")",
+                            campoIdentificador: "Vencimientos",
+                            IdComponenteasociado: "",
+                            IdFormulariomodal: "",
+                            Titulo: "Vencimientos disponibles",
+                            Params: "{\"Tipoasignacion\":\"" + $("#Tipo").val() + "\",\"Circuitotesoreria\":\"" + $("#Circuitotesoreria").val() + "\",\"Fkcuentas\":\"" + $("#Fkcuentas").val() + "\",\"Importe\":\"" + $("#Importe").val() + "\"}"
+                        };
+
+                        eventAggregator.Publish("_buscarvencimientosasociados", data);
+
+                        var dataMandato = {
+                            urlApiBancos: "@Url.Action("BancosMandatosApi","Api")",
+                            fkclientes: $("#Fkcuentas").val()
+                        };
+
+                        eventAggregator.Publish("_buscarmandato", dataMandato);
+                    }
+                }
+
+                 else if (info.step == 2 && info.direction != "previous") {
+                    if (!$("#step2-form").validate().form()) {
+                        e.preventDefault();
+                    }
+                    else {
+                        eventAggregator.Publish("_generarImporteCircuitos", 1);
+                    }
+
+
+                } else if (info.step == 3 && info.direction != "previous") {                   
+                    eventAggregator.Publish("_generarregistroscartera", 2);
+                }
+            });
+
+        });
+    </script>
+
+}
+
+
+@using (Html.BeginForm("GenerarCartera", "AsignacionCartera", FormMethod.Post, new { @id = "asignacioncarteraform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="Tipo" value="" />
+    <input type="hidden" name="Vencimientos" value="" />
+    <input type="hidden" name="Fkseriescontables" value="" />
+    <input type="hidden" name="Fkcuentas" value="" />  
+    <input type="hidden" name="Importe" value="" />
+    <input type="hidden" name="ImportePantalla3" value="" />
+    <input type="hidden" name="Situacion" value="" />
+    <input type="hidden" name="Fkcuentatesoreria" value="" />
+    <input type="hidden" name="Circuitotesoreria" value="" />
+    <input type="hidden" name="FechaContable" value="" />
+    <input type="hidden" name="FechaVencimiento" value="" />
+    <input type="hidden" name="Banco" value="" />
+    <input type="hidden" name="Letra" value="" />
+    <input type="hidden" name="Comentario" value="" />
+}

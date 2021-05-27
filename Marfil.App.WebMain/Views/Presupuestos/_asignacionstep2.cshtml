@@ -1,0 +1,108 @@
+﻿@*Rai*@
+
+@using Resources
+
+@model  Marfil.Dom.Persistencia.Model.Documentos.Presupuestos.PresupuestosAsistenteModel
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+
+<form class="form-horizontal" id="step2-form">
+</form>
+
+<style>
+    th {
+        border: 3px solid blue;
+    }
+</style>
+
+<div class="col-md-3"></div>
+<div class="center col-md-6" style="border: 2px solid; background-color: #C5ECF7; padding:5px; font-size:15px; font-style:italic; font-family:Arial, Helvetica, sans-serif" ng-show="componentesprevios">
+    El documento ya se había presupuestado, los componentes que se indicaron fueron
+</div>
+<div class="col-md-3"></div>
+
+<br />
+<br />
+
+<div class="col-md-12"></div>
+<span class="pull-left">
+    <button type="button" class="btn btn-success btn-sm" ng-click="Nuevalinea()" title="@General.LblCrear - (+)">
+        <i class="fa fa-plus"></i>
+        @General.BtnNuevoRegistro
+    </button>
+</span>
+
+<br />
+<br />
+<br />
+
+<table class="table table-bordered">
+    <thead>
+        <tr class="active">
+            <th>Componente</th>
+            <th>Descripción</th>
+            <th>Piezas</th>
+            <th>Largo</th>
+            <th>Ancho</th>
+            <th>Grueso</th>
+            <th>Metros</th>
+            <th>Precio</th>
+            <th>Merma</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="componente in componentes track by $index">
+            <th ng-show="!componente.BuscarArticulo" scope="row">{{componente.IdComponente}}</th>
+            <th ng-show="componente.BuscarArticulo" scope="row">
+                <button type="button" class="btn btn-light btn-sm" ng-click="BuscarComponente()" title="@General.LblBuscar - (+)">
+                    <i class="fa fa-search"></i>
+                    @General.LblBuscarComponente
+                </button>
+            </th>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.DescripcionComponente}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.DescripcionComponente" class="form-control">
+            </td>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.Piezas}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.Piezas" class="form-control">
+            </td>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.Largo}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.Largo" class="form-control">
+            </td>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.Ancho}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.Ancho" class="form-control">
+            </td>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.Grueso}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.Grueso" class="form-control">
+            </td>
+            <td bgcolor="#b7e6f3">
+                <span>{{componente.Metros}}</span>
+            </td>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.PrecioInicial}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.PrecioInicial" class="form-control">
+            </td>
+            <td>
+                <span ng-show="componente.showEdit">{{componente.Merma}}</span>
+                <input ng-show="!componente.showEdit" type="text" ng-model="componente.Merma" class="form-control">
+            </td>
+            <td bgcolor="#b7e6f3">
+                <span>{{componente.Precio}}</span>
+            </td>
+            <td>
+                <span ng-show="componente.showEdit" ng-click="toggleEdit(componente)" class="center glyphicon glyphicon-pencil"></span>
+                <span ng-show="!componente.showEdit" ng-click="toggleEdit(componente)" class="center glyphicon glyphicon-ok"></span>
+            </td>
+            <td>
+                <span ng-click="componentes.splice($index,1)" class="center glyphicon glyphicon-trash"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

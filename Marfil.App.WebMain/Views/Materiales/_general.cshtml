@@ -1,0 +1,91 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.FicherosGenerales.MaterialesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var listfamiliasmateriales = WebHelper.GetApplicationHelper().GetListFamiliaMateriales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var cvgrupomateriales = FCampoverificacion.Instance.GetModel<GrupoMaterialesModel>(WebHelper.ContextService);
+    var listdurezas = new[] { "1", "2", "3", "4", "5" }.Select(f => new SelectListItem() { Value = f, Text = f }).ToList();
+}
+
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcarpetas)
+
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @aria_label = "materiales", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "materiales", @required = "required", @class = "form -control", @autofocus = "", @ng_blur = "existePk(3,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Materiales") + "\",\"" + Url.Action("Edit", "Materiales") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+        @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion2, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion2, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcion2, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcionabreviada, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcionabreviada, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcionabreviada, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkfamiliamateriales, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkfamiliamateriales, listfamiliasmateriales, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Fkfamiliamateriales, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkgruposmateriales, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvgrupomateriales.Name = "Fkgruposmateriales";
+            cvgrupomateriales.Url = Url.Action("GrupoMaterialesApi", "Api");
+            cvgrupomateriales.Valor = Model.Fkgruposmateriales;
+            cvgrupomateriales.SoloLectura = isreadonly;
+            cvgrupomateriales.CampoIdentificador = "Cod";
+        }
+        @Html.Partial("CampoverificacionUI", cvgrupomateriales)
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkgruposmateriales, "", new { @class = "control-label text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Dureza, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Dureza, listdurezas, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Dureza, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

@@ -1,0 +1,72 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using RAlmacenes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Almacenes;
+@model Marfil.Dom.Persistencia.Model.Configuracion.AlmacenesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+
+    var isNuevo = !isreadonly && !iseditable;
+}
+<div>
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
+            <li><a data-toggle="tab" href="#zonas">@RAlmacenes.Zonas</a></li>
+            <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active margin-bottom">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="zonas" class="tab-pane fade margin-bottom">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <span class="fa-2x">
+                        @RAlmacenes.Zonas
+                    </span>
+                    @if (isNuevo || iseditable)
+                    {
+                        <span class="pull-right">
+                            <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                                <i class="fa fa-plus"></i>
+                                @General.BtnNuevoRegistro
+                            </a>
+                        </span>
+                    }
+
+
+                </div>
+                <div class="col-md-12">
+                    @Html.Partial("_zonas", Model.Lineas)
+                </div>
+            </div>
+            
+        </div>
+        <div id="direcciones" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/UserControls/Direcciones/DireccionesController.js")"></script>
+            @Html.Partial("_direcciones", Model)
+        </div>
+        <div id="galeria" class="tab-pane fade margin-bottom">
+            @Html.Partial("_galeriaimagenes", Model.Galeria)
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $.validator.setDefaults({ ignore: null });
+</script>*@
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

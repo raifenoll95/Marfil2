@@ -1,0 +1,119 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model TarifasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !iseditable && !isreadonly;
+    var cvfamilia = FCampoverificacion.Instance.GetModel<FamiliasproductosModel>(WebHelper.ContextService);
+    var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
+}
+<div class="form-horizontal">
+    
+    <h4>@Tarifas.LblFormula</h4>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Precioautomaticobase, new { @class = "control-label col-md-3 col-md-offset-2",@style="text-align:center !important" })
+        @Html.LabelFor(f => Model.Precioautomaticoporcentajebase, new { @class = "control-label col-md-2 col-md-offset-1", @style = "text-align:center !important" })
+        @Html.LabelFor(f => Model.Precioautomaticoporcentajefijo, new { @class = "control-label col-md-2 col-md-2 col-md-offset-1", @style = "text-align:center !important" })
+        <div class="col-md-12"></div>
+        <div class="col-md-3 col-md-offset-2">
+            <select ng-model="precioautomaticobase" class="form-control creacionprecio" name="Precioautomaticobase" @Html.Raw(isreadonly ? " ng-disabled=\"true\"" : string.Empty)>
+                <option ng-selected="{{precioautomaticobase == item.Id}}" ng-repeat="item  in tarifasbase" value="{{ item.Id }}">{{item.Descripcion}}</option>
+            </select>
+        </div>
+        <div class="col-md-1 text-center" style="padding-top: 5px;"><img src="@Url.Content("~/Images/mas_menos.png")"/></div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Precioautomaticoporcentajebase, isreadonly ? (object) new {@class = "form-control creacionprecio", @readonly = "readonly"} : (object) new {@class = "form-control creacionprecio"})
+        </div>
+        <div class="col-md-1 text-center" style="padding-top: 10px;"><i class="fa fa-plus bigger-130"></i></div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Precioautomaticoporcentajefijo, isreadonly ? (object) new {@class = "form-control creacionprecio", @readonly = "readonly"} : (object) new {@class = "form-control creacionprecio"})
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-3 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticobase, "", new {@class = "text-danger"})
+        </div>
+       
+        <div class="col-md-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticoporcentajebase, "", new {@class = "text-danger"})
+        </div>
+        
+        <div class="col-md-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticoporcentajefijo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Precioautomaticofkfamiliasproductosdesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                cvfamilia.Name = "Precioautomaticofkfamiliasproductosdesde";
+                cvfamilia.Url = Url.Action("FamiliasproductosApi", "Api");
+                cvfamilia.Valor = Model.Precioautomaticofkfamiliasproductosdesde;
+                cvfamilia.SoloLectura = isreadonly;
+                cvfamilia.Obligatorio = false;
+                cvfamilia.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvfamilia)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticofkfamiliasproductosdesde, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Precioautomaticofkfamiliasproductoshasta, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                cvfamilia.Name = "Precioautomaticofkfamiliasproductoshasta";
+                cvfamilia.Url = Url.Action("FamiliasproductosApi", "Api");
+                cvfamilia.Valor = Model.Precioautomaticofkfamiliasproductoshasta;
+                cvfamilia.SoloLectura = isreadonly;
+                cvfamilia.Obligatorio = false;
+                cvfamilia.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvfamilia)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticofkfamiliasproductoshasta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Precioautomaticofkmaterialesdesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                cvmateriales.Name = "Precioautomaticofkmaterialesdesde";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.Precioautomaticofkmaterialesdesde;
+                cvmateriales.SoloLectura = isreadonly;
+                
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticofkmaterialesdesde, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Precioautomaticofkmaterialeshasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvmateriales.Name = "Precioautomaticofkmaterialeshasta";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.Precioautomaticofkmaterialeshasta;
+                cvmateriales.SoloLectura = isreadonly;
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Precioautomaticofkmaterialeshasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

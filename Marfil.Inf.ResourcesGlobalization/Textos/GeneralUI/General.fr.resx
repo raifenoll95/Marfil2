@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LblBienvenido" xml:space="preserve">
+    <value>Bienvenue</value>
+  </data>
+  <data name="BtnNuevoRegistro" xml:space="preserve">
+    <value>Nouveau</value>
+  </data>
+  <data name="LblVolverALaLista" xml:space="preserve">
+    <value>Retourner á la liste</value>
+  </data>
+  <data name="LblEditar" xml:space="preserve">
+    <value>Éditer</value>
+  </data>
+  <data name="LblCrear" xml:space="preserve">
+    <value>Créer</value>
+  </data>
+  <data name="LblVer" xml:space="preserve">
+    <value>Voir</value>
+  </data>
+  <data name="LblBorrar" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="LblMensajeConfirmacionBorrado" xml:space="preserve">
+    <value>Vous allez effacer le registre. ¿Voulez vous continuer?</value>
+  </data>
+  <data name="LblContinuar" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="LblCancelar" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="LblFormaPago" xml:space="preserve">
+    <value>Mode de paiement</value>
+  </data>
+  <data name="BtnGuardar" xml:space="preserve">
+    <value>Sauver</value>
+  </data>
+  <data name="LblEfectivo" xml:space="preserve">
+    <value>Espèces</value>
+  </data>
+  <data name="LblPorcentajeTotal" xml:space="preserve">
+    <value>Pourcentage total</value>
+  </data>
+  <data name="LblGestionDe" xml:space="preserve">
+    <value>Gestion de</value>
+  </data>
+  <data name="LblPersonalizado" xml:space="preserve">
+    <value>Customicé</value>
+  </data>
+  <data name="LblInicio" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="LblCambiarEmpresa" xml:space="preserve">
+    <value>Modifier l'entreprise</value>
+  </data>
+  <data name="LblNoExistenMasEmpresas" xml:space="preserve">
+    <value>Il n'y a pas plus entreprises</value>
+  </data>
+  <data name="LblUltimaModificacion" xml:space="preserve">
+    <value>Derniere modification</value>
+  </data>
+  <data name="LblNivel" xml:space="preserve">
+    <value>Niveau</value>
+  </data>
+  <data name="LblDescripcion" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="LblId" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="LblBuscar" xml:space="preserve">
+    <value>Chercher</value>
+  </data>
+  <data name="LblNuevo" xml:space="preserve">
+    <value>Nouveau</value>
+  </data>
+  <data name="LblBusquedas" xml:space="preserve">
+    <value>Chercher</value>
+  </data>
+  <data name="LblAceptar" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="LblCerrar" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="LblIndicaMotivoBloqueo" xml:space="preserve">
+    <value>Pour quoi vous voulez bloquéer </value>
+  </data>
+  <data name="LblBloqueoConfirmacionParte1" xml:space="preserve">
+    <value>Vous etes en train de debloqueer le registre actuel, Vous voulez poursuivre avec l'operation?</value>
+  </data>
+  <data name="LblDesbloqueo" xml:space="preserve">
+    <value>Desbloqueer</value>
+  </data>
+  <data name="LblBloqueo" xml:space="preserve">
+    <value>Bloqueer</value>
+  </data>
+  <data name="LblBloqueada" xml:space="preserve">
+    <value>Bloquée</value>
+  </data>
+  <data name="LblNoBloqueada" xml:space="preserve">
+    <value>Desbloquée</value>
+  </data>
+  <data name="LblAtencion" xml:space="preserve">
+    <value>Atention</value>
+  </data>
+  <data name="LblAqui" xml:space="preserve">
+    <value>ici</value>
+  </data>
+  <data name="LblGeneral" xml:space="preserve">
+    <value>Generale</value>
+  </data>
+  <data name="LblDirecciones" xml:space="preserve">
+    <value>Directions</value>
+  </data>
+  <data name="LblBancos" xml:space="preserve">
+    <value>Banques</value>
+  </data>
+  <data name="LblNoHayRegistros" xml:space="preserve">
+    <value>Il n'y a pas d'information</value>
+  </data>
+  <data name="LblActividad" xml:space="preserve">
+    <value>Activitée</value>
+  </data>
+  <data name="LblContabilidad" xml:space="preserve">
+    <value>Contabilitée</value>
+  </data>
+  <data name="LblAdministrador" xml:space="preserve">
+    <value>Administrateur</value>
+  </data>
+  <data name="LblAñadir" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="LblUsuarios" xml:space="preserve">
+    <value>Utilisateur</value>
+  </data>
+  <data name="LblQuitarSeleccionados" xml:space="preserve">
+    <value>Supprimer sélectionnée</value>
+  </data>
+  <data name="MensajeExitoOperacion" xml:space="preserve">
+    <value>L'operation a été realisé correctament</value>
+  </data>
+  <data name="LblBien" xml:space="preserve">
+    <value>Bien</value>
+  </data>
+  <data name="ErrorModificarRegistroBloqueado" xml:space="preserve">
+    <value>C'est pas possible de modifier une entitée bloquée</value>
+  </data>
+  <data name="ErrorTipoCuentaIncorrecto" xml:space="preserve">
+    <value>Le tipe du comte n'est pas bonne</value>
+  </data>
+  <data name="ErrorCuentaObligatoria" xml:space="preserve">
+    <value>Il est obligatoire d'especificer une comte</value>
+  </data>
+  <data name="ErrorTipoCuentaConfiguracion" xml:space="preserve">
+    <value>Il n'y a pas de configuration pour le tipe de comte {0}</value>
+  </data>
+  <data name="LblOperario" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="LblDiferencia" xml:space="preserve">
+    <value>Journées</value>
+  </data>
+  <data name="LblCoeficientes" xml:space="preserve">
+    <value>Coefficient</value>
+  </data>
+  <data name="LblOtros" xml:space="preserve">
+    <value>Autres</value>
+  </data>
+  <data name="LblEjercicio" xml:space="preserve">
+    <value>Gerer exercice</value>
+  </data>
+  <data name="LblGenerarPedido" xml:space="preserve">
+    <value>Créer commande</value>
+  </data>
+  <data name="EnumTodos" xml:space="preserve">
+    <value>Touts les documents</value>
+  </data>
+  <data name="LblUltimo" xml:space="preserve">
+    <value>Dernière</value>
+  </data>
+  <data name="LblPrimero" xml:space="preserve">
+    <value>Premier</value>
+  </data>
+  <data name="LblAnterior" xml:space="preserve">
+    <value>Antérieur</value>
+  </data>
+  <data name="LblSiguiente" xml:space="preserve">
+    <value>Suivant</value>
+  </data>
+  <data name="LblImprimir" xml:space="preserve">
+    <value>Imprimer</value>
+  </data>
+  <data name="LblCambiarEstado" xml:space="preserve">
+    <value>Modifier état</value>
+  </data>
+  <data name="LblMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="ErrorDocumentoSinLineas" xml:space="preserve">
+    <value>Le document n'a pas de lignes.</value>
+  </data>
+  <data name="Si" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="ErrorFechaNoValida" xml:space="preserve">
+    <value>Date invalide</value>
+  </data>
+  <data name="LblFichero" xml:space="preserve">
+    <value>Fichier</value>
+  </data>
+</root>

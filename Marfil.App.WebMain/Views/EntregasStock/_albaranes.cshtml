@@ -1,0 +1,88 @@
+﻿@using Marfil.App.WebMain.Controllers
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@using Filter = System.Web.Mvc.Filter
+@model Marfil.Dom.Persistencia.Model.Documentos.Albaranes.AlbaranesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable && !(Model.Importado ?? false);
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var canImportar = Model.Estado.Tipoestado <= TipoEstado.Curso && Model.Tipoalbaran <= (int) TipoAlbaran.Autocomsumo;
+    if (isNuevo && Model.Tipoalbaranenum == TipoAlbaran.Devolucion)
+    { isNuevo = false; }
+}
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Albaranes/AlbaranesController.js")"></script>
+<div  ng-controller="AlbaranesCtrl" ng-init="init(@((!isNuevo).ToString().ToLower()),'@Model.Fkclientes','@Model.Fkagentes','@Model.Fkcomerciales','@(Model.Fkdireccionfacturacion?.ToString()??string.Empty)','@Model.Fkbancosmandatos','@Model.Fkobras',@isNuevo.ToString().ToLower(),'@(Model.Tipodeportes.HasValue ? ((int)Model.Tipodeportes).ToString() : string.Empty)','@Url.Action("AlbaranesRefresh")','@Url.Action("BancosMandatosApi","Api")','@Url.Action("ImportarLineas")','@string.Format("{0};{1};{2}",Model.Referencia??string.Empty,(Model.DocumentosImpresion?.Tipo)?.ToString()??string.Empty,Model.DocumentosImpresion?.Defecto??string.Empty)'
+     ,'@Url.Action("EmpresasApi","Api")','@Model.Empresa','@Url.Action("TiposAlbaranesApi","Api")')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#direcciones">@Clientes.TituloEntidadSingular</a></li>
+            <li><a data-toggle="tab" href="#comerciales">@Comerciales.TituloEntidad</a></li>
+            <li><a data-toggle="tab" href="#transporte">@General.LblTransporte</a></li>
+            <li><a data-toggle="tab" href="#otros">@General.LblOtros</a></li>
+            <li><a data-toggle="tab" href="#desglose">@General.LblDesglose</a></li>
+           
+            @if (iseditable || isreadonly)
+            {
+                <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+            }
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_cabeceraAlbaranes", Model)
+        </div>
+        <div id="direcciones" class="tab-pane fade in">
+            @Html.Partial("_clientes", Model)
+        </div>
+        <div id="comerciales" class="tab-pane fade in">
+            @Html.Partial("_comerciales", Model)
+        </div>
+        <div id="transporte" class="tab-pane fade in">
+            @Html.Partial("_transporte", Model)
+        </div>
+        <div id="otros" class="tab-pane fade in">
+            @Html.Partial("_otros", Model)
+        </div>
+        <div id="desglose" class="tab-pane fade in">
+            @Html.Partial("_desglose", Model)
+        </div>
+     
+        @if (iseditable || isreadonly)
+        {
+            <div id="galeria" class="tab-pane fade in">
+                @Html.Partial("_galeriaimagenes", Model.Galeria)
+            </div>
+        }
+    </div>
+
+</div>
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        var target = $(e.target).attr("href"); // activated tab
+        if (target === "#desglose") {
+            GridViewLineas.Refresh();
+            GridViewTotales.Refresh();
+        }
+    });
+
+
+    $.validator.setDefaults({ ignore: null });
+
+</script>
+
+
+
+

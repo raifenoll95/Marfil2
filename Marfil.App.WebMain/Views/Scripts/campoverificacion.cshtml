@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+
+    (function () {
+        var app = angular.module('marfil', ['campoverificacionModule']);
+
+        app.controller('campoverificacionController.@ViewBag.id', [
+        '$scope', '$http', '$timeout', '$q', function ($scope, $http, $timeout, $q) {
+
+            $scope.selected = undefined;
+            $scope.vector = [];
+            
+            $http.get('@Url.Action(ViewBag.Api, "Api")').
+            success(function (data) {
+                $scope.vector = data;
+            }).error(function (data, status) {
+                alert(status);
+            });
+
+        }
+        ]);
+    })();
+

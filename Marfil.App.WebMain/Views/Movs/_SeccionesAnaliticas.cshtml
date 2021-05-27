@@ -1,0 +1,22 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@{
+    var isreadonly = true;
+    ViewData["readonly"] = true;
+}
+
+<div class="form-group margin-top-10 col-md-12">
+    <div class="col-md-6 color-black">
+        <label>@SeccionesAnaliticas.TituloEntidadSingular</label>
+        <input class="form-control" id="seannombre" name="seannombre" readonly/>
+    </div>
+
+    <div class="col-md-6">
+        <label>@SeccionesAnaliticas.Grupo</label>
+        <input class="form-control" id="seangrupo" name="seangrupo" readonly/>
+    </div>
+</div>
+
+
+
+

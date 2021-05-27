@@ -1,0 +1,380 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.CRM
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion;
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Helpers;
+@using Resources
+@model IEnumerable<CostesVariablesPeriodoLinModel>
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        //Añadimos los campos de las lineas (los que se ven y los que no)
+        //settings.Columns.Add("Id");
+        //settings.Columns.Add("Fkejercicio");
+        settings.Columns.Add("Tablavaria");
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            comboBoxProperties.TextField = "Text";
+            comboBoxProperties.ValueField = "Value";
+            comboBoxProperties.ValueType = typeof(string);
+            comboBoxProperties.DataSource = Session["valorescostesvariablesperiodo"];
+            comboBoxProperties.EnableSynchronization = DefaultBoolean.True;
+            comboBoxProperties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Precio";
+        });
+
+        settings.Columns["Tablavaria"].Visible = false;
+        settings.Columns["Descripcion"].Visible = true;
+        settings.Columns["Precio"].Visible = true;
+
+        //Tema Botones
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 5;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.CellEditorInitialize += (sender, args) =>
+        {
+
+            if (args.Column.FieldName == settings.KeyFieldName)
+            {
+                ASPxTextBox tb = (ASPxTextBox)args.Editor;
+                //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
+                tb.Focus();
+            }
+        };
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        var user = HttpContext.Current.User as ICustomPrincipal;
+
+        //Ahora para que no aparezcan en blanco los campos cuando creamos un registro, podemos inicializarlo con unos valores
+        settings.InitNewRow += (s, e) =>
+        {
+
+            //Si es un registro nuevo
+            e.NewValues["Tablavaria"] = 2130;
+            e.NewValues["Precio"] = 0;
+        };
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['Empresa'] = '" + user.Empresa + "'; }";
+        //settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['Empresa'] = '" + user.Empresa + "'; e.customArgs['Fkejercicio'] = '1'; }";
+
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+
+        function FunOnFocusedRowChanged(s, e) {
+            $("#GridView").unbind("keydown");
+            $('#GridView').keydown(function (event) {
+
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                var index = s.GetFocusedRowIndex();
+
+                switch (keycode) {
+                    case 113://editar
+                        if (!GridView.IsEditing()) {
+
+                            GridView.StartEditRow(index);
+                        }
+                        break;
+                    case 46://Eliminar
+                        if (!GridView.IsEditing()) {
+                            GridView.DeleteRow(index);
+                        }
+                        break;
+                    case 27://escape
+                        if (GridView.IsEditing()) {
+                            GridView.CancelEdit();
+                            GridView.Focus();
+                        }
+                        break;
+                    case 13://enter
+                        if (GridView.IsEditing()) {
+                            GridView.Focus();
+                            GridView.UpdateEdit();
+                        }
+                        break;
+                    case 107://mas
+                        CreateRow();
+                        break;
+                }
+
+            });
+        }
+
+        function CreateRow() {
+            if (!GridView.IsEditing()) {
+                GridView.Focus();
+                GridView.AddNewRow();
+            }
+        }
+
+        $(document).ready(function () {
+            GridView.Focus();
+        });
+
+</script>
+
+
+
+
+@*
+
+        @using System.Drawing
+    @using System.Text
+    @using System.Web.UI.WebControls
+    @using DevExpress.Data
+    @using Marfil.App.WebMain.Misc
+    @using Marfil.Dom.Persistencia.Helpers
+    @using Marfil.Dom.Persistencia.Model
+    @using Marfil.Dom.Persistencia.Model.Configuracion
+    @using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+    @using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+    @using Marfil.Dom.Persistencia.Model.FicherosGenerales
+    @using Marfil.Dom.Persistencia.ServicesView.Servicios
+    @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+    @using Marfil.Inf.Genericos.Helper
+    @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+    @using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+
+    @using Resources
+    @model IEnumerable<Marfil.Dom.Persistencia.Model.CRM.CostesVariablesPeriodoLinModel>
+    @{
+        bool needCreatCopy = ViewData["key"] != null;
+        var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+        var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+        var listcanales = new List<SelectListItem>();
+        if (configuracionAplicacion.VentasUsarCanal)
+        {
+            listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+            listcanales.Insert(0, new SelectListItem() { Value = "", Text = "" });
+        }
+
+        Html.EnableClientValidation(true);
+        Html.EnableUnobtrusiveJavaScript(true);
+    }
+
+    @{
+
+        var grid = Html.DevExpress().GridView(settings =>
+        {
+
+            //general
+            settings.Name = "GridViewLineas";
+            settings.KeyFieldName = "Id";
+            settings.CallbackRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLin" };
+            settings.EnableRowsCache = true;
+            settings.KeyboardSupport = true;
+            settings.Width = Unit.Percentage(100);
+            settings.Height = Unit.Pixel(500);
+            settings.SettingsPager.Visible = true;
+
+            //edition
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLinAddNew" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLinUpdate" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CostesVariablesPeriodoLinDelete" };
+            settings.CustomActionRouteValues = new { Controller = "CostesVariablesPeriodo", Action = "CustomGridViewEditingPartial" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+            settings.SettingsBehavior.ConfirmDelete = false;
+            settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+            settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+            //campos
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Id";
+                c.Visible = true;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Fkejercicios";
+                c.Visible = true;
+            });
+
+
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Descripcion";
+                c.Visible = true;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Precio";
+                c.Visible = true;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Enum";
+                c.Visible = true;
+            });
+
+
+            settings.CommandColumn.Visible = isreadonly;
+            if (!isreadonly)
+            {
+
+                settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+
+                //Esto de ahora creo que es para cuando has creado un registro, te da la opcion de Editar y Borrar. (2 botones)
+                //Una vez has editado, te da la opcion de Guardar y Cancelar (otros 2 botones)
+                settings.CommandColumn.ShowNewButton = false;
+                settings.CommandColumn.ShowDeleteButton = true; //Mostramos el boton eliminar
+                settings.CommandColumn.ShowEditButton = true; //Mostramos el boton Editar
+
+                //Los textos de los botones (Al pasar el cursor por encima de los botones sale) creo xd
+                settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblEditar + " - (F2)\"></i>";
+                settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
+                settings.SettingsCommandButton.UpdateButton.Text = "<span tabindex=\"-1\" class=\"fa fa-save\" title=\"" + General.LblGuardar + " - (Enter)\"></i>";
+                settings.SettingsCommandButton.CancelButton.Text = "<span tabindex=\"-1\" class=\"fa fa-close\" title=\"" + General.LblCancelar + " - (Ctlr + '+')\"></i>";
+
+                //Este es el boton clonar (a la derecha del de borrar)
+                settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnCopy", Text = "<span tabindex=\"-1\" class=\"fa fa-copy\" title=\"" + General.LblClonar + " - (Ctlr + '+')\"></i>" });
+
+                //Otros ajustes de los campos
+                settings.CommandColumn.Width = Unit.Pixel(150);
+                settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+                settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+                settings.CommandColumn.VisibleIndex = 0;
+                settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+            }
+
+            settings.SettingsEditing.ShowModelErrorsForEditors = true; //Esto no se lo que es
+
+            //Ahora para que no aparezcan en blanco los campos cuando creamos un registro, podemos inicializarlo con unos valores
+            settings.InitNewRow += (s, e) =>
+            {
+
+                //Si es un registro nuevo
+                e.NewValues["Precio"] = 0;
+
+                //En caso de que queramos crear una copia, los campos deben ser los mismos que los de la copia original
+                if(needCreatCopy)
+                {
+
+                    object keyValue = ViewData["key"];
+
+                    MVCxGridView gridView = (MVCxGridView)s;
+                    object[] rowValues = (object[])gridView.GetRowValuesByKeyValue(keyValue, new string[] {"Tablavaria", "Descripcion", "Precio", "Enum"});
+
+                    e.NewValues["Tablavaria"] = rowValues[0];
+                    e.NewValues["Descripcion"] = rowValues[1];
+                    e.NewValues["Precio"] = rowValues[2];
+                    e.NewValues["Enum"] = rowValues[3];
+                }
+            };
+
+            //Esto tampoco se lo que es. Sigo sin saber que hace getcallBack
+            settings.BeforeGetCallbackResult = (sender, e) =>
+            {
+                if (needCreatCopy)
+                {
+                    MVCxGridView gridView = (MVCxGridView)sender;
+                    gridView.AddNewRow();
+                }
+            };
+
+
+            //display
+            settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+            settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+            settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+            settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+            settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+            settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+            settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+
+        });
+
+    }
+
+*@
+
+
+
+
+
+
+
+
+
+

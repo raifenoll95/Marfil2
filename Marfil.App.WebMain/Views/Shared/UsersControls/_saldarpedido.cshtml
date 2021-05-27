@@ -1,0 +1,100 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Albaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes;
+@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    Html.AddScript(Url.Content("~/Scripts/Model/Pedidos/SaldarPedidoController.js"));
+}
+
+
+<div class="modal fade" id="saldarpedidomodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="SaldarpedidoCtrl">
+    <div class="modal-dialog modal-lg" role="document" ng-init="init('@Url.Action("GetLineasSaldarPedido",controller)','@Url.Action("SaldarPedido",controller)')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@General.LblSaldarPedido <span ng-show="Pedidosaldado"  class="orange2 pull-right margin-right-10"><i class="fa fa-warning"></i> Pedido saldado</span></h4>
+                
+            </div>
+
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <h3 ng-show="Carga">@General.LblLoading</h3>
+                        <div class="table-resposive" ng-show="!Carga">
+                            <table class="table tabe-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>@Articulos.Id</th>
+                                    <th>@General.CantidadPedida</th>
+                                    <th>@Albaranes.Largo</th>
+                                    <th>@Albaranes.Ancho</th>
+                                    <th>@Albaranes.Grueso</th>
+                                    <th>@Albaranes.Metros</th>
+                                    <th>@General.CantidadAlbaran</th>
+                                    <th>@General.MetrosAlbaran</th>
+                                    <th>@General.CantidadPendiente</th>
+                                    <th>#</th>
+                                </tr>
+                                </thead>
+                                <tbody style="max-height:500px;overflow-y:auto;">
+                                <tr ng-repeat="item in Articulos">
+                                    <td>{{item.Codigo}}</td>
+                                    <td>{{item.Cantidadpedida}}</td>
+                                    <td>{{item.Largo}}</td>
+                                    <td>{{item.Ancho}}</td>
+                                    <td>{{item.Grueso}}</td>
+                                    <td>{{item.Metros}}</td>
+                                    <td>{{item.Cantidadalbaran}}</td>
+                                    <td><input type="text" ng-change="CalcularPendientes(item)" ng-model="item.Metrosalbaran" class="form-control" decimalesnumerico/></td>
+                                    <td>{{item.Cantidadpendiente}}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown" class="btn dropdown-toggle btn-success">
+                                                Operaciones
+                                                <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-default">
+                                                <li>
+                                                    <a href="#"  ng-click="SaldarLinea(0,item)" style="cursor: pointer">Saldar pedido</a>
+                                                </li>
+
+                                                <li>
+                                                    <a ng-click="SaldarLinea(1,item)" style="cursor: pointer">Saldar con albarán</a>
+                                                </li>
+
+                                                <li>
+                                                    <a ng-click="SaldarLinea(2,item)" style="cursor: pointer">No saldar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <span class="text-danger pull-left col-md-8 text-left">{{Generalerrores}}</span>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <span class="btn btn-primary" ng-disabled="Carga" ng-click="Aceptar()">@General.BtnGuardar</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

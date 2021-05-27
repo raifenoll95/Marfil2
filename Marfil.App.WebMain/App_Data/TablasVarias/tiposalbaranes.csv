@@ -1,0 +1,12 @@
+001;Habitual;;true;false;false;false;false;0
+002;Autoconsumo;;false;false;true;false;false;1
+003;Devolución;Return;false;true;false;false;false;2
+004;Reclamación;Reclamation;false;true;false;false;false;3
+005;Imputación materiales fabricación;;false;false;true;false;true;4
+006;Salidas regularización stock;;false;false;true;false;true;5
+007;Roturas;;false;false;true;false;true;6
+008;Muestras;;false;false;true;false;true;7
+009;Salida material elaborado;;false;false;true;false;false;8
+010;Entrada regularización stock;;false;false;false;true;false;9
+011;Mercancías en consigna;;false;false;false;true;false;10
+012;Material a elaborar en terceros;;false;false;false;true;false;11

@@ -1,0 +1,124 @@
+﻿@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@model Marfil.Dom.Persistencia.Model.Terceros.AcreedoresModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var list1_31 = new List<int>();
+    for (int i = -1; i < 31; i++)
+    {
+        list1_31.Add(i + 1);
+    }
+    
+    var cvformaspago = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+}
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkformaspago, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvformaspago.Name = "Fkformaspago";
+            cvformaspago.Url = Url.Action("FormasPagoApi", "Api");
+            cvformaspago.Valor = Model.Fkformaspago.ToString();
+            cvformaspago.SoloLectura = isreadonly;
+            cvformaspago.Obligatorio = true;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvformaspago)
+        @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descuentoprontopago, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Descuentoprontopago, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+
+    </div>
+    @Html.LabelFor(f => Model.Descuentocomercial, new {@class = "control-label col-md-3"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Descuentocomercial, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+
+    </div>
+    <div class="col-md-12"> </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Descuentoprontopago, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Descuentocomercial, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Diafijopago1, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Diafijopago1, list1_31.Select(f => new SelectListItem() {Value = f.ToString(), Text = f.ToString()}), isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+
+    </div>
+    @Html.LabelFor(f => Model.Diafijopago2, new {@class = "control-label col-md-3"})
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Diafijopago2, list1_31.Select(f => new SelectListItem() {Value = f.ToString(), Text = f.ToString()}), isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+
+    </div>
+    <div class="col-md-12"> </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Diafijopago1, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Diafijopago2, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Periodonopagodesde, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Periodonopagodesde, isreadonly ? (object)new { @class = "form-control input-mask-date", @id="nopago1", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control input-mask-date", @autofocus = "" })
+
+    </div>
+    @Html.LabelFor(f => Model.Periodonopagohasta, new { @class = "control-label col-md-3" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Periodonopagohasta, isreadonly ? (object)new { @class = "form-control input-mask-date", @id = "nopago2", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control input-mask-date", @autofocus = "" })
+
+    </div>
+    <div class="col-md-12"> </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Periodonopagodesde, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Periodonopagohasta, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tarifa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Tarifa, Model.LstTarifas, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Tarifa, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Previsionpagosperiodicos, new { @class = "control-label col-md-3" })
+    <div class="col-md-2">
+        @Html.EnumDropDownListFor(f => Model.Previsionpagosperiodicos, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Previsionpagosperiodicos, "", new { @class = "text-danger" })
+    </div>
+
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Notas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextAreaFor(f => Model.Notas, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Notas, "", new { @class = "text-danger" })
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.maskedinput.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.input-mask-date').mask("99/99");
+        
+    });
+</script>

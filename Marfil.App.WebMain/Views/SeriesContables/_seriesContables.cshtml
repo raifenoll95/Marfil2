@@ -1,0 +1,153 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.SeriesContablesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+    var cvregimeniva = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    var cvcontadores = FCampoverificacion.Instance.GetModel<ContadoresModel>(WebHelper.ContextService);
+    var cvseries = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvejercicios = FCampoverificacion.Instance.GetModel<EjerciciosModel>(WebHelper.ContextService);
+    var isNuevo = !isreadonly && !iseditable;
+    var listtipodocumentos = WebHelper.GetApplicationHelper().GetListTiposDocumentosContables().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion });
+    //var listtiposasientos = WebHelper.GetApplicationHelper().GetListTipoAsientos().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion });
+}
+
+
+<script src="@Url.Content("~/Scripts/Model/Series/SeriesContablesController.js")"></script>
+
+
+@Html.HiddenFor(f => Model.Empresa)
+<input type="hidden" name="Bloqueo.Entidad" value="@Model.Bloqueo.Entidad" />
+<input type="hidden" name="Bloqueo.Campoclaveprimaria" value="@Model.Bloqueo.Campoclaveprimaria" />
+<input type="hidden" name="Bloqueo.Valorclaveprimaria" value="@Model.Bloqueo.Valorclaveprimaria" />
+<input type="hidden" name="Bloqueo.Bloqueada" value="@Model.Bloqueo.Bloqueada.ToString().ToLower()" />
+@if (!isNuevo)
+{
+    @Html.HiddenFor(f => Model.Tipodocumento)
+}
+<div ng-controller="SeriesContablesCtrl" ng-init="init('@Model.Id','@Model.Tipodocumento')">
+@*<div ng-controller="SeriesContablesCtrl" ng-init="init('@Model.Id')">*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipodocumento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.DropDownListFor(f => Model.Tipodocumento, listtipodocumentos, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled", @id = "idcontrol", @aria_label = "Codigo" } : (object)new { @required = "required", @class = "form-control", @autofocus = "", @ng_model = "tipodocumento", @aria_label = "Codigo", @id = "idcontrol" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Tipodocumento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @if (isNuevo)
+            {
+                @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" }
+                                : (object)new { @required = "required", @class = "form -control", @autofocus = ""})
+            }
+            else
+            {
+                <input type="text" class="form-control" name="Id" aria-label="Codigo" readonly="readonly" value="@Model.Id" />
+            }
+
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmonedas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvmonedas.Name = "Fkmonedas";
+                cvmonedas.Url = Url.Action("MonedasApi", "Api");
+                cvmonedas.Valor = Model.Fkmonedas.HasValue ? Model.Fkmonedas.ToString() : string.Empty;
+                cvmonedas.SoloLectura = isreadonly;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvmonedas)
+            @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkcontadores, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvcontadores.Name = "Fkcontadores";
+                cvcontadores.Url = Url.Action("ContadoresApi", "Api");
+                cvcontadores.Valor = Model.Fkcontadores;
+                cvcontadores.SoloLectura = isreadonly;
+                cvcontadores.Obligatorio = true;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvcontadores)
+
+        </div>
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ValidationMessageFor(f => Model.Fkcontadores, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkejercicios, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvejercicios.Name = "Fkejercicios";
+                cvejercicios.Url = Url.Action("EjerciciosApi", "Api");
+                cvejercicios.Valor = Model.Fkejercicios;
+                cvejercicios.SoloLectura = isreadonly;
+            }
+            @Html.Partial("CampoverificacionUI", cvejercicios)
+        </div>
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ValidationMessageFor(f => Model.Fkejercicios, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (iseditable)
+    {
+        @Html.EditorFor(f => Model.Bloqueo)
+    }
+
+    @{
+        if (isNuevo)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }
+
+</div>

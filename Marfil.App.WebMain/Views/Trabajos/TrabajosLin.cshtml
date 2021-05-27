@@ -1,0 +1,170 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Resources
+@*@using Marfil.Dom.Persistencia.Model.Stock.TareasLinModel
+    @model IEnumerable<TareasLinModel>*@
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Stock.TrabajosLinModel>
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Trabajos", Action = "TrabajosLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Trabajos", Action = "TrabajosLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Trabajos", Action = "TrabajosLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Trabajos", Action = "TrabajosLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add("Id");
+        settings.Columns.Add("Año").SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Precio";
+            c.Width = Unit.Percentage(50);
+            c.PropertiesEdit.DisplayFormatString = "N2";
+        });
+        settings.Columns["Año"].Width = Unit.Percentage(50);
+        settings.Columns["Id"].Visible = false;
+
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+            if (col.FieldName == "Precio")
+            {
+                var sum = c.Grid.GetTotalSummaryValue(c.Grid.TotalSummary["Precio"]);
+                //ViewContext.Writer.Write(General.LblPorcentajeTotal + ": " + double.Parse(sum.ToString()).ToString("0.00") + " %");
+            }
+        });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Precio");
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 2;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+        settings.InitNewRow += (s, e) => { e.NewValues["Precio"] = 0; };
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+
+            editor.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Right;
+            editor.ValidationSettings.Display = Display.Dynamic;
+            editor.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            editor.ValidationSettings.SetFocusOnError = true;
+
+            if (e.Column.FieldName == "Año")
+            {
+                editor.Focus();
+            }
+        };
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        // Focus en la Grid
+        //settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113://editar
+                    if (!GridView.IsEditing()) {
+
+                        GridView.StartEditRow(index);
+                    }
+                    break;
+                case 46://Eliminar
+                    if (!GridView.IsEditing()) {
+                        GridView.DeleteRow(index);
+                    }
+                    break;
+                case 27://escape
+                    if (GridView.IsEditing()) {
+                        GridView.CancelEdit();
+                        GridView.Focus();
+                    }
+                    break;
+                case 13://enter
+                    if (GridView.IsEditing()) {
+                        GridView.Focus();
+                        GridView.UpdateEdit();
+                    }
+                    break;
+                case 107://mas
+                    CreateRow();
+                    break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        if (!GridView.IsEditing()) {
+            GridView.Focus();
+            GridView.AddNewRow();
+
+        }
+    }
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
+</script>

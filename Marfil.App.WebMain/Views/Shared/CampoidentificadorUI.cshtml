@@ -1,0 +1,25 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Resources
+@model Marfil.Dom.ControlsUI.Campoidentificador.CampoidentificadorModel
+@{
+    var txtName = "txt" + Guid.NewGuid().ToString().Replace("-", "");
+}
+<div class="input-group" ng-controller="CampoidentificadorController" ng-init="init('@Model.Url','@Model.Name','@Model.CampoIdentificador','@Model.CampoDescripcion', '@Constantes.NombreBusquedaGlobal','@Model.Valor','@Model.Params','@Model.SettingsVerificacion.UrlVerificacion','@Model.SettingsVerificacion.UrlEdicion',6,'@Model.Mascara',@Model.EditarEnPagina.ToString().ToLower(),@Model.Rellenacod,@Model.PermiteExistentes.ToString().ToLower())">
+    <input ng-keydown="checkenter($event)" aria-label="Id" style="width:200px !important" placeholder="@Html.Raw(!string.IsNullOrEmpty(Model.Mascara) ? Model.Mascara+ "..." : "")" enter-as-tab ng-keydown="keydown($event)" @Html.Raw(Model.Autofocus ? "autofocus=\"autofocus\"" : "") @Html.Raw(Model.SoloLectura ? "readonly=\"readonly\"" : string.Empty) @Html.Raw(Model.Obligatorio ? "data-val=\"true\" data-val-required=\"" + string.Format(Resources.Unobtrusive.PropertyValueRequired, Model.DisplayName) + "\"" : string.Empty) name="@Model.Name" id="@Model.Name" ng-model="valor" ng-blur="lostFocus()" ng-focus="" type="text" class="@Model.Configuracion.AnchoTexto">
+
+    <div ng-cloak id="@Html.Raw("lbl" + Model.Name)" class="input-group-addon" style="width: 100%; text-align: left;">
+        <span ng-show="!loading" id="cv-@(Model.Name)-descripcion" >{{descripcion}}</span>
+        <span class="fa fa-hourglass-start" style="text-align: left;" ng-show="loading"> @General.LblLoading</span>
+    </div>
+    @if (Model.PermiteBuscar)
+    {
+        <span class="input-group-btn">
+            <button tabindex="-1" @Html.Raw(Model.SoloLectura ? "disabled=\"disabled\"" : string.Empty) type="button" class="btn btn-purple btn-sm pull-right" ng-controller="BotonbuscarCtrl" ng-click="buscar('@Model.CampoIdentificador', '@Model.Name', '@Constantes.NombreBusquedaGlobal', '@Model.Url','@Model.Titulo','@Model.Params')">
+                <i class="fa fa-search"></i>
+                @General.LblBuscar
+            </button>
+        </span>
+    }
+   
+    
+</div>

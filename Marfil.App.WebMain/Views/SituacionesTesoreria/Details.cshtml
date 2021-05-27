@@ -1,0 +1,29 @@
+﻿@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+<div>   
+    @{
+        ViewData["readonly"] = true;
+    }
+    <div class="form-horizontal">
+        @Html.Partial("_situacionestesoreria", Model as SituacionesTesoreriaModel)
+    </div>
+</div>
+
+@if (ViewBag.Modificar)
+{
+    <div class="col-md-offset-2 col-md-10">
+        <p class="margin-top">
+            <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((SituacionesTesoreriaModel)Model).Cod})">
+                <i class="ace-icon fa fa-pencil bigger-110"></i>
+                @General.LblEditar
+            </a>
+        </p>
+    </div>
+}

@@ -1,0 +1,21 @@
+﻿@{
+    string messagesError = string.Join("; ", ViewData.ModelState.Values
+        .SelectMany(x => x.Errors)
+        .Select(x => x.ErrorMessage));
+
+    if (!string.IsNullOrEmpty(messagesError))
+    {
+
+        
+
+        <text>
+            <script>
+                $(document).ready(function() {
+                    messagesService.show(TipoMensaje.Error, "Ups!", "@Html.Raw(messagesError)");
+                });
+            </script>
+        </text>
+
+    }
+   
+}

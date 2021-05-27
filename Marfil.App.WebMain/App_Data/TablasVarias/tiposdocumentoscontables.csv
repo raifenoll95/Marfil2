@@ -1,0 +1,6 @@
+AST;Asientos;Accounting entries;false
+INM;Inmovilizado;Assets;false
+IVR;IVA repercutido;Output VAT;false
+IVS;IVA soportado;Input VAT;false
+PRC;Previsión cobros;Collection forecast;false
+PRP;Previsión pagos;Payments forecast;false

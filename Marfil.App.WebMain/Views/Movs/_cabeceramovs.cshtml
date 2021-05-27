@@ -1,0 +1,192 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@*@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes*@
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Contabilidad.Movs.MovsModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+
+    // var cvcampoverificacion = FCampoverificacion.Instance.GetModel<TablasVariasModel>(WebHelper.ContextService);
+
+    var listdescripciones = WebHelper.GetApplicationHelper().GetListDescripcionAsientos().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listdescripciones.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    
+    var listatiposasientos = WebHelper.GetApplicationHelper().GetListTiposAsientos().Where(f => !f.MovAutomatico).Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();      
+
+    var listcanalcontable = WebHelper.GetApplicationHelper().GetListCanalContable().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listcanalcontable.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Fkejercicio)
+@Html.HiddenFor(f=> Model.Integridadreferencial)
+@Html.HiddenFor(f=>Model.Identificadorsegmento)
+@Html.HiddenFor(f => Model.Bloqueado)
+@Html.HiddenFor(f => Model.Vinculo)
+
+@if (isNuevo)
+{
+    <div class="form-group">
+            @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvseriecontable.Name = "Fkseriescontables";
+                    cvseriecontable.Url = Url.Action("SeriesContablesApi", "Api");
+                    cvseriecontable.Valor = Model.Fkseriescontables;
+                    //cvseriecontable.Titulo = "Series contables";
+                    cvseriecontable.Params = "{\"tipodocumento\":\"AST\"}";
+                    cvseriecontable.SoloLectura = false;
+                    cvseriecontable.Autofocus = true;
+                    cvseriecontable.Obligatorio = true;
+                    cvseriecontable.Configuracion.OcultarTexto = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvseriecontable)
+            </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
+        </div>
+        </div>
+}
+else
+{
+    @Html.HiddenFor(f => Model.Fkseriescontables)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencia, new {@class = "form-control", @readonly = "readonly"})
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-6 col-md-offset-2">  
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new {@class = "text-danger"})
+        </div>
+    </div>
+}
+
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fecha, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fecha, (object)new { @class = "form-control", @ng_blur = "ValidarFecha()", @ng_model = "Fecha" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fecha, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*<div class="form-group">
+    @Html.LabelFor(f => Model.Tipoasientoenum, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownListFor(f => Model.Tipoasientoenum, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Tipoasientoenum, "", new { @class = "text-danger" })
+    </div>
+</div>*@
+
+<div class="form-group">
+
+    @Html.LabelFor(f => Model.Tipoasiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Tipoasiento, listatiposasientos, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Tipoasiento, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*<div class="form-group">
+    @Html.LabelFor(f => Model.Codigodescripcionasiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.TextBoxFor(f => Model.Codigodescripcionasiento, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+</div>*@
+
+@*<div class="form-group">
+    @Html.LabelFor(f => Model.Codigodescripcionasiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(f => Model.Codigodescripcionasiento, listdescripciones, isreadonly ?
+                                    (object)new { @aria_label = "Codigodescripcionasiento", @disabled = "disabled", @class = "form-control" } :
+                                    (object)new { @aria_label = "Codigodescripcionasiento", @ng_blur = "Mostrardescripcion()",@ng_model = "Codigodescripcionasiento", @class = "form-control" })    
+    </div>
+</div>*@
+
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Codigodescripcionasiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(f => Model.Codigodescripcionasiento, listdescripciones, isreadonly ?
+           (object)new { @aria_label = "Codigodescripcionasiento", @class = "form-control", @disabled = "disabled" } :
+           (object)new { @aria_label = "Codigodescripcionasiento", @ng_model = "Codigodescripcionasiento", @class = "form-control" })
+    </div>
+</div>
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcionasiento, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Descripcionasiento,
+            isreadonly ? (object)new {  @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Descripcionasiento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencialibre, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencialibre, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(f => Model.Canalcontable, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.DropDownListFor(f => Model.Canalcontable, listcanalcontable, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Canalcontable, "", new { @class = "text-danger" })
+            </div>
+    </div>
+
+
+
+
+@Html.HiddenFor(f => Model.Traza)
+@Html.HiddenFor(f => Model.Fkmonedas)
+@Html.HiddenFor(f => Model.Tipocambio)
+
+

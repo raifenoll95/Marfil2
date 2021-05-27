@@ -1,0 +1,13 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@using RPedidos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Pedidos;
+@model Marfil.Dom.Persistencia.Listados.ListadosProductosAlbaranesCompras
+@Html.Partial("_productosEnDocumento",Model)

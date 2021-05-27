@@ -1,0 +1,140 @@
+--Publicado en azure
+
+create table DivisionLotes (
+
+	empresa varchar(4) not null,
+	id int IDENTITY(1,1) NOT NULL,
+	fkejercicio int not null,
+	fkseries varchar(3) not null,
+	identificadorsegmento nvarchar(12),
+	referencia nvarchar(30),
+	fechadocumento datetime,
+	fkalmacen varchar(4),
+	fkproveedores varchar(15),
+	nombreproveedor nvarchar(200),
+	notas ntext,
+	fktransportista varchar(15),
+	referenciadocumentoproveedor nvarchar(30),
+	fechadocumentoproveedor datetime,
+	nombretransportista nvarchar(40),
+	conductor nvarchar(20),
+	matricula nvarchar(12),
+	fkoperarios varchar(15),
+	fkoperadortransporte varchar(15),
+	fkzonas varchar(3),
+	fkusuarioalta uniqueidentifier not null,
+	fechaalta datetime not null,
+	fkusuariomodificacion uniqueidentifier not null,
+	fechamodificacion datetime not null,
+	integridadreferencialflag uniqueidentifier,
+	fkestados nvarchar(10) not null,
+	tipoalmacenlote int,
+
+	primary key(empresa, id)
+);
+
+
+create table DivisionLotesentradalin (
+
+	empresa varchar(4) not null,
+	fkdivisioneslotes int not null,
+	id int not null,
+	fkarticulos nvarchar(15),
+	descripcion nvarchar(120),
+	lote nvarchar(12),
+	tabla int,
+	cantidad float,
+	largo float,
+	ancho float,
+	grueso float,
+	fkunidades nvarchar(2),
+	metros float,
+	notas ntext,
+	documentoorigen nvarchar(15),
+	documentodestino nvarchar(15),
+	canal nvarchar(3),
+	revision nvarchar(1),
+	decimalesmonedas int,
+	decimalesmedidas int,
+	bundle varchar(2),
+	tblnum int,
+	contenedor nvarchar(12),
+	sello nvarchar(10),
+	caja int,
+	pesoneto float,
+	pesobruto float,
+	seccion nvarchar(4),
+	costeadicionalmaterial float,
+	costeadicionalportes float,
+	costeadicionalotro float,
+	costeadicionalvariable float,
+	orden int,
+	flagidentifier uniqueidentifier,
+	fkcontadoreslotes varchar(12),
+	precio float,
+	nuevo bit,
+	loteautomaticoid varchar(40),
+	lotenuevocontador int,
+	tipoalmacenlote int,
+
+	primary key (empresa,fkdivisioneslotes,id),
+	foreign key (empresa, fkdivisioneslotes) references DivisionLotes (empresa,id)
+);
+
+
+create table DivisionLotessalidalin (
+
+	empresa varchar(4) not null,
+	fkdivisioneslotes int not null,
+	id int not null,
+	fkarticulos nvarchar(15),
+	descripcion nvarchar(120),
+	lote nvarchar(12),
+	tabla int,
+	cantidad float,
+	largo float,
+	ancho float,
+	grueso float,
+	fkunidades nvarchar(2),
+	metros float,
+	notas ntext,
+	documentoorigen nvarchar(15),
+	documentodestino nvarchar(15),
+	canal nvarchar(3),
+	revision nvarchar(1),
+	decimalesmonedas int,
+	decimalesmedidas int,
+	bundle varchar(2),
+	tblnum int,
+	contenedor nvarchar(12),
+	sello nvarchar(10),
+	caja int,
+	pesoneto float,
+	pesobruto float,
+	seccion nvarchar(4),
+	orden int,
+	flagidentifier uniqueidentifier,
+	precio float,
+	tipoalmacenlote int,
+
+	primary key (empresa,fkdivisioneslotes,id),
+	foreign key (empresa, fkdivisioneslotes) references DivisionLotes (empresa,id)
+);
+
+create table DivisionLotescostesadicionales (
+
+	empresa varchar(4) not null,
+	fkdivisionlotes int not null,
+	id int not null,
+	tipodocumento int not null,
+	referenciadocumento nvarchar(30),
+	importe float,
+	porcentaje float,
+	total float,
+	tipocoste int not null,
+	tiporeparto int not null,
+	notas ntext,
+
+	primary key (empresa,fkdivisionlotes,id),
+	foreign key (empresa, fkdivisionlotes) references DivisionLotes (empresa,id)
+);

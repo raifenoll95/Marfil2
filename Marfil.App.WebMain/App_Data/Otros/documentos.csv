@@ -1,0 +1,55 @@
+0;Defecto;0;0;Presupuestos.repx;true
+0;Pie;0;1;PresupuestosPie.repx;false
+0;Presupuesto medidas;0;0;PresupuestosMedidas.repx;false
+0;Presupuesto metros;0;0;PresupuestosMetros.repx;false
+1;Defecto;0;0;Pedidos.repx;true
+1;Pie;0;1;PedidosPie.repx;false
+1;Pedido sin valorar;0;0;PedidosSinValorar.repx;false
+1;Pedido valorado;0;0;PedidosValorado.repx;false
+1;Pedido taller;0;0;PedidosTaller.repx;false
+2;Defecto;0;0;Albaranes.repx;true
+2;Pie;0;1;AlbaranesPie.repx;false
+2;Albaran lote agrupado;0;0;AlbaranesLoteAgrupado.repx;false
+2;Albaran lote detallado;0;0;AlbaranesLoteDetallado.repx;false
+2;Albaran taller valorado;0;0;AlbaranesTallerValorado.repx;false
+2;Albaran taller sin valorar;0;0;AlbaranesTallerSinValorar.repx;false
+3;Defecto;0;0;Facturas.repx;true
+3;Pie;0;1;FacturasPie.repx;false
+4;Defecto;0;0;PresupuestosCompras.repx;true
+4;Pie;0;1;PresupuestosComprasPie.repx;false
+4;Presupuesto medidas;0;0;PresupuestosComprasMedidas.repx;false
+4;Presupuesto metros;0;0;PresupuestosComprasMetros.repx;false
+5;Defecto;0;0;PedidosCompras.repx;true
+5;Pie;0;1;PedidosComprasPie.repx;false
+5;Pedido sin valorar;0;0;PedidosComprasSinValorar.repx;false
+5;Pedido valorado;0;0;PedidosComprasValorado.repx;false
+5;Pedido taller;0;0;PedidosComprasTaller.repx;false
+6;Defecto;0;0;AlbaranesCompra.repx;true
+6;Pie;0;1;AlbaranesCompraPie.repx;false
+6;Albaran lote agrupado;0;0;AlbaranesComprasLoteAgrupado.repx;false
+6;Albaran lote detallado;0;0;AlbaranesComprasLoteDetallado.repx;false
+6;Albaran taller valorado;0;0;AlbaranesComprasTallerValorado.repx;false
+6;Albaran taller sin valorar;0;0;AlbaranesComprasTallerSinValorar.repx;false
+6;Agrupado;0;0;AlbaranesComprasAgrupado.repx;false
+6;Sin agrupar;0;0;AlbaranesComprasSinAgrupar.repx;false
+6;Listado etiquetas;0;0;AlbaranesComprasListadoEtiquetas.repx;false
+7;Defecto;0;0;FacturasCompras.repx;true
+7;Pie;0;1;FacturasComprasPie.repx;false
+30;Defecto;0;0;KitEtiquetas.repx;true
+40;Defecto;0;0;BundleEtiquetas.repx;true
+50;Defecto;0;0;Reservas.repx;true
+50;Defecto;0;0;ReservasPie.repx;false
+60;Defecto;0;0;TraspasosDefecto.repx;true
+70;Defecto;0;0;InventariosDefecto.repx;true
+1000;Defecto;0;0;DiarioContable.repx;true
+1010;Defecto;0;0;Mayor.repx;true
+1015;Defecto;0;0;SumasYSaldos.repx;true
+1020;Defecto;0;0;BalancePedidosPorProducto.repx;true
+1020;Documento;0;0;BalancePedidosPorDocumento.repx;false
+1020;Producto;0;0;BalancePedidosPorProducto.repx;false
+1025;ArticuloAgrupado;0;0;ArticuloAgrupado.repx;false
+1025;ArticuloDetallado;0;0;ArticuloDetallado.repx;false
+1025;ClienteAgrupado;0;0;ClienteAgrupado.repx;false
+1025;ClienteDetallado;0;0;ClienteDetallado.repx;false
+1025;ProveedorAgrupado;0;0;ProveedorAgrupado.repx;false
+1025;ProveedorDetallado;0;0;ProveedorDetallado.repx;false

@@ -1,0 +1,98 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IModelView
+@{
+    var modelview = Model as TiposCuentasModel;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+<script src="@Url.Content("~/Scripts/Model/Tiposcuentas/TiposcuentasController.js")"></script>
+
+<div ng-controller="TiposcuentasCtrl" ng-init="init('@((int)modelview.Categoria)','@modelview.Cuenta')">
+
+    @Html.HiddenFor(f => ((TiposCuentasModel)Model).Empresa)
+    @if (isreadonly || iseditable)
+    {
+        @Html.HiddenFor(f => ((TiposCuentasModel)Model).Tipos)
+        @Html.HiddenFor(f => ((TiposCuentasModel)Model).Categoria)
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((TiposCuentasModel)Model).Tipos, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownList("Tipos", ((TiposCuentasModel)Model).Tipos, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => ((TiposCuentasModel)Model).Tipos, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((TiposCuentasModel)Model).Categoria, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListForAngular("Categoria", ((TiposCuentasModel)Model).Categoria, "Categoria", isreadonly || iseditable ? "class = \"form-control\" disabled = \"disabled\"" : "class = \"form-control\"")
+            @Html.ValidationMessageFor(f => ((TiposCuentasModel)Model).Categoria, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((TiposCuentasModel)Model).Cuenta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" ng-show="Categoria=='0'">
+            @{
+                campoverificacion.Name = "Cuenta";
+                campoverificacion.Url = Url.Action("Supercuentas", "Api");
+                campoverificacion.Valor = ((TiposCuentasModel)Model).Cuenta;
+                campoverificacion.Titulo = "Cuentas";
+                campoverificacion.Obligatorio = true;
+                campoverificacion.Longitud = WebHelper.GetApplicationHelper().NivelesCuentas(((TiposCuentasModel)Model).Empresa).ToString();
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+
+        <div class="col-md-2" ng-show="Categoria=='1'">
+            <input type="text" name="Cuenta" ng-blur="rellenar()" ng-model="Cuenta" value="@(((TiposCuentasModel)Model).Cuenta)" class="form-control" min="@WebHelper.GetApplicationHelper().NivelesCuentas(((TiposCuentasModel) Model).Empresa)" maxlength="@WebHelper.GetApplicationHelper().NivelesCuentas(((TiposCuentasModel) Model).Empresa)" />
+        </div>
+
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((TiposCuentasModel)Model).Cuenta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((TiposCuentasModel)Model).Nifobligatorio, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(f => ((TiposCuentasModel)Model).Nifobligatorio, new { })
+            @Html.ValidationMessageFor(f => ((TiposCuentasModel)Model).Nifobligatorio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" ng-show="Categoria=='0'">
+        <div class="col-md-10 col-md-offset-2">
+            <span class="fa-2x">
+                @Tiposcuentas.CuentasAsociadas
+            </span>
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.Partial("TiposcuentasLin", ((TiposCuentasModel)Model))
+        </div>
+    </div>
+</div>

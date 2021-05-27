@@ -1,0 +1,156 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using DevExpress.XtraSpreadsheet.Utils
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@model IEnumerable<CriteriosagrupacionLinModel>
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Criteriosagrupacion", Action = "CriteriosagrupacionLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Criteriosagrupacion", Action = "CriteriosagrupacionLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Criteriosagrupacion", Action = "CriteriosagrupacionLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Criteriosagrupacion", Action = "CriteriosagrupacionLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add("Id");
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Campo";
+            
+            c.ColumnType=MVCxGridViewColumnType.ComboBox;
+            var p = c.PropertiesEdit as ComboBoxProperties;
+            foreach (var i in Enum.GetValues(typeof(CamposAgrupacionAlbaran)))
+                p.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+            p.ValueType = typeof(int);
+            p.DropDownStyle = DropDownStyle.DropDownList;
+        } );
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Orden";
+            c.Width = Unit.Pixel(100);
+            c.ColumnType=MVCxGridViewColumnType.SpinEdit;
+            c.PropertiesEdit.DisplayFormatString = "N0";
+            c.SortOrder=ColumnSortOrder.Ascending;
+        });
+
+        settings.Columns["Id"].Visible = false;
+        
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 2;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+        settings.InitNewRow += (s, e) => { e.NewValues["Id"] = Model.Any() ? Model.Max(f=>f.Id)+1 : 1; };
+        
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113://editar
+                    if (!GridView.IsEditing()) {
+
+                        GridView.StartEditRow(index);
+                    }
+                    break;
+                case 46://Eliminar
+                    if (!GridView.IsEditing()) {
+                        GridView.DeleteRow(index);
+                    }
+                    break;
+                case 27://escape
+                    if (GridView.IsEditing()) {
+                        GridView.CancelEdit();
+                        GridView.Focus();
+                    }
+                    break;
+                case 13://enter
+                    if (GridView.IsEditing()) {
+                        GridView.Focus();
+                        GridView.UpdateEdit();
+                    }
+                    break;
+                case 107://mas
+                    CreateRow();
+                    break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        if (!GridView.IsEditing()) {
+            GridView.Focus();
+            GridView.AddNewRow();
+
+        }
+    }
+   
+
+</script>

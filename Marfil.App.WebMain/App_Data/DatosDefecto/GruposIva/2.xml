@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-16"?>
+<GruposIvaModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Empresa>0001</Empresa>
+  <Id>REDU</Id>
+  <Descripcion>Reducido</Descripcion>
+  <Lineas>
+    <GruposIvaLinModel>
+      <Empresa>0001</Empresa>
+      <FkGruposIva>REDU</FkGruposIva>
+      <Id>5</Id>
+      <Desde>2012-09-01T00:00:00</Desde>
+      <FkTiposIvaSinRecargo>010</FkTiposIvaSinRecargo>
+      <FkTiposIvaConRecargo>011</FkTiposIvaConRecargo>
+      <FkTiposIvaExentoIva>000</FkTiposIvaExentoIva>
+    </GruposIvaLinModel>
+  </Lineas>
+</GruposIvaModel>

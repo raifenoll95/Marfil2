@@ -1,0 +1,187 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras.FacturasComprasTotalesModel>
+
+@{
+    var usuario = HttpContext.Current.User as ICustomPrincipal;
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewTotales";
+        settings.KeyFieldName = "Fktiposiva";
+        settings.CallbackRouteValues = new { Controller = "FacturasCompras", Action = "FacturasComprasTotales" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.HorizontalScrollBarMode=ScrollBarMode.Auto;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SBrutototal";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Porcentajedescuentocomercial";
+            var editor = (TextEditProperties)c.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SImportedescuentocomercial";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Porcentajedescuentoprontopago";
+            var editor = (TextEditProperties)c.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SImportedescuentoprontopago";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SBaseimponible";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            if (Model.Any(f => f.Baseconredondeo))
+                c.HeaderStyle.ForeColor = Color.Coral;
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fktiposiva";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Porcentajeiva";
+            var editor = (TextEditProperties)c.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+        } );
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SCuotaiva";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        } );
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Porcentajerecargoequivalencia";
+            var editor = (TextEditProperties)c.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SImporterecargoequivalencia";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        } );
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SBaseretencion";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Porcentajeretencion";
+            var editor = (TextEditProperties)c.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SImporteretencion";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SSubtotal";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+
+        } );
+
+
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+            if (col.FieldName == "SBrutototal")
+            {
+
+                var model = c.Grid.DataSource as IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras.FacturasComprasTotalesModel>;
+                var decimalesmonedas = model.FirstOrDefault()?.Decimalesmonedas ?? 2;
+                var sum = model.Sum(f => f.Subtotal);
+                ViewContext.Writer.Write("<h4 class=\"pull-right\">" + @FacturasCompras.Importetotaldoc + ": <span class=\"green bigger\">" + (sum ?? 0).ToString("N" + decimalesmonedas)+ "</span></h4>");
+            }
+        });
+
+
+
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = settings.Columns.Count;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.ClientSideEvents.RowDblClick = null;
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+    });
+}
+@grid.Bind(Model).GetHtml()

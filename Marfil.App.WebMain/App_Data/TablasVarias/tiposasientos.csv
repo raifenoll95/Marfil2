@@ -1,0 +1,8 @@
+F1;Normal;;true;false
+F2;Simulación;;false;false
+F3;Asiento vinculado;;false;false
+R1;Apertura provisional;;false;true
+R2;Apertura;;false;true
+R3;Regularización existencias;;false;true
+R4;Regularización grupos 6 y 7;;false;true
+R5;Cierre;;false;true

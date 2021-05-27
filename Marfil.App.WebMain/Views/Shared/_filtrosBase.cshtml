@@ -1,0 +1,36 @@
+﻿@model Marfil.Dom.Persistencia.Listados.Base.IListados
+
+@{
+    var listPropierties = Model.GetType().GetProperties();
+}
+
+@foreach (var item in listPropierties)
+{
+    if (item.Name != "TituloListado" && item.Name != "IdListado")
+    {
+        <div class="form-group">
+            @Html.Label(item.Name, new { @class = "control-label col-md-2" })
+            @{
+                if (item.PropertyType == typeof(int) || item.PropertyType == typeof(double))
+                {
+                    <div class="col-md-2">
+                        @Html.Editor(item.Name, new { @class = "form-control" })
+                    </div>
+                }
+                else if (item.PropertyType == typeof(bool))
+                {
+                    <div class="col-md-2">
+                        @Html.Editor(item.Name)
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-10">
+                        @Html.Editor(item.Name, new { @class = "form-control" })
+                    </div>
+                }
+            }
+        </div>
+                }
+
+                }

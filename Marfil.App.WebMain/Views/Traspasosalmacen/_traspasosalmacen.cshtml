@@ -1,0 +1,93 @@
+﻿@using Marfil.App.WebMain.Controllers
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@using Filter = System.Web.Mvc.Filter
+@model Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen.TraspasosalmacenModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable && !(Model.Importado ?? false);
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    
+    var columns = new[]
+    {
+        new ColumnDefinition() {field = "Id", displayName = "Id", visible = false, width = 100 },
+        new ColumnDefinition() {field = "Fkarticulos", displayName = "Cod. Artículo", visible = true, width = 150},
+        new ColumnDefinition() {field = "Descripcion", displayName = "Descripción", visible = true, width = 200},
+        new ColumnDefinition() {field = "Cantidad", displayName = "Cantidad", visible = true, width = 100, enableCellEdit = true, type = "number"},
+        new ColumnDefinition() {field = "Lote", displayName = "Lote", visible = true, width = 100, enableCellEdit = false},
+        new ColumnDefinition() {field = "SLargo", displayName = "Largo", visible = true, width = 100},
+        new ColumnDefinition() {field = "SAncho", displayName = "Ancho", visible = true, width = 100},
+        new ColumnDefinition() {field = "SGrueso", displayName = "Grueso", visible = true, width = 100},
+        new ColumnDefinition() {field = "SMetros", displayName = "Metros", visible = true, width = 100},
+        new ColumnDefinition() {field = "SPrecio", displayName = "Precio", visible = true, width = 100},
+        new ColumnDefinition() {field = "Porcetanjedescuento", displayName = "%  Desc.", visible = true, width = 100},
+        new ColumnDefinition() {field = "SImporte", displayName = "Subtotal", visible = true, width = 100}
+
+    };
+}
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Traspasos/TraspasosalmacenController.js")"></script>
+<div  ng-controller="AlbaranesCtrl" ng-init="init(@((!isNuevo).ToString().ToLower()),'@Model.Fkproveedores','@Model.Fkagentes','@Model.Fkcomerciales','@(Model.Fkdireccionfacturacion?.ToString()??string.Empty)','','@Model.Fkobras',@isNuevo.ToString().ToLower(),'@(Model.Tipodeportes.HasValue ? ((int)Model.Tipodeportes).ToString() : string.Empty)','@Url.Action("TraspasosalmacenRefresh")','@Url.Action("BancosMandatosApi","Api")','@Url.Action("ImportarLineas")','@string.Format("{0};{1};{2}",Model.Referencia??string.Empty,(Model.DocumentosImpresion?.Tipo)?.ToString()??string.Empty,Model.DocumentosImpresion?.Defecto??string.Empty)')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#otros">@General.LblServicios</a></li>
+            <li><a data-toggle="tab" href="#transporte">@General.LblTransporte</a></li>
+            <li><a data-toggle="tab" href="#desglose">@General.LblDesglose</a></li>
+            <li><a data-toggle="tab" href="#costes">@AlbaranesCompras.CostesAdicionales</a></li>
+            @if (iseditable || isreadonly)
+            {
+                <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+            }
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_cabeceraTraspasosalmacen", Model)
+        </div>
+        <div id="transporte" class="tab-pane fade in">
+            @Html.Partial("_transporte", Model)
+        </div>
+        <div id="otros" class="tab-pane fade in">
+            @Html.Partial("_otros", Model)
+        </div>
+        <div id="desglose" class="tab-pane fade in">
+            @Html.Partial("_desglose", Model)
+        </div>
+        <div id="costes" class="tab-pane fade in">
+            @Html.Partial("_costes", Model)
+        </div>
+        @if (iseditable || isreadonly)
+        {
+            <div id="galeria" class="tab-pane fade in">
+                @Html.Partial("_galeriaimagenes", Model.Galeria)
+            </div>
+        }
+    </div>
+
+</div>
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        var target = $(e.target).attr("href"); // activated tab
+        if (target === "#desglose") {
+            GridViewLineas.Refresh();
+        }
+        else if (target === "#costes") {
+            GridViewCosteAdicional.Refresh();
+        }
+    });
+
+
+    $.validator.setDefaults({ ignore: null });
+
+</script>

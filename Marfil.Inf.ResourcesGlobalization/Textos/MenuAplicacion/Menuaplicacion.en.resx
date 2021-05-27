@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ficheros" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="unidades" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="tiposiva" xml:space="preserve">
+    <value>TAX types</value>
+  </data>
+  <data name="tiposcuentas" xml:space="preserve">
+    <value>Account types</value>
+  </data>
+  <data name="terceros" xml:space="preserve">
+    <value>Thirds</value>
+  </data>
+  <data name="tablasvarias" xml:space="preserve">
+    <value>Generic tables</value>
+  </data>
+  <data name="regimeniva" xml:space="preserve">
+    <value>TAX</value>
+  </data>
+  <data name="puertos" xml:space="preserve">
+    <value>Docks</value>
+  </data>
+  <data name="provincias" xml:space="preserve">
+    <value>Provinces</value>
+  </data>
+  <data name="proveedores" xml:space="preserve">
+    <value>Providers</value>
+  </data>
+  <data name="monedas" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="gruposiva" xml:space="preserve">
+    <value>TAX groups</value>
+  </data>
+  <data name="cambiosmonedas" xml:space="preserve">
+    <value>Management of foreign currency changes</value>
+  </data>
+  <data name="mantformaspago" xml:space="preserve">
+    <value>Paymenth methods</value>
+  </data>
+  <data name="cuentas" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="contabilidad" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="configuracion" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="aseguradoras" xml:space="preserve">
+    <value>Insurance companies</value>
+  </data>
+  <data name="bancos" xml:space="preserve">
+    <value>Banks</value>
+  </data>
+  <data name="agentes" xml:space="preserve">
+    <value>Agents</value>
+  </data>
+  <data name="manttiposretenciones" xml:space="preserve">
+    <value>Retention types</value>
+  </data>
+  <data name="operarios" xml:space="preserve">
+    <value>Workers</value>
+  </data>
+  <data name="clientes" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="produccion" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="acabados" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="grosores" xml:space="preserve">
+    <value>Thickness</value>
+  </data>
+  <data name="guiascontables" xml:space="preserve">
+    <value>Contable guides</value>
+  </data>
+  <data name="familiasproductos" xml:space="preserve">
+    <value>Families</value>
+  </data>
+  <data name="productos" xml:space="preserve">
+    <value>Articles</value>
+  </data>
+  <data name="materiales" xml:space="preserve">
+    <value>Materials</value>
+  </data>
+  <data name="caracteristicas" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="articulos" xml:space="preserve">
+    <value>Articles</value>
+  </data>
+  <data name="contadores" xml:space="preserve">
+    <value>Document Counters</value>
+  </data>
+  <data name="series" xml:space="preserve">
+    <value>Series</value>
+  </data>
+  <data name="listado" xml:space="preserve">
+    <value>Lists</value>
+  </data>
+  <data name="comerciales" xml:space="preserve">
+    <value>Commercial agents</value>
+  </data>
+  <data name="tarifas" xml:space="preserve">
+    <value>Rates</value>
+  </data>
+  <data name="headerpresupuestos" xml:space="preserve">
+    <value>Estimations</value>
+  </data>
+  <data name="presupuestos" xml:space="preserve">
+    <value>Management of estimations</value>
+  </data>
+  <data name="listadogeneralpresupuestos" xml:space="preserve">
+    <value>General list</value>
+  </data>
+  <data name="compras" xml:space="preserve">
+    <value>Purchases</value>
+  </data>
+  <data name="ventas" xml:space="preserve">
+    <value>Sells</value>
+  </data>
+  <data name="listadodetalladopresupuestos" xml:space="preserve">
+    <value>Detailed list</value>
+  </data>
+  <data name="configurardocumentos" xml:space="preserve">
+    <value>Setup documents</value>
+  </data>
+  <data name="transportistas" xml:space="preserve">
+    <value>Transporters</value>
+  </data>
+  <data name="headerpedidos" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="pedidos" xml:space="preserve">
+    <value>Management of orders</value>
+  </data>
+  <data name="listadogeneralpedidos" xml:space="preserve">
+    <value>General list</value>
+  </data>
+  <data name="listadodetalladopedidos" xml:space="preserve">
+    <value>Detailed list</value>
+  </data>
+  <data name="estados" xml:space="preserve">
+    <value>Docuements states</value>
+  </data>
+  <data name="headeralbaranes" xml:space="preserve">
+    <value>Packing lists</value>
+  </data>
+  <data name="albaranes" xml:space="preserve">
+    <value>Management of packing lists</value>
+  </data>
+  <data name="listadogeneralalbaranes" xml:space="preserve">
+    <value>General list</value>
+  </data>
+  <data name="listadodetalladoalbaranes" xml:space="preserve">
+    <value>Detailed list</value>
+  </data>
+  <data name="obras" xml:space="preserve">
+    <value>Constructions</value>
+  </data>
+  <data name="criteriosagrupacion" xml:space="preserve">
+    <value>Groups criteria</value>
+  </data>
+  <data name="headerfacturas" xml:space="preserve">
+    <value>Invoices</value>
+  </data>
+  <data name="facturas" xml:space="preserve">
+    <value>Invoice management</value>
+  </data>
+  <data name="listadogeneralfacturas" xml:space="preserve">
+    <value>General list</value>
+  </data>
+  <data name="listadodetalladofacturas" xml:space="preserve">
+    <value>Detailed list</value>
+  </data>
+  <data name="prospectos" xml:space="preserve">
+    <value>Prospects</value>
+  </data>
+  <data name="ayuda" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="gestiondocumental" xml:space="preserve">
+    <value>Documents management</value>
+  </data>
+  <data name="stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="almacen" xml:space="preserve">
+    <value>Stores management</value>
+  </data>
+  <data name="listadostock" xml:space="preserve">
+    <value>Stock list</value>
+  </data>
+  <data name="lotes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="listadosbundles" xml:space="preserve">
+    <value>Bundle list</value>
+  </data>
+  <data name="listadoskits" xml:space="preserve">
+    <value>Kit list</value>
+  </data>
+  <data name="seccionesanaliticas" xml:space="preserve">
+    <value>Analytical sections</value>
+  </data>
+  <data name="seriescontables" xml:space="preserve">
+    <value>Accounting series</value>
+  </data>
+  <data name="seriesdocumentos" xml:space="preserve">
+    <value>Document series</value>
+  </data>
+  <data name="listadostockvalorado" xml:space="preserve">
+    <value>Stock list valued</value>
+  </data>
+  <data name="movs" xml:space="preserve">
+    <value>Accounting journal</value>
+  </data>
+  <data name="listadodiariocontable" xml:space="preserve">
+    <value>Accounting journal</value>
+  </data>
+</root>

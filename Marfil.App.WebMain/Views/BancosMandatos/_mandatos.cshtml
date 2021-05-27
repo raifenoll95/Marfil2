@@ -1,0 +1,203 @@
+﻿
+@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model BancosMandatosModel
+@{
+    var idControl = "bancosmandatos";
+    var factory = new FModel();
+    var linbanco = factory.GetModel<BancosMandatosLinModel>(WebHelper.ContextService);
+    var isreadonly = Model.ReadOnly;
+    Html.AddCss(Url.Content("~/Components/datepicker/css/bootstrap-datepicker3.standalone.min.css"));
+    Html.AddScript(Url.Content("~/Components/datepicker/js/bootstrap-datepicker.js"));
+    Html.AddScript(Url.Content("~/Components/datepicker/locales/bootstrap-datepicker." + Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0] + ".min.js"));
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#fechafirma").datepicker({
+            language: '@Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0]'
+        });
+        $("#fechaexpiracion").datepicker({
+            language: '@Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0]'
+        });
+    });
+</script>
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Idmandato, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="text" class="form-control" min="35" max="35" id="idmandato" required="required" ng-blur="RellenaCeros()" ng-model="nuevo.Idmandato" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Idmandato!==''" class="field-validation-valid text-danger">{{errores.Idmandato}}</span>
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Idacreedor, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="text" class="form-control" ng-model="nuevo.Idacreedor" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Idacreedor!==''" class="field-validation-valid text-danger">{{errores.Idacreedor}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+
+    @Html.LabelFor(f => linbanco.Tiposecuenciasepa, new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2 col-sm-2">
+        @Html.EnumDropDownListForAngular("Tiposecuenciasepa", linbanco.Tiposecuenciasepa, "nuevo.Tiposecuenciasepa", "class=\"form-control\" ng-model=\"nuevo.Tiposecuenciasepa\"" + (isreadonly ? "disabled=\"disabled\"" : string.Empty))
+    </div>
+
+    @Html.LabelFor(f => linbanco.Tipoadeudo, new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2 col-sm-2 ">
+        @Html.EnumDropDownListForAngular("Tipoadeudo", linbanco.Tipoadeudo, "nuevo.Tipoadeudo", "class=\"form-control\" ng-model=\"nuevo.Tipoadeudo\"" + (isreadonly ? "disabled=\"disabled\"" : string.Empty))
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Tiposecuenciasepa!==''" class="field-validation-valid text-danger">{{errores.Tiposecuenciasepa}}</span>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Tipoadeudo!==''" class="field-validation-valid text-danger">{{errores.Tipoadeudo}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Importemandato, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" ng-model="nuevo.Importemandato" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+
+    @Html.LabelFor(f => linbanco.Importeremesados, new { @class = "control-label col-md-2" })
+    <div class="col-md-2 col-sm-2">
+        <input type="text" class="form-control" readonly="readonly" ng-model="nuevo.Importeremesados" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+
+    <div class="col-md-12"></div>
+
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Importemandato!==''" class="field-validation-valid text-danger">{{errores.Importemandato}}</span>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Importeremesados!==''" class="field-validation-valid text-danger">{{errores.Importeremesados}}</span>
+    </div>
+
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Recibosmandato, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" ng-model="nuevo.Recibosmandato" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    @Html.LabelFor(f => linbanco.Recibosremesados, new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2 col-sm-2 ">
+        <input type="text" class="form-control" readonly="readonly" ng-model="nuevo.Recibosremesados" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Recibosmandato!==''" class="field-validation-valid text-danger">{{errores.Recibosmandato}}</span>
+    </div>
+    <div class="col-md-2">
+        <span ng-show="errores.Recibosremesados!==''" class="field-validation-valid text-danger">{{errores.Recibosremesados}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Importelimiterecibo, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" ng-model="nuevo.Importelimiterecibo" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    @Html.LabelFor(f => linbanco.Finalizado, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        <input type="checkbox" ng-model="nuevo.Finalizado" @Html.Raw(isreadonly ? "disabled='disabled'" : "") />
+    </div>
+
+    @Html.LabelFor(f => linbanco.Bloqueado, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        <input type="checkbox" ng-model="nuevo.Bloqueado" @Html.Raw(isreadonly ? "disabled='disabled'" : "") />
+    </div>
+
+    
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Importelimiterecibo!==''" class="field-validation-valid text-danger">{{errores.Importelimiterecibo}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+
+    @Html.LabelFor(f => linbanco.Fechafirma, new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2 col-sm-2">
+        <input id="fechafirma" type="text" class="form-control" ng-model="nuevo.Fechafirma" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+
+    @Html.LabelFor(f => linbanco.Fechaexpiracion, new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2 col-sm-2 ">
+        <input id="fechaexpiracion" type="text" class="form-control" ng-model="nuevo.Fechaexpiracion" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Fechafirma!==''" class="field-validation-valid text-danger">{{errores.Fechafirma}}</span>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Fechaexpiracion!==''" class="field-validation-valid text-danger">{{errores.Fechaexpiracion}}</span>
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Fechaultimaremesa, new { @class = "control-label col-md-2 col-md-offset-4" })
+    <div class="col-md-2">
+        fecha remesa automatica
+    </div>
+</div>
+<hr/>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Devolvera, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="text" class="form-control" ng-model="nuevo.Devolvera" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Devolvera!==''" class="field-validation-valid text-danger">{{errores.Devolvera}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Notas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <textarea class="form-control" ng-model="nuevo.Notas" @Html.Raw(isreadonly ? "readonly='readonly'" : "")></textarea>
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Notas!==''" class="field-validation-valid text-danger">{{errores.Notas}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+
+    @Html.LabelFor(f => linbanco.Esquema, new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2 col-sm-2">
+        @{
+            var itemsString = "<option ng-selected=\"\''==nuevo.Esquema\" value=\"\"></option>";
+            IEnumerable<Esquema> values = Enum.GetValues(typeof (Esquema)).Cast<Esquema>();
+            foreach (var value in values)
+            {
+                itemsString += string.Format("<option ng-selected=\"\'{0}'==nuevo.Esquema\" value=\"{0}\">{1}</option>", Funciones.GetIntEnumByStringValueAttribute(value), Funciones.GetEnumByStringValueAttribute(value));
+            }
+        }
+        <select class="form-control" ng-model="nuevo.Esquema" id="Esquema" @Html.Raw(isreadonly ? "readonly='readonly'" : "")>
+            @Html.Raw(itemsString)
+        </select>
+    </div>
+</div>
+

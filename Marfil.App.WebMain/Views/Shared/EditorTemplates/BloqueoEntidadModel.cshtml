@@ -1,0 +1,81 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Resources
+@model Marfil.Dom.ControlsUI.Bloqueo.BloqueoEntidadModel
+@if (ViewBag.Bloquear)
+{
+    <div class="form-group">
+        @Html.HiddenFor(f => Model.Bloqueada)
+        @Html.HiddenFor(f => Model.FkMotivobloqueo)
+        @Html.HiddenFor(f => Model.FkUsuario)
+        @Html.HiddenFor(f => Model.Fecha)
+
+
+
+    </div>
+
+    <div class="well col-md-offset-2">
+
+        @if (Model.Readonly)
+        {
+            if (Model.Bloqueada)
+            {
+                <h4 class="red smaller @Html.Raw(WebHelper.DevexpressAA ? "color-black bolder" : "lighter")">@Model.Entidad @General.LblBloqueada</h4>
+            }
+            else
+            {
+                <h4 class="green smaller @Html.Raw(WebHelper.DevexpressAA ? "color-black bolder" : "lighter") ">@Model.Entidad @General.LblNoBloqueada</h4>
+            }
+        }
+        else
+        {
+            <h4 class="green smaller lighter">
+                <div class="btn-group">
+                    @if (Model.Bloqueada)
+                    {
+                        <button data-toggle="dropdown" class="btn btn-danger dropdown-toggle">
+                            @Model.Entidad @General.LblBloqueada
+                            <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                        </button>
+
+                    }
+                    else
+                    {
+                        <button data-toggle="dropdown" class="btn btn-success dropdown-toggle">
+                            @Model.Entidad @General.LblNoBloqueada
+                            <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                        </button>
+                    }
+
+                    <ul class="dropdown-menu @Html.Raw(Model.Bloqueada ? "dropdown-success" : "dropdown-danger")">
+                        @if (Model.Bloqueada)
+                        {
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#desbloquear">
+                                    <i class="fa fa-unlock"></i> @General.LblDesbloqueo @Model.Entidad
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#bloquear">
+                                    <i class="fa fa-lock"></i> @General.LblBloqueo @Model.Entidad
+                                </a>
+                            </li>
+                        }
+
+
+
+                    </ul>
+                </div>
+            </h4>
+
+        }
+
+        @Html.Raw(Model.Descripcionbloqueo)
+    </div>
+}
+
+

@@ -1,0 +1,103 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Contabilidad.Movs
+
+@*@model IEnumerable<MovsTotalesModel>
+@{
+    var usuario = HttpContext.Current.User as ICustomPrincipal;
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewTotales";
+        settings.KeyFieldName = "Esdebe";
+        settings.CallbackRouteValues = new { Controller = "Movs", Action = "MovsTotales" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.HorizontalScrollBarMode=ScrollBarMode.Auto;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SDebe";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SHaber";
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "SSaldo";
+        //    c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        //});
+
+
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+            if (col.FieldName == "SDebe")
+            {
+                var model = c.Grid.DataSource as IEnumerable<MovsTotalesModel>;
+                var decimalesmonedas = model.FirstOrDefault()?.Decimalesmonedas ?? 2;
+                var sumdebe = model.Where(f => f.Esdebe == 1).Sum(f => f.Importe);
+                ViewContext.Writer.Write("<h4 class=\"pull-right\"><span class=\"green bigger\">" + (sumdebe ?? 0).ToString("N" + decimalesmonedas)+ "</span></h4>");
+            }
+
+            if (col.FieldName == "SHaber")
+            {
+                var model = c.Grid.DataSource as IEnumerable<MovsTotalesModel>;
+                var decimalesmonedas = model.FirstOrDefault()?.Decimalesmonedas ?? 2;
+                var sumhaber = model.Where(f => f.Esdebe == -1).Sum(f => f.Importe);
+                ViewContext.Writer.Write("<h4 class=\"pull-right\"><span class=\"green bigger\">" + (sumhaber ?? 0).ToString("N" + decimalesmonedas) + "</span></h4>");
+            }
+        });
+
+
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = settings.Columns.Count;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.ClientSideEvents.RowDblClick = null;
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+    });
+}
+@grid.Bind(Model).GetHtml()*@

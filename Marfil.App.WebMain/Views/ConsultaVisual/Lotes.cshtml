@@ -1,0 +1,75 @@
+﻿@model Marfil.Dom.Persistencia.Model.FicherosGenerales.ConsultaVisualFullModel
+@using Newtonsoft.Json
+@{}
+
+<html>
+<head>
+    <link rel="stylesheet" href="@Url.Content("~/content/Estilos.css")">
+    <style>
+        .btn:focus {
+          outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="@Url.Content("~/Scripts/ConsultaVisual/ConsultaVisual.js")"></script>
+    <div ng-controller="LotesCtrl" ng-init="init('@Url.Content("~/Images/imagenesauxiliares/consultadefecto.png")','@Url.Action("getMaterial","ConsultaVisual")')">
+        <br /><br />
+        <div class="container col-md-12 col-xs-12">
+            <i>{{modelo.DescEmpresa}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescAlmacen}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescFamilia}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescGrupoMateriales}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescMaterial}}</i>
+        </div>
+        <br /><br />
+        <div class="col-md-12 col-xs-12">
+            <img src="~/Images/imagenesauxiliares/familias.jpg" style="height: 22px;float: left;margin-right: 10px;margin-top: 10px;border-radius:0px;">
+            <p><font color="black" size="5">Lotes</font></p>
+        </div>
+        <br /><br />
+        <hr />
+        <div class="input-container col-md-6 col-xs-6">
+            <div class="wrapper">
+                <input style="border:none;font-family:Arial, FontAwesome" class="effect-1" type="text" ng-model="searching" ng-change="searchAlmacen()" placeholder="&#xf002; Busca lote..." />
+                <span class="focus-border"></span>
+            </div>
+        </div>
+        <br /><br /><br />
+        <div class="row">
+            <!--Estilo Fila-->
+            <div class="center">
+                <!--centrado-->
+                <div class="col-md-4 col-xs-12" ng-repeat="item in articulos | filter: searching: sensitiveCompare">
+                    <!--Gruid son 12 columnas. Cada almacen va a ocupar 4-->
+                    <a style="text-decoration:none" class="thumbnail">
+                        <!--Cada almacen en una caja para que no se salga-->
+                        <img ng-src="{{Getsrc('@(Url.Action("Thumbnail", "GestionDocumental"))/',item.Ficheros)}}" style="width:350px;height:300px;" />
+                        <br />
+                        <div class="center">
+                            <h3><font size="5" color="#2079df">{{item.DescLote}}</font></h3>
+                        </div>
+                        <hr />
+                        <dl class="center">
+                            <dt><font size="5" color="black">{{item.Descripcion}}</font></dt>
+                            <dt><font size="3" color="black">{{item.DescripcionAbreviada}}</font></dt>
+                            <br />  
+                            <dt><img src="~/Images/almacenicon/jigsaw.svg" width="20" height="20">   <font color="black">{{item.PiezasCV}} piezas disponibles</font> </dt>
+                            <dt><img src="~/Images/almacenicon/ruler.svg" width="20" height="20">   <font color="black">{{item.MetrosCV}} metros disponibles</font> </dt>
+                        </dl>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    var modeloproducto = @Html.Raw(JsonConvert.SerializeObject(Model));
+</script>

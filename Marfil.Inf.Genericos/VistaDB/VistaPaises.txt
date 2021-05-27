@@ -1,0 +1,7 @@
+﻿SELECT     xml.value('(/TablasVariasPaisesModel/Valor/text())[1]', 'varchar(40)') AS Valor, xml.value('(/TablasVariasPaisesModel/Descripcion/text())[1]', 'varchar(40)') 
+                      AS Descripcion, xml.value('(/TablasVariasPaisesModel/Descripcion2/text())[1]', 'varchar(40)') AS Descripcion2, 
+                      xml.value('(/TablasVariasPaisesModel/CodigoIsoAlfa2/text())[1]', 'varchar(40)') AS CodigoIsoAlfa2, xml.value('(/TablasVariasPaisesModel/CodigoIsoAlfa3/text())[1]', 
+                      'varchar(40)') AS CodigoIsoAlfa3, xml.value('(/TablasVariasPaisesModel/CodigoIsoNumerico/text())[1]', 'varchar(40)') AS CodigoIsoNumerico, 
+                      xml.value('(/TablasVariasPaisesModel/NifEuropeo/text())[1]', 'varchar(40)') AS NifEuropeo
+FROM         dbo.TablasvariasLin
+WHERE     (fkTablasvarias = '3166')

@@ -1,0 +1,55 @@
+﻿@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Stock
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Newtonsoft.Json
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as ImputacionCostesModel;
+}
+
+
+@using (Html.BeginForm("EditOperacion", "ImputacionCostes", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_imputacioncostes", Model as ImputacionCostesModel)
+
+        <div class="margin-top">
+
+
+            <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+
+        </div>
+
+    </div>
+}
+
+@Html.Partial("../ArticulosConSinStock/_registroconsinstock")
+
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

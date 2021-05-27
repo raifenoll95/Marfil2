@@ -1,0 +1,163 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Resources
+@model IEnumerable<CaracteristicasLinModel>
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    @*Model. = isreadonly;*@
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Caracteristicas", Action = "CaracteristicasLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Caracteristicas", Action = "CaracteristicasLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Caracteristicas", Action = "CaracteristicasLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Caracteristicas", Action = "CaracteristicasLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add("Id");
+        settings.Columns.Add("Descripcion");
+        settings.Columns.Add("Descripcion2");
+        settings.Columns.Add("Descripcionabreviada");
+        settings.CellEditorInitialize = (s, e) =>
+        {
+
+
+
+            var editor = e.Editor as ASPxEdit;
+
+            if (editor == null) return;
+            editor.ValidationSettings.Display = Display.Dynamic;
+
+            if (e.Column.FieldName == settings.KeyFieldName)
+            {
+                editor.ValidationSettings.RegularExpression.ValidationExpression = "[0-9]{1,2}";
+                editor.Focus();
+            }
+
+
+        };
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 5;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.CellEditorInitialize += (sender, args) =>
+        {
+
+            if (args.Column.FieldName == settings.KeyFieldName)
+            {
+                ASPxTextBox tb = (ASPxTextBox)args.Editor;
+                //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
+                tb.Focus();
+            }
+        };
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113://editar
+                    if (!GridView.IsEditing()) {
+
+                        GridView.StartEditRow(index);
+                    }
+                    break;
+                case 46://Eliminar
+                    if (!GridView.IsEditing()) {
+                        GridView.DeleteRow(index);
+                    }
+                    break;
+                case 27://escape
+                    if (GridView.IsEditing()) {
+                        GridView.CancelEdit();
+                        GridView.Focus();
+                    }
+                    break;
+                case 13://enter
+                    if (GridView.IsEditing()) {
+                        GridView.Focus();
+                        GridView.UpdateEdit();
+                    }
+                    break;
+                case 107://mas
+                    CreateRow();
+                    break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        if (!GridView.IsEditing()) {
+            GridView.Focus();
+            GridView.AddNewRow();
+
+        }
+    }
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
+</script>

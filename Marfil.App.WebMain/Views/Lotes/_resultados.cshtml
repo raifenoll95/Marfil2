@@ -1,0 +1,252 @@
+﻿@model Marfil.Dom.Persistencia.Model.Stock.ListadoLotesModel
+@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.DiarioStock
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@using RAlbaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras;
+@using RKit = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Kit;
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "gvDataBindingToLinq";
+        settings.CallbackRouteValues = new { Controller = "Lotes", Action = "DataBindingToLargeDatabasePartial" };
+        settings.KeyFieldName = "id";
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.CommandColumn.Visible = false;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.SettingsPager.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListPageSize"]);
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowGroup = true;
+        settings.SettingsBehavior.AllowSort = true;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        settings.Settings.ShowGroupPanel = true;
+        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        settings.SettingsCookies.StoreColumnsWidth = true;
+        settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+        settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleIfExpanded;
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "id";
+            c.Caption = "#";
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            c.SetDataItemTemplateContent(j =>
+            {
+                Html.DevExpress().HyperLink(hlSettings =>
+                {
+                    hlSettings.Name = "Website" + j.VisibleIndex;
+                    hlSettings.NavigateUrl = Url.Action("Detalle", "Lotes",new {id = DataBinder.Eval(j.DataItem, "id") });
+                    hlSettings.Properties.Target = "_blank";
+                    hlSettings.ControlStyle.CssClass = "btn btn-xs btn-primary";
+                    var prop = hlSettings.Properties as HyperLinkProperties;
+                    prop.Text =  General.LblVer;
+                    prop.EncodeHtml = true;
+                }).Render();
+            });
+        });
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Codarticulo";
+            c.Caption = RAlbaranes.Fkarticulos;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Articulo";
+            c.Caption = RAlbaranes.Descripcion;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "lote";
+            c.Caption = RAlbaranes.Lote;            
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "loteid";
+            c.Caption = RAlbaranes.Tabla;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "tipoalmacenlote";
+            c.Caption = RAlbaranes.TipoAlmacenLote;
+            if (!WebHelper.DevexpressAA)
+            {
+                c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+                foreach (var i in Enum.GetValues(typeof(TipoAlmacenloteService)))
+                    comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+                comboBoxProperties.ValueType = typeof(int);
+                comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            }
+
+        });        
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Kit";
+            c.Caption = RKit.TituloEntidadSingular;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Bundle";
+            c.Caption = RAlbaranes.Bundle;
+        });
+           
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "LargoProduccion";
+            c.Caption = RAlbaranes.LargoProduccion;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "AnchoProduccion";
+            c.Caption = RAlbaranes.AnchoProduccion;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "GruesoProduccion";
+            c.Caption = RAlbaranes.GruesoProduccion;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Unidades";
+            c.Caption = RAlbaranes.Fkunidades;
+        });
+        
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "cantidadentrada";
+            c.Caption = RAlbaranes.CantidadEntrada;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "largoentrada";
+            c.Caption = RAlbaranes.LargoEntrada;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "anchoentrada";
+            c.Caption = RAlbaranes.AnchoEntrada;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "gruesoentrada";
+            c.Caption = RAlbaranes.GruesoEntrada;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "MetrosEntrada";
+            c.Caption = RAlbaranes.MetrosEntrada;
+        });
+        
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "cantidadsalida";
+            c.Caption = RAlbaranes.CantidadSalida;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "largosalida";
+            c.Caption = RAlbaranes.LargoSalida;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "anchosalida";
+            c.Caption = RAlbaranes.AnchoSalida;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "gruesosalida";
+            c.Caption = RAlbaranes.GruesoSalida;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "MetrosSalida";
+            c.Caption = RAlbaranes.MetrosSalida;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadProduccion";
+            c.Caption = RAlbaranes.CantidadDisponible;
+            c.Width = 120;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "MetrosProduccion";
+            c.Caption = RAlbaranes.MetrosDisponibles;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "EnStock";
+            c.Caption = RAlbaranes.Vendido;
+            c.ColumnType = MVCxGridViewColumnType.CheckBox;
+        });
+
+
+
+
+        settings.ClientSideEvents.ColumnResized = "function(s,e) {  e.processOnServer = true; }";
+        settings.SettingsContextMenu.Enabled = true;
+        // settings.CommandColumn.VisibleIndex = 0;
+        // settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnVer", Text = "<span   tabindex=\"-1\" class=\"btn btn-xs btn-primary \"  title=\"" + General.LblVer + "\"><i class=\"fa fa-eye\"></i> " +General.LblVer+ "</span>" });
+
+        settings.SettingsContextMenu.EnableGroupPanelMenu = DefaultBoolean.True;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+    }).BindToLINQ(string.Empty, string.Empty, (s, e) =>
+    {
+        e.QueryableSource = LotesDatabaseDataProvider.GetMovimientos(Model);
+    }).GetHtml()
+

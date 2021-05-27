@@ -1,0 +1,47 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Espesordisco, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Espesordisco, new {@class = "form-control", @autofocus = ""})
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Espesordisco, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Espesorfleje, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Espesorfleje, new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Espesorfleje, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Formatogrosor, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Formatogrosor", Model.Formatogrosor, new {@class = "form-control", @autofocus = ""})
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+    @Html.ValidationMessageFor(f => Model.Formatogrosor, "", new { @class = "text-danger" })    
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Formatounidad, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Formatounidad",Model.Formatounidad, new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Formatounidad, "", new { @class = "text-danger" })
+    </div>
+</div>

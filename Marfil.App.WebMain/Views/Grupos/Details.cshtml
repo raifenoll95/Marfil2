@@ -1,0 +1,30 @@
+﻿@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    var columnas = Model.getProperties();
+    var objModel = Model as RolesModel;
+}
+
+
+
+<div>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(f=>objModel.Role)
+        </dt>
+        <dd>
+            @objModel.Role
+        </dd>
+        
+    </dl>
+</div>
+<p>
+    <a class="btn btn-info" href="@Url.Action("Edit", new { id = Model.get(((IModelViewExtension)Model).primaryKey.First().Name)})">
+        <i class="ace-icon fa fa-pencil bigger-110"></i>
+        @General.LblEditar
+    </a>
+</p>

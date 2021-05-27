@@ -1,0 +1,29 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+<div class="form-group">
+   
+    
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoalbaranescomprasinicial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoalbaranescomprasinicial, Model.Estadosalbaranescompras.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}), new { @class = "form-control" })
+        </div>
+    </div>
+
+
+   
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoalbaranescomprastotal, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoalbaranescomprastotal, Model.Estadosalbaranescompras.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+

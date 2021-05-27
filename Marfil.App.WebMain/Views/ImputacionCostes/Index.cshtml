@@ -1,0 +1,38 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model ListIndexModel
+@{
+    IEnumerable<ViewProperty> columnas = ViewBag.Columnas as IEnumerable<ViewProperty>;
+    var toolbarModel = Model as IToolbar;
+   // toolbarModel.Toolbar.OperacionTexto. = ;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+<div class="row margin-bottom">
+    @Html.Partial("GridViewIndex", Model)
+</div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+
+<script type="text/javascript">
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+        {
+            <text>
+    console.log("entra");
+            $(document).ready(function() {
+                alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage');
+            });
+            </text>
+        }
+</script>
+

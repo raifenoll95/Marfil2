@@ -1,0 +1,26 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Resources
+@model  Marfil.Dom.Persistencia.Model.Graficaslistados.ConfiguraciongraficasWrapperModel
+@{
+    ViewBag.Title = Model.Titulo;
+    var user = HttpContext.Current.User as ICustomPrincipal;
+}
+
+
+<div class="row margin-bottom">
+    @Html.Partial("_listConfiguraciongraficas", Model)
+</div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

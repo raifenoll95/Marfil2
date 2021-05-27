@@ -1,0 +1,479 @@
+﻿@using System.Drawing
+@using System.Text
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.Transformaciones.TransformacionesentradaLinModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    var listcanales = new List<SelectListItem>();
+    if (configuracionAplicacion.VentasUsarCanal)
+    {
+        listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+        listcanales.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    }
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewLineasEntrada";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Transformaciones", Action = "TransformacionesentradaLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+
+
+        //edition
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Transformaciones", Action = "TransformacionesentradaLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Transformaciones", Action = "TransformacionesentradaLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add("Id");
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fkarticulos";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Pixel(150);
+            j.ReadOnly = true;
+            var p = j.PropertiesEdit as ButtonEditProperties;
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.Init = "function(s, e){ s.Focus(); }";
+            p.ClientSideEvents.TextChanged = "OnFkarticulosChanged";
+            p.ClientSideEvents.KeyDown = "OnKeyPressArticulos";
+            p.ClientInstanceName = j.FieldName;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.ColumnType = MVCxGridViewColumnType.Memo;
+            c.CellStyle.Wrap = DefaultBoolean.True;
+        });
+
+        settings.Columns.Add(c=> {
+            c.FieldName="Lote";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Revision";
+            c.Visible = configuracionAplicacion.Gestionarrevisiones;
+            c.ReadOnly = true;
+
+        });
+
+        settings.Columns.Add(c=>{
+            c.FieldName="Tabla";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Canal";
+            c.Visible = configuracionAplicacion.VentasUsarCanal;
+            c.ReadOnly = true;
+            if (configuracionAplicacion.VentasUsarCanal)
+            {
+                c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+                comboBoxProperties.TextField = "Text";
+                comboBoxProperties.ValueField = "Value";
+                comboBoxProperties.ValueType = typeof(String);
+                comboBoxProperties.DataSource = listcanales;
+                comboBoxProperties.EnableSynchronization = DefaultBoolean.True;
+            }
+        });
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cantidad";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnSuperficieChanged";
+            c.ReadOnly = true;
+
+        });
+
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SLargo";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnSuperficieChanged";
+            p.SpinButtons.ShowIncrementButtons = false;
+        }
+        );
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SAncho";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnSuperficieChanged";
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SGrueso";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnSuperficieChanged";
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+        settings.Columns.Add("Fkunidades");
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SMetros";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+        });
+
+
+
+
+
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Orden";
+            c.Visible = true;
+            c.ColumnType = MVCxGridViewColumnType.Default;
+            c.SortOrder=ColumnSortOrder.Ascending;
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Nueva";
+            c.Visible = false;
+
+        });
+
+        settings.Columns.Add("Decimalesmonedas");
+        settings.Columns.Add("Decimalesunidades");
+
+
+        settings.Columns.Add("Tipodealmacenlote");
+        settings.Columns["Tipodealmacenlote"].Visible = false;
+
+
+        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Columns["Decimalesmonedas"].Visible = false;
+        settings.Columns["Decimalesunidades"].Visible = false;
+        settings.Columns["Id"].Visible = false;
+
+        settings.Columns["Fkarticulos"].FixedStyle = GridViewColumnFixedStyle.Left;
+        settings.Columns["Descripcion"].Width = Unit.Pixel(300);
+        settings.Columns["Descripcion"].AllowTextTruncationInAdaptiveMode = true;
+        settings.Columns["Descripcion"].CellStyle.Wrap = DefaultBoolean.False;
+
+
+        settings.Columns["Tabla"].Visible = true;
+        settings.Columns["Revision"].Visible = false;
+        settings.Columns["Fkunidades"].Visible = false;
+
+
+        settings.Settings.ShowFooter = true;
+
+        settings.CommandColumn.Visible = !isreadonly;
+        if (!isreadonly)
+        {
+            settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblBorrar + " - (F2)\"></i>";
+
+            settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
+
+            settings.CommandColumn.Width = Unit.Pixel(150);
+            settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+            settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+            settings.CommandColumn.VisibleIndex = 0;
+            settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+        }
+        settings.CommandButtonInitialize += (sender, e) =>{
+
+            if (e.ButtonType == ColumnCommandButtonType.Edit && !Funciones.Qbool(((MVCxGridView)sender).GetRowValues(e.VisibleIndex, "Nueva")))
+            {
+                e.Visible=false;
+            }
+        };
+
+
+
+
+
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            if (needCreatCopy)
+            {
+                MVCxGridView gridView = (MVCxGridView)sender;
+                gridView.AddNewRow();
+            }
+        };
+
+        if (!isreadonly)
+        {
+
+            settings.ClientSideEvents.EndCallback = "function(s,e) { OnEndEditing(s,e);}";
+            settings.ClientSideEvents.BeginCallback = "function(s,e) { OnStartEditing(s,e);}";
+            settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+            settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowLineasEntradaChanged(s, e);} ";
+            settings.ClientSideEvents.Init = "function(s,e) { GridViewLineasEntrada.Focus();  }";
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+@if (!isreadonly)
+{
+    <script type="text/javascript">
+        //Start search articulos
+        function OnKeyPressArticulos(s, e) {
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchArticulo();
+            }
+
+        }
+
+        function SearchArticulo() {
+
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Fkarticulos",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("ArticulosApi","Api")',
+                Titulo: "Busqueda de articulos",
+                Params: ""
+            };
+
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Fkarticulos-Buscarfocus", function (obj) {
+            Fkarticulos.SetValue(obj);
+
+            cDescripcion = GridViewLineasEntrada.GetEditor("Descripcion");
+            GridViewLineasEntrada.SetEnabled(false);
+
+            pedirArticulo(obj, '@Url.Action("ArticulosDocumentosApi","Api")', GridViewLineasEntrada, true);
+        });
+
+
+        function OnFkarticulosChanged(s, e) {
+
+            cDescripcion = GridViewLineasEntrada.GetEditor("Descripcion");
+            GridViewLineasEntrada.SetEnabled(false);
+
+            pedirArticulo(s.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineasEntrada, true);
+
+        }
+
+        //end search articulos
+        
+        function FunOnFocusedRowLineasEntradaChanged(s, e) {
+
+
+            $("#GridViewLineasEntrada").unbind("keydown");
+            $('#GridViewLineasEntrada').keydown(function (event) {
+
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                var index = s.GetFocusedRowIndex();
+
+                switch (keycode) {
+                   
+                    case 46: //Eliminar
+                        if (!GridViewLineasEntrada.IsEditing()) {
+                            GridViewLineasEntrada.DeleteRow(index);
+                        }
+                        break;
+                    case 27: //escape
+                        if (GridViewLineasEntrada.IsEditing()) {
+                            GridViewLineasEntrada.CancelEdit();
+                            GridViewLineasEntrada.Focus();
+                        }
+                        break;
+                    case 13:
+
+                        if (GridViewLineasEntrada.IsEditing() && !GridViewLineasEntrada.GetEditor("Descripcion").focused) {
+                            event.preventDefault();
+                            GridViewLineasEntrada.UpdateEdit();
+
+                        }
+                        break;
+                    case 107: //mas
+                        if (!GridViewLineasEntrada.IsEditing()) {
+                           CreateRow();
+                        }
+                        break;
+
+
+                }
+
+            });
+        }
+
+
+        function CreateLineasRow() {
+            if ($("[name='Fkproveedores']").val() && $("[name='Fkproveedores']").val() !== "") {
+                if (!GridViewLineasEntrada.IsEditing()) {
+                    GridViewLineasEntrada.Focus();
+                    GridViewLineasEntrada.AddNewRow();
+                }
+            } else {
+                bootbox.alert("El campo proveedor es obligatorio");
+            }
+        }
+
+        
+        var operation = "";
+        function OnStartEditing(s, e) {
+
+            operation = e.command;
+            if (operation === "UPDATEEDIT" || operation === "DELETEROW" || operation === "ADDNEWROW") {
+
+                if (articuloActual) {
+                    e.customArgs['Fktiposiva'] = articuloActual.Fktiposiva;
+                    e.customArgs['Decimalesmonedas'] = articuloActual.Decimalesmonedas;
+                    e.customArgs['Decimalesunidades'] = articuloActual.Decimalestotales;
+
+
+                }
+
+              
+               
+
+
+
+
+            }
+
+
+
+        }
+
+        function OnEndEditing(s, e) {
+            if (operation === 'STARTEDIT') {
+                var cArticulos = Fkarticulos;
+                GridViewLineasEntrada.SetEnabled(false);
+                pedirArticulo(cArticulos.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineasEntrada, false);
+                window.setTimeout(function () { GridViewLineasEntrada.SetHorizontalScrollPosition(0);  }, 0);
+            }
+            else if (operation === "UPDATEEDIT" || operation === "DELETEROW") {
+                
+                GridViewLineasEntrada.Focus();
+                window.setTimeout(function () {
+                    GridViewLineasEntrada.SetHorizontalScrollPosition(0); 
+
+
+                }, 0);
+                if (GridViewLineasEntrada.GetVisibleRowsOnPage() > 0) {
+                    GridViewLineasEntrada.SetFocusedRowIndex(GridViewLineasEntrada.GetVisibleRowsOnPage() - 1);
+                }
+            }
+            else if (operation === "ADDNEWROW") {
+                var cArticulos = Fkarticulos;
+                if (cArticulos.GetValue() !== "")
+                    pedirArticulo(cArticulos.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineasEntrada, false);
+                window.setTimeout(function () { GridViewLineasEntrada.SetHorizontalScrollPosition(0);  }, 0);
+                Fkarticulos.SetValue("");
+                Fkarticulos.Focus();
+
+            }
+            if (operation === "CUSTOMCALLBACK") {
+                var cArticulos = Fkarticulos;
+                if (cArticulos.GetValue() !== "")
+                    pedirArticulo(cArticulos.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineasEntrada, false);
+
+            }
+
+
+        }
+
+
+
+        function OnSuperficieChanged(s, e) {
+
+            cCantidad = GridViewLineasEntrada.GetEditor("Cantidad");
+            cLargo = GridViewLineasEntrada.GetEditor("SLargo");
+            cAncho = GridViewLineasEntrada.GetEditor("SAncho");
+            cGrueso = GridViewLineasEntrada.GetEditor("SGrueso");
+            cMetros = GridViewLineasEntrada.GetEditor("SMetros");
+
+            var num = FFormulasService.CreateFormula(articuloActual.Formulas).calculate(cCantidad.GetValue(), cLargo.GetValue(), cAncho.GetValue(), cGrueso.GetValue(), cMetros.GetValue(), articuloActual.Decimalestotales);
+            cMetros.SetValue(Funciones.Redondear(num,articuloActual.Decimalestotales));
+            
+        }
+
+        function CreateRow() {
+            $("#_entradastock").modal('show');
+        }
+    </script>
+}

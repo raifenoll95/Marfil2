@@ -1,0 +1,25 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model ArticulosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Preciominimoventa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Preciominimoventa, isreadonly ? (object)new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "tarifas", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Preciominimoventa, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<h3>@Tarifas.TituloEntidad</h3>
+@Html.EditorFor(f => Model.TarifasSistemaVenta)
+
+
+

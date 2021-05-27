@@ -1,0 +1,96 @@
+﻿@using System.Globalization
+@using System.Threading
+@model Marfil.Dom.Persistencia.Model.Terceros.AseguradorasModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+}
+@Html.HiddenFor(f=>Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcuentas,new {id="Fkcuentas"})
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Numeropoliza, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Numeropoliza, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Numeropoliza, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechainicio, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Fechainicio, isreadonly ? (object)new {@aria_label="Fecha inicio", @class = "form-control", @autofocus = "", @disabled = "disabled", @id = "fechainicio", Value = Model.Fechainicio.ToShortDateString() } : (object)new { @aria_label = "Fecha inicio", @class = "form-control", @autofocus = "", @id = "fechainicio", Value = Model.Fechainicio.ToShortDateString() } )
+    </div>
+    @Html.LabelFor(f => Model.Fechafin, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Fechafin, isreadonly ? (object)new { @aria_label = "Fecha fin", @class = "form-control", @autofocus = "", @disabled = "disabled", @id = "fechafin", Value = Model.Fechafin.ToShortDateString() } : (object)new { @aria_label = "Fecha fin", @class = "form-control", @autofocus = "", @id = "fechafin", Value = Model.Fechafin.ToShortDateString() })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-4 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Fechainicio, "", new { @class = "text-danger" })</div>
+    <div class="col-md-4 ">@Html.ValidationMessageFor(f => Model.Fechafin, "", new { @class = "text-danger" })</div>
+</div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Diasimpago, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Diasimpago, isreadonly ? (object)new { @class = "form-control col-md-2",  @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+            @Html.ValidationMessageFor(f => Model.Diasimpago, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(f => Model.Diasimpagovencimientoprorrogado, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Diasimpagovencimientoprorrogado, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+            @Html.ValidationMessageFor(f => Model.Diasimpagovencimientoprorrogado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Numeroprorrogas, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Numeroprorrogas, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+            @Html.ValidationMessageFor(f => Model.Numeroprorrogas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Primaanual, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Primaanual, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+            @Html.ValidationMessageFor(f => Model.Primaanual, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Numerorecibos, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Numerorecibos, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+            @Html.ValidationMessageFor(f => Model.Numerorecibos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajecoberturariesgo, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Porcentajecoberturariesgo, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+        @Html.ValidationMessageFor(f => Model.Porcentajecoberturariesgo, "", new {@class = "text-danger"})
+    </div>
+</div>
+<link rel="stylesheet" href="@Url.Content("~/Components/datepicker/css/bootstrap-datepicker3.standalone.min.css")" />
+<script src="@Url.Content("~/Components/datepicker/js/bootstrap-datepicker.js")"></script>
+<script src="@Url.Content("~/Components/datepicker/locales/bootstrap-datepicker."+ Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0] + ".min.js")"></script>
+<script type="text/javascript">
+    $("#fechainicio").datepicker({
+    language: '@CultureInfo.CurrentUICulture.Name.Split('-')[0]'
+});
+    $("#fechafin").datepicker({
+    language: '@CultureInfo.CurrentUICulture.Name.Split('-')[0]'
+    });
+    $("form").submit(function(event) {
+        $("#Fkcuentas").val(document.getElementById("Cuentas.Id").value);
+        
+    });
+
+
+</script>

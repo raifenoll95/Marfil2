@@ -1,0 +1,233 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Reservasstock = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Reservas;
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var user = HttpContext.Current.User as ICustomPrincipal;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    var listcanales = new List<SelectListItem>();
+    if (configuracionAplicacion.VentasUsarCanal)
+    {
+        listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+        
+    }
+}
+
+@{
+
+    Html.AddScript(Url.Content("~/Scripts/Model/Albaranes/NuevaLineaEntregaStockController.js"));
+}
+
+
+<div class="modal fade" id="_entregastock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="EntregaStockCtrl">
+    <div class="modal-dialog modal-lg modal-dialog-fullwidth" role="document" ng-init="init('@Url.Action("BusquedaArticulosEntregaLotesApi","Api")','@Url.Action("AgregarLineas","Reservasstock")','@Url.Action("UltimoprecioApi", "Api")','@((int)TipoDocumentos.Reservas)')">
+        <div class="modal-content modal-content-fullwidth">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <!--Titulo Seleccionar Lotes-->
+                <h4 class="modal-title" id="myModalLabel">@Albaranes.Seleccionarlotes</h4>
+            </div>
+
+            <div class="modal-body modal-body-fullwidth">
+                <div class="form-horizontal">
+                    <div>
+
+                        <!--FORM GROUP ARTICULO-->
+                        <div class="form-group">
+                            <input type="hidden" name="Fkalmacen" value="@user.Fkalmacen" />
+                            <input type="hidden" id="flujonuevoregistro" name="flujonuevoregistro" value="0" />
+
+                            <!--palabra articulo ocupa 2 columnas-->
+                            @Html.Label(Articulos.TituloEntidadSingular, new { @class = "control-label col-md-2" })
+                            <!--ID/Descripcion-->
+                            <div class="col-md-10">
+                                @{
+                                    campoverificacion.Name = "Fkarticulossalida";
+                                    campoverificacion.Url = Url.Action("ArticulosDocumentosApi", "Api");
+                                    campoverificacion.Valor = "";
+                                    campoverificacion.CampoIdentificador = "Id";
+                                    campoverificacion.CampoDescripcion = "Descripcion";
+                                    campoverificacion.Titulo = Articulos.TituloEntidad;
+                                    campoverificacion.Autofocus = true;
+
+                                    campoverificacion.ControlesAsociados = "[{\"fkcuentas\": \"Fkclientes\",\"flujo\":\"flujonuevoregistro\",\"fkmonedas\": \"Fkmonedas\",\"fkregimeniva\": \"Fkregimeniva\"}]";
+                                }
+                                @Html.Partial("CampoverificacionUI", campoverificacion)
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-offset-2 text-danger">{{Fkarticuloserrores}}</div>
+                        </div>
+
+                        <!--FORM GROUP LOTE-->
+                        <div class="form-group" ng-show="Gestionlotes">
+                            <!--palabra Lote ocupa 2 columnas-->
+                            @Html.Label(Albaranes.Lote, new { @class = "control-label col-md-2" })
+                            <!--CampoDescripcion-->
+                            <div class="col-md-10">
+                                @{
+                                    campoverificacion.Name = "Loteentrega";
+                                    campoverificacion.Url = Url.Action("BusquedaArticulosEntregaSingleLotesApi", "Api");
+                                    campoverificacion.Valor = "";
+                                    campoverificacion.CampoIdentificador = "Lote";
+                                    campoverificacion.CampoDescripcion = "Lote";
+                                    campoverificacion.Titulo = Albaranes.Lote;
+                                    campoverificacion.Autofocus = false;
+                                    campoverificacion.Configuracion.OcultarTexto = true;
+                                    campoverificacion.Params = "{\"Fkalmacen\":\"" + user.Fkalmacen + "\"}";
+                                    campoverificacion.ControlesAsociados = "[{\"FkarticulosDesde\": \"Fkarticulossalida\",\"FkarticulosHasta\":\"Fkarticulosentrada\",\"Flujo\":\"flujonuevoregistro\"}]";
+                                }
+                                @Html.Partial("CampoverificacionUI", campoverificacion)
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-offset-2 text-danger">{{Fkarticuloserrores}}</div>
+
+                        </div>
+
+                        <!--FORM GROUP BUSCAR LOTES-->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button class="pull-right btn btn-secondary btn-sm" ng-click="Buscarlote()" type="button"><i class="fa fa-search"></i> Buscar lotes</button>
+                            </div>
+
+                        </div>
+
+
+                        <!--SE MUESTRA CUANDO HAY LOTES DISPONIBLES-->
+                        <div ng-show="Mostrardetalle">
+                            <div class="form-group">
+                                <input type="hidden" name="Metros" ng-model="Metros" class="form-control col-md-2" />
+                                <input type="hidden" name="Fkunidades" ng-model="Fkunidades" class="form-control" />
+
+                                <div class="col-md-12"></div>
+                                <div class="col-md-2">
+                                    <div class="pull-right">
+                                        <label class="control-label">Modificar medidas</label>
+                                        <div class="margin-top-10">
+                                            <input type="checkbox" ng-model="Modificarmedidas" ng-disabled="Tipofamilia>=2" />
+                                        </div>    
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-2">
+                                    
+                                    <label class="control-label">@Reservasstock.Cantidad</label>
+                                    <div >
+                                        <input type="text" ng-readonly="true" ng-model="Cantidad" name="Cantidad" class="form-control" decimalesnumerico/>
+                                    </div>
+                                    <div class="text-danger">{{Cantidaderrores}}</div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="text-center">@Reservasstock.Largo</label>
+                                    <div>
+                                        <input type="text" ng-readonly="!Editarlargo || !Modificarmedidas" ng-model="Largo" name="Largo" class="form-control" decimalesnumerico />
+                                    </div>
+                                    <div class="text-danger">{{Largoerrores}}</div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="text-center">@Reservasstock.Ancho</label>
+                                    <div>
+                                        <input type="text" ng-readonly="!Editarancho || !Modificarmedidas" ng-model="Ancho" name="Ancho" class="form-control" decimalesnumerico />
+                                    </div>
+
+                                    <div class="text-danger">{{Anchoerrores}}</div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="text-center">@Reservasstock.Grueso</label>
+                                    <div>
+                                        <input type="text" ng-readonly="!Editargrueso || !Modificarmedidas " ng-model="Grueso" name="Grueso" class="form-control" decimalesnumerico />
+                                    </div>
+
+                                    <div class="text-danger">{{Gruesoerrores}}</div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div>
+                                        <label class="text-center">@Reservasstock.Metros</label>
+                                    </div>
+                                    <div class="badge-light text-right">
+                                        <label class="control-label" style="padding: 5px !important">{{Metros}} {{Unidades}}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">@Reservasstock.Precio</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" id="Precioarticulo" ng-readonly="!Editarprecio" name="Precioarticulo" ng-model="Precio" class="form-control" decimalesnumerico />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary btn-sm" ng-disabled="!Editarprecio" ng-click="SearchPrecios()" type="button"><i class="fa fa-search"></i> @General.LblBuscar</button>
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <input type="text" name="Descuento" ng-readonly="!Editardescuento" ng-model="Descuentoarticulo" class="form-control" decimalesnumerico />
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"></div>
+                                <div class="text-danger">{{Precioerrores}}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" ng-model="Subtotal" name="Subtotal" class="form-control"/>
+                                <label class="control-label col-md-2 ">@Reservasstock.Subtotal</label>
+                                <label class="control-label col-md-2 badge-light" style="padding: 5px !important">{{Subtotal}}</label>
+                                <label class="control-label col-md-2 ">@Reservasstock.Canal</label>
+                                <div class="col-md-2">
+                                    <select name="Canal" ng-model="Canal" aria-label="Canal" class="form-control">
+                                        <option value="" selected="selected"></option>
+                                        @foreach (var item in listcanales)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                                <label class="control-label col-md-2 ">@Reservasstock.Caja</label>
+                                <div class="col-md-2">
+                                    <input type="number" name="Caja" ng-model="Caja" aria-label="Caja" class="form-control"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                       
+                    </div>
+                    <hr />
+                    <div class="report-container report-container-2 ">
+                        <span ng-show="loading">@General.LblLoading</span>
+                        <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid ui-grid-fullheight"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <span class="text-danger pull-left col-md-8 text-left">{{Generalerrores}}</span>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" ng-disabled="!selected||selected==0" ng-click="Aceptar()">@General.BtnGuardar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    console.log("entrega");
+</script>

@@ -1,0 +1,34 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+
+   
+    
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoreservasinicial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoreservasinicial, Model.Estadosreservas.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoreservasparcial, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoreservasparcial, Model.Estadosreservas.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+   
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoreservastotal, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoreservastotal, Model.Estadosreservas.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+
+
+

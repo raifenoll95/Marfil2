@@ -1,0 +1,62 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as PedidosModel;
+    var modelImprimir = modelview.GetListFormatos();
+    
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "Pedidos", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_Pedidos", Model as PedidosModel)
+
+        <div class="margin-top">
+
+
+            <button class="btn btn-info no-margin-left" type="Submit">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+
+        </div>
+
+    </div>
+            }
+
+@Html.Partial("_envioemails")
+
+@{
+    using (Html.BeginForm("ForzarCambiarCostes", "Pedidos", FormMethod.Post, new { @id = "forzarcostesfabricacion" }))
+    {
+        <input type="hidden" name="documentoReferencia" value="@modelview.Id" />
+        <input type="hidden" name="returnUrl" value="@Url.Action("Edit",new { modelview.Id })" />
+    }
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

@@ -1,0 +1,70 @@
+﻿@using Marfil.App.WebMain.Misc
+@using System.Globalization
+@using System.Threading
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.CRM
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.PeticionesAsincronasModel
+@{
+    var isreadonly = true;
+}
+
+<h2>Información sobre la petición @Model.Id: </h2>
+<br />
+
+<div class="col-md-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th id="empresa" class="text-center col-md-2">@PeticionesAsincronas.Empresa </th>
+                <th id="usuario" class="text-center">@PeticionesAsincronas.Usuario</th>
+                <th id="fecha" class="text-center">@PeticionesAsincronas.Fecha </th>
+                <th id="estado" class="text-center">@PeticionesAsincronas.Estado </th>
+                <th id="tipo" class="text-center">@PeticionesAsincronas.Tipo</th>
+                <th id="configuracion" class="text-center">@PeticionesAsincronas.Configuracion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td headers="empresa" class="text-center">@Model.Empresa.ToString()</td>
+                <td headers="usuario" class="text-center">@Model.Usuario</td>
+                <td headers="fecha" class="text-center">@Convert.ToDateTime(Model.Fecha).ToString("dd/MM/yyyy")</td>
+                <td headers="tipo" class="text-center">@Model.Estado</td>
+                <td headers="tipo" class="text-center">@Model.Tipo</td>
+                <td headers="configuracion" class="text-center">@Model.Configuracion</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br />
+<h3>@PeticionesAsincronas.Resultado</h3>
+<br />
+
+@if(Model.Estado != EstadoPeticion.EnCurso)
+{
+    if (string.IsNullOrEmpty(Model.Resultado))
+    {
+        <p class="alert alert-success" id="successMessage" align="center">@PeticionesAsincronas.Correcto</p>
+    }
+    else
+    {
+        if (Model.Estado == EstadoPeticion.Finalizada)
+        {
+            <p class="alert alert-warning" id="errorMessage" align="center">@PeticionesAsincronas.Error</p>
+        }
+        else
+        {
+            <p class="alert alert-danger" id="errorMessage" align="center">@PeticionesAsincronas.ErrorCritico</p>
+        }
+        @Html.TextAreaFor(f => Model.Resultado, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    }
+}
+else
+{
+    <p class="alert alert-info" id="successMessage" align="center">@PeticionesAsincronas.EnEjecucion</p>
+}

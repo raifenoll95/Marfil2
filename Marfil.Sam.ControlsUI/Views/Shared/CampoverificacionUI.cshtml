@@ -1,0 +1,17 @@
+﻿
+@model Marfil.Dom.ControlsUI.CampoVerificacion.CampoverificacionModel
+@{
+    string txtName = "txt" + Guid.NewGuid().ToString().Replace("-", "");
+}
+
+<div class="form-group form-inline" ng-controller="CampoverificacionController" ng-init="init('@Model.Url','@Model.Name','@Model.CampoIdentificador','@Model.CampoDescripcion', 'BusquedaGeneral')">
+
+    <input enter-as-tab ng-keydown="keydown($event)" name="@Model.Name" id="@Model.Name" ng-model="valor" ng-blur="lostFocus()" ng-focus="" type="text" class="input-mini">
+    <label  id="@Html.Raw("lbl" + Model.Name)" class="align-left control-label" style="margin-bottom: 5px; margin-left: 5px;">
+        {{descripcion}}
+    </label>
+    <button tabindex="-1" type="button" class="btn btn-purple btn-sm pull-right" ng-controller="BotonbuscarCtrl" ng-click="buscar('@Model.CampoIdentificador', '@Model.Name', 'BusquedaGeneral', '@Model.Url')">
+        <i class="fa fa-search"></i>
+        Buscar
+    </button>
+</div>

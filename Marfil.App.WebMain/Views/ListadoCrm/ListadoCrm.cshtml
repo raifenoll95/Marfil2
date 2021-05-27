@@ -1,0 +1,182 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion;
+@using Resources
+
+@model Marfil.Dom.Persistencia.Listados.ListadoCrm
+@{
+   
+    
+    ViewBag.title = Menuaplicacion.listadocrm;
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#Estados').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        $('#Modulos').multiselect({
+            includeSelectAllOption: true
+            
+        });
+
+    });
+
+</script>
+
+@Html.HiddenFor(f => Model.Empresa)
+
+<div class="col-md-10" id="contenedor">
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Modulos, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Modulos" class="form-control" name="Modulos" multiple="multiple">
+                @foreach (var item in Model.ListModulos)
+            {
+                    <option value="@item" @Html.Raw(Model.Modulos.Any(f => f == item) ? "selected=\"selected\"" : string.Empty)>@item</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-10"></div>
+        <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Modulos, "", new { @class = "text-danger" })</div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estados, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Estados" class="form-control" name="Estados" multiple="multiple">
+                @foreach (var item in Model.ListEstados)
+            {
+                    <option value="@item.CampoId" @Html.Raw(Model.Estados.Any(f => f == item.Id) ? "selected=\"selected\"" : string.Empty)>@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-10"></div>
+        <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Estados, "", new { @class = "text-danger" })</div>
+    </div>
+
+   
+
+
+    <div class="form-group" >
+        @Html.LabelFor(f => Model.FechaAperturaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaAperturaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaAperturaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaAperturaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaAperturaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaAperturaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+   
+
+
+    <div class="form-group" class="col-md-10">
+        @Html.LabelFor(f => Model.FechaProxSeguiDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaProxSeguiDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaProxSeguiHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaProxSeguiHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaProxSeguiDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaProxSeguiHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+  
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.TerceroDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "TerceroDesde";
+                campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                campoverificacion.Valor = Model.TerceroDesde;
+                campoverificacion.Titulo = "TerceroDesde";
+                /*campoverificacion.SoloLectura = isreadonly;*/
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.TerceroDesde, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+   
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.TerceroHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "TerceroHasta";
+                campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                campoverificacion.Valor = Model.TerceroHasta;
+                campoverificacion.Titulo = "TerceroHasta";
+                /*campoverificacion.SoloLectura = isreadonly;*/
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.TerceroHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+   
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaInforme, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(f => Model.FechaInforme)
+        </div>
+    </div>
+
+ 
+</div>
+
+
+   <div class="col-md-2">
+        <ul class="list-group" id="Ordenarpor">
+            <li class="list-group-item active">TIPO</li>
+            <li class="list-group-item"><input type="radio" aria-label="Cerrado" aria-labelledby="Ordenarpor" name="Cerrado" @Html.Raw(!string.IsNullOrEmpty(Model.Cerrado) && Model.Cerrado == "0" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Cerrado) ? "checked=\"checked\"" : string.Empty) value="0" />Abierto </li>
+            <li class="list-group-item"><input type="radio" aria-label="Cerrado" aria-labelledby="Ordenarpor" name="Cerrado" @Html.Raw(!string.IsNullOrEmpty(Model.Cerrado) && Model.Cerrado == "1" ? "checked=\"checked\"" : string.Empty) value="1" /> Cerrado</li>
+            <li class="list-group-item"><input type="radio" aria-label="Cerrado" aria-labelledby="Ordenarpor" name="Cerrado" @Html.Raw(!string.IsNullOrEmpty(Model.Cerrado) && Model.Cerrado == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> Todos</li>
+           
+        </ul>
+   </div>
+
+
+

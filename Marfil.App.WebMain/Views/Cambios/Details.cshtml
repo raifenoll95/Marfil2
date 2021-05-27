@@ -1,0 +1,206 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Helpers
+@using Resources
+@model IModelView
+@{
+    ViewBag.TituloMantenimiento = @General.LblGestionCambioMonedas;
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var monedaBase = WebHelper.GetApplicationHelper().GetMonedaBase();
+    var monedaAdicional = WebHelper.GetApplicationHelper().GetMonedaAdicional();
+}
+
+
+
+<div>
+    
+    @using (Html.BeginForm(new {@class = "form-horizontal"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(f => ((MonedasModel) Model).Id, new {@class = "control-label col-md-2"})
+                <div class="col-md-1">
+                    @Html.TextBoxFor(f => ((MonedasModel) Model).Id, new {@class = "form-control", @autofocus = "", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((MonedasModel) Model).Id, "", new {@class = "text-danger"})
+                </div>
+
+                <div class="col-md-4 pull-right align-right">
+                    <label>@General.LblUltimaModificacion :</label>
+                    <label><strong>@Html.Raw(((MonedasModel)Model).Usuario)</strong> - </label>
+                    <label><strong>@Html.Raw(((MonedasModel)Model).FechaModificacion.ToShortDateString() + " " + @Html.Raw(((MonedasModel)Model).FechaModificacion.ToShortTimeString()))</strong></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((MonedasModel) Model).Descripcion, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => ((MonedasModel) Model).Descripcion, new {@class = "form-control", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((MonedasModel) Model).Descripcion, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((MonedasModel) Model).Abreviatura, new {@class = "control-label col-md-2"})
+                <div class="col-md-1">
+                    <input name="Abreviatura" aria-label="Abreviatura" type="text" class="form-control" readonly="readonly" ng-model="monedabase" ng-init="monedabase='@(((MonedasModel) Model).Abreviatura)'" />
+                    @Html.ValidationMessageFor(f => ((MonedasModel) Model).Abreviatura, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((MonedasModel) Model).Decimales, new {@class = "control-label col-md-2"})
+                <div class="col-md-1">
+                    @Html.TextBoxFor(f => ((MonedasModel) Model).Decimales, new {@class = "form-control", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((MonedasModel) Model).Decimales, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <span class="fa-2x">
+                        @General.LblGestionCambios
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(f => ((MonedasModel)Model).CambioMonedaBase, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => ((MonedasModel)Model).CambioMonedaBase, new { @readonly = "readonly", @class = "form-control", @autofocus = "", ng_model = "cantidadbase", ng_change = "cantidadbaseinversa=1/cantidadbase.replace(',','.')", ng_init = "cantidadbase='" + ((MonedasModel)Model).CambioMonedaBase + "';cantidadbaseinversa=1/cantidadbase.replace(',','.');" })
+            </div>
+
+            <div class="col-md-4 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((MonedasModel)Model).CambioMonedaBase, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-2">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="smaller">1 <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">{{monedabase}}</span>  = {{cantidadbase}} <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">@monedaBase.Abreviatura</span></h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-xs-6">@Html.Raw(((MonedasModel)Model).Descripcion)<span class="pull-right"><i class="fa fa-arrows-h"></i></span></div>
+                                    <div class="col-md-6 col-xs-6">@monedaBase.Descripcion</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 col-xs-6">
+                                        1 <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">{{monedabase}}</span> = {{cantidadbase.replace(',','.')}} <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">@monedaBase.Abreviatura</span>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6"> 1 <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">@monedaBase.Abreviatura</span>  = <span>{{cantidadbaseinversa.toFixed(5)}}</span> <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">{{monedabase}}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((MonedasModel)Model).CambioMonedaAdicional, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => ((MonedasModel)Model).CambioMonedaAdicional, new {@readonly="readonly", @class = "form-control", ng_model = "cantidadadicional", ng_change = "cantidadadicionalinversa=1/cantidadadicional.replace(',','.')", ng_init = "cantidadadicional='" + ((MonedasModel)Model).CambioMonedaAdicional + "';cantidadadicionalinversa=1/cantidadadicional.replace(',','.')" })
+            </div>
+            <div class="col-md-4 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((MonedasModel)Model).CambioMonedaAdicional, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-2">
+                <div>
+                    @if (monedaAdicional == null)
+                {
+
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="smaller">Ups!</h4>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <span class="label label-warning">
+                                        <i class="fa fa-info"></i>
+                                        @General.LblNoConfiguracionMonedaAdicional
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="smaller">1 <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">{{monedabase}}</span>  = {{cantidadadicional}} <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">@monedaAdicional.Abreviatura</span></h4>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <!-- #section:elements.popover -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6 col-xs-6">@Html.Raw(((MonedasModel)Model).Descripcion)<span class="pull-right"><i class="fa fa-arrows-h"></i></span></div>
+                                            <div class="col-md-6 col-xs-6">@monedaAdicional.Descripcion</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="col-md-6 col-xs-6">
+                                                1 <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">{{monedabase}}</span> = {{cantidadadicional.replace(',','.')}} <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">@monedaAdicional.Abreviatura</span>
+                                            </div>
+                                            <div class="col-md-6 col-xs-6"> 1 <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">@monedaAdicional.Abreviatura</span>  = <span>{{cantidadadicionalinversa.toFixed(5)}}</span> <span class="@Html.Raw(WebHelper.DevexpressAA? "color-black" :"blue") bolder">{{monedabase}}</span></div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- /section:elements.popover -->
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <span class="fa-2x">
+                        @General.LblHistoricoCambios
+                    </span>
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    @Html.Partial("CambiosLog", ((MonedasModel) Model).Log)
+                </div>
+            </div>
+
+        </div>
+            }
+        </div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((MonedasModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

@@ -1,0 +1,66 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Resources
+@model HeaderModel
+<div id="navbar" class="navbar navbar-default">
+    <div class="navbar-container" id="navbar-container">
+        <!-- #section:basics/sidebar.mobile.toggle -->
+        @if (!Model.IsInitial)
+        {
+            <button onclick="mkgSideBar.menu.open();" type="button" class="navbar-toggle menu-toggler pull-left" style="display:block !important" >
+                <span class="sr-only">Toggle sidebar</span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+            </button>
+        }
+        <!-- /section:basics/sidebar.mobile.toggle -->
+        <div class="navbar-header pull-left">
+            <!-- #section:basics/navbar.layout.brand -->
+            @if (!Model.IsInitial)
+            {
+                <a href="@Url.Action("Index","Home",new {area=""})" class="navbar-brand">
+                    <img src="@Url.Content("~/Images/logoWhite50.png")" style="max-height: 25px" alt="Marfil" />
+                </a>
+            }
+            else
+            {
+                <a href="#" class="navbar-brand">
+                    <img src="@Url.Content("~/Images/logoWhite50.png")" style="max-height: 25px" alt="Marfil" />
+                </a>
+            }
+
+
+            <!-- /section:basics/navbar.layout.brand -->
+            <!-- #section:basics/navbar.toggle -->
+            <!-- /section:basics/navbar.toggle -->
+        </div>
+
+        @if (!Model.IsInitial)
+        {
+            
+        <!-- #section:basics/navbar.dropdown -->
+            <div class="navbar-buttons navbar-header" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="transparent dropdown-modal" id="cambioempresali">
+                        @Html.Partial("Header/_empresa", Model)
+                    </li>
+                    <li class="transparent dropdown-modal" id="cambioejercicioli">
+                        @Html.Partial("Header/_ejercicio", Model)
+                    </li>
+                    <li class="transparent dropdown-modal" id="cambioalmacenli">
+                        @Html.Partial("Header/_almacenes", Model)
+                    </li>
+                    <li class="transparent dropdown-modal">
+                        @Html.Partial("Header/_azure", Model)
+                    </li>
+                </ul>
+            </div>
+        }
+
+
+    </div>
+</div>

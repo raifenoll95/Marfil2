@@ -1,0 +1,82 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@model AcabadosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @class = "form-control", @aria_label="codigo", @readonly = "readonly" } : (object)new { @required= "required", @class = "form -control", @aria_label = "codigo", @autofocus = "", @ng_blur = "existePk(2,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Acabados") + "\",\"" + Url.Action("Edit", "Acabados") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion2, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion2, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcion2, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcionabreviada, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcionabreviada, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcionabreviada, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Bruto, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Bruto, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        @Html.ValidationMessageFor(f => Model.Bruto, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+
+<script type="text/javascript">
+
+    //Cuando haces click en bruto, se llama aqui. Se le pone el #id del checkbox
+    $('#Bruto').click(function () {
+
+        if (document.getElementById("Bruto").checked == true) {
+
+            $.ajax({
+                url: '@Url.Action("comprobarAcabadoBruto", "Acabados")',
+                success: function (data) {
+                    if (data.status == "ok") {
+                        if (data.responseView == "okBruto") {
+                            bootbox.alert("Ya existe un acabado bruto. Si graba, se borrará el acabado " + data.acabado);
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+</script>

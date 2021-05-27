@@ -1,0 +1,78 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Newtonsoft.Json
+@model Marfil.Dom.ControlsUI.NifCif.NifCifModel
+@{
+    var id = Model.Id;
+}
+
+@Html.LabelFor(f => Model.Nif, new { @class = "control-label col-md-2", @id="Label" + id ,@name= "Label" + id })
+<div class="col-md-6">
+    @if (Model.Obligatorio)
+    {
+        @Html.TextBoxFor(f => Model.Nif, Model.Readonly ? (object)new { @aria_labelledby= "Label" + id, @aria_label = "Nif", @class = "form-control",@required="required", @readonly = "readonly", @onchange = "ValidateNif($('#FkPais').val(), $(this).val(),'ErrorNif'+'@id')" } : (object)new { @aria_labelledby = "Label" + id, @aria_label = "Nif", @class = "form-control", @required = "required", @onchange = "ValidateNif($('#FkPais').val(), $(this).val(),'ErrorNif' + '" + id + "')", @id = "Nif" + id })
+    }
+    else
+    {
+        @Html.TextBoxFor(f => Model.Nif, Model.Readonly ? (object)new { @aria_labelledby = "Label" + id, @aria_label = "Nif", @class = "form-control", @readonly = "readonly", @onchange = "ValidateNif($('#FkPais').val(), $(this).val(),'ErrorNif'+'@id')" } : (object)new { @aria_labelledby = "Label" + id, @aria_label="Nif",@class = "form-control", @onchange = "ValidateNif($('#FkPais').val(), $(this).val(),'ErrorNif' + '" + id + "')", @id = "Nif" + id })
+    }
+    
+
+</div>
+<div class="col-md-4">
+    @Html.DropDownListFor(f=>Model.TipoNif,WebHelper.TiposNif.Select(f=>new SelectListItem() {Value = f.Valor,Text=f.Descripcion}), Model.Readonly ? (object)new { @aria_labelledby = "Label" + id, @aria_label = "Tipo Nif", @class = "form-control", @disabled = "disabled" } : (object)new { @aria_labelledby = "Label" + id, @aria_label = "Tipo Nif", @class = "form-control",@id="tiponif"+id })
+</div>
+
+<div class="col-md-10 col-md-offset-2">
+    @Html.ValidationMessageFor(f => Model.Nif, "", new { @class = "text-danger" })
+    <span id="@Html.Raw("ErrorNif"+id)" class="text-danger"></span>
+</div>
+
+@{
+    Html.AddScript(Url.Content("~/Scripts/Model/Misc/NifValidator/Validators/NifValidator_070.js"));
+    Html.AddScript(Url.Content("~/Scripts/Model/Misc/NifValidator/Validators/NifValidator_Null.js"));
+    Html.AddScript(Url.Content("~/Scripts/Model/Misc/NifValidator/NifValidationService.js"));
+    Html.AddScript(Url.Content("~/Scripts/Model/Misc/Funciones.js"));
+}
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+
+        $("form").submit(function (event) {
+
+            if (!ValidateNif($('#@Model.FkpaisControlId').val(), $('#Nif' + '@id').val(), 'ErrorNif' + '@id')) {
+                 event.preventDefault();
+                return false;
+            }
+            return true;
+        });
+    });
+
+    function ValidateNif(pais, dni, errornif) {
+        if (PuedeVerificar($("#tiponif" + '@id').val())) {
+            if (Funciones.ValidarDni(pais, dni)) {
+                $("#" + errornif).html("");
+                return true;
+            } else {
+                $("#" + errornif).html("NIF/CIF con formato incorrecto");
+                return false;
+            }
+        } else {
+            $("#" + errornif).html("");
+            return true;
+        }
+    }
+
+    function PuedeVerificar(tipo) {
+        var obj = @Html.Raw(JsonConvert.SerializeObject(WebHelper.TiposNif));
+        for(var i=0;i<obj.length;i++)
+        {
+            if (obj[i].Valor === tipo) {
+                return obj[i].VerificaValor;
+            }
+            
+        }
+        return false;
+    }
+
+</script>

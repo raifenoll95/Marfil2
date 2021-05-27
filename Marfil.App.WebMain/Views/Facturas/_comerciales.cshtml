@@ -1,0 +1,179 @@
+﻿@using System.Globalization
+@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Facturas.FacturasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var cvregimen = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    var cvretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkformaspago, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvfp.Name = "Fkformaspago";
+            cvfp.Url = Url.Action("FormasPagoApi", "Api");
+            cvfp.Valor = Model.Fkformaspago?.ToString() ?? "";
+            cvfp.Titulo = "Formas de pago";
+            cvfp.SoloLectura = isreadonly;
+            cvfp.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvfp)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkbancosmandatos, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <select aria-label="Banco" ng-show="bancoscliente.length > 1" ng-model="fkbancosmandatos" class="form-control" name="Fkbancosmandatos" @Html.Raw(isreadonly ? " disabled=\"disabled\"" : string.Empty)>
+            <option ng-selected="{{fkbancosmandatos == item.Id}}" ng-repeat="item  in bancoscliente" value="{{ item.Id }}">{{item.Descripcion}}</option>
+        </select>
+        <label ng-show="bancoscliente.length && bancoscliente.length <= 1" class="control-label">@General.LblNoExistenBancos</label>
+
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkbancosmandatos, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajedescuentocomercial, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <div class="input-group">
+            @Html.TextBoxFor(f => Model.Porcentajedescuentocomercial, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            <span class="input-group-addon">%</span>
+        </div>
+    </div>
+
+    @Html.LabelFor(f => Model.Porcentajedescuentoprontopago, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <div class="input-group">
+            @Html.TextBoxFor(f => Model.Porcentajedescuentoprontopago, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            <span class="input-group-addon">%</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentastesoreria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvcuentas.Name = "Fkcuentastesoreria";
+            cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            cvcuentas.Valor = Model.Fkcuentastesoreria;
+            cvcuentas.SoloLectura = isreadonly;
+            cvcuentas.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Cuentastesoreria + "\"}";
+        }
+
+        @Html.Partial("CampoverificacionUI", cvcuentas)
+        @Html.ValidationMessageFor(f => Model.Fkcuentastesoreria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cobradoview, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Cobradoview, isreadonly ? (object)new {  @disabled = "disabled" } : (object)new {  })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvregimen.Name = "Fkregimeniva";
+            cvregimen.Url = Url.Action("RegimenIvaApi", "Api");
+            cvregimen.Valor = Model.Fkregimeniva;
+            cvregimen.SoloLectura = isreadonly;
+            cvregimen.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvregimen)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fktiposretenciones, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvretencion.Name = "Fktiposretenciones";
+                cvretencion.Url = Url.Action("TiporetencionApi", "Api");
+                cvretencion.Valor = Model.Fktiposretenciones;
+                cvretencion.SoloLectura = isreadonly;
+                cvretencion.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvretencion)
+
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fktiposretenciones, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.TextBoxFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+                <span class="input-group-addon">%</span>
+            </div>
+        </div>
+
+        @Html.LabelFor(f => Model.Criterioiva, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EnumDropDownListFor(f => Model.Criterioiva, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => Model.Criterioiva, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmonedas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvmonedas.Name = "Fkmonedas";
+                cvmonedas.Url = Url.Action("MonedasApi", "Api");
+                cvmonedas.Valor = Model.Fkmonedas?.ToString() ?? "";
+                cvmonedas.Titulo = "Monedas";
+                cvmonedas.SoloLectura = true;
+                cvmonedas.Obligatorio = false;
+
+            }
+            @Html.Partial("CampoverificacionUI", cvmonedas)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipocambio, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Tipocambio, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+    </div>

@@ -1,0 +1,27 @@
+﻿@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Resources
+
+@model Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales.GrupoMaterialesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var isEdicion = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "Edit" : false;
+    var isNuevo = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "New" : false;
+}
+
+<div id="tabs">
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+        <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div id="general" class="tab-pane fade in active">
+        @Html.Partial("_general", Model)
+    </div>
+        <div id="galeria" class="tab-pane fade margin-bottom">
+            @Html.Partial("_galeriaimagenes", Model.Galeria)
+        </div>
+    
+</div>
+

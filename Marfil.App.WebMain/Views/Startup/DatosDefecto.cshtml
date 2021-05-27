@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Marfil.Dom.Persistencia.Model.DatosDefectoItemModel>
+@{
+    ViewBag.Title = "Configurador de datos por defecto";
+    Layout = "~/Views/Shared/_layoutInitial.cshtml";
+}
+
+
+<h2>Configurador de datos por defecto</h2>
+<hr />
+<p>
+    Actualmente la aplicación se encuentra sin datos. <br />
+    Con nuestro asistente podrá cargar la información básica necesaria para poder empezar a trabajar inmediatamente.
+</p>
+
+@using (Html.BeginForm("DatosDefecto", "Startup", FormMethod.Post))
+{
+<div class="form-horizontal">
+    <table id="simple-table" class="table  table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="center col-xs-1">
+                    <label class="pos-rel">
+                        <input type="checkbox" class="ace" />
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th class="detail-col">Entidad</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            int i = 0;
+            foreach (var item in Model.ToList())
+            {
+                <tr>
+                    <td class="center">
+                        <input type="hidden" name="Model[@i].Fichero" value="@item.Fichero" />
+                        <label class="pos-rel margin-top">
+                            @if (item.Readonly)
+                            {
+                                <input type="hidden" name="Model[@i].Id"  value="@item.Id"/>
+                                <i class="fa fa-check"></i>
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="ace" name="Model[@i].Id" checked="checked" value="@item.Id" />
+                            }
+
+
+                            <span class="lbl"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <h3>@item.Titulo</h3>
+                        <p>@item.Descripcion</p>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+        
+        </tbody>
+    </table>
+
+
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <button class="btn btn-info" type="Submit">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Siguiente
+            </button>
+        </div>
+    </div>
+
+</div>
+}
+<script type="text/javascript">
+    //select/deselect a row when the checkbox is checked/unchecked
+    var active_class = 'active';
+    $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
+        var th_checked = this.checked;//checkbox inside "TH" table header
+
+        $(this).closest('table').find('tbody > tr').each(function () {
+            var row = this;
+            if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+            else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+        });
+    });
+
+    //select/deselect a row when the checkbox is checked/unchecked
+    $('#simple-table').on('click', 'td input[type=checkbox]', function () {
+        var $row = $(this).closest('tr');
+        if ($row.is('.detail-row ')) return;
+        if (this.checked) $row.addClass(active_class);
+        else $row.removeClass(active_class);
+    });
+
+
+</script>

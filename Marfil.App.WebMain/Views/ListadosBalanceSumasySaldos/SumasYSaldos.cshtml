@@ -1,0 +1,161 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+
+@model Marfil.Dom.Persistencia.Listados.ListadosBalanceSumasYSaldos
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel?.Toolbar?.Titulo;
+    var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService); //Obtenemos un objeto de cuentasModel con sus atributos
+    var listcanalcontable = WebHelper.GetApplicationHelper().GetListCanalContable().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listcanalcontable.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+
+}
+@Html.HiddenFor(f => Model.Empresa)
+
+<div class="col-md-10">
+
+    @Html.HiddenFor(f => Model.InicioEjercicio)    
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.CuentaDesde)
+        </div>
+        @Html.LabelFor(f => Model.CuentaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.CuentaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.PorGrupos, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBox("PorGrupos", true)
+            </div>
+            @Html.LabelFor(f => Model.PorSubgrupos, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBox("PorSubgrupos", true)
+            </div>
+            @Html.LabelFor(f => Model.PorMayor, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBox("PorMayor", true)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.PorSubmayor, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBox("PorSubmayor", true)
+            </div>
+            @Html.LabelFor(f => Model.PorNivelCinco, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBoxFor(f => Model.PorNivelCinco)
+            </div>
+            @Html.LabelFor(f => Model.PorSubcuenta, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBox("PorSubcuenta", true)
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.MostrarCuentasSinSaldo, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBox("MostrarCuentasSinSaldo", true)               
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.MostrarCuentasSinMovimientos, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.CheckBoxFor(f => Model.MostrarCuentasSinMovimientos)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.FechaInforme, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaInforme)
+            </div>
+        </div>
+
+    
+
+</div>
+
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+        // [1] Botón Limpiar
+        parentButtonListar.insertBefore(button, parentButtonListar.children[1])
+
+    }, false);
+
+    function imprimir() {
+        
+        var data = {
+            CuentaDesde: document.getElementById('CuentaDesde').value,
+            CuentaHasta: document.getElementById('CuentaHasta').value,
+            PorGrupos: document.getElementById('PorGrupos').checked,
+            PorSubgrupos: document.getElementById('PorSubgrupos').checked,
+            PorMayor: document.getElementById('PorMayor').checked,
+            PorSubmayor: document.getElementById('PorSubmayor').checked,
+            PorNivelCinco: document.getElementById('PorNivelCinco').checked,
+            PorSubcuenta: document.getElementById('PorSubcuenta').checked,
+            MostrarCuentasSinSaldo: document.getElementById('MostrarCuentasSinSaldo').checked,
+            MostrarCuentasSinMovimientos: document.getElementById('MostrarCuentasSinMovimientos').checked,
+            FechaInforme: document.getElementById('FechaInforme').value,
+            
+        };
+        console.log(data);
+        var dataSerialized = JSON.stringify(data)
+
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=SumasYSaldos&reportId=Defecto');
+
+    };
+
+
+</script>

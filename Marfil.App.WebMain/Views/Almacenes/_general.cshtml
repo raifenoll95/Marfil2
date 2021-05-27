@@ -1,0 +1,47 @@
+﻿@using System.Globalization
+@using System.Threading
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.Iva
+
+@model Marfil.Dom.Persistencia.Model.Configuracion.AlmacenesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;   
+}
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcarpetas)
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new {@aria_label="Codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "Codigo", @required = "required", @class = "form -control", @autofocus = "", @ng_blur = "existePk(4,3,\"" + Url.Action("Exists", "Almacenes") + "\",\"" + Url.Action("Edit", "Almacenes") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Coordenadas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Coordenadas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Coordenadas, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Privado, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Privado, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        @Html.ValidationMessageFor(f => Model.Privado, "", new { @class = "text-danger" })
+    </div>
+</div>

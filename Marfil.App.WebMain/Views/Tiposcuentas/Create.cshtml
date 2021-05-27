@@ -1,0 +1,40 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IModelView
+
+@using (Html.BeginForm("CreateOperacion", "Tiposcuentas", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+   @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.Partial("_tiposcuentas", Model)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}

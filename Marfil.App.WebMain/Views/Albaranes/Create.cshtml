@@ -1,0 +1,42 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    
+}
+
+
+
+
+@using (Html.BeginForm("CreateOperacion", "Albaranes", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+    <div class="form-horizontal">
+
+       @Html.Partial("_Albaranes", Model as AlbaranesModel)
+
+        <div class="form-group">
+            <div class="col-md-10 margin-top">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

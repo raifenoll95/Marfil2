@@ -1,0 +1,26 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model ListIndexModel
+@{
+    var toolbarModel = Model as IToolbar;
+    toolbarModel.Toolbar.Titulo = "Previsión de pagos";
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+
+<div class="row margin-bottom">
+    @Html.Partial("GridViewIndex", Model)
+</div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

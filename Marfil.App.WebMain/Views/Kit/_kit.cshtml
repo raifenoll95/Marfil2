@@ -1,0 +1,66 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Marfil.Dom.Persistencia.Model;
+@using RKit = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Kit;
+@model Marfil.Dom.Persistencia.Model.Stock.KitModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+
+    var isNuevo = !isreadonly && !iseditable;
+}
+<script src="~/Scripts/Model/Almacenes/AlmacenesController.js"></script>
+<script src="~/Scripts/Model/Kit/KitController.js"></script>
+<div ng-controller="AlmacenesCtrl" ng-init="init('@Url.Action("AlmacenesZonasApi","Api")','@Model.Fkalmacen','@Model.Fkzonaalmacenvista')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li ><a data-toggle="tab" href="#lineas">@RKit.Lineas</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active margin-bottom">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="lineas" class="tab-pane fade margin-bottom">
+            <div class="form-group" ng-controller="KitCtrl">
+                <div class="col-md-12">
+                    <span class="fa-2x">
+                        @RKit.Lineas
+                    </span>
+                    @if (isNuevo || iseditable)
+                    {
+                        <span class="pull-right">
+                            <button type="button" class="btn btn-success btn-sm" ng-click="Buscarlotes()">
+                                <i class="fa fa-plus"></i>
+                                @General.BtnNuevoRegistro
+                            </button>
+                        </span>
+                    }
+
+
+                </div>
+                <div class="col-md-12">
+                    @Html.Partial("_kitlin", Model.Lineas)
+                </div>
+            </div>
+            
+        </div>
+      
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>
+@Html.Partial("_buscarlotes",new BuscarLotesModel() {Solotablas=false})
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

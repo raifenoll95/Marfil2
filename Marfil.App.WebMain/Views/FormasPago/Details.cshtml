@@ -1,0 +1,173 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var objModel = Model as FormasPagoModel;
+    var service = new TablasVariasService(WebHelper.ContextService);
+    var modosPago = service.GetTablasVariasByType(typeof(TablasVariasModosPagoModel));
+    var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago();
+}
+
+
+
+<div>
+    
+    @using (Html.BeginForm(new {@class = "form-horizontal"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(f => ((FormasPagoModel)Model).Id, new { @class = "control-label col-md-2" })
+                <div class="col-md-1">
+                    @Html.TextBoxFor(f => ((FormasPagoModel)Model).Id, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((FormasPagoModel) Model).Nombre, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => ((FormasPagoModel) Model).Nombre, htmlAttributes: new {@class = "form-control", @autofocus = "", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((FormasPagoModel) Model).Nombre, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((FormasPagoModel) Model).Nombre2, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => ((FormasPagoModel) Model).Nombre2, new {@class = "form-control", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((FormasPagoModel) Model).Nombre2, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((FormasPagoModel) Model).RecargoFinanciero, new {@class = "control-label col-md-2"})
+                <div class="col-md-1 ">
+                    @Html.TextBoxFor(f => ((FormasPagoModel) Model).RecargoFinanciero, new {@class = "form-control", @readonly = ""})
+
+                </div>
+
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).ImprimirVencimientoFacturas, new {@disabled = "disabled"})
+                            <span class="lbl">Imprimir vencimientos en las facturas</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => ((FormasPagoModel)Model).ExcluirFestivos, new { @disabled = "disabled" })
+                            <span class="lbl">Excluir vencimientos en festivos</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            @{
+                var efectivo = ((FormasPagoModel) Model).Efectivo;
+                var remesable = ((FormasPagoModel)Model).Remesable;
+                var mandato = ((FormasPagoModel)Model).Mandato;
+
+                if (((FormasPagoModel) Model).ModoPago != "AAA")
+                {
+                    var item = modosPago.Lineas.Single(f => f.Valor == ((FormasPagoModel) Model).ModoPago);
+                    efectivo = item.Efectivo;
+                    remesable = item.Remesable;
+                    mandato = item.MandatoRequerido;
+                }
+            }
+
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((FormasPagoModel)Model).FkGruposformaspago, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(f => ((FormasPagoModel)Model).FkGruposformaspago, gruposPago.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).FkGruposformaspago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => objModel.ModoPago, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    <select class="form-control" name="ModoPago" disabled="disabled" aria-label="Modo de pago">
+                        <option value="AAA" @Html.Raw(((FormasPagoModel) Model).ModoPago == "AAA" ? "selected='selected'" : string.Empty)>Personalizado</option>
+                        @foreach (var item in modosPago.Lineas)
+                        {
+                            <option value="@item.Valor" @Html.Raw(((FormasPagoModel) Model).ModoPago == item.Valor ? "selected='selected'" : string.Empty)>@item.Descripcion</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => efectivo, new {@class = "optionCheck", @disabled = ""})
+                            <span class="lbl">Efectivo</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => remesable, new {@class = "optionCheck", @disabled = ""})
+                            <span class="lbl">Remesable</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => mandato, new {@class = "optionCheck", @disabled = ""})
+                            <span class="lbl">Mandato requerido</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            @{
+                ((FormasPagoModel) Model).BloqueoModel.Readonly = true;
+            }
+            @Html.EditorFor(f => ((FormasPagoModel)Model).BloqueoModel)
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <span class="fa-2x">
+                        @General.LblVencimientos
+                    </span>
+                   
+
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    @Html.Partial("FormasPagoLin", ((FormasPagoModel) Model).Lineas)
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info" href="@Url.Action("Edit", new {id = objModel.Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}

@@ -1,0 +1,77 @@
+﻿@using System.Globalization
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.Empresa.EmpresaModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    bool isEdicion = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "Edit" : false;
+    bool isNuevo = !isreadonly && !isEdicion;
+}
+<div class="form-group">
+    <div class="col-md-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th id="ejerciciosdescripcion">
+                        @Ejercicios.Descripcion
+                    </th>
+                    <th id="ejerciciosdescripcioncorta">
+                        @Ejercicios.Descripcioncorta
+                    </th>
+                    <th id="ejerciciosdesde">
+                        @Ejercicios.Desde
+                    </th>
+                    <th id="ejercicioshasta">
+                        @Ejercicios.Hasta
+                    </th>
+                    <th id="ejerciciosestado">
+                        @Ejercicios.Estado
+                    </th>
+                    <th id="ejercicioscontabilidadhasta">
+                        @Ejercicios.Contabilidadcerradahasta
+                    </th>
+                    <th id="ejerciciosregistrohasta">
+                        @Ejercicios.Registroivacerradohasta
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Ejercicios)
+            {
+                    <tr>
+                        <td headers="ejerciciosdescripcion">
+                            @item.Descripcion
+                        </td>
+                        <td headers="ejerciciosdescripcioncorta">
+                            @item.Descripcioncorta
+                        </td>
+                        <td headers="ejerciciosdesde">
+                            @item.DesdeCadena
+                        </td>
+                        <td headers="ejercicioshasta">
+                            @item.HastaCadena
+                        </td>
+                        <td headers="ejerciciosestado">
+                            @item.Estado.ToString()
+                        </td>
+                        <td headers="ejercicioscontabilidadhasta">
+                            @(item.Contabilidadcerradahasta !=null ? item.Contabilidadcerradahasta.Value.ToShortDateString().ToString(CultureInfo.InvariantCulture): string.Empty)
+                        </td>
+                        <td headers="ejerciciosregistrohasta">
+                            @(item.Registroivacerradohasta != null ? item.Registroivacerradohasta.Value.ToShortDateString().ToString(CultureInfo.InvariantCulture) : string.Empty)
+                        </td>
+                    </tr>
+                }
+
+                @if (!Model.Ejercicios.Any())
+            {
+                    <tr>
+                        <td colspan="7" headers="ejerciciosdescripcion">@General.LblNoHayRegistros</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

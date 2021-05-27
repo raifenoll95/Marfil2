@@ -1,0 +1,91 @@
+﻿@using Marfil.App.WebMain.Controllers
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@using Filter = System.Web.Mvc.Filter
+@model Marfil.Dom.Persistencia.Model.Documentos.Transformaciones.TransformacionesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    
+   
+}
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Transformaciones/TransformacionesController.js")"></script>
+<div  ng-controller="TransformacionesCtrl" ng-init="init(@((!isNuevo).ToString().ToLower()),'@Model.Fkproveedores',@isNuevo.ToString().ToLower(),'@string.Format("{0};{1};{2}",Model.Referencia??string.Empty,(Model.DocumentosImpresion?.Tipo)?.ToString()??string.Empty,Model.DocumentosImpresion?.Defecto??string.Empty)','@Model.Lotesalida',@Model.Materialsalidaigualentrada.ToString().ToLower(),'@Model.Material')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#transporte">@General.LblTransporte</a></li>
+            <li><a data-toggle="tab" href="#otros">@General.LblOtros</a></li>
+            <li><a data-toggle="tab" href="#salida">@Transformaciones.Salida</a></li>
+            <li><a data-toggle="tab" href="#entrada">@Transformaciones.Entrada</a></li>
+            <li><a data-toggle="tab" href="#costes">@AlbaranesCompras.CostesAdicionales</a></li>
+           
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_cabeceratransformaciones", Model)
+        </div>
+       
+        <div id="transporte" class="tab-pane fade in">
+            @Html.Partial("_transporte", Model)
+        </div>
+        <div id="otros" class="tab-pane fade in">
+            @Html.Partial("_otros", Model)
+        </div>
+        <div id="salida" class="tab-pane fade in">
+            @Html.Partial("_desglosesalida", Model)
+        </div>
+        <div id="entrada" class="tab-pane fade in">
+            @Html.Partial("_desgloseentrada", Model)
+        </div>
+        <div id="costes" class="tab-pane fade in">
+            @Html.Partial("_costes", Model)
+        </div>
+       
+      
+    </div>
+
+</div>
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        var target = $(e.target).attr("href"); // activated tab
+        if (target === "#entrada") {
+            GridViewLineasEntrada.Refresh();
+        }
+        if (target === "#salida") {
+            GridViewLineasSalida.Refresh();
+        }
+        if (target === "#costes") {
+            
+            GridViewCosteAdicional.Refresh();
+        }
+    });
+
+
+    $.validator.setDefaults({ ignore: null });
+
+</script>
+
+
+
+
+
+    
+
+
+
+
+

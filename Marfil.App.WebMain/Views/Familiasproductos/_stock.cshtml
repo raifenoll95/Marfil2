@@ -1,0 +1,109 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model FamiliasproductosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvcontadores = FCampoverificacion.Instance.GetModel<ContadoresModel>(WebHelper.ContextService);
+
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Gestionstock, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.CheckBoxFor(f => Model.Gestionstock, isreadonly ? (object)new { @disabled = "disabled" } : iseditable ? (object)new { } : (object)new { @ng_model = "Gestionstock", @ng_disabled = "!Gestionstockdisabled" })
+        @Html.ValidationMessageFor(f => Model.Gestionstock, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<!--<input type="hidden" ng-model="Gestionstock" ng-value="Gestionstock==true" name="Gestionstock"/>-->
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipogestionlotes, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @if (isreadonly)
+        {
+            @Html.EnumDropDownList("Tipogestionlotes", Model.Tipogestionlotes, new { @disabled = "disabled", @class = "form-control" })
+        }
+        else
+        {
+            @Html.EnumDropDownListForAngular("Tipogestionlotes", Model.Tipogestionlotes, "Tipogestionlotes", isreadonly ? "disabled = \"disabled\"  class = \"form-control\"" : "class = \"form-control\"  ng-model = \"Tipogestionlotes\" ng-disabled = \"Tipogestionlotesdisabled\"")
+        }
+
+        @Html.ValidationMessageFor(f => Model.Tipogestionlotes, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Stocknegativoautorizado, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Stocknegativoautorizado, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @ng_model = "Stocknegativoautorizado", @ng_disabled = "Stocknegativoautorizadodisabled" })
+    </div>
+
+    @Html.LabelFor(f => Model.Lotefraccionable, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Lotefraccionable, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @ng_model = "Lotefraccionable", @ng_disabled = "Lotefraccionabledisabled" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcontador, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvcontadores.Name = "Fkcontador";
+            cvcontadores.Url = Url.Action("ContadoresLoteApi", "Api");
+            cvcontadores.Valor = Model.Fkcontador;
+            cvcontadores.SoloLectura = isreadonly;
+        }
+        @Html.Partial("CampoverificacionUI", cvcontadores)
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcontador, "", new { @class = "control-label text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Existenciasminimasmetros, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Existenciasminimasmetros, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Existenciasminimasmetros, "", new { @class = "text-danger" })
+    </div>
+    @Html.LabelFor(f => Model.Existenciasmaximasmetros, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Existenciasmaximasmetros, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Existenciasmaximasmetros, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Existenciasminimasunidades, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Existenciasminimasunidades, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Existenciasminimasunidades, "", new { @class = "text-danger" })
+    </div>
+    @Html.LabelFor(f => Model.Existenciasmaximasunidades, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Existenciasmaximasunidades, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Existenciasmaximasunidades, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Web, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Web, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        @Html.ValidationMessageFor(f => Model.Web, "", new { @class = "text-danger" })
+    </div>
+    @Html.LabelFor(f => Model.Articulonegocio, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Articulonegocio, isreadonly ? (object)new { @autofocus = "", @disabled = "disabled" } : (object)new { @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Articulonegocio, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+

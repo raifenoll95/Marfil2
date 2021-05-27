@@ -1,0 +1,76 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.Stock.DiarioStockModel
+@{
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkarticulos, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvarticulos.Name = "Fkarticulos";
+            cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+            cvarticulos.Valor = Model.Fkarticulos;
+            cvarticulos.Autofocus = true;
+            cvarticulos.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvarticulos)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkarticulos, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Lote, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Lote, new {@class = "form-control"})
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Lote, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FechaDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @Html.EditorFor(f => Model.FechaDesde)
+    </div>
+    @Html.LabelFor(f => Model.FechaHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @Html.EditorFor(f => Model.FechaHasta)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FechaDesde, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FechaHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Categoria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Categoria", Model.Categoria, new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Categoria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipodealmacenlote, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Tipodealmacenlote", Model.Tipodealmacenlote, new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Tipodealmacenlote, "", new { @class = "text-danger" })
+    </div>
+</div>
+

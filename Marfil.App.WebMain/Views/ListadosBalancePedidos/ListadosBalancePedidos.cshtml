@@ -1,0 +1,222 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion;
+@using Resources
+
+@model Marfil.Dom.Persistencia.Listados.ListadosBalancePedidos
+@{
+    var series = Model.SeriesListado;
+    ViewBag.title = Menuaplicacion.listadosbalancepedidos;
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+</script>
+
+@Html.HiddenFor(f => Model.Empresa)
+
+<h2>@Menuaplicacion.listadosbalancepedidos</h2>
+<div class="col-md-12"><h2></h2></div>
+<div class="col-md-10" id="contenedor">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Series, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Series" class="form-control" name="Series" multiple="multiple">
+                @foreach (var item in series)
+                {
+                    <option value="@item.Id" @Html.Raw(Model.Series.Any(f => f == item.Id) ? "selected=\"selected\"" : string.Empty)>@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Series, "", new { @class = "text-danger" })</div>
+    </div>
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estado, Model.Estados.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group" class="col-md-10">
+        @Html.LabelFor(f => Model.PedidoDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.PedidoDesde, new { @class = "form-control", @autofocus = true })
+        </div>
+        @Html.LabelFor(f => Model.PedidoHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.PedidoHasta, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.PedidoDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.PedidoHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group" class="col-md-10">
+        @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ClienteDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "ClienteDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.ClienteDesde;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.ClienteDesde, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ClienteHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "ClienteHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.ClienteHasta;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+                cvclientes.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.ClienteHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaInforme, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(f => Model.FechaInforme)
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+    <div class="col-md-12"><h1></h1></div>
+
+</div>
+
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active">Detalle Informe</li>
+        <li class="list-group-item"><input type="radio" name="Detallepor" value="0" checked>Pedido</li>
+        <li class="list-group-item"><input type="radio" name="Detallepor" value="1">Producto</li>
+        <li class="list-group-item"><input type="radio" name="Detallepor" value="2">Documento</li>
+    </ul>
+</div>
+
+@*Creo el boton imprimir*@
+<script type="text/javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementById('contenedor');
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+
+        parentButtonListar.insertBefore(button, parentButtonListar.children[22])
+
+    }, false);
+
+    function imprimir() {
+
+        var data = {
+            Series: document.getElementById('Series').value,
+            Estado: document.getElementById('Estado').value,
+            PedidoDesde: document.getElementById('PedidoDesde').value,
+            PedidoHasta: document.getElementById('PedidoHasta').value,
+            FechaDesde: document.getElementById('FechaDesde').value,
+            FechaHasta: document.getElementById('FechaHasta').value,
+            ClienteDesde: document.getElementById('ClienteDesde').value,
+            ClienteHasta: document.getElementById('ClienteHasta').value,
+            FechaInforme: document.getElementById('FechaInforme').value
+
+
+        };
+
+        var detalleInforme = document.getElementsByName('Detallepor');
+                function getRadioButtonSelectedValue(detalleInforme) {
+                    for (var i = 0; i < detalleInforme.length; i++) {
+                        if (detalleInforme[i].checked) {
+                            return detalleInforme[i].value;
+
+                        }
+                    }
+                };
+
+        var detalle = getRadioButtonSelectedValue(detalleInforme);
+        var dataSerialized = JSON.stringify(data)
+
+        if (detalle == 0) {
+             window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=BalancePedidos&reportId=Defecto');
+        } else if (detalle == 1) {
+            window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=BalancePedidos&reportId=Producto');
+        } else {
+            window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=BalancePedidos&reportId=Documento');
+        }
+
+    };
+
+
+</script>

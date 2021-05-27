@@ -1,0 +1,39 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Gestionarrevisiones, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Gestionarrevisiones)
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Gestionarrevisiones, "", new {@class = "text-danger"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoinicial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoinicial, Model.Estados.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}),new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadoparcial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadoparcial, Model.Estados.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadototal, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadototal, Model.Estados.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+

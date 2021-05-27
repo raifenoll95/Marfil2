@@ -1,0 +1,66 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model TarifasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !iseditable && !isreadonly;
+
+}
+
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    <div class="col-md-12">
+
+        <label class="control-label bolder" style="font-size: 1.5em;" id="tarifaid">@Model.Id</label>
+        <label class="control-label bigger" style="font-size: 1.5em;" id="tarifadescripcion">@Model.Descripcion</label>
+
+    </div>
+    <div class="col-md-12">
+        @if (iseditable)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+
+
+        }
+        <span>
+            <button class="btn btn-link" type="button" name="OutputFormat" onclick="exportar('CSV')" value="CSV">
+                <i class="fa fa-file-text-o"></i>
+                Csv
+            </button>
+            |
+            <button class="btn btn-link" type="button" name="OutputFormat" onclick="exportar('PDF')" value="PDF">
+                <i class="fa fa-file-pdf-o"></i> Pdf
+            </button>
+            |
+            <button class="btn btn-link" type="button" name="OutputFormat" onclick="exportar('XLS')" value="XLS">
+                <i class="fa fa-file-excel-o"></i> Xls
+            </button>
+        </span>
+
+    </div>
+        <div class="col-md-12 margin-top-10">
+            @Html.Partial("_listadotarifas", Model)
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function() {
+        $("[name='Id']").bind('change', function (event, previousText) {
+            $("#tarifaid").innerHtml(event.currentTarget.value);
+        });
+
+        $("[name='Descripcion']").bind('change', function (event, previousText) {
+            $("#tarifadescripcion").innerHtml(event.currentTarget.value);
+        });
+    });
+</script>

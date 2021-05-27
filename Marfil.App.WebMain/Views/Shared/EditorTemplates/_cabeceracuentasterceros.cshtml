@@ -1,0 +1,227 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Campoidentificador
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Configuracion.Cuentas.CuentasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] !=null ? ViewData["operacion"] == "Edit": false;
+    var tipocuenta = ViewData["tipocuenta"];
+    var currentusuer = HttpContext.Current.User as ICustomPrincipal;
+    var tiposcuentasService = FService.Instance.GetService(typeof (TiposCuentasModel), WebHelper.ContextService) as TiposcuentasService;
+    var mascaratipocuenta = tiposcuentasService.GetMascaraFromTipoCuenta((TiposCuentas) Funciones.Qint(tipocuenta.ToString()));
+}
+
+<script>
+    var rellenacod = function Rellenacodcuentas(scope) {
+        var maxLength = @WebHelper.GetApplicationHelper().DigitosCuentas();
+        var siguienteNumero = /^([a-zA-Z]|[0-9])*\.\*$/;
+        var autofillNumero = /^([a-zA-Z]|[0-9])*\.[0-9]*$/;
+        var autofillCeros = /^([a-zA-Z]|[0-9])+/;
+        
+        if (scope.valor.length > maxLength) {
+            
+            scope.valor = "";
+            return false;
+        }
+        scope.valor = scope.valor.toUpperCase();
+        if (siguienteNumero.test(scope.valor)) {
+
+            scope.valor = scope.getSiguienteNumero();
+        } else if (autofillNumero.test(scope.valor)) {
+            var vector = scope.valor.split('.');
+            if (vector.length === 2) {
+                if (vector[1].length === 1 && vector[1] === "*")
+                    vector[1] = "";
+                var totalZeros = maxLength - (vector[0].length + vector[1].length);
+                var zeros = "";
+                for (var i = 0; i < totalZeros; i++)
+                    zeros += "0";
+                scope.valor = vector[0] + zeros + vector[1];
+                scope.valor = scope.valor.substring(0, maxLength);
+
+            } else
+                return false;
+        } else if (autofillCeros.test(scope.valor)) {
+            var totalZeros = maxLength - scope.valor.length;
+            var zeros = "";
+            for (var i = 0; i < totalZeros; i++)
+                zeros += "0";
+            scope.valor = scope.valor + zeros;
+            scope.valor = scope.valor.substring(0, maxLength);
+        }
+
+
+        return true;
+    }
+</script>
+<div ng-controller="cuentasCtrl">
+
+
+    @Html.HiddenFor(f => Model.Empresa)
+    <input type="hidden" name="Cuentas.UsuarioId" value="@currentusuer.Id.ToString()" />
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (isreadonly || iseditable)
+            {
+                <div class="col-md-2">
+                    <input aria-label="Codigo" type="text" class="form-control " name="Cuentas.Id" id="Cuentas.Id" value="@Model.Id" readonly="readonly" />
+                </div>
+                
+                
+                <span class="control-label margin-left-10" for="Cuentas_Id">@Model.Descripcion</span>
+
+
+
+             }
+            else
+            {
+                @Html.Partial("CampoidentificadorUI", new CampoidentificadorModel
+           {
+               Name = "Cuentas.Id",
+               CampoIdentificador = "Id",
+               Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api"),
+               CampoDescripcion = "Descripcion",
+               Valor = Model.Id,
+               Titulo = "Cuentas",
+               Obligatorio = true,
+               SoloLectura = iseditable || isreadonly,
+               Autofocus = !iseditable && !isreadonly,
+               DisplayName = Model.GetDisplayName(f => f.Id),
+               Params = "{\"tipocuenta\":" + tipocuenta + "}",
+               SettingsVerificacion = new SettingsVerificacionPk() { UrlEdicion = (!iseditable && !isreadonly) ? Url.Action("Edit", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()) : "", UrlVerificacion = (!iseditable && !isreadonly) ? Url.Action("Exists", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()) : "" },
+               Rellenacod = "Rellenacodcuentas(valor)",
+               EditarEnPagina = true,
+               Mascara = mascaratipocuenta
+
+           })
+            }
+            
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? new { @class = "form-control", @autofocus = "", @readonly = "readonly" ,@id="Descripcion", @aria_label = "Descripcion" } : (object)new { @aria_label = "Descripcion", @class = "form-control", @id= "Descripcion" } )
+            @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion2, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion2, isreadonly ? new { @class = "form-control", @autofocus = "", @readonly = "readonly", ng_focus = "alert('jarl');cloneDescripcion();", @id = "Descripcion2", @aria_label = "Descripcion2", } : (object)new { @aria_label = "Descripcion2", @class = "form-control", ng_focus = "alert('jarl');cloneDescripcion();", @id = "Descripcion2" } )
+            @Html.ValidationMessageFor(f => Model.Descripcion2, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FkPais, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.FkPais, WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem { Value = f.Valor, Text = f.Descripcion }), isreadonly ? (object)new {@disabled="disabled", @class = "form-control", @aria_label = "Pais" ,@id = "FkPais", @onchange = "ValidateNif($(this).val(), $('#Nif').val()); OnPaisChanged($(this).val())" } : (object)new { @aria_label = "Pais",@class = "form-control", @id = "FkPais", @onchange = "ValidateNif($(this).val(), $('#Nif').val()); OnPaisChanged($(this).val())" })
+            @Html.ValidationMessageFor(f => Model.FkPais, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @{
+            Model.Nif.FkpaisControlId = "FkPais";
+            Model.Nif.Readonly = isreadonly;
+            Model.Nif.Obligatorio = Model.Nifrequired;
+        }
+        @Html.EditorFor(f => Model.Nif)
+    </div>
+
+    @{
+
+        if (isreadonly || iseditable)
+        {
+            Model.BloqueoModel.Readonly = isreadonly;
+            @Html.EditorFor(f => Model.BloqueoModel)
+        }
+    }
+    
+
+</div>
+<script src="@Url.Content("~/Scripts/Model/Cuentas/Cuentas.js")"></script>
+<script type="text/javascript">
+
+    eventAggregator.RegisterEvent("Cuentas.Id-ci", function (message) {
+        if (message != null) {
+            if (message && message.Tiposcuentas && message.Tiposcuentas != '@tipocuenta') {
+                var url = "";
+                var nombreentidad = "";
+                switch(message.Tiposcuentas) {
+                    case 0:
+                        url = "@Url.Action("Edit","Clientes")" ;
+                        nombreentidad = "@Clientes.TituloEntidadSingular";
+                        break;
+                    case 1:
+                        url = "@Url.Action("Edit","Proveedores")" ;
+                        nombreentidad = "@Proveedores.TituloEntidadSingular";
+                        break;
+                    case 2:
+                        url = "@Url.Action("Edit","Acreedores")" ;
+                        nombreentidad = "@Acreedores.TituloEntidadSingular";
+                        break;
+                    case 3:
+                        url = "@Url.Action("Edit","Cuentastesoreria")" ;
+                        nombreentidad = "@Cuentastesoreria.TituloEntidadSingular";
+                        break;
+                    case 4:
+                        url = "@Url.Action("Edit","Transportistas")" ;
+                        nombreentidad = "@Transportistas.TituloEntidadSingular";
+                        break;
+                    case 5:
+                        url = "@Url.Action("Edit","Agentes")" ;
+                        nombreentidad = "@Agentes.TituloEntidadSingular";
+                        break;
+                    case 6:
+                        url = "@Url.Action("Edit","Aseguradoras")" ;
+                        nombreentidad = "@Aseguradoras.TituloEntidadSingular";
+                        break;
+                    case 7:
+                        url = "@Url.Action("Edit","Operarios")" ;
+                        nombreentidad = "@Operarios.TituloEntidadSingular";
+                        break;
+                    case 8:
+                        url = "@Url.Action("Edit","Comerciales")" ;
+                        nombreentidad = "@Comerciales.TituloEntidadSingular";
+                        break;
+                }
+
+                redirect(url +"/" + message.Id,nombreentidad);
+            } else {
+                $("#descripcioncuenta").val(message.Descripcion);
+                $("#descripcion2cuenta").val(message.Descripcion2);
+                if (message.FkPais && message.FkPais!=="")
+                    $("#FkPais").val(message.FkPais);
+                if (message.Nif) {
+                    $("#Nif" + "@Model.Nif.Id").val(message.Nif.Nif);
+                    if (message.Nif.TipoNif && message.Nif.TipoNif !== "")
+                        $("#tiponif" + "@Model.Nif.Id").val(message.Nif.TipoNif);
+                }
+            }
+
+
+        }
+
+    });
+
+    var OnPaisChanged = function(val) {
+        eventAggregator.Publish("cuentapais",val);
+    }
+
+
+</script>

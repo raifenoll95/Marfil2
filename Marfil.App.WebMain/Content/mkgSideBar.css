@@ -1,0 +1,320 @@
+@-webkit-keyframes sideopen {
+  0% {
+    -webkit-transform: translateX(-90px);
+            transform: translateX(-90px);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1; } }
+
+@keyframes sideopen {
+  0% {
+    -webkit-transform: translateX(-90px);
+            transform: translateX(-90px);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1; } }
+
+@-webkit-keyframes sideopen2 {
+  0% {
+    opacity: 0.3; }
+  100% {
+    opacity: 1; } }
+
+@keyframes sideopen2 {
+  0% {
+    opacity: 0.3; }
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes sideclose {
+  0% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1; }
+  100% {
+    -webkit-transform: translateX(-90px);
+            transform: translateX(-90px);
+    opacity: 0; } }
+
+@keyframes sideclose {
+  0% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1; }
+  100% {
+    -webkit-transform: translateX(-90px);
+            transform: translateX(-90px);
+    opacity: 0; } }
+
+@-webkit-keyframes sideclose2 {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    visibility: hidden; } }
+
+@keyframes sideclose2 {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    visibility: hidden; } }
+
+.msb {
+  position: relative;
+  overflow: hidden;
+  position: fixed;
+  z-index: 110;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+  -webkit-animation-timing-function: cubic-bezier(0.15, 0.015, 0.355, 1);
+          animation-timing-function: cubic-bezier(0.15, 0.015, 0.355, 1); }
+  .msb-container {
+    position: absolute;
+    z-index: 101;
+    overflow-y: auto;
+    
+    background: #f9f9f9;
+    padding: 10px 10px 10px 10px;
+    -webkit-animation-timing-function: cubic-bezier(0.15, 0.015, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.15, 0.015, 0.355, 1);
+    box-sizing: border-box; }
+
+
+  .msb-container::-webkit-scrollbar-track {
+  border-radius: 2px;
+}
+.msb-container::-webkit-scrollbar {
+  width: 5px;
+  background-color: #F7F7F7;
+}
+.msb-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #BFBFBF;
+}
+  .msb-container-header {
+     
+      margin: -10px !important;
+      margin-bottom: 1px !important;
+      padding: 10px;
+      
+      background-color: #307ECC;
+      
+  }
+
+  .msb-close {
+    width: 60px;
+    height: 60px;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    -ms-touch-action: manipulation;
+        touch-action: manipulation;
+    outline: 0;
+    font-size: 0;
+    line-height: 0;
+    margin: -10px -10px 0 0; }
+    .msb-close:before {
+      content: '';
+      width: 40%;
+      margin-top: 0;
+      margin-left: auto;
+      margin-right: auto;
+      height: 1px;
+      background-color: #000;
+      display: block;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg);
+      display: block;
+      margin-top: 50%; }
+    .msb-close:after {
+      content: '';
+      width: 40%;
+      margin-top: 0;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: -1px;
+      height: 1px;
+      background-color: #000;
+      display: block;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+      display: block; }
+    .msb-close:hover:before {
+      width: 40%; }
+    .msb-close:hover:after {
+      width: 40%; }
+  .msb-content {
+    clear: both; }
+    .msb-content > .msb-item:first-child, .msb-content > .msb-collapse-header:first-child {
+      border-top: 1px solid #e2dede; }
+    .msb-content > .msb-collapse {
+      margin: 0 -10px; }
+  .msb-item, .msb-collapse-header {
+     
+    display: block !important;
+    text-align: left !important;
+    margin: 0  !important;
+    padding: 0 20px !important;
+     font-size: 1.1em !important;
+    line-height: 60px !important;
+    height: 60px !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    -webkit-transition: all  200ms ease-out !important;
+    transition: all  200ms ease-out !important;
+    cursor: pointer !important;
+    border-bottom: 1px solid #e2dede !important;
+    color: #3F3F3F !important;
+    box-sizing: border-box !important;
+    outline: 0 !important; }
+    .msb-item:visited, .msb-collapse-header:visited {
+      text-decoration: none !important; }
+    .msb-item:hover, .msb-collapse-header:hover {
+      background-color: #E8E8E8 !important;
+        color: #2F7DCC !important;
+    }
+    .msb-item {
+        border-bottom: none !important;
+    }
+     .msb-collapse--open {
+       border-bottom: 1px solid #e2dede !important;
+    }
+
+     .msb-divider{
+         display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #E4E4E4;
+    margin: 1em 0;
+    padding: 0; 
+     }
+  .msb-collapse-items {
+    
+    display: none;
+    box-sizing: border-box; }
+  .msb-collapse-header {
+    margin: 0; }
+  .msb-collapse-button {
+    float: right;
+    width: 60px;
+    height: 60px;
+    background: none;
+    border: solid #e2dede;
+    border-width: 0 0px 1px 1px;
+    cursor: pointer;
+    outline: 0;
+    -webkit-transition: all  200ms ease-out;
+    transition: all  200ms ease-out;
+    box-sizing: border-box; }
+    .msb-collapse-button:before {
+      content: '';
+      width: 15px;
+      margin: 50% auto 0 auto;
+      height: 1px;
+      background: #333;
+      display: block;
+      -webkit-transition: all 300ms;
+      transition: all 300ms; }
+    .msb-collapse-button:after {
+      content: '';
+      width: 15px;
+      margin: 0 auto;
+      height: 1px;
+      background: #333;
+      display: block;
+      -webkit-transform: translateY(-1px) rotate(-90deg);
+              transform: translateY(-1px) rotate(-90deg);
+      -webkit-transition: all 300ms;
+      transition: all 300ms; }
+    .msb-collapse-button:hover {
+      background-color: #E8E8E8; }
+  .msb-collapse .msb-item, .msb-collapse .msb-collapse-header {
+    margin: 0; }
+  .msb-collapse--open > .msb-collapse-items {
+    display: block; }
+  .msb-collapse--open > .msb-collapse-button {
+    background: #f2ecec; }
+    .msb-collapse--open > .msb-collapse-button:before {
+      -webkit-transform: rotate(-180deg);
+              transform: rotate(-180deg); }
+    .msb-collapse--open > .msb-collapse-button:after {
+      -webkit-transform: translateY(-1px) rotate(-360deg);
+              transform: translateY(-1px) rotate(-360deg);
+      opacity: 0; }
+  .msb--open {
+    -webkit-animation-duration: 0.30s;
+            animation-duration: 0.30s;
+    -webkit-animation-name: sideopen2;
+            animation-name: sideopen2;
+    display: block; }
+    .msb--open .msb-container {
+      -webkit-animation-duration: 0.30s;
+              animation-duration: 0.30s;
+      -webkit-animation-name: sideopen;
+              animation-name: sideopen;
+      -webkit-animation-delay: 300ms;
+              animation-delay: 300ms;
+      opacity: 0;
+      -webkit-animation-fill-mode: both;
+              animation-fill-mode: both; }
+  .msb--close {
+    -webkit-animation-duration: 0.40s;
+            animation-duration: 0.40s;
+    -webkit-animation-duration: 0.60s;
+            animation-duration: 0.60s;
+    -webkit-animation-name: sideclose2;
+            animation-name: sideclose2;
+    display: block;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    pointer-events: none; }
+    .msb--close .msb-container {
+      -webkit-animation-name: sideclose;
+              animation-name: sideclose;
+      opacity: 0;
+      -webkit-animation-duration: 0.1s;
+              animation-duration: 0.1s; }
+  .msb--left .msb-container {
+    top: 0;
+    left: 0px;
+    width: 320px;
+    height: 100%; }
+  .msb--right .msb-container {
+    top: 0;
+    right: 0px;
+    width: 320px;
+    height: 100%; }
+  .msb--top .msb-container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 100%; }
+  .msb--bottom .msb-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 100%; }
+  .msb--full .msb-container {
+    position: relative;
+    position: static;
+    width: 100%;
+    height: 100%; }
+  .msb--touch, .msb-close, .msb-collapse-button {
+    cursor: pointer;
+    -ms-touch-action: manipulation;
+        touch-action: manipulation; }
+
+/*# sourceMappingURL=mkgSideBar.css.map */

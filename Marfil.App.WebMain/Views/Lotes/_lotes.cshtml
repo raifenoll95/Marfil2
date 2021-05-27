@@ -1,0 +1,43 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.LotesModel
+@Html.HiddenFor(f => Model.Empresa)
+
+<div>
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#propiedades">@General.LblPropiedades</a></li>
+            <li ><a data-toggle="tab" href="#medidas">@General.LblMedidas</a></li>
+            <li><a data-toggle="tab" href="#costes">@General.LblCostesproducto</a></li>
+            <li><a data-toggle="tab" href="#documentosrelacionados">@General.LblDocumentosrelacionados</a></li>
+            <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="propiedades" class="tab-pane fade margin-bottom">
+            @Html.Partial("_propiedades", Model)
+        </div>
+        <div id="medidas" class="tab-pane fade margin-bottom">
+            @Html.Partial("_medidas", Model)
+        </div>
+
+        <div id="documentosrelacionados" class="tab-pane fade margin-bottom">
+            @Html.Partial("_documentos", Model)
+        </div>
+
+        <div id="galeria" class="tab-pane fade margin-bottom">
+            @Html.Partial("_galeriaimagenes", Model.Galeria)
+        </div>
+        <div id="costes" class="tab-pane fade margin-bottom">
+            @Html.Partial("_costes", Model)
+        </div>
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>

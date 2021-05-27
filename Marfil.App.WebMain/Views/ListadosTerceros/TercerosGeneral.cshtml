@@ -1,0 +1,188 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.ListadosTerceros
+@{
+    var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}).ToList();
+    listunidadnegocio.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var listtipoempresa = WebHelper.GetApplicationHelper().GetListTiposEmpresas().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listtipoempresa.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    var paisdefecto = "";
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listpaises.Insert(0, new SelectListItem { Value = "", Text = "" });
+
+    var listzonacliente = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listzonacliente.Insert(0, new SelectListItem { Value = "", Text = "" });
+}
+<script src="@Url.Content("~/Scripts/UserControls/Provincias/ProvinciasController.js")"></script>
+
+@Html.HiddenFor(f => Model.Empresa)
+<div class="col-md-10">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipocuenta, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EnumDropDownList("Tipocuenta", Model.Tipocuenta, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.Tipocuenta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaDesde;
+                cvclientes.ControlesAsociados = "[{\"tipocuenta\":\"Tipocuenta\"}]";
+                cvclientes.Params = "{\"Permitebloqueados\":\"true\"}"; 
+                cvclientes.Autofocus = true;
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaHasta, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaHasta;
+                cvclientes.ControlesAsociados = "[{\"tipocuenta\":\"Tipocuenta\"}]";
+                cvclientes.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDescripcionDesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.CuentaDescripcionDesde, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.CuentaDescripcionDesde, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDescripcionHasta, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.CuentaDescripcionHasta, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.CuentaDescripcionHasta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkunidadnegocio, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fkunidadnegocio, listunidadnegocio, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.Fkunidadnegocio, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fktipoempresa, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fktipoempresa, listtipoempresa, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.Fktipoempresa, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FamiliaCliente, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.FamiliaCliente, listfamiliaproveedor, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.FamiliaCliente, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ZonaCliente, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.ZonaCliente, listzonacliente, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.ZonaCliente, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Agente, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Agente";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.Agente;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Agentes + "\"}";
+                cvclientes.ControlesAsociados = "";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.Agente, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comercial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Comercial";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.Comercial;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Comerciales + "\"}";
+                cvclientes.ControlesAsociados = "";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.Comercial, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group" ng-controller="ProvinciasCtrl" ng-init="init('@Url.Action("ProvinciasPaisesApi", "Api")', '@paisdefecto','@Model.Fkprovincia')">
+        @Html.LabelFor(f => Model.Fkpais, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fkpais, listpaises, new {@class = "form-control", @ng_model = "Fkpais"})
+        </div>
+
+        @Html.LabelFor(f => Model.Fkprovincia, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            <select aria-label="Provincia" name="Fkprovincia" ng-model="Fkprovincia" class="form-control">
+                <option ng-repeat="item in provincias" value="{{item.Id}}">{{item.Nombre}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Bloqueado, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(f => Model.Bloqueado)
+            @Html.ValidationMessageFor(f => Model.Bloqueado, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+</div>
+
+    <div class="col-md-2">
+        <ul class="list-group" id="Ordenarpor">
+            <li class="list-group-item active">@General.LblOrdernar</li>
+            <li class="list-group-item"><input aria-labelledby="Ordenarpor" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes.Fkcuentas" type="radio" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "1" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Order) ? "checked=\"checked\"" : string.Empty) value="1" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes.Fkcuentas</li>
+            <li class="list-group-item"><input aria-labelledby="Ordenarpor" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.Nombre" type="radio" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.Nombre</li>
+            <li class="list-group-item"><input aria-labelledby="Ordenarpor" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.FkPais, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones.Fkprovincia, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones.Poblacion, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.Nombre" type="radio" name="Order" @Html.Raw(!string.IsNullOrEmpty(Model.Order) && Model.Order == "3" ? "checked=\"checked\"" : string.Empty) value="3" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.FkPais, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones.Fkprovincia, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones.Poblacion, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas.Nombre</li>
+        </ul>
+    </div>
+

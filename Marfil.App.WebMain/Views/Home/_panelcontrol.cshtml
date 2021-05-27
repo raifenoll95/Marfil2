@@ -1,0 +1,25 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.PanelcontrolModel
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Graficas/PanelControlController.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Graficas/GraficasController.js")"></script>
+
+<div class="margin-top">
+    <div class="container" ng-controller="PanelControlCtrl" ng-init="init('@Url.Action("Ordenar","Configuraciongraficas")','@Url.Action("Index","Graficas")')" >
+        <div>
+            <ul class="list-unstyled " id="draggablePanelList">
+
+                @foreach (var item in Model.Paneles)
+            {
+                    @Html.Partial("_grafica", item)
+                }
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_modalgraficas")
+
+

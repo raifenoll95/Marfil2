@@ -1,0 +1,47 @@
+﻿@using Marfil.App.WebMain.Controllers
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@using Filter = System.Web.Mvc.Filter
+
+@model Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales.GrupoMaterialesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var isEdicion = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "Edit" : false;
+    var isNuevo = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "New" : false;
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcarpetas)
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cod, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Cod, isreadonly || isEdicion ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Cod, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.InglesDescripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.InglesDescripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.InglesDescripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+

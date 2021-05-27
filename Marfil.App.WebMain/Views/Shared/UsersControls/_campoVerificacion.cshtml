@@ -1,0 +1,20 @@
+﻿@model Marfil.Dom.Campoverificacion.ICampoverificacionModel
+
+
+<div ng-controller="campoverificacionController.@Model.id">
+    <div custom-select="t.@Model.valueName as t.@Model.displayName for t in vector | filter: { @Model.displayName: $searchTerm }" ng-model="selected">
+        <div>
+            <strong>{{ t.@Model.displayName }}</strong>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+   
+
+
+
+    
+
+
+
+

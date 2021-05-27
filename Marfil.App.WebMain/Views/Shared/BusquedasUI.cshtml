@@ -1,0 +1,43 @@
+﻿@using System.Web.Optimization
+@using Resources
+@model Marfil.Dom.ControlsUI.Busquedas.BusquedasModel
+
+
+<div id="@Html.Raw("id"+ Model.Nombre)" >
+    <div ng-controller="BusquedasCtrl">
+        <div class="modal" id="@Html.Raw(@Model.Nombre)" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width:90% !important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">@General.LblBusquedas - {{Titulo}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div>
+                                <input type="hidden" name="@Model.Nombre" />
+                                <h4 ng-show="loading">Loading...</h4>
+                                <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+
+                                <div class="modal-footer">
+                                    <button type="button" ng-click="cancelar()" id="@Html.Raw("btnAceptar"+Model.Nombre)" class="btn btn-grey">@General.LblCancelar</button>
+                                    <button type="button" ng-click="aceptar()" id="@Html.Raw("btnCancelar"+Model.Nombre)" class="btn  btn-primary" data-dismiss="modal" ng-disabled="selected==null">@General.LblAceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

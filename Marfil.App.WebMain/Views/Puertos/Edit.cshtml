@@ -1,0 +1,62 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "Puertos", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+        @Html.HiddenFor(f => ((PuertosModel)Model).Fkpaises)
+        <div class="form-group">
+            @Html.LabelFor(f => ((PuertosModel) Model).Fkpaises, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(f => ((PuertosModel) Model).Fkpaises, WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() {Text = f.Descripcion, Value = f.Valor}), new {@class = "form-control",  @readonly = "readonly",@disabled=""})
+                @Html.ValidationMessageFor(f => ((PuertosModel)Model).Fkpaises, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((PuertosModel)Model).Id, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                <input type="text" aria-label="Codigo" class="form-control" name="Id" readonly="readonly" value="@Html.Raw(((PuertosModel) Model).Id)"/>
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((PuertosModel)Model).Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((PuertosModel)Model).Descripcion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((PuertosModel)Model).Descripcion, htmlAttributes: new { @autofocus = "", @class = "form-control"})
+                @Html.ValidationMessageFor(f => ((PuertosModel)Model).Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+      
+
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,22 @@
+﻿@model Marfil.Dom.Persistencia.Controles.CabeceraMantenimientoModel
+<div class="page-header">
+    <h1>
+        @Model.Operacion.ToString()
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            @Model.Mantenimiento
+        </small>
+
+        <span class="pull-right">
+            @if (Model.MasOpciones)
+            {
+
+                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+                    <i class="fa fa-plus"></i>
+                    Más opciones
+                </a> @Html.Raw("|")
+            }
+            @Html.ActionLink("Volver a la lista", "Index")
+        </span>
+    </h1>
+</div>

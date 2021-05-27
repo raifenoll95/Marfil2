@@ -1,0 +1,366 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.PresupuestosCompras.PresupuestosComprasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    Session["readonly"] = isreadonly;
+    var isNuevo = !isreadonly && !iseditable;
+
+
+
+}
+<script src="@Url.Content("~/Scripts/documentosasociados.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Tiposiva/TiposivadocumentosController.js")"></script>
+<div class="form-group">
+
+    <div class="col-md-12 margin-bottom">
+        @if (!isreadonly)
+        {
+
+
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateLineasRow(); " title="@General.LblCrear - (+)">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+
+
+    </div>
+    <div class="col-md-12">
+        @Html.Partial("_PresupuestosCompraslin", Model.Lineas)
+
+    </div>
+
+    <div class="col-md-12 margin-top">
+        @Html.Partial("PresupuestosComprasTotales", Model.Totales)
+    </div>
+
+</div>
+
+@Html.Partial("_documentosasociados")
+
+@if (!isreadonly)
+{
+    <script type="text/javascript">
+
+
+
+    //start search prices
+
+    var rowKeyValueToCopy;
+
+    function OnCustomButtonClick(s, e) {
+        rowKeyValueToCopy = s.GetRowKey(e.visibleIndex);
+        s.PerformCallback();
+    }
+
+    function OnKeyPressPrecios(s, e) {
+        var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+        if (keycode == 66 && e.htmlEvent.ctrlKey) {
+            SearchPrecios();
+        }
+
+    }
+
+    function SearchPrecios() {
+
+        cDescripcion = GridViewLineas.GetEditor("Descripcion");
+        var obj = {
+            campoIdentificador: "Precio",
+            IdComponenteasociado: "Precio",
+            IdFormulariomodal: "ultimoprecio",
+            Url: '@Url.Action("UltimoprecioApi", "Api")',
+            Titulo: "Últimos precios",
+            Params: "{\"fkcuenta\":\"" + $("[name='Fkproveedores']").val() + "\",\"articulo\":\"" + Fkarticulos.GetValue() + "\",\"tipodocumento\":\"@Html.Raw((int)TipoDocumentos.PresupuestosCompras)\",\"cliente\":\"" + $("#cv-Fkproveedores-descripcion").html() + "\",\"descripcion\":\"" + cDescripcion.GetValue() + "\"}"
+        };
+
+        eventAggregator.Publish("_lanzarbusquedaultimoprecio", obj);
+    }
+
+    eventAggregator.RegisterEvent("Precio-Buscar", function (obj) {
+        SPrecio.SetValue(obj);
+        calculoImporte(GridViewLineas);
+        GridViewLineas.Precio = SPrecio.GetValue();
+        GridViewLineas.Importe = GridViewLineas.GetEditor("SImporte").GetValue();
+        SPrecio.Focus();
+    });
+
+    //end search prices
+
+    //Start search articulos
+    function OnKeyPressArticulos(s, e) {
+        var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+        if (keycode == 66 && e.htmlEvent.ctrlKey) {
+            SearchArticulo();
+        }
+
+    }
+
+    function SearchArticulo() {
+
+        var obj = {
+            campoIdentificador: "Id",
+            IdComponenteasociado: "Fkarticulos",
+            IdFormulariomodal: "BusquedaGlobal",
+            Url: '@Url.Action("ArticulosApi","Api")',
+            Titulo: "Busqueda de articulos",
+            Params: "{\"flujo\":\"1\"}"
+        };
+
+        eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("Fkarticulos-Buscarfocus", function (obj) {
+        Fkarticulos.SetValue(obj);
+
+        cDescripcion = GridViewLineas.GetEditor("Descripcion");
+        GridViewLineas.SetEnabled(false);
+
+        pedirArticulo(obj, '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineas, true);
+    });
+
+
+    function OnFkarticulosChanged(s, e) {
+
+        cDescripcion = GridViewLineas.GetEditor("Descripcion");
+        GridViewLineas.SetEnabled(false);
+
+        pedirArticulo(s.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineas, true);
+
+    }
+        //end search articulos
+        //Start search tiposiva
+        function OnKeyPressFktiposiva(s, e) {
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchFktiposiva();
+            }
+
+        }
+
+        function SearchFktiposiva() {
+
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Fktiposiva",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("TiposIvaApi","Api")',
+                Titulo: "Busqueda de tipos de IVA",
+                Params: ""
+            };
+
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Fktiposiva-Buscarfocus", function (obj) {
+            Fktiposiva.SetValue(obj);
+
+            OnFktiposivaChanged(null, null);
+
+
+        });
+
+
+        function OnFktiposivaChanged(s, e) {
+
+            GridViewLineas.SetEnabled(false);
+            var model =
+            {
+                Url: '@Url.Action("TiposivaApi","api")',
+                Id: Fktiposiva.GetValue(),
+                CtrlPorcentajeiva: GridViewLineas.GetEditor("Porcentajeiva"),
+                CtrlGridview: GridViewLineas
+            };
+            eventAggregator.Publish("Fktiposiva-changed", model);
+
+
+        }
+        //end search tiposiva
+
+        function FunOnFocusedRowLineasChanged(s, e) {
+
+
+            var index = s.GetFocusedRowIndex();
+
+
+
+        $("#GridViewLineas").unbind("keydown");
+        $('#GridViewLineas').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113: //editar
+                    if (!GridViewLineas.IsEditing()) {
+
+                        GridViewLineas.StartEditRow(index);
+                    }
+                    break;
+                case 46: //Eliminar
+                    if (!GridViewLineas.IsEditing()) {
+                        GridViewLineas.DeleteRow(index);
+                    }
+                    break;
+                case 27: //escape
+                    if (GridViewLineas.IsEditing()) {
+                        GridViewLineas.CancelEdit();
+                        GridViewLineas.Focus();
+                    }
+                    break;
+                case 13:
+
+                    if (GridViewLineas.IsEditing() && !GridViewLineas.GetEditor("Descripcion").focused) {
+                        event.preventDefault();
+                        GridViewLineas.UpdateEdit();
+
+                    }
+                    break;
+                case 107: //mas
+                    if (!GridViewLineas.IsEditing()) {
+                        if (event.ctrlKey) {
+                            event.preventDefault();
+                            rowKeyValueToCopy = s.GetRowKey(GridViewLineas.GetFocusedRowIndex());
+                            s.PerformCallback();
+
+                        } else {
+                            CreateRow();
+                        }
+                    }
+                    break;
+
+
+            }
+
+        });
+    }
+
+
+    function CreateLineasRow() {
+        if ($("[name='Fkproveedores']").val() && $("[name='Fkproveedores']").val() !== "") {
+            if (!GridViewLineas.IsEditing()) {
+                GridViewLineas.Focus();
+                GridViewLineas.AddNewRow();
+            }
+        } else {
+            bootbox.alert("El campo cliente es obligatorio");
+        }
+    }
+
+    var operation = "";
+    function OnStartEditing(s, e) {
+
+        operation = e.command;
+        if (operation === "UPDATEEDIT" || operation === "DELETEROW" || operation === "ADDNEWROW") {
+
+            if (articuloActual) {
+                e.customArgs['Fktiposiva'] = articuloActual.Fktiposiva;
+                e.customArgs['Decimalesmonedas'] = articuloActual.Decimalesmonedas;
+                e.customArgs['Decimalesunidades'] = articuloActual.Decimalestotales;
+            }
+
+            e.customArgs['descuentopp'] = Globalize.format($("[name='Porcentajedescuentoprontopago']").val());
+            e.customArgs['descuentocomercial'] = Globalize.format($("[name='Porcentajedescuentocomercial']").val());
+            e.customArgs['fkmonedas'] = $("[name='Fkmonedas']").val();
+            e.customArgs['Fkregimeniva'] = $("[name='Fkregimeniva']").val();
+
+        }
+
+        else if (operation === "CUSTOMCALLBACK") {
+            e.customArgs["key"] = rowKeyValueToCopy;
+        }
+
+    }
+
+    function OnEndEditing(s, e) {
+        if (operation === 'STARTEDIT') {
+            var cArticulos = Fkarticulos;
+            GridViewLineas.SetEnabled(false);
+            pedirArticulo(cArticulos.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineas, false);
+            window.setTimeout(function () { GridViewLineas.SetHorizontalScrollPosition(0); GridViewTotales.SetHorizontalScrollPosition(0); }, 0);
+        }
+        else if (operation === "UPDATEEDIT" || operation === "DELETEROW") {
+
+            if (GridViewLineas.Largo != undefined) { // Si no se modifica los valores Largo, Ancho, etc son null
+                GridViewLineas.GetEditor("SLargo").SetValue(GridViewLineas.Largo);
+                GridViewLineas.GetEditor("SAncho").SetValue(GridViewLineas.Ancho);
+                GridViewLineas.GetEditor("SGrueso").SetValue(GridViewLineas.Grueso);
+                GridViewLineas.GetEditor("SMetros").SetValue(GridViewLineas.Metros);
+                GridViewLineas.GetEditor("SPrecio").SetValue(GridViewLineas.Precio);
+                GridViewLineas.GetEditor("SImporte").SetValue(GridViewLineas.Importe);
+            }
+
+            GridViewTotales.Refresh();
+            GridViewLineas.Focus();
+            window.setTimeout(function () {
+                GridViewLineas.SetHorizontalScrollPosition(0); GridViewTotales.SetHorizontalScrollPosition(0);
+
+
+            }, 0);
+            if (GridViewLineas.GetVisibleRowsOnPage() > 0) {
+                GridViewLineas.SetFocusedRowIndex(GridViewLineas.GetVisibleRowsOnPage() - 1);
+            }
+        }
+        else if (operation === "ADDNEWROW") {
+            var cArticulos = Fkarticulos;
+            if (cArticulos.GetValue() !== "")
+                pedirArticulo(cArticulos.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineas, false);
+            window.setTimeout(function () { GridViewLineas.SetHorizontalScrollPosition(0); GridViewTotales.SetHorizontalScrollPosition(0); }, 0);
+            Fkarticulos.SetValue("");
+            Fkarticulos.Focus();
+
+        }
+        if (operation === "CUSTOMCALLBACK") {
+            var cArticulos = Fkarticulos;
+            if (cArticulos.GetValue() !== "")
+                pedirArticulo(cArticulos.GetValue(), '@Url.Action("ArticulosDocumentosApi", "Api")', GridViewLineas, false);
+
+        }
+
+
+    }
+
+
+
+    function OnSuperficieChanged(s, e) {
+
+        cCantidad = GridViewLineas.GetEditor("Cantidad");
+        cLargo = GridViewLineas.GetEditor("SLargo");
+        cAncho = GridViewLineas.GetEditor("SAncho");
+        cGrueso = GridViewLineas.GetEditor("SGrueso");
+        cMetros = GridViewLineas.GetEditor("SMetros");
+        cPrecio = GridViewLineas.GetEditor("SPrecio");
+        cImporte = GridViewLineas.GetEditor("SImporte");
+
+        var num = FFormulasService.CreateFormula(articuloActual.Formulas).calculate(cCantidad.GetValue(), cLargo.GetValue(), cAncho.GetValue(), cGrueso.GetValue(), cMetros.GetValue(), articuloActual.Decimalestotales);
+        cMetros.SetValue(Funciones.Redondear(num, articuloActual.Decimalestotales));
+        calculoImporte(GridViewLineas);
+
+        GridViewLineas.Largo = cLargo.GetValue();
+        GridViewLineas.Ancho = cAncho.GetValue();
+        GridViewLineas.Grueso = cGrueso.GetValue();
+        GridViewLineas.Metros = cMetros.GetValue();
+        GridViewLineas.Precio = cPrecio.GetValue();
+        GridViewLineas.Importe = cImporte.GetValue();
+    }
+
+    function CreateRow() {
+
+
+        GridViewLineas.AddNewRow();
+
+
+    }
+    </script>
+}

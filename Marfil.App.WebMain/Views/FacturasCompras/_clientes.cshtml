@@ -1,0 +1,194 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras.FacturasComprasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<DireccionesModel>(WebHelper.ContextService);
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+
+
+<div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Nombrecliente, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="input-group">
+                @Html.TextBoxFor(f => Model.Nombrecliente, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-message" @Html.Raw(isreadonly?"disabled=\"disabled\"" : string.Empty) onclick="SearchDireccion()">
+                        <i class="fa fa-search"></i> @Albaranes.LblBuscarDireccionProveedor
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Clientedireccion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(f => Model.Clientedireccion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientedireccion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Clientepoblacion, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clientepoblacion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Clienteprovincia, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clienteprovincia, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientepoblacion, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clienteprovincia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Clientetelefono, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clientetelefono, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Clientefax, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clientefax, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientetelefono, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientefax, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Clientepais, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clientepais, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Clientecp, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clientecp, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientepais, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientecp, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Clienteemail, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Clienteemail, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clienteemail, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Clientenif, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Clientenif, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Clientenif, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkbancosmandatos, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select aria-label="Bancos" ng-show="bancoscliente.length > 1" ng-model="fkbancosmandatos" class="form-control" name="Fkbancosmandatos" @Html.Raw(isreadonly ? " disabled=\"disabled\"" : string.Empty)>
+                <option ng-selected="{{fkbancosmandatos == item.Id}}" ng-repeat="item  in bancoscliente" value="{{ item.Id }}">{{item.Descripcion}}</option>
+            </select>
+            <label ng-show="bancoscliente.length && bancoscliente.length <= 1" class="control-label" >@General.LblNoExistenBancos</label>
+
+            
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkbancosmandatos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkdireccionfacturacion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkdireccionfacturacion";
+                campoverificacion.Url = Url.Action("DireccionesContacto", "Api");
+                campoverificacion.Valor = Model.Fkdireccionfacturacion?.ToString()??string.Empty;
+                campoverificacion.Titulo = "Dirección de facturación";
+                campoverificacion.SoloLectura = isreadonly;
+                campoverificacion.ControlesAsociados = "[ {\"fkentidad\":\"Fkclientes\"} ]";
+                campoverificacion.Params = "{\"tipotercero\":\"" + (int) TiposCuentas.Clientes + "\" }";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkdireccionfacturacion, "", new {@class = "text-danger"})
+        </div>
+        <div  class="col-md-10 col-md-offset-2" id="direccionfacturaciondescripcion"></div>
+    </div>
+</div>
+
+<script>
+
+    function SearchDireccion() {
+
+
+        var obj = {
+            campoIdentificador: "Id",
+            IdComponenteasociado: "Direccionesasociadas",
+            IdFormulariomodal: "BusquedaGlobal",
+            Url: '@Url.Action("DireccionesContacto", "Api")',
+            Titulo: "Busqueda de direcciones",
+            Params: @Html.Raw("'{\"tipotercero\":\"" + (int)TiposCuentas.Proveedores + "\",\"fkentidad\":\"' + $(\"[name='Fkproveedores']\").val()+'\" }'")
+
+            };
+
+        eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("Direccionesasociadas-Buscarfocus",function(obj) {
+        cargardDireccion('@Url.Action("DireccionesContacto", "Api")',obj,$("[name='Fkproveedores']").val());
+    });
+    eventAggregator.RegisterEvent("Fkdireccionfacturacion-cv",function(obj) {
+        cargarDireccionFacturacion(obj);
+    });
+    eventAggregator.RegisterEvent("Fkdireccionfacturacion",function(obj) {
+        cargarDireccionFacturacion(null);
+    });
+
+    @if (iseditable)
+    {
+        <text>
+    $(document).ready(function() {
+        eventAggregator.Publish("Fkdireccionfacturacion-Buscarmultiple", {"fkentidad":"@Model.Fkproveedores","tipotercero":"@Html.Raw((int)TiposCuentas.Proveedores)","id":"@Html.Raw(Model.Fkdireccionfacturacion?.ToString()??string.Empty)"});
+    });
+    </text>
+}
+
+</script>

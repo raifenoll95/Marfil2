@@ -1,0 +1,59 @@
+﻿@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    var action  = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+}
+@using Resources
+<script src="@Url.Content("~/Scripts/UserControls/Albaranes/Devolveralbaran.js")"></script>
+@using (Html.BeginForm("Devolucion", controller,  FormMethod.Post, new { @id = "devolucionform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden"  name="id" value="" />
+    <input type="hidden" name="lineas" value="" />
+    
+}
+<div ng-controller="DevolveralbaranCtrl" >
+    <div class="modal" id="devolveralbaran" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 90% !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">@Albaranes.LblGenerarDevolucion</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-horizontal">
+                            <h4 ng-show="loading">@General.LblLoading</h4>
+                           
+                            <div>
+                                <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                                <button type="button" ng-click="cancelar()" id="btnAceptardevolveralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                                <button type="button" ng-click="aceptar()" id="btnCancelardevolveralbaran" class="btn btn-ar btn-primary" ng-disabled="!selected || selected <= 0 ">@General.LblAceptar</button>  @*data-dismiss="modal"*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,64 @@
+﻿@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Newtonsoft.Json
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes.TransformacioneslotesModel;
+   
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "Transformacioneslotes", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_transformaciones", Model as Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes.TransformacioneslotesModel)
+
+        <div class="margin-top">
+
+
+            <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+
+        </div>
+
+    </div>
+            }
+
+
+@Html.Partial("../EntregasStock/_nuevoregistro")
+@{
+    using (Html.BeginForm("ForzarCambiarCostes", "Transformacioneslotes", FormMethod.Post, new { @id = "forzarcostesadicionales" }))
+    {
+        <input type="hidden" name="documentoReferencia" value="@modelview.Id" />
+        <input type="hidden" name="returnUrl" value="@Url.Action("Edit",new { modelview.Id })" />
+    }
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

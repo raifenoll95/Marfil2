@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-16"?>
+<GuiascontablesModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Empresa>0001</Empresa>
+  <Id>GENERAL</Id>
+  <Descripcion>GENERAL </Descripcion>
+  <Lineas />
+  <Fkcuentascompras>60000000</Fkcuentascompras>
+  <Fkcuentasventas>70000000</Fkcuentasventas>
+  <Fkcuentasdevolucioncompras>60000000</Fkcuentasdevolucioncompras>
+  <Fkcuentasdevolucionventas>70000000</Fkcuentasdevolucionventas>
+</GuiascontablesModel>

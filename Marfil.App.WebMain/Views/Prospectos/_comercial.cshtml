@@ -1,0 +1,132 @@
+﻿@using System.Globalization
+@using System.Threading
+@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Terceros.ProspectosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+    var cvagente = FCampoverificacion.Instance.GetModel<AgentesModel>(WebHelper.ContextService);
+    var cvcomercial = FCampoverificacion.Instance.GetModel<ComercialesModel>(WebHelper.ContextService);
+    var cvregimeniva = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    var cvformaspago = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var listmodoscontacto = WebHelper.GetApplicationHelper().GetListModosContacto().Select(f=>new SelectListItem() {Value=f.Valor,Text=f.Descripcion}).ToList();
+    listmodoscontacto.Insert(0,new SelectListItem() {Value="",Text=""});
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentasagente, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvagente.Name = "Fkcuentasagente";
+            cvagente.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            cvagente.Valor = Model.Fkcuentasagente;
+            cvagente.SoloLectura = isreadonly;
+            cvagente.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Agentes + "\"}";
+        }
+
+        @Html.Partial("CampoverificacionUI", cvagente)
+        @Html.ValidationMessageFor(f => Model.Fkcuentasagente, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentascomercial, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvcomercial.Name = "Fkcuentascomercial";
+            cvcomercial.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            cvcomercial.Valor = Model.Fkcuentascomercial;
+            cvcomercial.SoloLectura = isreadonly;            
+            cvcomercial.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Comerciales + "\"}";
+        }
+
+        @Html.Partial("CampoverificacionUI", cvcomercial)
+        @Html.ValidationMessageFor(f => Model.Fkcuentascomercial, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkmonedas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvmonedas.Name = "Fkmonedas";
+            cvmonedas.Url = Url.Action("MonedasApi", "Api");
+            cvmonedas.Valor = Model.Fkmonedas;
+            cvmonedas.SoloLectura = isreadonly;
+            cvmonedas.Obligatorio = true;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvmonedas)
+        @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvregimeniva.Name = "Fkregimeniva";
+            cvregimeniva.Url = Url.Action("RegimenIvaApi", "Api");
+            cvregimeniva.Valor = Model.Fkregimeniva?.ToString();
+            cvregimeniva.SoloLectura = isreadonly;
+            cvregimeniva.Obligatorio = true;
+
+        }
+
+        @Html.Partial("CampoverificacionUI", cvregimeniva)
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkformaspago, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+
+            cvformaspago.Name = "Fkformaspago";
+            cvformaspago.Url = Url.Action("FormasPagoApi", "Api");
+            cvformaspago.Valor = Model.Fkformaspago.ToString();
+            cvformaspago.SoloLectura = isreadonly;
+            cvformaspago.Obligatorio = true;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvformaspago)
+        @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktarifas, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Fktarifas, Model.LstTarifas, isreadonly ? (object) new {@class = "form-control",  @disabled = "disabled" } : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Fktarifas, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkmodocontacto, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Fkmodocontacto,listmodoscontacto, isreadonly ? (object) new {@class = "form-control",  @disabled = "disabled" } : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Fkmodocontacto, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Observaciones, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextAreaFor(f => Model.Observaciones,  isreadonly ? (object)new { @class = "form-control", @readonly = "readonly",@rows="4" } : (object)new { @class = "form-control", @rows = "4" })
+        @Html.ValidationMessageFor(f => Model.Observaciones, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+

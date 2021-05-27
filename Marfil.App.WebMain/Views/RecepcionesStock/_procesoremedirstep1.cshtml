@@ -1,0 +1,91 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.AsistenteRemedirStockModel
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvalbaranescompras = FCampoverificacion.Instance.GetModel<AlbaranesComprasModel>(WebHelper.ContextService);
+    var user = HttpContext.Current.User as ICustomPrincipal;
+    var almacen = user.Fkalmacen;
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkproveedores, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkproveedores";
+                campoverificacion.Url = Url.Action("CuentasTiposProveedoresAcreedoresExclusiveApi", "Api");
+                campoverificacion.CampoIdentificador = "Fkcuentas";
+                campoverificacion.Valor = Model.Fkproveedores;
+                campoverificacion.Titulo = "Proveedores";
+                campoverificacion.Autofocus = true;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkproveedores, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="form-group">
+
+        @Html.LabelFor(f=>Model.Desderecepcionstock, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @{
+                cvalbaranescompras.Name = "Desderecepcionstock";
+                cvalbaranescompras.Url = Url.Action("RecepcionStockApi", "Api");
+                cvalbaranescompras.Valor = Model.Desderecepcionstock ;
+                cvalbaranescompras.CampoIdentificador = "Referencia";
+                cvalbaranescompras.Params = "{\"Fkalmacen\":\"" + almacen + "\"}";
+                cvalbaranescompras.Configuracion.OcultarTexto = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvalbaranescompras)
+        </div>
+        @Html.LabelFor(f=>Model.Hastarecepcionstock, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @{
+                cvalbaranescompras.Name = "Hastarecepcionstock";
+                cvalbaranescompras.Url = Url.Action("RecepcionStockApi", "Api");
+                cvalbaranescompras.Valor = Model.Hastarecepcionstock;
+                cvalbaranescompras.Autofocus = false;
+                cvalbaranescompras.Configuracion.OcultarTexto = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvalbaranescompras)
+
+        </div>
+    </div>
+
+    <div class="form-group">
+       @Html.LabelFor(f => Model.Fechadesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f=>Model.Fechadesde)
+        </div>
+        @Html.LabelFor(f => Model.Fechahasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.Fechahasta)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Desdelote, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f=>Model.Desdelote, new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Hastalote, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            
+            @Html.TextBoxFor(f => Model.Hastalote, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group col-md-4" align="right">
+        <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+    </div>
+</form>

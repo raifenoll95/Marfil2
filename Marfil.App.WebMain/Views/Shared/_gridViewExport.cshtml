@@ -1,0 +1,21 @@
+﻿@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Model.ListIndexModel
+
+<input type="hidden" name="exportid" value="@Model.VarSessionName"/>
+
+<button class="btn @Html.Raw(WebHelper.DevexpressAA ? "btn-primary btn-sm" : "btn-link")" type="submit" name="OutputFormat" value="CSV">
+    <i class="fa fa-file-text-o"></i>
+    Csv
+</button>
+|
+<button class="btn @Html.Raw(WebHelper.DevexpressAA ? "btn-primary btn-sm" : "btn-link ")" type="submit" name="OutputFormat" value="PDF">
+    <i class="fa fa-file-pdf-o"></i> Pdf
+</button>
+|
+<button class="btn @Html.Raw(WebHelper.DevexpressAA ? "btn-primary btn-sm" : "btn-link ")" type="submit" name="OutputFormat" value="XLS">
+    <i class="fa fa-file-excel-o"></i> Xls
+</button>
+@if (WebHelper.DevexpressAA)
+{
+    <div class="margin-bottom-10"></div>
+}

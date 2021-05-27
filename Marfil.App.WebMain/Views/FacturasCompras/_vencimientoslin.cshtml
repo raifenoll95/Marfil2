@@ -1,0 +1,239 @@
+﻿@using System.Drawing
+@using System.Text
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model List<Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras.FacturasComprasVencimientosModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    var listcanales = new List<SelectListItem>();
+    if (configuracionAplicacion.VentasUsarCanal)
+    {
+        listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+        listcanales.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    }
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewVencimientos";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "FacturasCompras", Action = "VencimientosLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FacturasCompras", Action = "VencimientosLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FacturasCompras", Action = "VencimientosLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FacturasCompras", Action = "VencimientosLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.Visible = false;
+        } );
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Diasvencimiento";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.HeaderStyle.Wrap=DefaultBoolean.True;
+            c.SortOrder=ColumnSortOrder.Ascending;
+            
+            
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaVencimientoCadena";
+            c.ReadOnly = true;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SImporetevencimiento";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.HeaderStyle.Wrap = DefaultBoolean.True;
+        });
+
+
+        settings.CommandColumn.Visible = isreadonly;
+        if (!isreadonly)
+        {
+            settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblEditar + " - (F2)\"></i>";
+            settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
+            settings.SettingsCommandButton.UpdateButton.Text = "<span tabindex=\"-1\" class=\"fa fa-save\" title=\"" + General.LblGuardar + " - (Enter)\"></i>";
+            settings.SettingsCommandButton.CancelButton.Text = "<span tabindex=\"-1\" class=\"fa fa-close\" title=\"" + General.LblCancelar + " - (Ctlr + '+')\"></i>";
+            settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnCopy", Text = "<span tabindex=\"-1\" class=\"fa fa-copy\" title=\"" + General.LblClonar + " - (Ctlr + '+')\"></i>" });
+
+            settings.CommandColumn.Width = Unit.Pixel(150);
+            settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+            settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+            settings.CommandColumn.VisibleIndex = 0;
+            settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+        }
+
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+
+
+
+        if(!isreadonly)
+        {
+
+            settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+            settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowLineasChanged(s, e);} ";
+            settings.ClientSideEvents.Init = "function(s,e) { GridViewVencimientos.Focus();  }";
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+            if (col.FieldName == "SImporetevencimiento")
+            {
+
+                var model = c.Grid.DataSource as IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras.FacturasComprasVencimientosModel>;
+                var decimalesmonedas = model.FirstOrDefault()?.Decimalesmonedas ?? 2;
+                var sum = model.Sum(f => f.Importevencimiento);
+                ViewContext.Writer.Write((sum ?? 0).ToString("N" + decimalesmonedas));
+            }
+        });
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+@if (!isreadonly)
+{
+    <script type="text/javascript">
+
+
+
+    //start search prices
+
+   
+    //end search articulos
+        function FunOnFocusedRowLineasChanged(s, e) {
+            
+
+        $("#GridViewVencimientos").unbind("keydown");
+        $('#GridViewVencimientos').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113: //editar
+                    if (!GridViewVencimientos.IsEditing()) {
+
+                        GridViewVencimientos.StartEditRow(index);
+                    }
+                    break;
+                case 46: //Eliminar
+                    if (!GridViewVencimientos.IsEditing()) {
+                        GridViewVencimientos.DeleteRow(index);
+                    }
+                    break;
+                case 27: //escape
+                    if (GridViewVencimientos.IsEditing()) {
+                        GridViewVencimientos.CancelEdit();
+                        GridViewVencimientos.Focus();
+                    }
+                    break;
+                case 13:
+
+                    if (GridViewVencimientos.IsEditing() ) {
+                        event.preventDefault();
+                        GridViewVencimientos.UpdateEdit();
+
+                    }
+                    break;
+                case 107: //mas
+                    if (!GridViewVencimientos.IsEditing()) {
+                        if (event.ctrlKey) {
+                            event.preventDefault();
+                            rowKeyValueToCopy = s.GetRowKey(GridViewVencimientos.GetFocusedRowIndex());
+                            s.PerformCallback();
+
+                        } else {
+                            CreateRow();
+                        }
+                    }
+                    break;
+
+
+            }
+
+        });
+    }
+
+
+   
+
+   
+
+    function CreateRow() {
+
+
+        GridViewVencimientos.AddNewRow();
+
+
+    }
+    </script>
+}

@@ -1,0 +1,37 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras.FacturasComprasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+   
+
+}
+
+
+<div class="form-group">
+    <div class="col-md-12 margin-bottom">
+        @if (!isreadonly)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); " title="@General.LblCrear - (+)">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+    </div>
+    <div class="col-md-12">
+    @Html.Partial("_vencimientoslin", Model.Vencimientos)
+    </div>
+</div>
+

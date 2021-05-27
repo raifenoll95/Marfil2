@@ -1,0 +1,84 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.ContadoresLotesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    
+    var isNuevo = !isreadonly && !iseditable;
+    }
+@Html.HiddenFor(f=>Model.Empresa)
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new {@class = "control-label col-md-2"})
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new { @aria_label = "Codigo", @required = "required", @class = "form -control", @autofocus = "", @ng_blur = "existePk(4,3,\"" + Url.Action("Exists", "ContadoresLotes") + "\",\"" + Url.Action("Edit", "ContadoresLotes") + "\")", @ng_model = "codigo", @id = "idcontrol"})
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Id, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipoinicio, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Tipoinicio", Model.Tipoinicio, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Tipoinicio, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Primerdocumento, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Primerdocumento, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Primerdocumento, "", new {@class = "text-danger"})
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Offset, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Offset, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Offset, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+        <span class="fa-2x">
+           @General.LblConfiguracion
+        </span>
+        @if (isNuevo || iseditable)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+        
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.Partial("_Contadoreslin", Model.Lineas)
+    </div>
+    
+</div>
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

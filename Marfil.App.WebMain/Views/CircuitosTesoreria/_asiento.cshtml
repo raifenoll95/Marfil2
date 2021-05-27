@@ -1,0 +1,191 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+
+@model CircuitoTesoreriaCobrosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacioncargo = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var campoverificacionabono = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+
+    //var listaimportecuentacargo2 = Enum.GetValues(typeof(TipoImporte))
+    //                    .Cast<TipoImporte>()
+    //                    .Where(e => e == TipoImporte.Importecuentacargo2 || e == TipoImporte.Importe2masimporte3 || e == TipoImporte.Importe2menosimporte3)
+    //                    .Select(e => new SelectListItem
+    //                    {
+    //                        Value = ((int)e).ToString(),
+    //                        Text = e.ToString()
+    //                    });
+
+    //var listaimportecuentaabono2 = Enum.GetValues(typeof(TipoImporte))
+    //                    .Cast<TipoImporte>()
+    //                    .Where(e => e == TipoImporte.Importecuentaabono2 || e == TipoImporte.Importe2masimporte6 || e == TipoImporte.Importe2menosimporte6)
+    //                    .Select(e => new SelectListItem
+    //                    {
+    //                        Value = ((int)e).ToString(),
+    //                        Text = e.ToString()
+    //                    });
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+<script src="~/Scripts/Helper/ControllerHelper.js"></script>
+
+<div class="form-group">
+    <h3><b class="col-md-1"></b></h3>
+    <h3><b class="col-md-6">CUENTA</b></h3>
+    <h3><b class="col-md-2">IMPORTE</b></h3>
+    <h3><b class="col-md-3">DESCRIPCIÓN</b></h3>
+</div>
+
+<div ng-controller="HelperCtrl4CircuitosTesoreria" ng-init="init('@Url.Action("comprobarNumeroDigitos","HelperView")')">
+
+    @*Cta Cargo 1*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentacargo1, new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Cuentacargo1, isreadonly ? (object)new { @aria_label = "Cuent", @class = "form-control", @readonly = "readonly", @onchange = "onchangeeventcargo1();" } : (object)new { @class = "form-control", @autofocus = "", @onchange = "onchangeeventcargo1();" })
+        </div>
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Importecuentacargo1", Model.Importecuentacargo1, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Importecuentacargo1, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(f => Model.Desccuentacargo1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+    </div>
+
+    @*Cta Cargo 2*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentacargo2, new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @{
+                campoverificacioncargo.Name = "Cuentacargo2";
+                campoverificacioncargo.Url = Url.Action("CuentasApi", "Api");
+                campoverificacioncargo.Valor = Model.Cuentacargo2;
+                campoverificacioncargo.Titulo = Clientes.TituloEntidadSingular;
+                campoverificacioncargo.SoloLectura = isreadonly;
+                campoverificacioncargo.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacioncargo)
+        </div>
+
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Importecuentacargo2", Model.Importecuentacargo2, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Importecuentacargo2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(f => Model.Desccuentacargo2, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+    </div>
+
+    @*Cta relacionado Cargo*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentacargorel, new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Cuentacargorel, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Importecuentacargorel", Model.Importecuentacargorel, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Importecuentacargorel, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(f => Model.Desccuentacargorel, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+    </div>
+
+    @*Cta Abono 1*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentaabono1, new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Cuentaabono1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly", @onchange = "onchangeeventabono1();" } : (object)new { @class = "form-control", @autofocus = "", @onchange = "onchangeeventabono1();" })
+        </div>
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Importecuentaabono1", Model.Importecuentaabono1, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Importecuentaabono1, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(f => Model.Desccuentaabono1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+    </div>
+
+    @*Cta Abono 2*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentaabono2, new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @{
+                campoverificacionabono.Name = "Cuentaabono2";
+                campoverificacionabono.Url = Url.Action("CuentasApi", "Api");
+                campoverificacionabono.Valor = Model.Cuentaabono2;
+                campoverificacionabono.Titulo = Clientes.TituloEntidadSingular;
+                campoverificacionabono.SoloLectura = isreadonly;
+                campoverificacionabono.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacionabono)
+        </div>
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Importecuentaabono2", Model.Importecuentaabono2, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Importecuentaabono2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(f => Model.Desccuentaabono2, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+    </div>
+
+    @*Cta relacionado Abono*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentaabonorel, new { @class = "control-label col-md-1" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Cuentaabonorel, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Importecuentaabonorel", Model.Importecuentaabonorel, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Importecuentaabonorel, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(f => Model.Desccuentaabonorel, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+    </div>
+
+    <p style="border: 2px solid #3e9efe; padding: 10px; background-color: aliceblue; color: black; font-family: arial,helvetica; font-size: 14px; font-weight: normal;">
+
+        <b>*CO*</b> COBRADOR&nbsp;&nbsp;| &nbsp;&nbsp;<b>*CL*</b>    NÚMERO DE CHEQUE/LETRA (1)&nbsp;&nbsp;|&nbsp;&nbsp;<b>*NG*</b>    NÚMERO DE GIRO&nbsp;&nbsp;|&nbsp;&nbsp;<b>*CM*</b>    COMENTARIO MANUAL<br />
+        <b>*GT*</b>    NÚMERO TOTAL DE GIROS &nbsp;&nbsp;|&nbsp;&nbsp;<b>*CP*</b>    COMENTARIO PREVISIÓN&nbsp;&nbsp;|&nbsp;&nbsp;<b>*NL*</b>    NÚMERO DE LÍNEAS PUNTEADAS&nbsp;&nbsp;|&nbsp;&nbsp;<b>*CA*</b>    CUENTA DE ABONO<br />
+        <b>*FV*</b>    FECHA VENCIMIENTO (1)&nbsp;&nbsp;|&nbsp;&nbsp;<b>*DA*</b>    DESCRIPCIÓN CTA. ABONO&nbsp;&nbsp;|&nbsp;&nbsp;<b>*NF*</b>    NÚMERO DE FACTURA (1)&nbsp;&nbsp;|&nbsp;&nbsp;<b>*CC*</b>    CUENTA DE CARGO<br />
+        <b>*FA*</b>    FECHA DEL APUNTE&nbsp;&nbsp;|&nbsp;&nbsp;<b>*DC*</b>    DESCRIPCIÓN CTA. CARGO&nbsp;&nbsp;|&nbsp;&nbsp;<b>*FF*</b>    FECHA FACTURA (1)&nbsp;&nbsp;|&nbsp;&nbsp;<b>*CT*</b>    CÓDIGO TERCERO (1)<br />
+        <b>*FP*</b>    FORMA PAGO (1)&nbsp;&nbsp;|&nbsp;&nbsp;<b>*DT*</b>    DESCRIPCIÓN TERCERO (1)
+    </p>
+
+    @{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }
+
+</div>
+
+    <script type="text/javascript">
+        function onchangeeventcargo1() {
+            console.log($("#Cuentacargo1").val());
+            eventAggregator.Publish("InputCodCuentaCargo1", $("#Cuentacargo1").val());
+        }
+
+        function onchangeeventabono1() {
+            console.log($("#Cuentaabono1").val());
+            eventAggregator.Publish("InputCodCuentaAbono1", $("#Cuentaabono1").val());
+        }
+    </script>

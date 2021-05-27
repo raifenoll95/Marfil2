@@ -1,0 +1,39 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model ListIndexModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+@if (ViewBag.ExisteTipoCuenta)
+{
+    <div class="row margin-bottom">
+        @Html.Partial("GridViewIndex", Model)
+    </div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet {ExtensionSuite = ExtensionSuite.GridView}
+        )
+    @Html.DevExpress().GetScripts(
+        new Script {ExtensionSuite = ExtensionSuite.GridView}
+        )
+
+}
+
+}
+else
+{
+
+    <div class="well warning">
+        <h4 class="green smaller lighter">@General.LblAtencion</h4>
+        @Transportistas.LblMensajeTipoCuenta <br/><br/>
+        @General.LblConfigureloDesde <a href="@Url.Action("Create","Tiposcuentas")">@General.LblAqui</a>.
+    </div>
+
+}
+

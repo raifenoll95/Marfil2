@@ -1,0 +1,61 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Helpers
+@using Resources
+@model IModelView
+@{
+  
+    
+  
+  
+}
+
+
+
+
+@using (Html.BeginForm("CreateOperacion", "Provincias", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+    <div class="form-horizontal">
+        
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((ProvinciasModel)Model).Codigopais, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(f => ((ProvinciasModel)Model).Codigopais, WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(f => ((ProvinciasModel)Model).Codigopais, "", new { @class = "text-danger" })
+            </div>            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((ProvinciasModel) Model).Id, new {@class = "control-label col-md-2"})
+            <div class="col-md-1">
+                @Html.TextBoxFor(f => ((ProvinciasModel) Model).Id, new {@class = "form-control", @autofocus = ""})
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((ProvinciasModel)Model).Id, "", new { @class = "text-danger" })    
+            </div>
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((ProvinciasModel) Model).Nombre, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((ProvinciasModel) Model).Nombre, new {@class = "form-control"})
+                @Html.ValidationMessageFor(f => ((ProvinciasModel) Model).Nombre, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}

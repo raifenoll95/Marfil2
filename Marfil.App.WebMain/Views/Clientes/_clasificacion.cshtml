@@ -1,0 +1,81 @@
+﻿@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@model Marfil.Dom.Persistencia.Model.Terceros.ClientesModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var listidiomas = WebHelper.GetApplicationHelper().GetListIdiomas();
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList(); ;
+    var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listtipoempresa = WebHelper.GetApplicationHelper().GetListTiposEmpresas().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listunidadnegocio.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    var listincoterm = WebHelper.GetApplicationHelper().GetListIncoterm().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listincoterm.Insert(0, new SelectListItem() {Value="",Text=""});
+    listtipoempresa.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+}
+@Html.HiddenFor(f=>Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcuentas,new {id="Fkcuentas"})
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkidiomas, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkidiomas, listidiomas.Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}), isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Fkidiomas, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkfamiliacliente, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkfamiliacliente, listfamiliaproveedor, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Fkfamiliacliente, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkzonacliente, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkzonacliente, listzonaclienteproveedor, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Fkzonacliente, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktipoempresa, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fktipoempresa, listtipoempresa, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Fktipoempresa, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkunidadnegocio, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkunidadnegocio, listunidadnegocio, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Fkunidadnegocio, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkincoterm, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkincoterm, listincoterm, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Fkincoterm, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+
+@Html.EditorFor(f=>Model.Fkpuertos)
+
+<script type="text/javascript">
+    
+    $("form").submit(function(event) {
+        $("#Fkcuentas").val(document.getElementById("Cuentas.Id").value);
+        
+    });
+  
+</script>

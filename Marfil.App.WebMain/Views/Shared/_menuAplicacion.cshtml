@@ -1,0 +1,13 @@
+﻿@using System.Collections
+@using Marfil.App.WebMain.Misc
+@using Marfil.App.WebMain.Services
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+<!-- #section:Main basics/navbar.layout -->
+@Html.Partial("_header", (new FModel()).GetModel<HeaderModel>(new ContextService()))
+
+@Html.Action("_lateralHeader", "Home")
+
+
+
+

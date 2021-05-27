@@ -1,0 +1,105 @@
+﻿@using Resources
+@model  Marfil.Dom.Persistencia.Model.GaleriaImagenes.GaleriaModel
+@{
+    var isreadonly = (bool?)ViewData["readonly"] ?? false;
+}
+@if (Model.DirectorioId != Guid.Empty)
+{
+
+
+    <link rel="stylesheet" href="@Url.Content("~/components/jquery-colorbox/example1/colorbox.css")" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Model/GaleriaImagenes/GaleriaimagenesController.js")"></script>
+    <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+
+    <div ng-controller="GaleriaimagenesCtrl" ng-init="init('@Model.Empresa','@Model.DirectorioId','@Url.Action("Listar", "GestionDocumental")','@Url.Action("Agregar", "GestionDocumental")','@Url.Action("Quitar", "GestionDocumental")')">
+        @if (!isreadonly)
+        {
+            <div class="col-md-12 well well-sm">
+                <label class="fa-1-5x dark">
+                    <i class="fa fa-cloud-upload bigger"></i>
+                    <span>Adjunte archivos nuevos al documento</span>
+                </label>
+                <label class="btn btn-success btn-sm pull-right" style="cursor: pointer" ng-disabled="Subiendoarchivo">
+                    <i class="fa fa-paperclip"></i> Adjuntar un archivo <input multiple="multiple" ng-disabled="Subiendoarchivo" type="file" class="hidden" onchange="angular.element(this).scope().AñadirFicheros(this, '@Model.DirectorioId')">
+                </label>
+            </div>
+            <div class="col-sm-2 pull-right" ng-show="Subiendoarchivo" ng-cloak>
+                <span class="pull-right small pull-right"><i class="fa fa-upload"></i> Subiendo archivo...</span>
+            </div>
+        }
+
+        <ul ng-cloak class="ace-thumbnails clearfix" ng-show="Ficheros.length > 0">
+            <li ng-repeat="item in Ficheros">
+
+                <a ng-click="Preventclick(item,$event)" ng-href="@(Url.Action("Thumbnail", "GestionDocumental"))/{{item.Id}}" data-esimagen="{{item.Esimagen}}" data-rel="colorbox">
+                    <img width="150" height="150" alt="lote {{item.Nombre}}" ng-src="{{Getsrc('@(Url.Action("Thumbnail", "GestionDocumental"))/',item)}}" />
+                    <div class="text">
+                        <div class="inner">{{item.Nombre}}</div>
+                    </div>
+                </a>
+
+                <div class="tools tools-bottom">
+                    <a href="@(Url.Action("Fichero", "GestionDocumental"))/{{item.Id}}">
+                        <i class="ace-icon fa fa-download" title="@General.LblDescargar {{item.Nombre}}"></i>
+                    </a>
+                    @if (!isreadonly)
+                    {
+                        <span style="cursor: pointer" ng-click="EliminarFicheros(item)">
+                            <i class="ace-icon fa fa-times red" title="@General.LblBorrar {{item.Nombre}}"></i>
+                        </span>
+                    }
+
+                </div>
+            </li>
+        </ul>
+        <div class="margin-top" ng-show="Ficheros.length==0">
+            <h3 ng-cloak>No existen archivos asociados</h3>
+        </div>
+
+
+    </div>
+
+    <script src="@Url.Content("~/components/jquery-colorbox/jquery.colorbox.js")"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition: true,
+                scalePhotos: true,
+                scrolling: false,
+                previous: '<i class="ace-icon fa fa-arrow-left"></i>',
+                next: '<i class="ace-icon fa fa-arrow-right"></i>',
+                close: '&times;',
+                current: '{current} of {total}',
+                maxWidth: "200px",
+                maxHeight: "200px",
+                onOpen: function () {
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed: function () {
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete: function () {
+                    $.colorbox.resize();
+                }
+            };
+
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>"); //let's add a custom loading icon
+
+
+            $(document).one('ajaxloadstart.page', function (e) {
+                $('#colorbox, #cboxOverlay').remove();
+            });
+        });
+
+    </script>
+}
+else
+{
+
+    <h3>No existe ninguna carpeta. Guarda el documento y vuelve a abrirlo para generar la carpeta.</h3>
+}

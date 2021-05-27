@@ -1,0 +1,131 @@
+﻿@using System.Web.Mvc.Html
+@model Marfil.Dom.Persistencia.Model.GruposUsuariosModel
+
+@using Marfil.App.WebMain.Misc
+@using Resources
+<div>
+    <div ng-controller="campoverificacionController.@Model.id">
+        <div class="input-group">
+            <div class="color-black" custom-select="t as t.Usuario for t in vector | filter: { Usuario: $searchTerm }" ng-model="selected">
+                <div>
+                    <strong>{{ t.Usuario }}</strong>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-grey btn-xs" ng-disabled="selected==undefined" ng-click="addItem(selected)">
+                    <span class="ace-icon fa fa-plus icon-on-right bigger-110"></span>
+                    @General.LblAñadir
+                </button>
+            </span>
+        </div>
+        <div class="margin-top">
+            <table id="simple-table" class="table  table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="center col-sm-1">
+                            <span class="pos-rel">
+                                <input name="Seleccionartodos" aria-label="Seleccionar todos" aria-labelledby="Seleccionartodos" id="Seleccionartodos"  type="checkbox" class="ace" ng-model="selectedAll" ng-click="checkAll()" />
+                                <span class="lbl"></span>
+                            </span>
+                        </th>
+                        <th class="detail-col">
+                            <label for="Seleccionartodos">@General.LblUsuarios</label>
+                            <span>
+                                <a href="" ng-click="removeItems()" class="pull-right">
+                                    <i class="fa fa-remove"></i>
+                                    @General.LblQuitarSeleccionados
+                                </a>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in usuarios">
+                        <td class="center">
+                            <input type="hidden" name="usuarios.usuarios[{{$index}}].Id" value="{{ item.Id }}" />
+                            <input type="hidden" name="usuarios.usuarios[{{$index}}].Usuario" value="{{ item.Usuario }}" />
+                            <div class="pos-rel">
+                                <input aria-label="Id" aria-labelledby="{{item.Id}}" id="{{ item.Id }}" name="{{ item.Id }}" type="checkbox" class="ace" ng-model="item.Selected" ng-checked="item.Selected" />
+                                <label for="{{item.Id}}"  class="lbl"></label>
+                            </div>
+                        </td>
+
+                        <td class="center">
+                            {{ item.Usuario }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+@Html.Css(
+    @<link rel="stylesheet" href="@Url.Content("~/Content/UserControls/campoverificacion.css")" />
+)
+<script type="text/javascript">
+    
+    app.controller('campoverificacionController.@Model.id', [
+        '$scope', '$http', '$timeout', '$q', function ($scope, $http, $timeout, $q) {
+
+            $scope.selectedAll = false;
+            $scope.selected = undefined;
+            $scope.vector = [];
+            $scope.usuarios = [
+                @{
+                    var flag = false;
+                    foreach (var item in Model.usuarios)
+                    {
+                        @Html.Raw(flag ? "," : "")
+                        @Html.Raw(string.Format("{{\"Selected\":\"false\", \"Usuario\": \"{0}\", Id: \"{1}\"}}", item.usuario, item.id))
+                        flag = true;
+                    }
+                }
+            ];
+
+            $scope.addItem = function (item) {
+                if ($.inArray(item, $scope.usuarios)) {
+                    $scope.usuarios.push(item);
+                    $scope.selected = undefined;
+                }
+
+            };
+
+            $scope.removeItems = function () {
+                var filtrados = $scope.usuarios.filter(function (item) { return item.selected === true; });
+                for (var i = 0; i < filtrados.length; i++) {
+                    var index = $scope.usuarios.indexOf(filtrados[i]);
+                    if (index >= 0) {
+                        $scope.usuarios.splice(index,1);
+                        filtrados[i].Selected = false;
+                        $scope.selectedAll = false;
+                        
+                    }
+                }
+            }
+
+            $scope.checkAll = function () {
+                angular.forEach($scope.usuarios, function (item) {
+                    item.selected = $scope.selectedAll;
+                });
+            };
+
+            $http.get('@Url.Action(Model.api, "Api")').
+                success(function (data) {
+                    if (data != undefined)
+                        for (var i = 0; i < data.length; i++)
+                            data[i].Selected = false;
+                    $scope.vector = data;
+                }).error(function (data, status) {
+                    alert(status);
+                });
+
+        }
+    ]);
+</script>

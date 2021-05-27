@@ -1,0 +1,59 @@
+﻿@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    body.modal-open {
+        overflow: inherit;
+        padding-right: inherit !important;
+    }
+</style>
+<div class="jumbotron">
+    <h1>Controles UI</h1>
+
+</div>
+<!-- Campo verificacion -->
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Camp verificacion
+        </div>
+        <div class="panel-body">
+            @Html.Partial("CampoverificacionUI", new CampoverificacionModel()
+            {
+                Name = "Campoverificacion",
+                CampoIdentificador = "id",
+                Url = "http://localhost/MarfilControlsUI/Api/TestApi",
+                CampoDescripcion = "nombre"
+            })
+        </div>
+
+    </div>
+</div>
+
+<!-- Busquedas -->
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Busquedas
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+               
+                <div class="form-group" ng-controller="BotonbuscarCtrl">
+                    <button type="button" class="btn btn-purple btn-sm" data-toggle="modal" data-target="appBusquedas2Modal" ng-click="buscar('nombre', 'txtBuscar', 'BusquedaGeneral', 'http://localhost/MarfilControlsUI/Api/TestApi')">
+                        Search
+                        <i class="icon-search icon-on-right bigger-110"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

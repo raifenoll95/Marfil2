@@ -1,0 +1,160 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.AsistenteRemedirStockModel
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<IncidenciasModel>(WebHelper.ContextService);
+    var listzonas = WebHelper.GetApplicationHelper().GetAlmacenesZonas().Select(f=>new SelectListItem() {Text= f.Descripcion,Value=f.Id.ToString()}).ToList();
+    var listcalificacioncomercial = WebHelper.GetApplicationHelper().GetListCalificacionComercial().Select(f=>new SelectListItem() {Text= f.Descripcion,Value=f.Valor}).ToList();
+    var listtipograno = WebHelper.GetApplicationHelper().GetListTipograno().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    var listtono = WebHelper.GetApplicationHelper().GetListTono().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listcalificacioncomercial.Insert(0, new SelectListItem() {Value = "", Text = ""});
+    listtipograno.Insert(0, new SelectListItem() {Value = "", Text = ""});
+    listtono.Insert(0, new SelectListItem() {Value = "", Text = ""});
+    listzonas.Insert(0, new SelectListItem() { Value = "", Text = "" });
+}
+
+
+<form class="form-horizontal" id="step3-form">
+    <h2 class="text-left">
+        Medidas de produccion
+    </h2>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Nuevolargo, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Nuevolargo, new {@class = "form-control",@ng_model="Nuevolargo",@ng_disabled="!Permiteeditarlargo",decimalesnumerico = "" })
+        </div>
+        @Html.LabelFor(f => Model.Sumarlargo, new {@class = "control-label col-md-2"})
+        <div class="col-md-1">
+            @Html.CheckBoxFor(f => Model.Sumarlargo, new {@ng_model = "Sumarlargo", @ng_disabled = "!Permiteeditarlargo" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Nuevolargo, "", new {@class = "text-danger"})
+            <span class="field-validation-valid text-danger" id="errornuevolargo"></span>
+        </div>
+        
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Nuevoancho, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Nuevoancho, new {@class = "form-control", @ng_model = "Nuevoancho", @ng_disabled = "!Permiteeditarancho", decimalesnumerico="" })
+        </div>
+        @Html.LabelFor(f => Model.Sumarancho, new {@class = "control-label col-md-2"})
+        <div class="col-md-1">
+            @Html.CheckBoxFor(f => Model.Sumarancho, new {@ng_model = "Sumarancho", @ng_disabled = "!Permiteeditarancho" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Nuevoancho, "", new { @class = "text-danger" })
+            <span class="field-validation-valid text-danger" id="errornuevoancho"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Nuevogrueso, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Nuevogrueso, new {@class = "form-control", @ng_model = "Nuevogrueso", @ng_disabled = "!Permiteeditargrueso", decimalesnumerico = "" })
+        </div>
+        @Html.LabelFor(f => Model.Sumargrueso, new {@class = "control-label col-md-2"})
+        <div class="col-md-1">
+            @Html.CheckBoxFor(f => Model.Sumargrueso, new {@ng_model = "Sumargrueso", @ng_disabled = "!Permiteeditargrueso" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Nuevogrueso, "", new { @class = "text-danger" })
+            <span class="field-validation-valid text-danger" id="errornuevogrueso"></span>
+        </div>
+    </div>
+
+    <h2 class="text-left">
+        Propiedades
+    </h2>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Loteproveedor, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Loteproveedor, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkincidenciasmaterial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkincidenciasmaterial";
+                campoverificacion.Url = Url.Action("IncidenciasApi", "Api");
+                campoverificacion.CampoIdentificador = "Id";
+                campoverificacion.Valor = Model.Fkincidenciasmaterial;
+                campoverificacion.Titulo = Incidencias.TituloEntidad;
+                campoverificacion.Autofocus = true;
+                campoverificacion.Params = "{\"tipo\":\"" + (int) TipoMaterial.Material + "\"}";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Zona, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Zona, listzonas, new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Fkcalificacioncomercial, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fkcalificacioncomercial, listcalificacioncomercial, new {@class = "form-control"})
+        </div>
+        
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fktipograno, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fktipograno, listtipograno, new {@class = "form-control"})
+        </div>
+        @Html.LabelFor(f => Model.Fktonomaterial, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fktonomaterial, listtono, new {@class = "form-control"})
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkvariedades, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkvariedades";
+                campoverificacion.Url = Url.Action("VariedadesApi", "Api");
+                campoverificacion.CampoIdentificador = "Codigovariedad";
+                campoverificacion.Valor = Model.Fkvariedades;
+                campoverificacion.Titulo = Materiales.Variedadestajos;
+                campoverificacion.Autofocus = false;
+                campoverificacion.Params = "";
+                campoverificacion.ControlesAsociados = "[{\"fkarticulos\":\"fkarticulos\"}]";
+                campoverificacion.Longitud = "2";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Pesopieza, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            <input decimalesnumerico ng-model="Pesopieza" type="text" name="Pesopieza" id="Pesopieza" class="form-control" />
+        </div>
+        <div class="col-md-12"></div>
+        
+    </div>
+
+    <input type="hidden" name="fkarticulos" id="fkarticulos" value="{{Fkarticulos}}"/>
+</form>

@@ -1,0 +1,197 @@
+﻿@using System.Globalization
+@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.Documentos.Facturas.FacturasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var situacioncomisionlist = WebHelper.GetApplicationHelper().GetListSituacionComision().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    situacioncomisionlist.Insert(0, new SelectListItem() { Text = "", Value = "" });
+}
+<div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Brutocomision, new { @class = "control-label col-md-2 col-md-offset-4" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Brutocomision, (object)new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Brutocomision, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Checks de calculo -->
+    @Html.HiddenFor(f => Model.Comisiondescontardescuentocomercialvista)
+    @Html.HiddenFor(f => Model.Comsiondescontardescuentoprontopagovista)
+    @Html.HiddenFor(f => Model.Comisiondescontarrecargofinancieroformapagovista)
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comisiondescontardescuentocomercialvista, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Comisiondescontardescuentocomercialvista, (object) new {@disabled = "disabled"})
+        </div>
+        @Html.LabelFor(f => Model.Cuotadescuentocomercialcomision, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Cuotadescuentocomercialcomision, (object)new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Comisiondescontardescuentocomercialvista, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comsiondescontardescuentoprontopagovista, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Comsiondescontardescuentoprontopagovista, (object) new {@disabled = "disabled"})
+        </div>
+        @Html.LabelFor(f => Model.Cuotadescuentoprontopagocomision, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Cuotadescuentoprontopagocomision, (object)new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Comsiondescontardescuentoprontopagovista, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comisiondescontarrecargofinancieroformapagovista, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Comisiondescontarrecargofinancieroformapagovista, (object) new {@disabled = "disabled"})
+        </div>
+        @Html.LabelFor(f => Model.Cuotadescuentorecargofinancieroformapagocomision, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Cuotadescuentorecargofinancieroformapagocomision, (object)new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Comisiondescontarrecargofinancieroformapagovista, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Netobasecomision, new { @class = "control-label col-md-2 col-md-offset-4" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Netobasecomision, (object)new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Netobasecomision, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Fin checks de calculo -->
+
+    
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkagentes, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkagentes";
+                campoverificacion.Url = Url.Action("CuentasTiposAgentesExclusiveApi", "Api");
+                campoverificacion.Valor = Model.Fkagentes;
+                campoverificacion.Titulo = "Agentes";
+                campoverificacion.SoloLectura = isreadonly;
+                campoverificacion.Obligatorio = false;
+                campoverificacion.CampoIdentificador = "Fkcuentas";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkagentes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div ng-controller="ComisionCtrl" ng-init="init(@((Model.Netobasecomision ?? 0.0).ToString(CultureInfo.InvariantCulture)),@((Model.Comisionagente ?? 0.0).ToString(CultureInfo.InvariantCulture)),@((Model.Importecomisionagente ?? 0.0).ToString(CultureInfo.InvariantCulture)),@((Model.Comisioncomercial ?? 0.0).ToString(CultureInfo.InvariantCulture)),@((Model.Importecomisioncomercial ?? 0.0).ToString(CultureInfo.InvariantCulture)),@Model.Decimalesmonedas)">
+        <div class="form-group">
+
+            @Html.LabelFor(f => Model.Comisionagente, new {@class = "control-label col-md-2"})
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.TextBoxFor(f => Model.Comisionagente, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control", @ng_model = "porcentajecomisionagente"})
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+
+            @Html.LabelFor(f => Model.Importecomisionagente, new {@class = "control-label col-md-2"})
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.Importecomisionagente, new {@class = "form-control", @readonly = "readonly", @ng_model = "importecomisionagente"})
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Comisionagente, "", new {@class = "text-danger"})
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Importecomisionagente, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fksituacioncomision, new {@class = "control-label col-md-2"})
+            <div class="col-md-6">
+                @Html.DropDownListFor(f => Model.Fksituacioncomision, situacioncomisionlist, isreadonly ? (object) new {@disabled = "disabled", @class = "form-control"} : (object) new {@class = "form-control"})
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fksituacioncomision, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fkcomerciales, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @{
+                    campoverificacion.Name = "Fkcomerciales";
+                    campoverificacion.Url = Url.Action("CuentasTiposComercialesExclusiveApi", "Api");
+                    campoverificacion.Valor = Model.Fkcomerciales;
+                    campoverificacion.Titulo = "Comerciales";
+                    campoverificacion.SoloLectura = isreadonly;
+                    campoverificacion.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", campoverificacion)
+
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fkcomerciales, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Comisioncomercial, new {@class = "control-label col-md-2"})
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.TextBoxFor(f => Model.Comisioncomercial, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control", @ng_model = "porcentajecomisioncomercial"})
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+            @Html.LabelFor(f => Model.Importecomisioncomercial, new {@class = "control-label col-md-2"})
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.Importecomisioncomercial, new {@class = "form-control", @readonly = "readonly", @ng_model = "importecomisioncomercial"})
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Comisioncomercial, "", new {@class = "text-danger"})
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Importecomisioncomercial, "", new {@class = "text-danger"})
+            </div>
+        </div>
+    </div>
+   
+   
+</div>

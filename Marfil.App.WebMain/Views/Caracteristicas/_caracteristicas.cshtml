@@ -1,0 +1,73 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using SettingsVerificacionPk = Marfil.Dom.ControlsUI.Campoidentificador.SettingsVerificacionPk
+@model CaracteristicasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (isreadonly || iseditable)
+            {
+            @Html.HiddenFor(f => Model.Id)
+            <label class="control-label margin-left-10" for="Id">@Model.Descripcion</label>
+
+
+
+        }
+        else
+        {
+            var service = FService.Instance.GetService(typeof(FamiliasproductosModel),WebHelper.ContextService);
+            var list = service.getAll().OfType<FamiliasproductosModel>().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id });
+            @Html.DropDownListFor(f => Model.Id, list, new { @aria_label = "caracteristicas", @class = "form-control", @autofocus = "", @ng_blur = "existePk(2,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Caracteristicas") + "\",\"" + Url.Action("Edit", "Caracteristicas") + "\")", @ng_model = "codigo", @id = "idcontrol" });
+        }
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+        <span class="fa-2x">
+            @Caracteristicas.TituloEntidad
+        </span>
+        @if (!isreadonly)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @*@Html.DropDownListFor(f => Model.Descripcion_ejercicio, valores, "Valor", new { @aria_label = "costesvariablesperiodo", @class = "form-control", @autofocus = "" })*@
+    </div>
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.Partial("_caracteristicaslin", Model.Lineas)
+    </div>
+
+</div>
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

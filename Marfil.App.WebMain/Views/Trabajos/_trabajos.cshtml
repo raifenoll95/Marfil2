@@ -1,0 +1,149 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.TrabajosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvacabados = FCampoverificacion.Instance.GetModel<AcabadosModel>(WebHelper.ContextService);
+    var campoverificacion = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    <script src="@Url.Content("~/Scripts/Model/Trabajos/TrabajosController.js")"></script>
+}
+
+@Html.DevExpress().GetStyleSheets(
+new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }
+)
+@Html.DevExpress().GetScripts(
+new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+new Script { ExtensionSuite = ExtensionSuite.GridView },
+new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+<div ng-controller="TrabajosCtrl" ng-init="init('@((int)Model.Tipotrabajo)','@((int)Model.Tipoimputacion)')">
+    @Html.HiddenFor(f => Model.Empresa)
+    <div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @class = "form-control", @aria_label = "codigo", @readonly = "readonly" } : (object)new { @required = "required", @class = "form -control", @aria_label = "codigo", @autofocus = "", @ng_blur = "existePk(5,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Trabajos") + "\",\"" + Url.Action("Edit", "Trabajos") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipotrabajo, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EnumDropDownListFor(f => Model.Tipotrabajo, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" ,@ng_model="Tipotrabajo"})
+            @Html.ValidationMessageFor(f => Model.Tipotrabajo, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(f => Model.Tipoimputacion, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EnumDropDownListFor(f => Model.Tipoimputacion, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control", @ng_model = "Tipoimputacion", @ng_disabled = "Tipotrabajo=='1'" })
+            @Html.ValidationMessageFor(f => Model.Tipoimputacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkacabadoinicial, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvacabados.Name = "Fkacabadoinicial";
+                cvacabados.Url = Url.Action("AcabadosApi", "Api");
+                cvacabados.Valor = Model.Fkacabadoinicial;
+                cvacabados.SoloLectura = isreadonly;
+            }
+            @Html.Partial("CampoverificacionUI", cvacabados)
+
+            @Html.ValidationMessageFor(f => Model.Fkacabadoinicial, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkacabadofinal, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvacabados.Name = "Fkacabadofinal";
+                cvacabados.Url = Url.Action("AcabadosApi", "Api");
+                cvacabados.Valor = Model.Fkacabadofinal;
+                cvacabados.SoloLectura = isreadonly;
+            }
+            @Html.Partial("CampoverificacionUI", cvacabados)
+
+            @Html.ValidationMessageFor(f => Model.Fkacabadofinal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkarticulofacturable, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkarticulofacturable";
+                campoverificacion.Url = Url.Action("ArticulosApi", "Api");
+                campoverificacion.Valor = Model.Fkarticulofacturable;
+                campoverificacion.CampoIdentificador = "Id";
+                campoverificacion.CampoDescripcion = "Descripcion";
+                campoverificacion.Titulo = Articulos.TituloEntidad;
+                campoverificacion.SoloLectura = isreadonly;
+
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+
+            @Html.ValidationMessageFor(f => Model.Fkarticulofacturable, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Precio, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Precio, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+    </div>
+
+        <hr />
+
+        @* GRID *@
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <span class="fa-2x">
+                    @General.LblHistoricoPrecios
+                </span>
+
+                @if (isNuevo || iseditable)
+                {
+                    <span class="pull-right">
+                        <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                            <i class="fa fa-plus"></i>
+                            @General.BtnNuevoRegistro
+                        </a>
+                    </span>
+                }               
+
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.Partial("TrabajosLin", Model.Lineas)
+            </div>
+        </div>
+    </div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

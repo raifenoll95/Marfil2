@@ -1,0 +1,155 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Resources
+@model Marfil.Dom.Persistencia.Model.ContactosModel
+@{
+    var idControl = "contactos" + Model.Id.ToString().Replace("-", "");
+    var factory = new FModel();
+    var lindireccion = factory.GetModel<ContactosLinModel>(WebHelper.ContextService);
+    var isreadonly = Model.ReadOnly;
+    
+}
+<div class="modal fade" id="@idControl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Contactos.TituloEntidad</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="Fkentidad_contacto" value="{{nuevo.Fkentidad}}"/>
+                <div id="tabs">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="active"><a data-toggle="tab" href="@Html.Raw("#general" + idControl)">@General.LblGeneral</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="@Html.Raw("general" + idControl)" class="tab-pane fade in active">
+                       
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Nombre, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" required="required" ng-model="nuevo.Nombre" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+                            </div>
+                            <div class="col-md-10">
+                                <span ng-show="nuevo.nombreerror!=''" ng-model="nuevo.nombreerror"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Fktipocontacto, new {@class = "control-label col-md-2"})
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(f => lindireccion.Fktipocontacto, WebHelper.GetApplicationHelper().GetListTiposContacto().Select(f => new SelectListItem() {Text = f.Descripcion, Value = f.Valor}), isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fktipocontacto" } : (object) new {@class = "form-control", @ng_model = "nuevo.Fktipocontacto" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Fkcargoempresa, new {@class = "control-label col-md-2"})
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(f => lindireccion.Fkcargoempresa, Model.CargosEmpresa.Select(f => new SelectListItem() {Text = f.Descripcion, Value = f.Valor}), isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkcargoempresa"} : (object) new {@class = "form-control", @ng_model = "nuevo.Fkcargoempresa"})
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Fkidioma, new {@class = "control-label col-md-2"})
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(f => lindireccion.Fkidioma, WebHelper.GetApplicationHelper().GetListIdiomas().Select(f => new SelectListItem() {Text = f.Descripcion, Value = f.Valor}), isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkidioma"} : (object) new {@class = "form-control", @ng_model = "nuevo.Fkidioma"})
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Fkid_direccion, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @{
+                                    var direcciones = Model.Direcciones.Direcciones.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList();
+                                    direcciones.Insert(0, new SelectListItem() { Text = "", Value = "" });
+                                }
+                                @Html.DropDownListFor(f => lindireccion.Fkid_direccion, Model.Direcciones.Direcciones.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList(), isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+                                @*@Html.DropDownListFor(f => lindireccion.Fkid_direccion, Model.Direcciones.Direcciones.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList(), isreadonly ? (object)new { @class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkid_direccion" } : (object)new { @class = "form-control", @ng_model = "nuevo.Fkid_direccion" })*@
+                                @*@Html.DropDownListFor(f => lindireccion.Fkid_direccion, direcciones, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkid_direccion"} : (object) new {@class = "form-control", @ng_model = "nuevo.Fkid_direccion"})*@
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Telefono, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="nuevo.Telefono" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+                            </div>
+                            @Html.LabelFor(f => lindireccion.Telefonomovil, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="nuevo.Telefonomovil" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-4 col-md-offset-2">
+                                <span ng-show="nuevo.telefonoerror!=''" class="red" ng-model="nuevo.telefonoerror">{{nuevo.telefonoerror}}</span>
+                            </div>
+                            <div class="col-md-4">
+                                <span ng-show="nuevo.telefonomovilerror!=''" class="red" ng-model="nuevo.telefonomovilerror">{{nuevo.telefonomovilerror}}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Fax, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" ng-model="nuevo.Fax" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+                            </div>
+                            <div class="col-md-10">
+                                <span ng-show="nuevo.faxerror!=''" ng-model="nuevo.faxerror"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Email, new {@class = "control-label col-md-2"})
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" ng-model="nuevo.Email" @Html.Raw(isreadonly ? "readonly='readonly'" : "")/>
+                            </div>
+                            <div class="col-md-10">
+                                <span ng-show="nuevo.emailerror!=''" ng-model="nuevo.emailerror"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Nifcif, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" ng-model="nuevo.Nifcif" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+                            </div>
+                            <div class="col-md-10 col-md-offset-2 text-danger" >
+                                <span ng-show="errores.nifciferror!=''" >{{errores.nifciferror}}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(f => lindireccion.Observaciones, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <textarea type="text" class="form-control" ng-model="nuevo.Observaciones" @Html.Raw(isreadonly ? "readonly='readonly'" : "")></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                   
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                @if (!isreadonly)
+                {
+                    <button type="button" class="btn btn-primary" ng-click="saveItem()">@General.BtnGuardar</button>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,218 @@
+﻿@using System.Drawing
+@using System.Text
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Inventarios
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.Inventarios.InventariosLinModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    var listcanales = new List<SelectListItem>();
+    if (configuracionAplicacion.VentasUsarCanal)
+    {
+        listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+        listcanales.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    }
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewLineas";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new {Controller = "Inventarios", Action = "InventariosLin"};
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        settings.Settings.ShowFilterRow = isreadonly;
+
+        //edition
+        settings.SettingsEditing.DeleteRowRouteValues = new {Controller = "Inventarios", Action = "InventariosLinDelete"};
+        settings.CustomActionRouteValues = new {Controller = "Inventarios", Action = "CustomGridViewEditingPartial"};
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.Visible = false;
+        } );
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fkarticulos";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.ColumnType = MVCxGridViewColumnType.Memo;
+            c.CellStyle.Wrap = DefaultBoolean.True;
+        });
+
+        settings.Columns.Add("Lote");
+
+        settings.Columns.Add("Loteid");
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Estado";
+            if (!WebHelper.DevexpressAA)
+            {
+                c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+                foreach (var i in Enum.GetValues(typeof(EstadoLineaInventario)))
+                    comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+                comboBoxProperties.ValueType = typeof(int);
+                comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            }
+            else
+            {
+                c.Width = Unit.Percentage(100);
+                c.MinWidth = 150;
+            }
+
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cantidad";
+
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SLargo";
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SAncho";
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SGrueso";
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SMetros";
+
+        });
+
+
+        settings.Columns.Add("Fkunidadesmedidadescripcion");
+
+
+
+
+        settings.CommandColumn.Visible = isreadonly;
+        if (!isreadonly)
+        {
+            settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = false;
+
+
+            settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
+
+            settings.CommandColumn.Width = Unit.Pixel(150);
+            settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+            settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+            settings.CommandColumn.VisibleIndex = 0;
+            settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+        }
+
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+
+
+
+        settings.ClientSideEvents.RowDblClick = null;
+
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+@if (!isreadonly)
+{
+    <script type="text/javascript">
+
+
+        function FunOnFocusedRowLineasChanged(s, e) {
+
+
+            $("#GridViewLineas").unbind("keydown");
+            $('#GridViewLineas').keydown(function (event) {
+
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                var index = s.GetFocusedRowIndex();
+
+                switch (keycode) {
+                   
+                    case 46: //Eliminar
+                        if (!GridViewLineas.IsEditing()) {
+                            GridViewLineas.DeleteRow(index);
+                        }
+                        break;}
+
+            });
+        }
+
+
+        
+        
+    </script>
+}

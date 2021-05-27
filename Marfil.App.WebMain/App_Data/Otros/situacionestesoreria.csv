@@ -1,0 +1,7 @@
+C;CARTERA;WALLET;false;false;0;true;true;0
+G;PAGARE/CHEQUE ENVIADO;PAYMENT SENT;false;false;1;false;true;0
+I;IMPAGADO;UNPAID;false;false;0;true;true;0
+P;PAGADO;PAID OUT;false;false;2;false;false;1
+R;REMESA;CONSIGNMENT;false;false;0;false;false;1
+X;PENDIENTE DE COBRO;PAYMENT PENDING;true;false;0;false;true;0
+Y;PENDIENTE DE PAGO;UNSETTLED;false;true;1;false;true;0

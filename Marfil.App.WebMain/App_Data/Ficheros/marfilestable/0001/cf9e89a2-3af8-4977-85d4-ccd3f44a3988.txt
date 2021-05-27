@@ -1,0 +1,21 @@
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VisualStudio\v16.0\Web
+
+--------------------------------------------------
+
+he comentado en Microsoft.Web.Publishing.targets
+
+<CopyPipelineFiles PipelineItems="@(FilesForPackagingFromProject)"
+                           SourceDirectory="$(WebPublishPipelineProjectDirectory)"
+                           TargetDirectory="$(WebProjectOutputDir)"
+                           SkipMetadataExcludeTrueItems="True"
+                           UpdateItemSpec="True"
+                           DeleteItemsMarkAsExcludeTrue ="True"
+                       Condition="'@(FilesForPackagingFromProject)' != ''">
+    </CopyPipelineFiles>
+
+----------------------------------------------------
+
+he comentado en Microsoft.WebSite.Publishing.targets
+
+<UsingTask TaskName="CopyPipelineFiles" AssemblyFile="$(MSBuildThisFileDirectory)\Microsoft.Web.Publishing.Tasks.dll" Condition="Exists('Microsoft.Web.Publishing.Tasks.dll')"/>
+

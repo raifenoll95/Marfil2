@@ -1,0 +1,112 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Campoidentificador
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@{
+    var tiposcuentasService = FService.Instance.GetService(typeof (TiposCuentasModel), WebHelper.ContextService) as TiposcuentasService;
+    var mascaratipocuenta = tiposcuentasService.GetMascaraFromTipoCuenta(TiposCuentas.Clientes);
+}
+<script type="text/javascript">
+    var rellenacod = function Rellenacodcuentas(scope) {
+        var maxLength = @WebHelper.GetApplicationHelper().DigitosCuentas();
+        var siguienteNumero = /^([a-zA-Z]|[0-9])*\.\*$/;
+        var autofillNumero = /^([a-zA-Z]|[0-9])*\.[0-9]*$/;
+        var autofillCeros = /^([a-zA-Z]|[0-9])+/;
+        
+        if (scope.valor.length > maxLength) {
+            
+            scope.valor = "";
+            return false;
+        }
+        scope.valor = scope.valor.toUpperCase();
+        if (siguienteNumero.test(scope.valor)) {
+
+            scope.valor = scope.getSiguienteNumero();
+            return false;
+        } else if (autofillNumero.test(scope.valor)) {
+            var vector = scope.valor.split('.');
+            if (vector.length === 2) {
+                if (vector[1].length === 1 && vector[1] === "*")
+                    vector[1] = "";
+                var totalZeros = maxLength - (vector[0].length + vector[1].length);
+                var zeros = "";
+                for (var i = 0; i < totalZeros; i++)
+                    zeros += "0";
+                scope.valor = vector[0] + zeros + vector[1];
+                scope.valor = scope.valor.substring(0, maxLength);
+
+            } else
+                return false;
+        } else if (autofillCeros.test(scope.valor)) {
+            var totalZeros = maxLength - scope.valor.length;
+            var zeros = "";
+            for (var i = 0; i < totalZeros; i++)
+                zeros += "0";
+            scope.valor = scope.valor + zeros;
+            scope.valor = scope.valor.substring(0, maxLength);
+        }
+
+
+        return true;
+    }
+</script>
+<script src="@Url.Content("~/Scripts/Model/Prospectos/ConvertirProspectoClienteModel.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Prospectos/convertirprospectoscontroller.js")"></script>
+<div id="procesoconvertirprospectocliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="ConvertirProspectosClientesCtrl" ng-init="init('@Url.Action("Convertirprospectoencliente","Prospectos")',@WebHelper.GetApplicationHelper().DigitosCuentas())">
+    <div div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Prospectos.ConvertirProspectoCliente</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-12  align-left"><span class="bolder">@Prospectos.TituloEntidadSingular :</span> {{Model.ProspectoId}} {{Model.ProspectoDescripcion}}</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-12 align-left">Indique el nuevo código de cliente</label>
+                        <div class="col-md-12">
+                            @Html.Partial("CampoidentificadorUI", new CampoidentificadorModel
+                       {
+                           Name = "ClienteId",
+                           CampoIdentificador = "Id",
+                           Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api"),
+                           CampoDescripcion = "Descripcion",
+                           Valor = "",
+                           Titulo = "Cuentas",
+                           Obligatorio = true,
+                           SoloLectura = false,
+                           Autofocus = true,
+                           DisplayName = Clientes.TituloEntidadSingular,
+                           Params = "{\"tipocuenta\":" + ((int)TiposCuentas.Clientes).ToString() + "}",
+                           Rellenacod = "Rellenacodcuentas(valor)",
+                           PermiteExistentes =  false,
+                           PermiteBuscar = false,
+                           EditarEnPagina = true,
+                           Mascara = mascaratipocuenta
+
+                       })
+                        </div>
+                    </div>
+                    <div class="col-md-12 red" ng-cloak ng-show="Model.ClienteIderror!=''">{{Model.ClienteIderror}}</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span ng-show="Enviando" ng-cloak class="pull-left green fa-2x">@General.LblLoading</span>
+                <span ng-show="ResultadoEnvio==1" ng-cloak class="pull-left green fa-2x">Email enviado correctamente!</span>
+                <span ng-show="ResultadoEnvio==0" ng-cloak class="pull-left red fa-2x">{{Error}}</span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@General.LblCancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="Send()" ng-disabled="!Enableaceptar">@General.LblEnviar</button>
+            </div>
+        </div>
+    </div>
+</div>

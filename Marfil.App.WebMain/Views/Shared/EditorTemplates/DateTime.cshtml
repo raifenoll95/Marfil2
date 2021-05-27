@@ -1,0 +1,63 @@
+﻿@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var idcontrol = Guid.NewGuid().ToString().Replace("-","");
+}
+@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@model DateTime?
+
+<div class="input-group" >
+    @Html.TextBoxFor(f => Model, isreadonly ? (object)new {@aux_id=idcontrol, @class = "form-control", @autofocus = "",@aria_label="Fecha", @disabled = "disabled",  Value = Model?.ToShortDateString() ?? "" } : (object)new { @aux_id = idcontrol, @class = "form-control", @aria_label = "Fecha",@autofocus = "",  Value = Model?.ToShortDateString() ?? "" })
+    <span class="input-group-addon"  id="custom_@idcontrol">
+        <span class="glyphicon glyphicon-calendar" style="cursor:pointer"></span>
+    </span>
+</div>
+     @{ Html.AddCss(Url.Content("~/Components/datepicker/css/bootstrap-datepicker3.standalone.min.css")); Html.AddScript(Url.Content("~/Components/datepicker/js/bootstrap-datepicker.js")); Html.AddScript(Url.Content("~/Components/datepicker/locales/bootstrap-datepicker." + Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0] + ".min.js")); }
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("[aux-id='@idcontrol']").datepicker({
+            language: '@Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0]',
+        });
+
+        $("[aux-id='@idcontrol']").blur(function () {
+
+            var mensajeError = '@Html.Raw(Resources.General.ErrorFechaNoValida)';
+
+            if (!$(this).val() == '') {
+                var rxDatePattern = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+                //var rxDatePattern = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+
+                if ($(this).val().toString().match(rxDatePattern) == null) {
+                    $(this).val('');
+
+                    // Comprobar si ya está el mensaje de error
+                    if ($('#custom_@idcontrol').parent().parent().children().last().text() != mensajeError) {
+                        $('#custom_@idcontrol').parent().parent().append('<div><span class="text-danger field-validation-error" data-valmsg-replace="true">' + mensajeError + '</span></span></div>');                        
+                    }
+                } else {
+                    // Borrar mensaje de error al introducir una fecha válida
+                    var bloqueError = $('#custom_@idcontrol').parent().parent().children().last();
+                    if (bloqueError.text() == mensajeError) {
+                        bloqueError.remove();
+                    }
+                }
+            } else {
+                //Borrar mensaje de error si se deja la fecha vacía
+                var bloqueError = $('#custom_@idcontrol').parent().parent().children().last();
+                if (bloqueError.text() == mensajeError) {
+                    bloqueError.remove();
+                }
+            }
+        });
+
+        $('#custom_@idcontrol').click(function () {
+           $("[aux-id='@idcontrol']").data("datepicker").show();
+        });
+    });
+
+
+</script>

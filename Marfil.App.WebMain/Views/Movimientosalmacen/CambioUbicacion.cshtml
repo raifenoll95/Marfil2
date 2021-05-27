@@ -1,0 +1,128 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.CambioUbicacionModel
+@{
+    ViewBag.Title = Model.TituloPagina;
+    var cvalmacenes = FCampoverificacion.Instance.GetModel<AlmacenesModel>(WebHelper.ContextService);
+    var cvzonas = FCampoverificacion.Instance.GetModel<AlmacenesZonasModel>(WebHelper.ContextService);
+}
+<script src="@Url.Content("~/Scripts/UserControls/CambioUbicacion/cambioubicacioncontroller.js")"></script>
+
+@using (Html.BeginForm("CambioUbicacion", "Movimientosalmacen", FormMethod.Post, new { @class = "form-horizontal margin-top", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" ng-controller="CambioubicacionCtrl" ng-init="Init('@Url.Action("ArticulosLotesApi","Api")','@Url.Action("AlmacenesZonasApi","Api")')">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fkalmacen, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvalmacenes.Name = "Fkalmacen";
+                    cvalmacenes.Url = Url.Action("AlmacenesApi", "Api");
+                    cvalmacenes.Valor = Model.Fkalmacen;
+                    cvalmacenes.Autofocus = true;
+                }
+                @Html.Partial("CampoverificacionUI", cvalmacenes)
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-2 col-md-offset-1">
+                @Html.ValidationMessageFor(f => Model.Fkalmacen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Lote, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group">
+                    @Html.TextBoxFor(f => Model.Lote, new { @class = "form-control", @ng_model = "Lote" })
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="Comprobarlote()">
+                            @Movimientosalmacen.Comprobarlote
+                        </button>
+                    </span>
+                </div>
+
+
+            </div>
+            
+            <div class="col-md-12">
+                @Html.ValidationMessageFor(f => Model.Lote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="Lotecargado">
+            <label class="control-label col-md-2">
+                @Albaranes.Descripcion
+            </label>
+            <div class="col-md-10"><label class="control-label">{{Descripcion}}</label></div>
+        </div>
+        <div class="form-group" ng-show="Lotecargado">
+            <div class="col-md-offset-2 col-md-2">
+                <div class="col-md-12 bolder">@Albaranes.Cantidad</div>
+                <div class="col-md-12"><label class="control-label">{{Cantidad}}</label></div>
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <div class="col-md-12 bolder">@Albaranes.Largo</div>
+                <div class="col-md-12"><label class="control-label">{{Largo}}</label>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="col-md-12 bolder">@Albaranes.Ancho</div>
+                <div class="col-md-12"><label class="control-label">{{Ancho}}</label>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="col-md-12 bolder">@Albaranes.Grueso</div>
+                <div class="col-md-12"><label class="control-label">{{Grueso}}</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group" ng-show="Lotecargado">
+            @Html.Label(Movimientosalmacen.Zonaactual, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvzonas.Name = "Fkzonaactual";
+                    cvzonas.Url = Url.Action("AlmacenesZonasApi", "Api");
+                    cvzonas.Valor = "";
+                    cvzonas.ControlesAsociados = "[ { \"fkalmacen\":\"Fkalmacen\" } ]";
+                    cvzonas.SoloLectura = true;
+                }
+                @Html.Partial("CampoverificacionUI", cvzonas)
+            </div>
+
+        </div>
+
+        <div class="form-group" ng-show="Lotecargado">
+            @Html.LabelFor(f => Model.Fkzonaalmacen, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select ng-show="Zonas.length > 0" ng-model="Fkzonaalmacen" class="form-control" name="Fkzonaalmacen">
+                    <option ng-selected="{{Fkzonaalmacen == item.Id}}" ng-repeat="item  in Zonas" value="{{ item.Id }}">{{item.Descripcion}}</option>
+                </select>
+                <label  ng-show="Zonas.length <= 0" class="control-label">Sin zonas</label>
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fkzonaalmacen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="margin-top">
+            <div class="col-md-2  col-md-offset-2">
+                <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable || Fkzonaalmacen==0 || !Lote">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+            
+
+        </div>
+    </div>
+
+
+                    }

@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Bancos y mandatos</value>
+  </data>
+  <data name="Fkcuentas" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Fkpaises" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Iban" xml:space="preserve">
+    <value>IBAN</value>
+  </data>
+  <data name="Bic" xml:space="preserve">
+    <value>BIC</value>
+  </data>
+  <data name="Sufijoacreedor" xml:space="preserve">
+    <value>Sufijo acreedor</value>
+  </data>
+  <data name="Contratoconfirmig" xml:space="preserve">
+    <value>Contrato confirming</value>
+  </data>
+  <data name="Contadorconfirming" xml:space="preserve">
+    <value>Contador confirming</value>
+  </data>
+  <data name="Direccion" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="Cpostal" xml:space="preserve">
+    <value>C. Postal</value>
+  </data>
+  <data name="Ciudad" xml:space="preserve">
+    <value>Ciudad</value>
+  </data>
+  <data name="Fkprovincias" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="Telefonobanco" xml:space="preserve">
+    <value>Teléfono banco</value>
+  </data>
+  <data name="Personacontacto" xml:space="preserve">
+    <value>Persona de contacto</value>
+  </data>
+  <data name="Idmandato" xml:space="preserve">
+    <value>Id. Mandato</value>
+  </data>
+  <data name="Idacreedor" xml:space="preserve">
+    <value>Id. Acreedor</value>
+  </data>
+  <data name="Tiposecuenciasepa" xml:space="preserve">
+    <value>Secuencia SEPA</value>
+  </data>
+  <data name="Tipoadeudo" xml:space="preserve">
+    <value>Tipo de adeudo</value>
+  </data>
+  <data name="Importemandato" xml:space="preserve">
+    <value>Importe mandato</value>
+  </data>
+  <data name="Recibosmandato" xml:space="preserve">
+    <value>Recibos mandato</value>
+  </data>
+  <data name="Importelimiterecibo" xml:space="preserve">
+    <value>Importe límite recibo</value>
+  </data>
+  <data name="Fechafirma" xml:space="preserve">
+    <value>Fecha de la firma</value>
+  </data>
+  <data name="Fechaexpiracion" xml:space="preserve">
+    <value>Fecha de expiración</value>
+  </data>
+  <data name="Fechaultimaremesa" xml:space="preserve">
+    <value>Fecha de la última remesa</value>
+  </data>
+  <data name="Importeremesados" xml:space="preserve">
+    <value>Importe remesados</value>
+  </data>
+  <data name="Recibosremesados" xml:space="preserve">
+    <value>Recibos remesados</value>
+  </data>
+  <data name="Devolvera" xml:space="preserve">
+    <value>Devolver a</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Observaciones</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Defecto</value>
+  </data>
+  <data name="Finalizado" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="Esquema" xml:space="preserve">
+    <value>Esquema</value>
+  </data>
+  <data name="TiposBancosMandatosBanco" xml:space="preserve">
+    <value>Banco</value>
+  </data>
+  <data name="TipoBancosMandatosMandato" xml:space="preserve">
+    <value>Mandato</value>
+  </data>
+  <data name="TipoAdeudoPrimerAdeudoRecurrente" xml:space="preserve">
+    <value>Primer adeudo recurrente</value>
+  </data>
+  <data name="TipoAdeudoAdeudoRecurrente" xml:space="preserve">
+    <value>Adeudo recurrente</value>
+  </data>
+  <data name="TipoAdeudoUltimoAdeudoRecurrente" xml:space="preserve">
+    <value>Último adeudo recurrente</value>
+  </data>
+  <data name="TipoAdeudoUnico" xml:space="preserve">
+    <value>Único</value>
+  </data>
+  <data name="TipoSecuenciaSepaPeriodico" xml:space="preserve">
+    <value>Periódico</value>
+  </data>
+  <data name="TipoSecuenciaSepaUnico" xml:space="preserve">
+    <value>Único</value>
+  </data>
+  <data name="Bancos" xml:space="preserve">
+    <value>Bancos</value>
+  </data>
+  <data name="Mandatos" xml:space="preserve">
+    <value>Mandatos</value>
+  </data>
+  <data name="DatosBanco" xml:space="preserve">
+    <value>Datos del banco</value>
+  </data>
+  <data name="Remesas" xml:space="preserve">
+    <value>Remesas</value>
+  </data>
+  <data name="Bloqueado" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="Riesgonacional" xml:space="preserve">
+    <value>Riesgo nacional</value>
+  </data>
+  <data name="Riesgoextranjero" xml:space="preserve">
+    <value>Riesgo extranjero</value>
+  </data>
+</root>

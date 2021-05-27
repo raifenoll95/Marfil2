@@ -1,0 +1,46 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.ListadoLotesModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>@Albaranes.ListadoLotes
+    <span class="pull-right">
+        <a href="@Url.Action("Index", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString())">@General.LblVolverALaLista</a></span>
+</h3>
+
+<div class="form-horizontal">
+
+@if (Model.GetFiltros().Any())
+{
+    <div class="row">
+        <h4>Filtros <button aria-label="Mostrar" data-toggle="collapse" data-target="#democollapse" id="buttoncollapse" class="btn btn-link"><i id="iconcollapse" class="fa fa-chevron-circle-down"></i></button></h4>
+        <div id="democollapse" class="panel-collapse collapse">
+            <select aria-label="filtros" class="form-control">
+                @foreach (var item in Model.GetFiltros())
+                {
+                    <option>@item</option>
+                }
+            </select>
+        </div>
+    </div>
+
+}
+
+    <div class="row">
+        @Html.Partial("_resultados", Model)
+    </div>
+
+</div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

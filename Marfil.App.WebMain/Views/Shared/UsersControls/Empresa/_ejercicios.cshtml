@@ -1,0 +1,25 @@
+﻿@using System.Globalization
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.Empresa.EmpresaModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    bool isEdicion = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "Edit" : false;
+    bool isNuevo = !isreadonly && !isEdicion;
+}
+
+@if (isNuevo)
+{
+    
+    @Html.EditorFor(f=>Model.EjercicioNuevo)    
+    
+    
+}
+else
+{
+    @Html.Partial("UsersControls/Empresa/_ejerciciostabla",Model)
+}
+
+
+
+

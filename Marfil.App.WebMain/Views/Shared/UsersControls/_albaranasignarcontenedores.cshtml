@@ -1,0 +1,199 @@
+﻿@*Raimundo Fenoll*@
+
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    var action  = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+}
+@using Resources
+<script src="@Url.Content("~/Scripts/UserControls/Albaranes/AsignarContenedores.js")"></script>
+@using (Html.BeginForm("AsignarContenedores", controller,  FormMethod.Post, new { @id = "asignarcontenedoresform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden"  name="id" value="" />
+    <input type="hidden" name="lineas" value="" />
+}
+
+<style type="text/css">
+    .black {
+        background-color: #e5f2ca;
+    }
+</style>
+
+<div ng-controller="AsignarContenedoresCtrl" ng-init="init('@Url.Action("Validar","Familiasproductos")')">
+    <div class="modal" id="asignarcontenedores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 90% !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Seleccionar líneas</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-horizontal">
+                            <h4 ng-show="loading">@General.LblLoading</h4>
+
+                            <div>
+                                <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                                <button type="button" ng-click="cancelarlineas()" id="btnAceptarreclamaralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                                <button type="button" ng-click="siguiente()" id="btnCancelarreclamaralbaran" class="btn btn-ar btn-success" ng-disabled="!selected || selected <= 0 ">@General.LblSiguiente</button>  @*data-dismiss="modal"*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="introducircampos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 90% !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Asignar</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="form-group" id="myForm">
+                        <label class="col-md-1" for="fname">Contenedor</label>
+                        <input class="col-md-2" type="text" id="contenedor" name="contenedor" value="">
+                        <div class="col-md-1"></div>
+                        <label class="col-md-1" for="pin">Sello</label>
+                        <input class="col-md-1" type="text" id="sello" name="sello" value="">
+                        <div class="col-md-1"></div>
+                        <label class="col-md-1" for="pin">Peso Neto</label>
+                        <input class="col-md-1" type="text" id="pesoneto" name="pesoneto" value="">
+                        <div class="col-md-1"></div>
+                        <label class="col-md-1" for="pin">Caja</label>
+                        <input class="col-md-1" type="text" id="caja" name="caja" value="">
+                    </form>
+
+                    <br /><br />
+
+                    <div class="modal-footer">
+                        <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                        <button type="button" ng-click="cancelarlineasintroducir()" id="btnAceptarreclamaralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                        <button type="button" ng-click="anteriorintroducir()" id="anterior" class="btn btn-ar btn-primary">@General.LblAnterior</button>
+                        <button type="button" ng-click="siguienteintroducir()" id="btnCancelarreclamaralbaran" class="btn btn-ar btn-success" ng-disabled="!selected || selected <= 0 ">@General.LblSiguiente</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="asignarcontenedoresultimo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 90% !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Asignar contenedores</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-horizontal">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="active">
+                                        <th><b>Cód. Artículo</b></th>
+                                        <th><b>Artículo</b></th>
+                                        <th><b>Lote</b></th>
+                                        <th><b>Tabla</b></th>
+                                        <th><b>Cantidad</b></th>
+                                        <th><b>Largo</b></th>
+                                        <th><b>Ancho</b></th>
+                                        <th><b>Grueso</b></th>
+                                        <th><b>Metros</b></th>
+                                        <th><b>Contenedor</b></th>
+                                        <th><b>Sello</b></th>
+                                        <th><b>Peso Neto</b></th>
+                                        <th><b>Caja</b></th>
+                                        <th><b>Editar</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="articulo in articulos | orderBy : ['Lote','Tabla','Cantidad']">
+                                        <td>
+                                            <span>{{articulo.Fkarticulos}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.Descripcion}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.Lote}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.Tabla}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.Cantidad}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.SLargo}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.SAncho}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.SGrueso}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{articulo.SMetros}}</span>
+                                        </td>
+                                        <td ng-class='{black : articulo.anothercolor}'>
+                                            <span ng-show="articulo.showEdit">{{articulo.Contenedor}}</span>
+                                            <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit" type="text" ng-model="articulo.Contenedor" class="form-control">
+                                        </td>
+                                        <td ng-class='{black : articulo.anothercolor}'>
+                                            <span ng-show="articulo.showEdit">{{articulo.Sello}}</span>
+                                            <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit" type="text" ng-model="articulo.Sello" class="form-control">
+                                        </td>
+                                        <td ng-class='{black : articulo.anothercolor}'>
+                                            <span ng-show="articulo.showEdit">{{articulo.Pesoneto}}</span>
+                                            <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit" type="text" ng-model="articulo.Pesoneto" class="form-control">
+                                        </td>
+                                        <td ng-class='{black : articulo.anothercolor}'>
+                                            <span ng-show="articulo.showEdit">{{articulo.Caja}}</span>
+                                            <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit" type="text" ng-model="articulo.Caja" class="form-control">
+                                        </td>
+                                        <td bgcolor="#eae5e3">
+                                            <span ng-show="articulo.showEdit && !articulo.noeditable" ng-click="toggleEdit(articulo)" class="text-center glyphicon glyphicon-pencil"></span>
+                                            <span ng-show="!articulo.showEdit && !articulo.noeditable" ng-click="toggleEdit(articulo)" class="text-center glyphicon glyphicon-ok"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="modal-footer">
+                                <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                                <button type="button" ng-click="cancelarultimo()" id="btnAceptarreclamaralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                                <button type="button" ng-click="anteriorultimo()" id="anterior" class="btn btn-ar btn-primary">@General.LblAnterior</button>
+                                <button type="button" ng-click="asignar()" id="btnCancelarreclamaralbaran" class="btn btn-ar btn-success" ng-disabled="!selected || selected <= 0 ">Asignar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

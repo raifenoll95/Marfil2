@@ -1,0 +1,44 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Contabilidad.Movs.AsistenteMovsModel
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvalbaranes = FCampoverificacion.Instance.GetModel<PedidosModel>(WebHelper.ContextService);
+    //var listseccionproduccion = WebHelper.GetApplicationHelper().GetListSeccionesProduccion().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    //listseccionproduccion.Insert(0, new SelectListItem() { Value = "", Text = "" });    
+
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    
+    @*@if(Model.Columns != null) {    
+        <div align="center">        
+            <table id="tablaRelaciones" border="1">
+                <thead>
+                    <tr>
+                        <th class="bolder center">Cabecera css</th>
+                        <th class="bolder center">Campo BD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.Columns)
+                    {
+                        <tr>
+                            <td>@Html.EditorFor(f => c)</td>
+                            <td>@Html.DropDownListFor(f => Model.SelectedId, Model.MovsModelProperties)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>      
+    }*@       
+
+</form>

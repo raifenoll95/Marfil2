@@ -1,0 +1,134 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+
+@model CarteraVencimientosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var cvbancos = FCampoverificacion.Instance.GetModel<BancosModel>(WebHelper.ContextService);
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@*Formas pago*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkformaspago, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvfp.Name = "Fkformaspago";
+            cvfp.Url = Url.Action("FormasPagoApi", "Api");
+            cvfp.Valor = Model.Fkformaspago.ToString();
+            cvfp.Titulo = "Formas de pago";
+            cvfp.SoloLectura = isreadonly;
+            cvfp.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvfp)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Cuenta tesoreria*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentastesoreria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+
+        @{
+            campoverificacion.Name = "Fkcuentatesoreria";
+            campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
+            campoverificacion.Valor = Model.Fkcuentastesoreria;
+            campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Cuentastesoreria + "}";
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentastesoreria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Fecha desuento, fecha pago, remesa*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechadescuento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechadescuento)
+    </div>
+    @Html.LabelFor(f => Model.Fechapago, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechapago)
+    </div>
+    @Html.LabelFor(f => Model.Fecharemesa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fecharemesa)
+    </div>
+</div>
+
+@*Enlace bancos, repasar*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Banco, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvbancos.Name = "Banco";
+            cvbancos.Url = Url.Action("BancosApi", "Api");
+            cvbancos.Valor = Model.Banco;
+            cvbancos.Titulo = "Banco librado";
+            cvbancos.Obligatorio = true;
+            cvbancos.SoloLectura = isreadonly;
+        }
+        @Html.Partial("CampoverificacionUI", cvbancos)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Banco, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Letra*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Letra, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Letra, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+@*Mandato*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Mandato, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <select aria-label="Bancos" ng-show="bancoscliente.length > 1" ng-model="fkbancosmandatos" class="form-control" name="Fkbancosmandatos" @Html.Raw(isreadonly ? " disabled=\"disabled\"" : string.Empty)>
+            <option ng-selected="{{fkbancosmandatos == item.Id}}" ng-repeat="item  in bancoscliente" value="{{ item.Id }}">{{item.Descripcion}}</option>
+        </select>
+        <label ng-show="bancoscliente.length && bancoscliente.length <= 1" class="control-label">@General.LblNoExistenBancos</label>
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Mandato, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+    @{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }

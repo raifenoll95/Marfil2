@@ -1,0 +1,74 @@
+﻿@model Marfil.Dom.Persistencia.Model.FicherosGenerales.ConsultaVisualFullModel
+@using Newtonsoft.Json
+@{}
+
+<html>
+<head>
+    <link rel="stylesheet" href="@Url.Content("~/content/Estilos.css")">
+    <style>
+    </style>
+</head>
+
+<body>
+    <script src="@Url.Content("~/Scripts/ConsultaVisual/ConsultaVisual.js")"></script>
+    <div ng-controller="MaterialesCtrl" ng-init="init('@Url.Content("~/Images/imagenesauxiliares/consultadefecto.png")','@Url.Action("Lotes","ConsultaVisual")','@Url.Action("getMateriales","ConsultaVisual")')">
+        <br /><br />
+        <div class="container col-md-12 col-xs-12">
+            <i>{{modelo.DescEmpresa}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescAlmacen}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescFamilia}}</i>
+            <i><strong>  >  </strong></i>
+            <i>{{modelo.DescGrupoMateriales}}</i>
+        </div>
+        <br /><br />
+        <div class="col-md-12 col-xs-12">
+            <img src="~/Images/imagenesauxiliares/familias.jpg" style="height: 22px;float: left;margin-right: 10px;margin-top: 10px;border-radius:0px;">
+            <p><font color="black" size="5">Materiales</font></p>
+        </div>
+        <br /><br />
+        <hr />
+        <div class="input-container col-md-6 col-xs-6">
+            <div class="wrapper">
+                <input style="border:none;font-family:Arial, FontAwesome" class="effect-1" type="text" ng-model="searching" ng-change="searchAlmacen()" placeholder="&#xf002; Busca materiales..." />
+                <span class="focus-border"></span>
+            </div>
+        </div>
+        @*<div class="pull-right col-md-3 col-xs-3">
+            Ordenar por número de Lotes: <input type="checkbox" ng-model="ordena">
+        </div>*@
+        <div class="col-md-2 col-xs-2">
+        </div>
+        <br /><br /><br />
+        <div class="row">
+            <!--Estilo Fila-->
+            <div class="center">
+                <!--centrado-->
+                <div class="mi-configuracion col-md-4 col-xs-12" ng-repeat="item in productos | filter: searching: sensitiveCompare | orderBy:compruebaCheck">
+                    <!--Gruid son 12 columnas. Cada almacen va a ocupar 4-->
+                    <a style="text-decoration:none" class="btn-group thumbnail" role="button" ng-click="seleccionar(item.Id, item.Descripcion)" />
+                        <!--Cada almacen en una caja para que no se salga-->
+                        <img ng-src="{{Getsrc('@(Url.Action("Thumbnail", "GestionDocumental"))/',item.Ficheros)}}" style="width:350px;height:300px;" />
+                        <br />
+                        <div class="center">
+                            <h3><font size="5" color="#2079df">{{item.Descripcion}}</font></h3>
+                        </div>
+                        <hr />
+                        <dl class="center">
+                            <dt><font size="5" color="black">{{item.LotesCV}} Lotes</font></dt>
+                            <br />
+                            <dt><img src="~/Images/almacenicon/jigsaw.svg" width="20" height="20">   <font color="black">{{item.PiezasCV}} piezas disponibles</font> </dt>
+                            <dt><img src="~/Images/almacenicon/ruler.svg" width="20" height="20">   <font color="black">{{item.MetrosCV}} metros disponibles</font> </dt>                           
+                        </dl>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var modeloproductos = @Html.Raw(JsonConvert.SerializeObject(Model));
+</script>

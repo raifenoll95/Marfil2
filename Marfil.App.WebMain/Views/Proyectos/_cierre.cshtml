@@ -1,0 +1,78 @@
+﻿@using Marfil.App.WebMain.Misc
+@using System.Globalization
+@using System.Threading
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.CRM
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.CRM.ProyectosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var listreacciones = WebHelper.GetApplicationHelper().GetListReacciones().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listreacciones.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechacierre, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechacierre)
+        @Html.ValidationMessageFor(f => Model.Fechacierre, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkreaccion, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Fkreaccion, listreacciones, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Fkreaccion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cerrado, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Cerrado, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        @Html.ValidationMessageFor(f => Model.Cerrado, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<script>
+
+    function formattedDate() {
+        var d = new Date()
+        let month = String(d.getMonth() + 1);
+        let day = String(d.getDate());
+        const year = String(d.getFullYear());
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return `${day}/${month}/${year}`;
+    }
+
+    $('#Cerrado').change(function () {
+
+        $('#Fechacierre').val(formattedDate)
+
+        if ($(this).is(':checked')) {
+            $('#Fechacierre').attr('required', true);
+            $('#Fkreaccion').attr('required', true);
+        } else {
+            $('#Fechacierre').removeAttr('required');
+            $('#Fkreaccion').removeAttr('required');
+        }
+    });
+
+</script>

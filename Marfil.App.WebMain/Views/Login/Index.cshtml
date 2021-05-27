@@ -1,0 +1,199 @@
+﻿@model  Marfil.Dom.Persistencia.Model.LoginModel
+@{
+    Layout = null;
+}
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Resources;
+<!DOCTYPE html>
+<html lang="@Thread.CurrentThread.CurrentUICulture.ToString()">
+<head>
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+    @Html.MetaAcceptLanguage()
+    <!-- Traducciones javascript -->
+    <script src="@Url.Content("~/Scripts/globalize-cultures/Messages/Messages."+ Thread.CurrentThread.CurrentUICulture.ToString() + ".js")"></script>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/components/font-awesome/css/font-awesome.min.css")" />
+
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-fonts.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/flags.css")" />
+    <!-- Gritter -->
+    <link rel="stylesheet" href="@Url.Content("~/components/jquery-ui.custom/jquery-ui.custom.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/components/jquery.gritter/css/jquery.gritter.min.css")" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/"  + (WebHelper.DevexpressAA ? "ace.min.AA.css": "ace.min.css"))" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="@Url.Content("~/content/dropdown.css")" />
+
+
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-part2.css")" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-rtl.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-skins.css")" />
+
+
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-ie.css")" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="@Url.Content("~/assets/js/ace-extra.js")"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="@Url.Content("~/components/html5shiv/dist/html5shiv.min.js")"></script>
+    <script src="@Url.Content("~/components/respond/dest/respond.min.js")"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/Login.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/general.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Grid.css")" />
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <!-- Globalization-->
+
+    <script src="@Url.Content("~/Scripts/globalize.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    <script src="@Url.Content("~/Scripts/waitingdialog.js")"></script>
+    <title>Marfil - Iniciar sesión</title>
+</head>
+
+<body class="login-layout light-login">
+
+    <div id="errors">
+        @Html.Partial("_errors")
+        @Html.Partial("_success")
+    </div>
+    <div class="main-container">
+        <div class="main-content">
+            @if (Model.Usuariobloqueado)
+            {
+                <div class="row">
+                    @Html.Partial("_desbloqueocuenta", Model)
+                </div>
+            }
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 margin-top">
+                    <div class="login-container">
+                        <div class="position-relative">
+                            <div id="login-box" class="login-box visible widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header blue lighter bigger">
+                                            <img src="@Url.Content("~/Images/logo.png")" alt="Marfil"/>
+                                        </h4>
+
+                                        <div class="space-6"></div>
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.HiddenFor(m => m.ReturUrl)
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Usuario)
+                                                    <span class="block input-icon input-icon-right">
+                                                        @if (string.IsNullOrEmpty(Model.Usuario))
+                                                        {
+                                                            @Html.EditorFor(model => model.Usuario, new {htmlAttributes = new {@class = "form-control", @autofocus = "", @aria_label = "Usuario", @aria_labelledby = "Usuario", @title = "Usuario"}})
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.EditorFor(model => model.Usuario, new {htmlAttributes = new {@class = "form-control", @aria_label = "Usuario", @aria_labelledby = "Usuario", @title = "Usuario"}})
+                                                        }
+
+                                                        <i class="ace-icon fa fa-user"></i>
+                                                    </span>
+                                                    @Html.ValidationMessageFor(model => model.Usuario, "", new {@class = "text-danger"})
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.Contraseña)
+                                                    <span class="block input-icon input-icon-right">
+                                                        @if (string.IsNullOrEmpty(Model.Usuario))
+                                                        {
+                                                            @Html.EditorFor(model => model.Contraseña, new {htmlAttributes = new {@class = "form-control", @aria_label = "Contraseña", @aria_labelledby = "Contrase_a", @title = "Contraseña"}})
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.EditorFor(model => model.Contraseña, new {htmlAttributes = new {@class = "form-control", @autofocus = "", @aria_label = "Contraseña", @aria_labelledby = "Contrase_a", @title = "Contraseña"}})
+                                                        }
+
+                                                        <i class="ace-icon fa fa-lock"></i>
+                                                    </span>
+                                                    @Html.ValidationMessageFor(model => model.Contraseña, "", new {@class = "text-danger"})
+                                                </div>
+                                               
+
+
+
+                                                <div class="space"></div>
+
+                                                <div class="form-group">
+                                                    <div class="inline">
+                                                        @Html.CheckBoxFor(m => m.Recordarme)
+                                                        @Html.LabelFor(m => m.Recordarme)
+                                                    </div>
+
+                                                    <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                                        <i class="ace-icon fa fa-key"></i>
+                                                        @General.BtnEntrar
+                                                    </button>
+                                                </div>
+
+                                                @*<div class="space-4"></div>*@
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @*<div class="space"></div>*@
+                                    <h4 class="header blue lighter bigger">
+                                        <img  src="@Url.Content("~/Images/LogoFEDER.png")" alt="FEDER" />
+                                    </h4>
+                                    @*<div class="space-4"></div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+           
+            
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+
+    <script src="@Url.Content("~/Assets/js/src/ace.js")"></script>
+    <script src="@Url.Content("~/Assets/js/src/ace.sidebar.js")"></script>
+    <script src="@Url.Content("~/Assets/js/src/ace.sidebar-scroll-1.js")"></script>
+    <script src="@Url.Content("~/Scripts/globalize-cultures/globalize.culture." + Thread.CurrentThread.CurrentUICulture.Name + ".js")"></script>
+    <script src="@Url.Content("~/Scripts/GlobalizationCustom.js")"></script>
+
+    @Html.RenderScripts()
+    <script src="@Url.Content("~/components/jquery.gritter/js/jquery.gritter.js")"></script>
+    <script src="@Url.Content("~/Scripts/Messages/MessagesService.js")"></script>
+    <script type="text/javascript">
+        var messagesService = new MessagesService($.gritter);
+        $(document).ready(function () {
+            $("form").submit(function (ev) {
+                if ($(this).valid()) {
+                    waitingDialog.show('@General.LblLoading', { dialogSize: 'sm' });
+                    //this.submit(); // If all the validations succeeded
+                }
+            });
+        });
+    </script>
+</body>
+</html>

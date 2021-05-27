@@ -1,0 +1,53 @@
+﻿@using Marfil.App.WebMain.Controllers
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Contabilidad.Movs
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Contabilidad.Movs.MovsModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable; // && !(Model.Importado ?? false);
+    var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    //var canImportar = Model.Estado.Tipoestado <= TipoEstado.Curso && Model.Tipoalbaran <= (int)TipoAlbaran.Autocomsumo;
+
+}
+
+
+<script src="@Url.Content("~/Scripts/Model/Contabilidad/MovsController.js")"></script>
+<script src="~/Scripts/Helper/ControllerHelper.js"></script>
+<div ng-controller="HelperCtrl" ng-init="init()">
+    <div ng-controller="MovsCtrl" ng-init="init(@isNuevo.ToString().ToLower(),
+                                            '@Model.Codigodescripcionasiento'
+                                            )">
+        <div id="tabs">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+                <li><a data-toggle="tab" href="#desglose">@General.LblDesglose</a></li>
+            </ul>
+
+        </div>
+        <div class="tab-content">
+            <div id="general" class="tab-pane fade in active">
+                @Html.Partial("_cabeceraMovs", Model)
+            </div>
+            <div id="desglose" class="tab-pane fade in">
+                @Html.Partial("_desglose", Model)
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href"); // activated tab
+            if (target === "#desglose") {
+                GridViewLineas.Refresh();
+            }
+        });
+        $.validator.setDefaults({ ignore: null });
+    </script>

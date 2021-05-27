@@ -1,0 +1,140 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Reservasstock = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Reservas;
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var user = HttpContext.Current.User as ICustomPrincipal;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    var listcanales = new List<SelectListItem>();
+    if (configuracionAplicacion.VentasUsarCanal)
+    {
+        listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+
+    }
+}
+
+@{
+
+    Html.AddScript(Url.Content("~/Scripts/Model/ArticulosConSinStock/NuevaLineaConSinStockController.js"));
+}
+
+<style>
+
+    .modal-dialog {
+    width: 200px;
+    margin: 30px auto;
+}
+
+</style>
+
+
+<div class="modal fade" id="_consinstock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="ConSinStockCtrl">
+    <div class="modal-dialog modal-lg modal-dialog-fullwidth" role="document" ng-init="init('@Url.Action("BusquedaArticulosEntregaLotesApi/GetHitorico","Api")','@Url.Action("AgregarLineas","ImputacionCostes")','@Url.Action("UltimoprecioApi", "Api")','@((int)TipoDocumentos.Reservas)')">
+        <div class="modal-content modal-content-fullwidth">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <!--Titulo Seleccionar Lotes-->
+                <h4 class="modal-title" id="myModalLabel">@Albaranes.Seleccionarlotes</h4>
+            </div>
+
+            <div class="modal-body modal-body-fullwidth">
+                <div class="form-horizontal">
+                    <div>
+
+                        <!--FORM GROUP ARTICULO-->
+                        <div class="form-group">
+                            <input type="hidden" name="Fkalmacen" value="@user.Fkalmacen" />
+                            <input type="hidden" id="flujonuevoregistro" name="flujonuevoregistro" value="0" />
+
+                            <!--palabra articulo ocupa 2 columnas-->
+                            @Html.Label(Articulos.TituloEntidadSingular, new { @class = "control-label col-md-2" })
+                            <!--ID/Descripcion-->
+                            <div class="col-md-10">
+                                @{
+                                    campoverificacion.Name = "Fkarticulossalida";
+                                    campoverificacion.Url = Url.Action("ArticulosDocumentosApi", "Api");
+                                    campoverificacion.Valor = "";
+                                    campoverificacion.CampoIdentificador = "Id";
+                                    campoverificacion.CampoDescripcion = "Descripcion";
+                                    campoverificacion.Titulo = Articulos.TituloEntidad;
+                                    campoverificacion.Autofocus = true;
+
+                                    campoverificacion.ControlesAsociados = "[{\"fkcuentas\": \"Fkclientes\",\"flujo\":\"flujonuevoregistro\",\"fkmonedas\": \"Fkmonedas\",\"fkregimeniva\": \"Fkregimeniva\"}]";
+                                }
+                                @Html.Partial("CampoverificacionUI", campoverificacion)
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-offset-2 text-danger">{{Fkarticuloserrores}}</div>
+                        </div>
+
+                        <!--FORM GROUP LOTE-->
+                        <div class="form-group" ng-show="Gestionlotes">
+                            <!--palabra Lote ocupa 2 columnas-->
+                            @Html.Label(Albaranes.Lote, new { @class = "control-label col-md-2" })
+                            <!--CampoDescripcion-->
+                            <div class="col-md-10">
+                                @{
+                                    campoverificacion.Name = "Loteentrega";
+                                    campoverificacion.Url = Url.Action("BusquedaArticulosConSinStockSingleLotesApi", "Api");
+                                    campoverificacion.Valor = "";
+                                    campoverificacion.CampoIdentificador = "Lote";
+                                    campoverificacion.CampoDescripcion = "Lote";
+                                    campoverificacion.Titulo = Albaranes.Lote;
+                                    campoverificacion.Autofocus = false;
+                                    campoverificacion.Configuracion.OcultarTexto = true;
+                                    campoverificacion.Params = "{\"Fkalmacen\":\"" + user.Fkalmacen + "\"}";
+                                    campoverificacion.ControlesAsociados = "[{\"FkarticulosDesde\": \"Fkarticulossalida\",\"FkarticulosHasta\":\"Fkarticulosentrada\",\"Flujo\":\"flujonuevoregistro\"}]";
+                                }
+                                @Html.Partial("CampoverificacionUI", campoverificacion)
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-offset-2 text-danger">{{Fkarticuloserrores}}</div>
+
+                        </div>
+
+                        <!--FORM GROUP BUSCAR LOTES-->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button class="pull-right btn btn-secondary btn-sm" ng-click="Buscarlote()" type="button"><i class="fa fa-search"></i> Buscar lotes</button>
+                            </div>
+
+                        </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="report-container report-container-2 ">
+                        <span ng-show="loading">@General.LblLoading</span>
+                        <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid ui-grid-fullheight"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <span class="text-danger pull-left col-md-8 text-left">{{Generalerrores}}</span>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" ng-disabled="!selected||selected==0" ng-click="Aceptar()">@General.BtnGuardar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    console.log("llega aqui");
+</script>

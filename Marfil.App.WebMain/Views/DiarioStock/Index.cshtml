@@ -1,0 +1,24 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.DiarioStockModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Diario", "DiarioStock", FormMethod.Post, new { @class = "form-horizontal margin-top", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        @Html.Partial("_filtros", Model)
+
+        <div class="margin-top  col-md-offset-2">
+            <button class="btn btn-info no-margin-left" type="Submit">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.LblAceptar
+            </button>
+        </div>
+
+    </div>
+
+}
+

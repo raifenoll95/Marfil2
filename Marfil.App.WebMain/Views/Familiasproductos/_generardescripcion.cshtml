@@ -1,0 +1,93 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model FamiliasproductosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvguiascontables = FCampoverificacion.Instance.GetModel<GuiascontablesModel>(WebHelper.ContextService);
+    var cvunidades = FCampoverificacion.Instance.GetModel<UnidadesModel>(WebHelper.ContextService);
+    
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion1generada, new {@class = "control-label col-md-4", @style = "text-align:left !important" })
+    <div class="col-md-12"></div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion1Generada_1", Model.Descripcion1Generada_1, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly",@aria_label= "Descripcion1Generada_1" } : (object) new {@class = "form-control", @aria_label = "Descripcion1generada_1" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion1Generada_2", Model.Descripcion1Generada_2, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly", @aria_label = "Descripcion1generada_2" } : (object) new {@class = "form-control", @aria_label = "Descripcion1generada_2" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion1Generada_3", Model.Descripcion1Generada_3, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly", @aria_label = "Descripcion1generada_3" } : (object) new {@class = "form-control", @aria_label = "Descripcion1generada_3" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion1Generada_4", Model.Descripcion1Generada_4, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly", @aria_label = "Descripcion1generada_4" } : (object) new {@class = "form-control", @aria_label = "Descripcion1generada_4" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion1Generada_5", Model.Descripcion1Generada_5, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly", @aria_label = "Descripcion1generada_5" } : (object) new {@class = "form-control", @aria_label = "Descripcion1generada_5" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion1Generada_6", Model.Descripcion1Generada_6, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion1generada_6" } : (object)new { @class = "form-control", @aria_label = "Descripcion1generada_6" })
+    </div>
+    <div class="col-md-10 ">
+        @Html.ValidationMessageFor(f => Model.Descripcion1generada, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion2generada, new {@class = "control-label col-md-4",@style="text-align:left !important"})
+    <div class="col-md-12"></div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion2Generada_1", Model.Descripcion2Generada_1, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion2generada_1" } : (object)new { @class = "form-control", @aria_label = "Descripcion2generada_1" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion2Generada_2", Model.Descripcion2Generada_2, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion2generada_2" } : (object)new { @class = "form-control", @aria_label = "Descripcion2generada_2" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion2Generada_3", Model.Descripcion2Generada_3, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion2generada_3" } : (object)new { @class = "form-control", @aria_label = "Descripcion2generada_3" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion2Generada_4", Model.Descripcion2Generada_4, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion2generada_4" } : (object)new { @class = "form-control", @aria_label = "Descripcion2generada_4" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion2Generada_5", Model.Descripcion2Generada_5, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion2generada_5" } : (object)new { @class = "form-control", @aria_label = "Descripcion2generada_5" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcion2Generada_6", Model.Descripcion2Generada_6, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcion2generada_6" } : (object)new { @class = "form-control", @aria_label = "Descripcion2generada_6" })
+    </div>
+    <div class="col-md-10 ">
+        @Html.ValidationMessageFor(f => Model.Descripcion2generada, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcionabreviadagenerada, new { @class = "control-label col-md-4", @style = "text-align:left !important" })
+    <div class="col-md-12"></div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcionabreviadagenerada_1", Model.Descripcionabreviadagenerada_1, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcionabreviadagenerada_1" } : (object)new { @class = "form-control", @aria_label = "Descripcionabreviadagenerada_1" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcionabreviadagenerada_2", Model.Descripcionabreviadagenerada_2, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcionabreviadagenerada_2" } : (object)new { @class = "form-control", @aria_label = "Descripcionabreviadagenerada_2" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcionabreviadagenerada_3", Model.Descripcionabreviadagenerada_3, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcionabreviadagenerada_3" } : (object)new { @class = "form-control", @aria_label = "Descripcionabreviadagenerada_3" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcionabreviadagenerada_4", Model.Descripcionabreviadagenerada_4, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcionabreviadagenerada_4" } : (object)new { @class = "form-control", @aria_label = "Descripcionabreviadagenerada_4" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcionabreviadagenerada_5", Model.Descripcionabreviadagenerada_5, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcionabreviadagenerada_5" } : (object)new { @class = "form-control", @aria_label = "Descripcionabreviadagenerada_5" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Descripcionabreviadagenerada_6", Model.Descripcionabreviadagenerada_6, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly", @aria_label = "Descripcionabreviadagenerada_6" } : (object)new { @class = "form-control", @aria_label = "Descripcionabreviadagenerada_6" })
+    </div>
+    <div class="col-md-10 ">
+        @Html.ValidationMessageFor(f => Model.Descripcionabreviadagenerada, "", new { @class = "text-danger" })
+    </div>
+</div>

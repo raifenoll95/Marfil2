@@ -1,0 +1,147 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var paises = WebHelper.GetApplicationHelper().GetListPaises();
+    var service = new TablasVariasService(WebHelper.ContextService);
+    var motivos = service.GetTablasVariasByCode(12);
+}
+
+
+
+<div>
+    
+    @using (Html.BeginForm(new {@class = "form-horizontal"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal" ng-controller="cuentasCtrl">
+            <div class="form-group">
+                @Html.LabelFor(f => ((CuentasModel) Model).Id, new {@class = "control-label col-md-2"})
+                <div class="col-md-2">
+                 @Html.TextBoxFor(f => ((CuentasModel)Model).Id, new { @class = "form-control", @ng_model = "codigo", @onkeypress = "return (event.charCode >= 48 && event.charCode <= 57) || event.charCode== 46", @ng_blur = "getsupercuentas(\"" + Url.Action("SuperCuentas", "Cuentas") + "\")", @id = "id", @readonly = "readonly", @ng_init = "init('" + ((CuentasModel)Model).Id + "','" + Url.Action("SuperCuentas", "Cuentas") + "','',''," + WebHelper.GetApplicationHelper().NivelesCuentas() + "," + @WebHelper.GetApplicationHelper().DigitosCuentas() + ")" })
+                </div>
+                <div class="col-md-1">
+                    <label>@General.LblNivel</label>
+                    <span><strong>{{level}}</strong></span>
+                    <input type="hidden" name="Nivel" value="{{level}}"/>
+                </div>
+                <div class="col-md-4 pull-right align-right">
+                    <label>@General.LblUltimaModificacion :</label>
+                    <label><strong>@Html.Raw(((CuentasModel)Model).Usuario)</strong> - </label>
+                    <label><strong>@Html.Raw(((CuentasModel)Model).FechaModificacion.ToShortDateString() + " " + @Html.Raw(((CuentasModel)Model).FechaModificacion.ToShortTimeString()))</strong></label>
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    @Html.ValidationMessageFor(f => ((CuentasModel) Model).Id, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(f => ((CuentasModel)Model).Tiposcuentas, new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.HiddenFor(f => ((CuentasModel)Model).Tiposcuentas)
+                    <input type="text" class="form-control" readonly="readonly" value="@Html.Raw(((CuentasModel) Model).Tiposcuentas.HasValue ?  Funciones.GetEnumByStringValueAttribute(((TiposCuentas) ((CuentasModel) Model).Tiposcuentas.Value)) : Tiposcuentas.TiposCuentasGeneral)" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(f => ((CuentasModel) Model).Descripcion, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => ((CuentasModel) Model).Descripcion, new {@class = "form-control", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((CuentasModel) Model).Descripcion, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((CuentasModel) Model).Descripcion2, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => ((CuentasModel) Model).Descripcion2, new {@class = "form-control", @readonly = ""})
+                    @Html.ValidationMessageFor(f => ((CuentasModel) Model).Descripcion2, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div ng-show="level == 0 && codigo!=''">
+                <h2 class="col-md-offset-2">@General.LblInformacionSubcuenta</h2>
+
+                <div class="form-group">
+                    @Html.LabelFor(f => ((CuentasModel) Model).FkPais, new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(f => ((CuentasModel) Model).FkPais, paises.Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}), new {@class = "form-control", @disabled = ""})
+                        @Html.ValidationMessageFor(f => ((CuentasModel) Model).FkPais, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @{
+                        ((CuentasModel)Model).Nif.FkpaisControlId = "FkPais";
+                        ((CuentasModel)Model).Nif.Readonly = true;
+                    }
+                   @Html.EditorFor(f => ((CuentasModel)Model).Nif)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(f => ((CuentasModel)Model).Contrapartida, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" readonly="readonly" class="form-control" value="@Html.Raw( !string.IsNullOrEmpty(((CuentasModel)Model).Contrapartida) ?((CuentasModel)Model).Contrapartida + " -  "+ ((CuentasModel)Model).ContrapartidaDescripcion: string.Empty)"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @{
+                        ((CuentasModel) Model).BloqueoModel.Readonly=true;
+                        
+                    }
+                    
+                </div>
+               @Html.EditorFor(f => ((CuentasModel)Model).BloqueoModel)
+            </div>
+
+            <div class="col-md-offset-2 col-md-10">
+                <h2>@General.LblCuentasNivelSuperior</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-xs-1">@General.LblId</th>
+                        <th>@General.LblDescripcion</th>
+                        <th>@General.LblRazonSocial</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="obj in supercuentas">
+                    <tr>
+                        <td><input type="text" class="form-control" name="id_{{obj.Id}}" value="{{obj.Id}}" readonly="readonly" required="required"/></td>
+                        <td><input type="text" data-val="true" class="form-control" name="nombre_{{obj.Id}}" readonly="readonly" value="{{obj.Descripcion}}" required="required"/></td>
+                        <td><input type="text" data-val="true" data-val-required="El campo Descripcion es obligatorio." readonly="readonly" class="form-control" name="descripcion_{{obj.Descripcion2}}" value="{{obj.Descripcion}}" required="required"/></td>
+                    </tr>
+
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td colspan="3" ng-show="supercuentas.length==0">
+                            @General.LblNoExistenCuentas
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    }
+
+    </div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info " href="@Url.Action("Edit", new {id = ((CuentasModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}
+<script src="@Url.Content("~/Scripts/Model/Cuentas/Cuentas.js")"></script>

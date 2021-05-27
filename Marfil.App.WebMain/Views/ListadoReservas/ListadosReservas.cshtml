@@ -1,0 +1,154 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Resources
+
+@model Marfil.Dom.Persistencia.Listados.ListadosReservas
+@{
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+   
+    var paisdefecto = "";
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listpaises.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList(); ;
+    var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+
+}
+@Html.HiddenFor(f => Model.Empresa)
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function() {
+
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+</script>
+<div class="col-md-10">
+  
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estado, Model.Estados.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaDesde;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaHasta;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+                cvclientes.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.ArticuloDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvarticulos.Name = "ArticuloDesde";
+            cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+            cvarticulos.Valor = Model.ArticuloDesde;
+            cvarticulos.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvarticulos)
+        @Html.ValidationMessageFor(f => Model.ArticuloDesde, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.ArticuloHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvarticulos.Name = "ArticuloHasta";
+            cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+            cvarticulos.Valor = Model.ArticuloHasta;
+            cvarticulos.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvarticulos)
+        @Html.ValidationMessageFor(f => Model.ArticuloHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.LoteDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f=>Model.LoteDesde, new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.LoteHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.LoteHasta, new { @class = "form-control" })
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-2">
+   
+
+    <ul class="list-group" id="Agruparpor">
+        <li class="list-group-item active">@General.LblAgrupacion</li>
+        <li class="list-group-item"><input type="radio" aria-label="Agrupacion" aria-labelledby="Agruparpor" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "1" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Agrupacion) ? "checked=\"checked\"" : string.Empty) value="1" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Articulos.TituloEntidadSingular</li>
+        <li class="list-group-item"><input type="radio" aria-label="Agrupacion" aria-labelledby="Agruparpor" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @General.LblDetallado</li>
+    </ul>
+</div>
+

@@ -1,0 +1,44 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+
+
+<div>
+    
+    @using (Html.BeginForm(new {@class = "form-horizontal"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @{
+                ViewData["readonly"] = true;
+            }
+            @Html.Partial("_Operarios", Model as OperariosModel)
+
+        </div>
+    }
+</div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info margin-top" href="@Url.Action("Edit", new {id = ((OperariosModel)Model).Fkcuentas})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}
+@section Bloqueomodal
+{
+    @{
+        ((OperariosModel) Model).Cuentas.BloqueoModel.Readonly = true;
+    }
+    @Html.Partial("_bloqueomodals", ((OperariosModel)Model).Cuentas.BloqueoModel)
+}

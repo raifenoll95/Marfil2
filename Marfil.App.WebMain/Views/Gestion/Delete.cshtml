@@ -1,0 +1,47 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    IEnumerable<ViewProperty> columnas = ViewBag.Columnas as IEnumerable<ViewProperty>;
+    ViewBag.Title = $"Gestión de {ViewBag.TituloMantenimiento}";
+}
+
+<h2>@General.LblBorrar</h2>
+
+<h3>@General.LblMensajeConfirmacionBorrado</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+
+        @foreach (var item in columnas)
+        {
+            <dt>
+                @Html.DisplayName(item.property.Name)
+            </dt>
+
+            <dd>
+                @Html.Display(item.property.Name)
+            </dd>
+        }
+       
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-trash bigger-110"></i>
+                @General.LblContinuar
+            </button>
+
+            <a class="btn btn-info" href="@Url.Action("Index", new {mantenimiento = ViewBag.Mantenimiento})">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                @General.LblCancelar
+            </a>
+            
+        </div>
+    }
+</div>

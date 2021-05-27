@@ -1,0 +1,177 @@
+﻿@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Terceros.OperariosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+
+    var listestadocivil = WebHelper.GetApplicationHelper().GetListEstadoCivil().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listestadocivil.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+    var listtipocontrato = WebHelper.GetApplicationHelper().GetListTiposContrato().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listtipocontrato.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+<script src="@Url.Content("~/Scripts/Model/Operarios/OperariosController.js")"></script>
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Fkcuentas, new { id = "Fkcuentas" })
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechanacimiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechanacimiento)
+
+    </div>
+    <div class="col-md-offset-2 col-md-2">@Html.ValidationMessageFor(f => Model.Fechanacimiento, "", new { @class = "text-danger" })</div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkestadocivil, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkestadocivil, listestadocivil, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Fkestadocivil, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Numerohijos, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Numerohijos, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+        @Html.ValidationMessageFor(f => Model.Numerohijos, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechaingreso, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechaingreso)
+    </div>
+    <div class="col-md-offset-2 col-md-2">
+        @Html.ValidationMessageFor(f => Model.Fechaingreso, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Numeroseguridadsocial, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Numeroseguridadsocial, isreadonly ? (object)new { @class = "form-control col-md-10", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+        @Html.ValidationMessageFor(f => Model.Numeroseguridadsocial, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcontratoactual, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkcontratoactual, listtipocontrato, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Fkcontratoactual, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechaalta, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechaalta)
+    </div>
+    @Html.LabelFor(f => Model.Vencimientocontrato, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Vencimientocontrato)
+    </div>
+    <div class="col-md-12">
+        @Html.ValidationMessageFor(f => Model.Fechaingreso, "", new { @class = "text-danger col-md-2 col-md-offset-2" })
+        @Html.ValidationMessageFor(f => Model.Vencimientocontrato, "", new { @class = "text-danger col-md-2" })
+    </div>
+</div>
+
+<div class="form-group" ng-controller="OperariosCtrl" ng-init="init('@Html.Raw( Model.Ultimafechabaja?.ToShortDateString() ?? "")','@Html.Raw(Model.Ultimafechaalta?.ToShortDateString() ?? "")')">
+    @Html.LabelFor(f => Model.Ultimafechabaja, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Ultimafechabaja, isreadonly ? (object)new { @aria_label = "ultima baja", @id ="ultimabaja",@ng_model= "ultimabaja", @class = "form-control", @autofocus = "", @disabled = "disabled",  Value = Model.Ultimafechabaja?.ToShortDateString() ?? "" } : (object)new { @aria_label = "ultima alta", @class = "form-control", @autofocus = "", Value = Model.Ultimafechabaja.HasValue ? Model.Ultimafechabaja.Value.ToShortDateString() : "", @id = "ultimabaja", @ng_model = "ultimabaja" })
+    </div>
+    @Html.LabelFor(f => Model.Ultimafechaalta, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Ultimafechaalta, isreadonly ? (object)new {@aria_label="ultima alta", @id = "ultimaalta", @ng_model = "ultimaalta", @class = "form-control", @autofocus = "", @disabled = "disabled", Value = Model.Ultimafechaalta?.ToShortDateString() ?? "" } : (object)new { @aria_label = "ultima alta", @class = "form-control", @autofocus = "", Value = Model.Ultimafechaalta.HasValue ? Model.Ultimafechaalta.Value.ToShortDateString() : "",@id = "ultimaalta", @ng_model = "ultimaalta" })
+    </div>
+    <div class="col-md-2">
+        <span>@General.LblDiferencia :</span><span class="label label-info" > {{dias}}</span>
+    </div>
+    <div class="col-md-12">
+        @Html.ValidationMessageFor(f => Model.Ultimafechabaja, "", new { @class = "text-danger col-md-2 col-md-offset-2" })
+        @Html.ValidationMessageFor(f => Model.Ultimafechaalta, "", new { @class = "text-danger col-md-2" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-2 col-sm-2  col-md-offset-2">
+        @Html.LabelFor(f => Model.Tallacamisa, new { @class = "control-label" })
+        @Html.TextBoxFor(f => Model.Tallacamisa, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control align-center"})
+    </div>
+    <div class="col-md-2 col-sm-2 ">
+        @Html.LabelFor(f => Model.Tallapantalon, new { @class = "control-label" })
+        @Html.TextBoxFor(f => Model.Tallapantalon, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control align-center"})
+    </div>
+    <div class="col-md-2 col-sm-2 ">
+        @Html.LabelFor(f => Model.Tallacalzado, new { @class = "control-label" })
+        @Html.TextBoxFor(f => Model.Tallacalzado, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control align-center"})
+    </div>
+
+    <div class="col-md-10  col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Tallacamisa, "", new { @class = "text-danger col-md-2 col-sm-2 " })
+        @Html.ValidationMessageFor(f => Model.Tallapantalon, "", new { @class = "text-danger col-md-2 col-sm-2 " })
+        @Html.ValidationMessageFor(f => Model.Tallacalzado, "", new { @class = "text-danger col-md-2 col-sm-2 " })
+    </div>
+</div>
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+
+        @{
+            campoverificacion.Name = "Fkcuentatesoreria";
+            campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            campoverificacion.Valor = Model.Fkcuentatesoreria;
+            campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Cuentastesoreria + "\"}";
+
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentatesoreria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Notas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextAreaFor(f => Model.Notas, isreadonly ? (object)new { @class = "form-control col-md-10", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2" })
+        @Html.ValidationMessageFor(f => Model.Notas, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("form").submit(function(event) {
+        $("#Fkcuentas").val(document.getElementById("Cuentas.Id").value);
+    });
+    $(document).ready(function () {
+        $("#ultimabaja").datepicker({
+            language: '@Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0]'
+        });
+        $("#ultimaalta").datepicker({
+            language: '@Thread.CurrentThread.CurrentUICulture.Name.Split('-')[0]'
+        });
+        
+    });
+   
+</script>

@@ -1,0 +1,42 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.Diseñador.DesignModel
+
+
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Import","Designer",FormMethod.Post,new { @enctype = "multipart/form-data" }))
+            {
+            @Html.AntiForgeryToken();
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-arrow-right bigger"></i> Importar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Archivo</label>
+                        <div class="col-md-10">
+                            @Html.HiddenFor(f=>Model.Tipodocumento)
+                            @Html.HiddenFor(f => Model.ReturnUrl)
+                            <input type="file" class="form-control" id="archivo" name="archivo" accept=".repx"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-default" data-dismiss="modal">@General.LblCerrar</button>
+                <button type="submit" class="btn btn-ar btn-primary">Importar</button>
+            </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#import').on('shown.bs.modal', function () {
+        $('#archivo').focus();
+    })
+</script>

@@ -1,0 +1,145 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model ObrasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var listobras = WebHelper.GetApplicationHelper().GetListTiposObras().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    var cvregimeniva = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    listobras.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var paisdefecto = "";
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktiposobra, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Fktiposobra, listobras, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fktiposobra, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkagentes, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Fkagentes";
+            campoverificacion.Url = Url.Action("CuentasTiposAgentesExclusiveApi", "Api");
+            campoverificacion.Valor = Model.Fkagentes;
+            campoverificacion.CampoIdentificador = "Fkcuentas";
+            campoverificacion.Titulo = "Agentes";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkagentes, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcomerciales, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Fkcomerciales";
+            campoverificacion.Url = Url.Action("CuentasTiposComercialesExclusiveApi", "Api");
+            campoverificacion.CampoIdentificador = "Fkcuentas";
+            campoverificacion.Valor = Model.Fkcomerciales;
+            campoverificacion.Titulo = "Agentes";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcomerciales, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvregimeniva.Name = "Fkregimeniva";
+            cvregimeniva.Url = Url.Action("RegimenIvaApi", "Api");
+            cvregimeniva.Valor = Model.Fkregimeniva;
+            cvregimeniva.SoloLectura = isreadonly;
+            cvregimeniva.Obligatorio = false;
+
+        }
+        @Html.Partial("CampoverificacionUI", cvregimeniva)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Retencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <div class="input-group">
+            @Html.TextBoxFor(f => Model.Retencion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            <span class="input-group-addon">%</span>
+        </div>
+        </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Retencion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechainicio, new {@class = "control-label col-md-2"})
+    <div class="col-md-3">
+        @Html.EditorFor(f => Model.Fechainicio)
+    </div>
+    @Html.LabelFor(f => Model.Fechafin, new {@class = "control-label col-md-2"})
+    <div class="col-md-3">
+        @Html.EditorFor(f => Model.Fechafin)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-offset-2 col-md-3">
+        @Html.ValidationMessageFor(f => Model.Fechainicio, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-offset-2 col-md-3">
+        @Html.ValidationMessageFor(f => Model.Fechafin, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fecharevision, new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.EditorFor(f => Model.Fecharevision)
+    </div>
+    <div class="col-md-offset-2 col-md-2">
+        @Html.ValidationMessageFor(f => Model.Fecharevision, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Certificado, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Certificado, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+    <div class="col-md-10">
+        @Html.ValidationMessageFor(f => Model.Certificado, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Notas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextAreaFor(f => Model.Notas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-10">
+        @Html.ValidationMessageFor(f => Model.Notas, "", new { @class = "text-danger" })
+    </div>
+</div>

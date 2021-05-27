@@ -1,0 +1,66 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+@{
+    var situacioncomisionlist = WebHelper.GetApplicationHelper().GetListSituacionComision().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    situacioncomisionlist.Insert(0, new SelectListItem() { Text = "", Value = "" });
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descontardescuentocomercial, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Descontardescuentocomercial)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Descontardescuentocomercial, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descontardescuentoprontopago, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Descontardescuentoprontopago)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Descontardescuentoprontopago, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descontarrecargofinanciero, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Descontarrecargofinanciero)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Descontarrecargofinanciero, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+
+<div class="form-group">
+        @Html.LabelFor(f => Model.Fksituacioncomisioncrear, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fksituacioncomisioncrear, situacioncomisionlist, new {@class="form-control"} )
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fksituacioncomisionliquidar, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fksituacioncomisionliquidar, situacioncomisionlist, new { @class = "form-control" })
+        </div>
+    </div>
+
+   
+
+
+

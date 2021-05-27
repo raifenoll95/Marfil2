@@ -1,0 +1,241 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.App.WebMain.Misc
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Resources
+@using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+
+@model Marfil.Dom.Persistencia.Listados.ListadosConsultaTesoreria
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel?.Toolbar?.Titulo;
+    var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService); //Obtenemos un objeto de cuentasModel con sus atributos
+    var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var listformaspago = WebHelper.GetApplicationHelper().GetListGruposFormasPago().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listcanalcontable = WebHelper.GetApplicationHelper().GetListCanalContable().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listcanalcontable.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+
+}
+@Html.HiddenFor(f => Model.Empresa)
+
+    <form class="form-horizontal" id="step1-form">
+
+        @*Tipo*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Tipo, new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.EnumDropDownList("Tipo", Model.Tipo, (object)new { @class = "tipo-select", @style = "width: 350px;" })
+                @Html.ValidationMessageFor(f => Model.Tipo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Desde cuenta*@
+        <div id="cuenta1" class="form-group cuentaa1">
+            @Html.LabelFor(f => Model.CuentaDesde, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvcuentas.Name = "CuentaDesde";
+                    cvcuentas.Url = Url.Action("AsistenteAsignacionVencimientosApi", "Api");
+                    cvcuentas.Valor = Model.CuentaDesde;
+                    cvcuentas.Titulo = "Terceros";
+                    cvcuentas.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
+                    cvcuentas.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvcuentas)
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Hasta cuenta*@
+        <div id="cuenta1" class="form-group cuentaa1">
+            @Html.LabelFor(f => Model.CuentaHasta, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvcuentas.Name = "CuentaHasta";
+                    cvcuentas.Url = Url.Action("AsistenteAsignacionVencimientosApi", "Api");
+                    cvcuentas.Valor = Model.CuentaDesde;
+                    cvcuentas.Titulo = "Terceros";
+                    cvcuentas.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
+                    cvcuentas.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvcuentas)
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Desde Cuenta tesoreria*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.CuentaDesdeTesoreria, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @{
+                    campoverificacion.Name = "CuentaDesdeTesoreria";
+                    campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
+                    campoverificacion.Valor = Model.CuentaDesdeTesoreria;
+                    campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
+                    campoverificacion.SoloLectura = isreadonly;
+                    campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Cuentastesoreria + "}";
+                    campoverificacion.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", campoverificacion)
+
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.CuentaDesdeTesoreria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*Desde Cuenta tesoreria*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.CuentaHastaTesoreria, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @{
+                    campoverificacion.Name = "CuentaHastaTesoreria";
+                    campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
+                    campoverificacion.Valor = Model.CuentaHastaTesoreria;
+                    campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
+                    campoverificacion.SoloLectura = isreadonly;
+                    campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Cuentastesoreria + "}";
+                    campoverificacion.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", campoverificacion)
+
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.CuentaHastaTesoreria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        @*Situacion*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Situacion, (object)new { @class = "control-label col-md-2", @readonly = false })
+            <div class="col-md-10">
+                @{
+                    cvsituaciones.Name = "Situacion";
+                    cvsituaciones.Url = Url.Action("SituacionesExclusiveApi", "Api");
+                    cvsituaciones.Valor = Model.Situacion;
+                    cvsituaciones.Titulo = "Situación";
+                    cvsituaciones.ControlesAsociados = "[ { \"tipo\":\"Tipo\" } ]";
+                    cvsituaciones.SoloLectura = false;
+                    cvsituaciones.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvsituaciones)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.FechaDesdeFactura, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaDesdeFactura)
+            </div>
+
+            @Html.LabelFor(f => Model.FechaHastaFactura, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaHastaFactura)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.FechaDesdeVencimiento, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaDesdeVencimiento)
+            </div>
+
+            @Html.LabelFor(f => Model.FechaHastaVencimiento, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaHastaVencimiento)
+            </div>
+        </div>
+
+        @*Formas pago*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fkformaspago, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvfp.Name = "Fkformaspago";
+                    cvfp.Url = Url.Action("FormasPagoApi", "Api");
+                    cvfp.Valor = Model.Fkformaspago.ToString();
+                    cvfp.Titulo = "Formas de pago";
+                    cvfp.SoloLectura = isreadonly;
+                    cvfp.Obligatorio = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvfp)
+
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </form>
+
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+        // [1] Botón Limpiar
+        parentButtonListar.insertBefore(button, parentButtonListar.children[1])
+
+    }, false);
+
+    function imprimir() {
+
+        var data = {
+            CuentaDesde: document.getElementById('CuentaDesde').value,
+            CuentaHasta: document.getElementById('CuentaHasta').value,
+            PorGrupos: document.getElementById('PorGrupos').checked,
+            PorSubgrupos: document.getElementById('PorSubgrupos').checked,
+            PorMayor: document.getElementById('PorMayor').checked,
+            PorSubmayor: document.getElementById('PorSubmayor').checked,
+            PorNivelCinco: document.getElementById('PorNivelCinco').checked,
+            PorSubcuenta: document.getElementById('PorSubcuenta').checked,
+            MostrarCuentasSinSaldo: document.getElementById('MostrarCuentasSinSaldo').checked,
+            MostrarCuentasSinMovimientos: document.getElementById('MostrarCuentasSinMovimientos').checked,
+            FechaInforme: document.getElementById('FechaInforme').value,
+
+        };
+        console.log(data);
+        var dataSerialized = JSON.stringify(data)
+
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=SumasYSaldos&reportId=Defecto');
+
+    };
+
+
+</script>

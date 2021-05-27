@@ -1,0 +1,17 @@
+﻿@using Marfil.App.WebMain.Misc;
+@using Resources
+@{
+
+    if (TempData[Constantes.VariableMensajeExito]!=null)
+    {
+
+        <text>
+            <script>
+                $(document).ready(function() {
+                    messagesService.show(TipoMensaje.Exito, "@General.LblBien!", "@Html.Raw(TempData[Constantes.VariableMensajeExito])");
+                });
+            </script>
+        </text>
+
+    }
+}

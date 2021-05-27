@@ -1,0 +1,196 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas;
+@model Marfil.Dom.Persistencia.Model.Documentos.Facturas.FacturasModel
+@{
+
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var incoterm = WebHelper.GetApplicationHelper().GetListIncoterm().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    incoterm.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listunidadnegocio.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listcanalcontable = WebHelper.GetApplicationHelper().GetListCanalContable().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listcanalcontable.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvobras = FCampoverificacion.Instance.GetModel<ObrasModel>(WebHelper.ContextService);
+    var cvaseguradoras = FCampoverificacion.Instance.GetModel<AseguradorasModel>(WebHelper.ContextService);
+    var cvfacturas = FCampoverificacion.Instance.GetModel<FacturasModel>(WebHelper.ContextService);
+
+    var listmotivos = WebHelper.GetApplicationHelper().GetListMotivosRectificacion();
+}
+<div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkaseguradoras, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvaseguradoras.Name = "Fkaseguradoras";
+                cvaseguradoras.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvaseguradoras.Valor = Model.Fkaseguradoras;
+                cvaseguradoras.SoloLectura = isreadonly;
+                cvaseguradoras.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Aseguradoras + "\"}";
+            }
+            @Html.Partial("CampoverificacionUI", cvaseguradoras)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkaseguradoras, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Suplemento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Suplemento, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Suplemento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkobras, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvobras.Name = "Fkobras";
+                cvobras.Url = Url.Action("ObrasApi", "Api");
+                cvobras.Valor = Model.Fkobras;
+                cvobras.SoloLectura = isreadonly;
+                cvobras.ControlesAsociados = "[ { \"cliente\":\"Fkclientes\" } ]";
+
+            }
+            @Html.Partial("CampoverificacionUI", cvobras)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkobras, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkalmacen, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Fkalmacen, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkalmacen, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cartacredito, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Cartacredito, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Vencimientocartacredito, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Vencimientocartacredito)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referenciadocumento, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Vencimientocartacredito, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Unidadnegocio, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Unidadnegocio, listunidadnegocio, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        </div>
+
+        @Html.LabelFor(f => Model.Canalcontable, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.DropDownListFor(f => Model.Canalcontable, listcanalcontable, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Unidadnegocio, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Canalcontable, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Factura Rectificativa*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkfacturarectificativa, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="input-group">
+                @Html.TextBoxFor(f => Model.Fkfacturarectificativa, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-message" @Html.Raw(isreadonly ? "disabled=\"disabled\"" : string.Empty) onclick="SearchDocumento()">
+                        <i class="fa fa-search"></i> @Seguimientos.LblBuscarDocumentoRelacionado
+                    </button>
+                </span>
+                @*@if (Model.urlDocumentoRelacionado != null)
+                    {
+                        <div class="col-md-2">
+                            <a class="btn-xs btn btn-info" align="right" href="@Model.urlDocumentoRelacionado">
+                                <i class="fa fa-eye">
+                                    Ver documento
+                                </i>
+                            </a>
+                        </div>
+                    }*@
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmotivorectificacion, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.DropDownListFor(f => Model.Fkmotivorectificacion, listmotivos.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }), new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+
+@*Rai -- Script para el rectificar factura*@
+<script>
+    function SearchDocumento() {
+
+        var obj = {
+            campoIdentificador: "Referencia",
+            IdComponenteasociado: "ReferenciaDocumentosFacturas",
+            IdFormulariomodal: "BusquedaGlobal",
+            Url: '@Url.Action("ReferenciasDocumentosRelacionadosFacturasApi", "Api")',
+            Titulo: "Busqueda de documentos",
+            Params: @Html.Raw("'{\"cliente\":\"' + $(\"[name='Fkclientes']\").val()+'\" }'")
+
+            };
+
+        eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("ReferenciaDocumentosFacturas-Buscarfocus",function(obj) {
+        $("[name='Fkfacturarectificativa']").val(obj);
+    });
+</script>

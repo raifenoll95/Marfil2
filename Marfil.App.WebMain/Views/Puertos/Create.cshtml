@@ -1,0 +1,65 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Helpers
+@using Resources
+@model IModelView
+@{
+  
+    
+  
+  
+}
+
+
+
+
+@using (Html.BeginForm("CreateOperacion", "Puertos", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+    <div class="form-horizontal" ng-controller="VerificaPk">
+        
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((PuertosModel)Model).Fkpaises, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(f => ((PuertosModel)Model).Fkpaises, WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }), new { @class = "form-control",@aria_label="Pais",@ng_model="pais",@ng_init= "pais='" +((PuertosModel)Model).Fkpaises+"'" })
+                @Html.ValidationMessageFor(f => ((PuertosModel)Model).Fkpaises, "", new { @class = "text-danger" })
+            </div>            
+        </div>
+        
+        <div class="form-group" >
+            @Html.LabelFor(f => ((PuertosModel) Model).Id, new {@class = "control-label col-md-2"})
+            <div class="col-md-1">
+                @Html.TextBoxFor(f => ((PuertosModel) Model).Id, new {@class = "form-control", @autofocus = "", @ng_blur = "existeCustomPk(pais,4,TipoRellenacod.Letras,\"" + Url.Action("Exists", "Puertos") + "\",\"" + Url.Action("Edit", "Puertos") + "\")", @ng_model = "codigo", @id = "idcontrol",@aria_label="Codigo" })
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((PuertosModel)Model).Id, "", new { @class = "text-danger" })    
+            </div>
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((PuertosModel) Model).Descripcion, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((PuertosModel) Model).Descripcion, new {@class = "form-control"})
+                @Html.ValidationMessageFor(f => ((PuertosModel) Model).Descripcion, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>

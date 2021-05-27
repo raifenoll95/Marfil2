@@ -1,0 +1,66 @@
+﻿@*Rai*@
+
+
+@using Marfil.Dom.Persistencia.Model
+@using Newtonsoft.Json
+@using Resources
+@using Marfil.Dom.Persistencia.Model.CRM;
+@using Marfil.Dom.Persistencia.Model.CRM;
+
+@model List<Marfil.Dom.Persistencia.Model.CRM.OportunidadesModel>
+@{
+    var factory = new FModel();
+}
+
+    <div class="form-group" ng-controller="OportunidadesCtrl" ng-init="init('@Model')">
+        <div class="col-md-12">
+            <span class="fa-2x">
+                Oportunidades
+            </span>
+        </div>
+        <div class="col-md-12">
+            <table id="simple-table" class="table  table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Referencia
+                        </th>
+                        <th>
+                            Apertura
+                        </th>
+                        <th>
+                            Asunto
+                        </th>
+                        <th>
+                            Último seguimiento
+                        </th>
+                        <th>
+                            Etapa
+                        </th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Marfil.Dom.Persistencia.Model.CRM.OportunidadesModel oportunidad in Model)
+                    {
+                    <tr>
+                        <td>@oportunidad.Referencia</td>
+                        <td>@oportunidad.FechaAperturaStr</td>
+                        <td>@oportunidad.Asunto</td>
+                        <td>@oportunidad.fechaultimo</td>
+                        <td>@oportunidad.Fketapa</td>
+                        <td class="col-md-2">
+                            <a href="@Url.Action("Details", "Oportunidades", new {id = oportunidad.Id })" target="_blank" class="btn btn-sm btn-info" @*ng-click="ver(@oportunidad.Id)*@>
+                                <i class="fa fa-eye"></i>
+                                <span>@General.LblVer</span>
+                            </a>
+                        </td>
+                    </tr> 
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+

@@ -1,0 +1,28 @@
+﻿@using Marfil.Dom.Persistencia.Model.Graficaslistados
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.ConfiguraciongraficasModel
+<li class="col-md-4"  tag="@Model.Codigo">
+    <div class="panel panel-default">
+        <div class="panel-heading  clearfix">
+            <div class="panel-title pull-left"  title="@Model.Titulo" style="width: 60%; overflow: hidden; height: 25px;" >
+                @Model.Titulo
+            </div>
+            <div class="pull-right">
+
+                <a class="btn btn-link" style="padding: 5px !important;"  href="@Url.Action("Edit", "configuraciongraficas", new {id = Model.Codigo})" title="@General.LblEditar"><i class="fa fa-pencil"></i></a>
+                @if (Model.Tipografica != Tipografico.Tabla)
+                {
+                    <button class="btn btn-link" style="padding: 5px !important;"  onclick="eventAggregator.Publish('Imprimirgrafica','@Model.Codigo');" title="@General.LblImprimir"><i class="fa fa-print"></i></button>
+                }
+                
+                <button class="btn btn-link" style="padding: 5px !important;" ng-click="VisualizarGrafica('@Model.Codigo.ToString()', '@Model.Titulo')" title="@General.LblAmpliar"><i class="fa fa-search-plus"></i></button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="panel-main">
+                @Html.Action("Panel", "Graficas", new { id = Model.Codigo })
+            </div>
+        </div>
+    </div>
+</li>
+

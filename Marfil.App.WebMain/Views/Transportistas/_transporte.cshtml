@@ -1,0 +1,44 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@model Marfil.Dom.Persistencia.Model.Terceros.TransportistasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var listtipotransporte = WebHelper.GetApplicationHelper().GetListTipoTransporte().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listtipotransporte.Insert(0, new SelectListItem() { Value = "", Text = "" });
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Conductorhabitual, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Conductorhabitual, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+    <div class="col-md-12">
+        @Html.ValidationMessageFor(f => Model.Conductorhabitual, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Matricula, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Matricula, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+    @Html.LabelFor(f => Model.Remolque, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Remolque, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Matricula, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Remolque, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipotransporte, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Tipotransporte, listtipotransporte, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipotransporte, "", new { @class = "text-danger" })
+    </div>
+</div>

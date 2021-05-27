@@ -1,0 +1,147 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.Genericos.Helper;
+@model Marfil.Dom.Persistencia.Model.Stock.LotesModel
+@{
+    var isreadonly = true;
+    ViewData["readonly"] = true;
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+<div class="form-group">
+    <span class="col-md-4 fa-2x">
+        @Albaranes.Lote : @Model.Lotereferencia
+    </span>    
+    <span class="col-md-6 fa-2x">@Albaranes.Fkalmacen : @Model.NombreAlmacen</span>    
+    <span class="pull-right col-md-2 text-right  fa-1-5x">
+        <span class="alert-warning">@(Funciones.GetEnumByStringValueAttribute(Model.Estado))</span>
+    </span>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipodealmacenlote, new { @class = "control-label col-md-2" })
+    <div class="col-md-2" name="tipode-almacenlote">
+        @Html.EnumDropDownListFor(f => Model.Tipodealmacenlote, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "", @required = "required" })
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkarticulos, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @{
+                cvarticulos.Name = "Fkarticulos";
+                cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+                cvarticulos.Valor = Model.Fkarticulos;
+                cvarticulos.Autofocus = false;
+                cvarticulos.SoloLectura = isreadonly;
+            }
+            @Html.Partial("CampoverificacionUI", cvarticulos)
+        </div>
+    </div>
+
+    <h3>Entrada</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Codigoproveedor, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Codigoproveedor";
+                cvclientes.Url = Url.Action("CuentasTiposProveedoresAcreedoresExclusiveApi", "Api");
+                cvclientes.Valor = Model.Codigoproveedor;
+                cvclientes.CampoIdentificador = "Fkcuentas";
+                cvclientes.SoloLectura = isreadonly;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechaentrada, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechaentrada)
+        </div>
+        @Html.LabelFor(f => Model.Referenciaentrada, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.TextBoxFor(f => Model.Referenciaentrada, new { @class = "form-control", @readonly = "readonly" })
+                @if (!string.IsNullOrEmpty(Model.Referenciaentrada))
+            {
+                    <span class="input-group-btn">
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("RedirigirAlbaranReferencia", "FacturasCompras", new {id = Model.Referenciaentrada })">Ir</a>
+                    </span>
+                }
+
+            </div>
+        </div>
+        @Html.LabelFor(f => Model.Precioentrada, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Precioentrada, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>
+
+    <h3>Salida</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Codigocliente, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Codigocliente";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.Codigocliente;
+                cvclientes.CampoIdentificador = "Id";
+
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechasalida, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechasalida)
+        </div>
+        @Html.LabelFor(f => Model.Referenciasalida, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.TextBoxFor(f => Model.Referenciasalida, new { @class = "form-control", @readonly = "readonly" })
+                @if (!string.IsNullOrEmpty(Model.Referenciasalida))
+            {
+                    <span class="input-group-btn">
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("RedirigirAlbaranReferencia", "Facturas", new {id = Model.Referenciasalida})">Ir</a>
+                    </span>
+                }
+
+            </div>
+        </div>
+        @Html.LabelFor(f => Model.Preciosalida, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Preciosalida, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>

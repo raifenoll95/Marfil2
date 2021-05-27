@@ -1,0 +1,75 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Facturas.AsistenteFacturacionModel
+@{
+    
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvalbaranes = FCampoverificacion.Instance.GetModel<AlbaranesModel>(WebHelper.ContextService);
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkclientes, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkclientes";
+                campoverificacion.Url = Url.Action("CuentasTiposClientesExclusiveFacturacionApi", "Api");
+                campoverificacion.Valor = Model.Fkclientes;
+                campoverificacion.CampoIdentificador = "Fkcuentas";
+                campoverificacion.Titulo = Clientes.TituloEntidadSingular;
+                campoverificacion.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2" style="text-align: left !important;">
+            @Html.ValidationMessageFor(f => Model.Fkclientes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkalbaraninicio, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvalbaranes.Name = "Fkalbaraninicio";
+                cvalbaranes.Url = Url.Action("AlbaranesParaImportarApi", "Api");
+                cvalbaranes.Valor = Model.Fkalbaraninicio;
+                cvalbaranes.CampoIdentificador = "Referencia";
+                cvalbaranes.Configuracion.OcultarTexto = true;
+                cvalbaranes.Titulo = Albaranes.TituloEntidadSingular;
+                cvalbaranes.ControlesAsociados = "[ { \"cliente\":\"Fkclientes\" } ]";
+                cvalbaranes.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvalbaranes)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkalbaraninicio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkalbaranfin, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvalbaranes.Name = "Fkalbaranfin";
+                cvalbaranes.Url = Url.Action("AlbaranesParaImportarApi", "Api");
+                cvalbaranes.Valor = Model.Fkalbaranfin;
+                cvalbaranes.CampoIdentificador = "Referencia";
+                cvalbaranes.Configuracion.OcultarTexto = true;
+                cvalbaranes.Titulo = Albaranes.TituloEntidadSingular;
+                cvalbaranes.ControlesAsociados = "[ { \"cliente\":\"Fkclientes\" } ]";
+                cvalbaranes.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvalbaranes)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkalbaranfin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</form>

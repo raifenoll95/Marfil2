@@ -1,0 +1,167 @@
+@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using System.ComponentModel.DataAnnotations
+@using System.Resources
+@using DevExpress.Data.Filtering
+@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.BaseTablasVariasModel
+
+@{
+
+    var type = Helper.GetTypeFromFullName(Model.Clase);
+    var instance = Activator.CreateInstance(type) as IModelView;
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Valor";
+        settings.CallbackRouteValues = new { Controller = "TablasVarias", Action = "TablasvariasLinView" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.SettingsPager.PageSize = 30;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        //#region Filtrs para acentos
+
+        settings.AutoFilterCellEditorCreate += delegate (object sender, ASPxGridViewEditorCreateEventArgs e)
+        {
+            if (instance.getProperties().Single(f => f.property.Name == e.Column.FieldName).property.PropertyType == typeof(string))
+            {
+                e.Value = Session[e.Column.FieldName + "Filter"]?.ToString() ?? string.Empty;
+            }
+        };
+
+        settings.ProcessColumnAutoFilter += delegate (object sender, ASPxGridViewAutoFilterEventArgs e)
+        {
+
+            if (e.Kind == DevExpress.Web.GridViewAutoFilterEventKind.CreateCriteria)
+            {
+
+                var gr = sender as ASPxGridView;
+
+                if (instance.getProperties().Single(f => f.property.Name == e.Column.FieldName).property.PropertyType == typeof(string))
+                {
+
+                    var co = CriteriaOperator.TryParse(gr.FilterExpression);
+                    if (co != null)
+                    {
+                        AccentFilter.FindAndRemoveCustomOperator(ref co, e.Column.FieldName);
+                        gr.FilterExpression = null == co ? string.Empty : co.ToString();
+                    }
+                    Session[e.Column.FieldName + "Filter"] = e.Value;
+                    e.Criteria = CriteriaOperator.Parse(string.Format("AccentFilter([" + e.Column.FieldName + "], '{0}')", e.Value), e.Column.FieldName, e.Value.ToString());
+
+                }
+
+            }
+
+        };
+
+        //#endregion
+
+        foreach (var item in instance.getProperties())
+        {
+            if (item.property.Name == "Context")
+                continue;
+
+            if (item.property.Name == "Valor")
+            {
+                settings.Columns.Add(column =>
+                {
+                    column.FieldName = "Valor";
+                    column.ColumnType = MVCxGridViewColumnType.TextBox;
+                    column.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+                    ((TextBoxProperties)column.PropertiesEdit).MaskSettings.Mask = "000";
+                    ((TextBoxProperties)column.PropertiesEdit).MaskSettings.IncludeLiterals = MaskIncludeLiteralsMode.None;
+                    column.VisibleIndex = 0;
+                    column.Width = Unit.Pixel(100);
+
+                    var attribute = item.attributes.SingleOrDefault(f => f.GetType() == typeof(DisplayAttribute));
+                    if (attribute != null)
+                    {
+                        var caption = ((DisplayAttribute)attribute).Name;
+                        if (((DisplayAttribute)attribute).ResourceType != null)
+                        {
+                            var rm = new ResourceManager(((DisplayAttribute)attribute).ResourceType);
+                            caption = rm.GetString(((DisplayAttribute)attribute).Name);
+                        }
+
+                        column.Caption = caption;
+                    }
+
+                    var attributeCustom = item.attributes.SingleOrDefault(f => f.GetType() == typeof(CustomDisplayDescriptionAttribute));
+                    if (attributeCustom != null)
+                    {
+                        column.Caption = ((CustomDisplayDescriptionAttribute)attributeCustom).DisplayName;
+                    }
+                });
+            }
+            else
+            {
+                settings.Columns.Add(c =>
+                {
+                    c.FieldName = item.property.Name;
+
+                    var attribute = item.attributes.SingleOrDefault(f => f.GetType() == typeof(DisplayAttribute));
+                    if (attribute != null)
+                    {
+                        var caption = ((DisplayAttribute)attribute).Name;
+                        if (((DisplayAttribute)attribute).ResourceType != null)
+                        {
+                            var rm = new ResourceManager(((DisplayAttribute)attribute).ResourceType);
+                            caption = rm.GetString(((DisplayAttribute)attribute).Name);
+                        }
+
+                        c.Caption = caption;
+                    }
+
+                    var attributeCustom = item.attributes.SingleOrDefault(f => f.GetType() == typeof(CustomDisplayDescriptionAttribute));
+                    if (attributeCustom != null)
+                    {
+                        c.Caption = ((CustomDisplayDescriptionAttribute)attributeCustom).DisplayName;
+                    }
+                    if (item.property.PropertyType == typeof(bool))
+                    {
+                        c.ColumnType = MVCxGridViewColumnType.CheckBox;
+                        c.Width = Unit.Pixel(100);
+                    }
+
+                });
+
+            }
+
+        }
+
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor =System.Drawing.ColorTranslator.FromHtml("#DDDDDD");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model.Lineas.Any() ? Model.Lineas : Model.EmptyLineas()).GetHtml()
+
+

@@ -1,0 +1,86 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@model IEnumerable<Marfil.Dom.Persistencia.Model.FicherosGenerales.CambioMonedasLogModel>
+
+    @{
+        var grid = Html.DevExpress().GridView(settings =>
+        {
+            //general
+            settings.Name = "GridView";
+            settings.KeyFieldName = "Id";
+            settings.CallbackRouteValues = new { Controller = "Cambios", Action = "CambiosLog" };
+            settings.EnableRowsCache = true;
+            settings.KeyboardSupport = true;
+            settings.Width = Unit.Percentage(100);
+            settings.SettingsPager.Visible = false;
+            settings.Settings.ShowGroupPanel = false;
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Id";
+                c.Visible = false;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "UsuarioId";
+                c.Visible = false;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "FechaModificacion";
+                c.VisibleIndex = 0;
+                c.Width = Unit.Pixel(150);
+                c.SortOrder=ColumnSortOrder.Descending;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Usuario";
+                c.VisibleIndex = 1;
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "CambioMonedaBase";
+                c.VisibleIndex = 2;
+                c.Width = Unit.Pixel(120);
+            });
+
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "CambioMonedaAdicional";
+                c.VisibleIndex = 3;
+                c.Width = Unit.Pixel(120);
+            });
+
+
+
+            //display
+            settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+            settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+            settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+            settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+            settings.ControlStyle.Border.BorderColor = System.Drawing.ColorTranslator.FromHtml("#DDDDDD");
+            settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+            settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+            settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+            settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+            settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+        });
+
+        if (ViewData["EditError"] != null)
+        {
+            grid.SetEditErrorText((string)ViewData["EditError"]);
+
+        }
+
+    }
+    @grid.Bind(Model).GetHtml()
+

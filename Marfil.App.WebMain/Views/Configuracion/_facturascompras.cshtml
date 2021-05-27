@@ -1,0 +1,43 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+<div class="form-group">
+   
+    
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadofacturascomprasinicial, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadofacturascomprasinicial, Model.Estadosfacturascompras.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}), new { @class = "form-control" })
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Estadofacturascomprastotal, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Estadofacturascomprastotal, Model.Estadosfacturascompras.Select(f => new SelectListItem() {Value = f.CampoId, Text = f.Descripcion}), new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Margenfacturacompra, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+           @Html.TextBoxFor(f=>Model.Margenfacturacompra, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.DescripcionAsientoFacturaCompra, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.DescripcionAsientoFacturaCompra, Model.DescripcionesAsientos.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,107 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Bundle = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Bundle
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+
+<input type="hidden" id="flujonuevoregistro" name="flujonuevoregistro" value="1" />
+<div class="modal fade" id="_entradastock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@General.LblBuscarComponente</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" name="Materialsalida" id="Materialsalida" />
+                        @Html.Label(Articulos.TituloEntidadSingular, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @{
+                                campoverificacion.Name = "Fkarticulosentrada";
+                                campoverificacion.Url = Url.Action("ArticulosApi", "Api");
+                                campoverificacion.Valor = "";
+                                campoverificacion.CampoIdentificador = "Id";
+                                campoverificacion.CampoDescripcion = "Descripcion";
+                                campoverificacion.Titulo = Articulos.TituloEntidad;
+                                campoverificacion.Autofocus = true;
+                            }
+                            @Html.Partial("CampoverificacionUI", campoverificacion)
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="Tipofamilia==2">
+                        <label class="control-label col-md-2">@Bundle.TituloEntidadSingular</label>
+                        <div class="col-md-2">
+                            <input type="text" name="Bundle" ng-model="Bundle" class="form-control text-uppercase" maxlength="2" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">                        
+                        <div class="col-md-12"></div>
+                        <div class="col-md-2 col-md-offset-2">
+                            <label class="control-label">@Albaranes.Cantidad</label>
+                            <div class="">
+                                <input type="text" ng-model="cantidad" id="Cantidad" class="form-control" decimalesnumerico />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Largo</label>
+                            <div>
+                                <input type="text" ng-model="LargoPadre" id="Largo" class="form-control" decimalesnumerico />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Ancho</label>
+                            <div>
+                                <input type="text" ng-model="AnchoPadre" id="Ancho" class="form-control" decimalesnumerico />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Grueso</label>
+                            <div>
+                                <input type="text" ng-model="GruesoPadre" id="Grueso" class="form-control" decimalesnumerico />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-2"">
+                            <label class="text-center">@Albaranes.Merma</label>
+                            <div>
+                                <input type="text" ng-model="Merma" id="Merma" class="form-control" decimalesnumerico />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Precio</label>
+                            <div>
+                                <input type="text" ng-model="Precio" id="Precio" class="form-control" decimalesnumerico />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" ng-click="AceptarComponente()">@General.BtnGuardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

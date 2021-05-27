@@ -1,0 +1,31 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model  Marfil.Dom.Persistencia.Model.Graficaslistados.GraficasModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+    Layout = "~/Views/Shared/_Layoutgraficas.cshtml";
+}
+
+
+<div class="row margin-bottom">
+    <div class="col-md-12 text-center">
+        @Html.Partial("_partialgraficajavascript", Model)
+    </div>
+</div>
+
+@section GridView
+{
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Graficas/GraficasController.js")"></script>
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Chart }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.Chart }
+)
+
+}
+

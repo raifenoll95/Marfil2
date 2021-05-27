@@ -1,0 +1,214 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Iva
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Iva.GruposIvaLinModel>
+@{
+    Html.EnableClientValidation(false);
+    Html.EnableUnobtrusiveJavaScript(false);
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "GruposIva", Action = "GruposIvaLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GruposIva", Action = "GruposIvaLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "GruposIva", Action = "GruposIvaLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "GruposIva", Action = "GruposIvaLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add("Empresa");
+        settings.Columns.Add("FkGruposIva");
+        settings.Columns.Add("Id");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Desde";
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            c.Width = Unit.Pixel(150);
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FkTiposIvaSinRecargo";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            comboBoxProperties.TextField = "Nombre";
+            comboBoxProperties.ValueField = "Id";
+            comboBoxProperties.ValueType = typeof(String);
+            comboBoxProperties.DataSource = Session["tiposiva"];
+            comboBoxProperties.EnableSynchronization = DefaultBoolean.True;
+            comboBoxProperties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FkTiposIvaConRecargo";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            comboBoxProperties.TextField = "Nombre";
+            comboBoxProperties.ValueField = "Id";
+            comboBoxProperties.ValueType = typeof(String);
+            comboBoxProperties.DataSource = Session["tiposiva"];
+            comboBoxProperties.EnableSynchronization = DefaultBoolean.True;
+            comboBoxProperties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FkTiposIvaExentoIva";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            comboBoxProperties.TextField = "Nombre";
+            comboBoxProperties.ValueField = "Id";
+            comboBoxProperties.ValueType = typeof(String);
+            var list = Session["tiposiva"] as IEnumerable<TiposIvaModel>;
+            var currentList = list?.ToList();
+            currentList?.Insert(0,new TiposIvaModel() {Id="",Nombre=""});
+            comboBoxProperties.AllowNull = true;
+            
+            comboBoxProperties.DataSource = currentList;
+            comboBoxProperties.EnableSynchronization = DefaultBoolean.True;
+            comboBoxProperties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+        });
+
+
+
+        settings.Columns["Empresa"].Visible = false;
+        settings.Columns["FkGruposIva"].Visible = false;
+        settings.Columns["Id"].Visible = false;
+
+
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.CommandColumn.VisibleIndex = 4;
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        var user = HttpContext.Current.User as ICustomPrincipal;
+        settings.InitNewRow += (s, e) =>
+        {
+            e.NewValues["FkGruposIva"] = 1;
+            e.NewValues["Empresa"] = user.Empresa;
+            e.NewValues["Id"] = Model.Any() ? Model.Max(f => f.Id) + 1 : 1;
+        };
+
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+
+            editor.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Right;
+            editor.ValidationSettings.Display = Display.Dynamic;
+            editor.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            editor.ValidationSettings.SetFocusOnError = true;
+
+            if (e.Column.FieldName == "Desde")
+            {
+                editor.Focus();
+            }
+        };
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113://editar
+                    if (!GridView.IsEditing()) {
+
+                        GridView.StartEditRow(index);
+                    }
+                    break;
+                case 46://Eliminar
+                    if (!GridView.IsEditing()) {
+                        GridView.DeleteRow(index);
+                    }
+                    break;
+                case 27://escape
+                    if (GridView.IsEditing()) {
+                        GridView.CancelEdit();
+                        GridView.Focus();
+                    }
+                    break;
+                case 13://enter
+                    if (GridView.IsEditing()) {
+                        GridView.Focus();
+                        GridView.UpdateEdit();
+                    }
+                    break;
+                case 107://mas
+                    CreateRow();
+                    break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        if (!GridView.IsEditing()) {
+            GridView.Focus();
+            GridView.AddNewRow();
+
+        }
+    }
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
+</script>

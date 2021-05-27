@@ -1,0 +1,92 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model ObrasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+
+
+
+@Html.HiddenFor(f => Model.Empresa)
+
+@if (iseditable || isreadonly)
+{
+    @Html.HiddenFor(f => Model.Id)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            <label class="control-label bolder">@Model.Id</label>
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+else
+{
+    <input type="hidden" name="Id" value="-1" />
+}
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Finalizadavista, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.CheckBoxFor(f=>f.Finalizadavista, isreadonly ? (object)new {  @disabled = "disabled" } : (object)new { })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Finalizadavista, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkclientes, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Fkclientes";
+            campoverificacion.Url = Url.Action("CuentasTiposClientesExclusiveApi", "Api");
+            campoverificacion.CampoIdentificador = "Fkcuentas";
+            campoverificacion.Valor = Model.Fkclientes;
+            campoverificacion.Titulo = "Clientes";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = true;
+            campoverificacion.Autofocus = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkclientes, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkdirecciones, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <select aria-label="Direccion" ng-disabled="direcciones.length <= 1 || @Html.Raw(isreadonly.ToString().ToLower()) " ng-show="direcciones.length >= 1" ng-model="Fkdirecciones" class="form-control" name="Fkdirecciones" >
+            <option ng-selected="{{Fkdirecciones.toString() === item.Id.toString()}}" ng-repeat="item  in direcciones" value="{{ item.Id }}">{{item.Descripcion}}</option>
+        </select>
+
+        <label ng-show="direcciones && direcciones.length < 1" class="control-label">@General.LblNoExistenDirecciones</label>
+        <input type="hidden" value="" name="Fkdirecciones" ng-disabled="direcciones.length && direcciones.length >= 1"/>
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkdirecciones, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Nombreobra, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Nombreobra, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+
+</div>
+

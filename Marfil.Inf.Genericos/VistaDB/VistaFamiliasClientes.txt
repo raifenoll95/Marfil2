@@ -1,0 +1,4 @@
+﻿SELECT     xml.value('(/TablasVariasGeneralModel/Valor/text())[1]', 'varchar(40)') AS Valor, xml.value('(/TablasVariasGeneralModel/Descripcion/text())[1]', 'varchar(40)') 
+                      AS Descripcion, xml.value('(/TablasVariasGeneralModel/Descripcion2/text())[1]', 'varchar(40)') AS Descripcion2
+FROM         dbo.TablasvariasLin
+WHERE     (fkTablasvarias = '1')

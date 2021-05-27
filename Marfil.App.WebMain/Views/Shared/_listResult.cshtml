@@ -1,0 +1,216 @@
+﻿@using System.ComponentModel
+@using System.Drawing
+@using System.Web.UI.WebControls
+@using System.ComponentModel.DataAnnotations
+@using System.Resources
+@using System.Text
+@using DevExpress.Data.Filtering
+@using DevExpress.DataAccess.Native.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Bloqueo
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.Base.ListadoResultado
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = Model.Listado.Columns[0].ColumnName;
+        settings.CallbackRouteValues = new { Controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), Action = "_listResult", id = Model.IdListado };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.CommandColumn.Visible = false;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.SettingsPager.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListPageSize"]);
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowGroup = true;
+        settings.SettingsBehavior.AllowSort = true;
+        settings.Settings.HorizontalScrollBarMode=ScrollBarMode.Auto;
+        settings.Settings.ShowGroupPanel = true;
+        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        settings.SettingsCookies.StoreColumnsWidth = true;
+        settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+        settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleIfExpanded;
+
+        if (Model.Filtros.Any())
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Filtros:");
+            foreach (var item in Model.Filtros)
+            {
+                sb.AppendLine(item);
+            }
+
+            settings.SettingsExport.ReportHeader = sb.ToString();
+
+        }
+
+
+        foreach (System.Data.DataColumn item in Model.Listado.Columns)
+        {
+
+            settings.Columns.Add(c =>
+            {
+
+                if (!WebHelper.DevexpressAA)
+                {
+                    if (item.DataType == typeof(bool))
+                        c.ColumnType = MVCxGridViewColumnType.CheckBox;
+                    else if (item.DataType == typeof(DateTime))
+                        c.ColumnType = MVCxGridViewColumnType.DateEdit;
+                }
+
+
+                if (item.DataType == typeof (string))
+                {
+                    c.Width = Unit.Pixel((item.MaxLength < 1 ? 50 : item.MaxLength)*3);
+                }
+                else if (item.DataType == typeof (double) || item.DataType == typeof (int) || item.DataType == typeof (decimal))
+                {
+                    c.Width = Unit.Pixel(100);
+                    var displayformat = "N2";
+                    if (Model.ConfiguracionColumnas.ContainsKey(item.ColumnName))
+                    {
+                        var configuracion = Model.ConfiguracionColumnas[item.ColumnName];
+                        if(configuracion.Decimales!=null)
+                        {
+                            if (configuracion.Decimales.Decimales.HasValue)
+                                displayformat = "N" + configuracion.Decimales.Decimales;
+                            else if (!string.IsNullOrEmpty(configuracion.Decimales.Columna))
+                            {
+                                displayformat = "";
+
+                                c.SetDataItemTemplateContent(j =>
+                                {
+                                    var obj = DataBinder.GetPropertyValue(j.DataItem, j.Column.FieldName);
+                                    var valor = (double)((obj == DBNull.Value ? 0.0 : obj) ?? 0.0);
+                                    ViewContext.Writer.Write(valor.ToString("N" + DataBinder.Eval(j.DataItem, configuracion.Decimales.Columna)));
+                                });
+                            }
+                        }
+                    }
+
+                    c.PropertiesEdit.DisplayFormatString = displayformat;
+                }
+
+                c.FieldName = item.ColumnName;
+                c.Caption = item.ColumnName;
+                c.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+                if (item.ColumnName.StartsWith("_"))
+                {
+                    c.Visible = false;
+                    c.ShowInCustomizationForm = false;
+                }
+            });
+        }
+
+        settings.ClientSideEvents.ColumnResized = "function(s,e) {  e.processOnServer = true; }";
+        settings.SettingsContextMenu.Enabled = true;
+
+        settings.SettingsContextMenu.EnableGroupPanelMenu = DefaultBoolean.True;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu=DefaultBoolean.False;
+        settings.ClientLayout = (s, e) =>
+        {
+            if(Session != null)
+                if (e.LayoutMode == ClientLayoutMode.Loading)
+                {
+                    if (Session[Model.IdListado+ "UserSettings"] != null)
+                        e.LayoutData = (string)Session[Model.IdListado + "UserSettings"];
+                }
+                else
+                    Session[Model.IdListado + "UserSettings"] = e.LayoutData;
+        };
+        //display
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        Session[Model.IdListado + "Settings"] = settings;
+    });
+
+    @grid.Bind(Model.Listado).GetHtml()
+
+
+
+
+
+}
+
+<script type="text/javascript">
+
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+            case 113://editar
+                if (!GridView.IsEditing()) {
+
+                    GridView.StartEditRow(index);
+                }
+                break;
+            case 46://Eliminar
+                if (!GridView.IsEditing()) {
+                    GridView.DeleteRow(index);
+                }
+                break;
+            case 27://escape
+                if (GridView.IsEditing()) {
+                    GridView.CancelEdit();
+                    GridView.Focus();
+                }
+                break;
+            case 13://enter
+                if (GridView.IsEditing()) {
+                    GridView.Focus();
+                    GridView.UpdateEdit();
+                }
+                break;
+            case 107://mas
+                CreateRow();
+                break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        if (!GridView.IsEditing()) {
+            GridView.Focus();
+            GridView.AddNewRow();
+
+        }
+    }
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
+</script>
+

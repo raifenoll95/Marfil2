@@ -1,0 +1,28 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Resources
+@using Marfil.Dom.Persistencia.Model.Diseñador
+@model  Marfil.Dom.Persistencia.Model.Diseñador.DocumentosWrapperModel
+@{
+    ViewBag.Title = Model.Titulo;
+    var user = HttpContext.Current.User as ICustomPrincipal;
+    var newId = DocumentosUsuarioService.CreateCustomId(Model.Tipo, user.Id,General.BtnNuevoRegistro);
+}
+
+
+<div class="row margin-bottom">
+    @Html.Partial("_listDocumentos", Model.Lineas)
+</div>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+

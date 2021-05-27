@@ -1,0 +1,62 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "Provincias", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+        @Html.HiddenFor(f => ((ProvinciasModel)Model).Codigopais)
+        <div class="form-group">
+            @Html.LabelFor(f => ((ProvinciasModel) Model).Codigopais, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(f => ((ProvinciasModel) Model).Codigopais, WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() {Text = f.Descripcion, Value = f.Valor}), new {@class = "form-control",  @readonly = "readonly",@disabled=""})
+                @Html.ValidationMessageFor(f => ((ProvinciasModel)Model).Codigopais, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((ProvinciasModel)Model).Id, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="Id" aria-label="Codigo" readonly="readonly" value="@Html.Raw(((ProvinciasModel) Model).Id)"/>
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((ProvinciasModel)Model).Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((ProvinciasModel)Model).Nombre, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((ProvinciasModel)Model).Nombre, htmlAttributes: new { @autofocus = "", @class = "form-control"})
+                @Html.ValidationMessageFor(f => ((ProvinciasModel)Model).Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+      
+
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+

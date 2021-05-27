@@ -1,0 +1,164 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IModelView
+@{
+    
+    var user = HttpContext.Current.User as ICustomPrincipal;
+    var paises = WebHelper.GetApplicationHelper().GetListPaises();
+    var service = new TablasVariasService(WebHelper.ContextService);
+    var returnUrl = Request.Params["ReturnUrl"];
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+
+
+
+@using (Html.BeginForm("CreateOperacion", "Cuentas", FormMethod.Post, new { @class = "form-horizontal",@onsubmit= "return ValidateNif($('#FkPais').val(), $('#Nif').val())" }))
+{
+    
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal" ng-controller="cuentasCtrl">
+        <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+        <input type="hidden" name="Empresa" value="@user.Empresa" />
+
+        
+        <input type="hidden" name="UsuarioId" value="@user.Id"/>
+        
+        @if (!string.IsNullOrEmpty(returnUrl))
+        {
+            <input type="hidden" name="ReturnUrl" value="@returnUrl"/>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((CuentasModel) Model).Id, new {@class = "control-label col-md-2"})
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => ((CuentasModel) Model).Id, new {@class = "form-control", @autofocus = "", @ng_model = "codigo", @onkeypress = "return isNumberKey(event)", @ng_blur = "VerificarPK(\"" + Url.Action("SuperCuentas", "Cuentas") + "\",\"" + Url.Action("Exists", "Cuentas") + "\",\"" + Url.Action("Edit", "Cuentas") + "\")", @id = "id", @ng_init = "init('" + ((CuentasModel) Model).Id + "','" + Url.Action("SuperCuentas", "Cuentas") + "','" + Url.Action("TiposcuentasApi", "Api") + "','"+ (((CuentasModel) Model).Tiposcuentas?.ToString() ?? string.Empty) + "'," + WebHelper.GetApplicationHelper().NivelesCuentas() + "," + @WebHelper.GetApplicationHelper().DigitosCuentas() + ")" })
+            </div>
+            <div class="col-md-1">
+                <label>@General.LblNivel</label>
+                <span><strong>{{level}}</strong></span>
+                <input type="hidden" name="Nivel" value="{{level}}"/>
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((CuentasModel) Model).Id, "", new {@class = "text-danger"})
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((CuentasModel)Model).Tiposcuentas, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                <select name="Tiposcuentas" ng-model="currenttiposcuentas" class="form-control" ng-cloak>
+                    <option ng-repeat="option in tiposcuentas" value="{{option.Value}}">{{option.Text}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((CuentasModel)Model).Descripcion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((CuentasModel)Model).Descripcion, new { @class = "form-control" })
+                @Html.ValidationMessageFor(f => ((CuentasModel)Model).Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((CuentasModel)Model).Descripcion2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((CuentasModel)Model).Descripcion2, new { @class = "form-control", ng_focus = "cloneDescripcion();" })
+                @Html.ValidationMessageFor(f => ((CuentasModel)Model).Descripcion2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div ng-show="level == 0 && codigo!=''">
+            <h2 class="col-md-offset-2">@General.LblInformacionSubcuenta</h2>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((CuentasModel)Model).FkPais, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(f => ((CuentasModel)Model).FkPais, paises.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control", @id = "FkPais", @onchange = "ValidateNif($(this).val(), $('#Nif').val())" })
+                    @Html.ValidationMessageFor(f => ((CuentasModel)Model).FkPais, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @{
+                    ((CuentasModel)Model).Nif.FkpaisControlId = "FkPais";
+                    ((CuentasModel)Model).Nif.Readonly = false;
+                    ((CuentasModel) Model).Nif.Obligatorio = ((CuentasModel) Model).Nifrequired;
+                }
+                @Html.EditorFor(f => ((CuentasModel)Model).Nif)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => ((CuentasModel)Model).Contrapartida, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @{
+                        campoverificacion.Name = "Contrapartida";
+                        campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+                        campoverificacion.Valor = ((CuentasModel)Model).Contrapartida;
+                        campoverificacion.Titulo = Cuentas.LblCuentasContrapartida;
+
+                    }
+                    @Html.Partial("CampoverificacionUI",campoverificacion)
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            <h2>@General.LblCuentasNivelSuperior</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-xs-1">@General.LblId</th>
+                        <th>@General.LblDescripcion</th>
+                        <th>@General.LblRazonSocial</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="obj in supercuentas">
+                    <tr>
+                        <td><input type="text" class="form-control" name="id_{{obj.Id}}" value="{{obj.Id}}" readonly="readonly" required="required" /></td>
+                        <td><input type="text" data-val="true" class="form-control" name="nombre_{{obj.Id}}" ng-model="obj.Descripcion" required="required" /></td>
+                        <td><input type="text" data-val="true" data-val-required="El campo Descripcion es obligatorio." class="form-control" name="descripcion_{{obj.Id}}" ng-model="obj.Descripcion2" required="required" ng-focus="onItemFocus(obj);" /></td>
+                    </tr>
+
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td colspan="3" ng-show="supercuentas.length==0">
+                           @General.LblNoExistenCuentas
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Cuentas/Cuentas.js")"></script>

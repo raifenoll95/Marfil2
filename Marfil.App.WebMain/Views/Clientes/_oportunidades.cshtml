@@ -1,0 +1,6 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@model Marfil.Dom.Persistencia.Model.Terceros.ClientesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+}
+@Html.Action("Oportunidades", "Oportunidades", new { oportunidades = Model.Oportunidades })

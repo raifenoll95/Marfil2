@@ -1,0 +1,127 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.EstadosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable ;
+}
+<script src="@Url.Content("~/Scripts/Model/Estados/EstadosController.js")"></script>
+
+<div class="form-horizontal" ng-controller="VerificaPk">
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Documento, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @if (isNuevo)
+            {
+                @Html.EnumDropDownListForAngular("Documento", Model.Documento, "Documento", string.Format(" class=\"form-control\" ng-init=\"Documento=" + ((int)Model.Documento).ToString() + "\""))
+                
+            }
+            else
+            {
+                @Html.HiddenFor(f=>Model.Documento)
+                <label class="control-label">@Funciones.GetEnumByStringValueAttribute(Model.Documento)</label>
+            }
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Documento, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @if (isNuevo)
+            {
+                @Html.TextBoxFor(f => Model.Id, new {@autofocus="autofocus", @class = "form-control", @ng_blur = "existeCustomPk(Documento,3,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Estados") + "\",\"" + Url.Action("Edit", "Estados") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+            }
+            else
+            {
+                <input type="hidden" name="Id" value="@Model.Id"/>
+                <label class="control-label">@Model.Id</label>
+            }
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Descripcion, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Imputariesgo, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.CheckBoxFor(f => Model.Imputariesgo, isreadonly ? (object) new {disabled = "disabled"} : (object) new {})
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Imputariesgo, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipoestado, new {@class = "control-label col-md-2"})
+        <div class="col-md-3">
+            @Html.EnumDropDownList("Tipoestado", Model.Tipoestado, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-3">
+
+            <label class="label label-xlg label-success" id="permiteeditar"><i class="fa fa-check"></i> @Estados.LblPermiteEditar</label>
+            <label class="label label-xlg label-danger" id="nopermiteeditar"><i class="fa fa-ban"></i> @Estados.LblNoPermiteEditar</label>
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-3 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Tipoestado, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipomovimiento, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EnumDropDownList("Tipomovimiento", Model.Tipomovimiento, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Tipomovimiento, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Notas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(f => Model.Notas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Notas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+
+@if (isNuevo)
+{
+    <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+}

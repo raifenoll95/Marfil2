@@ -1,0 +1,153 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model TarifasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !iseditable && !isreadonly;
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+}
+<div>
+
+
+    @Html.HiddenFor(f => Model.Empresa)
+    <div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @required = "required", @class = "form -control", @autofocus = "", @ng_blur = "existePk(12,2,\"" + Url.Action("Exists", "Tarifas") + "\",\"" + Url.Action("Edit", "Tarifas") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipoflujo, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Tipoflujo", Model.Tipoflujo, iseditable || isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => Model.Tipoflujo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipotarifa, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Tipotarifa", Model.Tipotarifa, iseditable || isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control", @ng_model= "tipotarifa" })
+            @Html.ValidationMessageFor(f => Model.Tipotarifa, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentas.Name = "Fkcuentas";
+                cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvcuentas.Valor = Model.Fkcuentas;
+                cvcuentas.SoloLectura = isreadonly;
+                cvcuentas.ControlesAsociados = "[{\"tipocuenta\":\"Tipoflujo\"}]";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvcuentas)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkcuentas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmonedas, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+
+                cvmonedas.Name = "Fkmonedas";
+                cvmonedas.Url = Url.Action("MonedasApi", "Api");
+                cvmonedas.Valor = Model.Fkmonedas.ToString();
+                cvmonedas.SoloLectura = isreadonly;
+                cvmonedas.Obligatorio = true;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvmonedas)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Validodesde, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Validodesde, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "tipotarifa"} : (object) new {@class = "form-control", @ng_model = "tipotarifa", @id="Validodesde"})
+        </div>
+        @Html.LabelFor(f => Model.Validohasta, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Validohasta, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "tipotarifa"} : (object) new {@class = "form-control", @ng_model = "tipotarifa", @id = "Validohasta" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Validodesde, "", new {@class = "text-danger"})
+        </div>
+        <div class="col-md-2 ">
+            @Html.ValidationMessageFor(f => Model.Validohasta, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Ivaincluido, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Ivaincluido, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        </div>
+        @Html.LabelFor(f => Model.Precioobligatorio, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Precioobligatorio, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        </div>
+        @Html.LabelFor(f => Model.Valorarcomponentes, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Valorarcomponentes, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Asignartarifaalcreararticulos, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(f => Model.Asignartarifaalcreararticulos, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @ng_model = "asignaralcrear", @ng_disabled = "tipotarifa==\"0\"" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Asignartarifaalcreararticulos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Observaciones, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.TextAreaFor(f => Model.Observaciones, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        </div>
+    </div>
+    @if (!isNuevo)
+    {
+        Model.BloqueoModel.Readonly = isreadonly;
+        @Html.EditorFor(f => Model.BloqueoModel)
+    }
+    
+</div>
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

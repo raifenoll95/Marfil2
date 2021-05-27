@@ -1,0 +1,152 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.Iva.TiposIvaModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaIvaSoportado, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "CtaIvaSoportado";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaIvaSoportado;
+            campoverificacion.Titulo = "Cuenta IVA soportado";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaIvaSoportado, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaIvaRepercutido, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+
+        @{
+            campoverificacion.Name = "CtaIvaRepercutido";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaIvaRepercutido;
+            campoverificacion.Titulo = "Cuenta IVA repercutido";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaIvaRepercutido, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaIvaNoDeducible, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "CtaIvaNoDeducible";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaIvaNoDeducible;
+            campoverificacion.Titulo = "Cuenta IVA no deducible";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaIvaNoDeducible, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaRecargoEquivalenciaRepercutido, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "CtaRecargoEquivalenciaRepercutido";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaRecargoEquivalenciaRepercutido;
+            campoverificacion.Titulo = "Cuenta recargo equivalencia repercutido";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaRecargoEquivalenciaRepercutido, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaIvaSoportadoCriterioCaja, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "CtaIvaSoportadoCriterioCaja";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaIvaSoportadoCriterioCaja;
+            campoverificacion.Titulo = "Cuenta IVA soportado criterio caja";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI",campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaIvaSoportadoCriterioCaja, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaIvaRepercutidoCriterioCaja, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "CtaIvaRepercutidoCriterioCaja";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaIvaRepercutidoCriterioCaja;
+            campoverificacion.Titulo = "Cuenta IVA repercutido crit. caja";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaIvaRepercutidoCriterioCaja, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CtaRecargoEquivalenciaRepercutidoCriterioCaja, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "CtaRecargoEquivalenciaRepercutidoCriterioCaja";
+            campoverificacion.Url = Url.Action("CuentasClienteApi", "Api");
+            campoverificacion.Valor = Model.CtaRecargoEquivalenciaRepercutidoCriterioCaja;
+            campoverificacion.Titulo = "Cuenta recargo equivalencia reperc. crit. caja";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.CtaRecargoEquivalenciaRepercutidoCriterioCaja, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+
+
+
+

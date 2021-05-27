@@ -1,0 +1,250 @@
+﻿@model Marfil.Dom.Persistencia.Model.Stock.DiarioStockModel
+@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.DiarioStock
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
+@using Marfil.Inf.Genericos.Helper
+@using RAlbaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras;
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "gvDataBindingToLinq";
+        settings.CallbackRouteValues = new { Controller = "DiarioStock", Action = "DataBindingToLargeDatabasePartial" };
+        settings.KeyFieldName = "id";
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.CommandColumn.Visible = false;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.SettingsPager.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListPageSize"]);
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowGroup = true;
+        settings.SettingsBehavior.AllowSort = true;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        settings.Settings.ShowGroupPanel = true;
+        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        settings.SettingsCookies.StoreColumnsWidth = true;
+        settings.SettingsCookies.StoreColumnsVisiblePosition = true;
+        settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleIfExpanded;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "id";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "fecha";
+            c.Caption = RAlbaranes.Fechadocumento;
+            if (!WebHelper.DevexpressAA)
+            {
+                c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            }
+
+            c.PropertiesEdit.DisplayFormatString = "d";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "fecha";
+            c.Caption = RAlbaranes.Hora;
+            c.ColumnType = MVCxGridViewColumnType.TimeEdit;
+            c.PropertiesEdit.DisplayFormatString = "HH:mm";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "tipooperacion";
+            c.Caption = RAlbaranes.Tipooperacion;
+            if (!WebHelper.DevexpressAA)
+            {
+                c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+                foreach (var i in Enum.GetValues(typeof(TipoOperacionService)))
+                    comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+                comboBoxProperties.ValueType = typeof(int);
+                comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            }
+
+        });
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "tipoalmacenlote";
+            c.Caption = RAlbaranes.TipoAlmacenLote;
+            if (!WebHelper.DevexpressAA)
+            {
+                c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+                foreach (var i in Enum.GetValues(typeof(TipoAlmacenloteService)))
+                    comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute(i), (int)i);
+
+                comboBoxProperties.ValueType = typeof(int);
+                comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            }
+
+        });
+
+
+
+        settings.Columns.Add(c=>
+        {
+            c.FieldName = "Almacendescripcion";
+            c.Caption = RAlbaranes.Fkalmacen;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Almaceneszonas";
+            c.Caption = RAlbaranes.Zona;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "fkarticulos";
+            c.Caption = RAlbaranes.Fkarticulos;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcionarticulos";
+            c.Caption = RAlbaranes.Descripcion;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "lote";
+            c.Caption = RAlbaranes.Lote;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "loteid";
+            c.Caption = RAlbaranes.Tabla;
+        });
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "cantidad";
+            c.Caption = RAlbaranes.Cantidad;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "largo";
+            c.Caption = RAlbaranes.Largo;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "ancho";
+            c.Caption = RAlbaranes.Ancho;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "grueso";
+            c.Caption = RAlbaranes.Grueso;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "metros";
+            c.Caption = RAlbaranes.Metros;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Um";
+            c.Caption = RAlbaranes.Fkunidades;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Documentoreferencia";
+            c.Caption = RAlbaranes.Referencia;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Calificacioncomercial";
+            c.Caption = RAlbaranes.Fkcalificacioncomercial;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tonomaterial";
+            c.Caption = RAlbaranes.Fktonomaterial;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Incidencia";
+            c.Caption = RAlbaranes.Fkincidenciasmaterial;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Variedad";
+            c.Caption = RAlbaranes.Fkincidenciasmaterial;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tipograno";
+            c.Caption = RAlbaranes.Fktipograno;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Variedad";
+            c.Caption = RAlbaranes.Fkvariedades;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Usuario";
+            c.Caption = RAlbaranes.Usuario;
+        });
+
+        settings.ClientSideEvents.ColumnResized = "function(s,e) {  e.processOnServer = true; }";
+        settings.SettingsContextMenu.Enabled = true;
+
+
+
+        settings.SettingsContextMenu.EnableGroupPanelMenu = DefaultBoolean.True;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+    }).BindToLINQ(string.Empty, string.Empty, (s, e) =>
+    {
+        e.QueryableSource = DiarioStockDatabaseDataProvider.GetMovimientos(Model);
+    }).GetHtml()
+

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<SeriesSerializableModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Empresa>0001</Empresa>
+  <Tipodocumento>FRC</Tipodocumento>
+  <Id>FRC</Id>
+  <Descripcion>Facturas de compra</Descripcion>
+  <Fkmonedas>978</Fkmonedas>
+  <Fkcontadores>DOCS</Fkcontadores>
+  <Tipoimpresion>Secuencia</Tipoimpresion>
+  <Riesgo>false</Riesgo>
+  <Borrador>false</Borrador>
+  <Rectificativa>false</Rectificativa>
+</SeriesSerializableModel>

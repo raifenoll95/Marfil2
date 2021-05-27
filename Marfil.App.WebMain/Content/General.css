@@ -1,0 +1,187 @@
+﻿.boxdialog-shrink {
+    top: 50px !important;
+}
+body {
+    background-color: #ffffff !important;
+}
+/*
+    Margins
+*/
+
+.margin-top
+{
+    margin-top: 20px;
+}
+.margin-bottom
+{
+    margin-bottom: 20px;
+}
+
+.margin-left-10 {
+       margin-left: 10px;
+}
+
+.navbar-grey {
+    background-color: #666 !important;
+}
+
+.sidebar {
+   background-color: #ffffff !important; 
+}
+
+#footer {
+    background-color: #333;
+    color: #555555 !important;
+    padding: 17px 0;
+    text-align: center;
+    border-top: solid 1px #555;
+}
+.borderless td {
+    border: none !important;
+}
+
+.idiomaSeleccionado {
+    border-bottom: solid 3px #999;
+    font-weight: bold;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.buttontoolbar {
+  position: relative;
+  z-index: auto;
+  border-bottom: 1px solid #E5E5E5;
+  background-color: #FFFFFF;
+   
+
+}
+
+.buttontoolbar .header-title {
+    font-size: 1.2em;
+}
+
+.buttontoolbar .divider {
+    padding-right: 10px;
+    border-right: 1px solid #CCC;
+}
+
+.buttontoolbar div {
+    padding: 10px 0;
+}
+.buttontoolbar .header-first {
+    padding-left: 10px;
+}
+
+.toolbarseparator {
+     padding-right: 0 !important;
+   
+}
+
+.input-group-addon-bloqueado {
+    background-color: #ffcccc !important;
+    border: 1px solid #ff6666 !important;
+}
+
+.fa-1-5x {
+    font-size: 1.5em;
+}
+.color-black {
+    color: #000 !important;
+}
+.color-white {
+    color: #FFF !important;
+}
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+.margin-bottom-10 {
+    margin-bottom: 10px !important;
+}
+/**
+
+    Hace que los componentes dentro de la grid se visualicen correctamente
+*/
+ .dxgvCSD {
+        position: static !important;
+    }
+
+ .modal-dialog-fullwidth {
+  width: 95% !important;
+  height: 95% !important;
+ 
+  
+}
+ .modal-content-fullwidth {
+  
+    height: 100% !important;
+  border-radius: 0 !important;
+}
+
+.modal-body-fullwidth {
+  
+    height: 85% !important;
+  border-radius: 0 !important;
+}
+.report-container
+{
+margin:0px;
+width:100%;
+overflow:hidden;
+position:relative;
+height:600px;
+
+}
+.report-container-2 {
+    height: 450px !important;
+}
+.ui-grid-fullheight {
+    height: 85% !important;
+}
+
+/**CHART*/
+.chart {
+  width: 100%;
+    height: 180px !important;
+}
+
+ #draggablePanelList .panel-heading {
+        cursor: move;
+    }
+
+ #fixedbutton {
+    position: fixed;
+    bottom: 50px;
+    right: 50px; 
+}
+
+ 
+ .table-scroll {
+     
+ }
+
+.table-fixed thead {
+  width: 97%;
+    
+}
+.table-fixed .cabecera {
+  
+    background-color: #F5F5F5 !important;
+    color: #444444 !important;
+}
+.table-fixed tbody {
+  height: 270px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+    
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+  border: 1px #666666;
+}
+

@@ -1,0 +1,43 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Marfil.Dom.Persistencia.Model;
+@using RBundle = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Bundle;
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.ConfiguraciongraficasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+
+    var isNuevo = !isreadonly && !iseditable;
+}
+<script src="~/Scripts/Model/Almacenes/AlmacenesController.js"></script>
+<script src="~/Scripts/Model/Bundle/BundleController.js"></script>
+<div>
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li ><a data-toggle="tab" href="#filtros">@General.Filtros</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active margin-bottom">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="filtros" class="tab-pane fade margin-bottom">
+            @Html.Partial("_filtros", Model)
+        </div>
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

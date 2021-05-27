@@ -1,0 +1,207 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Resources
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@*Rai*@
+
+@model  AsistenteAsignacionModel
+@{
+    var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvcuentastesoreria = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var cvbancos = FCampoverificacion.Instance.GetModel<BancosModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+
+<form class="form-horizontal" id="step3-form">
+
+    <br />
+
+    @*Serie*@
+    <div class="col-md-12"></div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseries, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvseriecontable.Name = "Fkseriescontables";
+                cvseriecontable.Url = Url.Action("SeriesContablesApi", "Api");
+                cvseriecontable.Valor = Model.Fkseries;
+                cvseriecontable.ControlesAsociados = "[ { \"tipodocumento\":\"Tipo\" } ]";
+                cvseriecontable.SoloLectura = true;
+                cvseriecontable.Obligatorio = false;
+                cvseriecontable.Configuracion.OcultarTexto = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvseriecontable)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkseries, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Fkcuentas*@
+    <div id="cuenta1" class="form-group cuentaa1">
+        @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentas.Name = "Fkcuentas2";
+                cvcuentas.Url = Url.Action("AsistenteAsignacionVencimientosApi", "Api");
+                cvcuentas.Valor = Model.Fkcuentas;
+                cvcuentas.Titulo = "Terceros";
+                cvcuentas.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
+                cvcuentas.SoloLectura = true;
+                cvcuentas.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkcuentas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Importe*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Importe, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Importe, new { id = "ImportePantalla3", @class = "form-control", @ngModel = "Importe", @readonly = true })
+        </div>
+    </div>
+
+    @*Situacion final*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.SituacionFinal, (object)new { @class = "control-label col-md-2", @readonly = true })
+        <div class="col-md-10">
+            @{
+                cvsituaciones.Name = "SituacionFinal";
+                cvsituaciones.Url = Url.Action("SituacionesApi", "Api");
+                cvsituaciones.Valor = Model.SituacionFinal;
+                cvsituaciones.Titulo = "Situación de tesorería final";
+                cvsituaciones.SoloLectura = true;
+                cvsituaciones.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvsituaciones)
+        </div>
+    </div>
+
+    @*Cuenta tesoreria*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentastesoreria.Name = "Fkcuentatesoreria";
+                cvcuentastesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
+                cvcuentastesoreria.Valor = Model.Fkcuentatesoreria;
+                cvcuentastesoreria.Titulo = Operarios.Fkcuentatesoreria;
+                cvcuentastesoreria.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentastesoreria)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkcuentatesoreria, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Formas pago*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkformaspago, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvfp.Name = "Fkformaspago";
+                cvfp.Url = Url.Action("FormasPagoApi", "Api");
+                cvfp.Valor = Model.Fkformaspago.ToString();
+                cvfp.Titulo = "Formas de pago";
+                cvfp.SoloLectura = false;
+                cvfp.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvfp)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*fechas*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.FechaContable)
+        </div>
+        @Html.LabelFor(f => Model.FechaVencimiento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.FechaVencimiento, new { id = "FechaVencimientoPantalla3", @class = "form-control" })
+        </div>
+    </div>
+
+    @*Enlace bancos, repasar*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Banco, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvbancos.Name = "Banco";
+                cvbancos.Url = Url.Action("BancosApi", "Api");
+                cvbancos.Valor = Model.Banco;
+                cvbancos.Titulo = "Banco librado";
+                cvbancos.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvbancos)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Banco, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Letra*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Letra, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Letra, new { @class = "form-control" })
+        </div>
+    </div>
+
+    @*Mandato*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Mandato, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select aria-label="Bancos" ng-show="bancoscliente.length > 1" ng-model="fkbancosmandatos" class="form-control" name="Fkbancosmandatos" @Html.Raw(string.Empty)>
+                <option ng-selected="{{fkbancosmandatos == item.Id}}" ng-repeat="item  in bancoscliente" value="{{ item.Id }}">{{item.Descripcion}}</option>
+            </select>
+            <label ng-show="bancoscliente.length && bancoscliente.length <= 1" class="control-label">@General.LblNoExistenBancos</label>
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Mandato, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Observaciones*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comentario, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(f => Model.Comentario, (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => Model.Comentario, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group col-md-4" align="right">
+        <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+    </div>
+</form>

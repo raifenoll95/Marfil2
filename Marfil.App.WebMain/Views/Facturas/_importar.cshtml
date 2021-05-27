@@ -1,0 +1,71 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Facturas.FacturasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvPedidos = FCampoverificacion.Instance.GetModel<PedidosModel>(WebHelper.ContextService);
+    cvPedidos.Titulo = Albaranes.TituloEntidad;
+}
+
+<div >
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@Facturas.Fkclientes</label>
+        <div class="col-md-10">
+            <label class="control-label bolder " ng-cloak>{{cliente}}</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@Facturas.AlbaranesDesde</label>
+        <div class="col-md-10">
+            @{
+
+                cvPedidos.Name = "fkalbaraninicio";
+                cvPedidos.Url = Url.Action("AlbaranesParaImportarApi", "Api");
+                cvPedidos.ControlesAsociados = "[ { \"cliente\":\"Fkclientes\" } ]";
+                cvPedidos.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvPedidos)
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@Facturas.AlbaranesHasta</label>
+        <div class="col-md-10">
+            @{
+
+                cvPedidos.Name = "fkalbaranfin";
+                cvPedidos.Url = Url.Action("AlbaranesParaImportarApi", "Api");
+                cvPedidos.ControlesAsociados = "[ { \"cliente\":\"Fkclientes\" } ]";
+                cvPedidos.Autofocus = false;
+
+            }
+            @Html.Partial("CampoverificacionUI", cvPedidos)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <button type="button" ng-disabled="!Fkclientes" class="btn btn-grey" ng-click="ImportarLineas('@Url.Action("AlbaranesParaImportarApi", "Api")')">
+                <i class="fa fa-search"></i>
+                @General.LblBuscar
+            </button>
+        </div>
+
+    </div>
+
+</div>
+

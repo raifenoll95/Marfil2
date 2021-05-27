@@ -1,0 +1,45 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Iva.TiposIvaModel
+@{
+    var lineas = TiposIvaModel.GetGruposIva(WebHelper.ContextService,Model.Id);
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table   table-bordered">
+            <thead>
+                <tr>
+                    <th>@Tiposiva.Grupo</th>
+                    <th class="col-md-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (lineas.Any())
+                {
+                    foreach (var item in lineas)
+                    {
+                        <tr>
+                            <td>@item.Descripcion</td>
+                            <td>
+                                <a class="btn btn-info btn-sm" href="@Url.Action("Details", "GruposIva", new {id = item.Id})">
+                                    <i a class="fa fa-search"></i>
+                                    @Tiposiva.Ver
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">
+                            @Tiposiva.MensajeGruposIva
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

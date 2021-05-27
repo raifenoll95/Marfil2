@@ -1,0 +1,100 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Drawing
+@using System.Web.UI.WebControls
+@using DevExpress.Data.Filtering
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model  Marfil.Dom.Persistencia.Model.Graficaslistados.ConfiguraciongraficasWrapperModel
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Codigo";
+        settings.CallbackRouteValues = new { Controller = "Configuraciongraficas", Action = "_listConfiguraciongraficas", id = Model.Idlistado  };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Link;
+        settings.CommandColumn.Visible = true;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.SettingsPager.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListPageSize"]);
+        settings.SettingsBehavior.AllowFocusedRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        //#endregion
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Codigo";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Titulo";
+            c.Visible = true;
+
+        });
+
+
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        
+        settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnEditar", Text = "<span class=\"btn btn-xs btn-info\"><i tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblEditar + "\"></i> " + General.LblEditar + "</span>" });
+        settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnEliminar", Text = "<span class=\"btn btn-xs btn-info\"><i tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + "\"></i> " + General.LblBorrar + "</span>" });
+        settings.CommandColumn.Width = Unit.Pixel(200);
+
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+        settings.ClientSideEvents.CustomButtonClick = "function(s,e) { CustomRedirect(s,e);}";
+        //display
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+    });
+
+    @grid.Bind(Model.Lineas.ToList()).GetHtml()
+
+
+
+
+
+}
+
+
+<script>
+    function CustomRedirect(s, e) {
+        var key = s.GetRowKey(e.visibleIndex);
+       
+        if (e.buttonID === 'btnEditar') {
+            document.location = '@Url.Action("Edit","Configuraciongraficas" )/' + key;
+        }
+        if (e.buttonID === 'btnEliminar') {
+            document.location = '@Url.Action("Delete", "Configuraciongraficas")/' + key;
+        }
+
+    }
+</script>

@@ -1,0 +1,20 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Listados.Base
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Marfil.Dom.Persistencia.Model;
+@using RBundle = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Bundle;
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.ConfiguraciongraficasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+
+    var isNuevo = !isreadonly && !iseditable;
+}
+<div class="form-group">
+    @Html.HiddenFor(f=>Model.Idlistado)
+    @Html.Partial(Url.Content("../" + FListadosModel.Instance.GetController(Model.Idlistado) + "/" + Model.Idlistado), Model.ListadoModel)
+</div>

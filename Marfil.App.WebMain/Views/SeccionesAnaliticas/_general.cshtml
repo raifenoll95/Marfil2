@@ -1,0 +1,90 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model SeccionesanaliticasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+
+    var listgrupo = WebHelper.GetApplicationHelper().GetListGrupoSecciones().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listgrupo.Insert(0, new SelectListItem() { Text = "", Value = "" });
+}
+
+
+
+
+@Html.HiddenFor(f => Model.Empresa)
+
+@if (iseditable || isreadonly)
+{
+    @Html.HiddenFor(f => Model.Id)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            <label class="control-label bolder">@Model.Id</label>
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+else
+{
+    @*<input type="hidden" name="Id" value="-1"/>*@
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((SeccionesanaliticasModel)Model).Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+            @Html.TextBoxFor(f => ((SeccionesanaliticasModel)Model).Id,
+                new { @class = "form-control", @autofocus = "",
+                    @ng_blur = "existePk(4,TipoRellenacod.Generico,\"" + Url.Action("Exists", "SeccionesAnaliticas") + "\",\"" + Url.Action("Edit", "SeccionesAnaliticas") + "\")",
+                    @ng_model = "codigo" })                   
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((SeccionesanaliticasModel)Model).Id, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Nombre, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Nombre, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Grupo, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Grupo, listgrupo, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Grupo, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Grupo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

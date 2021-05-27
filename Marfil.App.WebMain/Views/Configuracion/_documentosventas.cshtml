@@ -1,0 +1,26 @@
+﻿@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.VentasUsarCanal, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.VentasUsarCanal)
+    </div>
+
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.VentasUsarCanal, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.VentasCanalObligatorio, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.VentasCanalObligatorio)
+    </div>
+
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.VentasCanalObligatorio, "", new { @class = "text-danger" })
+    </div>
+</div>

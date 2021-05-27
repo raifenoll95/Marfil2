@@ -1,0 +1,62 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.CampoVerificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model BancosMandatosModel
+@{
+    var idControl = "bancosmandatos";
+    var factory = new FModel();
+    var linbancosmandatos = factory.GetModel<BancosMandatosLinModel>(WebHelper.ContextService);
+    var isreadonly = Model.ReadOnly;
+
+}
+<div class="modal fade" id="@idControl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Html.Raw(Model.Tipo == TipoBancosMandatos.Banco ? @BancosMandatos.Bancos : @BancosMandatos.TituloEntidad)</h4>
+            </div>
+            <div class="modal-body">
+                <div id="tabs">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="active"><a data-toggle="tab" href="#bancosmandatos_bancos">@BancosMandatos.Bancos</a></li>
+                        @if (Model.Tipo == TipoBancosMandatos.Mandato)
+                        {
+                            <li><a data-toggle="tab" href="#bancosmandatos_mandatos">@BancosMandatos.Mandatos</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="bancosmandatos_bancos" class="tab-pane fade in active">
+                        @Html.Partial("_bancos", Model)
+                    </div>
+                    @if (Model.Tipo == TipoBancosMandatos.Mandato)
+                    {
+                        <div id="bancosmandatos_mandatos" class="tab-pane fade in">
+
+                            @Html.Partial("_mandatos", Model)
+
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@General.LblCancelar</button>
+                @if (!isreadonly)
+                {
+                    <button type="button" class="btn btn-primary" ng-click="saveItem()">@General.BtnGuardar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿@model Marfil.Dom.Persistencia.Model.CRM.CostesVariablesPeriodoModel
+
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+@Html.HiddenFor(f => Model.Empresa)
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkejercicio, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(f => Model.Fkejercicio, listmodoscontacto, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Fkorigen, "", new { @class = "text-danger" })
+    </div>
+</div>

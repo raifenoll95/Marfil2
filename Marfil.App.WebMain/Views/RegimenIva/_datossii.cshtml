@@ -1,0 +1,95 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@model Marfil.Dom.Persistencia.Model.Iva.RegimenIvaModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    
+
+    var listtipofactura = WebHelper.GetApplicationHelper().GetListTipoFactura().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listtipofactura.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listregimenespecialemitidas = WebHelper.GetApplicationHelper().GetListRegimenEspecialEmitidas().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listregimenespecialemitidas.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listregimenespecialrecibidas = WebHelper.GetApplicationHelper().GetListRegimenEspecialRecibidas().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listregimenespecialrecibidas.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+}
+
+
+
+
+
+
+
+
+
+<div class="form-group">
+    <h1>@RegimenIva.DatosSII - @General.lblFacturasRecibidas</h1>
+    <label for="TipoFacturaRecibida" class="control col-md-2">@General.LblTipoFactura</label>
+    @*@Html.LabelFor(f => Model.TipoFacturaRecibida, new { @class = "control-label col-md-2" })*@
+    <div class="col-md-12">
+        @Html.DropDownListFor(f => Model.TipoFacturaRecibida, listtipofactura, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+
+    <label for="RegimenEspecialRecibida" class="control col-md-2">@General.LblRegimenEspecial</label>
+    <div class="col-md-12">
+        @Html.DropDownListFor(f => Model.RegimenEspecialRecibida, listregimenespecialrecibidas, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+
+    <hr class="col-md-12" />
+
+
+
+    <h1>@RegimenIva.DatosSII - @General.lblFacturasEmitidas  </h1>
+    <label for="TipoFacturaEmitida" class="control col-md-2">@General.LblTipoFactura</label>
+    <div class="col-md-12">
+        @Html.DropDownListFor(f => Model.TipoFacturaEmitida, listtipofactura, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-2"></div>
+
+    <label for="RegimenEspecialEmitida" class="control col-md-12">@General.LblRegimenEspecial</label>
+    <div class="col-md-12">
+        @Html.DropDownListFor(f => Model.RegimenEspecialEmitida, listregimenespecialemitidas, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+
+
+</div>
+
+
+
+    @*<div class="form-group">
+
+        @Html.LabelFor(f => Model.TipoFacturaRecibida, new { @class = "control-label col-md-2" })
+
+
+        <div class="col-md-2">
+            @Html.DropDownListFor(f => Model.TipoFacturaRecibida, listtipofactura, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.TipoFacturaRecibida, "", new { @class = "text-danger" })
+        </div>
+
+    </div>*@
+

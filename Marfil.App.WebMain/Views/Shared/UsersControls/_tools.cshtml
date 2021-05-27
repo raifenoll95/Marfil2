@@ -1,0 +1,94 @@
+﻿@model Marfil.Dom.Persistencia.Model.Interfaces.IToolbar
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Toolbar
+@using Resources
+
+@if (Model != null)
+{
+    <div class="">
+        <ul class="buttontoolbar list-inline">
+            <li>
+                <div class="header-title header-first"><strong><a href="@(Model.Toolbar.CustomAction? Url.Content(Model.Toolbar.CustomActionName) : Url.Action("Index"))">@General.LblGestionDe @Model.Toolbar.Titulo</a></strong>
+                </div></li>
+        @if (!string.IsNullOrEmpty(Model.Toolbar.OperacionTexto))
+        {
+            <li><div class="header-title @Html.Raw(WebHelper.DevexpressAA ? "" : "light-grey")">&gt;</div></li>
+            <li><div class="header-title divider">@Model.Toolbar.OperacionTexto</div></li>
+        }
+        else
+        {
+            <li><div class="header-title divider"></div></li>
+        }
+
+
+            @foreach (var item in Model.Toolbar.Acciones)
+            {
+                if (item is IToolbarComboModel)
+                {
+
+                    var itemobj = item as ToolbarActionComboModel;
+                    <li>
+                        <span class="btn-group" >
+                            @if (itemobj.Desactivado)
+                            {
+                                <span class="btn btn-info btn-white btn-xs" >
+                                    <i class="@itemobj.Icono"></i>
+                                    @itemobj.Texto
+                                </span>
+                            }
+                            else
+                            {
+                                <a class="btn btn-info btn-white btn-xs" target="@itemobj.Target" href="@itemobj.Url">
+                                    <i class="@itemobj.Icono"></i>
+                                    @itemobj.Texto
+                                </a>
+                            }
+                            
+                            @if (itemobj.Items.Count() > 1)
+                            {
+                                <button aria-label="@itemobj.Texto"  data-toggle="dropdown" class="btn btn-info btn-white btn-xs dropdown-toggle">
+                                    <span class="ace-icon fa fa-caret-down icon-only"></span>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-info dropdown-menu-right">
+                                    @foreach (var obj in itemobj.Items)
+                                    {
+                                        <li>
+                                            <a target="@itemobj.Target" href="@obj.Url">@obj.Texto</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+
+                        </span>
+                    </li>
+                }
+                else if (item is IToolbarSeparatorModel)
+                {
+                    var separatorItem = item as IToolbarSeparatorModel;
+                    <li><div class="header-title divider toolbarseparator"> &nbsp;</div></li>
+                }
+                else if (item is IToolbarActionModel)
+                {
+                    var actionItem = item as IToolbarActionModel;
+                    <li>
+                        @if (actionItem.Desactivado)
+                        {
+                            <span class="@Html.Raw(WebHelper.DevexpressAA ? "dark" : "grey")" title="@actionItem.Texto"><i class="@actionItem.Icono"></i> <span class="hidden-sm hidden-xs">@(actionItem.OcultarTextoSiempre ? string.Empty: actionItem.Texto)</span></span>
+                        }
+                        else
+                        {
+                            <a class="@Html.Raw(WebHelper.DevexpressAA ? "dark" : "blue")" title="@actionItem.Texto" target="@actionItem.Target" href="@actionItem.Url"><i class="@actionItem.Icono"></i> <span class="hidden-sm hidden-xs">@(actionItem.OcultarTextoSiempre ? string.Empty : actionItem.Texto)</span></a>
+                        }
+
+                    </li>
+                }
+                
+               
+            }
+
+
+        </ul><!-- /.breadcrumb -->
+    </div>
+}
+

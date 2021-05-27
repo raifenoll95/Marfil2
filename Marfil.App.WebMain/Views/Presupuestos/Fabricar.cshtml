@@ -1,0 +1,109 @@
+﻿@*Rai*@
+
+@using Resources
+@using Marfil.Dom.Persistencia.Model.Interfaces
+
+@model Marfil.Dom.Persistencia.Model.Documentos.Presupuestos.PresupuestosAsistenteModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Presupuestos/PresupuestosAsistenteController.js")"></script>
+
+<div ng-controller="PresupuestosAsistenteCtrl" ng-init="init('@Url.Action("getComponentes","Articulos")','@Url.Action("getPrecio","Tarifas")','@Url.Action("Presupuestar","Presupuestos")','@Url.Action("obtenerUnidadMedida","Articulos")', '@Url.Action("Index","Presupuestos")')">
+    <div id="fuelux-wizard-container">
+        <div>
+            <!-- #section:plugins/fuelux.wizard.steps -->
+            <ul class="steps">
+                <li data-step="1" class="active">
+                    <span class="step">1</span>
+                    <span class="title">Seleccionar artículos</span>
+                </li>
+
+                <li data-step="2">
+                    <span class="step">2</span>
+                    <span class="title">Componentes</span>
+                </li>
+            </ul>
+        </div>
+
+        <hr />
+
+        <!-- #section:plugins/fuelux.wizard.container -->
+        <div class="step-content pos-rel">
+            <div class="step-pane" data-step="1">
+                <div>
+                    <h3 font face="verdana" style="font-size:20px" class="blue center"><b>Seleccionar artículos</b></h3>
+                    <br />
+                    @Html.Partial("_asignacionstep1", Model)
+                </div>
+            </div>
+
+            <div class="step-pane" data-step="2">
+                <div>
+                    <h3 font face="verdana" style="font-size:20px" class="blue center"><b>Componentes</b></h3>
+                    <br />
+                    @Html.Partial("_asignacionstep2", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="wizard-actions">
+        <button class="btn btn-prev ">
+            <i class="ace-icon fa fa-arrow-left"></i>
+            @General.LblAnterior
+        </button>
+
+        <button class="btn btn-success btn-next" data-last="@General.Presupuestar">
+            @General.LblSiguiente
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+    </div>
+
+    @Html.Partial("_nuevoregistro")
+</div>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            //Antes de abrir el primer step, necesitamos pasarle ya las lineas al asistente
+            var data = {
+                Url: "@Url.Action("PresupuestosAsistenteApi", "Api")",
+                campoIdentificador: "Artículos",
+                IdComponenteasociado: "",
+                IdFormulariomodal: "",
+                Titulo: "Artículos disponibles",
+                Params: "{\"PresupuestoId\":\"" + @Model.Id + "\"}"
+            };
+            eventAggregator.Publish("_buscararticulospresupuesto", data);
+
+            $('#fuelux-wizard-container').ace_wizard().on('actionclicked.fu.wizard', function (e, info) {
+                if (info.step == 1) {
+                    if (!$("#step1-form").validate().form()) {
+                    }
+                    else {
+                        if (info.direction != "previous") {
+                            eventAggregator.Publish("_generarComponentes", 1);
+                        }
+                    }
+                }
+
+                else {
+                    if (info.step == 2 && info.direction != "previous") {
+                        eventAggregator.Publish("_presupuestar", 2);
+                    }
+                }
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,49 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var user = HttpContext.Current.User as ICustomPrincipal;
+}
+
+
+@using (Html.BeginForm("EditOperacion", "Almacenes", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+       @Html.Partial("_Almacenes", Model as AlmacenesModel)
+
+        
+        <div class="form-group">
+            <div class="col-md-12 margin-top">
+                <button ng-disabled="!MainFormIsEnable" class="btn btn-info" type="Submit">
+                    <i class="ace-icon fa fa-check bigger-110"  ></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

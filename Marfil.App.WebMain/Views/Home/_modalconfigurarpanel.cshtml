@@ -1,0 +1,63 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Resources
+@{
+    
+    var menu = WebHelper.GetApplicationHelper().GetListadosMenus();
+}
+<span style="cursor: pointer" onclick="$('#modalconfigurarpanel').modal('show');" id="fixedbutton" title="@General.LblConfigurarPanelControl"><i class="fa fa-plus-circle fa-4x green"></i></span>
+<div id="modalconfigurarpanel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>@General.LblConfigurarPanelControl</h3>
+            </div>
+            <div class="modal-body ">
+                <table class="table table-fixed">
+                    <thead class="cabecera" >
+                    <tr class="cabecera" >
+                        <th id="nombrelistado" class="col-md-9 cabecera"><span>@General.LblListado</span></th>
+                        <th id="listadoenlace" class="col-md-3 cabecera">#</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    @if (menu.Any())
+                    {
+                        foreach (var item in menu)
+                        {
+                            if (item.isseparator)
+                            {
+                                <tr>
+                                    <td headers="nombrelistado" class="col-md-12 cabecera bolder" colspan="2"><h5>@item.text</h5></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td headers="nombrelistado" class="col-md-9"><span>@item.text</span></td>
+                                    <td headers="listadoenlace" class="col-md-3"><a href="@Url.Action("Index", "Configuraciongraficas", new {id = item.link})" class="btn btn-primary btn-xs">@General.LblConfigurarGraficas</a></td>
+                                </tr>
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td headers="nombrelistado" colspan="2">
+                                <h3>@General.LblNoHayRegistros</h3>
+                            </td>
+                        </tr>
+                    }
+                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">@General.LblCerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model FamiliasproductosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+<script src="@Url.Content("~/Scripts/Model/Articulos/articulosstockcontroller.js")"></script>
+<div @Html.Raw("ng-controller=\"ArticulosStockCtrl\" ng-init=\"init(false," + Model.Gestionstock.ToString().ToLower() + "," + (((int)Model.Tipogestionlotes).ToString()) + "," + @Model.Stocknegativoautorizado.ToString().ToLower() + ","+ @Model.Lotefraccionable.ToString().ToLower() +"," + (((int)Model.Tipofamilia)) + "," + Model.Validarmaterial.ToString().ToLower() + "," + Model.Validarcaracteristica.ToString().ToLower() + ")\"")>
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#stock">@Articulos.Stock</a></li>
+            <li><a data-toggle="tab" href="#validar">@General.LblValidar</a></li>
+            <li><a data-toggle="tab" href="#generardescripcion">@General.LblGenerarDescripcion</a></li>
+            <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="stock" class="tab-pane fade margin-bottom">
+            @Html.Partial("_stock", Model)
+        </div>
+        <div id="validar" class="tab-pane fade margin-bottom">
+            @Html.Partial("_validar", Model)
+        </div>
+        <div id="generardescripcion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_generardescripcion", Model)
+        </div>
+        <div id="galeria" class="tab-pane fade margin-bottom">
+            @Html.Partial("_galeriaimagenes", Model.Galeria)
+        </div>
+    </div>
+</div>

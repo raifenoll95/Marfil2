@@ -1,0 +1,68 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras.AlbaranesComprasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvPedidosCompras = FCampoverificacion.Instance.GetModel<PedidosComprasModel>(WebHelper.ContextService);
+
+}
+
+<div >
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@AlbaranesCompras.Fkproveedores</label>
+        <div class="col-md-10">
+            <label class="control-label bolder " ng-cloak>{{proveedor}}</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@PedidosCompras.PedidosDesde</label>
+        <div class="col-md-10">
+            @{
+
+                cvPedidosCompras.Name = "PedidosComprasDesde";
+                cvPedidosCompras.Url = Url.Action("PedidosComprasParaImportarApi", "Api");
+                cvPedidosCompras.ControlesAsociados = "[ { \"cliente\":\"Fkproveedores\" } ]";
+                
+            }
+
+            @Html.Partial("CampoverificacionUI", cvPedidosCompras)
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@PedidosCompras.PedidosHasta</label>
+        <div class="col-md-10">
+            @{
+
+                cvPedidosCompras.Name = "PedidosComprasHasta";
+
+            }
+            @Html.Partial("CampoverificacionUI", cvPedidosCompras)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <button type="button" ng-disabled="!Fkproveedores" class="btn btn-grey" ng-click="ImportarLineas('@Url.Action("PedidosComprasLinParaImportarApi", "Api")')">
+                <i class="fa fa-search"></i>
+                @General.BtnBuscarLineas
+            </button>
+        </div>
+
+    </div>
+
+</div>
+

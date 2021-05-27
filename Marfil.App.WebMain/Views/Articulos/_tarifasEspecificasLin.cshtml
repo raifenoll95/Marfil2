@@ -1,0 +1,154 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model TarifaEspecificaArticulo
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var flujo = Model.Tipo.ToString();
+}
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView" + flujo;
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Articulos", Action = "ArticulosLin",id= flujo };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Articulos", Action = "ArticulosLinUpdate", id = flujo };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.ReadOnly = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Obligatorio";
+            c.ReadOnly = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.Caption = Articulos.TarifaDescripcion;
+            c.Width = Unit.Pixel(250);
+            c.ReadOnly = true;
+        } );
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fkcuenta";
+            c.Caption = Articulos.TarifaCuenta;
+            
+            c.ReadOnly = true;
+        } );
+
+
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Precio";
+            c.Caption = Articulos.Precio;
+            c.Width = Unit.Pixel(150);
+            c.PropertiesEdit.DisplayFormatString = "N2";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descuento";
+            c.Caption = Articulos.Descuento;
+            c.Width = Unit.Pixel(150);
+            c.PropertiesEdit.DisplayFormatString = "N2";
+        });
+        settings.Columns["Id"].Visible = false;
+        settings.Columns["Obligatorio"].Visible = false;
+
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+
+        });
+
+
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 4;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+
+            editor.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Right;
+            editor.ValidationSettings.Display = Display.Dynamic;
+            editor.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            editor.ValidationSettings.SetFocusOnError = true;
+
+            if (e.Column.FieldName == "Precio")
+            {
+
+                editor.Focus();
+            }
+        };
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+       if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model.Lineas).GetHtml()
+
+
+

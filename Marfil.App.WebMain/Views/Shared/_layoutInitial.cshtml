@@ -1,0 +1,144 @@
+﻿@using System.Threading
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.App.WebMain.Services
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model
+@using Resources
+@{
+    Layout = null;
+    var modelHeader = new HeaderModel() { IsInitial= true};
+    
+}
+<!DOCTYPE html>
+<html lang="@Thread.CurrentThread.CurrentUICulture.ToString()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marfil - @ViewBag.Title</title>
+    @Html.MetaAcceptLanguage()
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+    <script src="@Url.Content("~/Scripts/globalize-cultures/Messages/Messages."+ Thread.CurrentThread.CurrentUICulture.ToString() + ".js")"></script>
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/bootstrap.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/components/font-awesome/css/font-awesome.css")" />
+
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-fonts.css")" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace.css")" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="@Url.Content("~/content/dropdown.css")" />
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-rtl.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-skins.css")" />
+
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-part2.css")" class="ace-main-stylesheet" />
+    <![endif]-->
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-ie.css")" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="@Url.Content("~/assets/js/ace-extra.js")"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="@Url.Content("~/components/html5shiv/dist/html5shiv.min.js")"></script>
+    <script src="@Url.Content("~/components/respond/dest/respond.min.js")"></script>
+    <![endif]-->
+
+    
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/general.css")" />
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Css", required: false)
+    @Html.RenderCss()
+    @Scripts.Render("~/bundles/jquery")
+    <!-- Globalization-->
+
+    <script src="@Url.Content("~/Scripts/globalize.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    @Html.RenderScripts()
+    <!-- Angular -->
+    <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-touch.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-animate.min.js")"></script>
+    
+    <!-- Latinize -->
+    <script src="@Url.Content("~/Scripts/latinise.min.js")"></script>
+
+    <!-- Grid -->
+    <link rel="styleSheet" href="@Url.Content("~/Content/ui-grid.min.css")" />
+    <script src="@Url.Content("~/Scripts/ui-grid.js")"></script>
+
+    <!-- Events -->
+    <script src="@Url.Content("~/Scripts/EventAgregator/EventAgregator.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/TablasVarias/ValidatorAgregator.js")"></script>
+    <script src="@Url.Content("~/Scripts/VistaPrincipal/MainController.js")"></script>
+    <!-- Angular -->
+    <script>
+        var app = angular.module('angularApp', ['ngTouch', , 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.selection', 'campoverificacionModule']);
+    </script>
+
+    <script src="@Url.Content("~/Scripts/UserControls/Busquedas/BusquedasController.js")"></script>
+    <script src="@Url.Content("~/Scripts/UserControls/CampoVerificacion/CampoverificacionController.js")"></script>
+    <script src="@Url.Content("~/Scripts/UserControls/CampoVerificacion/customSelect.js")"></script>
+    <script src="@Url.Content("~/Scripts/UserControls/Campoidentificador/CampoidentificadorController.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Misc/Rellenacod/FRellenacod.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Misc/Rellenacod/RellenacodGeneric.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Misc/Rellenacod/RellenacodLetters.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Misc/Rellenacod/RellenacodLettersSimple.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Misc/Funciones.js")"></script>
+    <script src="@Url.Content("~/Scripts/string-format.min.js")"></script>
+    
+</head>
+<body ng-app="angularApp">
+@Html.Partial("_header", modelHeader)
+<div id="errors">
+    @Html.Partial("_errors")
+    @Html.Partial("_success")
+</div>
+<div class="container body-content full-height">
+    @RenderBody()
+</div>
+@Html.Partial("_footer")
+@Scripts.Render("~/bundles/bootstrap")
+
+
+@RenderSection("Scripts", required: false)
+@RenderSection("Angular", required: false)
+<script src="@Url.Content("~/Assets/js/src/ace.js")"></script>
+<script src="@Url.Content("~/Assets/js/src/ace.sidebar.js")"></script>
+<script src="@Url.Content("~/Assets/js/src/ace.sidebar-scroll-1.js")"></script>
+<script src="@Url.Content("~/Scripts/globalize-cultures/globalize.culture." + Thread.CurrentThread.CurrentUICulture.Name + ".js")"></script>
+<script src="@Url.Content("~/Scripts/GlobalizationCustom.js")"></script>
+
+@Html.RenderScripts()
+    <script src="@Url.Content("~/components/jquery.gritter/js/jquery.gritter.js")"></script>
+    <script src="@Url.Content("~/Scripts/Messages/MessagesService.js")"></script>
+    <div>
+        @Html.Partial("BusquedasUI", new BusquedasModel() { Nombre = "BusquedaGlobal" })
+</div>
+    <!-- layout -->
+    <script src="@Url.Content("~/Scripts/waitingdialog.js")"></script>
+<script type="text/javascript">
+    var messagesService = new MessagesService($.gritter);
+    $(document).ready(function() {
+        $("form").submit(function (ev) {
+            if ($(this).valid()) {
+                waitingDialog.show('@General.LblLoading', { dialogSize: 'sm' });
+                //this.submit(); // If all the validations succeeded
+            }
+         
+        });
+    });
+</script>
+</body>
+
+</html>

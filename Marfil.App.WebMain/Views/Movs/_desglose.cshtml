@@ -1,0 +1,52 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Contabilidad.Movs
+@using Marfil.Dom.Persistencia.Model.Contabilidad.Maes
+
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Contabilidad.Movs.MovsModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    Session["readonly"] = isreadonly;
+}
+
+<script src="~/Scripts/Helper/ControllerHelper.js"></script>
+<div ng-controller="HelperCtrl4Movs" ng-init="init('@Url.Action("comprobarNumeroDigitos","HelperView")','@Url.Action("existeCuenta4movs","HelperView")','@Url.Action("MaesApi","Api")')">
+    <div class="form-group">
+
+        <div class="col-md-12 margin-bottom">
+            @if (!isreadonly)
+            {
+                <span class="pull-right">
+                    <a class="btn btn-success btn-sm" href="javascript:CreateLineasRow(); " title="@General.LblCrear - (+)">
+                        <i class="fa fa-plus"></i>
+                        @General.BtnNuevoRegistro
+                    </a>
+                </span>
+            }
+
+        </div>
+        <div class="col-md-12">
+            @Html.Partial("_Movslin", ((MovsModel)Model).Lineas)
+        </div>
+
+        <div class="col-md-12" />
+
+        <div class="col-md-12">
+            @Html.Partial("_MaesTotales")
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        @Html.Partial("_SeccionesAnaliticas")
+    </div>
+</div>
+
+

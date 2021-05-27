@@ -1,0 +1,70 @@
+﻿@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.TituloMantenimiento = @General.LblGestionCambioMonedas;
+    
+    var user = HttpContext.Current.User as ICustomPrincipal;
+}
+
+
+
+@using (Html.BeginForm("CreateOperacion", "Monedas", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="UsuarioId" value="@user.Id" />
+    <input type="hidden" name="Usuario" value="@user.Usuario" />
+    <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+    <div class="form-horizontal">
+        
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((MonedasModel)Model).Id, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.TextBoxFor(f => ((MonedasModel)Model).Id, new { @class = "form-control" })
+                @Html.ValidationMessageFor(f => ((MonedasModel)Model).Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+       
+        <div class="form-group">
+            @Html.LabelFor(f => ((MonedasModel) Model).Descripcion, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((MonedasModel) Model).Descripcion, new {@class = "form-control", @autofocus = "" })
+                @Html.ValidationMessageFor(f => ((MonedasModel) Model).Descripcion, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((MonedasModel) Model).Abreviatura, new {@class = "control-label col-md-2"})
+            <div class="col-md-1">
+                @Html.TextBoxFor(f => ((MonedasModel) Model).Abreviatura, new {@class = "form-control"})
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((MonedasModel)Model).Abreviatura, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((MonedasModel)Model).Decimales, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.TextBoxFor(f => ((MonedasModel) Model).Decimales, new {@class = "form-control"})
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((MonedasModel)Model).Decimales, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.LblCrear
+                </button>
+            </div>
+        </div>
+    </div>
+}

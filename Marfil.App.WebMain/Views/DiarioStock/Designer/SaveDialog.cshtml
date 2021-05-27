@@ -1,0 +1,70 @@
+﻿@using Marfil.Dom.Persistencia.Model.Diseñador
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Diseñador.DesignModel
+<script src="@Url.Content("~/Scripts/UserControls/Designer/SavedialogController.js")"></script>
+
+<div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="SavedialogCtrl" ng-init="init('@Model.UsuarioId.ToString()','@Model.Usuarionombre','@((int)Model.Tipodocumento)','@((int)Model.Tipoprivacidad)','@Model.Name','@((int)Model.Tiporeport)','@Url.Action("SaveReport","Designer")')">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-save bigger"></i> @General.LblGuardar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Usuario</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" ng-model="usuario" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Privacidad</label>
+                        <div class="col-md-10">
+                            <select name="privacidad" class="form-control" ng-model="tipoprivacidad">
+                                <option value="0" @Html.Raw(Model.Tipoprivacidad ==TipoPrivacidadDocumento.Publico ? "selected=\"selected\"" : string.Empty )>Público</option>
+                                <option value="1"  @Html.Raw(Model.Tipoprivacidad ==TipoPrivacidadDocumento.Privado ? "selected=\"selected\"" : string.Empty )>Privado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tipo</label>
+                        <div class="col-md-10">
+                            <select name="tiporeport" class="form-control" ng-model="tiporeport" >
+                                <option value="0" @Html.Raw(Model.Tiporeport == TipoReport.Report ? "selected=\"selected\"" : string.Empty )>Report</option>
+                                <option value="1" @Html.Raw(Model.Tiporeport == TipoReport.Subreport ? "selected=\"selected\"" : string.Empty )>Subreport</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Nombre</label>
+                        <div class="col-md-10">
+                            <input type="text" id="savedialognombre" name="nombre" ng-model="nombre" class="form-control" autofocus="autofocus"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="tiporeport==='0'">
+                        <label class="col-md-2 control-label">Defecto</label>
+                        <div class="col-md-10">
+                            <input type="checkbox"  name="defecto" ng-model="defecto"  />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-default" data-dismiss="modal">@General.LblCerrar</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="aceptar()">@General.LblAceptar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#save').on('shown.bs.modal', function () {
+        $('#savedialognombre').focus();
+    })
+</script>

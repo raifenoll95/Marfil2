@@ -1,0 +1,33 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+
+
+<div>
+
+    @{
+        ViewData["readonly"] = true;
+    }
+    <div class="form-horizontal">
+
+
+        @Html.Partial("_SeccionesAnaliticas", Model as SeccionesanaliticasModel)
+    </div>
+</div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info margin-top" href="@Url.Action("Edit", new {id = ((SeccionesanaliticasModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}

@@ -1,0 +1,220 @@
+﻿@using Resources
+<script src="@Url.Content("~/Scripts/Model/Emails/EmailModel.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Emails/emailscontroller.js")"></script>
+<div id="enviaremail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="EmailCtrl" ng-init="init('@Url.Action("Edit","Seguimientos")','@Url.Action("Enviaremail","Email")','@Url.Action("Subirarchivoemail","Email")','@Url.Action("ContactoContactosApi", "Api")')">
+    <div div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@General.LblEnviaremail - {{Model.Tituloformulario}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group-sm">
+
+                        <div class="col-sm-1 pull-right" ng-show="Model.PertmiteCc">
+                            <span class="btn-xs btn-link pull-right" ng-click="MostrarCc=!MostrarCc" style="cursor: pointer">CC</span>
+                        </div>
+                        <div class="col-sm-1 pull-right" ng-show="Model.PertmiteBcc">
+                            <span class="btn-xs btn-link pull-right" ng-click="MostrarBcc=!MostrarBcc" style="cursor: pointer">BCC</span>
+                        </div>
+                        <div class="col-sm-2 pull-right">
+
+                            <label class="btn-xs btn-link pull-right" style="cursor: pointer" ng-disabled="Subiendoarchivo">
+                                <i class="fa fa-paperclip"></i> Adjuntar <input ng-disabled="Subiendoarchivo" type="file" class="hidden" onchange="angular.element(this).scope().seleccionarArchivo(this)">
+                            </label>
+                        </div>
+                        <div class="col-sm-2 pull-right" ng-show="Subiendoarchivo" ng-cloak>
+                            <span class="pull-right small pull-right" ><i class="fa fa-upload"></i> Subiendo archivo...</span>
+                        </div>
+                        <div class="col-md-12"></div>
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Para", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                @Html.TextBox("Para", "", new { @class = "form-control", @ng_model = "Model.Destinatario" })
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary pull-right" aria-label="Buscar direccion" ng-click="BuscarDireccion()"><i class="fa fa-search"></i> @General.LblBuscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-offset-2 col-md-10">
+                            <span name="asuntoerror" class="red">{{Model.Destinatarioerror}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="MostrarCc" ng-cloak>
+                        @Html.Label("Cc", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                @Html.TextBox("Cc", "", new {@class = "form-control", @ng_model = "Model.DestinatarioCc"})
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary pull-right" aria-label="Buscar direccion" ng-click="BuscarDireccionCC()"><i class="fa fa-search"></i> @General.LblBuscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-offset-2 col-md-10">
+                            <span name="asuntoerror" class="red">{{Model.DestinatarioCcerror}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="MostrarBcc" ng-cloak>
+                        @Html.Label("Bcc", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                @Html.TextBox("Bcc", "", new { @class = "form-control", @ng_model = "Model.DestinatarioBcc" })
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary pull-right" aria-label="Buscar direccion" ng-click="BuscarDireccionBCC()"><i class="fa fa-search"></i> @General.LblBuscar</button>
+                                </div>
+                            </div>
+                                
+                            </div>
+
+                        <div class="col-md-offset-2 col-md-10">
+                            <span name="asuntoerror" class="red">{{Model.DestinatarioBccerror}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Asunto", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBox("Asunto", "", new { @class = "form-control", @ng_model = "Model.Asunto" })
+                        </div>
+                        <div class="col-md-offset-2 col-md-10">
+                            <span name="asuntoerror" class="red">{{Model.Asuntoerror}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group-sm">
+                        <div class="col-md-10 col-md-offset-2">
+                            <ul class="list-inline">
+                                <li data-ng-repeat="c in Model.Ficheros">
+                                    <span class="label label-white middle">
+                                        <i data-ng-click="removeElement(c)" class="fa fa-trash-o" style="cursor: pointer" title="@General.LblBorrar"></i>
+                                        {{ c.Nombre }}
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Contenido", new { @class = "col-md-2 control-label" })
+                        <div id="wy">
+                            <div class="col-md-10">
+                                <div class="wysiwyg-editor" id="editor1" name="Contenido" ng-model="Model.Contenido"></div>
+                            </div>
+                        </div>                    
+                        <div class="col-md-offset-2 col-md-10">
+                            <span name="asuntoerror" class="red">{{Model.Contenidoerror}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span ng-show="Enviando" ng-cloak class="pull-left green fa-2x">@General.LblEnviandoMail</span>
+                <span ng-show="ResultadoEnvio==1" ng-cloak class="pull-left green fa-2x">Email enviado correctamente!</span>
+                <span ng-show="ResultadoEnvio==0" ng-cloak class="pull-left warning fa-2x">Ups! Parece que ocurrio un error al enviar el email</span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@General.LblCancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="Send()" ng-disabled="Enviando">@General.LblEnviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="@Url.Content("~/components/jquery-ui.custom/jquery-ui.custom.js")"></script>
+<script src="@Url.Content("~/components/jqueryui-touch-punch/jquery.ui.touch-punch.js")"></script>
+<script src="@Url.Content("~/components/markdown/lib/markdown.js")"></script>
+<script src="@Url.Content("~/components/bootstrap-markdown/js/bootstrap-markdown.js")"></script>
+<script src="@Url.Content("~/components/jquery.hotkeys/index.js")"></script>
+<script src="@Url.Content("~/components/bootstrap-wysiwyg/bootstrap-wysiwyg.js")"></script>
+<script src="@Url.Content("~/components/bootbox.js/bootbox.js")"></script>
+
+<script src="@Url.Content("~/assets/js/src/elements.scroller.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.colorpicker.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.fileinput.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.typeahead.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wysiwyg.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.spinner.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.treeview.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.aside.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.basics.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.scrolltop.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.ajax-content.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.touch-drag.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.sidebar.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.sidebar-scroll-1.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.submenu-hover.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.widget-box.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.settings.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.settings-rtl.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.settings-skin.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.widget-on-reload.js")"></script>
+<script src="@Url.Content("~/assets/js/src/ace.searchbox-autocomplete.js")"></script>
+
+
+
+
+<script>
+    $('#editor1').ace_wysiwyg({
+        toolbar:
+		[
+			'font',
+			null,
+			'fontSize',
+			null,
+			{ name: 'bold', className: 'btn-info' },
+			{ name: 'italic', className: 'btn-info' },
+			{ name: 'strikethrough', className: 'btn-info' },
+			{ name: 'underline', className: 'btn-info' },
+			null,
+			{ name: 'insertunorderedlist', className: 'btn-success' },
+			{ name: 'insertorderedlist', className: 'btn-success' },
+			{ name: 'outdent', className: 'btn-purple' },
+			{ name: 'indent', className: 'btn-purple' },
+			null,
+			{ name: 'justifyleft', className: 'btn-primary' },
+			{ name: 'justifycenter', className: 'btn-primary' },
+			{ name: 'justifyright', className: 'btn-primary' },
+			{ name: 'justifyfull', className: 'btn-inverse' },
+			null,
+			{ name: 'createLink', className: 'btn-pink' },
+			{ name: 'unlink', className: 'btn-pink' },
+			null,
+			{ name: 'insertImage', className: 'btn-success' },
+			null,
+			'foreColor',
+			null,
+			{ name: 'undo', className: 'btn-grey' },
+			{ name: 'redo', className: 'btn-grey' }
+		],
+        'wysiwyg': {
+            fileUploadError: showErrorAlert
+        }
+    }).prev().addClass('wysiwyg-style2');
+
+
+
+    function showErrorAlert(reason, detail) {
+        var msg = '';
+        if (reason === 'unsupported-file-type') { msg = "Unsupported format " + detail; }
+
+        $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+		 '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+    }
+
+   
+</script>
+

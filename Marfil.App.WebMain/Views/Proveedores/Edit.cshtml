@@ -1,0 +1,44 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "Proveedores", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+       @Html.Partial("_Proveedores", Model as ProveedoresModel)
+
+        
+        <div class="form-group">
+            <div class="col-md-12 margin-top">
+                <button class="btn btn-info" type="Submit" @Html.Raw( ((ProveedoresModel)Model).Cuentas.BloqueoModel.Bloqueada ? "disabled=\"disabled\"" : "" )>
+                    <i class="ace-icon fa fa-check bigger-110"  ></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Bloqueomodal
+{
+    @{
+        ((ProveedoresModel) Model).Cuentas.BloqueoModel.Controller = "Cuentas";
+    }
+    @Html.Partial("_bloqueomodals", ((ProveedoresModel)Model).Cuentas.BloqueoModel)
+}

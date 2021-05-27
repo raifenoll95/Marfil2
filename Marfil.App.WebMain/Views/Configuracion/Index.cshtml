@@ -1,0 +1,110 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+@{
+    ViewBag.Title = Configuracionaplicacion.TituloEntidad;
+    var idiomaslist = WebHelper.GetApplicationHelper().GetListIdiomas();
+}
+<div class="margin-top">
+    <div class="row">
+        @using (Html.BeginForm("Index", "Configuracion", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(f => Model.Id)
+
+            <div class="form-horizontal">
+                
+                <div>
+                    <div id="tabs">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+                            <li><a data-toggle="tab" href="#produccion">@General.LblProduccion</a></li>
+                            <li><a data-toggle="tab" href="#presupuestos">@General.LblPresupuestos</a></li>
+                            <li><a data-toggle="tab" href="#pedidosventa">@General.LblPedidos</a></li>
+                            <li><a data-toggle="tab" href="#reservas">@Reservas.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#albaranesventas">@General.LblAlbaranes</a></li>
+                            <li><a data-toggle="tab" href="#facturasventas">@Facturas.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#comisiones">@Facturas.LblComisiones</a></li>
+                            <li><a data-toggle="tab" href="#presupuestoscompras">@PresupuestosCompras.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#pedidoscompras">@PedidosCompras.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#albaranescompras">@AlbaranesCompras.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#facturascompras">@FacturasCompras.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#documentosventas">@Configuracionaplicacion.DocumentosVentas</a></li>
+                            <li><a data-toggle="tab" href="#documentoscompras">@Configuracionaplicacion.DocumentosCompras</a></li>
+                            <li><a data-toggle="tab" href="#transformaciones">@Transformaciones.TituloEntidadSingular</a></li>
+                            <li><a data-toggle="tab" href="#crm">@CRM.TituloEntidad</a></li>
+                           
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div id="general" class="tab-pane fade in active">
+                            @Html.Partial("_general", Model)
+                        </div>
+                        <div id="produccion" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_produccion", Model)
+                        </div>
+                        <div id="presupuestos" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_presupuestos", Model)
+                        </div>
+                        <div id="pedidosventa" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_pedidos", Model)
+                        </div>
+                        <div id="reservas" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_reservas", Model)
+                        </div>
+                        <div id="albaranesventas" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_albaranes", Model)
+                        </div>
+                        <div id="facturasventas" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_facturas", Model)
+                        </div>
+                        <div id="comisiones" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_comisiones", Model)
+                        </div>
+                        <div id="documentosventas" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_documentosventas", Model)
+                        </div>
+                        <div id="documentoscompras" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_documentoscompras", Model)
+                        </div>
+                        <div id="presupuestoscompras" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_presupuestoscompras", Model)
+                        </div>
+                        <div id="pedidoscompras" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_pedidoscompras", Model)
+                        </div>
+                        <div id="albaranescompras" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_albaranescompras", Model)
+                        </div>
+
+                        <div id="facturascompras" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_facturascompras", Model)
+                        </div>
+                        <div id="transformaciones" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_transformaciones", Model)
+                        </div>
+                        <div id="crm" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_crm", Model)
+                        </div>
+                    </div>
+                </div>
+                
+
+
+                <div class="form-group">
+                    <div class="col-md-10 margin-top">
+
+                        <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            @General.BtnGuardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+                                }
+    </div>
+</div>

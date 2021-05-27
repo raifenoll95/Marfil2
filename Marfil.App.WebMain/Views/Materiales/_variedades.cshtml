@@ -1,0 +1,34 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model MaterialesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+<div class="form-group">
+    <div class="col-md-10">
+        <span class="fa-2x">
+            @Materiales.Variedadestajos
+        </span>
+        @if (isNuevo || iseditable)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+
+
+    </div>
+    <div class="col-md-10">
+        @Html.Partial("_materialeslin", Model.Lineas)
+    </div>
+</div>

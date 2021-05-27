@@ -1,0 +1,163 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Bundle = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Bundle
+@{
+    var campoverificacion = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+}
+
+@{
+
+    Html.AddScript(Url.Content("~/Scripts/Model/Albaranes/NuevaLineaStockController.js"));
+    
+}
+
+<input type="hidden" id="flujonuevoregistro" name="flujonuevoregistro"  value="1"/>
+<div class="modal fade" id="_entradastock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="RecepcionStockCtrl">
+    <div class="modal-dialog modal-lg" role="document" ng-init="init('@Url.Action("NuevaLinea",controller)','@Url.Action("GetLotesAutomaticos",controller)','@Url.Action("UltimoprecioApi", "Api")','@((int)TipoDocumentos.AlbaranesCompras)')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Albaranes.Seleccionarlotes</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" name="Materialsalida" id="Materialsalida"/>
+                        @Html.Label(Articulos.TituloEntidadSingular, new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @{
+                                campoverificacion.Name = "Fkarticulosentrada";
+                                campoverificacion.Url = Url.Action("ArticulosDocumentosApi", "Api");
+                                campoverificacion.Valor = "";
+                                campoverificacion.CampoIdentificador = "Id";
+                                campoverificacion.CampoDescripcion = "Descripcion";
+                                campoverificacion.Titulo = Articulos.TituloEntidad;
+                                campoverificacion.Autofocus = true;
+                                campoverificacion.ControlesAsociados = "[{\"fkcuentas\": \"Fkproveedores\",\"flujo\":\"flujonuevoregistro\",\"fkmonedas\": \"Fkmonedas\",\"fkregimeniva\": \"Fkregimeniva\",\"Materialsalida\": \"Materialsalida\"}]";
+                            }
+                            @Html.Partial("CampoverificacionUI", campoverificacion)
+                        </div>
+                        <div class="col-md-12"></div>
+                        <div class="col-md-offset-2 text-danger">{{Fkarticuloserrores}}</div>
+
+                    </div>
+
+                    <div class="form-group" ng-show="Gestionlotes">
+                        <label class="control-label col-md-2">@Albaranes.LoteAutomatico</label>
+                        <div class="col-md-1"><input type="checkbox" name="Loteautomatico" ng-disabled="!Editarloteautomatico" ng-model="Loteautomatico" ng-checked="Loteautomatico"/>
+                        </div>
+                        <label class="control-label col-md-2">@Albaranes.Lote</label>
+                        <div class="col-md-4" ng-show="Loteautomatico">
+                            <select ng-model="Loteautomaticoid" class="form-control" name="Loteautomaticoid">
+                                <option ng-selected="{{Loteautomaticoid == item.IdLote}}" ng-repeat="item  in Lotesautomaticos" value="{{ item.IdLote }}">{{item.Texto}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" ng-show="!Loteautomatico">
+                            <input type="text" name="Lote" ng-model="Lote" class="form-control text-uppercase"/>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" ng-show="Tipofamilia==2">
+                        <label class="control-label col-md-2">@Bundle.TituloEntidadSingular</label>
+                        <div class="col-md-2" >
+                            <input type="text" name="Bundle" ng-model="Bundle" class="form-control text-uppercase" maxlength="2" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="Metros" ng-model="Metros" class="form-control col-md-2" />
+                        <input type="hidden" name="Fkunidades" ng-model="Fkunidades" class="form-control" />
+
+                        <div class="col-md-12"></div>
+                        <div class="col-md-2 col-md-offset-2">
+                            <label class="control-label">@Albaranes.Cantidad</label>
+                            <div class="">
+                                <input type="text" ng-readonly="Tipofamilia == 1 || !Editarcantidad" ng-model="Cantidad" name="Cantidad" class="form-control" decimalesnumerico/>
+                            </div>
+                            <div class="text-danger">{{Cantidaderrores}}</div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Largo</label>
+                            <div><input type="text" ng-readonly="!Editarlargo" ng-model="Largo" name="Largo" class="form-control" decimalesnumerico/></div>
+                            <div class="text-danger">{{Largoerrores}}</div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Ancho</label>
+                            <div><input type="text" ng-readonly="!Editarancho" ng-model="Ancho" name="Ancho" class="form-control"decimalesnumerico/>
+                            </div>
+                            
+                            <div class="text-danger">{{Anchoerrores}}</div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-center">@Albaranes.Grueso</label>
+                            <div><input type="text" ng-readonly="!Editargrueso" ng-model="Grueso" name="Grueso" class="form-control" decimalesnumerico/>
+                            </div>
+                            
+                            <div class="text-danger">{{Gruesoerrores}}</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div><label class="text-center">@Albaranes.Metros</label></div>
+                            <div class="badge-light text-right">
+                                <div>
+                                    <input type="text" ng-readonly="!Editarmetros" ng-model="Metros" name="Metros" class="form-control" decimalesnumerico />
+                                </div>
+                            </div>
+                        
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">@Albaranes.Precio</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" id="Precioarticulo" ng-readonly="!Editarprecio" name="Precioarticulo" ng-model="Precio" class="form-control" decimalesnumerico/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary btn-sm" ng-disabled="!Editarprecio" ng-click="SearchPrecios()" type="button"><i class="fa fa-search"></i> @General.LblBuscar</button>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="Descuento" ng-readonly="!Editardescuento" ng-model="Descuentoarticulo" class="form-control" decimalesnumerico/>
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12"></div>
+                        <div class="col-md-4 col-md-offset-2"><span class="text-danger">{{Precioerrores}}</span></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="hidden" ng-model="Subtotal" name="Subtotal" class="form-control" />
+                        <label class="control-label col-md-2 ">@Albaranes.Subtotal</label>
+                        <label class="control-label col-md-2 badge-light" style="padding: 5px !important">{{Subtotal}}</label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                
+                <span class="text-danger pull-left col-md-8 text-left">{{Generalerrores}}</span>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" ng-click="Aceptar()">@General.BtnGuardar</button>    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

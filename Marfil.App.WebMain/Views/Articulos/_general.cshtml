@@ -1,0 +1,333 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model ArticulosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var cvfamilia = FCampoverificacion.Instance.GetModel<FamiliasproductosModel>(WebHelper.ContextService);
+    var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
+    var cvcaracteristicas = FCampoverificacion.Instance.GetModel<CaracteristicasModel>(WebHelper.ContextService);
+    var cvgrosores = FCampoverificacion.Instance.GetModel<GrosoresModel>(WebHelper.ContextService);
+    var cvacabados = FCampoverificacion.Instance.GetModel<AcabadosModel>(WebHelper.ContextService);
+    var cvunidades = FCampoverificacion.Instance.GetModel<UnidadesModel>(WebHelper.ContextService);
+
+}
+<!-- primary key -->
+
+<script src="@Url.Content("~/Scripts/Model/Articulos/articuloscontroller.js")"></script>
+
+@if (isNuevo)
+{
+    <script>
+        eventAggregator.RegisterEvent("CodigoArticulo", function(codigo) {
+            $.get("@Url.Action("Exists","Articulos")/"+ codigo)
+           .success(function (response) {
+               if (response.Existe) {
+                   var resultValue;
+                   bootbox.confirm(Messages.EditarRegistroExistente, function (result) {
+                       if (result) {
+                           window.location = "@Url.Action("Edit", "Articulos")/" + codigo;
+                       } else {
+                           location.reload(true);
+                       }
+                   });
+
+
+               }
+           }).error(function (data, status, headers, config) {
+                    alert(data);
+                });
+        });
+    </script>
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+<input type="hidden" name="Id" id="Id" value="@Model.Id"/>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Familia, new {@class = "control-label col-md-2"})
+    @if (isNuevo)
+    {
+        <div class="col-md-10">
+            @{
+                cvfamilia.Name = "Familia";
+                cvfamilia.Url = Url.Action("FamiliasproductosApi", "Api");
+                cvfamilia.Valor = Model.Familia;
+                cvfamilia.SoloLectura = isreadonly || iseditable;
+                cvfamilia.Obligatorio = true;
+                cvfamilia.Autofocus = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvfamilia)
+        </div>
+    }
+    else
+    {
+        <div class="text-left">
+            @Html.HiddenFor(f => Model.Familia)
+            <label style="text-align: left !important" class="bolder control-label col-md-10">@Model.Familia - @Model.FamiliaDescripcion</label>
+        </div>
+    }
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Familia, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group" ng-show="Validarmaterial" ng-cloak>
+
+    @Html.LabelFor(f => Model.Materiales, new {@class = "control-label col-md-2"})
+    @if (isNuevo)
+    {
+        <div class="col-md-10">
+            @{
+                cvmateriales.Name = "Materiales";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.Materiales;
+                cvmateriales.SoloLectura = isreadonly || iseditable;
+               // cvmateriales.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+    }
+    else
+    {
+        <div class="text-left">
+            @Html.HiddenFor(f => Model.Materiales)
+            <label style="text-align: left !important" class="bolder control-label col-md-10">@Model.Materiales - @Model.MaterialesDescripcion</label>
+        </div>
+    }
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Materiales, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group" ng-show="Validarcaracteristica" ng-cloak>
+
+    @Html.LabelFor(f => Model.Caracteristicas, new {@class = "control-label col-md-2"})
+    @if (isNuevo)
+    {
+        <div class="col-md-10">
+            @{
+                cvcaracteristicas.Name = "Caracteristicas";
+                cvcaracteristicas.Url = Url.Action("CaracteristicasApi", "Api");
+                cvcaracteristicas.Valor = Model.Caracteristicas;
+                cvcaracteristicas.SoloLectura = isreadonly || iseditable;
+                //cvcaracteristicas.Obligatorio = true;
+                cvcaracteristicas.ControlesAsociados = "[ { \"familia\":\"Familia\" } ]";
+
+            }
+            @Html.Partial("CampoverificacionUI", cvcaracteristicas)
+        </div>
+    }
+    else
+    {
+        <div class="text-left">
+            @Html.HiddenFor(f => Model.Caracteristicas)
+            <label style="text-align: left !important" class="bolder control-label col-md-10">@Model.Caracteristicas - @Model.CaracteristicasDescripcion</label>
+        </div>
+
+    }
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Caracteristicas, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group" ng-show="Validargrosor" ng-cloak>
+    @Html.LabelFor(f => Model.Grosores, new {@class = "control-label col-md-2"})
+
+    @if (isNuevo)
+    {
+        <div class="col-md-10">
+            @{
+                cvgrosores.Name = "Grosores";
+                cvgrosores.Url = Url.Action("GrosoresApi", "Api");
+                cvgrosores.Valor = Model.Grosores;
+                cvgrosores.SoloLectura = isreadonly || iseditable;
+                //cvgrosores.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvgrosores)
+        </div>
+    }
+    else
+    {
+        <div class="text-left">
+            @Html.HiddenFor(f => Model.Grosores)
+            <label style="text-align: left !important" class="bolder control-label col-md-10">@Model.Grosores - @Model.GrosoresDescripcion</label>
+        </div>
+    }
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Acabados, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group" ng-show="Validaracabado" ng-cloak>
+
+    @Html.LabelFor(f => Model.Acabados, new { @class = "control-label col-md-2" })
+    @if (isNuevo)
+    {
+        <div class="col-md-10">
+            @{
+                cvacabados.Name = "Acabados";
+                cvacabados.Url = Url.Action("AcabadosApi", "Api");
+                cvacabados.Valor = Model.Acabados;
+                cvacabados.SoloLectura = isreadonly || iseditable;
+               // cvacabados.Obligatorio = true;
+
+            }
+            @Html.Partial("CampoverificacionUI", cvacabados)
+        </div>
+    }
+    else
+    {
+        <div class="text-left">
+            @Html.HiddenFor(f => Model.Acabados)
+            <label style="text-align: left !important" class="bolder control-label col-md-10">@Model.Acabados - @Model.AcabadosDescripcion</label>
+        </div>
+    }
+
+
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Acabados, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group" ng-show="Mostrarcodigolibre">
+    @Html.LabelFor(f => Model.Codigolibre, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f=>Model.Codigolibre, isreadonly ||iseditable ? (object)new { @class = "form-control", @ng_model = "Codigolibre", @readonly = "readonly" } :(object) new  {  @class="form-control", @ng_blur="ValidarCodigo()", @ng_model="Codigolibre" })
+    </div>
+</div>
+
+<!-- end primary key -->
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion2, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion2, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion2, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcionabreviada, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcionabreviada, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Descripcionabreviada, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Categoria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(f => Model.Categoria, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Categoria, "", new { @class = "text-danger" })
+    </div>
+</div>
+<h4>@Articulos.Medidas</h4>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkunidades, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvunidades.Name = "Fkunidades";
+            cvunidades.Url = Url.Action("UnidadesApi", "Api");
+            cvunidades.Valor = Model.Fkunidades;
+            cvunidades.SoloLectura = true;
+
+        }
+        @Html.Partial("CampoverificacionUI", cvunidades)
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkunidades, "", new {@class = "control-label text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Largo, new {@class = "control-label col-md-2"})
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Largo, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+    @Html.LabelFor(f => Model.Ancho, new {@class = "control-label col-md-2"})
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Ancho, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+
+    @Html.LabelFor(f => Model.Grueso, new {@class = "control-label col-md-2"})
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Grueso, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-offset-2 col-md-1">
+        @Html.ValidationMessageFor(f => Model.Largo, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-offset-2 col-md-1">
+        @Html.ValidationMessageFor(f => Model.Ancho, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-offset-2 col-md-1">
+        @Html.ValidationMessageFor(f => Model.Grueso, "", new {@class = "text-danger"})
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <div class="col-md-3 col-md-offset-2">
+        <div class="input-group">
+            @Html.LabelFor(f => Model.Editarlargo, new {@class = "control-label input-group-addon"})
+            <span class="input-group-addon">
+                @Html.CheckBoxFor(f => Model.Editarlargo, isreadonly ? (object) new {@disabled = "disabled"} : (object) new {@class = "align-center"})
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="input-group">
+            @Html.LabelFor(f => Model.Editarancho, new {@class = "control-label input-group-addon"})
+            <span class="input-group-addon">
+                @Html.CheckBoxFor(f => Model.Editarancho, isreadonly ? (object) new {@disabled = "disabled"} : (object) new {@class = "align-center"})
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="input-group">
+            @Html.LabelFor(f => Model.Editargrueso, new {@class = "control-label input-group-addon"})
+            <span class="input-group-addon">
+                @Html.CheckBoxFor(f => Model.Editargrueso, isreadonly ? (object) new {@disabled = "disabled"} : (object) new {@class = "align-center"})
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-10  col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Editarlargo, "", new {@class = "text-danger col-md-2"})
+        @Html.ValidationMessageFor(f => Model.Editarancho, "", new {@class = "text-danger col-md-2"})
+        @Html.ValidationMessageFor(f => Model.Editargrueso, "", new {@class = "text-danger col-md-2"})
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+
+

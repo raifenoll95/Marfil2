@@ -1,0 +1,44 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+@{
+    var idiomaslist = WebHelper.GetApplicationHelper().GetListIdiomas();
+    var criteriosagrupacionlist = Model.GetCriteriosAgrupacion();
+}
+@Html.HiddenFor(f=>Model.Id)
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkidioma1, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkidioma1, idiomaslist.Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}), new {@class = "form-control", @autofocus = ""})
+        
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Fkidioma1, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkidioma2, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkidioma2, idiomaslist.Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}), new {@class = "form-control"})
+
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Fkidioma2, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcriterioagrupacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkcriterioagrupacion, criteriosagrupacionlist.Select(f => new SelectListItem() { Value = f.Id, Text = f.Nombre }), new { @class = "form-control" })
+
+    </div>
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ValidationMessageFor(f => Model.Fkcriterioagrupacion, "", new { @class = "text-danger" })
+    </div>
+</div>

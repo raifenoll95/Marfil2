@@ -1,0 +1,116 @@
+﻿@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Newtonsoft.Json
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as AlbaranesModel;
+    var modelImprimir = modelview.GetListFormatos();
+    var columns = new[]
+   {
+        new ColumnDefinition() {field = "Id", displayName = "Id", visible = false, width = 100 },
+        new ColumnDefinition() {field = "Fkarticulos", displayName = "Cod. Artículo", visible = true, width = 150},
+        new ColumnDefinition() {field = "Descripcion", displayName = "Descripción", visible = true, width = 200},
+        new ColumnDefinition() {field = "Lote", displayName = "Lote", visible = true, width = 100, enableCellEdit = false},
+        new ColumnDefinition() {field = "Cantidad", displayName = "Cantidad", visible = true, width = 100, enableCellEdit = true, type = "number"},
+        new ColumnDefinition() {field = "SLargo", displayName = "Largo", visible = true, width = 100},
+        new ColumnDefinition() {field = "SAncho", displayName = "Ancho", visible = true, width = 100},
+        new ColumnDefinition() {field = "SGrueso", displayName = "Grueso", visible = true, width = 100},
+        new ColumnDefinition() {field = "SMetros", displayName = "Metros", visible = true, width = 100},
+        new ColumnDefinition() {field = "SPrecio", displayName = "Precio", visible = true, width = 100},
+        new ColumnDefinition() {field = "Porcetanjedescuento", displayName = "%  Desc.", visible = true, width = 100},
+        new ColumnDefinition() {field = "SImporte", displayName = "Subtotal", visible = true, width = 100},
+        new ColumnDefinition() {field = "Fktiposiva", displayName = "IVA", visible = true, width = 100},
+        new ColumnDefinition() {field = "Porcentajeiva", displayName = "% IVA", visible = true, width = 100},
+
+    };
+
+    var columnsAsignarContenedores = new[]
+    {
+        new ColumnDefinition() {field = "Id", displayName = "Id", visible = false, width = 80 },
+        new ColumnDefinition() {field = "Fkarticulos", displayName = "Cod. Artículo", visible = true, width = 150},
+        new ColumnDefinition() {field = "Descripcion", displayName = "Descripción", visible = true, width = 180},
+        new ColumnDefinition() {field = "Lote", displayName = "Lote", visible = true, width = 100, enableCellEdit = false},
+        new ColumnDefinition() {field = "Tabla", displayName = "Tabla", visible = true, width = 60, enableCellEdit = false},
+        new ColumnDefinition() {field = "Cantidad", displayName = "Cantidad", visible = true, width = 90, enableCellEdit = true, type = "number"},
+        new ColumnDefinition() {field = "SLargo", displayName = "Largo", visible = true, width = 100},
+        new ColumnDefinition() {field = "SAncho", displayName = "Ancho", visible = true, width = 100},
+        new ColumnDefinition() {field = "SGrueso", displayName = "Grueso", visible = true, width = 100},
+        new ColumnDefinition() {field = "SMetros", displayName = "Metros", visible = true, width = 100},
+        new ColumnDefinition() {field = "Contenedor", displayName = "Contenedor", visible = true, width = 100},
+        new ColumnDefinition() {field = "Sello", displayName = "Sello", visible = true, width = 100},
+        new ColumnDefinition() {field = "Pesoneto", displayName = "Peso neto", visible = true, width = 100},
+        new ColumnDefinition() {field = "Caja", displayName = "Caja", visible = true, width = 100},
+
+    };
+}
+
+@using (Html.BeginForm("Facturar", "Facturas", FormMethod.Post, new { @id = "facturarform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="serie" value="@modelview.Fkseriefactura" />
+    <input type="hidden" name="fecha" value="@modelview.Fechafactura" />
+    <input type="hidden" name="albaranesreferencia" value="@modelview.Referencia" />
+    <input type="hidden" name="returnUrl" value="@Url.Action("Edit", "Albaranes", new {id = modelview.Id})" />
+}
+
+
+@using (Html.BeginForm("EditOperacion", "Albaranes", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_Albaranes", Model as AlbaranesModel)
+
+        <div class="margin-top">
+
+
+            <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+
+        </div>
+
+    </div>
+}
+
+@Html.Partial("_envioemails")
+<script>
+        function CallGenerarDevolucion() {
+            var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
+            var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
+
+            GenerarDevolucion(values, columnas, "@Url.Action("Devolucion","Albaranes")","@modelview.Id");
+        }
+        function CallGenerarContenedores() {
+            var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
+            var columnas = @Html.Raw(JsonConvert.SerializeObject(columnsAsignarContenedores));
+
+            GenerarContenedores(values, columnas, "@Url.Action("AsignarContenedores","Albaranes")", "@modelview.Id");
+        }
+</script>
+@Html.Partial("UsersControls/_albarandevolucionModal")
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+
+@Html.Partial("UsersControls/_albaranasignarcontenedores")
+

@@ -1,0 +1,7 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@model Marfil.Dom.Persistencia.Model.Terceros.ClientesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    Model.Direcciones.ReadOnly = isreadonly;
+}
+@Html.Action("Direcciones", "Direcciones", Model.Direcciones)

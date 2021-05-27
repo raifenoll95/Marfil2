@@ -1,0 +1,91 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model ArticulosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+}
+
+
+<div >
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-2">
+            @Html.LabelFor(f => Model.Preciomateriaprima, new { @class = "control-label" })
+            @Html.TextBoxFor(f => Model.Preciomateriaprima, isreadonly ? (object)new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "tarifas", @class = "form-control",@ng_model= "Preciomateriaprima" })
+            @Html.ValidationMessageFor(f => Model.Preciomateriaprima, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(f => Model.Porcentajemerma, new { @class = "control-label" })
+            @Html.TextBoxFor(f => Model.Porcentajemerma, isreadonly ? (object)new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "tarifas", @class = "form-control", @ng_model = "Porcentajemerma" })
+            @Html.ValidationMessageFor(f => Model.Porcentajemerma, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(f => Model.Costemateriaprima, new { @class = "control-label" })
+            @Html.TextBoxFor(f => Model.Costemateriaprima, new { @class = "form-control", @readonly = "readonly", @ng_model = "Costemateriaprima" })
+            @Html.ValidationMessageFor(f => Model.Costemateriaprima, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Costeelaboracionmateriaprima, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Costeelaboracionmateriaprima, isreadonly ? (object) new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly"} : (object) new { @aria_label = "tarifas", @class = "form-control", @ng_model = "Costeelaboracionmateriaprima" })
+            @Html.ValidationMessageFor(f => Model.Costeelaboracionmateriaprima, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Costeportes, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Costeportes, isreadonly ? (object) new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly"} : (object) new { @aria_label = "tarifas", @class = "form-control", @ng_model = "Costeportes" })
+            @Html.ValidationMessageFor(f => Model.Costeportes, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Otroscostes, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Otroscostes, isreadonly ? (object) new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly"} : (object) new { @aria_label = "tarifas", @class = "form-control", @ng_model = "Otroscostes" })
+            @Html.ValidationMessageFor(f => Model.Otroscostes, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Costefabricacion, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Costefabricacion, isreadonly ? (object) new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly"} : (object) new { @aria_label = "tarifas", @class = "form-control", @ng_model = "Costefabricacion" })
+            @Html.ValidationMessageFor(f => Model.Costefabricacion, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Costeindirecto, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Costeindirecto, isreadonly ? (object)new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "tarifas", @class = "form-control", @ng_model = "Costeindirecto" })
+            @Html.ValidationMessageFor(f => Model.Costeindirecto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Coste, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Coste, new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly", @ng_model = "Coste" } )
+            @Html.ValidationMessageFor(f => Model.Coste, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+<h3>@Tarifas.TituloEntidad</h3>
+@Html.EditorFor(f => Model.TarifasSistemaCompra)
+
+
+

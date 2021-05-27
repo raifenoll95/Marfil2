@@ -1,0 +1,95 @@
+﻿@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+<div class="form-horizontal">
+    @if (!isNuevo)
+    {
+        @Html.HiddenFor(f=> ((CriteriosagrupacionModel)Model).Id)
+    }
+    <div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+        @Html.LabelFor(f => ((CriteriosagrupacionModel)Model).Id, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.TextBoxFor(f => ((CriteriosagrupacionModel)Model).Id, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new {@aria_label="Codigo", @required = "required", @class = "form -control", @autofocus = "autofocus", @ng_blur = "existePk(4,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Criteriosagrupacion") + "\",\"" + Url.Action("Edit", "Criteriosagrupacion") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((CriteriosagrupacionModel)Model).Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((CriteriosagrupacionModel)Model).Nombre, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => ((CriteriosagrupacionModel)Model).Nombre, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly",@autofocus="autofocus" } : (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((CriteriosagrupacionModel)Model).Nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => ((CriteriosagrupacionModel)Model).Ordenaralbaranesvista, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(f => ((CriteriosagrupacionModel)Model).Ordenaralbaranesvista, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => ((CriteriosagrupacionModel)Model).Ordenaralbaranesvista, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+            <span class="fa-2x">
+                @General.Agruparpor
+            </span>
+            @if (!isreadonly)
+            {
+                <span class="pull-right">
+                    <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                        <i class="fa fa-plus"></i>
+                        @General.BtnNuevoRegistro
+                    </a>
+                </span>
+            }
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.Partial("_CriteriosagrupacionLin", ((CriteriosagrupacionModel)Model).Lineas)
+        </div>
+    </div>
+   
+</div>
+
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

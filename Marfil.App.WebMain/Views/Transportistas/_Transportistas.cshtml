@@ -1,0 +1,63 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model TransportistasModel
+
+<div>
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#transporte">@Transportistas.LblTransporte</a></li>
+            <li><a data-toggle="tab" href="#clasificacion">@Acreedores.Clasificacion</a></li>
+            <li><a data-toggle="tab" href="#facturacion">@Acreedores.Facturacion</a></li>
+            <li><a data-toggle="tab" href="#pagos">@Acreedores.Pagos</a></li>
+            <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
+            <li><a data-toggle="tab" href="#contactos">@General.LblContactos</a></li>
+            <li><a data-toggle="tab" href="#bancos">@General.LblBancos</a></li>
+            
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @{
+                ViewData["tipocuenta"] = (int) TiposCuentas.Transportistas;
+            }
+            @Html.EditorFor(f => Model.Cuentas, "_cabeceracuentasterceros")
+        </div>
+        <div id="clasificacion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_clasificacion", Model)
+        </div>
+        <div id="facturacion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_facturacion", Model)
+        </div>
+        <div id="pagos" class="tab-pane fade margin-bottom">
+            @Html.Partial("_pago", Model)
+        </div>
+        <div id="direcciones" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/UserControls/Direcciones/DireccionesController.js")"></script>
+            @Html.Partial("_direcciones", Model)
+        </div>
+        <div id="contactos" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/Scripts/UserControls/Contactos/ContactosController.js")"></script>
+            @Html.Partial("_contactos", Model)
+        </div>
+        <div id="bancos" class="tab-pane fade margin-bottom">
+            @{
+                var isreadonly = ViewData["readonly"] != null ? (bool) ViewData["readonly"] : false;
+                Model.BancosMandatos.ReadOnly = isreadonly;
+            }
+            @Html.Action("BancosMandatos", "BancosMandatos", Model.BancosMandatos)
+        </div>
+
+        <div id="transporte" class="tab-pane fade margin-bottom">
+            @Html.Partial("_transporte", Model)
+        </div>
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>
+

@@ -1,0 +1,57 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+
+<h4>@CRM.TituloEntidadOportunidades</h4>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Estadooportunidadesinicial, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadooportunidadesinicial, Model.Estadosoportunidades.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Estadooportunidadestotal, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadooportunidadestotal, Model.Estadosoportunidades.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+</div>
+
+<br />
+<h4>@CRM.TituloEntidadProyectos</h4>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Estadoproyectosinicial, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadoproyectosinicial, Model.Estadosproyectos.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Estadoproyectostotal, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadoproyectostotal, Model.Estadosproyectos.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+</div>
+
+<br />
+<h4>@CRM.TituloEntidadCampañas</h4>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Estadocampañasinicial, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadocampañasinicial, Model.Estadoscampañas.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Estadocampañastotal, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadocampañastotal, Model.Estadoscampañas.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+</div>
+
+<br />
+<h4>@CRM.TituloEntidadIncidencias</h4>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Estadoincidenciasinicial, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadoincidenciasinicial, Model.Estadosincidencias.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Estadoincidenciastotal, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Estadoincidenciastotal, Model.Estadosincidencias.Select(f => new SelectListItem() { Value = f.CampoId, Text = f.Descripcion }), new { @class = "form-control" })
+    </div>
+</div>

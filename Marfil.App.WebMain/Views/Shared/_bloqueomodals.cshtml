@@ -1,0 +1,85 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Resources
+@model Marfil.Dom.ControlsUI.Bloqueo.BloqueoEntidadModel
+
+@if (ViewBag.Bloquear)
+{
+    var motivos = WebHelper.GetApplicationHelper().GetListMotivosBloqueo();
+
+
+
+    if (!Model.Readonly)
+    {
+        <div class="modal fade" id="bloquear" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-lock bigger"></i> @General.LblBloqueo @(Model.Entidad)</h4>
+                    </div>
+                    @using (Html.BeginForm("Bloquear", string.IsNullOrEmpty(Model.Controller) ? @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() : Model.Controller, FormMethod.Post))
+                    {
+                        <div class="modal-body">
+                            <p>
+                                @General.LblIndicaMotivoBloqueo <strong>@(Model.Entidad)</strong>
+                            </p>
+
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="operacion" value="true"/>
+                            <input type="hidden" name="@(Model.Campoclaveprimaria)" value="@(Model.Valorclaveprimaria)"/>
+                            <input type="hidden" name="returnurl" value="@Url.Action("Edit", @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), new { id = Model.Valorclaveprimaria })"/>
+                            <div class="margin">
+                                <div>
+
+                                    @Html.LabelFor(f => Model.FkMotivobloqueo, new { @class = "control-label" })
+
+                                    <div>                                        
+                                        <select name="motivo" class="form-control">
+                                            @foreach (var item in motivos)
+                                            {
+                                                <option value="@item.Valor">@item.Descripcion</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-ar btn-default" data-dismiss="modal">@General.LblCerrar</button>
+                            <button type="submit" class="btn btn-ar btn-primary">@General.LblAceptar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="desbloquear" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-unlock bigger"></i> @General.LblDesbloqueo @(Model.Entidad)</h4>
+                    </div>
+                    @using (Html.BeginForm("Bloquear", string.IsNullOrEmpty(Model.Controller) ? @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() : Model.Controller, FormMethod.Post, new {@class = "form-horizontal"}))
+                    {
+                        <div class="modal-body">
+                            <p>@General.LblBloqueoConfirmacionParte1</p>
+
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="operacion" value="false"/>
+                            <input type="hidden" name="@(Model.Campoclaveprimaria)" value="@(Model.Valorclaveprimaria)"/>
+                            <input type="hidden" name="returnurl" value="@Url.Action("Edit", @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), new {id = Model.Valorclaveprimaria})"/>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-ar btn-default" data-dismiss="modal">@General.LblCerrar</button>
+                            <button type="submit" class="btn btn-ar btn-primary">@General.LblAceptar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,52 @@
+﻿@using System.Globalization
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.CRM.IncidenciasCRMModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+   
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+@*<div ng-controller="ArticulosCtrl" ng-init="init(@((Model.Preciomateriaprima??0).ToString(CultureInfo.InvariantCulture)),@((Model.Porcentajemerma??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costemateriaprima??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costeelaboracionmateriaprima??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costeportes??0).ToString(CultureInfo.InvariantCulture)),@((Model.Otroscostes??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costefabricacion??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costeindirecto??0).ToString(CultureInfo.InvariantCulture)),@((Model.Coste??0).ToString(CultureInfo.InvariantCulture)),'@Model.Codigolibre',@Model.Validarmateriales.ToString().ToLower(),@Model.Validarcaracteristicas.ToString().ToLower(),@Model.Validargrosores.ToString().ToLower(),@Model.Validaracabados.ToString().ToLower(),@((Model.Tipofamilia==(int)TipoFamilia.Libre).ToString().ToLower()))">*@
+@*<div style="padding: 10px;">*@
+    <div id="tabs"> 
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#gestion">@General.LblGestion</a></li>
+            <li><a data-toggle="tab" href="#seguimientos">Seguimientos</a></li>
+            <li><a data-toggle="tab" href="#cierre">@General.LblCierre</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="gestion" class="tab-pane fade">
+            @Html.Partial("_gestion", Model)
+        </div>      
+        <div id="seguimientos" class="tab-pane fade">
+            @Html.Partial("_seguimientos", Model)
+        </div>  
+        <div id="cierre" class="tab-pane fade">
+            @Html.Partial("_cierre", Model)
+        </div>         
+    </div>
+
+@*</div>*@
+
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href");
+        if (target === "#seguimientos") {
+            GridViewSeguimientos.Refresh();            
+        }
+    });
+
+    $.validator.setDefaults({ ignore: null });
+</script>
+

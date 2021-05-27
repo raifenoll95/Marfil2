@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{05B45CAD-4AA8-4DA5-A87C-F0F918114A26}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Marfil.Dom.Persistencia</RootNamespace>
+    <AssemblyName>Marfil.Dom.Persistencia</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure|AnyCPU'">
+    <OutputPath>bin\Azure\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Acabados.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Acreedores.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Agentes.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Albaranes.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlbaranesLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlbaranesTotales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppPermisos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Articulos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Aseguradoras.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bancos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BancosMandatos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Caracteristicas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CaracteristicasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Clientes.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comerciales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contactos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contadores.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContadoresLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Criteriosagrupacion.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CriteriosagrupacionLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cuentas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cuentastesoreria.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Direcciones.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentosUsuario.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ejercicios.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Empresas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Estados.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Facturas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FacturasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FacturasTotales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FacturasVencimientos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Familiasproductos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FormasPago.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FormasPagoLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Grosores.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GruposIva.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GruposIvaLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Guiascontables.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GuiascontablesLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ApplicationHelper.cs" />
+    <Compile Include="Helpers\CheckPaisEuropeo.cs" />
+    <Compile Include="Helpers\CustomDisplayDescriptionAttribute.cs" />
+    <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Helpers\LogService.cs" />
+    <Compile Include="Helpers\ServiceHelper.cs" />
+    <Compile Include="Helpers\ValidationException.cs" />
+    <Compile Include="Listados\Base\IListados.cs" />
+    <Compile Include="Listados\Base\IListResultView.cs" />
+    <Compile Include="Listados\Base\ListadoResultado.cs" />
+    <Compile Include="Listados\Base\ListadosModel.cs" />
+    <Compile Include="Listados\FListadosModel.cs" />
+    <Compile Include="Listados\ListadosArticulos.cs" />
+    <Compile Include="Listados\ListadosProductosFacturas.cs" />
+    <Compile Include="Listados\ListadosProductosDocumentos.cs" />
+    <Compile Include="Listados\ListadosFacturas.cs" />
+    <Compile Include="Listados\ListadosDetalladoFacturas.cs" />
+    <Compile Include="Listados\ListadosDetalladoAlbaranes.cs" />
+    <Compile Include="Listados\ListadosDetalladoPedidos.cs" />
+    <Compile Include="Listados\ListadosDetalladoPresupuestos.cs" />
+    <Compile Include="Listados\ListadosAlbaranes.cs" />
+    <Compile Include="Listados\ListadosPedidos.cs" />
+    <Compile Include="Listados\ListadosPresupuestos.cs" />
+    <Compile Include="Listados\ListadosTerceros.cs" />
+    <Compile Include="Listados\ListadosProductosAlbaranes.cs" />
+    <Compile Include="Listados\ListadosProductosPedidos.cs" />
+    <Compile Include="Listados\ListadosProductosPresupuestos.cs" />
+    <Compile Include="Listados\ResultModel.cs" />
+    <Compile Include="MarfilEntities.cs" />
+    <Compile Include="MarfilModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarfilModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarfilModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarfilModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarfilModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Materiales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialesLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ConfiguracionModel.cs" />
+    <Compile Include="Model\Configuracion\EjerciciosModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasTiposDocumentos.cs" />
+    <Compile Include="Model\Configuracion\TarifasbaseModel.cs" />
+    <Compile Include="Model\Configuracion\SeriesConstants.cs" />
+    <Compile Include="Model\Configuracion\SeriesModel.cs" />
+    <Compile Include="Model\Configuracion\ContadoresModel.cs" />
+    <Compile Include="Model\Configuracion\Cuentas\GuiascontablesModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasEstadosStock.cs" />
+    <Compile Include="Model\Configuracion\EstadosModel.cs" />
+    <Compile Include="Model\Diseñador\DesignModel.cs" />
+    <Compile Include="Model\Diseñador\DocumentosModel.cs" />
+    <Compile Include="Model\Documentos\Albaranes\AlbaranesModel.cs" />
+    <Compile Include="Model\Documentos\Albaranes\AlbaranesReport.cs" />
+    <Compile Include="Model\Documentos\Facturas\AsistenteFacturacionModel.cs" />
+    <Compile Include="Model\Documentos\Facturas\FacturasModel.cs" />
+    <Compile Include="Model\Documentos\Facturas\FacturasReport.cs" />
+    <Compile Include="Model\Documentos\FDocumentosDatasourceReport.cs" />
+    <Compile Include="Model\Documentos\IDocumentosImpresion.cs" />
+    <Compile Include="Model\Documentos\IReport.cs" />
+    <Compile Include="Model\Documentos\Pedidos\PedidosModel.cs" />
+    <Compile Include="Model\Documentos\Pedidos\PedidosReport.cs" />
+    <Compile Include="Model\Documentos\Presupuestos\PresupuestosModel.cs" />
+    <Compile Include="Model\Documentos\Presupuestos\PresupuestosReport.cs" />
+    <Compile Include="Model\FicherosGenerales\Criteriosagrupacion.cs" />
+    <Compile Include="Model\FicherosGenerales\ObrasModel.cs" />
+    <Compile Include="Model\FicherosGenerales\ArticulosModel.cs" />
+    <Compile Include="Model\FicherosGenerales\CaracteristicasModel.cs" />
+    <Compile Include="Model\FicherosGenerales\FamiliasproductosModel.cs" />
+    <Compile Include="Model\FicherosGenerales\GrosoresModel.cs" />
+    <Compile Include="Model\FicherosGenerales\BancosMandatosModel.cs" />
+    <Compile Include="Model\Configuracion\Cuentas\CuentasModel.cs" />
+    <Compile Include="Model\Configuracion\Cuentas\TiposCuentasModel.cs" />
+    <Compile Include="Model\Configuracion\Empresa\EmpresaModel.cs" />
+    <Compile Include="Model\Configuracion\Planesgenerales\PlanesGeneralesModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\BaseTablasVariasModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\BasicDerivada.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\ICanValidate.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasCargosEmpresaModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasDestinosAlmacen.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasFrecuenciaTareasProgramadas.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasGeneralModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasIdiomasAplicacion.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasModosPagoModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasPaisesModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasTareasProgramadas.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasTiposAlbaranesModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasTiposNif.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\EventosMaquinasModel.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\IGetColumnasGrid.cs" />
+    <Compile Include="Model\Configuracion\TablasVarias\ITablasVariasModel.cs" />
+    <Compile Include="Model\Configuracion\UnidadesModel.cs" />
+    <Compile Include="Model\ContactosModel.cs" />
+    <Compile Include="Model\DatosDefectoModel.cs" />
+    <Compile Include="Model\DireccionesModel.cs" />
+    <Compile Include="Model\FicherosGenerales\AcabadosModel.cs" />
+    <Compile Include="Model\FicherosGenerales\BancosModel.cs" />
+    <Compile Include="Model\FicherosGenerales\FormasPagoModel.cs" />
+    <Compile Include="Model\FicherosGenerales\MaterialesModel.cs" />
+    <Compile Include="Model\FicherosGenerales\MonedasModel.cs" />
+    <Compile Include="Model\FicherosGenerales\ProvinciasModel.cs" />
+    <Compile Include="Model\FicherosGenerales\PuertosModel.cs" />
+    <Compile Include="Model\FicherosGenerales\TarifasModel.cs" />
+    <Compile Include="Model\Interfaces\IDocumentState.cs" />
+    <Compile Include="Model\Iva\GruposIvaModel.cs" />
+    <Compile Include="Model\Iva\RegimenIvaModel.cs" />
+    <Compile Include="Model\Iva\TiposRetencionesModel.cs" />
+    <Compile Include="Model\Iva\TiposIvaModel.cs" />
+    <Compile Include="Model\FModel.cs" />
+    <Compile Include="Model\HeaderModel.cs" />
+    <Compile Include="Model\ListIndexModel.cs" />
+    <Compile Include="Model\PermisosModel.cs" />
+    <Compile Include="Model\RolesModel.cs" />
+    <Compile Include="Model\RootModel.cs" />
+    <Compile Include="Model\Terceros\CuentastesoreriaModel.cs" />
+    <Compile Include="Model\Terceros\ComercialesModel.cs" />
+    <Compile Include="Model\Terceros\AgentesModel.cs" />
+    <Compile Include="Model\Terceros\AseguradorasModel.cs" />
+    <Compile Include="Model\Terceros\AcreedoresModel.cs" />
+    <Compile Include="Model\Terceros\IProspectoCliente.cs" />
+    <Compile Include="Model\Terceros\OperariosModel.cs" />
+    <Compile Include="Model\Terceros\ClientesModel.cs" />
+    <Compile Include="Model\Terceros\ProveedoresModel.cs" />
+    <Compile Include="Model\Terceros\ProspectosModel.cs" />
+    <Compile Include="Model\Terceros\TransportistasModel.cs" />
+    <Compile Include="Model\UltimoprecioEspecificoModel.cs" />
+    <Compile Include="Model\UsuariosModel.cs" />
+    <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\Interfaces\ICanDisplayName.cs" />
+    <Compile Include="Model\Interfaces\IModelView.cs" />
+    <Compile Include="Model\LoginModel.cs" />
+    <Compile Include="Model\MenuItemsAplicacionModel.cs" />
+    <Compile Include="Monedas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MonedasLog.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Obras.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Operarios.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pedidos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedidosLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedidosTotales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Planesgenerales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreferenciasUsuario.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Presupuestos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PresupuestosLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PresupuestosTotales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Prospectos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proveedores.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Provincias.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Puertos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegimenIva.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Roles.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Series.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServicesView\FConverterModel.cs" />
+    <Compile Include="ServicesView\FService.cs" />
+    <Compile Include="ServicesView\FValidationService.cs" />
+    <Compile Include="ServicesView\Interfaces\IConverterModelService.cs" />
+    <Compile Include="ServicesView\Interfaces\IGestionService.cs" />
+    <Compile Include="ServicesView\Interfaces\ILoginService.cs" />
+    <Compile Include="ServicesView\Interfaces\IValidationService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\UsuariosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ProspectosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Mailing\EmailsService.cs" />
+    <Compile Include="ServicesView\Servicios\ProspectosService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\FacturasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\FacturasService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\CriteriosagrupacionConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ObrasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\CriteriosagrupacionService.cs" />
+    <Compile Include="ServicesView\Servicios\ObrasService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\CuentastesoreriaConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\EstadosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\AlbaranesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\PedidosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TransportistasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\EjerciciosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Documentos\DocumentosUsuarioService.cs" />
+    <Compile Include="ServicesView\Servicios\Documentos\Importar\ImportacionService.cs" />
+    <Compile Include="ServicesView\Servicios\Documentos\StateMachine\MachineStateService.cs" />
+    <Compile Include="ServicesView\Servicios\Documentos\TipoDocumento.cs" />
+    <Compile Include="ServicesView\Servicios\EjerciciosService.cs" />
+    <Compile Include="ServicesView\Servicios\BancosService.cs" />
+    <Compile Include="ServicesView\Servicios\AlbaranesService.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\PreferenciaConfiguracionListado.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\PreferenciaDocumentoImpresionDefecto.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\PreferenciaEjercicioDefecto.cs" />
+    <Compile Include="ServicesView\Servicios\PedidosService.cs" />
+    <Compile Include="ServicesView\Servicios\PresupuestosService.cs" />
+    <Compile Include="ServicesView\Servicios\AcabadosService.cs" />
+    <Compile Include="ServicesView\Servicios\ComercialesService.cs" />
+    <Compile Include="ServicesView\Servicios\AgentesService.cs" />
+    <Compile Include="ServicesView\Servicios\ArticulosService.cs" />
+    <Compile Include="ServicesView\Servicios\AseguradorasService.cs" />
+    <Compile Include="ServicesView\Servicios\BancosMandatosService.cs" />
+    <Compile Include="ServicesView\Servicios\Campoverificacion\FCampoverificacion.cs" />
+    <Compile Include="ServicesView\Servicios\ConfiguracionService.cs" />
+    <Compile Include="ServicesView\Servicios\ContactosService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ComercialesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\PresupuestosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\SeriesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TarifasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Listados\ListadosService.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\EstadosdocumentosStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\TarifasbaseStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\TiposDocumentosStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\TiposNifStartup.cs" />
+    <Compile Include="ServicesView\Servicios\TarifasbaseService.cs" />
+    <Compile Include="ServicesView\Servicios\SeriesService.cs" />
+    <Compile Include="ServicesView\Servicios\ContadoresService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\AgentesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ArticulosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\AseguradorasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\BancosMandatosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\BaseConverterModel.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ConfiguracionConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ContactosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ContadoresConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\CuentasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\DireccionesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\EmpresasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\FamiliasproductosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\FormasPagoConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GruposIvaConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GuiascontablesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\CaracteristicasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\MaterialesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\MonedasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\AcreedoresConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\OperariosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ClientesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ProveedoresConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\ProvinciasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\PuertosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\RegimenIvaConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\RolesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TablasVariasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TablasVariasLinConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TiposcuentasConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TiposIvaConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TiposRetencionesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\UnidadesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\CuentasService.cs" />
+    <Compile Include="ServicesView\Servicios\DireccionesService.cs" />
+    <Compile Include="ServicesView\Servicios\EmpresasService.cs" />
+    <Compile Include="ServicesView\Servicios\FamiliasproductosService.cs" />
+    <Compile Include="ServicesView\Servicios\GrosoresService.cs" />
+    <Compile Include="ServicesView\Servicios\GruposIvaService.cs" />
+    <Compile Include="ServicesView\Servicios\GruposService.cs" />
+    <Compile Include="ServicesView\Servicios\GuiascontablesService.cs" />
+    <Compile Include="ServicesView\Servicios\CaracteristicasService.cs" />
+    <Compile Include="ServicesView\Servicios\MaterialesService.cs" />
+    <Compile Include="ServicesView\Servicios\MonedasService.cs" />
+    <Compile Include="ServicesView\Servicios\FormasPagoService.cs" />
+    <Compile Include="ServicesView\Servicios\GestionService.cs" />
+    <Compile Include="ServicesView\Servicios\LoginService.cs" />
+    <Compile Include="ServicesView\Servicios\OperariosService.cs" />
+    <Compile Include="ServicesView\Servicios\PlanesGeneralesService.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\FPreferenciasUsuario.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\ITipoPreferencia.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\PreferenciaEmpresaDefecto.cs" />
+    <Compile Include="ServicesView\Servicios\Preferencias\PreferenciasUsuarioService.cs" />
+    <Compile Include="ServicesView\Servicios\AcreedoresService.cs" />
+    <Compile Include="ServicesView\Servicios\ClientesService.cs" />
+    <Compile Include="ServicesView\Servicios\ProveedoresService.cs" />
+    <Compile Include="ServicesView\Servicios\ProvinciasService.cs" />
+    <Compile Include="ServicesView\Servicios\PuertosService.cs" />
+    <Compile Include="ServicesView\Servicios\RegimenivaService.cs" />
+    <Compile Include="ServicesView\Servicios\StartupService.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\BancosStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\CargosEmpresaStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\CuentasStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\EstadosStockStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\FStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\GenericTablaVariaStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\IStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\ModosPagoStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\MonedasStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\PaisesStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\PlanesGeneralesStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\ProvinciasStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\TablasVariasCabecerasStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\TablaVariaStartup.cs" />
+    <Compile Include="ServicesView\Servicios\Startup\TiposAlbaranesStartup.cs" />
+    <Compile Include="ServicesView\Servicios\TablasVariasService.cs" />
+    <Compile Include="ServicesView\Servicios\FTercerosService.cs" />
+    <Compile Include="ServicesView\Servicios\TarifasService.cs" />
+    <Compile Include="ServicesView\Servicios\TiposcuentasService.cs" />
+    <Compile Include="ServicesView\Servicios\TiposivaService.cs" />
+    <Compile Include="ServicesView\Servicios\TiposRetencionesService.cs" />
+    <Compile Include="ServicesView\Servicios\CuentastesoreriaService.cs" />
+    <Compile Include="ServicesView\Servicios\TransportistasService.cs" />
+    <Compile Include="ServicesView\Servicios\UltimospreciosService.cs" />
+    <Compile Include="ServicesView\Servicios\EstadosService.cs" />
+    <Compile Include="ServicesView\Servicios\UnidadesService.cs" />
+    <Compile Include="ServicesView\Servicios\UsuariosService.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ProspectosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\FacturasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\CriteriosagrupacionValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ObrasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\EjerciciosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\EstadosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\AlbaranesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\PedidosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\PresupuestosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ComercialesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ArticulosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TarifasbaseValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\SeriesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ContadoresValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\FamiliasproductosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\GrosoresValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\AcabadosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\AgentesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\AseguradorasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\BancosMandatosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ConfiguracionValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ContactosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\CuentasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\DireccionesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\EmpresasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\GruposIvaValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\GuiascontablesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\CaracteristicasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\MaterialesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\MonedasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\BancosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\BaseValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\FormasPagoValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\OperariosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\PlanesGeneralesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\AcreedoresValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ClientesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ProveedoresValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\ProvinciasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\PuertosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\RegimenIvaValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\RolesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TablasVariasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TarifasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TiposcuentasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TiposIvaValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TiposRetencionesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\CuentastesoreriaValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TransportistasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\UnidadesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\UsuariosValidation.cs" />
+    <Compile Include="Tablasvarias.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TablasvariasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tarifas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tarifasbase.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TarifasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tiposcuentas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TiposcuentasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TiposIva.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tiposretenciones.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transportistas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Unidades.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="MarfilModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MarfilModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MarfilModel.edmx.diagram">
+      <DependentUpon>MarfilModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MarfilModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarfilModel.edmx</DependentUpon>
+      <LastGenOutput>MarfilModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MarfilModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarfilModel.edmx</DependentUpon>
+      <LastGenOutput>MarfilModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Marfil.Dom.Campoverificacion\Marfil.Dom.Campoverificacion.csproj">
+      <Project>{F4B6CC7E-CF15-4E25-BBAF-86CFFD667821}</Project>
+      <Name>Marfil.Dom.Campoverificacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Marfil.Dom.ControlsUI\Marfil.Dom.ControlsUI.csproj">
+      <Project>{7c03697d-141d-471c-a9a6-f9497bb9d7dc}</Project>
+      <Name>Marfil.Dom.ControlsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Marfil.Inf.Genericos\Marfil.Inf.Genericos.csproj">
+      <Project>{A6E67FCF-2188-4C07-8C0C-F9E94F054D20}</Project>
+      <Name>Marfil.Inf.Genericos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Marfil.Inf.ResourcesGlobalization\Marfil.Inf.ResourcesGlobalization.csproj">
+      <Project>{51ac93d0-ed0f-4c46-be6a-bb06c8f5c4f7}</Project>
+      <Name>Marfil.Inf.ResourcesGlobalization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

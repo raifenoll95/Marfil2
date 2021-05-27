@@ -1,0 +1,7 @@
+﻿@model Marfil.Dom.Persistencia.Model.Configuracion.Empresa.EmpresaModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/Scripts/UserControls/Direcciones/DireccionesController.js")"></script>
+@Html.Action("Direcciones", "Direcciones", Model.Direcciones)

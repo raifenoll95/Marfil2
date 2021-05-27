@@ -1,0 +1,40 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@model Marfil.Dom.Persistencia.Model.FicherosGenerales.PuertoscontrolModel
+    @{
+        var listpaises = WebHelper.GetApplicationHelper().GetListPaises();
+        bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+        bool iseditable = ViewData["operacion"] != null ? ViewData["operacion"] == "Edit" : false;
+        var paisdefecto = (isreadonly||iseditable) ? Model.Fkpaises : WebHelper.GetApplicationHelper().GetPaisesDefecto();
+    }
+
+<script src="@Url.Content("~/Scripts/Model/Puertos/PuertosController.js")"></script>
+<div class="form-group" ng-controller="PuertosCtrl" ng-init="init('@Url.Action("PuertosApi", "Api")','@paisdefecto','@Model.Id')">
+    @Html.LabelFor(f => Model.Id, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Fkpaises, listpaises.Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}), isreadonly ? (object) new {@aria_label="Pais",@class = "form-control", @autofocus = "", @disabled = "disabled", @ng_model = "Fkpaises", @id = "FkpuertosFkpaises"} : (object) new { @aria_label = "Pais", @class = "form-control", @autofocus = "", @ng_model = "Fkpaises", @id = "FkpuertosFkpaises"})
+
+    </div>
+    @Html.HiddenFor(f=>Model.Id,new {id="idhidden"})
+    <div class="col-md-2">
+        <select aria-label="Puerto" id="puertoscontrolid"  ng-model="Id" class="form-control" @Html.Raw(isreadonly ? "disabled='disabled'" : "")>
+            <option ng-repeat="item in puertos" value="{{item.Id}}">{{item.Descripcion}}</option>
+        </select>
+        @Html.ValidationMessageFor(f => Model.Id, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-offset-2 col-md-2">
+        @Html.ValidationMessageFor(f => Model.Fkpaises, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-2">
+        @Html.ValidationMessageFor(f => Model.Id, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<script type="text/javascript">
+    eventAggregator.RegisterEvent("cuentapais", function (message) {
+        if ($("#puertoscontrolid").val() !== "") {
+            $("#FkpuertosFkpaises").val(message);
+        }
+    });
+</script>

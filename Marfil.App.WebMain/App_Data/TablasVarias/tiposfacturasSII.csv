@@ -1,0 +1,11 @@
+F1;FACTURA.;
+F2;FACTURA SIMPLIFICADA.;
+F3;FACTURA EMITIDA EN SUSTITUCIÓN DE FACTURAS SIMPLIFICADAS FACTURADAS Y DECLARADAS CON ANTERIORIDAD.;
+F4;ASIENTO RESUMEN DE FACTURAS.;
+F5;IMPORTACIONES (DUA).;
+F6;Otros justificantes contables y documentos justificativos del derecho a la deducción.;
+R1;FACTURA RECTIFICATIVA. Error fundado en derecho y Art. 80 Uno y Dos LIVA.;
+R2;FACTURA RECTIFICATIVA. Art 80 Tres LIVA - concurso.;
+R3;FACTURA RECTIFICATIVA. Art 80 Cuatro LIVA - deuda incobrable.;
+R4;FACTURA RECTIFICATIVA. Resto.;
+R5;FACTURA RECTIFICATIVA. Factura rectificativa simplificada.;

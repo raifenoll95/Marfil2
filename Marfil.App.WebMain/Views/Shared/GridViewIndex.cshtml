@@ -1,0 +1,9 @@
+﻿@model Marfil.Dom.Persistencia.Model.ListIndexModel
+@using (Html.BeginForm("ExportTo", "Home"))
+{
+    <input type="hidden" id="excludedform" value="true"/>
+    @Html.Partial("_gridViewExport", Model)
+    @Html.Partial("_listIndex", Model)
+
+}
+

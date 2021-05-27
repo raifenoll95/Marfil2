@@ -1,0 +1,63 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Series = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Series
+@model Marfil.Dom.Persistencia.Model.Documentos.Facturas.AsistenteFacturacionModel
+@{
+    
+    var cvseries = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var listcriteriosAgrupacion =Model.Criteriosagrupacion;
+}
+
+
+<form class="form-horizontal" id="step2-form">
+    <h4 style="text-align: left !important">Datos de cabecera de la factura</h4>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseriefactura, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                cvseries.Name = "Fkseriefactura";
+                cvseries.Url = Url.Action("SeriesApi", "Api");
+                cvseries.Params = "{\"tipodocumento\":\"FRA\"}";
+                cvseries.Valor = Model.Fkseriefactura;
+                cvseries.CampoIdentificador = "Id";
+                cvseries.Titulo = Series.TituloEntidadSingular;
+                cvseries.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvseries)
+        </div>
+       
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2" style="text-align: left !important;">
+            @Html.ValidationMessageFor(f => Model.Fkseriefactura, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechafactura, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechafactura)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fechafactura, "", new {@class = "text-danger",@id= "fechafacturaerror" })
+        </div>
+    </div>
+</form>
+
+<div style="margin-top:40px !important">
+    <h4 style="text-align: left !important">Albaranes pendientes de facturar</h4>
+
+    <span class="field-validation-valid text-danger"  id="albaraneseleccionadoserror"></span>
+
+    <span ng-show="loading">@General.LblLoading</span>
+    <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+    <input type="hidden" value="{{cantidadalbaranes}}" name="albaraneseleccionados"/>
+
+</div>

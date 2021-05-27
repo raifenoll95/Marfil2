@@ -1,0 +1,152 @@
+﻿@using Marfil.App.WebMain.Misc
+@using System.Globalization
+@using System.Threading
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.CRM
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.CRM.SeguimientosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var listacciones = WebHelper.GetApplicationHelper().GetListAcciones().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+
+    var listtipodocumento = WebHelper.GetApplicationHelper().GetListTiposDocumentos().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listtipodocumento.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fketapa, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">        
+        @Html.DropDownListFor(f => Model.Fketapa, Model.EstadosAsociados.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.CampoId }), isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control", aria_label = "Estados" })
+        @Html.ValidationMessageFor(f => Model.Fketapa, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkaccion, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Fkaccion, listacciones, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Fkaccion, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Coste, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Coste, isreadonly ? (object)new { @class = "form-control col-md-2", @readonly = "readonly" } : (object)new { @class = "form-control  col-md-2"})
+            @Html.ValidationMessageFor(f => Model.Coste, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Notas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextAreaFor(f => Model.Notas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Notas, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechaproximoseguimiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechaproximoseguimiento)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkdocumentorelacionado, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Fkdocumentorelacionado, listtipodocumento, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Fkdocumentorelacionado, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkreferenciadocumentorelacionado, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="input-group">
+            @Html.TextBoxFor(f => Model.Fkreferenciadocumentorelacionado, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-message" @Html.Raw(isreadonly ? "disabled=\"disabled\"" : string.Empty) onclick="SearchDocumento()">
+                    <i class="fa fa-search"></i> @Seguimientos.LblBuscarDocumentoRelacionado
+                </button>
+            </span>
+            @if (Model.urlDocumentoRelacionado != null)
+            {
+                <div class="col-md-2">
+                    <a class="btn-xs btn btn-info" align="right" href="@Model.urlDocumentoRelacionado">
+                        <i class="fa fa-eye">
+                            Ver documento
+                        </i>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $('#Fkdocumentorelacionado').change(function() {
+        $("[name='Fkreferenciadocumentorelacionado']").val("");
+    });
+
+
+
+    //Rai
+    //Cuando se cambie la accion del CRM, hay que buscar en costes variables periodo el coste de esa accion e imputarsela a costes seguimientos
+    $('#Fkaccion').change(function () {
+        var data = {
+            accion: $("[name='Fkaccion']").val(),
+            fechaejercicio: $("[name='Fechadocumento']").val()
+        };
+
+        eventAggregator.Publish("_cargarCosteCRM", data);
+    });
+
+    ////Cuando se cambie la FECHA DEL DOCUMENTO hay que buscar en costes variables periodo el coste de esa accion e imputarsela a costes seguimientos
+    //$('#Fechadocumento').change(function () {
+    //        var data = {
+    //            accion: $("[name='Fkaccion']").val(),
+    //            fechaejercicio: $("[name='Fechadocumento']").val()
+    //        };
+
+    //        eventAggregator.Publish("_cargarCosteCRM", data);   
+    //});
+
+    function SearchDocumento() {
+
+        var obj = {
+            campoIdentificador: "Referencia",
+            IdComponenteasociado: "ReferenciaDocumentos",
+            IdFormulariomodal: "BusquedaGlobal",
+            Url: '@Url.Action("ReferenciasDocumentosRelacionadosApi", "Api")',
+            Titulo: "Busqueda de documentos",
+            Params: @Html.Raw("'{\"tipodocumento\":\"' + $(\"[name='Fkdocumentorelacionado']\").val()+'\",\"tercero\":\"' + $(\"[name='Fkempresa']\").val()+'\" }'")
+
+            };
+
+        eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("ReferenciaDocumentos-Buscarfocus",function(obj) {
+        $("[name='Fkreferenciadocumentorelacionado']").val(obj);
+    });
+
+
+
+</script>

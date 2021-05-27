@@ -1,0 +1,34 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model TarifasModel
+<script src="@Url.Content("~/Scripts/Model/Tarifas/tarifascontroller.js")"></script>
+<div ng-controller="tarifasCtrl" ng-init="init('@Html.Raw((int)Model.Tipotarifa)',@Html.Raw(Model.Precioobligatorio.ToString().ToLower()),@Html.Raw(Model.Asignartarifaalcreararticulos.ToString().ToLower()), @Html.Raw((int)Model.Tipoflujo),'@Url.Action("TarifasApi","Api")','@Model.Precioautomaticobase')">
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li ><a  data-toggle="tab" href="#calculoprecio">@Tarifas.LblCalculoprecio</a></li>
+            <li><a data-toggle="tab" href="#listadotarifas">@Tarifas.Lbllistadotarifas</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="calculoprecio" class="tab-pane fade margin-bottom">
+            @Html.Partial("_calculoprecio", Model)
+        </div>
+        <div id="listadotarifas" class="tab-pane fade margin-bottom">
+            @Html.Partial("_tarifasarticulos", Model)
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>

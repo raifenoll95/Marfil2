@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4c54e0c0a5f84085b11715aad28cb228" Name="Diagram1" ZoomLevel="67" ShowGrid="false">
+        <EntityTypeShape EntityType="MarfilModel.Administrador" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Agentes" Width="1.5" PointX="7.75" PointY="21.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Almacenes" Width="1.5" PointX="25.75" PointY="31.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.AlmacenesZona" Width="1.5" PointX="28" PointY="31" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.AppPermisos" Width="1.5" PointX="0.75" PointY="20" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Aseguradoras" Width="1.5" PointX="17.75" PointY="29.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Bancos" Width="1.5" PointX="10.75" PointY="31.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.BancosMandatos" Width="1.5" PointX="12.75" PointY="31.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Caracteristicas" Width="1.5" PointX="30.75" PointY="22.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.CaracteristicasLin" Width="1.5" PointX="33" PointY="22" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Carpetas" Width="1.5" PointX="30.75" PointY="7.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Clientes" Width="1.5" PointX="30.75" PointY="31.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Comerciales" Width="1.5" PointX="32.75" PointY="31.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Configuracion" Width="1.5" PointX="17.75" PointY="33.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Contactos" Width="1.5" PointX="25.75" PointY="34.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Contadores" Width="1.5" PointX="30.75" PointY="18" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.ContadoresLin" Width="1.5" PointX="33" PointY="18" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Criteriosagrupacion" Width="1.5" PointX="30.75" PointY="11" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.CriteriosagrupacionLin" Width="1.5" PointX="33" PointY="10.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Cuentas" Width="1.5" PointX="27.75" PointY="34.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Cuentastesoreria" Width="1.5" PointX="34.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarfilModel.Direcciones" Width="1.5" PointX="34.75" PointY="34.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.DocumentosUsuario" Width="1.5" PointX="35.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Estados" Width="1.5" PointX="35.75" PointY="14.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasLin" Width="1.5" PointX="17.875" PointY="1.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasTotales" Width="1.5" PointX="17.875" PointY="0.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasVencimientos" Width="1.5" PointX="17.875" PointY="2.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Ficheros" Width="1.5" PointX="33" PointY="7" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FormasPago" Width="1.5" PointX="30.75" PointY="1" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FormasPagoLin" Width="1.5" PointX="33" PointY="2.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.GruposIva" Width="1.5" PointX="10.75" PointY="28.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.GruposIvaLin" Width="1.5" PointX="13" PointY="28" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Guiascontables" Width="1.5" PointX="25.75" PointY="27" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.GuiascontablesLin" Width="1.5" PointX="28" PointY="27" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Incidencias" Width="1.5" PointX="17.75" PointY="36.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Materiales" Width="1.5" PointX="25.75" PointY="17" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.MaterialesLin" Width="1.5" PointX="28" PointY="17.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Monedas" Width="1.5" PointX="25.75" PointY="12" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.MonedasLog" Width="1.5" PointX="28" PointY="12.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Obras" Width="1.5" PointX="36.75" PointY="30.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Operarios" Width="1.5" PointX="36.75" PointY="36.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Pedidos" Width="1.5" PointX="20.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarfilModel.PedidosCompras" Width="1.5" PointX="20.75" PointY="2.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PedidosComprasLin" Width="1.5" PointX="22.875" PointY="3.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PedidosComprasTotales" Width="1.5" PointX="23" PointY="2.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PedidosLin" Width="1.5" PointX="23" PointY="25.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PedidosTotales" Width="1.5" PointX="23" PointY="20.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Planesgenerales" Width="1.5" PointX="37.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PreferenciasUsuario" Width="1.5" PointX="37.75" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Presupuestos" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosCompras" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosComprasLin" Width="1.5" PointX="3" PointY="1.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosComprasTotales" Width="1.5" PointX="3.125" PointY="3.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosLin" Width="1.5" PointX="8" PointY="1.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosTotales" Width="1.5" PointX="8.125" PointY="3.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Prospectos" Width="1.5" PointX="37.75" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Provincias" Width="1.5" PointX="37.75" PointY="19.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Puertos" Width="1.5" PointX="37.75" PointY="22.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Roles" Width="1.5" PointX="3" PointY="20" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Tablasvarias" Width="1.5" PointX="25.75" PointY="7.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TablasvariasLin" Width="1.5" PointX="28" PointY="8.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Tarifas" Width="1.5" PointX="25.75" PointY="1.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Tarifasbase" Width="1.5" PointX="39.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TarifasLin" Width="1.5" PointX="28" PointY="2.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Tiposcuentas" Width="1.5" PointX="10.75" PointY="24" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TiposcuentasLin" Width="1.5" PointX="13" PointY="24.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TiposIva" Width="1.5" PointX="39.75" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Tiposretenciones" Width="1.5" PointX="39.75" PointY="8.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Transportistas" Width="1.5" PointX="39.75" PointY="12.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Usuarios" Width="1.5" PointX="5.25" PointY="19" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_AlmacenesZona_Almacenes" />
+        <AssociationConnector Association="MarfilModel.FK_CaracteristicasLin_Caracteristicas" />
+        <AssociationConnector Association="MarfilModel.FK_Ficheros_Carpetas" />
+        <AssociationConnector Association="MarfilModel.FK_ContadoresLin_Contadores" />
+        <AssociationConnector Association="MarfilModel.FK_CriteriosagrupacionLin_Criteriosagrupacion" />
+        <AssociationConnector Association="MarfilModel.FK_FormasPagoLin_FormasPago" />
+        <AssociationConnector Association="MarfilModel.FK_GruposIvaLin_GruposIva" />
+        <AssociationConnector Association="MarfilModel.FK_GuiascontablesLin_Guiascontables" />
+        <AssociationConnector Association="MarfilModel.FK_MaterialesLin_Materiales" />
+        <AssociationConnector Association="MarfilModel.FK_MonedasLog_Monedas" />
+        <AssociationConnector Association="MarfilModel.FK_PedidosLin_Pedidos" />
+        <AssociationConnector Association="MarfilModel.FK_PedidosTotales_Pedidos" />
+        <AssociationConnector Association="MarfilModel.FK_PedidosComprasLin_PedidosCompras" />
+        <AssociationConnector Association="MarfilModel.FK_PedidosComprasTotales_PedidosCompras" />
+        <AssociationConnector Association="MarfilModel.FK_Presupuestos_Presupuestos" />
+        <AssociationConnector Association="MarfilModel.FK_PresupuestosLin_Presupuestos" />
+        <AssociationConnector Association="MarfilModel.FK_PresupuestosTotales_Presupuestos" />
+        <AssociationConnector Association="MarfilModel.FK_PresupuestosCompras_PresupuestosCompras" />
+        <AssociationConnector Association="MarfilModel.FK_PresupuestosComprasLin_PresupuestosCompras" />
+        <AssociationConnector Association="MarfilModel.FK_PresupuestosComprasTotales_PresupuestosCompras" />
+        <AssociationConnector Association="MarfilModel.FK_TablasvariasLin_Tablasvarias" />
+        <AssociationConnector Association="MarfilModel.FK_TarifasLin_TarifasLin" />
+        <AssociationConnector Association="MarfilModel.FK_GestioncuentasLin_Gestioncuentas" />
+        <AssociationConnector Association="MarfilModel.AppPermisosRoles" />
+        <AssociationConnector Association="MarfilModel.AppPermisosUsuarios" />
+        <AssociationConnector Association="MarfilModel.RolesUsuarios" />
+        <EntityTypeShape EntityType="MarfilModel.Acreedores" Width="1.5" PointX="2.625" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Proveedores" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Reservasstock" Width="1.5" PointX="5.25" PointY="32.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.ReservasstockLin" Width="1.5" PointX="7.375" PointY="33.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.ReservasstockTotales" Width="1.5" PointX="7.375" PointY="32" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_ReservasstockLin_Reservasstock" />
+        <AssociationConnector Association="MarfilModel.FK_ReservasstockTotales_Reservasstock" />
+        <EntityTypeShape EntityType="MarfilModel.InventariosLin" Width="1.5" PointX="9.5" PointY="6.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Configuraciongraficas" Width="1.5" PointX="4.25" PointY="9" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Articulos" Width="1.5" PointX="9.25" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Familiasproductos" Width="1.5" PointX="0.625" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Traspasosalmacen" Width="1.5" PointX="1" PointY="35.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TraspasosalmacenCostesadicionales" Width="1.5" PointX="3" PointY="36.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TraspasosalmacenLin" Width="1.5" PointX="3" PointY="34.75" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_TraspasosalmacenCostesadicionales_Traspasosalmacen" />
+        <AssociationConnector Association="MarfilModel.FK_TraspasosalmacenLin_Traspasosalmacen" />
+        <EntityTypeShape EntityType="MarfilModel.Bundle" Width="1.5" PointX="0.875" PointY="13.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.BundleLin" Width="1.5" PointX="3" PointY="13.75" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_BundleLin_Bundle" />
+        <EntityTypeShape EntityType="MarfilModel.ContadoresLotes" Width="1.5" PointX="11.25" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.ContadoresLotesLin" Width="1.5" PointX="13.5" PointY="10.75" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_ContadoresLotesLin_ContadoresLotes" />
+        <EntityTypeShape EntityType="MarfilModel.Kit" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.KitLin" Width="1.5" PointX="3" PointY="14.625" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_KitLin_Kit" />
+        <EntityTypeShape EntityType="MarfilModel.Trabajos" Width="1.5" PointX="11.5" PointY="6.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacioneslotescostesadicionales" Width="1.5" PointX="3.25" PointY="21.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacionescostesadicionales" Width="1.5" PointX="11.625" PointY="37.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasComprasLin" Width="1.5" PointX="2.875" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasComprasTotales" Width="1.5" PointX="2.75" PointY="52.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasComprasVencimientos" Width="1.5" PointX="4.875" PointY="40.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarfilModel.AlbaranesComprasCostesadicionales" Width="1.5" PointX="26.625" PointY="37.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.AlbaranesComprasTotales" Width="1.5" PointX="26.625" PointY="39.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.AlbaranesLin" Width="1.5" PointX="31.625" PointY="37.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.AlbaranesTotales" Width="1.5" PointX="33.75" PointY="37.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Usuariosactivos" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Facturas" Width="1.5" PointX="15.125" PointY="0.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasCompras" Width="1.5" PointX="0.5" PointY="41.75" IsExpanded="true" />
+        <AssociationConnector Association="MarfilModel.FK_FacturasLin_Facturas" />
+        <AssociationConnector Association="MarfilModel.FK_FacturasTotales_Facturas" />
+        <AssociationConnector Association="MarfilModel.FK_FacturasVencimientos_Facturas" />
+        <AssociationConnector Association="MarfilModel.FK_FacturasComprasLin_FacturasCompras" />
+        <AssociationConnector Association="MarfilModel.FK_FacturasComprasTotales_FacturasCompras" />
+        <AssociationConnector Association="MarfilModel.FK_FacturasComprasVencimientos_FacturasCompras" />
+        <EntityTypeShape EntityType="MarfilModel.RegimenIva" Width="1.5" PointX="14.375" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Albaranes" Width="1.5" PointX="29.375" PointY="36.125" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_AlbaranesLin_Albaranes" />
+        <AssociationConnector Association="MarfilModel.FK_AlbaranesTotales_Albaranes" />
+        <EntityTypeShape EntityType="MarfilModel.Stockactual" Width="1.5" PointX="5.375" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Stockhistorico" Width="1.5" PointX="10.875" PointY="14.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Movimientosstock" Width="1.5" PointX="12.875" PointY="14.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Transformaciones" Width="1.5" PointX="9.25" PointY="35.5" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacionescostesadicionales_Transformaciones" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacionesentradalin" Width="1.5" PointX="11.5" PointY="39.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacionessalidalin" Width="1.5" PointX="11.5" PointY="49" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacionesentradalin_Transformaciones" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacionessalidalin_Transformacionessalidalin" />
+        <EntityTypeShape EntityType="MarfilModel.AlbaranesCompras" Width="1.5" PointX="23.5" PointY="39.375" IsExpanded="false" />
+        <AssociationConnector Association="MarfilModel.FK_AlbaranesComprasCostesadicionales_AlbaranesCompras" />
+        <AssociationConnector Association="MarfilModel.FK_AlbaranesComprasTotales_AlbaranesCompras" />
+        <EntityTypeShape EntityType="MarfilModel.Series" Width="1.5" PointX="5.375" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarfilModel.Inventarios" Width="1.5" PointX="7.5" PointY="4.75" />
+        <AssociationConnector Association="MarfilModel.FK_InventariosLin_Inventarios" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacioneslotes" Width="1.5" PointX="1" PointY="21.125" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacionesloteslin" Width="1.5" PointX="3.25" PointY="23.375" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacioneslotescostesadicionales_Transformacioneslotes" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacionesloteslin_Transformacioneslotes" />
+        <EntityTypeShape EntityType="MarfilModel.ContadoresContabilidadLin" Width="1.5" PointX="14.625" PointY="17" />
+        <EntityTypeShape EntityType="MarfilModel.ContadoresContabilidad" Width="1.5" PointX="12.75" PointY="17" />
+        <AssociationConnector Association="MarfilModel.FK_ContadoresContabilidadLin_ContadoresContabilidad" />
+        <EntityTypeShape EntityType="MarfilModel.Maes" Width="1.5" PointX="30" PointY="38.625" />
+        <AssociationConnector Association="MarfilModel.FK_Maes_Cuentas" />
+        <EntityTypeShape EntityType="MarfilModel.SeriesContables" Width="1.5" PointX="10.375" PointY="2.75" />
+        <EntityTypeShape EntityType="MarfilModel.Movs" Width="1.5" PointX="17.375" PointY="15.25" />
+        <EntityTypeShape EntityType="MarfilModel.Tareas" Width="1.5" PointX="18.375" PointY="5" />
+        <EntityTypeShape EntityType="MarfilModel.TareasLin" Width="1.5" PointX="20.625" PointY="5.25" />
+        <AssociationConnector Association="MarfilModel.FK__TareasLin__5B8E6C8E" />
+        <EntityTypeShape EntityType="MarfilModel.PedidosCostesFabricacion" Width="1.5" PointX="23" PointY="27.625" />
+        <AssociationConnector Association="MarfilModel.FK__PedidosCostesFab__459F2B6F" />
+        <EntityTypeShape EntityType="MarfilModel.Empresas" Width="1.5" PointX="20.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MarfilModel.MovsLin" Width="1.5" PointX="20" PointY="16.375" />
+        <EntityTypeShape EntityType="MarfilModel.Seccionesanaliticas" Width="1.5" PointX="0.75" PointY="16.75" />
+        <AssociationConnector Association="MarfilModel.FK_MovsLin_Movs" />
+        <EntityTypeShape EntityType="MarfilModel.AlbaranesComprasLin" Width="1.5" PointX="25.75" PointY="41.125" />
+        <AssociationConnector Association="MarfilModel.FK_AlbaranesComprasLin_AlbaranesCompras" />
+        <EntityTypeShape EntityType="MarfilModel.Oportunidades" Width="1.5" PointX="15.375" PointY="22.75" />
+        <EntityTypeShape EntityType="MarfilModel.IncidenciasCRM" Width="1.5" PointX="17.375" PointY="22.75" />
+        <EntityTypeShape EntityType="MarfilModel.Proyectos" Width="1.5" PointX="5.375" PointY="23.75" />
+        <EntityTypeShape EntityType="MarfilModel.PeticionesAsincronas" Width="1.5" PointX="7.375" PointY="23.75" />
+        <EntityTypeShape EntityType="MarfilModel.CostesVariablesPeriodo" Width="1.5" PointX="20.625" PointY="41.625" />
+        <EntityTypeShape EntityType="MarfilModel.CostesVariablesPeriodoLin" Width="1.5" PointX="22.875" PointY="41.375" />
+        <AssociationConnector Association="MarfilModel.fkcabecera" />
+        <EntityTypeShape EntityType="MarfilModel.DivisionLotes" Width="1.5" PointX="5.375" PointY="42.875" />
+        <EntityTypeShape EntityType="MarfilModel.DivisionLotesentradalin" Width="1.5" PointX="7.625" PointY="37.625" />
+        <EntityTypeShape EntityType="MarfilModel.DivisionLotessalidalin" Width="1.5" PointX="7.625" PointY="47.375" />
+        <AssociationConnector Association="MarfilModel.FK__DivisionLotesent__31ED387D" />
+        <AssociationConnector Association="MarfilModel.FK__DivisionLotessal__34C9A528" />
+        <EntityTypeShape EntityType="MarfilModel.DivisionLotescostesadicionales" Width="1.5" PointX="7.625" PointY="55.625" />
+        <AssociationConnector Association="MarfilModel.FK__DivisionLotescos__37A611D3" />
+        <EntityTypeShape EntityType="MarfilModel.ArticulosTercero" Width="1.5" PointX="11.5" PointY="33.625" />
+        <AssociationConnector Association="MarfilModel.FK__ArticulosTercero__2275EAC3" />
+        <EntityTypeShape EntityType="MarfilModel.ArticulosComponentes" Width="1.5" PointX="11.5" PointY="41.375" />
+        <AssociationConnector Association="MarfilModel.FK__ArticulosCompone__2552576E" />
+        <EntityTypeShape EntityType="MarfilModel.ImputacionCostes" Width="1.5" PointX="25.375" PointY="18.75" />
+        <EntityTypeShape EntityType="MarfilModel.ImputacionCostesLin" Width="1.5" PointX="27.625" PointY="18.75" />
+        <AssociationConnector Association="MarfilModel.FK__ImputacionCostes__377107A9" />
+        <EntityTypeShape EntityType="MarfilModel.ImputacionCostescostesadicionales" Width="1.5" PointX="27.625" PointY="53.75" />
+        <AssociationConnector Association="MarfilModel.FK__ImputacionCostes__489B93AB" />
+        <EntityTypeShape EntityType="MarfilModel.TrabajosLin" Width="1.5" PointX="13.75" PointY="6" />
+        <AssociationConnector Association="MarfilModel.FK__TrabajosLin__5BAE681F" />
+        <EntityTypeShape EntityType="MarfilModel.Campañas" Width="1.5" PointX="22.375" PointY="14.75" />
+        <EntityTypeShape EntityType="MarfilModel.CampañasTercero" Width="1.5" PointX="24.625" PointY="53.75" />
+        <AssociationConnector Association="MarfilModel.FK__CampañasTercero__1A6AB4A7" />
+        <EntityTypeShape EntityType="MarfilModel.Seguimientos" Width="1.5" PointX="14.375" PointY="39.125" />
+        <EntityTypeShape EntityType="MarfilModel.SeguimientosCorreo" Width="1.5" PointX="16.625" PointY="40.375" />
+        <AssociationConnector Association="MarfilModel.FK__SeguimientosCorr__65C1E23E" />
+        <EntityTypeShape EntityType="MarfilModel.Municipios" Width="1.5" PointX="12.375" PointY="20.75" />
+        <EntityTypeShape EntityType="MarfilModel.GrupoMateriales" Width="1.5" PointX="22.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MarfilModel.Acabados" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MarfilModel.Grosores" Width="1.5" PointX="7.375" PointY="27.75" />
+        <EntityTypeShape EntityType="MarfilModel.SituacionesTesoreria" Width="1.5" PointX="0.75" PointY="28.75" />
+        <EntityTypeShape EntityType="MarfilModel.Unidades" Width="1.5" PointX="30.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MarfilModel.Diariostock" Width="1.5" PointX="36.375" PointY="38.75" />
+        <EntityTypeShape EntityType="MarfilModel.ListadoStockValorado" Width="1.5" PointX="7.375" PointY="15.75" />
+        <EntityTypeShape EntityType="MarfilModel.Lotes" Width="1.5" PointX="38.375" PointY="38.75" />
+        <EntityTypeShape EntityType="MarfilModel.CircuitosTesoreriaCobros" Width="1.5" PointX="39.375" PointY="24.75" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="32.625" PointY="25" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.875" PointY="25.25" />
+        <EntityTypeShape EntityType="MarfilModel.TipoGuia" Width="1.5" PointX="30.375" PointY="26" />
+        <EntityTypeShape EntityType="MarfilModel.TipoInforme" Width="1.5" PointX="30.375" PointY="29" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalances_TipoGuia" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalances_TipoInforme" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" />
+        <EntityTypeShape EntityType="MarfilModel.CarteraVencimientos" Width="1.5" PointX="40.375" PointY="34.125" />
+        <EntityTypeShape EntityType="MarfilModel.PrevisionesCartera" Width="1.5" PointX="42.625" PointY="36.625" />
+        <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="40.375" PointY="48.125" />
+        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5C8CB268" />
+        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5B988E2F" />
+        <EntityTypeShape EntityType="MarfilModel.Ejercicios" Width="1.5" PointX="18.375" PointY="44" />
+        <AssociationConnector Association="MarfilModel.fk_costes_variables" />
+        <EntityTypeShape EntityType="MarfilModel.SaldosAcomuladosPeriodos" Width="1.5" PointX="16.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" Width="1.5" PointX="32.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosComponentesLin" Width="1.5" PointX="8" PointY="59.875" />
+        <AssociationConnector Association="MarfilModel.FK__PresupuestosComp__4C5715F6" />
+        <AssociationConnector Association="MarfilModel.FK_Empresas_Empresas" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

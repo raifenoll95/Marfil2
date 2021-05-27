@@ -1,0 +1,101 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Stock.LotesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<IncidenciasModel>(WebHelper.ContextService);
+    campoverificacion.SoloLectura = true;
+    var listzonas = WebHelper.GetApplicationHelper().GetAlmacenesZonas().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList();
+    var listcalificacioncomercial = WebHelper.GetApplicationHelper().GetListCalificacionComercial().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    var listtipograno = WebHelper.GetApplicationHelper().GetListTipograno().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    var listtono = WebHelper.GetApplicationHelper().GetListTono().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listcalificacioncomercial.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listtipograno.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listtono.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listzonas.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+}
+
+
+<div class="form-group">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Loteproveedor, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Loteproveedor, new { @class = "form-control", @disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkincidenciasmaterial, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkincidenciasmaterial";
+                campoverificacion.Url = Url.Action("IncidenciasApi", "Api");
+                campoverificacion.CampoIdentificador = "Id";
+                campoverificacion.Valor = Model.Fkincidenciasmaterial;
+                campoverificacion.Titulo = Incidencias.TituloEntidad;
+                campoverificacion.Autofocus = true;
+                campoverificacion.Params = "{\"tipo\":\"" + (int)TipoMaterial.Material + "\"}";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Zona, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Zona, listzonas, new { @class = "form-control",@disabled="disabled" })
+        </div>
+        @Html.LabelFor(f => Model.Fkcalificacioncomercial, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fkcalificacioncomercial, listcalificacioncomercial, new { @class = "form-control", @disabled = "disabled" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fktipograno, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fktipograno, listtipograno, new { @class = "form-control", @disabled = "disabled" })
+        </div>
+        @Html.LabelFor(f => Model.Fktonomaterial, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fktonomaterial, listtono, new { @class = "form-control", @disabled = "disabled" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkvariedades, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkvariedades";
+                campoverificacion.Url = Url.Action("VariedadesApi", "Api");
+                campoverificacion.CampoIdentificador = "Codigovariedad";
+                campoverificacion.Valor = Model.Fkvariedades;
+                campoverificacion.Titulo = Materiales.Variedadestajos;
+                campoverificacion.Autofocus = false;
+                campoverificacion.Params = "";
+                campoverificacion.ControlesAsociados = "[{\"fkarticulos\":\"fkarticulos\"}]";
+                campoverificacion.Longitud = "2";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Pesoneto, new {@class = "control-label col-md-2"})
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.Pesoneto, new {@class = "form-control", @disabled = "disabled"})
+        </div>
+    </div>
+
+    <input type="hidden" name="fkarticulos" id="fkarticulos" value="@Model.Fkarticulos" />
+</div>

@@ -1,0 +1,35 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@{
+    var isreadonly = true;
+    ViewData["readonly"] = true;
+}
+
+<div class="form-group margin-top-10 col-md-12">
+    <div class="col-md-2 color-black glyphicon glyphicon-list-alt">
+        <label>@Maes.Fkcuentas</label>
+        <input class="form-control" id="maesfkcuentas" name="maesfkcuentas" readonly/>
+    </div>
+
+    <div class="col-md-4 ">
+        <label>@Maes.Descripcion</label>
+        <input class="form-control" id="maesdescripcion" name="maesdescripcion" readonly/>
+    </div>
+
+    <div class="col-md-2">
+        <label>@Maes.Debe</label>
+        <input class="form-control align-right" id="maesdebe" name="maesdebe" readonly/>
+    </div>
+    <div class="col-md-2">
+        <label>@Maes.Haber</label>
+        <input class="form-control align-right" id="maeshaber" name="maeshaber" readonly/>
+    </div>
+    <div class="col-md-2">
+        <label>@Maes.Saldo</label>
+        <input class="form-control align-right" id="maessaldo" name="maessaldo" readonly/>
+    </div>
+</div>
+
+
+
+

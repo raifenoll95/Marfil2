@@ -1,0 +1,35 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.Empresa.EmpresaModel
+<input type="hidden" name="Id" value="@Model.Id" />
+<div id="tabs">
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+        <li><a data-toggle="tab" href="#actividad">@General.LblActividad</a></li>
+        <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
+        <li><a data-toggle="tab" href="#contabilidad">@General.Contabilidad</a></li>
+        <li><a data-toggle="tab" href="#ejercicios">@Ejercicios.TituloEntidad</a></li>
+        <li><a data-toggle="tab" href="#gestion">@Ejercicios.Gestion</a></li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div id="general" class="tab-pane fade in active">
+        @Html.Partial("UsersControls/Empresa/_general", Model)
+    </div>
+    <div id="actividad" class="tab-pane fade margin-bottom">
+        @Html.Partial("UsersControls/Empresa/_actividad", Model)
+    </div>
+    <div id="direcciones" class="tab-pane fade margin-bottom">
+        @Html.Partial("UsersControls/Empresa/_direcciones", Model)
+    </div>
+    <div id="contabilidad" class="tab-pane fade margin-bottom">
+        @Html.Partial("UsersControls/Empresa/_contabilidad", Model)
+    </div>
+    <div id="ejercicios" class="tab-pane fade margin-bottom">
+        @Html.Partial("UsersControls/Empresa/_ejercicios", Model)
+    </div>
+    <div id="gestion" class="tab-pane fade margin-bottom">
+        @Html.Partial("UsersControls/Empresa/_gestion", Model)
+    </div>
+</div>

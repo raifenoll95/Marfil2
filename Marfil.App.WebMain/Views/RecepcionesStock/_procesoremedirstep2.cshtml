@@ -1,0 +1,24 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+
+@model Marfil.Dom.Persistencia.Model.Stock.AsistenteRemedirStockModel
+
+
+
+<form class="form-horizontal" id="step2-form">
+    
+</form>
+
+<div style="margin-top:40px !important">
+    <span class="field-validation-valid text-danger"  id="lotesseleccionadoserror"></span>
+
+    <span ng-show="loading">@General.LblLoading</span>
+    <div ui-grid="gridOptionsremedir" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+    <input type="hidden" value="{{cantidadlotes}}" name="lotesseleccionados"/>
+</div>

@@ -1,0 +1,159 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model BancosMandatosModel
+@{
+    var idControl = "bancosmandatos";
+    var factory = new FModel();
+    var linbanco = factory.GetModel<BancosMandatosLinModel>(WebHelper.ContextService);
+    var isreadonly = Model.ReadOnly;
+
+}
+
+<div class="form-group">
+    <div class="col-md-2 pull-right align-right">
+        @Html.LabelFor(f => linbanco.Defecto, new { @class = "control-label", @style = "margin-right:10px" })
+        <input type="checkbox" ng-model="nuevo.Defecto" @Html.Raw(isreadonly ? "disabled='disabled'" : "") />
+    </div>
+    @Html.LabelFor(f => linbanco.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        <input type="text" class="form-control" ng-model="nuevo.Descripcion" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Descripcion!=''" class="field-validation-valid text-danger">{{errores.Descripcion}}</span>
+    </div>
+</div>
+<h4>@BancosMandatos.DatosBanco</h4>
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Fkpaises, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => linbanco.Fkpaises, WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }), isreadonly ? (object)new { @class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkpaises" } : (object)new { @class = "form-control", @ng_model = "nuevo.Fkpaises" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Iban, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="text" class="form-control" ng-blur="operaIban()" ng-model="nuevo.Iban" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Iban!=''" class="field-validation-valid text-danger">{{errores.Iban}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Bic, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="text" class="form-control" ng-model="nuevo.Bic" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Bic!=''" class="field-validation-valid text-danger">{{errores.Bic}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Sufijoacreedor, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" maxlength="3" ng-model="nuevo.Sufijoacreedor" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <span ng-show="errores.Sufijoacreedor!=''" class="field-validation-valid text-danger">{{errores.Sufijoacreedor}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Contratoconfirmig, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" maxlength="12" ng-model="nuevo.Contratoconfirmig" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    @Html.LabelFor(f => linbanco.Contadorconfirming, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" readonly="readonly" class="form-control" maxlength="10" ng-model="nuevo.Contadorconfirming" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Contratoconfirmig!=''" class="field-validation-valid text-danger">{{errores.Contratoconfirmig}}</span>
+    </div>
+    <div class="col-md-2" col-md-offset-2">
+        <span ng-show="errores.Contadorconfirming!=''" class="field-validation-valid text-danger">{{errores.Contadorconfirming}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Riesgonacional, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" maxlength="12" ng-model="nuevo.Riesgonacional" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    @Html.LabelFor(f => linbanco.Riesgoextranjero, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <input type="text" class="form-control" maxlength="10" ng-model="nuevo.Riesgoextranjero" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        <span ng-show="errores.Riesgonacional!=''" class="field-validation-valid text-danger">{{errores.Riesgonacional}}</span>
+    </div>
+    <div class="col-md-2" col-md-offset-2">
+        <span ng-show="errores.Riesgoextranjero!=''" class="field-validation-valid text-danger">{{errores.Riesgoextranjero}}</span>
+    </div>
+</div>
+
+<h4>@BancosMandatos.Direccion</h4>
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Direccion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <textarea class="form-control" ng-model="nuevo.Direccion" @Html.Raw(isreadonly ? "readonly='readonly'" : "")></textarea>
+    </div>
+    <div class="col-md-10">
+        <span ng-show="nuevo.Direccion!=''" ng-model="nuevo.Direccion" @Html.Raw(isreadonly ? "readonly='readonly'" : "")></span>
+    </div>
+</div>
+<div class="form-group">
+
+
+    @Html.LabelFor(f => linbanco.Fkprovincias, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        <select ng-model="nuevo.Fkprovincias" class="form-control" @Html.Raw(isreadonly ? "disabled='disabled'" : "")>
+            <option ng-repeat="item in provincias" value="{{item.Id}}">{{item.Nombre}}</option>
+        </select>
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        <span ng-show="errores.Fkpaises!=''">{{errores.Fkpaises}}</span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Ciudad, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" class="form-control" ng-model="nuevo.Ciudad" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+
+    @Html.LabelFor(f => linbanco.Cpostal, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" class="form-control" ng-model="nuevo.Cpostal" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        <span ng-show="errores.Ciudad!=''" ng-model="errores.Ciudad"></span>
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        <span ng-show="errores.Cpostal!=''" ng-model="errores.Cpostal"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => linbanco.Telefonobanco, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" class="form-control" ng-model="nuevo.Telefonobanco" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+
+    @Html.LabelFor(f => linbanco.Personacontacto, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        <input type="text" class="form-control" ng-model="nuevo.Personacontacto" @Html.Raw(isreadonly ? "readonly='readonly'" : "") />
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        <span ng-show="errores.Telefonobanco!=''" ng-model="errores.Telefonobanco"></span>
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        <span ng-show="errores.Personacontacto!=''" ng-model="errores.Personacontacto"></span>
+    </div>
+</div>

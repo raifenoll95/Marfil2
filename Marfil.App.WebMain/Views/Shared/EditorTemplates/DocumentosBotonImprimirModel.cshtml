@@ -1,0 +1,31 @@
+﻿
+@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Model.Diseñador.DocumentosBotonImprimirModel
+@if (Model.Lineas.Any())
+{
+    
+    <div class="btn-group pull-right">
+        <a class="btn btn-success " target="_blank" href="@Url.Action("Visualizar", "Designer", new {primarykey = Model.Primarykey, tipo = Model.Tipo, reportId = Model.Defecto})">
+            <i class="ace-icon fa fa-print bigger-110"></i>
+            Imprimir
+        </a>
+        @if (Model.Lineas.Count() > 1)
+        {
+            <button data-toggle="dropdown" class="btn btn-success dropdown-toggle">
+                <span class="ace-icon fa fa-caret-down icon-only"></span>
+            </button>
+
+            <ul class="dropdown-menu">
+                @foreach (var item in Model.Lineas)
+                {
+                    <li>
+                        <a target="_blank" href="@Url.Action("Visualizar", "Designer", new {primarykey = Model.Primarykey, tipo = Model.Tipo, reportId = item})">@item</a>
+                    </li>
+                }
+            </ul>
+        }
+
+    </div>
+}

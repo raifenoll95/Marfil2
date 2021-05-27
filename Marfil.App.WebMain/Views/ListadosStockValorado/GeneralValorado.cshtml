@@ -1,0 +1,350 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.ListadosStockValorado
+@{
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvAlbaranes = FCampoverificacion.Instance.GetModel<AlbaranesModel>(WebHelper.ContextService);
+    var cvfamilias = FCampoverificacion.Instance.GetModel<FamiliasproductosModel>(WebHelper.ContextService);
+    var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
+    var cvcaracteristicas = FCampoverificacion.Instance.GetModel<CaracteristicasModel>(WebHelper.ContextService);
+    var cvgrosores = FCampoverificacion.Instance.GetModel<GrosoresModel>(WebHelper.ContextService);
+    var cvacabados = FCampoverificacion.Instance.GetModel<AcabadosModel>(WebHelper.ContextService);
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var cvalmacenes = FCampoverificacion.Instance.GetModel<AlmacenesModel>(WebHelper.ContextService);
+    var cvzonas = FCampoverificacion.Instance.GetModel<AlmacenesZonasModel>(WebHelper.ContextService);
+    var series = Model.SeriesListado;
+    var paisdefecto = "";
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listpaises.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList(); ;
+    var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listfamiliamateriales = WebHelper.GetApplicationHelper().GetListFamiliaMateriales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listfamiliamateriales.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+}
+<script src="@Url.Content("~/Scripts/UserControls/Provincias/ProvinciasController.js")"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+</script>
+@Html.HiddenFor(f => Model.Empresa)
+<div class="col-md-10">
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkalmacen, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvalmacenes.Name = "Fkalmacen";
+            cvalmacenes.Url = Url.Action("AlmacenesApi", "Api");
+            cvalmacenes.Valor = Model.Fkalmacen;
+        }
+        @Html.Partial("CampoverificacionUI", cvalmacenes)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-1">
+        @Html.ValidationMessageFor(f => Model.Fkalmacen, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipodealmacenlote, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(f => Model.Tipodealmacenlote, (object)new { @class = "form-control"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkzonasalmacen, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvzonas.Name = "Fkzonasalmacen";
+            cvzonas.Url = Url.Action("AlmacenesZonasApi", "Api");
+            cvzonas.Valor = Model.Fkzonasalmacen;
+            cvzonas.ControlesAsociados = "[ { \"fkalmacen\":\"Fkalmacen\" } ]";
+        }
+        @Html.Partial("CampoverificacionUI", cvzonas)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-1">
+        @Html.ValidationMessageFor(f => Model.Fkzonasalmacen, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkarticulosDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvarticulos.Name = "FkarticulosDesde";
+            cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+            cvarticulos.Valor = Model.FkarticulosDesde;
+            cvarticulos.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvarticulos)
+        @Html.ValidationMessageFor(f => Model.FkarticulosDesde, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkarticulosHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvarticulos.Name = "FkarticulosHasta";
+            cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+            cvarticulos.Valor = Model.FkarticulosHasta;
+            cvarticulos.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvarticulos)
+        @Html.ValidationMessageFor(f => Model.FkarticulosHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkfamiliasmateriales, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkfamiliasmateriales, listfamiliamateriales, new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Fkfamiliasmateriales, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkfamiliasDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvfamilias.Name = "FkfamiliasDesde";
+            cvfamilias.Url = Url.Action("FamiliasproductosApi", "Api");
+            cvfamilias.Valor = Model.FkfamiliasDesde;
+            cvfamilias.Obligatorio = false;
+            cvfamilias.Configuracion.OcultarTexto = true;
+            cvfamilias.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvfamilias)
+    </div>
+    @Html.LabelFor(f => Model.FkfamiliasHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvfamilias.Name = "FkfamiliasHasta";
+            cvfamilias.Url = Url.Action("FamiliasproductosApi", "Api");
+            cvfamilias.Valor = Model.FkfamiliasHasta;
+            cvfamilias.Obligatorio = false;
+            cvfamilias.Configuracion.OcultarTexto = true;
+            cvfamilias.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvfamilias)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkfamiliasDesde, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkfamiliasHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkmaterialesDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvmateriales.Name = "FkmaterialesDesde";
+            cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+            cvmateriales.Valor = Model.FkmaterialesDesde;
+            cvmateriales.Configuracion.OcultarTexto = true;
+            cvmateriales.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvmateriales)
+    </div>
+
+    @Html.LabelFor(f => Model.FkmaterialesHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvmateriales.Name = "FkmaterialesHasta";
+            cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+            cvmateriales.Valor = Model.FkmaterialesHasta;
+            cvmateriales.Configuracion.OcultarTexto = true;
+            cvmateriales.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvmateriales)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkmaterialesDesde, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkmaterialesHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group" id="panelcaracteristicas">
+
+    @Html.LabelFor(f => Model.FkcaracteristicasDesde, new {@class = "control-label col-md-2"})
+
+    <div class="col-md-4">
+        @{
+            cvcaracteristicas.Name = "FkcaracteristicasDesde";
+            cvcaracteristicas.Url = Url.Action("CaracteristicasApi", "Api");
+            cvcaracteristicas.Valor = Model.FkcaracteristicasDesde;
+            cvcaracteristicas.Obligatorio = false;
+            cvcaracteristicas.Configuracion.OcultarTexto = true;
+            cvcaracteristicas.ControlesAsociados = "[ { \"familia\":\"FkfamiliasDesde\" } ]";
+
+        }
+        @Html.Partial("CampoverificacionUI", cvcaracteristicas)
+    </div>
+
+    @Html.LabelFor(f => Model.FkcaracteristicasHasta, new {@class = "control-label col-md-2"})
+
+    <div class="col-md-4">
+        @{
+            cvcaracteristicas.Name = "FkcaracteristicasHasta";
+            cvcaracteristicas.Url = Url.Action("CaracteristicasApi", "Api");
+            cvcaracteristicas.Valor = Model.FkcaracteristicasHasta;
+            cvcaracteristicas.Obligatorio = false;
+            cvcaracteristicas.Configuracion.OcultarTexto = true;
+            cvcaracteristicas.ControlesAsociados = "[ { \"familia\":\"FkcaracteristicasHasta\" } ]";
+
+        }
+        @Html.Partial("CampoverificacionUI", cvcaracteristicas)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkcaracteristicasDesde, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkcaracteristicasHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkgrosoresDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvgrosores.Name = "FkgrosoresDesde";
+            cvgrosores.Url = Url.Action("GrosoresApi", "Api");
+            cvgrosores.Configuracion.OcultarTexto = true;
+            cvgrosores.Valor = Model.FkgrosoresDesde;
+        }
+        @Html.Partial("CampoverificacionUI", cvgrosores)
+    </div>
+    @Html.LabelFor(f => Model.FkgrosoresHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvgrosores.Name = "FkgrosoresHasta";
+            cvgrosores.Url = Url.Action("GrosoresApi", "Api");
+            cvgrosores.Configuracion.OcultarTexto = true;
+            cvgrosores.Valor = Model.FkgrosoresHasta;
+        }
+        @Html.Partial("CampoverificacionUI", cvgrosores)
+    </div>
+
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkgrosoresDesde, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkgrosoresHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkacabadosDesde, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvacabados.Name = "FkacabadosDesde";
+            cvacabados.Url = Url.Action("AcabadosApi", "Api");
+            cvacabados.Configuracion.OcultarTexto = true;
+            cvacabados.Valor = Model.FkacabadosDesde;
+        }
+        @Html.Partial("CampoverificacionUI", cvacabados)
+    </div>
+
+    @Html.LabelFor(f => Model.FkacabadosHasta, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @{
+            cvacabados.Name = "FkacabadosHasta";
+            cvacabados.Url = Url.Action("AcabadosApi", "Api");
+            cvacabados.Configuracion.OcultarTexto = true;
+            cvacabados.Valor = Model.FkacabadosHasta;
+        }
+        @Html.Partial("CampoverificacionUI", cvacabados)
+    </div>
+
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkacabadosDesde, "", new {@class = "text-danger"})
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkacabadosHasta, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+</div>
+
+    <div class="col-md-2">
+        <ul class="list-group">
+            <li class="list-group-item active" id="Detallepor">@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblDetallepor</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Detallepor" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSindetallar" role="group" name="Detallepor" @Html.Raw(!string.IsNullOrEmpty(Model.Detallepor) && Model.Detallepor == "0" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Detallepor) ? "checked=\"checked\"" : string.Empty) value="0" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSindetallar</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Detallepor" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSindetallar" role="group" name="Detallepor" @Html.Raw(!string.IsNullOrEmpty(Model.Detallepor) && Model.Detallepor == "1" ? "checked=\"checked\"" : string.Empty) value="1" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.Fkalmacen</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Detallepor" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSindetallar" role="group" name="Detallepor" @Html.Raw(!string.IsNullOrEmpty(Model.Detallepor) && Model.Detallepor == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.Fkalmacen ,@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.Fkzonas</li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-item active" id="Sinagrupar">@General.LblAgrupacion</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Sinagrupar" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSinAgrupar" role="group" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "0" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Agrupacion) ? "checked=\"checked\"" : string.Empty) value="0" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSinAgrupar</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Sinagrupar" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSinAgrupar" role="group" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "1" ? "checked=\"checked\"" : string.Empty) value="1" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblAgrupadoArticulo</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Sinagrupar" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSinAgrupar" role="group" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblAgrupadoArticuloLote</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Sinagrupar" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSinAgrupar" role="group" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "3" ? "checked=\"checked\"" : string.Empty) value="3" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblAgrupadoArticuloLoteMedidas</li>
+            <li class="list-group-item"><input type="radio" aria-labelledby="Sinagrupar" aria-label="@Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblSinAgrupar" role="group" name="Agrupacion" @Html.Raw(!string.IsNullOrEmpty(Model.Agrupacion) && Model.Agrupacion == "4" ? "checked=\"checked\"" : string.Empty) value="4" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras.LblAgrupadoArticuloMedidas</li>
+        </ul>
+    </div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#panelcaracteristicas").hide();
+    });
+
+    $("#FkfamiliasDesde").bind("change", function () {
+        MostarCaracteristicas();
+    });
+
+    $("#FkfamiliasHasta").bind("change", function () {
+        MostarCaracteristicas();
+    });
+
+    eventAggregator.RegisterEvent("FkfamiliasDesde-cv", function (message) {
+        MostarCaracteristicas();
+    });
+
+    eventAggregator.RegisterEvent("FkfamiliasHasta-cv", function (message) {
+        MostarCaracteristicas();
+    });
+
+    function MostarCaracteristicas() {
+        var equals = $("#FkfamiliasDesde").val() === $("#FkfamiliasHasta").val() && $("#FkfamiliasHasta").val() !== "";
+        if (equals) $("#panelcaracteristicas").show();
+        else $("#panelcaracteristicas").hide();
+    }
+</script>

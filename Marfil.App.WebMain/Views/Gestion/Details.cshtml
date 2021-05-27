@@ -1,0 +1,36 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    IEnumerable<ViewProperty> columnas = ViewBag.Columnas as IEnumerable<ViewProperty>;
+    ViewBag.Title = $"Gestión de {ViewBag.TituloMantenimiento}";
+}
+
+
+
+<div>
+    
+    <dl class="dl-horizontal">
+        @foreach (var item in columnas)
+        {
+            <dt>
+                @Html.DisplayName(item.property.Name)
+            </dt>
+            <dd>
+                @Html.Display(item.property.Name)
+            </dd>
+        }
+
+    </dl>
+</div>
+@if (ViewBag.Modificar)
+{
+    <p>
+        <a class="btn btn-info" href="@Url.Action("Edit", new { id = Model.get(((IModelViewExtension)Model).primaryKey.First().Name), mantenimiento=ViewBag.Mantenimiento})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}
+

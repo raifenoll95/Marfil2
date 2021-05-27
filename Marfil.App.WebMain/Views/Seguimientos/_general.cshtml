@@ -1,0 +1,180 @@
+﻿@using Marfil.App.WebMain.Misc
+@using System.Globalization
+@using Resources
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.CRM
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.CRM.SeguimientosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var listmodoscontacto = WebHelper.GetApplicationHelper().GetListModosContacto().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<ContactosModel>(WebHelper.ContextService);
+}
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Tipo)
+    
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Origen, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.Origen, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(f => Model.Origen, "", new { @class = "text-danger" })
+            </div>
+            @if (Model.urlPadre != null)
+            {
+                <div class="col-md-2">
+                    <a class="btn-xs btn btn-info" align="right" href="@Model.urlPadre">
+                        <i class="fa fa-eye">
+                            Ver documento
+                        </i>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Usuario, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.Usuario, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            @Html.LabelFor(f => Model.Fechadocumento, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(f => Model.Fechadocumento)
+            </div>
+            <div class="col-md-10"></div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Usuario, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fechadocumento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Asunto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => Model.Asunto, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+                @Html.ValidationMessageFor(f => Model.Asunto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fkempresa, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    campoverificacion.Name = "Fkempresa";
+                    campoverificacion.Url = Url.Action("CuentasTiposClientesProspectosExclusiveApi", "Api");
+                    campoverificacion.CampoIdentificador = "Fkcuentas";
+                    campoverificacion.Valor = Model.Fkempresa;
+                    campoverificacion.Titulo = "Clientes";
+                    campoverificacion.SoloLectura = isreadonly;
+
+                    //Rai
+                    if(Model.Tipo == (int)DocumentoEstado.Campañas)
+                    {
+                        campoverificacion.Obligatorio = false;
+                    }
+
+                    else
+                    {
+                        campoverificacion.Obligatorio = true;
+                    }
+                }
+                @Html.Partial("CampoverificacionUI", campoverificacion)
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fkempresa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fkcontacto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group">
+                    @Html.TextBoxFor(f => Model.Fkcontacto, isreadonly ? (object)new { @class = "col-md-2", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "col-md-2" })
+                    @Html.TextBoxFor(f => Model.Nombrecontacto, isreadonly ? (object)new { @class = "col-md-10", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "col-md-10" })
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-message" @Html.Raw(isreadonly ? "disabled=\" disabled\"" : string.Empty) onclick="SearchContacto()">
+                            <i class="fa fa-search"></i> @CRM.LblBuscarContacto
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        @if (isreadonly || iseditable)
+        {
+            <hr />
+
+            @* GRID *@
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <span class="fa-2x">
+                        @General.lblCorreos
+                    </span>
+                    <i class="bigger fa fa-envelope-o" style="font-size:28px;"></i>
+                </div>
+                <div class="col-md-10 col-md-offset-2">
+                    @Html.Partial("_correos", Model.Correos)
+                </div>
+            </div>
+        }
+
+<script>
+
+    window.onload = function () {
+        document.getElementById("Fkempresa").setAttribute("readonly", true)
+        document.getElementById("btnbuscarFkempresa").setAttribute("disabled", true)
+        document.getElementById("Fkcontacto").setAttribute("readonly", true)
+        document.getElementById("Nombrecontacto").setAttribute("readonly", true)
+        if (document.getElementById("Fkcontacto").value != "")
+            obtenerNombreContacto(document.getElementById("Fkempresa").value, document.getElementById("Fkcontacto").value, '@Url.Action("ContactoContactosApi", "Api")');               
+        if (document.getElementById("Fkempresa").value == "")
+        {
+            document.getElementById("Fkdocumentorelacionado").setAttribute("disabled", true)
+            document.getElementById("Fkreferenciadocumentorelacionado").setAttribute("readonly", true)
+        }
+    };
+
+    function SearchContacto() {
+
+        var obj = {
+            campoIdentificador: "Id",
+            IdComponenteasociado: "BusquedaContactos",
+            IdFormulariomodal: "BusquedaGlobal",
+            Url: '@Url.Action("ContactoContactosApi", "Api")',
+            Titulo: "Busqueda de contactos",
+            Params: @Html.Raw("'{\"fkentidad\":\"' + $(\"[name='Fkempresa']\").val()+'\" }'")
+
+        };
+
+        eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("BusquedaContactos-Buscarfocus",function(obj) {
+        $("[name='Fkcontacto']").val(obj);
+        obtenerNombreContacto(document.getElementById("Fkempresa").value, obj, '@Url.Action("ContactoContactosApi", "Api")');
+    });
+
+    var obtenerNombreContacto = function (fkentidad, idcontacto, url) {
+        $.get(url + "?fkentidad=" + fkentidad + "&id=" + idcontacto).success(function (result) {
+            $("[name='Nombrecontacto']").val(result.Nombre);
+        });
+
+    };
+
+</script>

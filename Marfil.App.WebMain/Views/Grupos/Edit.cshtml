@@ -1,0 +1,80 @@
+﻿@using Marfil.Dom.ControlsUI.Toolbar
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model IModelView
+
+@{
+    var columnas = Model.getProperties();
+}
+
+
+<div class="form-horizontal">
+    
+</div>
+
+<div>
+    @using (Html.BeginForm("EditOperacion", "Grupos", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
+        <div>
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+                <li><a data-toggle="tab" href="#permisos">@Gruposusuarios.LblPermisos</a></li>
+
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="permisos" class="tab-pane fade  margin-bottom">
+                    @Html.Partial("UsersControls/_permisos",((RolesModel)Model).Permisos)
+            </div>
+            <div id="general" class="tab-pane fade in active">
+
+                @foreach (var item in columnas)
+                {
+                    if (item.property.Name == "Permisos")
+                    {
+                        continue;
+                    }
+
+                    if (((IModelViewExtension) Model).primaryKey.Any(f => f.Name == item.property.Name && f.PropertyType == typeof (Guid)))
+                    {
+                        @Html.Hidden(item.property.Name)
+                    }
+                    else if (item.property.PropertyType != typeof(ToolbarModel) && item.property.PropertyType != typeof(IContextService))
+                    {
+                        <div class="form-group">
+                            @Html.Label(item.property.Name, htmlAttributes: new {@class = "control-label col-md-2"})
+                            <div class="col-md-10">
+                                @Html.Editor(item.property.Name, new {htmlAttributes = new {@class = "form-control",@autofocus=""}})
+                                @Html.ValidationMessage(item.property.Name, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        @General.BtnGuardar
+                    </button>
+                </div>
+            </div>
+        </div>
+           
+
+    }
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

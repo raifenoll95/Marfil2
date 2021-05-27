@@ -1,0 +1,64 @@
+﻿@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@model Marfil.Dom.Persistencia.Model.Configuracion.IncidenciasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var gruposincidencias = WebHelper.GetApplicationHelper().GetListGrupoIncidencias().Select(f=>new SelectListItem() {Text= f.Descripcion,Value=f.Valor}).ToList();
+    gruposincidencias.Insert(0,new SelectListItem() {Text="",Value=""});
+}
+
+@Html.HiddenFor(f=>Model.Empresa)
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty) >
+    @Html.LabelFor(f => Model.Id, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || iseditable ? (object)new { @class = "form-control", @aria_label="codigo", @readonly = "readonly" } : (object)new { @required= "required", @class = "form -control", @aria_label = "codigo", @autofocus = "", @ng_blur = "existePk(3,0,\"" + Url.Action("Exists", "Incidencias") + "\",\"" + Url.Action("Edit", "Incidencias") + "\")", @ng_model = "codigo", @id = "idcontrol" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Id, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipomaterial, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListForAngular("Tipomaterial",Model.Tipomaterial,"Tipomaterial", "class = \"form-control\"  ng-init=\"Tipomaterial='"+ ((int)Model.Tipomaterial) + "'\"" + (isreadonly ? " ng-disabled=\"true\"":string.Empty))
+        @Html.ValidationMessageFor(f => Model.Tipomaterial, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Documento, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListForAngular("Documento", Model.Documento, "Documento", "class = \"form-control\" ng-init=\"Documento='"+ ((int)Model.Documento) + "'\"" + (isreadonly ? " ng-disabled=\"true\"" : " ng-disabled=\"Tipomaterial=='0'\""))
+        @Html.ValidationMessageFor(f => Model.Documento, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkgrupo, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkgrupo, gruposincidencias, isreadonly ? (object)new { @class = "form-control",  @disabled = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Fkgrupo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

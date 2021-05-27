@@ -1,0 +1,160 @@
+﻿@*Raimundo Fenoll*@
+
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    var action  = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+}
+@using Resources
+<script src="@Url.Content("~/Scripts/UserControls/Albaranes/Reclamaralbaran.js")"></script>
+@using (Html.BeginForm("Reclamar", controller,  FormMethod.Post, new { @id = "reclamacionform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden"  name="id" value="" />
+    <input type="hidden" name="lineas" value="" />
+}
+
+<style type="text/css">
+    .black {
+        background-color: #D5D0D0;
+    }
+</style>
+
+<div ng-controller="ReclamaralbaranCtrl" ng-init="init('@Url.Action("getLineasDuplicadas","RecepcionesStock")','@Url.Action("Validar","Familiasproductos")')">
+        <div class="modal" id="reclamaralbaran" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width: 90% !important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">@Albaranes.SeleccionarReclamacion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-horizontal">
+                                <h4 ng-show="loading">@General.LblLoading</h4>
+
+                                <div>
+                                    <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                                    <button type="button" ng-click="cancelarlineas()" id="btnAceptarreclamaralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                                    <button type="button" ng-click="siguiente()" id="btnCancelarreclamaralbaran" class="btn btn-ar btn-primary" ng-disabled="!selected || selected <= 0 ">@General.LblSiguiente</button>  @*data-dismiss="modal"*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="reclamaralbaransiguiente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width: 90% !important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">@Albaranes.LblGenerarReclamacion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-horizontal">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="active">
+                                            <th><b>Cód. Artículo</b></th>
+                                            <th><b>Artículo</b></th>
+                                            <th><b>Lote</b></th>
+                                            <th><b>Tabla</b></th>
+                                            <th><b>Cantidad</b></th>
+                                            <th><b>Largo</b></th>
+                                            <th><b>Ancho</b></th>
+                                            <th><b>Grueso</b></th>
+                                            <th><b>Metros</b></th>
+                                            <th><b>Precio</b></th>
+                                            <th><b>%Desc.</b></th>
+                                            <th><b>Subtotal</b></th>
+                                            <th><b>Editar</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="articulo in articulosduplicados | orderBy : ['Lote','Tabla','Cantidad']">
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.Fkarticulos}}</span>
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.Descripcion}}</span>
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.Lote}}</span>
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.Tabla}}</span>
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.Cantidad}}</span>
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span ng-show="articulo.showEdit || !articulo.permitelargo">{{articulo.SLargo}}</span>
+                                                <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit && articulo.permitelargo" type="text" ng-model="articulo.SLargo" class="form-control">
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span ng-show="articulo.showEdit || !articulo.permiteancho">{{articulo.SAncho}}</span>
+                                                <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit && articulo.permiteancho" type="text" ng-model="articulo.SAncho" class="form-control">
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span ng-show="articulo.showEdit || !articulo.permitegrueso">{{articulo.SGrueso}}</span>
+                                                <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit && articulo.permitegrueso" type="text" ng-model="articulo.SGrueso" class="form-control">
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.SMetros}}</span>
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span ng-show="articulo.showEdit">{{articulo.SPrecio}}</span>
+                                                <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit" type="text" ng-model="articulo.SPrecio" class="form-control">
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span ng-show="articulo.showEdit">{{articulo.Porcentajedescuento}}</span>
+                                                <input ng-keyup="$event.keyCode == 13 && toggleEdit(articulo)" ng-show="!articulo.showEdit" type="text" ng-model="articulo.Porcentajedescuento" class="form-control">
+                                            </td>
+                                            <td ng-class='{black : articulo.noeditable}'>
+                                                <span>{{articulo.SImporte}}</span>
+                                            </td>
+                                            <td bgcolor="#eae5e3">
+                                                <span ng-show="articulo.showEdit && !articulo.noeditable" ng-click="toggleEdit(articulo)" class="text-center glyphicon glyphicon-pencil"></span>
+                                                <span ng-show="!articulo.showEdit && !articulo.noeditable" ng-click="toggleEdit(articulo)" class="text-center glyphicon glyphicon-ok"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="modal-footer">
+                                    <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                                    <button type="button" ng-click="cancelarduplicadas()" id="btnAceptarreclamaralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                                    <button type="button" ng-click="anterior()" id="anterior" class="btn btn-ar btn-primary">@General.LblAnterior</button>            
+                                    <button type="button" ng-click="reclamar()" id="btnCancelarreclamaralbaran" class="btn btn-ar btn-success" ng-disabled="!selected || selected <= 0 ">Reclamar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

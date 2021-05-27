@@ -1,0 +1,104 @@
+﻿@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Model.Configuracion.UnidadesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var isEdicion = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "Edit" : false;
+    var isNuevo = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "New" : false;
+    var decimalestotalesvector = new[] {"0", "1", "2", "3", "4", "5", "6"};
+}
+
+<div class="form-group" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
+    @Html.LabelFor(f => Model.Id, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Id, isreadonly || isEdicion ? (object)new { @class = "form-control",  @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "",@aria_label="Codigo", @ng_blur= "existePk(2,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Unidades") + "\",\"" + Url.Action("Edit", "Unidades") + "\")", @ng_model="codigo", @id= "idcontrol" })
+        @Html.ValidationMessageFor(f => Model.Id, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Codigounidad, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Codigounidad, isreadonly || isEdicion ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Codigounidad, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : isEdicion ? (object)new { @class = "form-control",@autofocus="autofocus" }: (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion2, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion2, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion2, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Textocorto, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Textocorto, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Textocorto, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Textocorto2, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Textocorto2, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Textocorto2, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Decimalestotales, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Decimalestotales, decimalestotalesvector.Select(f=>new SelectListItem() {Value=f, Text=f}), isreadonly  ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Decimalestotales, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Formula, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Formula", Model.Formula, isreadonly || isEdicion ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Formula, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tiposmovimientostock, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Tiposmovimientostock", Model.Tiposmovimientostock, isreadonly || isEdicion ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tiposmovimientostock, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipostock, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Tipostock", Model.Tipostock, isreadonly || isEdicion ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipostock, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipototal, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Tipototal", Model.Tipototal, isreadonly || isEdicion ? (object) new {@class = "form-control", @disabled = "disabled"} : (object) new {@class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Tipototal, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}

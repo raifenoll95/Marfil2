@@ -1,0 +1,5 @@
+﻿localhost;marfilestable;false
+192.168.223.210;marfilestable;false
+marfilnet;marfilestable;false
+marfilnet.azurewebsites.net;marfil;true
+portal.marfilb2b.com;marfil;true

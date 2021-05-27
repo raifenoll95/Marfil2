@@ -1,0 +1,127 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@model Marfil.Dom.Persistencia.Model.DireccionesModel
+@{
+    var idControl = "direcciones" + Model.Id.ToString().Replace("-", "");
+    var factory = new FModel();
+    var lindireccion = new DireccionesLinModel();
+    var jsoncadena = JsonConvert.SerializeObject(Model.Direcciones);
+    var isreadonly = Model.ReadOnly;
+    var paisdefecto = WebHelper.GetApplicationHelper().GetPaisesDefecto();
+}
+
+<div class="form-group" ng-controller="DireccionesCtrl" ng-init="init('@idControl','@Model.Empresa',@Model.Tipotercero,@jsoncadena,'@Url.Action("ProvinciasPaisesApi", "Api")','@paisdefecto')">
+    <div class="col-md-12">
+        <span class="fa-2x">
+            @Direcciones.TituloEntidad
+        </span>
+        @if (!isreadonly)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" ng-click="nuevoRegistro()">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+    </div>
+    <div class="col-md-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+
+                    <th class="center col-sm-1">
+
+                    </th>
+                    <th>
+                        @Html.LabelFor(f => lindireccion.Descripcion)
+                    </th>
+                    <th>
+                        @Html.LabelFor(f => lindireccion.Direccion)
+                    </th>
+                    <th>
+                        @Html.LabelFor(f => lindireccion.Cp)
+                    </th>
+                    <th>
+                        @Html.LabelFor(f => lindireccion.Poblacion)
+                    </th>
+                    <th class="col-md-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in direcciones">
+
+                    <td class="center col-sm-1">
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Empresa" value="{{ empresa }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Tipotercero" value="{{ item.Tipotercero }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Fkentidad" value="{{ item.Fkentidad }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Id" value="{{ item.Id }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Fktipodireccion" value="{{ item.Fktipodireccion }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Defecto" value="{{ item.Defecto }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Descripcion" value="{{ item.Descripcion }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Fkpais" value="{{ item.Fkpais }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Fkprovincia" value="{{ item.Fkprovincia }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Fktipovia" value="{{ item.Fktipovia }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Direccion" value="{{ item.Direccion }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Poblacion" value="{{ item.Poblacion }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Cp" value="{{ item.Cp }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Personacontacto" value="{{ item.Personacontacto }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Telefono" value="{{ item.Telefono }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Telefonomovil" value="{{ item.Telefonomovil }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Fax" value="{{ item.Fax }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Email" value="{{ item.Email }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Web" value="{{ item.Web }}" />
+                        <input type="hidden" name="Direcciones.Direcciones[{{$index}}].Notas" value="{{ item.Notas }}" />
+
+
+                        <span ng-show="item.Defecto"><i class="fa fa-check green"></i></span>
+                    </td>
+                    <td>
+                        {{item.Descripcion}}
+                    </td>
+                    <td>
+                        {{item.Direccion}}
+                    </td>
+                    <td>
+                        {{item.Cp}}
+                    </td>
+                    <td>
+                        {{item.Poblacion}}
+                    </td>
+                    <td class="col-md-2">
+
+
+                        @if (isreadonly)
+                        {
+                            <a href="#" class="btn btn-sm btn-info" ng-click="edit(item.Empresa,item.Tipotercero,item.Fkentidad,item.Id)">
+                                <i class="fa fa-eye"></i>
+                                <span>@General.LblVer</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn btn-sm btn-info" ng-click="edit(item.Empresa,item.Tipotercero,item.Fkentidad,item.Id)">
+                                <i class="fa fa-pencil"></i>
+                                <span>@General.LblEditar</span>
+                            </a>
+
+                            <a href="#" class="btn btn-sm btn-info" ng-click="delete(item.Empresa,item.Tipotercero,item.Fkentidad,item.Id)">
+                                <i class="fa fa-trash"></i>@General.LblBorrar
+                            </a>
+                        }
+                    </td>
+                </tr>
+                <tr ng-show="direcciones.length==0"><td colspan="6">@General.LblNoHayRegistros</td></tr>
+            </tbody>
+        </table>
+    </div>
+    @Html.Partial("_direccionesLinModal", Model)
+</div>
+
+

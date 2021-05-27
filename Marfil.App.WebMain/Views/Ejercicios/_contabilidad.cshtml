@@ -1,0 +1,245 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+
+@model Marfil.Dom.Persistencia.Model.Configuracion.EjerciciosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var ejericciosService = FService.Instance.GetService(typeof(EjerciciosModel), WebHelper.ContextService) as EjerciciosService;
+    var listejercicios = ejericciosService.GetEjercicios(Model.Id).Select(f => new SelectListItem() { Value = f.Id.ToString(), Text = f.Descripcioncorta }).ToList();
+    listejercicios.Insert(0, new SelectListItem() { Value = null, Text = "" });
+
+    var cvseriecontableAST = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontableIVS = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontableIVP = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontablePRC = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontablePRP = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontableCRC = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontableCRP = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontableREM = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvseriecontableINM = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+}
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesAST, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableAST.Name = "FkseriescontablesAST";
+            cvseriecontableAST.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableAST.Valor = Model.FkseriescontablesAST;
+            cvseriecontableAST.Params = "{\"tipodocumento\":\"AST\"}";
+            cvseriecontableAST.SoloLectura = false;
+            cvseriecontableAST.Autofocus = true;
+            cvseriecontableAST.Obligatorio = false;
+            cvseriecontableAST.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableAST)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesAST, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesIVS, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableIVS.Name = "FkseriescontablesIVS";
+            cvseriecontableIVS.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableIVS.Valor = Model.FkseriescontablesIVS;
+            cvseriecontableIVS.Params = "{\"tipodocumento\":\"IVS\"}";
+            cvseriecontableIVS.SoloLectura = false;
+            cvseriecontableIVS.Autofocus = true;
+            cvseriecontableIVS.Obligatorio = false;
+            cvseriecontableIVS.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableIVS)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesIVS, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesIVP, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableIVP.Name = "FkseriescontablesIVP";
+            cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableIVP.Valor = Model.FkseriescontablesIVP;
+            cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
+            cvseriecontableIVP.SoloLectura = false;
+            cvseriecontableIVP.Autofocus = true;
+            cvseriecontableIVP.Obligatorio = false;
+            cvseriecontableIVP.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableIVP)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesIVP, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesPRC, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontablePRC.Name = "FkseriescontablesPRC";
+            cvseriecontablePRC.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontablePRC.Valor = Model.FkseriescontablesPRC;
+            cvseriecontablePRC.Params = "{\"tipodocumento\":\"PRC\"}";
+            cvseriecontablePRC.SoloLectura = false;
+            cvseriecontablePRC.Autofocus = true;
+            cvseriecontablePRC.Obligatorio = false;
+            cvseriecontablePRC.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontablePRC)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesPRC, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesPRP, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontablePRP.Name = "FkseriescontablesPRP";
+            cvseriecontablePRP.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontablePRP.Valor = Model.FkseriescontablesPRP;
+            cvseriecontablePRP.Params = "{\"tipodocumento\":\"PRP\"}";
+            cvseriecontablePRP.SoloLectura = false;
+            cvseriecontablePRP.Autofocus = true;
+            cvseriecontablePRP.Obligatorio = false;
+            cvseriecontablePRP.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontablePRP)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesPRP, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesCRC, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableCRC.Name = "FkseriescontablesCRC";
+            cvseriecontableCRC.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableCRC.Valor = Model.FkseriescontablesCRC;
+            cvseriecontableCRC.Params = "{\"tipodocumento\":\"CRC\"}";
+            cvseriecontableCRC.SoloLectura = false;
+            cvseriecontableCRC.Autofocus = true;
+            cvseriecontableCRC.Obligatorio = false;
+            cvseriecontableCRC.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableCRC)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesPRC, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesCRP, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableCRP.Name = "FkseriescontablesCRP";
+            cvseriecontableCRP.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableCRP.Valor = Model.FkseriescontablesCRP;
+            cvseriecontableCRP.Params = "{\"tipodocumento\":\"CRP\"}";
+            cvseriecontableCRP.SoloLectura = false;
+            cvseriecontableCRP.Autofocus = true;
+            cvseriecontableCRP.Obligatorio = false;
+            cvseriecontableCRP.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableCRP)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesPRC, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesREM, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableREM.Name = "FkseriescontablesREM";
+            cvseriecontableREM.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableREM.Valor = Model.FkseriescontablesREM;
+            cvseriecontableREM.Params = "{\"tipodocumento\":\"REM\"}";
+            cvseriecontableREM.SoloLectura = false;
+            cvseriecontableREM.Autofocus = true;
+            cvseriecontableREM.Obligatorio = false;
+            cvseriecontableREM.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableREM)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesPRC, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+<div class="col-md-12"></div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FkseriescontablesINM, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvseriecontableINM.Name = "FkseriescontablesINM";
+            cvseriecontableINM.Url = Url.Action("SeriesContablesApi", "Api");
+            cvseriecontableINM.Valor = Model.FkseriescontablesINM;
+            cvseriecontableINM.Params = "{\"tipodocumento\":\"INM\"}";
+            cvseriecontableINM.SoloLectura = false;
+            cvseriecontableINM.Autofocus = true;
+            cvseriecontableINM.Obligatorio = false;
+            cvseriecontableINM.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvseriecontableINM)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.FkseriescontablesINM, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+

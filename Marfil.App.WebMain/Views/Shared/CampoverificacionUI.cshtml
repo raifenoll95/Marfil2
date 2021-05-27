@@ -1,0 +1,36 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Resources
+@model Marfil.Dom.ControlsUI.CampoVerificacion.CampoverificacionModel
+@{
+    var txtName = "txt" + Guid.NewGuid().ToString().Replace("-", "");
+    var formularioAltaEnlazada = "AltaEnlazada" + Guid.NewGuid().ToString().Replace("-", "");
+}
+<div class="input-group" ng-controller="CampoverificacionController" ng-init="init(@Html.Raw(string.IsNullOrEmpty(Model.Longitud)? "0": Model.Longitud),'@Model.Tipo', '@Model.Url','@Model.Name','@Model.CampoIdentificador','@Model.CampoDescripcion', '@Constantes.NombreBusquedaGlobal','@Model.Valor','@Model.Params','@Model.SettingsVerificacion.UrlVerificacion','@Model.SettingsVerificacion.UrlEdicion','@Model.Tipo','@Model.ControlesAsociados','@Model.Columnabloqueados','@Model.Titulo')">
+    <input aria-label="@Model.Name" style="@Html.Raw(Model.Configuracion.OcultarTexto ? string.Empty : "width:200px !important")" enter-as-tab ng-keydown="keydown($event)" @Html.Raw(Model.Autofocus ? "autofocus=\"autofocus\"" : "") @Html.Raw(Model.SoloLectura ? "readonly=\"readonly\"" : string.Empty) @Html.Raw(Model.Obligatorio ? "data-val=\"true\" data-val-required=\"" + string.Format(Resources.Unobtrusive.PropertyValueRequired, Model.DisplayName) + "\"" : string.Empty) @Html.Raw(Model.ExcludeSubmit ? string.Empty: "name=\""+ Model.Name +"\"") id="@Model.Name" ng-model="valor" change-on-blur="lostFocus()" ng-focus="" type="text" class="form-control @Html.Raw(Model.Configuracion.OcultarTexto ? "" : Model.Configuracion.AnchoTexto)">
+    
+    @if (!Model.Configuracion.OcultarTexto)
+    {
+
+        <div style="width: 100%; text-align: left;" ng-cloak id="@Html.Raw("lbl" + Model.Name)" ng-class="bloqueado ? 'input-group-addon input-group-addon-bloqueado' : 'input-group-addon'">
+            <i title="@General.LblBloqueado" ng-show="!loading && bloqueado" class="fa fa-ban red"></i> 
+            <span ng-show="!loading" id="cv-@(Model.Name)-descripcion" ng-class="bloqueado ? red : '' " >{{descripcion}}</span>
+            <span class="fa fa-hourglass-start" style="text-align: left;" ng-show="loading"> @General.LblLoading</span>
+        </div>
+    }
+    
+
+    @if (Model.AltaEnlazada)
+    {
+        <a href="@Url.Action(Model.AltaSettings.Action, Model.AltaSettings.Controller, new {ReturnUrl = Model.AltaSettings.ReturnUrl})"  style="margin-left: 5px;" tabindex="-1" @Html.Raw(Model.SoloLectura ? "disabled=\"disabled\"" : string.Empty) type="button" class="btn btn-success btn-sm input-group-btn">
+            <i class="fa fa-plus"></i>
+            @General.LblNuevo
+        </a> 
+    }
+    <span class="input-group-btn">
+        <button tabindex="-1" @Html.Raw(Model.SoloLectura ? "disabled=\"disabled\"" : string.Empty) type="button" style="margin-left:0px !important" id="@Html.Raw("btnbuscar" + Model.Name)" class="btn btn-purple btn-sm" ng-controller="BotonbuscarCtrl" ng-click="buscar('@Model.CampoIdentificador', '@Model.Name', '@Constantes.NombreBusquedaGlobal', '@Model.Url','@Model.Titulo','@Model.Params','@Model.ControlesAsociados')">
+            <i class="fa fa-search"></i>
+            @General.LblBuscar
+        </button>
+    </span>
+    
+</div>

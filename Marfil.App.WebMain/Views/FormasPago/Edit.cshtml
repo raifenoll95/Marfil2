@@ -1,0 +1,238 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var objModel = Model as FormasPagoModel;
+    var service = new TablasVariasService(WebHelper.ContextService);
+    var modosPago = service.GetTablasVariasByType(typeof(TablasVariasModosPagoModel));
+    var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago();
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "FormasPago", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((FormasPagoModel)Model).Id, new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.TextBoxFor(f => ((FormasPagoModel)Model).Id, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((FormasPagoModel)Model).Nombre, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((FormasPagoModel)Model).Nombre, htmlAttributes: new { @class = "form-control", @autofocus = "autofocus" })
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((FormasPagoModel)Model).Nombre2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(f => ((FormasPagoModel)Model).Nombre2, new { @class = "form-control" })
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Nombre2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => ((FormasPagoModel)Model).RecargoFinanciero, new { @class = "control-label col-md-2" })
+            <div class="col-md-1 ">
+                
+                @Html.TextBoxFor(f => ((FormasPagoModel) Model).RecargoFinanciero, new {@class = "form-control"})
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(f => ((FormasPagoModel)Model).ImprimirVencimientoFacturas)
+                        <span class="lbl">Imprimir vencimientos en las facturas</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(f => ((FormasPagoModel)Model).ExcluirFestivos)
+                        <span class="lbl">Excluir vencimientos en festivos</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-md-offset-2">
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).RecargoFinanciero, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).ImprimirVencimientoFacturas, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).ExcluirFestivos, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(f => ((FormasPagoModel)Model).FkGruposformaspago, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(f => ((FormasPagoModel)Model).FkGruposformaspago, gruposPago.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).FkGruposformaspago, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(f => objModel.ModoPago, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                <select class="form-control" name="ModoPago" id="Modopago" aria-label="Modo de pago" onchange="onSelectChange($(this))">
+                    <option value="AAA" @Html.Raw(((FormasPagoModel) Model).ModoPago == "AAA" ? "selected='selected'" : string.Empty)>Personalizado</option>
+                    @foreach (var item in modosPago.Lineas)
+                    {
+                        <option value="@item.Valor" @Html.Raw(((FormasPagoModel) Model).ModoPago == item.Valor ? "selected='selected'" : string.Empty)>@item.Descripcion</option>
+                    }
+                </select>
+            </div>
+
+            
+
+            <div class="col-md-10 col-md-offset-2">
+                <div class="checkbox">
+                    <label>
+                        @if (((FormasPagoModel) Model).ModoPago == "AAA")
+                        {
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Efectivo, new {@class = "optionCheck"})
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Efectivo, new {@class = "optionCheck", @disabled = "disabled"})
+                        }
+
+                        <span class="lbl">@General.LblEfectivo</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                <div class="checkbox">
+                    <label>
+                        @if (((FormasPagoModel) Model).ModoPago == "AAA")
+                        {
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Remesable, new {@class = "optionCheck"})
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Remesable, new {@class = "optionCheck", @disabled = "disabled"})
+                        }
+                        <span class="lbl">@General.LblRemesable</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                <div class="checkbox">
+                    <label>
+                        @if (((FormasPagoModel) Model).ModoPago == "AAA")
+                        {
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Mandato, new {@class = "optionCheck"})
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Mandato, new {@class = "optionCheck", @disabled = "disabled"})
+                        }
+
+
+                        <span class="lbl">@General.LblMandatoRequerido</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        @Html.EditorFor(f => ((FormasPagoModel)Model).BloqueoModel)
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <span class="fa-2x">
+                    @General.LblVencimientos
+                </span>
+                <span class="pull-right">
+                    <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                        <i class="fa fa-plus"></i>
+                        @General.BtnNuevoRegistro
+                    </a>
+                </span>
+
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.Partial("FormasPagoLin", ((FormasPagoModel)Model).Lineas)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" @Html.Raw( ((FormasPagoModel)Model).BloqueoModel.Bloqueada ? "disabled=\"disabled\"" : "" )>
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function onSelectChange(combo) {
+        var vector = [
+            @{
+                var flag = false;
+             foreach (var item in modosPago.Lineas)
+             {
+                    @Html.Raw(flag?",":"")
+                 @Html.Raw("{ valor:'" + item.Valor + "', remesable: " + item.Remesable.ToString().ToLower() + ", efectivo:" + item.Efectivo.ToString().ToLower() + ", mandato:" + item.MandatoRequerido.ToString().ToLower() + " }")
+                 flag = true;
+             }
+            }
+        ];
+
+        if (combo.val() === "AAA") {
+            $(".optionCheck").prop('disabled', false);
+            $(".optionCheck").prop('checked', false);
+        } else {
+            $(".optionCheck").prop('disabled', true);
+
+            var result = $.grep(vector, function (e) { return e.valor == combo.val(); });
+            if (result.length > 0) {
+                $("#Efectivo").prop('checked', result[0].efectivo);
+                $("#Remesable").prop('checked', result[0].remesable);
+                $("#Mandato").prop('checked', result[0].mandato);
+
+                $("[name='Efectivo']").val(result[0].efectivo);
+                $("[name='Remesable']").val(result[0].remesable);
+                $("[name='Mandato']").val(result[0].mandato);
+            } else {
+                alert("no hay");
+            }
+        }
+    }
+
+     @if (((FormasPagoModel) Model).ModoPago != "AAA")
+     {
+         @Html.Raw("onSelectChange($(\"#Modopago\"));")
+     }
+</script>
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}
+
+@section Bloqueomodal
+{
+    @Html.Partial("_bloqueomodals", ((FormasPagoModel)Model).BloqueoModel)
+}

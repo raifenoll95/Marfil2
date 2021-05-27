@@ -1,0 +1,120 @@
+﻿@using Marfil.App.WebMain.Misc
+@using System.Globalization
+@using System.Threading
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.CRM
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.CRM.CampañasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var listmodoscontacto = WebHelper.GetApplicationHelper().GetListModosContacto().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<ContactosModel>(WebHelper.ContextService);
+}
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Identificadorsegmento)
+
+
+@if (isNuevo)
+{
+     <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseries, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @{
+
+                cvserie.Name = "Fkseries";
+                cvserie.Url = Url.Action("SeriesApi", "Api");
+                cvserie.Valor = Model.Fkseries;
+                cvserie.Params = "{\"tipodocumento\":\"CAM\"}";
+                cvserie.Autofocus = true;
+                cvserie.Obligatorio = true;
+                cvserie.Configuracion.OcultarTexto = true;
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvserie)
+        </div>    
+        @Html.LabelFor(f => Model.Fechadocumento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechadocumento)
+        </div>
+    
+        <div class="col-md-12"></div>
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fkseries, "", new {@class = "text-danger"})
+            </div>
+
+            <div class="col-md-2 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fechadocumento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+}
+else
+{
+    @Html.HiddenFor(f => Model.Fkseries)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        @Html.LabelFor(f => Model.Fechadocumento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechadocumento)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fechadocumento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Asunto, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Asunto, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Asunto, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechaultimoseguimiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechaultimoseguimiento)
+    </div>
+    @Html.LabelFor(f => Model.Fechaproximoseguimiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechaproximoseguimiento)
+    </div>
+    <div class="col-md-10"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fechaultimoseguimiento, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fechaproximoseguimiento, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<script>
+
+    window.onload = function () {
+        document.getElementById("Fechaultimoseguimiento").setAttribute("readonly", true)
+    };
+
+</script>

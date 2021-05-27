@@ -1,0 +1,385 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion
+@model Marfil.Dom.Persistencia.Listados.ListadoMargen
+@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@{
+    var series = Model.SeriesListado;
+    ViewBag.Title = Menuaplicacion.listadomargen;
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
+}
+
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+</script>
+
+@Html.HiddenFor(f => Model.Empresa)
+
+<h2>@Menuaplicacion.listadomargen</h2>
+<div class="col-md-12"><h2></h2></div>
+
+<div class="col-md-10" id="contenedor">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Series, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Series" class="form-control" name="Series" multiple="multiple">
+                @foreach (var item in series)
+                {
+                    <option value="@item.Id" @Html.Raw(Model.Series.Any(f => f == item.Id) ? "selected=\"selected\"" : string.Empty)>@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Series, "", new { @class = "text-danger" })</div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group" class="col-md-10">
+        @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ClienteDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "ClienteDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.ClienteDesde;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.ClienteDesde, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ClienteHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "ClienteHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.ClienteHasta;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+                cvclientes.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.ClienteHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.AgenteDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "AgenteDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.AgenteDesde;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Agentes + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.AgenteDesde, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-12"><h1></h1></div>
+
+        @Html.LabelFor(f => Model.AgenteHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "AgenteHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.AgenteHasta;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Agentes + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.AgenteHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComercialDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "ComercialDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.ComercialDesde;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Comerciales + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.ComercialDesde, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-12"><h1></h1></div>
+
+        @Html.LabelFor(f => Model.ComercialHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "ComercialHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.ComercialHasta;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Comerciales + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.ComercialHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ArticuloDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvarticulos.Name = "ArticuloDesde";
+                cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+                cvarticulos.Valor = Model.ArticuloDesde;
+                cvarticulos.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvarticulos)
+            @Html.ValidationMessageFor(f => Model.ArticuloDesde, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-12"><h1></h1></div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ArticuloHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvarticulos.Name = "ArticuloHasta";
+                cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+                cvarticulos.Valor = Model.ArticuloHasta;
+                cvarticulos.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvarticulos)
+            @Html.ValidationMessageFor(f => Model.ArticuloHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.MaterialDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvmateriales.Name = "MaterialDesde";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.MaterialDesde;
+                cvmateriales.Configuracion.OcultarTexto = false;
+                cvmateriales.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+
+        <div class="col-md-12"><h1></h1></div>
+
+        @Html.LabelFor(f => Model.MaterialHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvmateriales.Name = "MaterialHasta";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.MaterialHasta;
+                cvmateriales.Configuracion.OcultarTexto = false;
+                cvmateriales.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.MaterialDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.MaterialHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaInforme, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(f => Model.FechaInforme)
+        </div>
+    </div>
+
+    <div class="col-md-12"><h1></h1></div>
+    <div class="col-md-12"><h1></h1></div>
+
+</div>
+
+
+
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active">Vista</li>
+        <li class="list-group-item"><input type="radio" name="vista" value="0" checked>Articulo</li>
+        <li class="list-group-item"><input type="radio" name="vista" value="1">Cliente</li>
+        <li class="list-group-item"><input type="radio" name="vista" value="2">Proveedor</li>
+    </ul>
+</div>
+
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active">Agrupación</li>
+        <li class="list-group-item"><input type="radio" name="agr" value="0" checked>Agrupado</li>
+        <li class="list-group-item"><input type="radio" name="agr" value="1">Detallado</li>
+    </ul>
+</div>
+
+<div class="col-md-2">
+    <ul class="list-group">
+        <li class="list-group-item active">Valorado a:</li>
+        <li class="list-group-item"><input type="radio" name="valor" value="0">Neto compra</li>
+        <li class="list-group-item"><input type="radio" name="valor" value="1" checked>Coste adquisicion</li>
+    </ul>
+</div>
+
+
+@*Creo el boton imprimir*@
+<script type="text/javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementById('contenedor');
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+
+        parentButtonListar.insertBefore(button, parentButtonListar.children[22])
+
+    }, false);
+
+    function imprimir() {
+
+        var valorate = document.getElementsByName('valor');
+
+        for (var i = 0; i < valorate.length; i++) {
+            if (valorate[i].checked) {
+                var val = valorate[i].value;
+
+            }
+        }
+
+        var data = {
+            Series: document.getElementById('Series').value,
+            FechaDesde: document.getElementById('FechaDesde').value,
+            FechaHasta: document.getElementById('FechaHasta').value,
+            ClienteDesde: document.getElementById('ClienteDesde').value,
+            ClienteHasta: document.getElementById('ClienteHasta').value,
+            AgenteDesde: document.getElementById('AgenteDesde').value,
+            AgenteHasta: document.getElementById('AgenteHasta').value,
+            ComercialDesde: document.getElementById('ComercialDesde').value,
+            ComercialHasta: document.getElementById('ComercialHasta').value,
+            ArticuloDesde: document.getElementById('ArticuloDesde').value,
+            ArticuloHasta: document.getElementById('ArticuloHasta').value,
+            MaterialDesde: document.getElementById('MaterialDesde').value,
+            MaterialHasta: document.getElementById('MaterialHasta').value,
+            FechaInforme: document.getElementById('FechaInforme').value,
+            Valorado: val
+        };
+
+        var vis = document.getElementsByName('vista');
+
+        for (var i = 0; i < vis.length; i++) {
+            if (vis[i].checked) {
+                var v = vis[i].value;
+
+            }
+        }
+
+        var grupo = document.getElementsByName('agr');
+
+        for (var i = 0; i < grupo.length; i++) {
+            if (grupo[i].checked) {
+                var g = grupo[i].value;
+
+            }
+        }
+
+        var dataSerialized = JSON.stringify(data)
+
+        if (v == 0 && g == 0) {
+             window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=ListadoMargen&reportId=ArticuloAgrupado');
+        } else if (v == 0 && g == 1) {
+             window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=ListadoMargen&reportId=ArticuloDetallado');
+        } else if (v == 1 && g == 0) {
+            window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=ListadoMargen&reportId=ClienteAgrupado');
+        } else if (v == 1 && g == 1) {
+            window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=ListadoMargen&reportId=ClienteDetallado');
+        }else if (v == 2 && g == 0) {
+            window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=ListadoMargen&reportId=ProveedorAgrupado');
+        }else if (v == 2 && g == 1) {
+            window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=ListadoMargen&reportId=ProveedorDetallado');
+        }
+
+    };
+
+</script>

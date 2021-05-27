@@ -1,0 +1,132 @@
+﻿@using Marfil.Dom.ControlsUI.Toolbar
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.UsuariosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Nombre, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Nombre, "", isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = "", ng_model = "nombre"})
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Nombre, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Usuariomail, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Usuariomail, "", isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" ,ng_model="usuariomail"})
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Usuariomail, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Passwordmail, htmlAttributes: new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Passwordmail, "", isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", ng_model = "passwordmail" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Passwordmail, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Email, "", isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", ng_model = "email" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Email, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Smtp, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Smtp, "", isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", ng_model = "smtp" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Smtp, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Puerto, htmlAttributes: new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Puerto, "", isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", ng_model = "puerto" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Puerto, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Copiaremitente, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownListFor(f => Model.Copiaremitente, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Copiaremitente, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Ssl, htmlAttributes: new { @class = "control-label col-md-2" })
+
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Ssl, isreadonly ? (object)new {  @readonly = "readonly" } : (object)new {  ng_model = "ssl" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Ssl, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Firma, htmlAttributes: new {@class = "control-label col-md-2"})
+
+    @if (!isreadonly)
+    {
+        <div class="col-md-10">
+            <input type="file" name="Firma" id="Firma" accept=".html" class="form-control" ng-model="archivohtml" />
+        </div>
+    }
+
+    
+    <div class="col-md-10 col-md-offset-2" id="contenidofirma">
+        @Html.Raw(Model.Firma)
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-2">
+        <button type="button" class="btn btn-grey" ng-click="Probaremail()">
+            <i class="fa fa-mail-forward" ></i>
+            @Usuarios.LblProbarEmail
+        </button>
+    </div>
+
+    <div class="col-md-6">
+        {{resulttest}}
+        <span ng-show="resultflag && firsttest && resulttest==''" class="green" ng-cloak>
+            <i class="fa fa-thumbs-up"></i> 
+            El email se ha enviado correctamente
+        </span>
+        <span ng-show="!resultflag && firsttest && resulttest==''" class="red" ng-cloak>
+            <i class="fa fa-thumbs-down"></i>
+            Ups! Parece que ocurrió un problema al enviar el email
+        </span>
+    </div>
+</div>
+
+
+
+

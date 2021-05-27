@@ -1,0 +1,48 @@
+﻿@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    IEnumerable<ViewProperty> columnas = ViewBag.Columnas as IEnumerable<ViewProperty>;
+    ViewBag.Title = $"Gestión de {ViewBag.TituloMantenimiento}";
+    var objModel = Model as RolesModel;
+}
+
+<h2>@General.LblBorrar</h2>
+
+<h3>@General.LblMensajeConfirmacionBorrado</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+
+        
+            <dt>
+                @Html.DisplayNameFor(f=>objModel.Role)
+            </dt>
+
+            <dd>
+                @objModel.Role
+            </dd>
+        
+       
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-trash bigger-110"></i>
+                @General.LblContinuar
+            </button>
+
+            <a class="btn btn-info" href="@Url.Action("Index")">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                @General.LblCancelar
+            </a>
+            
+        </div>
+    }
+</div>

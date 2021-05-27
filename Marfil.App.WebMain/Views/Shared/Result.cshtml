@@ -1,0 +1,57 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Listados.Base.ListadoResultado
+@{
+    ViewBag.Title = Model.TituloListado;
+    var size = Model.Filtros.Count() > 5 ? 5 : Model.Filtros.Count();
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Listados/listadoscontroller.js")"></script>
+<h3>@Model.TituloListado
+    <span class="pull-right">
+        <a href="@Url.Action("Listado", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), new {id = Model.WebIdListado})">@General.LblVolverALaLista</a> 
+    </span></h3>
+<hr/>
+@if (Model.Filtros.Any())
+{
+    <div class="row">
+        <h4>Filtros <button aria-label="Mostrar" data-toggle="collapse" data-target="#democollapse" id="buttoncollapse" class="btn btn-link"><i id="iconcollapse" class="fa fa-chevron-circle-down"></i></button></h4>
+        <div id="democollapse" class="panel-collapse collapse">
+            <select aria-label="filtros" size="@size" class="form-control">
+                @foreach (var item in Model.Filtros)
+                {
+                    <option>@item</option>
+                }
+            </select>
+        </div>
+    </div>
+
+}
+<div class="row margin-bottom" ng-controller="ListadosCtrl" ng-init="init('@Url.Action("SaveSettings", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(),new {id = Model.IdListado })')">
+    @Html.Partial("_gridViewListado", Model)
+</div>
+
+
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}
+
+<script>
+    $(document).ready(function() {
+        $('#democollapse').on('shown.bs.collapse', function () {
+            $("#iconcollapse").removeClass("fa-chevron-circle-down").addClass("fa-chevron-circle-up");
+        });
+
+        $('#democollapse').on('hidden.bs.collapse', function () {
+            $("#iconcollapse").removeClass("fa-chevron-circle-up").addClass("fa-chevron-circle-down");
+        });
+    });
+
+</script>

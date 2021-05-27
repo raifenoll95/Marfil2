@@ -1,0 +1,69 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Listados.ListadosLotes
+@{
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+}
+@*<script src="@Url.Content("~/Scripts/UserControls/Provincias/ProvinciasController.js")"></script>*@
+
+@*<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>*@
+<script>
+
+    $(document).ready(function () {
+
+        //$('#Series').multiselect({
+        //    includeSelectAllOption: true
+        //});
+
+    });
+
+</script>
+@Html.HiddenFor(f => Model.Empresa)
+<div class="col-md-12">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkarticulos, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvarticulos.Name = "Fkarticulos";
+                cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+                cvarticulos.Valor = Model.Fkarticulos;
+                cvarticulos.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvarticulos)
+            @Html.ValidationMessageFor(f => Model.Fkarticulos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.LotesDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.LotesDesde, new { @class = "form-control", @autofocus = true })
+        </div>
+        @Html.LabelFor(f => Model.LotesHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.LotesHasta, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.LotesDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.LotesHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+@*<script>
+
+
+
+
+</script>*@

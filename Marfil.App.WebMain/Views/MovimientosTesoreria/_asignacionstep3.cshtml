@@ -1,0 +1,187 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Resources
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@*Rai*@
+
+@model  Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.AsistenteMovimientosTesoreriaModel
+@{
+    var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvcuentastesoreria = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var cvbancos = FCampoverificacion.Instance.GetModel<BancosModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var campoverificacioncargo = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var campoverificacionabono = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+
+<form class="form-horizontal" id="step3-form">
+
+    <br />
+
+    @*fecha contable*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.FechaContable)
+        </div>
+    </div>
+
+    @*Cobrador, si en las cuentas hay alguna 'C'*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentastesoreria.Name = "Fkcuentatesoreria";
+                cvcuentastesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
+                cvcuentastesoreria.Valor = Model.Fkcuentatesoreria;
+                cvcuentastesoreria.Titulo = Operarios.Fkcuentatesoreria;
+                cvcuentastesoreria.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentastesoreria)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkcuentatesoreria, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Guia Remesa*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseries, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @{
+                cvseriecontable.Name = "Fkseriescontables";
+                cvseriecontable.Url = Url.Action("SeriesContablesApi", "Api");
+                cvseriecontable.Valor = Model.Fkseries;
+                cvseriecontable.Params = "{\"tipodocumento\":\"" + "REM" + "\"}";
+                cvseriecontable.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvseriecontable)
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkseries, "", new { @class = "text-danger" })
+        </div>
+
+        @*fecha contable*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.FechaRemesa, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(f => Model.FechaRemesa)
+            </div>
+        </div>
+    </div>
+
+    @*Cta Cargo 2*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentacargo2, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @{
+                campoverificacioncargo.Name = "Cuentacargo2";
+                campoverificacioncargo.Url = Url.Action("CuentasApi", "Api");
+                campoverificacioncargo.Valor = Model.Cuentacargo2;
+                campoverificacioncargo.Titulo = Clientes.TituloEntidadSingular;
+                campoverificacioncargo.SoloLectura = true;
+                campoverificacioncargo.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacioncargo)
+        </div>
+
+        @*Importe2Importe3*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.ImporteCargo2, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.ImporteCargo2, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    @*Cta Abono 2*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentaabono2, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @{
+                campoverificacionabono.Name = "Cuentaabono2";
+                campoverificacionabono.Url = Url.Action("CuentasApi", "Api");
+                campoverificacionabono.Valor = Model.Cuentacargo2;
+                campoverificacionabono.Titulo = Clientes.TituloEntidadSingular;
+                campoverificacionabono.SoloLectura = true;
+                campoverificacionabono.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacionabono)
+        </div>
+
+        @*Importe2Importe6*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.ImporteAbono2, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.ImporteAbono2, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    @*SOLICITAR DATOS DOCUMENTO*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Banco, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvbancos.Name = "Banco";
+                cvbancos.Url = Url.Action("BancosApi", "Api");
+                cvbancos.Valor = Model.Banco;
+                cvbancos.Titulo = "Banco librado";
+                cvbancos.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvbancos)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Banco, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Letra*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Letra, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Letra, new { @class = "form-control" })
+        </div>
+    </div>
+
+    @*Actualizar fecha de pago*@
+    <div id="campofechapago" class="form-group">
+        @Html.LabelFor(f => Model.FechaPago, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.FechaPago)
+        </div>
+    </div>    
+
+        @*Observaciones*@
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Comentario, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(f => Model.Comentario, (object)new { @class = "form-control", @autofocus = "" })
+                @Html.ValidationMessageFor(f => Model.Comentario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-4" align="right">
+            <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+        </div>
+</form>

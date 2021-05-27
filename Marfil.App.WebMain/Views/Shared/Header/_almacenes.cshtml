@@ -1,0 +1,60 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.HeaderModel
+@{
+    var almacenes = Model.AlmacenesList.Where(f => f.Item1 != Model.EjercicioId);
+
+}
+<a href="javascript:;" class="dropdown-toggle" id="cambioalmacen">
+    <span class="bigger-180" style="padding-right: 10px; padding-left: 10px;">
+        @Model.Almacen
+    </span>
+</a>
+<ul class="dropdown-menu">
+    <li >
+        @if (almacenes.Any())
+        {
+            <form action="@Url.Action("Index", "CambioAlmacen")" name="CambioAlmacen" id="CambioAlmacen" method="POST">
+                <div class="form-horizontal" style="padding: 10px;">
+                    <select aria-label="Cambio de almacen" name="id" class="form-control">
+                        @foreach (var item in almacenes)
+                        {
+                            <option value="@item.Item1">@item.Item2</option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn btn-md btn-primary">
+                        <i class="fa fa-refresh"></i>
+                        @General.LblCambiarAlmacen
+                    </button>
+                </div>
+            </form>
+            
+            
+                
+
+            
+        }
+        else
+        {
+            <a href="#">
+                <i class="fa fa-warning"></i>
+                @General.LblNoExistenMasAlmacenes
+            </a>
+
+        }
+    </li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#cambioalmacen').on('click', function(event) {
+            $(this).parent().toggleClass("open");
+        });
+
+        $('body').on('click', function(e) {
+            if (!$('#cambioalmacenli').is(e.target) && $('#cambioalmacenli').has(e.target).length === 0 && $('.open').has(e.target).length === 0) {
+                $('#cambioalmacenli').removeClass('open');
+            }
+        });
+    });
+   
+</script>

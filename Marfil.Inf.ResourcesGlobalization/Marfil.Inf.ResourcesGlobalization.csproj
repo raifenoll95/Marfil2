@@ -1,0 +1,1229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{51AC93D0-ED0F-4C46-BE6A-BB06C8F5C4F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Marfil.Inf.ResourcesGlobalization</RootNamespace>
+    <AssemblyName>Marfil.Inf.ResourcesGlobalization</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <AssemblyVersion>2017.10.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure|AnyCPU'">
+    <OutputPath>bin\Azure\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Subvencion|AnyCPU'">
+    <OutputPath>bin\Subvencion\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'localhost|AnyCPU'">
+    <OutputPath>bin\localhost\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Textos\Entidades\Acabados.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Acabados.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Agentes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Agentes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Albaranes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Albaranes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\AlbaranesCompras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbaranesCompras.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Almacenes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Almacenes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Articulos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Articulos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ArticulosComponentes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArticulosComponentes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ArticulosTercero.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArticulosTercero.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Aseguradoras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Aseguradoras.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Bancos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Bancos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\BancosMandatos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BancosMandatos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Bundle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Bundle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Campañas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Campañas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Caracteristicas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Caracteristicas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\CobrosYPagos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CobrosYPagos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Comerciales.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comerciales.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Configuracionaplicacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Configuracionaplicacion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Configuraciongraficas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Configuraciongraficas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Contactos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contactos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Contadores.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contadores.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\CostesVariablesPeriodo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CostesVariablesPeriodo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Criteriosagrupacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Criteriosagrupacion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Cuentas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cuentas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Cuentastesoreria.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cuentastesoreria.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Direcciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Direcciones.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\DivisionLotes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DivisionLotes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Documentos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Documentos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Ejercicios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ejercicios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Empresas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Empresas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\EntradasVarias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntradasVarias.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Estados.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Estados.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Facturas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Facturas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\FacturasCompras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FacturasCompras.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Familiasproductos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Familiasproductos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Ficheros.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ficheros.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Formaspago.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Formaspago.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Grosores.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Grosores.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\GrupoMateriales.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrupoMateriales.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Gruposiva.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Gruposiva.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Gruposusuarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Gruposusuarios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\GuiasBalances.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuiasBalances.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\GuiasBalancesLineas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuiasBalancesLineas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Guiascontables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Guiascontables.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ImputacionCostes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImputacionCostes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Incidencias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Incidencias.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Inventarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Inventarios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Kit.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Kit.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ListadoAcomuladoPeriodos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListadoAcomuladoPeriodos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ListadoComisiones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListadoComisiones.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ListadoMovs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListadoMovs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Maes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Maes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Materiales.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Materiales.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Monedas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Monedas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Acreedores.Designer.cs">
+      <DependentUpon>Acreedores.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Textos\Entidades\Movimientosalmacen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Movimientosalmacen.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Movs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Movs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Municipios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Municipios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Obras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Obras.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Operarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Operarios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Clientes.Designer.cs">
+      <DependentUpon>Clientes.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Textos\Entidades\PeticionesAsincronas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PeticionesAsincronas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\CircuitosTesoreria.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CircuitosTesoreria.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Seguimientos.Designer.cs">
+      <DependentUpon>Seguimientos.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Textos\Entidades\CRM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRM.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Pedidos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pedidos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\PedidosCompras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PedidosCompras.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Presupuestos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Presupuestos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\PresupuestosCompras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PresupuestosCompras.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Prospectos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Prospectos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Proveedores.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Proveedores.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Provincias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Provincias.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Puertos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Puertos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\RecepcionStock.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecepcionStock.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\RegimenIva.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegimenIva.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Reservas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reservas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\SeguimientosCorreo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SeguimientosCorreo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\SituacionesTesoreria.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SituacionesTesoreria.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Tareas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tareas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\SalidasVarias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalidasVarias.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\SeccionesAnaliticas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SeccionesAnaliticas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Series.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Series.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\SeriesContables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SeriesContables.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Stock.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Stock.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\TablasVarias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TablasVarias.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Tarifas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tarifas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Tiposcuentas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tiposcuentas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Tiposiva.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tiposiva.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Tiposretenciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tiposretenciones.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Trabajos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Trabajos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Transformaciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Transformaciones.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Transformacioneslotes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Transformacioneslotes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Transportistas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Transportistas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Traspasosalmacen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Traspasosalmacen.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Unidades.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unidades.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Usuarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Usuarios.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Zonasalmacen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Zonasalmacen.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\GeneralUI\General.en.Designer.cs">
+      <DependentUpon>General.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Textos\GeneralUI\General.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\GeneralUI\TiposAsientosContables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposAsientosContables.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\GeneralUI\TiposDocumentos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposDocumentos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\GeneralUI\TiposDocumentosContables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposDocumentosContables.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Login\Login.en.Designer.cs">
+      <DependentUpon>Login.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Textos\Login\Login.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\MenuAplicacion\Menuaplicacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Menuaplicacion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Unobtrusive\Unobtrusive.en.Designer.cs">
+      <DependentUpon>Unobtrusive.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Unobtrusive\Unobtrusive.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unobtrusive.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Textos\Entidades\Acabados.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Acabados.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Acabados.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Acabados.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Agentes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Agentes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Agentes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Agentes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Albaranes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Albaranes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Albaranes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Albaranes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\AlbaranesCompras.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\AlbaranesCompras.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\AlbaranesCompras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlbaranesCompras.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Almacenes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Almacenes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Almacenes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Almacenes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Articulos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Articulos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Articulos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Articulos.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ArticulosComponentes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ArticulosComponentes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArticulosComponentes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ArticulosTercero.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArticulosTercero.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Aseguradoras.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Aseguradoras.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Aseguradoras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Aseguradoras.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Bancos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Bancos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Bancos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Bancos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\BancosMandatos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\BancosMandatos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\BancosMandatos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BancosMandatos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Bundle.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Bundle.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Bundle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Bundle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Campañas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Campañas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Caracteristicas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Caracteristicas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Caracteristicas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Caracteristicas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Clientes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Clientes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CobrosYPagos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CobrosYPagos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Comerciales.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Comerciales.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Comerciales.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Comerciales.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Configuracionaplicacion.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Configuracionaplicacion.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Configuracionaplicacion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Configuracionaplicacion.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Configuraciongraficas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Configuraciongraficas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Configuraciongraficas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Configuraciongraficas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Contactos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Contactos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Contactos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contactos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Contadores.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Contadores.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Contadores.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contadores.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\CostesVariablesPeriodo.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CostesVariablesPeriodo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CostesVariablesPeriodo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Criteriosagrupacion.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Criteriosagrupacion.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Criteriosagrupacion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Criteriosagrupacion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Cuentas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Cuentas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Cuentas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cuentas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Cuentastesoreria.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Cuentastesoreria.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Cuentastesoreria.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cuentastesoreria.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Direcciones.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Direcciones.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Direcciones.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Direcciones.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\DivisionLotes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\DivisionLotes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DivisionLotes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Documentos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Documentos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Documentos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Documentos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Ejercicios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Ejercicios.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Ejercicios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ejercicios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Empresas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Empresas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Empresas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Empresas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\EntradasVarias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\EntradasVarias.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\EntradasVarias.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntradasVarias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Estados.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Estados.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Estados.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Estados.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Facturas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Facturas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Facturas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Facturas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\FacturasCompras.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\FacturasCompras.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\FacturasCompras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FacturasCompras.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Familiasproductos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Familiasproductos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Familiasproductos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Familiasproductos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Ficheros.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Ficheros.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Ficheros.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ficheros.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Formaspago.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Formaspago.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Formaspago.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Formaspago.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Grosores.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Grosores.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Grosores.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Grosores.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GrupoMateriales.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\GrupoMateriales.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GrupoMateriales.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Gruposiva.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Gruposiva.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Gruposiva.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Gruposiva.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Gruposusuarios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Gruposusuarios.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Gruposusuarios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Gruposusuarios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalances.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiasBalances.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalancesLineas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiasBalancesLineas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Guiascontables.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Guiascontables.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Guiascontables.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Guiascontables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ImputacionCostes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImputacionCostes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Incidencias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Incidencias.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Incidencias.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Incidencias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Inventarios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Inventarios.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Inventarios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Inventarios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Kit.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Kit.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Kit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Kit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoAcomuladoPeriodos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ListadoAcomuladoPeriodos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ListadoComisiones.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoMovs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ListadoMovs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Maes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Maes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Maes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Materiales.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Materiales.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Materiales.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Materiales.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Monedas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Monedas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Monedas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Monedas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Acreedores.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Acreedores.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Acreedores.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Movimientosalmacen.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Movimientosalmacen.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Movimientosalmacen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Movimientosalmacen.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Movs.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Movs.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Movs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Movs.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Municipios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Municipios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Obras.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Obras.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Obras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Obras.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Operarios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Operarios.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Operarios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Operarios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Clientes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Clientes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PeticionesAsincronas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PeticionesAsincronas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\CircuitosTesoreria.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CircuitosTesoreria.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Seguimientos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Seguimientos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\CRM.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CRM.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Pedidos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Pedidos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Pedidos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pedidos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PedidosCompras.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PedidosCompras.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PedidosCompras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PedidosCompras.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Presupuestos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Presupuestos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Presupuestos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Presupuestos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PresupuestosCompras.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PresupuestosCompras.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PresupuestosCompras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PresupuestosCompras.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Prospectos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Prospectos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Prospectos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Prospectos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Proveedores.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Acreedores.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Proveedores.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Proveedores.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Proveedores.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Provincias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Provincias.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Provincias.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Provincias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Puertos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Puertos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Puertos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Puertos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\RecepcionStock.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\RecepcionStock.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\RecepcionStock.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RecepcionStock.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\RegimenIva.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\RegimenIva.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\RegimenIva.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegimenIva.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Reservas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Reservas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Reservas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reservas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SeguimientosCorreo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeguimientosCorreo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SituacionesTesoreria.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SituacionesTesoreria.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Tareas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tareas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tareas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tareas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SalidasVarias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SalidasVarias.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SalidasVarias.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalidasVarias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SeccionesAnaliticas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SeccionesAnaliticas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SeccionesAnaliticas.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeccionesAnaliticas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Series.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Series.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Series.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Series.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SeriesContables.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SeriesContables.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SeriesContables.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeriesContables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Stock.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Stock.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Stock.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Stock.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\TablasVarias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\TablasVarias.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\TablasVarias.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TablasVarias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Tarifas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tarifas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tarifas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tarifas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Tiposcuentas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tiposcuentas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tiposcuentas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tiposcuentas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Tiposiva.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tiposiva.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tiposiva.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tiposiva.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Tiposretenciones.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tiposretenciones.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Tiposretenciones.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tiposretenciones.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Trabajos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Trabajos.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Trabajos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Trabajos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Transformaciones.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transformaciones.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transformaciones.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Transformaciones.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Transformacioneslotes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transformacioneslotes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transformacioneslotes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Transformacioneslotes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Transportistas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transportistas.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transportistas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Transportistas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Traspasosalmacen.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Traspasosalmacen.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Traspasosalmacen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Traspasosalmacen.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Unidades.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Unidades.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Unidades.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Unidades.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Usuarios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Usuarios.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Usuarios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Usuarios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Zonasalmacen.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Zonasalmacen.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Zonasalmacen.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Zonasalmacen.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\GeneralUI\General.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\GeneralUI\General.fr.resx" />
+    <EmbeddedResource Include="Textos\GeneralUI\General.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\GeneralUI\TiposAsientosContables.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposAsientosContables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentos.en.resx" />
+    <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentos.fr.resx" />
+    <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposDocumentos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentosContables.en.resx" />
+    <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentosContables.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposDocumentosContables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Login\Login.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Login\Login.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\MenuAplicacion\Menuaplicacion.en.resx" />
+    <EmbeddedResource Include="Textos\MenuAplicacion\Menuaplicacion.fr.resx" />
+    <EmbeddedResource Include="Textos\MenuAplicacion\Menuaplicacion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Menuaplicacion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Unobtrusive\Unobtrusive.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Unobtrusive.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Unobtrusive\Unobtrusive.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Unobtrusive.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

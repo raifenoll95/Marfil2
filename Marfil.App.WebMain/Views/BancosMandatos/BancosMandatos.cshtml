@@ -1,0 +1,139 @@
+﻿
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Newtonsoft.Json
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Configuracion.Cuentas.BancosMandatosModel
+@{
+    var idControl = "bancosmandatos";
+    var factory = new FModel();
+    var bancosmandatoslin = factory.GetModel<BancosMandatosLinModel>(WebHelper.ContextService);
+    var jsoncadena = JsonConvert.SerializeObject(Model.BancosMandatos);
+
+    var paisdefecto = WebHelper.GetApplicationHelper().GetPaisesDefecto();
+    var jsonpaises= JsonConvert.SerializeObject(WebHelper.GetApplicationHelper().GetListPaises());
+    var isreadonly = Model.ReadOnly;
+
+
+}
+<script src="@Url.Content("~/Scripts/sepa.js")"></script>
+<script src="@Url.Content("~/Scripts/UserControls/BancosMandatos/BancosMandatosController.js")"></script>
+<div class="form-group" ng-controller="BancosMandatosCtrl" ng-init="init('@idControl','@Model.Empresa','@Model.Tipo',@jsoncadena,'@Url.Action("ProvinciasPaisesApi", "Api")','@Url.Action("BancosApi", "Api")','@paisdefecto',@jsonpaises,'@WebHelper.GetApplicationHelper().GetCurrentEmpresa().Nif.Nif')">
+    <div class="col-md-12">
+        <span class="fa-2x">
+            @Html.Raw(Model.Tipo == TipoBancosMandatos.Banco? @BancosMandatos.Bancos: @BancosMandatos.TituloEntidad)
+        </span>
+        @if (!isreadonly)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" ng-click="nuevoRegistro()">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+    </div>
+    <div class="col-md-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center col-sm-1">
+
+                    </th>
+                    
+                    <th>
+                        @Html.LabelFor(f => bancosmandatoslin.Descripcion)
+                    </th>
+                    <th>
+                        @Html.LabelFor(f => bancosmandatoslin.Iban)
+                    </th>
+                    <th class="col-md-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in bancosmandatos">
+                    <td class="center col-sm-1">
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Defecto" value="{{ item.Defecto }}" />
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Empresa" value="{{ empresa }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Fkcuentas" value="{{ item.Fkcuentas }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Id" value="{{ item.Id }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Descripcion" value="{{ item.Descripcion }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Fkpaises" value="{{ item.Fkpaises }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Iban" value="{{ item.Iban }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Bic" value="{{ item.Bic }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Sufijoacreedor" value="{{ item.Sufijoacreedor }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Contratoconfirmig" value="{{ item.Contratoconfirmig }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Contadorconfirming" value="{{ item.Contadorconfirming }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Direccion" value="{{ item.Direccion }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Cpostal" value="{{ item.Cpostal }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Ciudad" value="{{ item.Ciudad }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Fkprovincias" value="{{ item.Fkprovincias }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Telefonobanco" value="{{ item.Telefonobanco }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Personacontacto" value="{{ item.Personacontacto }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Riesgonacional" value="{{ item.Riesgonacional }}"/>
+                        <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Riesgoextranjero" value="{{ item.Riesgoextranjero }}" />
+                        @if (Model.Tipo == TipoBancosMandatos.Mandato)
+                        {
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Idmandato" value="{{ item.Idmandato }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Idacreedor" value="{{ item.Idacreedor }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Tiposecuenciasepa" value="{{ item.Tiposecuenciasepa }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Tipoadeudo" value="{{ item.Tipoadeudo }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Importemandato" value="{{ item.Importemandato }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Recibosmandato" value="{{ item.Recibosmandato }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Importelimiterecibo" value="{{ item.Importelimiterecibo }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Fechafirma" value="{{ item.Fechafirma }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Fechaexpiracion" value="{{ item.Fechaexpiracion }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Fechaultimaremesa" value="{{ item.Fechaultimaremesa }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Importeremesados" value="{{ item.Importeremesados }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Recibosremesados" value="{{ item.Recibosremesados }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Devolvera" value="{{ item.Devolvera }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Notas" value="{{ item.Notas }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Finalizado" value="{{ item.Finalizado }}"/>
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Bloqueado" value="{{ item.Bloqueado }}" />
+                            <input type="hidden" name="BancosMandatos.BancosMandatos[{{$index}}].Esquema" value="{{ item.Esquema }}" />
+                        }
+                       
+                        <span ng-show="item.Defecto"><i class="fa fa-check green"></i></span>
+                    </td>
+                   
+                    <td>
+                        {{item.Descripcion}}
+                    </td>
+                    <td>
+                        {{item.Iban}}
+                    </td>
+                   
+                    <td class="col-md-2">
+
+
+                        @if (isreadonly)
+                        {
+                            <a href="#" class="btn btn-sm btn-info" ng-click="edit(item.Empresa,item.Fkcuentas,item.Id)">
+                                <i class="fa fa-eye"></i>
+                                <span>@General.LblVer</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn btn-sm btn-info" ng-click="edit(item.Empresa,item.Fkcuentas,item.Id)">
+                                <i class="fa fa-pencil"></i>
+                                <span>@General.LblEditar</span>
+                            </a>
+
+                            <a href="#" class="btn btn-sm btn-info" ng-click="delete(item.Empresa,item.Fkcuentas,item.Id)">
+                                <i class="fa fa-trash"></i>@General.LblBorrar
+                            </a>
+                        }
+                    </td>
+                </tr>
+                <tr ng-show="bancosmandatos.length==0"><td colspan="6">@General.LblNoHayRegistros</td></tr>
+            </tbody>
+        </table>
+    </div>
+    @Html.Partial("_bancosmandatosLinModal", Model)
+</div>

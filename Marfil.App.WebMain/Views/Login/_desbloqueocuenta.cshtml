@@ -1,0 +1,30 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.LoginModel
+@using (Html.BeginForm("ForzarDesconexion","Login", FormMethod.Post,new { @id="formforzardesconexion"}))
+{
+    @Html.AntiForgeryToken()
+
+    
+    <input type="hidden" name="usuario" value="@Model.Usuario" />
+          
+}
+<div class="col-md-12 margin-top-10">
+    <div class="alert alert-block alert-warning">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="ace-icon fa fa-close"></i>
+        </button>
+
+        <i class="ace-icon fa fa-warning warning"></i>
+
+        @Html.Raw(string.Format(General.LblTextoDesconexion, "<strong>" + Model.Usuario + "</strong>"))
+        <button type="button" onclick="Forzardesconexion()" class="btn btn-default btn-xs">@General.BtnDesconectarUsuario</button>
+
+    </div>
+
+</div>
+
+<script>
+    function Forzardesconexion() {
+        $("#formforzardesconexion").submit();
+    }
+</script>

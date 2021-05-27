@@ -1,0 +1,81 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Series = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Series
+@model Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras.AsistentePedidosComprasModel
+@{
+
+    var cvseries = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+
+<form class="form-horizontal" id="step2-form">
+    <h4 style="text-align: left !important">Datos de cabecera del pedido de compra</h4>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseriepedido, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                cvseries.Name = "Fkseriepedido";
+                cvseries.Url = Url.Action("SeriesApi", "Api");
+                cvseries.Params = "{\"tipodocumento\":\"PEC\"}";
+                cvseries.Valor = Model.Fkseriepedido;
+                cvseries.CampoIdentificador = "Id";
+                cvseries.Titulo = Series.TituloEntidadSingular;
+                cvseries.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvseries)
+        </div>
+
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2" style="text-align: left !important;">
+            @Html.ValidationMessageFor(f => Model.Fkseriepedido, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkproveedores, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkproveedores";
+                campoverificacion.Url = Url.Action("CuentasTiposProveedoresAcreedoresExclusiveApi", "Api");
+                campoverificacion.CampoIdentificador = "Fkcuentas";
+                campoverificacion.Valor = Model.Fkproveedores;
+                campoverificacion.Titulo = "Proveedores";
+                campoverificacion.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkproveedores, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechapedido, new {@class = "control-label col-md-2"})
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechapedido)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fechapedido, "", new {@class = "text-danger",@id= "fechafacturaerror" })
+        </div>
+    </div>
+</form>
+
+<div style="margin-top:40px !important">
+    <h4 style="text-align: left !important">Pedidos</h4>
+
+    <span class="field-validation-valid text-danger"  id="pedidosseleccionadoserror"></span>
+
+    <span ng-show="loading">@General.LblLoading</span>
+    <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+    <input type="hidden" value="{{cantidadpedidos}}" name="pedidosseleccionados"/>
+
+</div>

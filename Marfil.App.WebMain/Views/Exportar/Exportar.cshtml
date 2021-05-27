@@ -1,0 +1,27 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model Marfil.Dom.Persistencia.Helpers.Exportar
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel?.Toolbar?.Titulo;
+}
+
+<div>    
+    <h3 class="green center">Exportar a Marfil Classic</h3>
+    <br />
+    <div class="form-group center">
+
+        @Html.ActionLink("Exportar cuentas", "ExportarCuentas", "Exportar", new { @class = "btn btn-primary", @style = "color:white" })
+        <br />
+        <br />
+        @Html.ActionLink("Exportar apuntes", "ExportarApuntes", "Exportar", new { @class = "btn btn-primary", @style = "color:white" })
+        <br />
+        <br />
+        @Html.ActionLink("Exportar IVA", "ExportarIVA", "Exportar", new { @class = "btn btn-primary", @style = "color:white" })
+        <br />
+        <br />
+        @Html.ActionLink("Exportar previsiones", "ExportarPrevisiones", "Exportar", new { @class = "btn btn-primary", @style = "color:white" })
+
+    </div>
+</div>

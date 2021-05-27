@@ -1,0 +1,42 @@
+﻿@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var user = HttpContext.Current.User as ICustomPrincipal;
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "TiposRetenciones", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="UsuarioId" value="@user.Id" />
+    <input type="hidden" name="Usuario" value="@user.Usuario" />
+    <div class="form-horizontal">
+        
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+       @Html.Partial("_tiposRetenciones", Model as TiposRetencionesModel)
+
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+

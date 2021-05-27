@@ -1,0 +1,6 @@
+﻿INS;En Stock;In Stock;Si;Si
+RET;Reservado Telares/Cortabloques;Gang Saw Reserved;Si;No
+REC;Reservado cliente;Customer Reserved;Si;No
+REP;Reservado Producción;Production Reserved;Si;No
+REU;Reservado usuario;User Reserved;Si;No
+OUT;Salida;Out of Stock;No;No

@@ -1,0 +1,105 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+
+@model VencimientosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@*Formas pago*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkformaspago, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvfp.Name = "Fkformaspago";
+            cvfp.Url = Url.Action("FormasPagoApi", "Api");
+            cvfp.Valor = Model.Fkformaspago.ToString();
+            cvfp.Titulo = "Formas de pago";
+            cvfp.SoloLectura = isreadonly;
+            cvfp.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvfp)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Cuenta tesoreria*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+
+        @{
+            campoverificacion.Name = "Fkcuentatesoreria";
+            campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
+            campoverificacion.Valor = Model.Fkcuentatesoreria;
+            campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Cuentastesoreria + "}";
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentatesoreria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Fecha registro, Fecha desuento, fecha pago*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fecharegistrofactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fecharegistrofactura)
+    </div>
+    @Html.LabelFor(f => Model.Fechadescuento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechadescuento)
+    </div>
+    @Html.LabelFor(f => Model.Fechapago, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechapago)
+    </div>
+</div>
+
+@*Mandato*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Mandato, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <select aria-label="Bancos" ng-show="bancoscliente.length > 1" ng-model="fkbancosmandatos" class="form-control" name="Fkbancosmandatos" @Html.Raw(isreadonly ? " disabled=\"disabled\"" : string.Empty)>
+            <option ng-selected="{{fkbancosmandatos == item.Id}}" ng-repeat="item  in bancoscliente" value="{{ item.Id }}">{{item.Descripcion}}</option>
+        </select>
+        <label ng-show="bancoscliente.length && bancoscliente.length <= 1" class="control-label">@General.LblNoExistenBancos</label>
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Mandato, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+    @{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }

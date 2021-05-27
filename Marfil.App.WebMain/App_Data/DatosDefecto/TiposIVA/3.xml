@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TiposIvaModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Empresa>0001</Empresa>
+  <Id>026</Id>
+  <Nombre>I.V.A. 21% y R.E. 5,2%</Nombre>
+  <PorcentajeIva>21</PorcentajeIva>
+  <PorcentajeRecargoEquivalencia>5.2</PorcentajeRecargoEquivalencia>
+  <CtaIvaSoportado>47200000</CtaIvaSoportado>
+  <CtaIvaRepercutido>47700000</CtaIvaRepercutido>
+  <IvaSoportado>false</IvaSoportado>
+  <IvaDeducible>true</IvaDeducible>
+  <PorcentajeDeducible>100</PorcentajeDeducible>
+</TiposIvaModel>

@@ -1,0 +1,323 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using DevExpress.Web.ASPxHtmlEditor.Internal
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@model List<AlmacenesZonasModel>
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+    var list = WebHelper.GetApplicationHelper().GetListTiposUbicacion();
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Almacenes", Action = "AlmacenesLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Almacenes", Action = "AlmacenesLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Almacenes", Action = "AlmacenesLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Almacenes", Action = "AlmacenesLinDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fktipoubicacion";
+            c.Name = "Fktipoubicacion";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (var i in list)
+                comboBoxProperties.Items.Add(i.Descripcion, i.Valor);
+
+            comboBoxProperties.ValueType = typeof(string);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Coordenadas";
+        });
+
+        
+      
+
+      
+      
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Longitud");
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 3;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+       /* settings.CellEditorInitialize += (sender, args) =>
+        {
+
+            if (args.Column.FieldName == settings.KeyFieldName)
+            {
+                ASPxTextBox tb = (ASPxTextBox)args.Editor;
+                tb.Focus();
+            }
+
+            else if (args.Column.FieldName == "Tiposegmento")
+            {
+                ASPxComboBox cb = (ASPxComboBox)args.Editor;
+
+                var index = args.VisibleIndex < 0 ? 0 : args.VisibleIndex;
+                cb.ClientSideEvents.SelectedIndexChanged = "OnTiposegmentoChanged";
+                cb.Focus();
+            }
+            else if (args.Column.FieldName == "Longitud")
+            {
+                ASPxComboBox cb = (ASPxComboBox)args.Editor;
+                cb.ClientSideEvents.Init = "OnInit";
+            }
+            else if (args.Column.FieldName == "Valor")
+            {
+                ASPxTextBox cb = (ASPxTextBox)args.Editor;
+                cb.ClientSideEvents.Init = "OnInit";
+                cb.ClientSideEvents.TextChanged = "OnTextChanged";
+            }
+        };*/
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+    function OnTextChanged(s, e) {
+        cSegmento = GridView.GetEditor("Tiposegmento");
+        cLongitud = GridView.GetEditor("Longitud");
+        var valor = cSegmento.GetValue();
+        var currentValue = s.GetValue();
+        switch (valor) {
+            case "Constante":
+                cLongitud.SetValue(currentValue.length);
+                break;
+        }
+    }
+    function OnInit(s, e) {
+        cSegmento = GridView.GetEditor("Tiposegmento");
+        cLongitud = GridView.GetEditor("Longitud");
+        cValor = GridView.GetEditor("Valor");
+        var cLongitudValue = cLongitud.GetValue();
+        var valor = cSegmento.GetValue();
+        switch(valor) {
+            case "Constante":
+                cValor.SetEnabled(true);
+                cLongitud.SetEnabled(false);
+                cLongitud.ClearItems();
+                cLongitud.AddItem("1");
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("3");
+                cLongitud.SetValue(cLongitudValue);
+                break;
+            case "Mes":
+                cLongitud.ClearItems();
+                cLongitud.AddItem("2");
+                cLongitud.SetValue("2");
+                cValor.SetEnabled(false);
+                cLongitud.SetEnabled(false);
+                break;
+            case "Serie":
+                cLongitud.SetEnabled(true);
+                cLongitud.ClearItems();
+                cLongitud.AddItem("1");
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("3");;
+                cLongitud.SetValue(cLongitudValue);
+                cValor.SetEnabled(false);
+                break;
+            case "Año":
+                cLongitud.SetEnabled(true);
+                cLongitud.ClearItems();
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("4");
+                cLongitud.SetValue(cLongitudValue);
+                cValor.SetEnabled(false);
+                break;
+            case "Secuencia":
+                cLongitud.SetEnabled(true);
+                cLongitud.ClearItems();
+                cLongitud.AddItem("1");
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("3");
+                cLongitud.AddItem("4");
+                cLongitud.AddItem("5");
+                cLongitud.AddItem("6");
+                cLongitud.SetValue(cLongitudValue);
+                cValor.SetEnabled(false);
+                break;
+        }
+    }
+    function OnTiposegmentoChanged(s, e) {
+        var currentValue = s.GetValue();
+        cSegmento = GridView.GetEditor("Tiposegmento");
+        cLongitud = GridView.GetEditor("Longitud");
+        cValor = GridView.GetEditor("Valor");
+        switch (currentValue) {
+            case "Constante":
+                cLongitud.ClearItems();
+                cLongitud.AddItem("1");
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("3");
+                cLongitud.SetValue("");
+                cLongitud.SetEnabled(false);
+                break;
+            case "Mes":
+                cLongitud.ClearItems();
+                cLongitud.AddItem("2");
+                cLongitud.SetValue("2");
+                cLongitud.SetEnabled(false);
+                cValor.SetValue("");
+                cValor.SetEnabled(false);
+                break;
+            case "Serie":
+                cLongitud.ClearItems();
+                cLongitud.AddItem("1");
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("3");;
+                cLongitud.SetValue("3");
+                cLongitud.SetEnabled(true);
+                cValor.SetValue("");
+                cValor.SetEnabled(false);
+                break;
+            case "Año":
+                cValor.SetValue("");
+                cValor.SetEnabled(false);
+                cLongitud.ClearItems();
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("4");
+                cLongitud.SetValue("2");
+                cLongitud.SetEnabled(true);
+                break;
+            case "Secuencia":
+                cLongitud.ClearItems();
+                cLongitud.AddItem("1");
+                cLongitud.AddItem("2");
+                cLongitud.AddItem("3");
+                cLongitud.AddItem("4");
+                cLongitud.AddItem("5");
+                cLongitud.AddItem("6");
+                cLongitud.SetValue("1");
+                cLongitud.SetEnabled(true);
+                break;
+
+        }
+
+    }
+    function FunOnFocusedRowChanged(s, e) {
+        $("#GridView").unbind("keydown");
+        $('#GridView').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+            case 113://editar
+                if (!GridView.IsEditing()) {
+
+                    GridView.StartEditRow(index);
+                }
+                break;
+            case 46://Eliminar
+                if (!GridView.IsEditing()) {
+                    GridView.DeleteRow(index);
+                }
+                break;
+            case 27://escape
+                if (GridView.IsEditing()) {
+                    GridView.CancelEdit();
+                    GridView.Focus();
+                }
+                break;
+            case 13://enter
+                if (GridView.IsEditing()) {
+                    GridView.Focus();
+                    GridView.UpdateEdit();
+                }
+                break;
+            case 107://mas
+                CreateRow();
+                break;
+            }
+
+        });
+    }
+
+    function CreateRow() {
+        if (!GridView.IsEditing()) {
+            GridView.Focus();
+            GridView.AddNewRow();
+
+        }
+    }
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
+</script>

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <!--
+        <script src="http://code.angularjs.org/snapshot/angular.js"></script>
+        -->
+    <script src="http://localhost/MarfilControlsUI/Scripts/angular.min.js"></script>
+    <script>
+
+    var app = angular.module('generalApp', []);
+    app.controller('FirstController',['$scope', function ($scope) {
+        $scope.desc = Math.random();
+    }]);
+
+
+    app.controller('SecondController',['$scope', function ($scope) {
+        $scope.desc = "Second app. ";
+    }]);
+
+
+    </script>
+</head>
+<body ng-app="generalApp">
+
+
+    <div id="app1">
+        <div ng-controller="FirstController">
+            <span>{{ desc }}</span>
+        </div>
+    </div>
+
+<div id="app2">
+    <div ng-controller="FirstController">
+        <span>{{ desc }}</span>
+    </div>
+</div>
+
+
+</body>
+</html>

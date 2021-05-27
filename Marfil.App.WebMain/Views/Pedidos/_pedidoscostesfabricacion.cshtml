@@ -1,0 +1,558 @@
+﻿@using System.Drawing
+@using System.Text
+@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.Pedidos.PedidosCostesFabricacionModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    //var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewCostesFabricacion";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Pedidos", Action = "CostesFabricacion" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+
+        //Adaptative        
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.Styles.Cell.Wrap = DefaultBoolean.True;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Pedidos", Action = "CostesFabricacionNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Pedidos", Action = "CostesFabricacionUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Pedidos", Action = "CostesFabricacionDelete" };
+        settings.CustomActionRouteValues = new { Controller = "Pedidos", Action = "GridViewCostesFabricacion" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add("Id");
+        settings.Columns["Id"].Visible = false;
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Fecha";
+            c.Width = Unit.Pixel(115);
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            var p = c.PropertiesEdit as DateEditProperties;
+            p.DisplayFormatString = "dd/MM/yyyy";
+
+            p.ClientSideEvents.ValueChanged = "OnFechaChanged";
+            p.ClientInstanceName = c.FieldName;
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fkoperario";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Pixel(115);
+            var p = j.PropertiesEdit as ButtonEditProperties;
+
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.Init = "function(s, e){ s.Focus(); }";
+            p.ClientSideEvents.TextChanged = "OnFkoperarioChanged";
+            p.ClientInstanceName = j.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchOperario(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "DescripcionOperario";
+            c.Width = Unit.Pixel(200);
+            c.ReadOnly = true;
+            c.ColumnType = MVCxGridViewColumnType.Memo;
+            c.CellStyle.Wrap = DefaultBoolean.True;
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fktarea";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Pixel(90);
+            var p = j.PropertiesEdit as ButtonEditProperties;
+
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+
+            p.ClientSideEvents.KeyDown = "OnKeyPressTarea";
+            p.ClientSideEvents.TextChanged = "OnFktareaChanged";
+            p.ClientInstanceName = j.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchTarea(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.Width = Unit.Pixel(180);
+            c.ColumnType = MVCxGridViewColumnType.Memo;
+            c.CellStyle.Wrap = DefaultBoolean.True;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cantidad";
+            c.Width = Unit.Pixel(70);
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnCantidadChanged";
+            p.ClientInstanceName = c.FieldName;
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Precio";
+            c.Width = Unit.Pixel(90);
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnPrecioChanged";
+            p.ClientInstanceName = c.FieldName;
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Total";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            c.ReadOnly = true;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+
+        // Footer 
+        settings.Settings.ShowFooter = true;
+        settings.SetFooterCellTemplateContent(c =>
+        {
+            var col = c.Column as MVCxGridViewColumn;
+            if (col == null) return;
+            if (col.FieldName == "Descripcion")
+            {
+                var model = c.Grid.DataSource as IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.Pedidos.PedidosCostesFabricacionModel>;
+                var sum = model.Sum(f => f.Total);
+                ViewContext.Writer.Write("<h4 class=\"pull-right\">" + "TOTAL" + ": <span class=\"green bigger\">" + (sum).ToString("N" + 2) + "</span></h4>");
+            }
+        });
+
+        settings.CommandColumn.Visible = isreadonly;
+        if (!isreadonly)
+        {
+            settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+
+            settings.CommandColumn.ShowNewButton = false;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblEditar + " - (F2)\"></i>";
+            settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
+            settings.SettingsCommandButton.UpdateButton.Text = "<span tabindex=\"-1\" class=\"fa fa-save\" title=\"" + General.LblGuardar + " - (Enter)\"></i>";
+            settings.SettingsCommandButton.CancelButton.Text = "<span tabindex=\"-1\" class=\"fa fa-close\" title=\"" + General.LblCancelar + " - (Ctlr + '+')\"></i>";
+            settings.CommandColumn.CustomButtons.Add(new GridViewCommandColumnCustomButton() { ID = "btnCopy", Text = "<span tabindex=\"-1\" class=\"fa fa-copy\" title=\"" + General.LblClonar + " - (Ctlr + '+')\"></i>" });
+
+            settings.CommandColumn.Width = Unit.Pixel(150);
+            settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+            settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+            settings.CommandColumn.VisibleIndex = 0;
+            settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
+        }
+
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.InitNewRow += (s, e) =>
+        {
+            e.NewValues["Fecha"] = DateTime.Now;
+            e.NewValues["Cantidad"] = 1;
+            e.NewValues["Precio"] = 0;
+            e.NewValues["Total"] = 0;
+
+            if (needCreatCopy)
+            {
+                object keyValue = ViewData["key"];
+
+                MVCxGridView gridView = (MVCxGridView)s;
+                object[] rowValues = (object[])gridView.GetRowValuesByKeyValue(keyValue, new string[] { "Fecha", "Fkoperario", "DescripcionOperario", "Fktarea", "Descripcion", "Cantidad", "Precio", "Total" });
+
+                e.NewValues["Fecha"] = rowValues[0];
+                e.NewValues["Fkoperario"] = rowValues[1];
+                e.NewValues["DescripcionOperario"] = rowValues[2];
+                e.NewValues["Fktarea"] = rowValues[3];
+                e.NewValues["Descripcion"] = rowValues[4];
+                e.NewValues["Cantidad"] = rowValues[5];
+                e.NewValues["Precio"] = rowValues[6];
+                e.NewValues["Total"] = rowValues[7];
+            }
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            if (needCreatCopy)
+            {
+                MVCxGridView gridView = (MVCxGridView)sender;
+                gridView.AddNewRow();
+            }
+        };
+        
+        if (!isreadonly)
+        {
+            settings.ClientSideEvents.CustomButtonClick = "function(s,e) { OnCustomButtonClick(s,e);}";
+            settings.ClientSideEvents.EndCallback = "function(s,e) { OnEndEditingFabricacion(s,e);}";
+            settings.ClientSideEvents.BeginCallback = "function(s,e) { OnStartEditingFabricacion(s,e);}";
+            settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+            settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowLineasChangedFabricacion(s, e);} ";
+            settings.ClientSideEvents.Init = "function(s,e) { GridViewLineas.Focus();  }";
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+        //display     
+        //settings.Styles.Cell.Wrap = DefaultBoolean.False;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+
+
+@grid.Bind(Model).GetHtml()
+@if (!isreadonly)
+{
+    <script type="text/javascript">
+
+        var rowKeyValueToCopy;
+
+        function OnCustomButtonClick(s, e) {
+            rowKeyValueToCopy = s.GetRowKey(e.visibleIndex);
+            s.PerformCallback();
+        }
+
+        //Operario
+        function SearchOperario() {
+
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Fkoperario",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("CuentasTiposTercerosApi", "Api")',
+                Titulo: "Busqueda de operario",
+                // tipotercero = 7 son los operarios
+                Params: "{\"tipocuenta\":\"" + "7" + "\"}"
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Fkoperario-Buscarfocus", function (obj) {
+            Fkoperario.SetValue(obj);
+            pedirOperario(obj, '@Url.Action("CuentasClienteApi", "Api")', GridViewCostesFabricacion, true);
+        });
+
+        function OnFkoperarioChanged(s, e) {
+            var operario = s.GetValue();
+            operario = rellenacod(s.GetValue());
+            s.SetValue(operario);
+            pedirOperario(s.GetValue(), '@Url.Action("CuentasClienteApi", "Api")', GridViewCostesFabricacion, true);
+        }
+
+
+        //Tarea
+        function OnKeyPressTarea(s, e) {
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchTarea();
+            }
+        }
+
+        function SearchTarea() {
+
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Fktarea",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("TareasApi", "Api")',
+                Titulo: "Tareas",
+                Params: ""
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        eventAggregator.RegisterEvent("Fktarea-Buscarfocus", function (obj) {
+            Fktarea.SetValue(obj);
+            pedirTarea(obj, '@Url.Action("TareasApi", "Api")', GridViewCostesFabricacion, true);
+        });
+
+        function OnFktareaChanged(s, e) {
+            pedirTarea(s.GetValue(), '@Url.Action("TareasApi", "Api")', GridViewCostesFabricacion, true);
+        }
+
+        //Puede cambiar el precio dependiendo de la fecha
+        function OnFechaChanged(s, e) {
+            var tarea = GridViewCostesFabricacion.GetEditor("Fktarea").GetValue();
+            if(tarea != null) {
+                pedirTarea(tarea, '@Url.Action("TareasApi", "Api")', GridViewCostesFabricacion, true);
+            }
+        }
+
+        function OnCantidadChanged(s, e) {
+            CalcularTotal();
+        }
+
+        function OnPrecioChanged(s, e) {
+            s.SetValue(s.GetValue().toFixed(2));
+            CalcularTotal();
+        }
+
+        // Actions
+        function FunOnFocusedRowLineasChangedFabricacion(s, e) {
+
+            $("#GridViewCostesFabricacion").unbind("keydown");
+            $('#GridViewCostesFabricacion').keydown(function (event) {
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                var index = s.GetFocusedRowIndex();
+
+                switch (keycode) {
+                    case 113: //editar
+                        if (!GridViewCostesFabricacion.IsEditing()) {
+
+                            GridViewCostesFabricacion.StartEditRow(index);
+                        }
+                        break;
+                    case 46: //Eliminar
+                        if (!GridViewCostesFabricacion.IsEditing()) {
+                            GridViewCostesFabricacion.DeleteRow(index);
+                        }
+                        break;
+                    case 27: //escape
+                        if (GridViewCostesFabricacion.IsEditing()) {
+                            GridViewCostesFabricacion.CancelEdit();
+                            GridViewCostesFabricacion.Focus();
+                        }
+                        break;
+                    case 13: //enter
+                        if (GridViewCostesFabricacion.IsEditing() && !GridViewCostesFabricacion.GetEditor("Descripcion").focused) {
+                            event.preventDefault();
+                            GridViewCostesFabricacion.UpdateEdit();
+                        }
+                        break;
+                    case 107: //mas
+                        if (!GridViewCostesFabricacion.IsEditing()) {
+                            if (event.ctrlKey) {
+                                event.preventDefault();
+                                rowKeyValueToCopy = s.GetRowKey(GridViewCostesFabricacion.GetFocusedRowIndex());
+                                s.PerformCallback();
+
+                            } else {
+                                CreateRowFabricacion();
+                            }
+                        }
+                        break;
+                }
+            });
+        }
+
+        var operation = "";
+        function OnStartEditingFabricacion(s, e) {
+
+            operation = e.command;
+            if (operation === "UPDATEEDIT" || operation === "DELETEROW" || operation === "ADDNEWROW") {
+
+            }
+
+            else if (operation === "CUSTOMCALLBACK") {
+                e.customArgs["key"] = rowKeyValueToCopy;
+            }
+        }
+
+        function OnEndEditingFabricacion(s, e) {
+
+            if (operation === 'STARTEDIT') {
+
+            }
+            else if (operation === "UPDATEEDIT" || operation === "DELETEROW") {
+                GridViewCostesFabricacion.Focus();
+                if (GridViewCostesFabricacion.GetVisibleRowsOnPage() > 0) {
+                    GridViewCostesFabricacion.SetFocusedRowIndex(GridViewCostesFabricacion.GetVisibleRowsOnPage() - 1);
+                }
+            }
+            else if (operation === "ADDNEWROW") {
+                var cOperario = GridViewCostesFabricacion.GetEditor("Fkoperario");
+                var cTarea = GridViewCostesFabricacion.GetEditor("Fktarea");
+
+                if (cOperario.GetValue() !== null) {
+                    pedirOperario(cOperario.GetValue(), '@Url.Action("CuentasClienteApi", "Api")', GridViewCostesFabricacion, false);
+                } else {
+                    cOperario.SetValue("");
+                }
+                if (cTarea.GetValue() !== null) {
+                    pedirTarea(cTarea.GetValue(), '@Url.Action("TareasApi", "Api")', GridViewCostesFabricacion, false);
+                } else {
+                    cTarea.SetValue("");
+                }
+
+                cOperario.Focus();
+            }
+            if (operation === "CUSTOMCALLBACK") {
+
+            }
+
+        }
+
+        function CreateLineasFabricacionRow() {
+            GridViewCostesFabricacion.Focus();
+            GridViewCostesFabricacion.AddNewRow();
+        }
+
+        function CreateRowFabricacion() {
+            GridViewCostesFabricacion.AddNewRow();
+        }
+
+        //function GuardarCostesFabricacion() {
+        //    console.log("Guardar");
+        //    $("#forzarcostesadicionales").submit();
+        //}
+
+        // Recuperar nombre de operario
+        var pedirOperario = function (codigo, urlcuentas, lineas, setvaloresdefecto) {
+            $.get(urlcuentas + "/" + codigo).success(function (result) {
+
+                lineas.GetEditor("DescripcionOperario").SetValue(result.Descripcion);
+                GridViewCostesFabricacion.FocusEditor("Fktarea");
+                lineas.SetEnabled(true);
+
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                lineas.SetEnabled(true);
+                Fkoperario.SetValue("");
+                lineas.GetEditor("DescripcionOperario").SetValue("");
+                Fkoperario.Focus();
+            });
+        }
+
+
+        // Llamada a la api para obtener los datos necesarios de la tarea a partir de su id
+        var pedirTarea = function (codigotarea, urltareas, lineas, setvaloresdefecto) {
+            $.get(urltareas + "/" + codigotarea).success(function (result) {
+
+                cFecha = lineas.GetEditor("Fecha");
+
+                if (cFecha.GetValue() == null) {
+                    // Si la fecha es nula pone la fecha de hoy
+                    var today = new Date();
+                    var year = today.getFullYear();
+                    cFecha.SetValue(today);
+                } else {
+                    var DateValue = cFecha.GetValue();
+                    var correctFormat = new Date(DateValue);
+                    var year = correctFormat.getFullYear();
+                }
+
+                var cDescripcion = lineas.GetEditor("Descripcion");
+                var cPrecio = lineas.GetEditor("Precio");
+
+                // Asignar los valores descripcion y precio a la grid
+                cDescripcion.SetValue(result.Descripcion);
+
+                //Llamada a la api para obtener precio de históricos y actualizar valor precio de la grid
+                $.get(urltareas + "/" + codigotarea + "/" + year).success(function (precioHistorico) {
+                    if (precioHistorico != 0) {
+                        cPrecio.SetValue(precioHistorico)
+                    } else {
+                        cPrecio.SetValue(result.Precio);
+                    }
+                    CalcularTotal();
+                });
+
+                lineas.SetEnabled(true);
+                //if (setvaloresdefecto)
+                //    establecerValoresDefecto(lineas);
+                lineas.FocusEditor("Descripcion");
+
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log("Error tarea no encontrada");
+                lineas.SetEnabled(true);
+                Fktarea.SetValue("");
+                lineas.GetEditor("Descripcion").SetValue("");
+                Fktarea.Focus();
+            });
+        }
+
+
+        function CalcularTotal() {
+            var cantidad = GridViewCostesFabricacion.GetEditor("Cantidad").GetValue();
+            var precio = GridViewCostesFabricacion.GetEditor("Precio").GetValue();
+
+            var total = (cantidad * precio).toFixed(2);
+            var cTotal = GridViewCostesFabricacion.GetEditor("Total").SetValue(total);
+        }
+
+        // script cogido de _cabeceracuentasterceros.cshtml
+        // corrige si formato nn.nn lo actualiza a nn0000nn
+        var rellenacod = function Rellenacodcuentas(valor) {
+            var maxLength = @WebHelper.GetApplicationHelper().DigitosCuentas();
+            var autofillNumero = /^[0-9]*\.[0-9]*$/;
+            if (valor.length > maxLength) {
+                valor = "";
+                return valor;
+            }
+            valor = valor.toUpperCase();
+            if (autofillNumero.test(valor)) {
+                var vector = valor.split('.');
+                if (vector.length === 2) {
+                    if (vector[1].length === 1 && vector[1] === "*")
+                        vector[1] = "";
+                    var totalZeros = maxLength - (vector[0].length + vector[1].length);
+                    var zeros = "";
+                    for (var i = 0; i < totalZeros; i++)
+                        zeros += "0";
+                    valor = vector[0] + zeros + vector[1];
+                    valor = valor.substring(0, maxLength);
+                    return valor;
+                } else
+                    return "";
+            }
+            return valor;
+        }
+
+    </script>
+}

@@ -1,0 +1,23 @@
+﻿@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var id = Guid.NewGuid().ToString();
+}
+@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.FicherosGenerales.TarifasSistemaArticulosViewModel
+    
+<div class="form-group">
+    @Html.HiddenFor(f => Model.Id)
+    @Html.HiddenFor(f=>Model.Descripcion)
+    @Html.Label(Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Precio, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly",@aria_label="Precio" } :( Model.Obligatorio ? (object)new { @class = "form-control", @aria_label = "Precio", @data_val_range = string.Format(General.ErrorValorMinimo,Tarifas.Precio ,0.01.ToString(CultureInfo.InvariantCulture)), @data_val_range_max = "1.79769313486232E+308", @data_val_range_min = "0.01" }  : (object)new { @class = "form-control", @aria_label = "Precio" }))
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Precio, "", new { @class = "text-danger" })
+    </div>
+</div>
+

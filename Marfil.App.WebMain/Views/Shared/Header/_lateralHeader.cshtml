@@ -1,0 +1,39 @@
+﻿@using System.Configuration
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Inf.Genericos.Helper
+@using Newtonsoft.Json
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.MenuItemJavascriptModel>
+
+@{
+    var usuario = HttpContext.Current.User as ICustomPrincipal;
+    var welcome = General.LblBienvenido;
+    var cerrarsesion = General.LblCerrarSesion;
+    var urlcerrarsesion = Url.Action("LogOff", "Login");
+    var footer = Html.Partial("_idiomas");
+}
+<div id="menu"></div>
+<script type="text/javascript">
+    var items =  @{
+                    @Html.Raw(JsonConvert.SerializeObject(Model))
+                };
+    @if (Funciones.Qbool(ConfigurationManager.AppSettings["Multilanguage"]))
+    {
+        <text>
+            var footer = [{ selected: @((Thread.CurrentThread.CurrentUICulture.ToString().ToLower() == "es").ToString().ToLower()), url: '@Url.Action("Index", "ChangeCulture", new {id = "es", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery})', idiomacode: 'es', urlimagen: '@Url.Content("~/Content/blank.gif")' }, { selected: @((Thread.CurrentThread.CurrentUICulture.ToString().ToLower() == "en").ToString().ToLower()), url: '@Url.Action("Index", "ChangeCulture", new {id = "en", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery})', idiomacode: 'en', urlimagen: '@Url.Content("~/Content/blank.gif")' }, { selected: @((Thread.CurrentThread.CurrentUICulture.ToString().ToLower() == "fr").ToString().ToLower()), url: '@Url.Action("Index", "ChangeCulture", new {id = "fr", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery})', idiomacode: 'fr', urlimagen: '@Url.Content("~/Content/blank.gif")' }];
+        </text>
+    }
+    else
+    {
+        <text>
+            var footer =[];
+        </text>
+    }
+
+    new mkgSideBar('menu', items, { position: 'left', usuario: '@usuario.Usuario', welcomeString: '@welcome', cerrarsesionString: '@cerrarsesion', urlcerrarsesion: '@urlcerrarsesion', footer: footer });
+</script>
+
+
+

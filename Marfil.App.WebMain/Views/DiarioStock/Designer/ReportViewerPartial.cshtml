@@ -1,0 +1,37 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Diseñador.DesignModel
+@{
+
+    DocumentViewerSettings customSettings = new DocumentViewerSettings();
+
+    // The following settings are required for a Document Viewer.
+    customSettings.Name = "Ver";
+    customSettings.Report = XtraReport.FromStream(new MemoryStream(Model.Report), true);
+    customSettings.Report.DataSource = Model.DataSource;
+    // Callback and export route values specify corresponding controllers and their actions.
+    // These settings are also required.
+    customSettings.CallbackRouteValues = new { Controller = "Designer", Action = "ReportViewerPartial" };
+    customSettings.ExportRouteValues = new { Controller = "Designer", Action = "ExportDocumentViewer" };
+
+    if (Model.Parameters != null)
+    {
+        foreach (var p in Model.Parameters)
+        {
+            if (customSettings.Report.Parameters.FindIndex(b => b.Name == p.Key) > -1)
+            {
+                customSettings.Report.Parameters[p.Key].Value = p.Value;
+            }
+        }
+        customSettings.Report.RequestParameters = false;
+    }
+
+
+    Html.DevExpress().DocumentViewer(customSettings).GetHtml();
+
+}

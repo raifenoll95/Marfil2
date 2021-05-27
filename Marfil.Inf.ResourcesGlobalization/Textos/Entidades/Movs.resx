@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Fkejercicio" xml:space="preserve">
+    <value>Ejercicio</value>
+  </data>
+  <data name="Fkcuentas" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
+  <data name="Orden" xml:space="preserve">
+    <value>Orden</value>
+  </data>
+  <data name="Esdebe" xml:space="preserve">
+    <value>Es debe</value>
+  </data>
+  <data name="Fkseriescontables" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="Documento" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="Referencia" xml:space="preserve">
+    <value>Referencia</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="TipoDocumento" xml:space="preserve">
+    <value>Tipo de documento</value>
+  </data>
+  <data name="Codigodescripcionasiento" xml:space="preserve">
+    <value>Codigo descripción</value>
+  </data>
+  <data name="Descripcionasiento" xml:space="preserve">
+    <value>Descripción asiento</value>
+  </data>
+  <data name="Vinculo" xml:space="preserve">
+    <value>Vínculo</value>
+  </data>
+  <data name="Canalcontable" xml:space="preserve">
+    <value>Canal contable</value>
+  </data>
+  <data name="Traza" xml:space="preserve">
+    <value>Traza</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Moneda</value>
+  </data>
+  <data name="Tipocambio" xml:space="preserve">
+    <value>Tipo de cambio</value>
+  </data>
+  <data name="Fkseccionesanaliticas" xml:space="preserve">
+    <value>Sección analítica</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Importe</value>
+  </data>
+  <data name="Debe" xml:space="preserve">
+    <value>Debe</value>
+  </data>
+  <data name="Haber" xml:space="preserve">
+    <value>Haber</value>
+  </data>
+  <data name="Importemonedadocumento" xml:space="preserve">
+    <value>Importe moneda documento</value>
+  </data>
+  <data name="Codigocomentario" xml:space="preserve">
+    <value>Cod. Comentario</value>
+  </data>
+  <data name="Comentario" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
+  <data name="Conciliado" xml:space="preserve">
+    <value>Conciliado</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Movimientos Contables</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>MovimientoContable</value>
+  </data>
+  <data name="TipoAsientoNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="TipoAsientoSimulacion" xml:space="preserve">
+    <value>Simulación</value>
+  </data>
+  <data name="TipoAsientoVinculado" xml:space="preserve">
+    <value>Vinculado</value>
+  </data>
+  <data name="TipoAsientoAperturaProvisional" xml:space="preserve">
+    <value>Apertura provisional</value>
+  </data>
+  <data name="TipoAsientoApertura" xml:space="preserve">
+    <value>Apertura</value>
+  </data>
+  <data name="TipoAsientoRegularizacionExistencias" xml:space="preserve">
+    <value>Regularización de existencias</value>
+  </data>
+  <data name="TipoAsientoRegularizacionGrupos6y7" xml:space="preserve">
+    <value>Regularización grupos 6 y 7</value>
+  </data>
+  <data name="TipoAsientoCierre" xml:space="preserve">
+    <value>Cierre</value>
+  </data>
+  <data name="Identificadorsegmento" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="ReferenciaLibre" xml:space="preserve">
+    <value>Referencia del usuario</value>
+  </data>
+  <data name="Bloqueado" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="ErrorDescuadreDebeHaber" xml:space="preserve">
+    <value>Saldo importes Debe/Haber descuadrado</value>
+  </data>
+  <data name="TipoAsiento" xml:space="preserve">
+    <value>Tipo de asiento</value>
+  </data>
+  <data name="ErrorLongitudCuenta" xml:space="preserve">
+    <value>Faltan dígitos en la cuenta</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>Desde fecha</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>Hasta fecha</value>
+  </data>
+  <data name="Saldo" xml:space="preserve">
+    <value>Saldo</value>
+  </data>
+  <data name="ErrorFechaEjercicio" xml:space="preserve">
+    <value>La fecha del documento no corresponde con la fecha del ejercicio del documento</value>
+  </data>
+  <data name="DocumentoDesde" xml:space="preserve">
+    <value>Desde documento</value>
+  </data>
+  <data name="DocumentoHasta" xml:space="preserve">
+    <value>Hasta documento</value>
+  </data>
+  <data name="SumaAnteriorDebe" xml:space="preserve">
+    <value>Suma anterior debe</value>
+  </data>
+  <data name="SumaAnteriorHaber" xml:space="preserve">
+    <value>Suma anterior haber</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>Desde cuenta</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>Hasta cuenta</value>
+  </data>
+  <data name="MostrarCuentasSinSaldo" xml:space="preserve">
+    <value>Mostrar cuentas sin saldo</value>
+  </data>
+  <data name="SaldosAnteriores" xml:space="preserve">
+    <value>Saldos anteriores</value>
+  </data>
+  <data name="MostrarCuentasSinMovimientos" xml:space="preserve">
+    <value>Mostras cuentas sin movimientos</value>
+  </data>
+  <data name="PorGrupos" xml:space="preserve">
+    <value>Por grupos</value>
+  </data>
+  <data name="PorMayor" xml:space="preserve">
+    <value>Por mayor</value>
+  </data>
+  <data name="PorNivelCinco" xml:space="preserve">
+    <value>Por nivel 5</value>
+  </data>
+  <data name="PorSubcuenta" xml:space="preserve">
+    <value>Por subcuenta</value>
+  </data>
+  <data name="PorSubgrupos" xml:space="preserve">
+    <value>Por subgrupos</value>
+  </data>
+  <data name="PorSubmayor" xml:space="preserve">
+    <value>Por submayor</value>
+  </data>
+  <data name="FechaInforme" xml:space="preserve">
+    <value>Fecha informe</value>
+  </data>
+  <data name="CuentaDesdeTesoreria" xml:space="preserve">
+    <value>Desde cuenta tesorería</value>
+  </data>
+  <data name="CuentaHastaTesoreria" xml:space="preserve">
+    <value>Hasta cuenta tesoreria</value>
+  </data>
+  <data name="FechaDesdeVencimiento" xml:space="preserve">
+    <value>Desde fecha vencimiento</value>
+  </data>
+  <data name="FechaHastaVencimiento" xml:space="preserve">
+    <value>Hasta fecha vencimiento</value>
+  </data>
+  <data name="FormaPago" xml:space="preserve">
+    <value>Forma de pago</value>
+  </data>
+</root>

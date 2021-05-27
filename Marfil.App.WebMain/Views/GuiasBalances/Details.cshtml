@@ -1,0 +1,36 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Contabilidad
+
+@{
+    //ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    ViewData["readonly"] = true;
+}
+
+<div>
+    <div class="form-horizontal">
+        @Html.AntiForgeryToken()
+        @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
+    </div>
+</div>
+
+@if (ViewBag.Modificar)
+{
+    <p class="margin-top">
+        <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((GuiasBalancesModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            Editar
+        </a>
+    </p>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+}
+
+
+

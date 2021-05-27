@@ -1,0 +1,28 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.PanelcontrolModel
+@{
+    ViewBag.Title = General.LblInicio;
+}
+
+@if (ViewBag.Message != null)
+{
+<script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+</script>
+}
+
+@if (Model.Paneles?.Any() ?? false)
+{
+    @Html.Partial("_panelcontrol", Model)
+}
+
+
+
+
+
+
+@Html.Partial("_modalconfigurarpanel")
+
+

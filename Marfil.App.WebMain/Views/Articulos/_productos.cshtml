@@ -1,0 +1,203 @@
+﻿@using DevExpress.CodeParser
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model ArticulosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var cvgruposiva = FCampoverificacion.Instance.GetModel<GruposIvaModel>(WebHelper.ContextService);
+    var cvguiascontables = FCampoverificacion.Instance.GetModel<GuiascontablesModel>(WebHelper.ContextService);
+    var cvgrupomateriales = FCampoverificacion.Instance.GetModel<GrupoMaterialesModel>(WebHelper.ContextService);
+
+    var listlabores = WebHelper.GetApplicationHelper().GetListLabores().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listlabores.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+    var clasificacion = WebHelper.GetApplicationHelper().GetClasificacionArticulos().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+}
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkgruposiva, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvgruposiva.Name = "Fkgruposiva";
+            cvgruposiva.Url = Url.Action("GruposIvaApi", "Api");
+            cvgruposiva.Valor = Model.Fkgruposiva;
+            cvgruposiva.SoloLectura = isreadonly;
+            cvgruposiva.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvgruposiva)
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkgruposiva, "", new { @class = "control-label text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipoivavariable, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+       @Html.CheckBoxFor(f=>Model.Tipoivavariable, isreadonly ? (object)new { @readonly="readonly" } :(object) new { })
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Tipoivavariable, "", new { @class = "control-label text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkguiascontables, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+            cvguiascontables.Name = "Fkguiascontables";
+            cvguiascontables.Url = Url.Action("GuiascontablesApi", "Api");
+            cvguiascontables.Valor = Model.Fkguiascontables;
+            cvguiascontables.SoloLectura = isreadonly;
+        }
+        @Html.Partial("CampoverificacionUI", cvguiascontables)
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkguiascontables, "", new {@class = "control-label text-danger"})
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkgruposmateriales, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvgrupomateriales.Name = "Fkgruposmateriales";
+            cvgrupomateriales.Url = Url.Action("GrupoMaterialesApi", "Api");
+            cvgrupomateriales.Valor = Model.Fkgruposmateriales;
+            cvgrupomateriales.SoloLectura = isreadonly;
+            cvgrupomateriales.CampoIdentificador = "Cod";
+        }
+        @Html.Partial("CampoverificacionUI", cvgrupomateriales)
+    </div>
+    <div class="col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkgruposmateriales, "", new { @class = "control-label text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Partidaarancelaria, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Partidaarancelaria, isreadonly ? (object) new {@aria_label = "tarifas", @class = "form-control", @readonly = "readonly"} : (object) new {@aria_label = "tarifas", @class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Fkgruposmateriales, "", new {@class = "text-danger"})
+    </div>
+    @Html.LabelFor(f => Model.Piezascaja, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Piezascaja, isreadonly ? (object)new { @aria_label = "Piezascaja", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "Piezascaja", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Piezascaja, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Kilosud, new {@class = "control-label col-md-2"})
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Kilosud, isreadonly ? (object) new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly"} : (object) new { @aria_label = "tarifas", @class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Kilosud, "", new {@class = "text-danger"})
+    </div>
+
+    @Html.LabelFor(f => Model.Rendimientom2m3, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Rendimientom2m3, isreadonly ? (object)new { @aria_label = "tarifas", @class = "form-control", @readonly = "readonly" } : (object)new { @aria_label = "tarifas", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Rendimientom2m3, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Medidalibre, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Medidalibre, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+        @Html.ValidationMessageFor(f => Model.Medidalibre, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Ean13, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Ean13, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Ean13, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Labor, new { @aria_label = "aticulos", @class = "control-label col-md-2"})
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Labor, isreadonly ? (object) new { @disabled = "disabled" } : (object) new {})
+    </div>
+    <div class="col-md-9">
+        @Html.DropDownListFor(f => Model.Fklabores, listlabores, isreadonly ? (object) new {@aria_label="aticulos", @class = "form-control", @disabled = "disabled"} : (object) new { @aria_label = "aticulos", @class = "form-control"})
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fklabores, "", new {@class = "text-danger"})
+    </div>
+
+</div>
+
+<div class="form-group">
+
+
+
+    @Html.LabelFor(f => Model.Excluircomisiones, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Excluircomisiones, isreadonly ? (object) new { @disabled = "disabled" } : (object) new {})
+        @Html.ValidationMessageFor(f => Model.Excluircomisiones, "", new {@class = "text-danger"})
+    </div>
+
+    @Html.LabelFor(f => Model.Exentoretencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Exentoretencion, isreadonly ? (object) new { @disabled = "disabled" } : (object) new {})
+        @Html.ValidationMessageFor(f => Model.Exentoretencion, "", new {@class = "text-danger"})
+    </div>
+
+    @Html.LabelFor(f => Model.Gestionarcaducidad, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Gestionarcaducidad, isreadonly ? (object) new {@disabled = "disabled"} : (object) new {})
+        @Html.ValidationMessageFor(f => Model.Gestionarcaducidad, "", new {@class = "text-danger"})
+    </div>
+@{
+    var articulocomentarioactivo = true;
+    if (iseditable)
+    {
+        articulocomentarioactivo = Model.Tipofamilia == 3 && !Model.Gestionstock;
+    }
+}
+    @Html.LabelFor(f => Model.Articulocomentariovista, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Articulocomentariovista, isreadonly || !articulocomentarioactivo ? (object)new { @disabled = "disabled"} : (object)new { })
+        @Html.ValidationMessageFor(f => Model.Articulocomentariovista, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tiempostandardfabricacion, new {@class = "control-label col-md-2"})
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Tiempostandardfabricacion, isreadonly ? (object) new { @aria_label = "tarifas", @readonly = "readonly", @class = "form-control"} : (object) new { @aria_label = "tarifas", @class = "form-control"})
+        @Html.ValidationMessageFor(f => Model.Tiempostandardfabricacion, "", new {@class = "text-danger"})
+    </div>
+
+    @Html.LabelFor(f => Model.Clasificacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(f => Model.Clasificacion, clasificacion, "", isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Clasificacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@if (isNuevo || iseditable)
+{
+    <script>
+        $("[name='Fklabores']").prop('disabled',@((!Model.Labor).ToString().ToLower()));
+    </script>
+
+}
+
+
+   

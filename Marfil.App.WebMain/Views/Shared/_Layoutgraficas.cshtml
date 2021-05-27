@@ -1,0 +1,129 @@
+﻿@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.ControlsUI.Busquedas
+@using System.Globalization
+@using System.Threading
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@{
+    if (Model is IToolbar)
+    {
+        ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    }
+
+}
+<!DOCTYPE html>
+<html lang="@Thread.CurrentThread.CurrentUICulture.ToString()">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marfil - @ViewBag.Title</title>
+    @Html.MetaAcceptLanguage()
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+
+    <!-- Traducciones javascript -->
+    <script src="@Url.Content("~/Scripts/globalize-cultures/Messages/Messages."+ Thread.CurrentThread.CurrentUICulture.ToString() + ".js")"></script>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/components/font-awesome/css/font-awesome.min.css")" />
+
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-fonts.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/content/flags.css")" />
+    <!-- Gritter -->
+    <link rel="stylesheet" href="@Url.Content("~/components/jquery-ui.custom/jquery-ui.custom.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/components/jquery.gritter/css/jquery.gritter.min.css")" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/"  + (WebHelper.DevexpressAA ? "ace.min.AA.css": "ace.min.css"))" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="@Url.Content("~/content/dropdown.css")" />
+
+
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-part2.css")" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-rtl.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-skins.css")" />
+
+
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-ie.css")" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="@Url.Content("~/assets/js/ace-extra.js")"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="@Url.Content("~/components/html5shiv/dist/html5shiv.min.js")"></script>
+    <script src="@Url.Content("~/components/respond/dest/respond.min.js")"></script>
+    <![endif]-->
+
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/general.css")" />
+    <link rel="stylesheet" href="@Html.Raw(WebHelper.DevexpressAA ? Url.Content("~/Content/Grid-AA.css") : Url.Content("~/Content/Grid.css"))" />
+
+    @RenderSection("Css", required: false)
+    @Html.RenderCss()
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <!-- Globalization-->
+
+    <script src="@Url.Content("~/Scripts/globalize.js")"></script>
+
+    <!-- Angular -->
+    <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-touch.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-animate.min.js")"></script>
+
+    <script>
+        var app = angular.module('angularApp', []);
+    </script>
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+    
+    @if (WebHelper.DevexpressAA)
+    {
+        <link rel="stylesheet" href="@Url.Content("~/Content/ValidateAA.css")" />
+    }
+    <!-- layout -->
+    @RenderSection("GridView", required: false)
+    
+    
+</head>
+<body ng-app="angularApp">
+    <script>
+        sessionStorage.clear();
+
+    </script>
+    
+    <div class="col-md-10 col-md-offset-1" >
+        @RenderBody()
+    </div>
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    @RenderSection("Scripts", required: false)
+    @RenderSection("Angular", required: false)
+   
+
+    @Html.RenderScripts()
+    
+    <script src="@Url.Content("~/Scripts/waitingdialog.js")"></script>
+</body>
+</html>

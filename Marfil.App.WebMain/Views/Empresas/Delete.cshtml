@@ -1,0 +1,66 @@
+﻿@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion.Empresa
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var objModel = Model as EmpresaModel;
+}
+
+<style>
+    h2 {
+        text-align: center;
+    }
+
+    h3 {
+        text-align: center;
+        background-color: #E2EEF2;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<h2><b>ELIMINAR EMPRESA</b></h2>
+<hr />
+
+
+<img src="@Url.Content("~/Images/alerta.png")" width="300" height="280" class="center" alt="Marfil" />
+<hr />
+
+<h3>
+    <b>
+        <p style="font-family:Calibri; color:Black; font-size:25px">
+            Va a borrar todos los datos y ejercicios de la empresa <u>@objModel.Id</u> con nombre <u>@objModel.Nombre</u>
+            <br>
+            Está función NO TIENE DESHACER POR LO QUE SERA IMPOSIBLE RECUPERAR LOS DATOS ELIMINADOS. ¿Está Vd. seguro?
+        </p>
+    </b>
+</h3>
+
+<div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="center form-actions no-color">
+            <button class="btn btn-danger" type="Submit" ng-disabled="!MainFormIsEnable" style="height:60px;width:200px">
+                <i class="ace-icon fa fa-trash bigger-110"></i>
+                Eliminar Empresa
+            </button>
+
+            <a class="btn btn-info" href="@Url.Action("Index")" style="height:60px;width:200px">
+                <i class="ace-icon fa fa-undo bigger-110"></i>
+                @General.LblCancelar
+            </a>
+
+        </div>
+    }
+</div>

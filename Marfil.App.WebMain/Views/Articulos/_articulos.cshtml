@@ -1,0 +1,66 @@
+﻿@using System.Globalization
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model ArticulosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+   
+}
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+    <div ng-controller="ArticulosCtrl" ng-init="init(@((Model.Preciomateriaprima??0).ToString(CultureInfo.InvariantCulture)),@((Model.Porcentajemerma??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costemateriaprima??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costeelaboracionmateriaprima??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costeportes??0).ToString(CultureInfo.InvariantCulture)),@((Model.Otroscostes??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costefabricacion??0).ToString(CultureInfo.InvariantCulture)),@((Model.Costeindirecto??0).ToString(CultureInfo.InvariantCulture)),@((Model.Coste??0).ToString(CultureInfo.InvariantCulture)),'@Model.Codigolibre',@Model.Validarmateriales.ToString().ToLower(),@Model.Validarcaracteristicas.ToString().ToLower(),@Model.Validargrosores.ToString().ToLower(),@Model.Validaracabados.ToString().ToLower(),@((Model.Tipofamilia==(int)TipoFamilia.Libre).ToString().ToLower()))">
+        <div id="tabs">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+                <li><a data-toggle="tab" href="#articulos">@Articulos.TituloEntidadSingular</a></li>
+                <li><a data-toggle="tab" href="#stock">@Articulos.Stock</a></li>
+                <li><a data-toggle="tab" href="#tarifasVentas">@General.LblTarifasVentas</a></li>
+                <li><a data-toggle="tab" href="#tarifasespecificasventas">@General.LblTarifasEspecificasVentas</a></li>
+                <li><a data-toggle="tab" href="#tarifasCompras">@General.LblTarifasCompras</a></li>
+                <li><a data-toggle="tab" href="#tarifasespecificascompra">@General.LblTarifasEspecificasCompras</a></li>
+                <li><a data-toggle="tab" href="#articulostercero">@Articulos.ArticulosTercero</a></li>
+                <li><a data-toggle="tab" href="#componentes">@Articulos.Componentes</a></li>
+                <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="general" class="tab-pane fade in active">
+                @Html.Partial("_general", Model)
+            </div>
+            <div id="articulos" class="tab-pane fade margin-bottom">
+                @Html.Partial("_productos", Model)
+            </div>
+            <div id="stock" class="tab-pane fade margin-bottom">
+                @Html.Partial("_stock", Model)
+            </div>
+            <div id="tarifasVentas" class="tab-pane fade margin-bottom">
+                @Html.Partial("_tarifasVentas", Model)
+            </div>
+            <div id="tarifasespecificasventas" class="tab-pane fade margin-bottom">
+                @Html.Partial("_tarifasEspecificasVentas", Model.TarifasEspecificasVentas)
+            </div>
+            <div id="tarifasCompras" class="tab-pane fade margin-bottom">
+                @Html.Partial("_tarifasCompras", Model)
+            </div>
+            <div id="tarifasespecificascompra" class="tab-pane fade margin-bottom">
+                @Html.Partial("_tarifasEspecificasCompra", Model.TarifasEspecificasCompras)
+            </div>
+            <div id="articulostercero" class="tab-pane fade margin-bottom">
+                @Html.Partial("_articulostercero", Model.ArticulosTercero)
+            </div>
+            <div id="componentes" class="tab-pane fade margin-bottom">
+                @Html.Partial("_articuloscomponentes", Model.ArticulosComponentes)
+            </div>
+            <div id="galeria" class="tab-pane fade">
+                @Html.Partial("_galeriaimagenes", Model.Galeria)
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $.validator.setDefaults({ ignore: null });
+    </script>

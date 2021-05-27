@@ -1,0 +1,25 @@
+﻿@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Iva.TiposIvaModel
+
+<div id="tabs">
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#general">@Tiposiva.General</a></li>
+        <li><a data-toggle="tab" href="#cuentas">@Tiposiva.Cuentas</a></li>
+        <li><a data-toggle="tab" href="#grupos">@Tiposiva.GruposIva</a></li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div id="general" class="tab-pane fade in active">
+        @Html.Partial("General", Model)
+    </div>
+    <div id="cuentas" class="tab-pane fade margin-bottom">
+        @Html.Partial("Cuentas", Model)
+    </div>
+    <div id="grupos" class="tab-pane fade margin-bottom">
+        @Html.Partial("Grupos", Model)
+    </div>
+</div>
+
+<script>
+    $.validator.setDefaults({ ignore: null });
+</script>

@@ -1,0 +1,25 @@
+﻿@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var viewmodel = Model as UsuariosModel;
+}
+
+
+
+<div class="form-horizontal">
+    @{
+        ViewData["readonly"] = true;
+    }
+    @Html.Partial("_usuarios", viewmodel)
+   
+</div>
+<p>
+    <a class="btn btn-info" href="@Url.Action("Edit", new { id = Model.get(((IModelViewExtension)Model).primaryKey.First().Name)})">
+        <i class="ace-icon fa fa-pencil bigger-110"></i>
+        @General.LblEditar
+    </a>
+</p>

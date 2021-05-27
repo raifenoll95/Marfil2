@@ -1,0 +1,31 @@
+﻿@using System.Configuration
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model
+@model Marfil.Pre.Ficheros.LinqFileSystemProvider
+@{
+    var user = HttpContext.Current.User as ICustomPrincipal;
+}
+@Html.DevExpress().FileManager(
+    settings =>
+    {
+        settings.Name = "FileManager";
+        settings.CallbackRouteValues = new { Controller = "GestionDocumental", Action = "Galeria" };
+        settings.DownloadRouteValues = new { Controller = "GestionDocumental", Action = "DownloadFiles" };
+
+        settings.Settings.RootFolder = "Root"; // Folder within the data source
+        settings.Settings.ThumbnailFolder = Url.Content(Path.Combine(ConfigurationManager.AppSettings["RootFolderFicherosThumbnail"], user.Empresa));
+        settings.SettingsFileList.ThumbnailsViewSettings.ThumbnailWidth = Unit.Pixel(int.Parse(ConfigurationManager.AppSettings["FileManagerImagePreviewWidth"]));
+        settings.SettingsFileList.ThumbnailsViewSettings.ThumbnailHeight = Unit.Pixel(int.Parse(ConfigurationManager.AppSettings["FileManagerImagePreviewHeight"]));
+
+        settings.SettingsUpload.Enabled = true;
+        settings.SettingsUpload.AdvancedModeSettings.EnableMultiSelect = true;
+
+        settings.SettingsUpload.UseAdvancedUploadMode = true;
+        settings.SettingsEditing.AllowCreate = true;
+        settings.SettingsEditing.AllowDelete = false;
+        settings.SettingsEditing.AllowMove = false;
+        settings.SettingsEditing.AllowRename = false;
+        settings.SettingsEditing.AllowDownload = true;
+        Session["FileManager"] = settings;
+    }
+).BindToFileSystemProvider(Model).GetHtml()

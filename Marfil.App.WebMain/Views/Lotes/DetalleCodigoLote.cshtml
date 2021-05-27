@@ -1,0 +1,26 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Stock.LotesModel
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+
+
+
+
+    
+    <div class="form-horizontal">
+
+
+        @{
+            ViewData["operacion"] = "Edit";
+        }
+        @Html.Partial("_lotes", Model)
+
+        
+    </div>

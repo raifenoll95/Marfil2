@@ -1,0 +1,39 @@
+﻿@using Marfil.Dom.ControlsUI.Toolbar
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Resources
+@model IModelView
+
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var viewmodel = Model as UsuariosModel;
+}
+
+
+
+
+@using (Html.BeginForm("Administrador", "Usuarios", FormMethod.Post,new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        
+        @Html.Partial("_usuarios", viewmodel)
+
+
+        <div class="form-group">
+            <div class="col-md-10 margin-top">
+
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

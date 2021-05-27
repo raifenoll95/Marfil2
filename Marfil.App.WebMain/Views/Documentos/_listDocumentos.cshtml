@@ -1,0 +1,148 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.App.WebMain.Misc
+@using Newtonsoft.Json
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Diseñador
+@using Resources
+
+@*@model  Marfil.Dom.Persistencia.Model.Diseñador.DocumentosWrapperModel*@
+@model  IEnumerable<Marfil.Dom.Persistencia.Model.Diseñador.DocumentosModel>
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridView";
+        settings.KeyFieldName = "CustomId";
+        settings.CallbackRouteValues = new { Controller = "Documentos", Action = "_listDocumentos", id = Request.Params["id"]?.ToString() };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = false;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.SettingsPager.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListPageSize"]);
+        settings.SettingsBehavior.AllowFocusedRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        //settings.EncodeHtml = false;
+        //#endregion
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CustomId";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tipo";
+            c.Visible = false;
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Defecto";
+            if (!WebHelper.DevexpressAA)
+            {
+                c.ColumnType = MVCxGridViewColumnType.CheckBox;
+            }
+            c.Caption = Documentos.Defecto;
+
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tipoprivacidad";
+            c.Caption = Documentos.Tipoprivacidad;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tiporeport";
+            c.Caption = Documentos.Tiporeport;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Usuario";
+            c.Caption = Documentos.Usuario;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Nombre";
+            c.Caption = Documentos.Nombre;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Action";
+            c.Width = Unit.Pixel(200);
+            c.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            c.Caption = " ";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.AllowAutoFilter = DefaultBoolean.False;
+
+            c.SetDataItemTemplateContent(n =>
+            {
+                var customId = DataBinder.Eval(n.DataItem, "CustomId").ToString();
+                var tipo = (int)DataBinder.Eval(n.DataItem, "Tipo");
+
+                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Index", "Designer", new { nuevo = false, reportId = customId, returnUrl = Url.Action("Index", "Documentos", new { id = tipo }) }) + "\">" +
+                        "<i class=\"ace-icon fa fa-pencil\"></i>" +
+                        General.LblEditar +
+                        "</a> ");
+                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Delete", "Documentos", new { id = customId, returnUrl = Url.Action("Index", "Documentos", new { id = tipo }) }) + "\">" +
+                        "<i class=\"ace-icon fa fa-trash\"></i>" +
+                        General.LblBorrar +
+                        "</a> ");
+            });
+
+        });
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            var a = 2;
+            if (e.Column.FieldName == "Action")
+            {
+                e.Value = (e.GetListSourceFieldValue("CustomId")).ToString() ?? "";
+            }
+        };
+
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+
+        //display
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.SettingsPager.PageSize = 50;
+    });
+
+    @*@grid.Bind(Model.Lineas.ToList()).GetHtml();*@
+    @grid.Bind(Model).GetHtml();
+}
+
+<script type="text/javascript">
+    var documentos = @Html.Raw(JsonConvert.SerializeObject(Model));
+    console.log(documentos);
+</script>
+

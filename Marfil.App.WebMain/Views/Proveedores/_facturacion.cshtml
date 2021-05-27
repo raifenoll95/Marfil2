@@ -1,0 +1,145 @@
+﻿@using System.Globalization
+@using System.Threading
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Marfil.Dom.Persistencia.Model.Iva;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+@model Marfil.Dom.Persistencia.Model.Terceros.ProveedoresModel
+@{
+    bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+    var cvregimeniva = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    var cvgruposiva = FCampoverificacion.Instance.GetModel<GruposIvaModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvtiposretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
+    var criteriosagrupacionlist = WebHelper.GetApplicationHelper().GetListCriteriosagrupacion().Select(f => new SelectListItem() { Value = f.Id, Text = f.Nombre }).ToList();
+    criteriosagrupacionlist.Insert(0, new SelectListItem() { Value = "", Text = "" });
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkmonedas, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+
+            cvmonedas.Name = "Fkmonedas";
+            cvmonedas.Url = Url.Action("MonedasApi", "Api");
+            cvmonedas.Valor = Model.Fkmonedas.ToString();
+            cvmonedas.SoloLectura = isreadonly;
+            cvmonedas.Obligatorio = true;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvmonedas)
+        @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkregimeniva, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+
+            cvregimeniva.Name = "Fkregimeniva";
+            cvregimeniva.Url = Url.Action("RegimenIvaApi", "Api");
+            cvregimeniva.Valor = Model.Fkregimeniva?.ToString();
+            cvregimeniva.SoloLectura = isreadonly;
+            cvregimeniva.Obligatorio = true;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvregimeniva)
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkgruposiva, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+
+            cvgruposiva.Name = "Fkgruposiva";
+            cvgruposiva.Url = Url.Action("GruposIvaApi", "Api");
+            cvgruposiva.Valor = Model.Fkgruposiva;
+            cvgruposiva.SoloLectura = isreadonly;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvgruposiva)
+        @Html.ValidationMessageFor(f => Model.Fkgruposiva, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Criterioiva, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(f => Model.Criterioiva, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Criterioiva, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktiposretencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvtiposretencion.Name = "Fktiposretencion";
+            cvtiposretencion.Url = Url.Action("TiporetencionApi", "Api");
+            cvtiposretencion.Valor = Model.Fktiposretencion;
+            cvtiposretencion.SoloLectura = isreadonly;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvtiposretencion)
+        @Html.ValidationMessageFor(f => Model.Fktiposretencion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktransportistahabitual, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvcuentas.Name = "Fktransportistahabitual";
+            cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            cvcuentas.Valor = Model.Fktransportistahabitual;
+            cvcuentas.SoloLectura = isreadonly;
+            cvcuentas.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Transportistas + "\"}";
+        }
+
+        @Html.Partial("CampoverificacionUI", cvcuentas)
+        @Html.ValidationMessageFor(f => Model.Fktransportistahabitual, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipodeportes, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(f => Model.Tipodeportes, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.ValidationMessageFor(f => Model.Tipodeportes, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentatesoreria, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @{
+
+            cvcuentas.Name = "Cuentatesoreria";
+            cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            cvcuentas.Valor = Model.Cuentatesoreria;
+            cvcuentas.SoloLectura = isreadonly;
+            cvcuentas.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Cuentastesoreria + "\"}";
+        }
+
+        @Html.Partial("CampoverificacionUI", cvcuentas)
+        @Html.ValidationMessageFor(f => Model.Cuentatesoreria, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcriteriosagrupacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkcriteriosagrupacion, criteriosagrupacionlist, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcriteriosagrupacion, "", new { @class = "text-danger" })
+    </div>
+</div>

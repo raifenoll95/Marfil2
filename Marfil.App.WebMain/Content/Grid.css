@@ -1,0 +1,21 @@
+﻿.dxgvHeader {
+    color: #707070 !important;
+  font-weight: normal !important;
+  background: #F2F2F2 !important;
+  background-image: -webkit-linear-gradient(top, #F8F8F8 0%, #ECECEC 100%) !important;
+  background-image: -o-linear-gradient(top, #F8F8F8 0%, #ECECEC 100%) !important;
+  background-image: linear-gradient(to bottom, #F8F8F8 0%, #ECECEC 100%) !important;
+  background-repeat: repeat-x !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#ffececec', GradientType=0) !important;
+  padding: 8px !important;
+  line-height: 1.428571429 !important;
+}
+.dxgvFocusedRow {
+     background-color: #8FAfAF !important;
+        color:#FFF !important;
+}
+
+.dxgvHeader {
+    border-color: #DDD !important;
+}
+	

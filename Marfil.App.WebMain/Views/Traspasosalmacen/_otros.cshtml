@@ -1,0 +1,56 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using RProveedores = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Proveedores;
+@model Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen.TraspasosalmacenModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var incoterm = WebHelper.GetApplicationHelper().GetListIncoterm().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    incoterm.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listunidadnegocio.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvobras = FCampoverificacion.Instance.GetModel<ObrasModel>(WebHelper.ContextService);
+    var cvalmacenes = FCampoverificacion.Instance.GetModel<AlmacenesModel>(WebHelper.ContextService);
+    var cvzonas = FCampoverificacion.Instance.GetModel<AlmacenesZonasModel>(WebHelper.ContextService);
+}
+<div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkproveedores, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkproveedores";
+                campoverificacion.Url = Url.Action("CuentasTiposProveedoresExclusiveApi", "Api");
+                campoverificacion.Valor = Model.Fkproveedores;
+                campoverificacion.CampoIdentificador = "Fkcuentas";
+                campoverificacion.Titulo = RProveedores.TituloEntidadSingular;
+                campoverificacion.SoloLectura = isreadonly;
+                
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkproveedores, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    @Html.Partial("_clientes",Model)
+
+</div>

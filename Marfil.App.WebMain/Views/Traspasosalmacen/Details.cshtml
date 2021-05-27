@@ -1,0 +1,44 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as TraspasosalmacenModel;
+    var modelImprimir = modelview.GetListFormatos();
+}
+
+
+
+<div>
+
+    @{
+        ViewData["readonly"] = true;
+    }
+    <div class="form-horizontal">
+        @Html.Partial("_Traspasosalmacen", Model as TraspasosalmacenModel)
+    </div>
+</div>
+
+@Html.Partial("_envioemails")
+@{
+    using (Html.BeginForm("ForzarCambiarCostes", "Traspasosalmacen", FormMethod.Post, new { @id = "forzarcostesadicionales" }))
+    {
+        <input type="hidden" name="documentoReferencia" value="@modelview.Id" />
+        <input type="hidden" name="returnUrl" value="@Url.Action("Details",new { modelview.Id })" />
+    }
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

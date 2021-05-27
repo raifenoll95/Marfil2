@@ -1,0 +1,21 @@
+﻿PRE;Presupuesto de venta;Sale quotation;false
+PED;Pedido de venta;Sale order;false
+ALB;Albarán de venta;Delivery sheet;false
+FRA;Factura de venta;Sale invoice;true
+PRC;Presupuesto de compra;Purchase quotation;false
+PEC;Pedido de compra;Purchase order;false
+ALC;Albarán de compra;Receiving sheet;false
+FRC;Factura de compra;Purchase invoice;false
+COR;Cortabloques;Blockcutter;false
+TRA;Traspaso;Transfer doc.;false
+RES;Reserva de stock;Stock reservation;false
+INV;Inventarios;Inventories;false
+TRF;Transformaciones de lotes;Transformations;false
+TRL;Transformaciones de acabados;Lote Transformations;false
+KIT;Kits;Kits;false
+OPO;Oportunidad;Opportunity;false
+PRO;Proyecto;Project;false
+CAM;Campaña;Campaign;false
+INC;Incidencia;Case;false
+DIV;División lotes; Division lots;false
+IMP;Imputación de costes; Allocation costs;false

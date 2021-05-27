@@ -1,0 +1,272 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using System.ComponentModel.DataAnnotations
+@using System.Resources
+@using DevExpress.CodeParser
+@using DevExpress.Data.Filtering
+@using DevExpress.Data.Helpers
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.ControlsUI.Bloqueo
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias
+@using Marfil.Inf.Genericos.Helper
+@using Resources
+@model ListIndexModel
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@{ 
+
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+
+        //general
+
+        settings.Name = "GridView";
+        settings.KeyFieldName = Model.PrimaryColumnns.First();
+        settings.CallbackRouteValues = new { Controller = "TablasVarias", Action = "_customListIndex", id = Model.VarSessionName };
+        settings.EnableRowsCache = false;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.AccessibilityCompliant = WebHelper.DevexpressAA;
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = false;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.SettingsPager.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListPageSize"]);
+        settings.SettingsBehavior.AllowFocusedRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        //#region Filtrs para acentos
+        settings.AutoFilterCellEditorCreate += delegate(object sender, ASPxGridViewEditorCreateEventArgs e)
+        {
+            if (Model.Properties.Single(f => f.property.Name == e.Column.FieldName).property.PropertyType == typeof (string) && Session!=null )
+            {
+                e.Value = Session[e.Column.FieldName + "Filter"]?.ToString() ?? string.Empty;
+            }
+        };
+
+        settings.ProcessColumnAutoFilter += delegate (object sender, ASPxGridViewAutoFilterEventArgs e)
+        {
+
+            if (e.Kind == DevExpress.Web.GridViewAutoFilterEventKind.CreateCriteria)
+            {
+
+                var gr = sender as ASPxGridView;
+
+                if (Model.Properties.Single(f => f.property.Name == e.Column.FieldName).property.PropertyType == typeof(string) && Session != null)
+                {
+
+                    var co = CriteriaOperator.TryParse(gr.FilterExpression);
+                    if (co != null)
+                    {
+                        AccentFilter.FindAndRemoveCustomOperator(ref co, e.Column.FieldName);
+                        gr.FilterExpression = null == co ? string.Empty : co.ToString();
+                    }
+                    Session[e.Column.FieldName + "Filter"] = e.Value;
+                    if (!string.IsNullOrEmpty(e.Value.ToString()))
+                        e.Criteria = CriteriaOperator.Parse(string.Format("AccentFilter([" + e.Column.FieldName + "], '{0}')", e.Value), e.Column.FieldName, e.Value.ToString());
+
+                }
+
+            }
+
+        };
+
+        //#endregion
+
+        foreach (var item in Model.Properties)
+        {
+            if (Model.ExcludedColumns.Any(f => f == item.property.Name))
+                continue;
+            settings.Columns.Add(c =>
+            {
+
+                c.FieldName = item.property.Name;
+
+
+                if (Model.ExcludedColumns.Any(f => f == item.property.Name))
+                {
+                    c.Visible = false;
+                }
+                else
+                {
+                    var attribute = item.attributes.SingleOrDefault(f => f.GetType() == typeof(DisplayAttribute));
+                    c.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+                    if (attribute != null)
+                    {
+                        var caption = ((DisplayAttribute)attribute).Name;
+                        if (((DisplayAttribute)attribute).ResourceType != null)
+                        {
+                            var rm = new ResourceManager(((DisplayAttribute)attribute).ResourceType);
+                            caption = rm.GetString(((DisplayAttribute)attribute).Name);
+                        }
+
+                        c.Caption = caption;
+                    }
+
+                    var attributeCustom = item.attributes.SingleOrDefault(f => f.GetType() == typeof(CustomDisplayDescriptionAttribute));
+                    if (attributeCustom != null)
+                    {
+                        c.Caption = ((CustomDisplayDescriptionAttribute)attributeCustom).DisplayName;
+                    }
+
+                    if (item.property.PropertyType == typeof(bool))
+                    {
+                        if (!WebHelper.DevexpressAA)
+                            c.ColumnType = MVCxGridViewColumnType.CheckBox;
+                        c.Width = Unit.Pixel(100);
+                    }
+                    else if (item.property.PropertyType == typeof(DateTime) )
+                    {
+                        if (!WebHelper.DevexpressAA)
+                        {
+                            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+                        }
+                        else
+                        {
+                            c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                        }
+                        c.Width = Unit.Pixel(150);
+                    }
+                    else if (item.property.PropertyType == typeof(double))
+                    {
+                        c.Width = Unit.Pixel(150);
+                        c.PropertiesEdit.DisplayFormatString = "N2";
+                    }
+                    else if (item.property.PropertyType == typeof(int))
+                    {
+                        c.Width = Unit.Pixel(150);
+
+                    }
+
+                    else if (item.property.PropertyType == typeof(TipoTablaVaria) && !WebHelper.DevexpressAA)
+                    {
+
+                        c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                        var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+                        foreach (int i in Enum.GetValues(typeof(TipoTablaVaria)))
+                            comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute((TipoTablaVaria)i), i);
+
+                        comboBoxProperties.ValueType = typeof(int);
+                        comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+                        c.Width = Unit.Pixel(150);
+
+                    }
+
+                    if (Model.AnchoColumnas.ContainsKey(item.property.Name))
+                    {
+                        c.Width = Unit.Pixel(Model.AnchoColumnas[item.property.Name]);
+
+                    }
+                    if (Model.FiltroColumnas.ContainsKey(item.property.Name))
+                    {
+                        switch (Model.FiltroColumnas[item.property.Name])
+                        {
+                            case FiltroColumnas.ContenidoEn:
+                                c.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+                                break;
+                            case FiltroColumnas.EmpiezaPor:
+                                c.Settings.AutoFilterCondition = AutoFilterCondition.BeginsWith;
+                                break;
+                            case FiltroColumnas.TerminaEn:
+                                c.Settings.AutoFilterCondition = AutoFilterCondition.EndsWith;
+                                break;
+                        }
+
+                    }
+                }
+
+            });
+        }
+
+        settings.Columns.Add(c =>
+        {
+
+            c.FieldName = "Action";
+            c.Width = Unit.Pixel(150);
+            c.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            c.Caption = " ";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.AllowAutoFilter = DefaultBoolean.False;
+            c.SetDataItemTemplateContent(n =>
+            {
+                var idtext = n.Text.Split('-')[0];
+                var noeditable = n.Text.Split('-')[1] == "True";
+
+                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Ver\" href =\"" + Url.Action("Details", Model.Controller, new { id = idtext }) + "\">" +
+                                        "<i class=\"ace-icon fa fa-search\"></i>" +
+                                        General.LblVer +
+                                        "</a> ");
+
+                if (Model.PermiteModificar)
+                {
+                    ViewContext.Writer.Write(noeditable ? "" : "<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Edit", Model.Controller, new { id = idtext }) + "\">" +
+                        "<i class=\"ace-icon fa fa-pencil\"></i>" +
+                        General.LblEditar +
+                        "</a> ");
+                }
+
+                if (Model.PermiteEliminar)
+                {
+
+                    ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Delete", Model.Controller, new { id = idtext }) + "\">" +
+                            "<i class=\"ace-icon fa fa-trash\"></i>" +
+                            General.LblBorrar +
+                            "</a> ");
+                }
+
+            });
+
+        });
+
+
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName == "Action")
+            {
+
+                e.Value = (e.GetListSourceFieldValue(Model.PrimaryColumnns.First())).ToString() + "-" + (e.GetListSourceFieldValue("Noeditable")).ToString();
+            }
+        };
+
+        settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
+
+        if (!string.IsNullOrEmpty(Model.BloqueoColumn))
+        {
+            settings.HtmlRowPrepared = (s, e) =>
+            {
+                if (e.RowType != GridViewRowType.Data) return;
+
+                var bloqueada = (bool)e.GetValue(Model.BloqueoColumn);
+                if (bloqueada)
+                    e.Row.BackColor = ColorTranslator.FromHtml("#E37E63");
+            };
+        }
+
+
+        //display
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        //settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        Session[Model.VarSessionName + "Settings"] = settings;
+    });
+
+
+
+}
+@grid.Bind(Model.List).GetHtml()
+

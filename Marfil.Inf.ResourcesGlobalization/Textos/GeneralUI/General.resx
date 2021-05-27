@@ -1,0 +1,943 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BtnVolver" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="LblBienvenido" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="LblConfiguracion" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="LblDesconectar" xml:space="preserve">
+    <value>Desconectar</value>
+  </data>
+  <data name="LblEmpresas" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="LblGestionGrupos" xml:space="preserve">
+    <value>Gestion de grupos</value>
+  </data>
+  <data name="LblGestionUsuarios" xml:space="preserve">
+    <value>Gestión de usuarios</value>
+  </data>
+  <data name="LblPerfil" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="LblSeguridad" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="LblSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="BtnNuevoRegistro" xml:space="preserve">
+    <value>Nuevo registro</value>
+  </data>
+  <data name="LblVolverALaLista" xml:space="preserve">
+    <value>Volver a la lista</value>
+    <comment>Volver a la lista</comment>
+  </data>
+  <data name="LblEditar" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="LblCrear" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="LblVer" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="LblBorrar" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="LblMensajeConfirmacionBorrado" xml:space="preserve">
+    <value>Está apunto de eliminar el registro.¿Desea continuar?</value>
+  </data>
+  <data name="LblContinuar" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="LblCancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="LblFormaPago" xml:space="preserve">
+    <value>Forma de pago</value>
+  </data>
+  <data name="LblVencimientos" xml:space="preserve">
+    <value>Vencimientos</value>
+  </data>
+  <data name="BtnGuardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="LblMandatoRequerido" xml:space="preserve">
+    <value>Mandato requerido</value>
+  </data>
+  <data name="LblRemesable" xml:space="preserve">
+    <value>Remesable</value>
+  </data>
+  <data name="LblEfectivo" xml:space="preserve">
+    <value>Efectivo</value>
+  </data>
+  <data name="LblPorcentajeTotal" xml:space="preserve">
+    <value>Porcentaje total</value>
+  </data>
+  <data name="LblGestionDe" xml:space="preserve">
+    <value>Gestión de</value>
+  </data>
+  <data name="LblPersonalizado" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="LblInicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="LblCambiarEmpresa" xml:space="preserve">
+    <value>Cambiar de empresa</value>
+  </data>
+  <data name="LblNoExistenMasEmpresas" xml:space="preserve">
+    <value>No existen más empresas</value>
+  </data>
+  <data name="LblUltimaModificacion" xml:space="preserve">
+    <value>Última modificación</value>
+  </data>
+  <data name="LblGestionCambios" xml:space="preserve">
+    <value>Gestión de cambios</value>
+  </data>
+  <data name="LblHistoricoCambios" xml:space="preserve">
+    <value>Histórico de cambios</value>
+  </data>
+  <data name="LblNoConfiguracionMonedaAdicional" xml:space="preserve">
+    <value>No se ha configurado una moneda adicional</value>
+  </data>
+  <data name="LblGestionCambioMonedas" xml:space="preserve">
+    <value>Gestión de cambios de monedas</value>
+  </data>
+  <data name="LblNivel" xml:space="preserve">
+    <value>Nivel</value>
+  </data>
+  <data name="LblInformacionSubcuenta" xml:space="preserve">
+    <value>Información subcuenta</value>
+  </data>
+  <data name="LblCuentasNivelSuperior" xml:space="preserve">
+    <value>Cuentas de nivel superior</value>
+  </data>
+  <data name="LblDescripcion" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="LblRazonSocial" xml:space="preserve">
+    <value>Razón social</value>
+  </data>
+  <data name="LblId" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="LblNoExistenCuentas" xml:space="preserve">
+    <value>No existen cuentas de nivel superior</value>
+  </data>
+  <data name="LblBuscar" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="LblNuevo" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="LblBusquedas" xml:space="preserve">
+    <value>Búsquedas</value>
+  </data>
+  <data name="LblAceptar" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="LblCerrar" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="LblIndicaMotivoBloqueo" xml:space="preserve">
+    <value>Indica el motivo por el que quiere bloquear la</value>
+  </data>
+  <data name="LblBloqueoConfirmacionParte1" xml:space="preserve">
+    <value>Está apunto de desbloquear el registro actual, ¿Desea continuar?</value>
+  </data>
+  <data name="LblDesbloqueo" xml:space="preserve">
+    <value>Desbloqueo de</value>
+  </data>
+  <data name="LblBloqueo" xml:space="preserve">
+    <value>Bloqueo</value>
+  </data>
+  <data name="LblBloqueada" xml:space="preserve">
+    <value>Bloqueada</value>
+  </data>
+  <data name="LblNoBloqueada" xml:space="preserve">
+    <value>Desbloqueada</value>
+  </data>
+  <data name="LblAtencion" xml:space="preserve">
+    <value>Atención</value>
+  </data>
+  <data name="LblConfigureloDesde" xml:space="preserve">
+    <value>Configúrelo desde</value>
+  </data>
+  <data name="LblAqui" xml:space="preserve">
+    <value>aquí</value>
+  </data>
+  <data name="LblGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="LblDirecciones" xml:space="preserve">
+    <value>Direcciones</value>
+  </data>
+  <data name="LblBancos" xml:space="preserve">
+    <value>Bancos</value>
+  </data>
+  <data name="LblContactos" xml:space="preserve">
+    <value>Contactos</value>
+  </data>
+  <data name="LblNoHayRegistros" xml:space="preserve">
+    <value>No hay registros</value>
+  </data>
+  <data name="LblActividad" xml:space="preserve">
+    <value>Actividad</value>
+  </data>
+  <data name="LblContabilidad" xml:space="preserve">
+    <value>Importar contabilidad</value>
+  </data>
+  <data name="LblAdministrador" xml:space="preserve">
+    <value>Administrador</value>
+  </data>
+  <data name="LblAñadir" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="LblUsuarios" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="LblQuitarSeleccionados" xml:space="preserve">
+    <value>Quitar seleccionados</value>
+  </data>
+  <data name="MensajeExitoOperacion" xml:space="preserve">
+    <value>La operación se ha realizado correctamente</value>
+  </data>
+  <data name="LblBien" xml:space="preserve">
+    <value>Bien</value>
+  </data>
+  <data name="ErrorModificarRegistroBloqueado" xml:space="preserve">
+    <value>No se puede modificar un registro bloqueado</value>
+  </data>
+  <data name="ErrorTipoCuentaIncorrecto" xml:space="preserve">
+    <value>El tipo de cuenta no es correcto</value>
+  </data>
+  <data name="ErrorCuentaObligatoria" xml:space="preserve">
+    <value>Es obligatorio indicar una Cuenta</value>
+  </data>
+  <data name="ErrorTipoCuentaConfiguracion" xml:space="preserve">
+    <value>No se ha configurado el tipo de cuenta para {0}</value>
+  </data>
+  <data name="ErrorCampoObligatorio" xml:space="preserve">
+    <value>El campo {0} no puede estar vacío</value>
+  </data>
+  <data name="ErrorFormatoCampo" xml:space="preserve">
+    <value>El formato del campo {0} no es correcto</value>
+  </data>
+  <data name="ErrorRegistroExistente" xml:space="preserve">
+    <value>Ya existe un registro con el mismo código</value>
+  </data>
+  <data name="LblOperario" xml:space="preserve">
+    <value>Operario</value>
+  </data>
+  <data name="LblDiferencia" xml:space="preserve">
+    <value>Días</value>
+  </data>
+  <data name="ErrorIdAcreedor" xml:space="preserve">
+    <value>El Id de acreedor {0} no es válido</value>
+  </data>
+  <data name="LblCoeficientes" xml:space="preserve">
+    <value>Coeficientes</value>
+  </data>
+  <data name="LblProduccion" xml:space="preserve">
+    <value>Producción</value>
+  </data>
+  <data name="LblLoading" xml:space="preserve">
+    <value>Cargando...</value>
+  </data>
+  <data name="LblValidar" xml:space="preserve">
+    <value>Validaciones</value>
+  </data>
+  <data name="LblGenerarDescripcion" xml:space="preserve">
+    <value>Orden de generación de descripción</value>
+  </data>
+  <data name="LblUnidades" xml:space="preserve">
+    <value>Unidades de medida</value>
+  </data>
+  <data name="LblGestion" xml:space="preserve">
+    <value>Gestión</value>
+  </data>
+  <data name="LblLongitudTotal" xml:space="preserve">
+    <value>Longitud total</value>
+  </data>
+  <data name="LblExportar" xml:space="preserve">
+    <value>Exportar a </value>
+  </data>
+  <data name="LblFiltros" xml:space="preserve">
+    <value>Filtros</value>
+  </data>
+  <data name="LblOrdernar" xml:space="preserve">
+    <value>Ordenar por</value>
+  </data>
+  <data name="LblBloquear" xml:space="preserve">
+    <value>Bloquear</value>
+  </data>
+  <data name="LblErrorBloqueoNoPermitido" xml:space="preserve">
+    <value>No está permitido bloquear esta entidad</value>
+  </data>
+  <data name="LblTarifasVentas" xml:space="preserve">
+    <value>Tarifas de venta</value>
+  </data>
+  <data name="LblTarifasCompras" xml:space="preserve">
+    <value>Tarifas de compra</value>
+  </data>
+  <data name="LblTarifasEspecificasVentas" xml:space="preserve">
+    <value>Tarifa específica de venta</value>
+  </data>
+  <data name="LblTarifasEspecificasCompras" xml:space="preserve">
+    <value>Tarifa específica de compra</value>
+  </data>
+  <data name="LblCerrarSesion" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="LblMenuSuperusuario" xml:space="preserve">
+    <value>Menú de administrador</value>
+  </data>
+  <data name="LblOtros" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="LblDesglose" xml:space="preserve">
+    <value>Desglose</value>
+  </data>
+  <data name="ErrorClonarGeneral" xml:space="preserve">
+    <value>Ups!! parace que no se ha podido clonar el documento</value>
+  </data>
+  <data name="MensajeExitoClonar" xml:space="preserve">
+    <value>Se ha clonado el registro correctamente</value>
+  </data>
+  <data name="LblGuardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ErrorValorMinimo" xml:space="preserve">
+    <value>El valor debe ser mayor o igual que {1}</value>
+  </data>
+  <data name="ConfiguradorDocumentos" xml:space="preserve">
+    <value>Configurador de documentos: {0}</value>
+  </data>
+  <data name="EnumPresupuestosVentas" xml:space="preserve">
+    <value>Presupuesto de venta</value>
+  </data>
+  <data name="EnumPedidosVentas" xml:space="preserve">
+    <value>Pedido de venta</value>
+  </data>
+  <data name="EnumAlbaranesVentas" xml:space="preserve">
+    <value>Albarán de venta</value>
+  </data>
+  <data name="EnumFacturasVentas" xml:space="preserve">
+    <value>Factura de venta</value>
+  </data>
+  <data name="LblPresupuestos" xml:space="preserve">
+    <value>Presupuestos de venta</value>
+  </data>
+  <data name="ErrorCampo1MayorCampo2" xml:space="preserve">
+    <value>El campo {0} no puede ser mayor que el campo {1}</value>
+  </data>
+  <data name="LblEjercicio" xml:space="preserve">
+    <value>Gestión de ejercicios</value>
+  </data>
+  <data name="ErrorRangoExistente" xml:space="preserve">
+    <value>El rango de fechas ya existe</value>
+  </data>
+  <data name="LblNoExistenMasEjercicios" xml:space="preserve">
+    <value>No hay más ejercicios</value>
+  </data>
+  <data name="LblCambiarEjercicio" xml:space="preserve">
+    <value>Cambiar ejercicio</value>
+  </data>
+  <data name="ErrorCuentaExistente" xml:space="preserve">
+    <value>Ya existe una cuenta de tipo {0} con el código {1}</value>
+  </data>
+  <data name="LblClonar" xml:space="preserve">
+    <value>Clonar</value>
+  </data>
+  <data name="LblUltimosPrecios" xml:space="preserve">
+    <value>Últimos precios</value>
+  </data>
+  <data name="LblNoExistenBancos" xml:space="preserve">
+    <value>No existen bancos asociados</value>
+  </data>
+  <data name="LblMediacion" xml:space="preserve">
+    <value>Mediación</value>
+  </data>
+  <data name="ErrorBorradoArticulosUsados" xml:space="preserve">
+    <value>No se puede borrar el artículo porque ya ha sido utilizado en algún documento.</value>
+  </data>
+  <data name="LblGenerarPedido" xml:space="preserve">
+    <value>Generar pedido</value>
+  </data>
+  <data name="ErrorIntegridadReferencial" xml:space="preserve">
+    <value>No se puede modificar el {0} {1} porque ya ha sido modificado por otro usuario </value>
+  </data>
+  <data name="LblImportar" xml:space="preserve">
+    <value>Proceso de importación de líneas</value>
+  </data>
+  <data name="BtnBuscarLineas" xml:space="preserve">
+    <value>Buscar líneas</value>
+  </data>
+  <data name="EnumPresupuestosCompras" xml:space="preserve">
+    <value>Presupuesto de compra</value>
+  </data>
+  <data name="EnumPedidosCompras" xml:space="preserve">
+    <value>Pedido de compra</value>
+  </data>
+  <data name="EnumTodos" xml:space="preserve">
+    <value>Todos los documentos</value>
+  </data>
+  <data name="EnumAlbaranesCompras" xml:space="preserve">
+    <value>Albarán de compra</value>
+  </data>
+  <data name="EnumFacturasCompras" xml:space="preserve">
+    <value>Factura de compra</value>
+  </data>
+  <data name="EnumDiseno" xml:space="preserve">
+    <value>En diseño</value>
+  </data>
+  <data name="EnumCurso" xml:space="preserve">
+    <value>En curso</value>
+  </data>
+  <data name="EnumFinalizado" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="EnumAnulado" xml:space="preserve">
+    <value>Anulado</value>
+  </data>
+  <data name="EnumCaducado" xml:space="preserve">
+    <value>Caducado</value>
+  </data>
+  <data name="ErrorModificacionNoValidaPorElEstadoActual" xml:space="preserve">
+    <value>Los documentos en estado {0} no pueden modificarse</value>
+  </data>
+  <data name="ErrorBorradoUnidadesUsadas" xml:space="preserve">
+    <value>No se puede borrar la unidade de medida porque ya ha sido utilizada en algún artículo.</value>
+  </data>
+  <data name="LblUltimo" xml:space="preserve">
+    <value>Último</value>
+  </data>
+  <data name="LblPrimero" xml:space="preserve">
+    <value>Primero</value>
+  </data>
+  <data name="LblAnterior" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="LblSiguiente" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="LblImprimir" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="LblCambiarEstado" xml:space="preserve">
+    <value>Cambiar estado</value>
+  </data>
+  <data name="LblTransporte" xml:space="preserve">
+    <value>Transporte</value>
+  </data>
+  <data name="LblGenerarAlbaran" xml:space="preserve">
+    <value>Generar albarán</value>
+  </data>
+  <data name="LblDividir" xml:space="preserve">
+    <value>Dividir</value>
+  </data>
+  <data name="LblNoExistenDirecciones" xml:space="preserve">
+    <value>No existen direcciones</value>
+  </data>
+  <data name="Agruparpor" xml:space="preserve">
+    <value>Agrupar por</value>
+  </data>
+  <data name="LblFacturar" xml:space="preserve">
+    <value>Facturar</value>
+  </data>
+  <data name="BtnAñadirLinea" xml:space="preserve">
+    <value>Añadir nueva línea</value>
+  </data>
+  <data name="LblListar" xml:space="preserve">
+    <value>Listar</value>
+  </data>
+  <data name="LblLimpiar" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="LblBloqueado" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="LblAyuda" xml:space="preserve">
+    <value>Ayuda online</value>
+  </data>
+  <data name="AsuntoEmailTest" xml:space="preserve">
+    <value>Prueba configuración email</value>
+  </data>
+  <data name="CuerpoEmailTest" xml:space="preserve">
+    <value>Prueba realizada a las {0}</value>
+  </data>
+  <data name="LblEnviaremail" xml:space="preserve">
+    <value>Enviar email</value>
+  </data>
+  <data name="LblEnviar" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="LblEnviandoMail" xml:space="preserve">
+    <value>Enviando email....</value>
+  </data>
+  <data name="LblEnvioMail" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblAgrupacion" xml:space="preserve">
+    <value>Agrupación</value>
+  </data>
+  <data name="LblDesglosado" xml:space="preserve">
+    <value>Desglosado</value>
+  </data>
+  <data name="LblSinDesglose" xml:space="preserve">
+    <value>Sin Desglosar</value>
+  </data>
+  <data name="LblDetallado" xml:space="preserve">
+    <value>Detallado</value>
+  </data>
+  <data name="LblAgrupadoporcliente" xml:space="preserve">
+    <value>Agrupado por cliente</value>
+  </data>
+  <data name="LblDescargar" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="GestionFicheros" xml:space="preserve">
+    <value>Ficheros adjuntos</value>
+  </data>
+  <data name="ErrorGenerarMovimientoStock" xml:space="preserve">
+    <value>El ya existe un artículo con el lote: {0}.{1}</value>
+  </data>
+  <data name="LblMenu" xml:space="preserve">
+    <value>Menú</value>
+  </data>
+  <data name="LblCambiarAlmacen" xml:space="preserve">
+    <value>Cambiar de almacén</value>
+  </data>
+  <data name="LblNoExistenMasAlmacenes" xml:space="preserve">
+    <value>No existe ningún almacén</value>
+  </data>
+  <data name="LblAgrupadoporproveedor" xml:space="preserve">
+    <value>Agrupado por proveedor</value>
+  </data>
+  <data name="TipoOperacionServiceInsertar" xml:space="preserve">
+    <value>Insertar</value>
+  </data>
+  <data name="TipoOperacionServiceActualizar" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="TipoOperacionServiceEliminar" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="TipoOperacionServiceMovimientoAlmacen" xml:space="preserve">
+    <value>Movimiento de almacén</value>
+  </data>
+  <data name="TipoOperacionServiceKit" xml:space="preserve">
+    <value>Kit</value>
+  </data>
+  <data name="TipoOperacionServiceBundle" xml:space="preserve">
+    <value>Bundle</value>
+  </data>
+  <data name="TipoOperacionServiceRemedir" xml:space="preserve">
+    <value>Remedir</value>
+  </data>
+  <data name="LblEntregar" xml:space="preserve">
+    <value>Generar entrega</value>
+  </data>
+  <data name="LblServicios" xml:space="preserve">
+    <value>Servicios</value>
+  </data>
+  <data name="LblCostesproducto" xml:space="preserve">
+    <value>Coste del producto</value>
+  </data>
+  <data name="LblDocumentosrelacionados" xml:space="preserve">
+    <value>Documentos relacionados</value>
+  </data>
+  <data name="LblMedidas" xml:space="preserve">
+    <value>Medidas</value>
+  </data>
+  <data name="Entrada" xml:space="preserve">
+    <value>Entrada</value>
+  </data>
+  <data name="Produccion" xml:space="preserve">
+    <value>Produccion</value>
+  </data>
+  <data name="Salida" xml:space="preserve">
+    <value>Salida</value>
+  </data>
+  <data name="Lotes" xml:space="preserve">
+    <value>Centro de control de lotes</value>
+  </data>
+  <data name="DetalleLotes" xml:space="preserve">
+    <value>Detalle de lotes</value>
+  </data>
+  <data name="LblGraficas" xml:space="preserve">
+    <value>Crear gráfica</value>
+  </data>
+  <data name="LblConfigurarGraficas" xml:space="preserve">
+    <value>Gestión de gráficas</value>
+  </data>
+  <data name="Filtros" xml:space="preserve">
+    <value>Filtros</value>
+  </data>
+  <data name="LblAmpliar" xml:space="preserve">
+    <value>Ampliar</value>
+  </data>
+  <data name="LblConfigurarPanelControl" xml:space="preserve">
+    <value>Configurar panel de control</value>
+  </data>
+  <data name="LblListado" xml:space="preserve">
+    <value>Listado</value>
+  </data>
+  <data name="ErrorRangoEntre" xml:space="preserve">
+    <value>El valor de {0}  tiene que estar entre {1} y {2}</value>
+  </data>
+  <data name="LblCajas" xml:space="preserve">
+    <value>Cajas</value>
+  </data>
+  <data name="Unidades" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="LblPropiedades" xml:space="preserve">
+    <value>Propiedades</value>
+  </data>
+  <data name="ErrorLineasObligatoriasCostes" xml:space="preserve">
+    <value>Es obligatorio indicar al menos una línea cuando se añaden costes adicionales</value>
+  </data>
+  <data name="Sinagrupar" xml:space="preserve">
+    <value>Sin agrupar</value>
+  </data>
+  <data name="LblFinalizar" xml:space="preserve">
+    <value>Finalizar</value>
+  </data>
+  <data name="LblGenerarEntrega" xml:space="preserve">
+    <value>Generar entrega de stock</value>
+  </data>
+  <data name="LblGenerarRecepcionStock" xml:space="preserve">
+    <value>Generar recepción de stock</value>
+  </data>
+  <data name="LblSaldarPedido" xml:space="preserve">
+    <value>Saldar pedido</value>
+  </data>
+  <data name="CantidadPedida" xml:space="preserve">
+    <value>Cant. Pedida</value>
+  </data>
+  <data name="CantidadAlbaran" xml:space="preserve">
+    <value>Cant. Albarán</value>
+  </data>
+  <data name="MetrosAlbaran" xml:space="preserve">
+    <value>Metros Albarán</value>
+  </data>
+  <data name="CantidadPendiente" xml:space="preserve">
+    <value>Cant. Pendiente</value>
+  </data>
+  <data name="BtnEntrar" xml:space="preserve">
+    <value>Entrar</value>
+  </data>
+  <data name="LblPedidos" xml:space="preserve">
+    <value>Pedidos de venta</value>
+  </data>
+  <data name="LblAlbaranes" xml:space="preserve">
+    <value>Albarán de venta</value>
+  </data>
+  <data name="LblTextoDesconexion" xml:space="preserve">
+    <value>El usuario {0} ya está en uso. Desea forzar la desconexión del usuario?</value>
+  </data>
+  <data name="BtnDesconectarUsuario" xml:space="preserve">
+    <value>Desconectar usuario</value>
+  </data>
+  <data name="MensajeExitoOperacionForzarDesconexion" xml:space="preserve">
+    <value>Se ha desconectado al otro usuario correctamente. Ya puede intentar conectarse a la aplicación.</value>
+  </data>
+  <data name="lblFacturasEmitidas" xml:space="preserve">
+    <value>Facturas emitidas</value>
+  </data>
+  <data name="lblFacturasRecibidas" xml:space="preserve">
+    <value>Facturas recibidas</value>
+  </data>
+  <data name="LblTipoFactura" xml:space="preserve">
+    <value>Tipo de factura</value>
+  </data>
+  <data name="LblRegimenEspecial" xml:space="preserve">
+    <value>Régimen especial</value>
+  </data>
+  <data name="ErrorDocumentoSinLineas" xml:space="preserve">
+    <value>El documento no tiene líneas.</value>
+  </data>
+  <data name="Si" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ErrorFechaNoValida" xml:space="preserve">
+    <value>Fecha no válida</value>
+  </data>
+  <data name="LblHistoricoPrecios" xml:space="preserve">
+    <value>Histórico precios</value>
+  </data>
+  <data name="Fabricacion" xml:space="preserve">
+    <value>Fabricación</value>
+  </data>
+  <data name="LblPlanContable" xml:space="preserve">
+    <value>Plan contable</value>
+  </data>
+  <data name="LblDiarioContable" xml:space="preserve">
+    <value>Diario contable</value>
+  </data>
+  <data name="LblFichero" xml:space="preserve">
+    <value>Fichero</value>
+  </data>
+  <data name="LblGenerarCuentas" xml:space="preserve">
+    <value>Generar cuentas</value>
+  </data>
+  <data name="LblGenerarDiarioContable" xml:space="preserve">
+    <value>Generar diario contable</value>
+  </data>
+  <data name="LblDelimitador" xml:space="preserve">
+    <value>Delimitador</value>
+  </data>
+  <data name="LblCabecera" xml:space="preserve">
+    <value>Contiene cabecera</value>
+  </data>
+  <data name="LblIso" xml:space="preserve">
+    <value>Código ISO</value>
+  </data>
+  <data name="LblGenerarSecciones" xml:space="preserve">
+    <value>Secciones analíticas</value>
+  </data>
+  <data name="ErrorDelimitadorFormato" xml:space="preserve">
+    <value>Delimitador o formato de csv incorrecto</value>
+  </data>
+  <data name="ErrorFichero" xml:space="preserve">
+    <value>Por favor sube tu archivo</value>
+  </data>
+  <data name="ErrorFormatoFichero" xml:space="preserve">
+    <value>Este formato de archivo no es compatible</value>
+  </data>
+  <data name="LblContabilizar" xml:space="preserve">
+    <value>Contabilizar</value>
+  </data>
+  <data name="LblExportarClassic" xml:space="preserve">
+    <value>Exportar a Marfil Classic</value>
+  </data>
+  <data name="LblGenerarImputacionMateriales" xml:space="preserve">
+    <value>Imputación de materiales</value>
+  </data>
+  <data name="ImputacionMateriales" xml:space="preserve">
+    <value>Imputación materiales</value>
+  </data>
+  <data name="LblVariedades" xml:space="preserve">
+    <value>Variedades/Tajos</value>
+  </data>
+  <data name="StockActual" xml:space="preserve">
+    <value>Stock actual</value>
+  </data>
+  <data name="SubirImagen" xml:space="preserve">
+    <value>Subir imagen</value>
+  </data>
+  <data name="LblCierre" xml:space="preserve">
+    <value>Cierre</value>
+  </data>
+  <data name="LblGenerarSeguimiento" xml:space="preserve">
+    <value>Generar seguimiento</value>
+  </data>
+  <data name="LblGestionDeGraficas" xml:space="preserve">
+    <value>Gestión de configuración de gráficas de </value>
+  </data>
+  <data name="LblPeticionesAsincronas" xml:space="preserve">
+    <value>Peticiones asíncronas</value>
+  </data>
+  <data name="LblImportarStock" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="LblSerie" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="LblTipoAlmacenLote" xml:space="preserve">
+    <value>Tipo lote</value>
+  </data>
+  <data name="ErrorDocumentoFinalizado" xml:space="preserve">
+    <value>No se puede eliminar un documento en estado finalizado</value>
+  </data>
+  <data name="LblImportarArticulos" xml:space="preserve">
+    <value>Importar Artículos</value>
+  </data>
+  <data name="ErrorLoteSinStock" xml:space="preserve">
+    <value>No se puede generar un lote que ya ha sido vendido</value>
+  </data>
+  <data name="Lblarticulostercero" xml:space="preserve">
+    <value>Articulos tercero</value>
+  </data>
+  <data name="Lbltercero" xml:space="preserve">
+    <value>Terceros</value>
+  </data>
+  <data name="lblCorreos" xml:space="preserve">
+    <value>Correos Enviados</value>
+  </data>
+  <data name="LblVencimientosSeguimientos" xml:space="preserve">
+    <value>Seguimientos</value>
+  </data>
+  <data name="LblAsiento" xml:space="preserve">
+    <value>Asiento</value>
+  </data>
+  <data name="VencimientosCobros" xml:space="preserve">
+    <value>Gestión de previsión de cobros</value>
+  </data>
+  <data name="VencimientosPagos" xml:space="preserve">
+    <value>Gestión de previsión de pagos</value>
+  </data>
+  <data name="AsignarCartera" xml:space="preserve">
+    <value>Asignar a cartera</value>
+  </data>
+  <data name="Contabilidad" xml:space="preserve">
+    <value>Contabilidad</value>
+  </data>
+  <data name="LblPrevisiones" xml:space="preserve">
+    <value>Previsión</value>
+  </data>
+  <data name="LblCartera" xml:space="preserve">
+    <value>Cartera</value>
+  </data>
+  <data name="MovimientosTesoreria" xml:space="preserve">
+    <value>Movimientos de tesorería</value>
+  </data>
+  <data name="GenerarMovimiento" xml:space="preserve">
+    <value>Generar movimiento</value>
+  </data>
+  <data name="configurardocumentoscartera" xml:space="preserve">
+    <value>Configurador de documentos: Cartera</value>
+  </data>
+  <data name="ErrorEan13" xml:space="preserve">
+    <value>El campo ean13 debe tener una longitud máxima de 10 dígitos</value>
+  </data>
+  <data name="ErrorDecimalesPrecios" xml:space="preserve">
+    <value>El campo decimales precios debe estar comprendido entre 0 y 4</value>
+  </data>
+  <data name="Fabricar" xml:space="preserve">
+    <value>Fabricar</value>
+  </data>
+  <data name="Presupuestar" xml:space="preserve">
+    <value>Presupuestar</value>
+  </data>
+  <data name="LblBuscarComponente" xml:space="preserve">
+    <value>Buscar componente</value>
+  </data>
+</root>

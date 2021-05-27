@@ -1,0 +1,140 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.Stock.LotesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+}
+
+
+<div class="form-group">
+    <div class="col-md-4">
+        <h4 class="text-center">@AlbaranesCompras.Total</h4>
+        <ul class="list-group margin">
+            <li class="list-group-item list-group-item-info">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Netocompra</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : string.Empty)">@(Model.SNetocompra)</p>
+
+            </li>
+
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Material</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalmaterial)</p>
+
+            </li>
+
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Portes</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalportes)</p>
+
+            </li>
+           
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Otros</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalotro )</p>
+
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Variables</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalvariable )</p>
+
+            </li>
+            <li class="list-group-item list-group-item-success">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.CosteNeto</h4>
+                <p class="list-group-item-text fa-1-5x color-black">@Model.SCosteneto</p>
+
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="col-md-4">
+        <h4 class="text-center">@AlbaranesCompras.Costeumentrada</h4>
+        <ul class="list-group margin">
+            <li class="list-group-item list-group-item-info">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Netocompra</h4>
+                <p class="list-group-item-text  @(WebHelper.DevexpressAA ? "color-black" : string.Empty)">@Model.SNetocompracompra</p>
+
+            </li>
+            
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Material</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalmaterialcompra )</p>
+
+            </li>
+
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Portes</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalportescompra )</p>
+
+            </li>
+           
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Otros</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalotrocompra )</p>
+
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Variables</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalvariablecompra )</p>
+
+            </li>
+            <li class="list-group-item list-group-item-success">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.CosteNeto</h4>
+                <p class="list-group-item-text fa-1-5x color-black">@Model.SCostenetocompra</p>
+
+            </li>           
+
+        </ul>
+    </div>
+
+    <div class="col-md-4">
+        <h4 class="text-center">@AlbaranesCompras.Costeumproduccion</h4>
+        <ul class="list-group margin">
+            <li class="list-group-item list-group-item-info">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Netocompra</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : string.Empty)">@Model.SNetocompraproduccion</p>
+
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Material</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalmaterialproduccion )</p>
+
+            </li>
+
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Portes</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalportesproduccion )</p>
+
+            </li>
+          
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Otros</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalotroproduccion )</p>
+
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.Variables</h4>
+                <p class="list-group-item-text @(WebHelper.DevexpressAA ? "color-black" : "orange")">@(Model.SCosteadicionalvariableproduccion )</p>
+
+            </li>
+            <li class="list-group-item list-group-item-success">
+                <h4 class="list-group-item-heading">@AlbaranesCompras.CosteNeto</h4>
+                <p class="list-group-item-text fa-1-5x color-black">@Model.SCostenetoproduccion</p>
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">        
+        <per class="list-group-item list-group-item-success">
+            <h4 class="list-group-item-heading">@AlbaranesCompras.Preciovaloracion</h4>
+            <p class="list-group-item-text fa-1-5x color-black">@Model.SPreciovaloracion</p>
+
+        </per>
+    </div>
+
+</div>

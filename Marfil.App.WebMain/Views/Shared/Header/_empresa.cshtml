@@ -1,0 +1,61 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.HeaderModel
+@{
+    var empresas = Model.EmpresasList.Where(f => f.Item1 != Model.EmpresaId);
+
+}
+<a href="javascript:;" class="dropdown-toggle" id="cambioempresa">
+    <span class="bigger-180" style="padding-right: 10px; padding-left: 10px;">
+        @Model.Empresa
+    </span>
+</a>
+<ul class="dropdown-menu">
+    <li >
+        @if (empresas.Any())
+        {
+                //Rai
+                <form action="@Url.Action("CambioEmpresa", "Home")" name="CambioEmpresa" id="CambioEmpresa" method="POST">
+                    <div class="form-horizontal" style="padding: 10px;">
+
+
+                        <select aria-label="Cambio de empresa" name="id" class="form-control">
+                            @foreach (var item in empresas)
+                            {
+                                <option value="@item.Item1">@item.Item2</option>
+                            }
+                        </select>
+
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa fa-refresh"></i>
+                            @General.LblCambiarEmpresa
+                        </button>
+                    </div>
+                </form>
+                
+
+            
+        }
+        else
+        {
+            <a href="#">
+                <i class="fa fa-warning"></i>
+                @General.LblNoExistenMasEmpresas
+            </a>
+
+        }
+    </li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#cambioempresa').on('click', function(event) {
+            $(this).parent().toggleClass("open");
+        });
+
+        $('body').on('click', function(e) {
+            if (!$('#cambioempresali').is(e.target) && $('#cambioempresali').has(e.target).length === 0 && $('.open').has(e.target).length === 0) {
+                $('#cambioempresali').removeClass('open');
+            }
+        });
+    });
+   
+</script>

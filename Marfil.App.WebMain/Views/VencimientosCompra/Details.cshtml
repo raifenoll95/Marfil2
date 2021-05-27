@@ -1,0 +1,28 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Resources
+@model IModelView
+@{
+    var toolbarModel = Model as IToolbar;
+    toolbarModel.Toolbar.Titulo = "Previsión de pagos";
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+<div>   
+    @{
+        ViewData["readonly"] = true;
+    }
+    <div class="form-horizontal">
+        @Html.Partial("_vencimientos", Model as VencimientosModel)
+    </div>
+</div>
+
+@if (ViewBag.Modificar)
+{
+    <p class="margin-top">
+        <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((VencimientosModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}

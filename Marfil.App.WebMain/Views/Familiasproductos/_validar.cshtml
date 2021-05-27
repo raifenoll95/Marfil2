@@ -1,0 +1,90 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model FamiliasproductosModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+   
+    var cvunidades = FCampoverificacion.Instance.GetModel<UnidadesModel>(WebHelper.ContextService);
+}
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Validarmaterial, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.CheckBoxFor(f => Model.Validarmaterial, isreadonly ? (object) new {@autofocus = "", @disabled = "disabled"} : (object) new {@autofocus = "", ng_model = "Valormaterial", ng_disabled = "Deshabilitarmaterial"})
+        @Html.ValidationMessageFor(f => Model.Validarmaterial, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Validarcaracteristica, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.CheckBoxFor(f => Model.Validarcaracteristica, isreadonly ? (object)new { @autofocus = "", @disabled = "disabled" } : (object)new { @autofocus = "", ng_model = "Valorcaracteristica", ng_disabled = "Deshabilitarcaracteristica" })
+        @Html.ValidationMessageFor(f => Model.Validarcaracteristica, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Validargrosor, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.CheckBoxFor(f => Model.Validargrosor, isreadonly ? (object) new {@autofocus = "", @disabled = "disabled"} : (object) new {@autofocus = "", ng_model = "Valorgrosor", ng_disabled = "Deshabilitargrosor" })
+        @Html.ValidationMessageFor(f => Model.Validargrosor, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Validaracabado, new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.CheckBoxFor(f => Model.Validaracabado, isreadonly ? (object) new {@autofocus = "", @disabled = "disabled"} : (object) new {@autofocus = "", ng_model = "Valoracabado", ng_disabled = "Deshabilitaracabado"})
+        @Html.ValidationMessageFor(f => Model.Validaracabado, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Validardimensiones, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.Validardimensiones, isreadonly ? (object) new {@disabled = "disabled"} : (object) new {})
+        @Html.ValidationMessageFor(f => Model.Validardimensiones, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Minlargo, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+       @Html.TextBoxFor(f => Model.Minlargo, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Maxlargo, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Maxlargo, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Minancho, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Minancho, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Maxancho, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Maxancho, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Mingrueso, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Mingrueso, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.Maxgrueso, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Maxgrueso, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+    </div>
+</div>
+
+

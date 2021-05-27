@@ -1,0 +1,34 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.Base.ListadoResultado
+
+
+    <input type="hidden" name="id" value="@Model.IdListado" />
+    <button class="btn btn-success @Html.Raw(WebHelper.DevexpressAA ? "dark" : "")" type="submit" name="OutputFormat" value="CSV">
+        <i class="fa fa-file-text-o"></i>
+        @General.LblExportar CSV
+    </button>
+
+    @*<button class="btn btn-success @Html.Raw(WebHelper.DevexpressAA ? "dark" : "")" type="submit" name="OutputFormat" value="PDF">
+        <i class="fa fa-file-pdf-o"></i>
+        @General.LblExportar PDF
+    </button>*@
+
+<button class="btn btn-success @Html.Raw(WebHelper.DevexpressAA ? "dark" : "")" type="submit" name="OutputFormat" value="XLS">
+    <i class="fa fa-file-excel-o"></i>
+    @General.LblExportar Excel
+</button>
+
+<div class="pull-right">
+    <a class="btn btn-success" href="@Url.Action("GenerarGrafica")">
+        <i class="fa fa-bar-chart"></i>
+        @General.LblGraficas
+    </a>
+    <button class="btn btn-success" type="button" ng-click="SaveSettings()">
+        <i class="fa fa-save"></i>
+        @General.LblGuardar @General.LblConfiguracion
+    </button>    
+</div>
+
+
+

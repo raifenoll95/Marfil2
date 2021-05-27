@@ -1,0 +1,60 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.HeaderModel
+@{
+    var Ejercicios = Model.EjerciciosList.Where(f => f.Item1 != Model.EjercicioId);
+
+}
+<a href="javascript:;" class="dropdown-toggle" id="cambioejercicio">
+    <span class="bigger-180" style="padding-right: 10px; padding-left: 10px;">
+        @Model.Ejercicio
+    </span>
+</a>
+<ul class="dropdown-menu">
+    <li >
+        @if (Ejercicios.Any())
+        {
+            <form action="@Url.Action("Index", "CambioEjercicio")" name="CambioEjercicio" id="CambioEjercicio" method="POST">
+                <div class="form-horizontal" style="padding: 10px;">
+                    <select aria-label="Cambio de ejercicio" name="id" class="form-control">
+                        @foreach (var item in Ejercicios)
+                        {
+                            <option value="@item.Item1">@item.Item2</option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn btn-md btn-primary">
+                        <i class="fa fa-refresh"></i>
+                        @General.LblCambiarEjercicio
+                    </button>
+                </div>
+            </form>
+            
+            
+                
+
+            
+        }
+        else
+        {
+            <a href="#">
+                <i class="fa fa-warning"></i>
+                @General.LblNoExistenMasEjercicios
+            </a>
+
+        }
+    </li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#cambioejercicio').on('click', function(event) {
+            $(this).parent().toggleClass("open");
+        });
+
+        $('body').on('click', function(e) {
+            if (!$('#cambioejercicioli').is(e.target) && $('#cambioejercicioli').has(e.target).length === 0 && $('.open').has(e.target).length === 0) {
+                $('#cambioejercicioli').removeClass('open');
+            }
+        });
+    });
+   
+</script>

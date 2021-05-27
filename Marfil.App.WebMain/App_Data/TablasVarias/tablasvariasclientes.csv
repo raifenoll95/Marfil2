@@ -1,0 +1,21 @@
+1;Familia  Cliente / Proveedor;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+2;Cod. Zona Cliente / Proveedor;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+10;Motivos de rectificación;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;2;false
+15;Unidad de negocio;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+20;Familias de materiales;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+21;Grupo de materiales;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+25;Tipo de obra;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+30;Canales;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+40;Seguimientos documentales;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+55;Labores - Trabajos;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+60;Costes variables por periodo;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;5;false
+71;Grupos de secciones;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;4;false
+80;Secciones producción;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
+700;Tipo de grano;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
+705;Tono materiales;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
+710;Calificación comercial;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+800;Grupo de incidencias;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
+900;Descripción almacenes;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+920;Eventos de maquinas;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
+930;Tipos de transporte;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false
+2080;Canales contables;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;4;false

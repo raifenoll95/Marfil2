@@ -1,0 +1,41 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@model Marfil.Dom.Persistencia.Model.RootModel
+@{
+    ViewBag.Title = "Crear contraseña Superusuario";
+    Layout = "~/Views/Shared/_layoutInitial.cshtml";
+}
+
+<h2>Configuración usuario administrador</h2>
+<hr />
+
+@using (Html.BeginForm("Admin", "Startup", FormMethod.Post, new { returnurl = "" }))
+{
+@Html.HiddenFor(f => Model.DataBase)
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Password, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.PasswordFor(f => Model.Password, new {@class = "form-control",@autofocus=""})
+            @Html.ValidationMessageFor(f => Model.Password, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ConfirmacionPassword, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.PasswordFor(f => Model.ConfirmacionPassword, new {@class = "form-control"})
+            @Html.ValidationMessageFor(f => Model.ConfirmacionPassword, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-info" type="Submit">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                Siguiente
+            </button>
+        </div>
+    </div>
+</div>
+}

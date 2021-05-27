@@ -1,0 +1,111 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Newtonsoft.Json
+@using Resources
+@model Marfil.Dom.Persistencia.Model.ContactosModel
+    @{
+        var idControl = "contactos" + Model.Id.ToString().Replace("-", "");
+        var factory = new FModel();
+        var lindireccion = factory.GetModel<ContactosLinModel>(WebHelper.ContextService);
+        var jsoncadena = JsonConvert.SerializeObject(Model.Contactos);
+        var isreadonly = Model.ReadOnly;
+        var paisdefecto = WebHelper.GetApplicationHelper().GetPaisesDefecto();
+        var cargosempresasjson = JsonConvert.SerializeObject(Model.CargosEmpresa);
+        
+    }
+
+<div class="form-group" ng-controller="ContactosCtrl" ng-init="init('@idControl','@Model.Empresa','@Model.Tipotercero',@jsoncadena,@cargosempresasjson)">
+    <div class="col-md-12">
+        <span class="fa-2x">
+            Contactos
+        </span>
+        @if (!isreadonly)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" ng-click="nuevoRegistro()">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+    </div>
+    <div class="col-md-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+            <tr>
+
+                
+                <th>
+                    @Html.LabelFor(f => lindireccion.Nombre)
+                </th>
+                <th>
+                    @Html.LabelFor(f => lindireccion.Telefono)
+                </th>
+                <th>
+                    @Html.LabelFor(f => lindireccion.Email)
+                </th>
+                <th class="col-md-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in contactos">
+               
+                <td>
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Empresa" value="{{ empresa }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Tipotercero" value="{{ item.Tipotercero }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Fkentidad" value="{{ item.Fkentidad }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Id" value="{{ item.Id }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Nombre" value="{{ item.Nombre }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Fktipocontacto" value="{{ item.Fktipocontacto }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Fkcargoempresa" value="{{ item.Fkcargoempresa }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Fkidioma" value="{{ item.Fkidioma }}" />
+                    <!--<input type="hidden" name="Contactos.Contactos[{{$index}}].Fkid_direccion" value="{{ item.Fkid_direccion }}" />-->
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Telefono" value="{{ item.Telefono }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Telefonomovil" value="{{ item.Telefonomovil }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Fax" value="{{ item.Fax }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Email" value="{{ item.Email }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Nifcif" value="{{ item.Nifcif }}" />
+                    <input type="hidden" name="Contactos.Contactos[{{$index}}].Observaciones" value="{{ item.Observaciones }}" />
+
+
+                    {{item.Nombre}}
+                </td>
+                <td>
+                    {{item.Telefono}}
+                </td>
+                <td>
+                    {{item.Email}}
+                </td>
+                <td class="col-md-2">
+                    @if (isreadonly)
+                    {
+                        <a href="#" class="btn btn-sm btn-info" ng-click="edit(item.Empresa,item.Tipotercero,item.Fkentidad,item.Id)">
+                            <i class="fa fa-eye"></i>
+                            <span>@General.LblVer</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-sm btn-info" ng-click="edit(item.Empresa,item.Tipotercero,item.Fkentidad,item.Id)">
+                            <i class="fa fa-pencil"></i>
+                            <span>@General.LblEditar</span>
+                        </a>
+
+                            <a href="#" class="btn btn-sm btn-info" ng-click="delete(item.Empresa,item.Tipotercero,item.Fkentidad,item.Id)">
+                                <i class="fa fa-trash"></i>@General.LblBorrar
+                            </a>
+                    }
+                    
+                </td>
+            </tr>
+            <tr ng-show="contactos.length==0"><td colspan="6">@General.LblNoHayRegistros</td></tr>
+            </tbody>
+        </table>
+    </div>
+    @Html.Partial("_contactosLinModal",Model)
+</div>
+
+
