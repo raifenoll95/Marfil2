@@ -28,7 +28,7 @@ namespace Marfil.App.WebMain.Controllers
 
         public HttpResponseMessage Get()
         {
-            
+
             using (var service = new UltimospreciosService(ContextService))
             {
                 var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
@@ -40,7 +40,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     Especificos = new ResultBusquedas<UltimoprecioEspecificoModel>()
                     {
-                        values = service.GetUltimosPrecios(articulo, cuenta, tipodocumento).OrderByDescending(f=>f.Fecha),
+                        values = service.GetUltimosPrecios(articulo, cuenta, tipodocumento).OrderByDescending(f => f.Fecha),
                         columns = new[]
                         {
                             new ColumnDefinition()
@@ -62,7 +62,7 @@ namespace Marfil.App.WebMain.Controllers
                     },
                     SistemaVenta = new ResultBusquedas<UltimopreciosistemaModel>()
                     {
-                        values = service.GetPreciosSistema(articulo,TipoFlujo.Venta),
+                        values = service.GetPreciosSistema(articulo, TipoFlujo.Venta, cuenta),
                         columns = new[]
                         {
                              new ColumnDefinition() {field = "Tarifa", displayName = "Tarifa", visible = true},
@@ -71,7 +71,16 @@ namespace Marfil.App.WebMain.Controllers
                     },
                     SistemaCompra = new ResultBusquedas<UltimopreciosistemaModel>()
                     {
-                        values = service.GetPreciosSistema(articulo, TipoFlujo.Compra),
+                        values = service.GetPreciosSistema(articulo, TipoFlujo.Compra, cuenta),
+                        columns = new[]
+                        {
+                             new ColumnDefinition() {field = "Tarifa", displayName = "Tarifa", visible = true},
+                            new ColumnDefinition() {field = "Precio", displayName = "Precio", visible = true}
+                        }
+                    },
+                    SistemaEspecial = new ResultBusquedas<UltimopreciosistemaModel>()
+                    {
+                        values = service.GetPreciosEspeciales(articulo, cuenta),
                         columns = new[]
                         {
                              new ColumnDefinition() {field = "Tarifa", displayName = "Tarifa", visible = true},
@@ -79,7 +88,7 @@ namespace Marfil.App.WebMain.Controllers
                         }
                     }
                 };
-              
+
 
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(result), Encoding.UTF8, "application/json");
@@ -90,8 +99,8 @@ namespace Marfil.App.WebMain.Controllers
         // GET: api/Supercuentas/5
         public HttpResponseMessage Get(string id)
         {
-            
-            using (var service = FService.Instance.GetService(typeof(AcabadosModel),ContextService) as AcabadosService)
+
+            using (var service = FService.Instance.GetService(typeof(AcabadosModel), ContextService) as AcabadosService)
             {
                 service.Empresa = ContextService.Empresa;
                 var list = service.get(id) as UltimoprecioEspecificoModel;

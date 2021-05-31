@@ -298,6 +298,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Incidencias.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\InformeMargen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformeMargen.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\Inmuebles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Inmuebles.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Inventarios.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -387,6 +397,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CircuitosTesoreria.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\PreciosEspeciales.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreciosEspeciales.resx</DependentUpon>
     </Compile>
     <Compile Include="Textos\Entidades\Seguimientos.Designer.cs">
       <DependentUpon>Seguimientos.resx</DependentUpon>
@@ -869,6 +884,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Incidencias.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\InformeMargen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InformeMargen.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Inmuebles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Inmuebles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Inventarios.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Inventarios.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Inventarios.resx">
@@ -962,6 +985,10 @@
     <EmbeddedResource Include="Textos\Entidades\CircuitosTesoreria.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CircuitosTesoreria.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PreciosEspeciales.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PreciosEspeciales.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Seguimientos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

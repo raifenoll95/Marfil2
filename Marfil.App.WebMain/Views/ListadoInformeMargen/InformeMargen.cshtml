@@ -1,0 +1,241 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Listados
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Terceros
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+@model Marfil.Dom.Persistencia.Listados.ListadoInformeMargen
+@{
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvAlbaranes = FCampoverificacion.Instance.GetModel<AlbaranesModel>(WebHelper.ContextService);
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+    var series = Model.SeriesListado;
+    var cvagentes = FCampoverificacion.Instance.GetModel<AgentesModel>(WebHelper.ContextService);
+    var cvfamilias = FCampoverificacion.Instance.GetModel<FamiliasproductosModel>(WebHelper.ContextService);
+    var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
+    var cvcaracteristicas = FCampoverificacion.Instance.GetModel<CaracteristicasModel>(WebHelper.ContextService);
+    var cvgrosores = FCampoverificacion.Instance.GetModel<GrosoresModel>(WebHelper.ContextService);
+    var cvacabados = FCampoverificacion.Instance.GetModel<AcabadosModel>(WebHelper.ContextService);
+    var paisdefecto = "";
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    listpaises.Insert(0, new SelectListItem { Value = "", Text = "" });
+    var listfamiliamateriales = WebHelper.GetApplicationHelper().GetListFamiliaMateriales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList(); ;
+    var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listfamiliamateriales.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    var listagentes = WebHelper.GetApplicationHelper().GetListAgentes().Select(f => new SelectListItem() { Value = f.Fkcuentas, Text = f.Descripcion }).ToList();
+    var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+}
+
+
+<script src="@Url.Content("~/Scripts/UserControls/Provincias/ProvinciasController.js")"></script>
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function() {
+
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+</script>
+@Html.HiddenFor(f => Model.Empresa)
+<div class="col-md-10">
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Series, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Series" class="form-control" name="Series" multiple="multiple">
+                @foreach (var item in series)
+                {
+                    <option value="@item.Id" @Html.Raw(Model.Series.Any(f => f == item.Id) ? "selected=\"selected\"" : string.Empty)>@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Series, "", new { @class = "text-danger" })</div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaDesde";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaDesde;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "CuentaHasta";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.CuentaHasta;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+                cvclientes.Autofocus = false;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkfamiliacliente, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fkfamiliacliente, listfamiliaproveedor, new { @class = "form-control", @aria_label = "Familia" })
+            @Html.ValidationMessageFor(f => Model.Fkfamiliacliente, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkzonacliente, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fkzonacliente, listzonaclienteproveedor, new { @class = "form-control", @aria_label = "Zona" })
+            @Html.ValidationMessageFor(f => Model.Fkzonacliente, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FkAgentes, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+
+                cvclientes.Name = "Agente";
+                cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvclientes.Valor = Model.FkAgentes;
+                cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Agentes + "\"}";
+            }
+
+            @Html.Partial("CampoverificacionUI", cvclientes)
+            @Html.ValidationMessageFor(f => Model.FkAgentes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkfamiliasmateriales, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(f => Model.Fkfamiliasmateriales, listfamiliamateriales, new { @class = "form-control", @aria_label = "Familia material" })
+            @Html.ValidationMessageFor(f => Model.Fkfamiliasmateriales, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(f => Model.FkfamiliasDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @{
+                cvfamilias.Name = "FkfamiliasDesde";
+                cvfamilias.Url = Url.Action("FamiliasproductosApi", "Api");
+                cvfamilias.Valor = Model.FkfamiliasDesde;
+                cvfamilias.Obligatorio = false;
+                cvfamilias.Params = "{\"listadomargen\":\"" + 1 + "\"}";
+                cvfamilias.Configuracion.OcultarTexto = true;
+                cvfamilias.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvfamilias)
+        </div>
+
+        @Html.LabelFor(f => Model.FkfamiliasHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @{
+                cvfamilias.Name = "FkfamiliasHasta";
+                cvfamilias.Url = Url.Action("FamiliasproductosApi", "Api");
+                cvfamilias.Valor = Model.FkfamiliasHasta;
+                cvfamilias.Obligatorio = false;
+                cvfamilias.Params = "{\"listadomargen\":\"" + 1 + "\"}";
+                cvfamilias.Configuracion.OcultarTexto = true;
+                cvfamilias.Autofocus = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvfamilias)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FkfamiliasDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FkfamiliasHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FkmaterialesDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @{
+                cvmateriales.Name = "FkmaterialesDesde";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.FkmaterialesDesde;
+                cvmateriales.Configuracion.OcultarTexto = true;
+                cvmateriales.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+
+        @Html.LabelFor(f => Model.FkmaterialesHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @{
+                cvmateriales.Name = "FkmaterialesHasta";
+                cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+                cvmateriales.Valor = Model.FkmaterialesHasta;
+                cvmateriales.Configuracion.OcultarTexto = true;
+                cvmateriales.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvmateriales)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FkmaterialesDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FkmaterialesHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="col-md-2">
+    <ul class="list-group" id="Ordenarpor">
+        <li class="list-group-item active">Margen por</li>
+        <li class="list-group-item"><input type="radio" aria_label="Ordenar" aria-labelledby="Ordenarpor" name="Group" @Html.Raw(!string.IsNullOrEmpty(Model.Group) && Model.Group == "1" ? "checked=\"checked\"" : string.IsNullOrEmpty(Model.Group) ? "checked=\"checked\"" : string.Empty) value="1" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Fkarticulos</li>
+        <li class="list-group-item"><input type="radio" aria_label="Ordenar" aria-labelledby="Ordenarpor" name="Group" @Html.Raw(!string.IsNullOrEmpty(Model.Group) && Model.Group == "2" ? "checked=\"checked\"" : string.Empty) value="2" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Fkarticulos, @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Lote</li>
+        <li class="list-group-item"><input type="radio" aria_label="Ordenar" aria-labelledby="Ordenarpor" name="Group" @Html.Raw(!string.IsNullOrEmpty(Model.Group) && Model.Group == "3" ? "checked=\"checked\"" : string.Empty) value="3" /> @Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes.Fkclientes</li>
+    </ul>
+</div>

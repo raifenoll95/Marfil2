@@ -12,6 +12,8 @@ using Resources;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.ControlsUI.Toolbar;
 using System.Net;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -146,6 +148,30 @@ namespace Marfil.App.WebMain.Controllers
                 TempData["errors"] = ex.Message;
                 TempData["model"] = model;
                 return RedirectToAction("Edit", new { id = obj.get(objExt.primaryKey.First().Name) });
+            }
+        }
+
+        public JsonResult GetMunicipio(string nombre)
+        {
+            using (var servicioMunicipios = FService.Instance.GetService(typeof(MunicipiosModel), ContextService) as MunicipiosService)
+            {
+                JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+                String N = serializer1.Deserialize<String>(nombre);
+                var municipio = servicioMunicipios.GetMunicipioNombre(N).FirstOrDefault();
+                var data = JsonConvert.SerializeObject(municipio, Formatting.Indented);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetMunicipios(string id)
+        {
+            using (var servicioMunicipios = FService.Instance.GetService(typeof(MunicipiosModel), ContextService) as MunicipiosService)
+            {
+                JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+                String N = serializer1.Deserialize<String>(id);
+                var municipio = servicioMunicipios.GetMunicipiosProvincia(N);
+                var data = JsonConvert.SerializeObject(municipio, Formatting.Indented);
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion

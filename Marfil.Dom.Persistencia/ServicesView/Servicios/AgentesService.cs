@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
@@ -276,5 +277,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         #endregion
+
+        public IEnumerable<AgentesModel> GetListAgentes()
+        {
+            return _db.Set<Agentes>().ToList().Select(f => _converterModel.GetModelView(f) as AgentesModel);
+        }
     }
 }

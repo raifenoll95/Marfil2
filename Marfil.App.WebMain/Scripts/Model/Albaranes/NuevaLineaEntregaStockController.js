@@ -75,15 +75,15 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
                 $scope.gridApi.selection.selectAllRows();
             }
             $scope.selected = $scope.gridApi.selection.getSelectedCount();
-            
+
         });
         gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
             if ($scope.Tipopieza >= 1) {
                 $scope.gridApi.selection.selectAllRows();
             }
             $scope.selected = $scope.gridApi.selection.getSelectedCount();
-            
-            
+
+
         });
     };
 
@@ -110,7 +110,7 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
 
     $scope.ClearFormulario = function () {
         $scope.Bundle = "";
-        eventAggregator.Publish("Lote-Buscar","");
+        eventAggregator.Publish("Lote-Buscar", "");
         $scope.data = [];
         $scope.gridOptions.data = [];
         $scope.Fkarticuloserrores = "";
@@ -127,15 +127,15 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         $("[name='Fkarticulossalida']").val("");
     }
 
-    $scope.GridVista =function() {
-        return typeof GridViewLineas === 'undefined' || GridViewLineas === null ? GridViewLineasSalida : GridViewLineas ;
+    $scope.GridVista = function () {
+        return typeof GridViewLineas === 'undefined' || GridViewLineas === null ? GridViewLineasSalida : GridViewLineas;
     }
 
     $('#_entregastock').on('show.bs.modal', function () {
         console.log("nueva linea js show modal");
         $scope.Carga = true;
         $scope.ClearFormulario();
-        
+
     });
     $('#_entregastock').on('hidden.bs.modal', function () {
         $scope.GridVista().Focus();
@@ -154,58 +154,58 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             FkarticulosDesde: $("[name='Fkarticulossalida']").val(),
             FkarticulosHasta: $("[name='Fkarticulossalida']").val(),
             Id: $("[name='Loteentrega']").val(),
-            Flujo:'0'
+            Flujo: '0'
         };
-        
+
         $http({
             url: $scope.Urlapi, method: "GET", params: parametros
         })
-       .success(function (response) {
-           $scope.selected = null;
-           $scope.gridApi.grid.clearAllFilters();
+            .success(function (response) {
+                $scope.selected = null;
+                $scope.gridApi.grid.clearAllFilters();
 
-           $scope.loading = false;
+                $scope.loading = false;
 
-           $scope.gridOptions.columnDefs = response.columns;
-           $scope.gridOptions.data = response.values;
-           $scope.gridApi.grid.enableHorizontalScrollbar = 2;
-           $scope.gridOptions.minWidth = 150;
-          
-           $scope.gridApi.core.refresh();
-           $scope.gridApi.core.handleWindowResize();
-           if (response.values.length > 0) {
-               $scope.Largo = response.values[0]["Largo"];
-               $scope.Ancho = response.values[0]["Ancho"];
-               $scope.Grueso = response.values[0]["Grueso"];
-               $scope.Metros = response.values[0]["Metros"];
-           }
-           
-           $timeout(function () {
-               if (response.values.length == 1) {
-                   $scope.gridApi.selection.selectAllRows();
-               }
-               if ($scope.Tipopieza >= 1) {
-                   $scope.gridApi.selection.selectAllRows();
-                   $scope.gridOptions.noUnselect= true;
-               }
-               else
-                   $scope.gridOptions.noUnselect = false;
-               $scope.gridApi.core.refresh();
-               $scope.gridApi.core.handleWindowResize();
-               $("[name='columnheader-0']")[0].focus();
-               $("[name='columnheader-0']").on("keydown", function (e) {
-                   if (e.keyCode === 40) {
-                       $scope.scrollToFocus(0, 0);
-                   }
-               });
+                $scope.gridOptions.columnDefs = response.columns;
+                $scope.gridOptions.data = response.values;
+                $scope.gridApi.grid.enableHorizontalScrollbar = 2;
+                $scope.gridOptions.minWidth = 150;
 
-           });
-          
+                $scope.gridApi.core.refresh();
+                $scope.gridApi.core.handleWindowResize();
+                if (response.values.length > 0) {
+                    $scope.Largo = response.values[0]["Largo"];
+                    $scope.Ancho = response.values[0]["Ancho"];
+                    $scope.Grueso = response.values[0]["Grueso"];
+                    $scope.Metros = response.values[0]["Metros"];
+                }
 
-       }).error(function (data, status, headers, config) {
-           $scope.gridOptions.data = [];
-           $scope.loading = false;
-       });
+                $timeout(function () {
+                    if (response.values.length == 1) {
+                        $scope.gridApi.selection.selectAllRows();
+                    }
+                    if ($scope.Tipopieza >= 1) {
+                        $scope.gridApi.selection.selectAllRows();
+                        $scope.gridOptions.noUnselect = true;
+                    }
+                    else
+                        $scope.gridOptions.noUnselect = false;
+                    $scope.gridApi.core.refresh();
+                    $scope.gridApi.core.handleWindowResize();
+                    $("[name='columnheader-0']")[0].focus();
+                    $("[name='columnheader-0']").on("keydown", function (e) {
+                        if (e.keyCode === 40) {
+                            $scope.scrollToFocus(0, 0);
+                        }
+                    });
+
+                });
+
+
+            }).error(function (data, status, headers, config) {
+                $scope.gridOptions.data = [];
+                $scope.loading = false;
+            });
     }
 
     eventAggregator.RegisterEvent("Loteentrega", function (ms) {
@@ -216,13 +216,13 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         }
     });
 
-    eventAggregator.RegisterEvent("Loteentrega-cv", function(ms) {
+    eventAggregator.RegisterEvent("Loteentrega-cv", function (ms) {
         eventAggregator.Publish("Fkarticulossalida-Buscar", ms.Fkarticulos);
         $scope.Buscarlote();
         $scope.Tipopieza = ms.Tipopieza;
         $scope.Mostrardetalle = ms.Tipopieza != 2;
         $scope.Cantidad = ms.Cantidad;
-       
+
     });
 
     eventAggregator.RegisterEvent("Fkarticulossalida-cv", function (ms) {
@@ -240,6 +240,7 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             $scope.Editarmetros = ms.Permitemodificarmetros;
             $scope.Grueso = Funciones.RedondearGlobalize(ms.Grueso, $scope.Decimalesmedidas);
             $scope.Precio = Funciones.RedondearGlobalize(ms.Precio, $scope.Decimalesmonedas);
+            $scope.Descuentoarticulo = Funciones.RedondearGlobalize(ms.Descuento, $scope.Decimalesmonedas);
             $scope.Fktiposiva = "";
             $scope.Fkunidades = ms.Fkunidades;
             $scope.Unidades = ms.Unidadesdescripcion;
@@ -252,14 +253,14 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             $scope.Editarcantidad = !ms.Articulocomentario;
             $scope.Editarprecio = !ms.Articulocomentario;
             $scope.Editardescuento = !ms.Articulocomentario;
-            $scope.Editarloteautomatico = ms.Fkcontador && ms.Fkcontador!=null;
+            $scope.Editarloteautomatico = ms.Fkcontador && ms.Fkcontador != null;
             $scope.Loteautomatico = ms.Fkcontador && ms.Fkcontador != null;
             $scope.Modificarmedidas = ms.Tipofamilia < 2;
 
             if (ms.Tipofamilia == 1) {
                 $scope.Cantidad = 1;
             }
-           
+
             if (!$scope.Gestionlotes) {
                 $scope.Cantidad = 1;
             }
@@ -271,19 +272,19 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             }
             $scope.RecalculaMetrosSubtotal();
         }
-        
+
     });
 
-   
+
 
     $scope.$watch("Loteautomatico", function (value, old) {
         $scope.Lote = "";
         if (value && $scope.Lotedetransformacion)
             $scope.Lote = $scope.Lotedetransformacion;
-        
+
     });
 
-    $scope.$watch("Cantidad", function (value,old) {
+    $scope.$watch("Cantidad", function (value, old) {
         $scope.RecalculaMetrosSubtotal();
     });
 
@@ -327,9 +328,9 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         $scope.Subtotal = Funciones.RedondearNumerico(bruto, 2);
     }
 
-    $scope.SearchPrecios = function(){
-       
-        if ($scope.Fkarticulos && $scope.Fkarticulos!="") {
+    $scope.SearchPrecios = function () {
+
+        if ($scope.Fkarticulos && $scope.Fkarticulos != "") {
             var obj = {
                 campoIdentificador: "Precio",
                 IdComponenteasociado: "Precioarticulo",
@@ -341,17 +342,17 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
 
             eventAggregator.Publish("_lanzarbusquedaultimoprecio", obj);
         }
-        
+
     }
 
-    eventAggregator.RegisterEvent("Precioarticulo-Buscar",function(ms) {
+    eventAggregator.RegisterEvent("Precioarticulo-Buscar", function (ms) {
         $scope.Precio = ms.toLocaleString();
         $scope.RecalculaMetrosSubtotal();
     });
 
-    eventAggregator.RegisterEvent("setloteBloqueSalida", function(msg) {
+    eventAggregator.RegisterEvent("setloteBloqueSalida", function (msg) {
         $scope.Lotedetransformacion = msg;
-      
+
     });
 
     $scope.ValidarDatos = function () {
@@ -366,16 +367,16 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         $scope.Generalerrores = "";
         var resultado = true;
         console.log($scope.Tipopieza);
-        if ($scope.Tipopieza == 0 ) {
+        if ($scope.Tipopieza == 0) {
             var campoobligatorio = "Este campo es obligatorio";
             $scope.Fkarticulos = $("#Fkarticulossalida").val();
             if ($scope.Fkarticulos == "" || $scope.Fkarticulos == undefined) {
-                resultado = false; 
+                resultado = false;
                 $scope.Fkarticuloserrores = campoobligatorio; NuevaLineaEntregaStockController
             }
 
-            if (!$scope.Cantidad ) {
-            
+            if (!$scope.Cantidad) {
+
                 resultado = false;
                 $scope.Cantidaderrores = campoobligatorio;
             }
@@ -408,15 +409,15 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
                 resultado = false;
                 $scope.Generalerrores = "No ha indicado ningún almacén para la entrada";
             }
-           
+
         }
-        
+
 
         return resultado;
     }
 
     $scope.Aceptar = function () {
-        
+
         if ($scope.ValidarDatos()) {
             $scope.EnviarDatos();
         }
@@ -468,12 +469,12 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
                     if (typeof GridViewTotales !== 'undefined' && GridViewTotales !== null)
                         GridViewTotales.Refresh();
                     $('#_entregastock').modal('hide');
-                   
+
                 }
 
 
 
-            }).error(function(data, status, headers, config,statusText ) {
+            }).error(function (data, status, headers, config, statusText) {
                 $scope.Errorgeneral = data.error;
             });
     }

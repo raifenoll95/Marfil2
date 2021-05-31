@@ -53,6 +53,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Empresas), typeof(EmpresasConverterService));
             _converterServicesTypes.Add(typeof(Cuentas), typeof(CuentasConverterService));
             _converterServicesTypes.Add(typeof(Tiposcuentas), typeof(TiposcuentasConverterService));
+            _converterServicesTypes.Add(typeof(Inmuebles), typeof(InmueblesConverterService));
             _converterServicesTypes.Add(typeof(Unidades), typeof(UnidadesConverterService));
             _converterServicesTypes.Add(typeof(Direcciones), typeof(DireccionesConverterService));
             _converterServicesTypes.Add(typeof(Contactos), typeof(ContactosConverterService));
@@ -69,6 +70,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Series), typeof(SeriesConverterService));
             _converterServicesTypes.Add(typeof(SeriesContables), typeof(SeriesContablesConverterService));
             _converterServicesTypes.Add(typeof(Tarifas), typeof(TarifasConverterService));
+            _converterServicesTypes.Add(typeof(PreciosEspeciales), typeof(PreciosEspecialesConverterService));
             _converterServicesTypes.Add(typeof(Estados), typeof(EstadosConverterService));
             _converterServicesTypes.Add(typeof(Obras), typeof(ObrasConverterService));
             _converterServicesTypes.Add(typeof(Criteriosagrupacion), typeof(CriteriosagrupacionConverterService));

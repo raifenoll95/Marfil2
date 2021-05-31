@@ -248,6 +248,11 @@
         <EntityTypeShape EntityType="MarfilModel.PresupuestosComponentesLin" Width="1.5" PointX="8" PointY="59.875" />
         <AssociationConnector Association="MarfilModel.FK__PresupuestosComp__4C5715F6" />
         <AssociationConnector Association="MarfilModel.FK_Empresas_Empresas" />
+        <EntityTypeShape EntityType="MarfilModel.Inmuebles" Width="1.5" PointX="35.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MarfilModel.InformeMargen" Width="1.5" PointX="32.375" PointY="39.75" />
+        <EntityTypeShape EntityType="MarfilModel.PreciosEspeciales" Width="1.5" PointX="36" PointY="16.125" />
+        <AssociationConnector Association="MarfilModel.FK_Articulo" />
+        <AssociationConnector Association="MarfilModel.FK_Clientes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

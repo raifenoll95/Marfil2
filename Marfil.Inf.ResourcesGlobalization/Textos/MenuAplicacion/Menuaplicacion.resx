@@ -582,4 +582,13 @@
   <data name="configurardocumentostransformacionesacabados" xml:space="preserve">
     <value>Conf. de docs: transformaciones de acabados</value>
   </data>
+  <data name="inmuebles" xml:space="preserve">
+    <value>Inmuebles</value>
+  </data>
+  <data name="preciosespeciales" xml:space="preserve">
+    <value>Precios Especiales</value>
+  </data>
+  <data name="listadoinformemargen" xml:space="preserve">
+    <value>Listado de Margen</value>
+  </data>
 </root>

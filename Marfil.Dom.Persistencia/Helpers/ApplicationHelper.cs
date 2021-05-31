@@ -20,6 +20,7 @@ using Marfil.Inf.Genericos.Helper;
 using Marfil.Inf.Genericos.NifValidators;
 using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion;
 using Resources;
+using Marfil.Dom.Persistencia.Model.Terceros;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -804,6 +805,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        //Municipios
+        public IEnumerable<MunicipiosModel> GetListMunicipios(string provincia)
+        {
+            using (var service = new MunicipiosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetMunicipiosProvincia(provincia);
+            }
+        }
 
         public IEnumerable<TablasVariasGeneralModel> GetListTiposVias()
         {
@@ -965,6 +974,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
             {
                 return service.GetListFamiliaMateriales();
+            }
+        }
+
+        public IEnumerable<AgentesModel> GetListAgentes()
+        {
+            using (var service = new AgentesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetListAgentes();
             }
         }
 

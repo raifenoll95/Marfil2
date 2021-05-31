@@ -48,6 +48,7 @@ namespace Marfil.Dom.Persistencia.Listados
         public const string AlbaranesCabecera = "AlbaranesCabecera";
         public const string AlbaranesCabeceraAgrupado = "AlbaranesCabeceraAgrupado";
         public const string AlbaranesDetallado = "AlbaranesDetallado";
+        public const string InformeMargen = "InformeMargen";
 
         public const string FacturasCabecera = "FacturasCabecera";
         public const string FacturasCabeceraAgrupado = "FacturasCabeceraAgrupado";
@@ -138,6 +139,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(PedidosDetallado, typeof(ListadosDetalladoPedidos));
             _dictionary.Add(AlbaranesCabecera, typeof(ListadosAlbaranes));
             _dictionary.Add(AlbaranesDetallado, typeof(ListadosDetalladoAlbaranes));
+            _dictionary.Add(InformeMargen, typeof(ListadoInformeMargen));
             _dictionary.Add(FacturasCabecera, typeof(ListadosFacturas));
             _dictionary.Add(FacturasDetallado, typeof(ListadosDetalladoFacturas));
             _dictionary.Add(ProductosEnPresupuestos, typeof(ListadosProductosPresupuestos));

@@ -15,18 +15,17 @@
     $scope.fkobras = "";
     $scope.tipodeportes = "";
     $scope.urlDescargaDefecto = "";
-   
+
     $scope.urlTiposAlbaranes = "";
     $scope.urlApiEmpresas = "";
     $scope.empresa = "";
 
-    $scope.init = function (firstEdit, cliente, agente, comercial, direccionfacturacion, bancomandato, fkobras, isnuevo, tipodeportes, urlrefrescar, urlApiBancos, urlImportarlineas, urlDescargaDefecto, urlApiEmpresas, empresa, urlTiposAlbaranes)
-    {
+    $scope.init = function (firstEdit, cliente, agente, comercial, direccionfacturacion, bancomandato, fkobras, isnuevo, tipodeportes, urlrefrescar, urlApiBancos, urlImportarlineas, urlDescargaDefecto, urlApiEmpresas, empresa, urlTiposAlbaranes) {
         $scope.firstEditSeries = firstEdit && cliente !== "";
-        $scope.firstEditClientes = firstEdit && cliente!=="";
+        $scope.firstEditClientes = firstEdit && cliente !== "";
         $scope.firstEditAgentes = firstEdit && agente !== "";
         $scope.firstEditComerciales = firstEdit && comercial !== "";
-        $scope.firstEditDireccionfacturacion = firstEdit && direccionfacturacion!=="";
+        $scope.firstEditDireccionfacturacion = firstEdit && direccionfacturacion !== "";
         $scope.isnuevo = isnuevo;
         $scope.urlreferescarlineas = urlrefrescar;
         $scope.fkbancosmandatos = bancomandato;
@@ -36,7 +35,7 @@
         $scope.fkobras = fkobras;
         $scope.tipodeportes = tipodeportes;
         $scope.urlDescargaDefecto = urlDescargaDefecto;
-        
+
         $scope.urlTiposAlbaranes = urlTiposAlbaranes;
         $scope.urlApiEmpresas = urlApiEmpresas;
         $scope.empresa = empresa;
@@ -48,14 +47,14 @@
         $("#btnbuscarPedidosHasta").prop("disabled", true);
     }
 
-    $scope.cambioTipoportes = function(valor) {
-        if(!(valor && valor==0)){$("[name='Costeportes']").val("");}
+    $scope.cambioTipoportes = function (valor) {
+        if (!(valor && valor == 0)) { $("[name='Costeportes']").val(""); }
     }
 
-    eventAggregator.RegisterEvent("PedidosDesde",function(msg) {
-        
-        if ($("#PedidosHasta").val()==="") {
-            eventAggregator.Publish("PedidosHasta-Buscar",msg);
+    eventAggregator.RegisterEvent("PedidosDesde", function (msg) {
+
+        if ($("#PedidosHasta").val() === "") {
+            eventAggregator.Publish("PedidosHasta-Buscar", msg);
         }
     });
 
@@ -121,7 +120,7 @@
             }
 
         });
- 
+
 
         if (message.Salidasvarias) {
             //console.log($scope.urlApiEmpresas)
@@ -152,69 +151,69 @@
 
         $("#PedidosHasta").prop("readonly", message == null || message === "");
         $("#btnbuscarPedidosHasta").prop("disabled", message == null || message === "");
-        
+
     });
     eventAggregator.RegisterEvent("Fkclientes-cv", function (message) {
         $scope.cliente = message.Fkcuentas + "-" + message.Descripcion;
-            if (!$scope.firstEditClientes) {
-                var fkmonedaactual = $("#Fkmonedas").val();
-                if (fkmonedaactual && fkmonedaactual!=="" &&  message.Fkmonedas != fkmonedaactual) {
-                    eventAggregator.Publish("Fkclientes-Buscar", "");
-                    bootbox.alert("La moneda de la seria y la del cliente no coinciden");
-                    return;
-                }
-                if (!fkmonedaactual) {
-                    
-                    eventAggregator.Publish("Fkmonedas-Buscar", message.Fkmonedas);
-
-                    if ($scope.isnuevo) {
-                        $("#btnbuscarFkmonedas").removeAttr('disabled');
-                        $("#Fkmonedas").removeAttr('readonly');
-                    }
-                }
-                $scope.Fkclientes = message.Fkcuentas;
-                $("[name='Nombrecliente']").val(message.Descripcion);
-                $("[name='Clientedireccion']").val(message.Direccion);
-                $("[name='Clientepoblacion']").val(message.Poblacion);
-                $("[name='Clientecp']").val(message.Cp);
-                $("[name='Clientepais']").val(message.Pais);
-                $("[name='Clienteprovincia']").val(message.Provincia);
-                $("[name='Clientetelefono']").val(message.Telefono);
-                $("[name='Clientefax']").val(message.Fax);
-                $("[name='Clienteemail']").val(message.Email);
-                $("[name='Clientenif']").val(message.Nif);
-                $("[name='Porcentajedescuentocomercial']").val(message.Descuentocomercial);
-                $("[name='Porcentajedescuentoprontopago']").val(message.Descuentoprontopago);
-                $("[name='Fktransportista']").val(message.Fktransportistahabitual);
-                $("[name='Fkregimeniva']").val(message.Fkregimeniva);
-                $("[name='Nombrecliente']").val(message.Descripcion);
-                $("[name='Incoterm']").val(message.Fkincoterm);
-                $("[name='Unidadnegocio']").val(message.Fkunidadnegocio);
-                $scope.tipodeportes= message.Tipodeportes;
-                $("#FkpuertosFkpaises").val(message.Fkpuertos.Fkpaises);
-                $("#puertoscontrolid").val(message.Fkpuertos.Id);
-                $("#idhidden").val(message.Fkpuertos.Id);
-                if (message.Fkcriteriosagrupacion && message.Fkcriteriosagrupacion !== "")
-                    $("[name='Fkcriteriosagrupacion']").val(message.Fkcriteriosagrupacion);
-
-                eventAggregator.Publish("Fkcuentastesoreria-Buscar", message.Cuentatesoreria ? message.Cuentatesoreria : "");
-                eventAggregator.Publish("Fkformaspago-Buscar", message.Fkformaspago ? message.Fkformaspago : "");
-                eventAggregator.Publish("Fktransportista-Buscar", message.Fktransportistahabitual ? message.Fktransportistahabitual : "");
-                eventAggregator.Publish("Fkagentes-Buscar", message.Fkcuentasagente ? message.Fkcuentasagente: "");
-                eventAggregator.Publish("Fkcomerciales-Buscar", message.Fkcuentascomercial ? message.Fkcuentascomercial : "");
-                eventAggregator.Publish("Fkdireccionfacturacion-Buscar", message.DireccionId ? message.DireccionId : "");
-               
+        if (!$scope.firstEditClientes) {
+            var fkmonedaactual = $("#Fkmonedas").val();
+            if (fkmonedaactual && fkmonedaactual !== "" && message.Fkmonedas != fkmonedaactual) {
+                eventAggregator.Publish("Fkclientes-Buscar", "");
+                bootbox.alert("La moneda de la seria y la del cliente no coinciden");
+                return;
             }
+            if (!fkmonedaactual) {
 
-            if ($scope.fkobras !== "") {
-               
-                eventAggregator.Publish("Fkobras-Buscar", $scope.fkobras ? $scope.fkobras : "");
-                $scope.fkobras = "";
+                eventAggregator.Publish("Fkmonedas-Buscar", message.Fkmonedas);
+
+                if ($scope.isnuevo) {
+                    $("#btnbuscarFkmonedas").removeAttr('disabled');
+                    $("#Fkmonedas").removeAttr('readonly');
+                }
             }
-                
-            $scope.calcularBancoscliente();
-            $scope.firstEditClientes = false;
-        });
+            $scope.Fkclientes = message.Fkcuentas;
+            $("[name='Nombrecliente']").val(message.Descripcion);
+            $("[name='Clientedireccion']").val(message.Direccion);
+            $("[name='Clientepoblacion']").val(message.Poblacion);
+            $("[name='Clientecp']").val(message.Cp);
+            $("[name='Clientepais']").val(message.Pais);
+            $("[name='Clienteprovincia']").val(message.Provincia);
+            $("[name='Clientetelefono']").val(message.Telefono);
+            $("[name='Clientefax']").val(message.Fax);
+            $("[name='Clienteemail']").val(message.Email);
+            $("[name='Clientenif']").val(message.Nif);
+            $("[name='Porcentajedescuentocomercial']").val(message.Descuentocomercial);
+            $("[name='Porcentajedescuentoprontopago']").val(message.Descuentoprontopago);
+            $("[name='Fktransportista']").val(message.Fktransportistahabitual);
+            $("[name='Fkregimeniva']").val(message.Fkregimeniva);
+            $("[name='Nombrecliente']").val(message.Descripcion);
+            $("[name='Incoterm']").val(message.Fkincoterm);
+            $("[name='Unidadnegocio']").val(message.Fkunidadnegocio);
+            $scope.tipodeportes = message.Tipodeportes;
+            $("#FkpuertosFkpaises").val(message.Fkpuertos.Fkpaises);
+            $("#puertoscontrolid").val(message.Fkpuertos.Id);
+            $("#idhidden").val(message.Fkpuertos.Id);
+            if (message.Fkcriteriosagrupacion && message.Fkcriteriosagrupacion !== "")
+                $("[name='Fkcriteriosagrupacion']").val(message.Fkcriteriosagrupacion);
+
+            eventAggregator.Publish("Fkcuentastesoreria-Buscar", message.Cuentatesoreria ? message.Cuentatesoreria : "");
+            eventAggregator.Publish("Fkformaspago-Buscar", message.Fkformaspago ? message.Fkformaspago : "");
+            eventAggregator.Publish("Fktransportista-Buscar", message.Fktransportistahabitual ? message.Fktransportistahabitual : "");
+            eventAggregator.Publish("Fkagentes-Buscar", message.Fkcuentasagente ? message.Fkcuentasagente : "");
+            eventAggregator.Publish("Fkcomerciales-Buscar", message.Fkcuentascomercial ? message.Fkcuentascomercial : "");
+            eventAggregator.Publish("Fkdireccionfacturacion-Buscar", message.DireccionId ? message.DireccionId : "");
+
+        }
+
+        if ($scope.fkobras !== "") {
+
+            eventAggregator.Publish("Fkobras-Buscar", $scope.fkobras ? $scope.fkobras : "");
+            $scope.fkobras = "";
+        }
+
+        $scope.calcularBancoscliente();
+        $scope.firstEditClientes = false;
+    });
 
     eventAggregator.RegisterEvent("_nuevalinea", function (msg) {
         $scope.Nuevalinea();
@@ -230,113 +229,113 @@
         } else {
             bootbox.alert("El campo cliente es obligatorio");
         }
-        
+
     }
-        eventAggregator.RegisterEvent("Fkagentes-cv", function (message) {
-            if (!$scope.firstEditAgentes) {
-                $("[name='Comisionagente']").val(message.Porcentajecomision);
-            }
-            $scope.firstEditAgentes = false;
-        });
+    eventAggregator.RegisterEvent("Fkagentes-cv", function (message) {
+        if (!$scope.firstEditAgentes) {
+            $("[name='Comisionagente']").val(message.Porcentajecomision);
+        }
+        $scope.firstEditAgentes = false;
+    });
 
-        eventAggregator.RegisterEvent("Fkcomerciales-cv", function (message) {
-            if (!$scope.firstEditComerciales) {
-                $("[name='Comisioncomercial']").val(message.Porcentajecomision);
-            }
-            $scope.firstEditComerciales = false;
-        });
+    eventAggregator.RegisterEvent("Fkcomerciales-cv", function (message) {
+        if (!$scope.firstEditComerciales) {
+            $("[name='Comisioncomercial']").val(message.Porcentajecomision);
+        }
+        $scope.firstEditComerciales = false;
+    });
 
-        eventAggregator.RegisterEvent("Fkmonedas-cv", function (message) {
-            if (!$scope.firstEditClientes) {
-                $("[name='Tipocambio']").val(message.CambioMonedaBase);
-            }
-        });
+    eventAggregator.RegisterEvent("Fkmonedas-cv", function (message) {
+        if (!$scope.firstEditClientes) {
+            $("[name='Tipocambio']").val(message.CambioMonedaBase);
+        }
+    });
 
-        eventAggregator.RegisterEvent("Fkregimeniva-cv", function (message) {
-            if (!$scope.firstEditComerciales) {
-                $scope.refrescharGrids();
-            }
-        });
-        eventAggregator.RegisterEvent("Precio-Buscarcancelar", function (message) {
-            SPrecio.Focus();
-        });
-        eventAggregator.RegisterEvent("Fkarticulos-Buscarcancelar", function (message) {
-            Fkarticulos.Focus();
-        });
-        $scope.calcularBancoscliente = function () {
-            if (!$scope.Fkclientes) {
-                $scope.bancoscliente = [{ Id: "", Descripcion: "" }];
-                return;
-            }
-            $http.get($scope.urlApiBancos + "?fkcuenta=" + $scope.Fkclientes)
-                .success(function (response) {
-                    if (response.values.length > 0) {
-                        $scope.bancoscliente = response.values;
-                        $scope.bancoscliente.splice(0, 0, { Id: "", Descripcion: "", Defecto:false });
-                        if (!$scope.fkbancosmandatos) {
-                            var result = $.grep($scope.bancoscliente, function (e) { return e.Defecto == true; });
-                            if (result.length)
-                                $scope.fkbancosmandatos = result[0].Id;
-                        }
-                    } else {
-                        $scope.fkbancosmandatos = "";
-                        $scope.bancoscliente = [{ Id: "", Descripcion: "" }];
+    eventAggregator.RegisterEvent("Fkregimeniva-cv", function (message) {
+        if (!$scope.firstEditComerciales) {
+            $scope.refrescharGrids();
+        }
+    });
+    eventAggregator.RegisterEvent("Precio-Buscarcancelar", function (message) {
+        SPrecio.Focus();
+    });
+    eventAggregator.RegisterEvent("Fkarticulos-Buscarcancelar", function (message) {
+        Fkarticulos.Focus();
+    });
+    $scope.calcularBancoscliente = function () {
+        if (!$scope.Fkclientes) {
+            $scope.bancoscliente = [{ Id: "", Descripcion: "" }];
+            return;
+        }
+        $http.get($scope.urlApiBancos + "?fkcuenta=" + $scope.Fkclientes)
+            .success(function (response) {
+                if (response.values.length > 0) {
+                    $scope.bancoscliente = response.values;
+                    $scope.bancoscliente.splice(0, 0, { Id: "", Descripcion: "", Defecto: false });
+                    if (!$scope.fkbancosmandatos) {
+                        var result = $.grep($scope.bancoscliente, function (e) { return e.Defecto == true; });
+                        if (result.length)
+                            $scope.fkbancosmandatos = result[0].Id;
                     }
-                    
-                }).error(function (data, status, headers, config) {
-                    //alert(status);
-                });
-        }
+                } else {
+                    $scope.fkbancosmandatos = "";
+                    $scope.bancoscliente = [{ Id: "", Descripcion: "" }];
+                }
 
-        $scope.refrescharGrids=function() {
-            $.get($scope.urlreferescarlineas, { porcentajedescuentopp: $("[name='Porcentajedescuentoprontopago']").val(), porcentajedescuentocomercial: $("[name='Porcentajedescuentocomercial']").val(), fkregimeniva: $("[name='Fkregimeniva']").val() }).success(function (result) {
-
-                GridViewLineas.Refresh();
-                GridViewTotales.Refresh();
-
-            }).error(function (jqXHR, textStatus, errorThrown) {
-                
-
+            }).error(function (data, status, headers, config) {
+                //alert(status);
             });
+    }
+
+    $scope.refrescharGrids = function () {
+        $.get($scope.urlreferescarlineas, { porcentajedescuentopp: $("[name='Porcentajedescuentoprontopago']").val(), porcentajedescuentocomercial: $("[name='Porcentajedescuentocomercial']").val(), fkregimeniva: $("[name='Fkregimeniva']").val() }).success(function (result) {
+
+            GridViewLineas.Refresh();
+            GridViewTotales.Refresh();
+
+        }).error(function (jqXHR, textStatus, errorThrown) {
 
 
-        }
+        });
 
 
-    
+    }
+
+
+
 
 
 
     //region start importar lineas
 
-    $scope.ImportarLineas = function(url) {
+    $scope.ImportarLineas = function (url) {
         var obj = {
             campoIdentificador: "Id",
             IdComponenteasociado: "Importarlineas",
             IdFormulariomodal: "BusquedaGlobal",
-            Url:url,
+            Url: url,
             Titulo: "Buscar líneas de pedidos",
             Params: "{ \"cliente\":\"" + $("[name='Fkclientes']").val() + "\" ,\"PedidosDesde\":\"" + $("[name='PedidosDesde']").val() + "\", \"PedidosHasta\":\"" + $("[name='PedidosHasta']").val() + "\"}"
-            
+
         };
 
         eventAggregator.Publish("_lanzarbusquedaimportarlineas", obj);
     };
 
-    
 
-    eventAggregator.RegisterEvent("Importarlineas-Buscar", function(obj) {
 
-        if (GridViewLineas.GetVisibleRowsOnPage() === 0 && obj && obj.length>0)
+    eventAggregator.RegisterEvent("Importarlineas-Buscar", function (obj) {
+
+        if (GridViewLineas.GetVisibleRowsOnPage() === 0 && obj && obj.length > 0)
             SetCabeceraValues(obj[0].Cabecera);
 
         $.post($scope.urlimportarlineas, {
-            lineas: JSON.stringify(obj), descuentocomercial: $("[name='Porcentajedescuentocomercial']").val(), descuentopp:$("[name='Porcentajedescuentoprontopago']").val()
-    }).success(function (result) {
+            lineas: JSON.stringify(obj), descuentocomercial: $("[name='Porcentajedescuentocomercial']").val(), descuentopp: $("[name='Porcentajedescuentoprontopago']").val()
+        }).success(function (result) {
 
             GridViewLineas.Refresh();
             GridViewTotales.Refresh();
-            
+
             messagesService.show(TipoMensaje.Informacion, "Bien", "Lineas importadas correctamente");
             $('.nav-tabs a[href="#desglose"]').tab('show');
             $('.nav-tabs a[href="#importar"]').hide();
@@ -345,7 +344,7 @@
 
             messagesService.show(TipoMensaje.Error, "Ups!", "Parece que ocurrión un error al importar las líneas");
         });
-        
+
 
     });
 
@@ -423,9 +422,9 @@
 }]);
 
 var articuloActual = null;
-var cargardDireccion=function(urldireccion,id,entidad) {
+var cargardDireccion = function (urldireccion, id, entidad) {
     $.get(urldireccion + "/" + id, { fkentidad: entidad }).success(function (message) {
-       
+
         $("[name='Clientedireccion']").val(message.Direccion);
         $("[name='Clientepoblacion']").val(message.Poblacion);
         $("[name='Clientecp']").val(message.Cp);
@@ -435,7 +434,7 @@ var cargardDireccion=function(urldireccion,id,entidad) {
         $("[name='Clientefax']").val(message.Fax);
         $("[name='Clienteemail']").val(message.Email);
     }).error(function (jqXHR, textStatus, errorThrown) {
-        
+
     });
 
 }
@@ -458,11 +457,11 @@ var MostrarCalculadora = function () {
     }
 }
 var cargarDireccionFacturacion = function (message) {
-    $("#direccionfacturaciondescripcion").html(message ? "<div class=\"well\">"+message.Direccion + "<br/>" + message.Poblacion + ", " + message.Provincia + "<br/>" + message.Cp + "<br/>" + message.Pais+ "</div>" : "");
-   
+    $("#direccionfacturaciondescripcion").html(message ? "<div class=\"well\">" + message.Direccion + "<br/>" + message.Poblacion + ", " + message.Provincia + "<br/>" + message.Cp + "<br/>" + message.Pais + "</div>" : "");
+
 }
-var pedirArticulo=function(codigoarticulo,urlarticulos,lineas,setvaloresdefecto) {
-    $.get(urlarticulos + "/" + codigoarticulo, { fkcuentas: $("[name='Fkclientes']").val(),flujo:'0', fkmonedas: $("[name='Fkmonedas']").val(),fkregimeniva: $("[name='Fkregimeniva']").val() }).success(function (result) {
+var pedirArticulo = function (codigoarticulo, urlarticulos, lineas, setvaloresdefecto) {
+    $.get(urlarticulos + "/" + codigoarticulo, { fkcuentas: $("[name='Fkclientes']").val(), flujo: '0', fkmonedas: $("[name='Fkmonedas']").val(), fkregimeniva: $("[name='Fkregimeniva']").val() }).success(function (result) {
 
         articuloActual = result;
 
@@ -511,14 +510,16 @@ var establecerValoresDefecto = function (lineas) {
     var cAncho = lineas.GetEditor("SAncho");
     var cGrueso = lineas.GetEditor("SGrueso");
     var cPrecio = lineas.GetEditor("SPrecio");
+    var cPorcentajedescuento = lineas.GetEditor("Porcentajedescuento");
     var cIva = lineas.GetEditor("Porcentajeiva");
     var cMetros = lineas.GetEditor("SMetros");
     var cFktiposiva = lineas.GetEditor("Fktiposiva");
-    cLargo.SetValue(Funciones.Redondear(articuloActual.Largo,articuloActual.Decimalestotales));
-    cAncho.SetValue(Funciones.Redondear(articuloActual.Ancho,articuloActual.Decimalestotales));
+    cLargo.SetValue(Funciones.Redondear(articuloActual.Largo, articuloActual.Decimalestotales));
+    cAncho.SetValue(Funciones.Redondear(articuloActual.Ancho, articuloActual.Decimalestotales));
     cGrueso.SetValue(Funciones.Redondear(articuloActual.Grueso, articuloActual.Decimalestotales));
     cFktiposiva.SetValue(articuloActual.Fktiposiva);
     cPrecio.SetValue(articuloActual.Precio);
+    cPorcentajedescuento.SetValue(articuloActual.Descuento);
     cIva.SetValue(articuloActual.Porcentajeiva);
     cDescripcion.SetValue(articuloActual.Descripcion);
     if (articuloActual.Articulocomentario) {
@@ -530,25 +531,24 @@ var establecerValoresDefecto = function (lineas) {
     cDescripcion.Focus();
 }
 
-var calculoImporte = function(lineas)
-{
+var calculoImporte = function (lineas) {
     var cDescuento = lineas.GetEditor("Porcentajedescuento");
     var cMetros = lineas.GetEditor("SMetros");
     var cPrecio = lineas.GetEditor("SPrecio");
     var cImporte = lineas.GetEditor("SImporte");
 
- 
+
     var porcentajedescuento = cDescuento.GetValue();
 
     var bruto = cMetros.GetValue() * cPrecio.GetValue();
     var neto = bruto - (bruto * porcentajedescuento / 100.0);
 
-    var importe = Globalize.format(Funciones.Redondear(neto, articuloActual.Decimalesmonedas ));
+    var importe = Globalize.format(Funciones.Redondear(neto, articuloActual.Decimalesmonedas));
 
     cImporte.SetValue(importe);
 }
 
-var GenerarDevolucion = function(lineas, columnas, url,id) {
+var GenerarDevolucion = function (lineas, columnas, url, id) {
     var obj = {
         Values: lineas,
         Columns: columnas,
@@ -581,7 +581,7 @@ var GenerarContenedores = function (lineas, columnas, url, id) {
     eventAggregator.Publish("_lanzarbusquedarasignarcontendores", obj);
 }
 
-eventAggregator.RegisterEvent("Fktransportista-cv", function(message) {
+eventAggregator.RegisterEvent("Fktransportista-cv", function (message) {
     $("[name='Nombretransportista']").val(message.Descripcion);
 });
 
