@@ -41,6 +41,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble;
 
 namespace Marfil.Dom.Persistencia.ServicesView
 {
@@ -77,6 +78,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(MonedasModel), typeof(MonedasService));
             _servicesTypes.Add(typeof(ConfiguracionModel), typeof(ConfiguracionService));
             _servicesTypes.Add(typeof(TiposCuentasModel), typeof(TiposcuentasService));
+            _servicesTypes.Add(typeof(InmueblesModel), typeof(InmueblesService));
             _servicesTypes.Add(typeof(GuiascontablesModel), typeof(GuiascontablesService));
             _servicesTypes.Add(typeof(TiposRetencionesModel), typeof(TiposRetencionesService));
             _servicesTypes.Add(typeof(TiposIvaModel), typeof(TiposivaService));
@@ -105,6 +107,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(SeriesModel), typeof(SeriesService));
             _servicesTypes.Add(typeof(SeriesContablesModel), typeof(SeriesContablesService));
             _servicesTypes.Add(typeof(TarifasModel), typeof(TarifasService));
+            _servicesTypes.Add(typeof(PreciosEspecialesModel), typeof(PreciosEspecialesService));
             _servicesTypes.Add(typeof(EstadosModel), typeof(EstadosService));
             _servicesTypes.Add(typeof(ObrasModel), typeof(ObrasService));
             _servicesTypes.Add(typeof(CriteriosagrupacionModel), typeof(CriteriosagrupacionService));

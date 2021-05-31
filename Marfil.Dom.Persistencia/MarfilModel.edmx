@@ -2108,6 +2108,62 @@
           <Property Name="fechacierre" Type="datetime" />
           <Property Name="fkreaccion" Type="varchar" MaxLength="3" />
         </EntityType>
+        <EntityType Name="InformeMargen">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="fkArticulosCod" Type="varchar" MaxLength="15" />
+          <Property Name="fkArticulosNom" Type="nvarchar" MaxLength="120" />
+          <Property Name="lote" Type="nvarchar" MaxLength="12" />
+          <Property Name="tablaId" Type="int" />
+          <Property Name="cantidad" Type="float" />
+          <Property Name="referenciaAlbVenta" Type="varchar" MaxLength="30" />
+          <Property Name="fkClientesCod" Type="varchar" MaxLength="15" />
+          <Property Name="fkClientesNom" Type="varchar" MaxLength="200" />
+          <Property Name="metrosVenta" Type="float" />
+          <Property Name="precioTotalVenta" Type="float" />
+          <Property Name="precioVtaMetro" Type="float" />
+          <Property Name="referenciaAlbCompra" Type="varchar" MaxLength="30" />
+          <Property Name="fkProveedorCod" Type="varchar" MaxLength="15" />
+          <Property Name="fkProveedorNom" Type="varchar" MaxLength="200" />
+          <Property Name="metrosCompra" Type="float" />
+          <Property Name="precioTotalCompra" Type="float" />
+          <Property Name="precioCompraMetro" Type="float" />
+          <Property Name="diferenciaMetros" Type="float" />
+          <Property Name="margen" Type="float" />
+          <Property Name="margenPorcentaje" Type="float" />
+        </EntityType>
+        <EntityType Name="Inmuebles">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="refCatastral" Type="nvarchar" MaxLength="25" />
+          <Property Name="situacion" Type="int" />
+          <Property Name="fkPais" Type="varchar" MaxLength="3" />
+          <Property Name="fkProvinciaCod" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="fkMunicipioCod" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="fkMunicipioNom" Type="nvarchar" MaxLength="100" />
+          <Property Name="codPostal" Type="varchar" MaxLength="5" />
+          <Property Name="fkTipoVia" Type="varchar" MaxLength="50" />
+          <Property Name="nombreVia" Type="varchar" MaxLength="50" />
+          <Property Name="tipoNumeracion" Type="varchar" MaxLength="3" />
+          <Property Name="numCasa" Type="varchar" MaxLength="5" />
+          <Property Name="califNumero" Type="varchar" MaxLength="3" />
+          <Property Name="bloque" Type="varchar" MaxLength="3" />
+          <Property Name="portal" Type="varchar" MaxLength="3" />
+          <Property Name="escalera" Type="varchar" MaxLength="3" />
+          <Property Name="planta" Type="varchar" MaxLength="3" />
+          <Property Name="puerta" Type="varchar" MaxLength="3" />
+          <Property Name="complemento" Type="varchar" MaxLength="40" />
+          <Property Name="poblaDiferente" Type="varchar" MaxLength="40" />
+        </EntityType>
         <EntityType Name="Inventarios">
           <Key>
             <PropertyRef Name="empresa" />
@@ -2808,6 +2864,19 @@
           <Property Name="nombre" Type="nvarchar" MaxLength="50" />
           <Property Name="fichero" Type="nvarchar" MaxLength="300" />
           <Property Name="defecto" Type="bit" />
+        </EntityType>
+        <EntityType Name="PreciosEspeciales">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkclientes" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="fkarticulo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="fechavalidez" Type="datetime" />
+          <Property Name="precio" Type="float" Nullable="false" />
+          <Property Name="descuento" Type="float" />
         </EntityType>
         <EntityType Name="PreferenciasUsuario">
           <Key>
@@ -4954,6 +5023,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Articulo">
+          <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+          <End Role="PreciosEspeciales" Type="Self.PreciosEspeciales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PreciosEspeciales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkarticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BundleLin_Bundle">
           <End Role="Bundle" Type="Self.Bundle" Multiplicity="1" />
           <End Role="BundleLin" Type="Self.BundleLin" Multiplicity="*" />
@@ -4981,6 +5064,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <Dependent Role="CaracteristicasLin">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="fkcaracteristicas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="PreciosEspeciales" Type="Self.PreciosEspeciales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkcuentas" />
+            </Principal>
+            <Dependent Role="PreciosEspeciales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkclientes" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5774,6 +5871,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="ImputacionCostesLin" EntityType="Self.ImputacionCostesLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidencias" EntityType="Self.Incidencias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidenciasCRM" EntityType="Self.IncidenciasCRM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformeMargen" EntityType="Self.InformeMargen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inmuebles" EntityType="Self.Inmuebles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventarios" EntityType="Self.Inventarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventariosLin" EntityType="Self.InventariosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kit" EntityType="Self.Kit" Schema="dbo" store:Type="Tables" />
@@ -5799,6 +5898,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="PedidosTotales" EntityType="Self.PedidosTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PeticionesAsincronas" EntityType="Self.PeticionesAsincronas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Planesgenerales" EntityType="Self.Planesgenerales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreciosEspeciales" EntityType="Self.PreciosEspeciales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreferenciasUsuario" EntityType="Self.PreferenciasUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Presupuestos" EntityType="Self.Presupuestos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PresupuestosComponentesLin" EntityType="Self.PresupuestosComponentesLin" Schema="dbo" store:Type="Tables" />
@@ -6092,6 +6192,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="AppPermisosUsuarios" EntitySet="AppPermisosUsuarios" />
           </AssociationSet>
+          <AssociationSet Name="FK_Articulo" Association="Self.FK_Articulo">
+            <End Role="Articulos" EntitySet="Articulos" />
+            <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
+          </AssociationSet>
           <AssociationSet Name="FK_BundleLin_Bundle" Association="Self.FK_BundleLin_Bundle">
             <End Role="Bundle" EntitySet="Bundle" />
             <End Role="BundleLin" EntitySet="BundleLin" />
@@ -6099,6 +6203,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_CaracteristicasLin_Caracteristicas" Association="Self.FK_CaracteristicasLin_Caracteristicas">
             <End Role="Caracteristicas" EntitySet="Caracteristicas" />
             <End Role="CaracteristicasLin" EntitySet="CaracteristicasLin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes" Association="Self.FK_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
           </AssociationSet>
           <AssociationSet Name="FK_ContadoresContabilidadLin_ContadoresContabilidad" Association="Self.FK_ContadoresContabilidadLin_ContadoresContabilidad">
             <End Role="ContadoresContabilidad" EntitySet="ContadoresContabilidad" />
@@ -6786,6 +6894,17 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Empresas" EntitySet="Empresas" />
             <End Role="Empresas1" EntitySet="Empresas" />
           </AssociationSet>
+          <EntitySet Name="Inmuebles" EntityType="MarfilModel.Inmuebles" />
+          <EntitySet Name="InformeMargen" EntityType="MarfilModel.InformeMargen" />
+          <EntitySet Name="PreciosEspeciales" EntityType="MarfilModel.PreciosEspeciales" />
+          <AssociationSet Name="FK_Articulo" Association="MarfilModel.FK_Articulo">
+            <End Role="Articulos" EntitySet="Articulos" />
+            <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes" Association="MarfilModel.FK_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -7002,6 +7121,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="diascondecidos" Type="Int32" />
           <Property Name="fktarifas" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="fkcriteriosagrupacion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PreciosEspeciales" Relationship="MarfilModel.FK_Clientes" FromRole="Clientes" ToRole="PreciosEspeciales" />
         </EntityType>
         <EntityType Name="Comerciales">
           <Key>
@@ -9155,6 +9275,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <NavigationProperty Name="ArticulosTercero" Relationship="MarfilModel.FK__ArticulosTercero__2275EAC3" FromRole="Articulos" ToRole="ArticulosTercero" />
           <NavigationProperty Name="ArticulosComponentes" Relationship="MarfilModel.FK__ArticulosCompone__2552576E" FromRole="Articulos" ToRole="ArticulosComponentes" />
           <Property Name="ean13" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PreciosEspeciales" Relationship="MarfilModel.FK_Articulo" FromRole="Articulos" ToRole="PreciosEspeciales" />
         </EntityType>
         <EntityType Name="Familiasproductos">
           <Key>
@@ -12556,6 +12677,105 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Principal>
             <Dependent Role="Empresas1">
               <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Inmuebles">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="refCatastral" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="situacion" Type="Int32" />
+          <Property Name="fkPais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkProvinciaCod" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="fkMunicipioCod" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkMunicipioNom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="codPostal" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="fkTipoVia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombreVia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipoNumeracion" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="numCasa" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="califNumero" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="bloque" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="portal" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="escalera" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="planta" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="puerta" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="complemento" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="poblaDiferente" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="InformeMargen">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="fkArticulosCod" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkArticulosNom" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="lote" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="tablaId" Type="Int32" />
+          <Property Name="cantidad" Type="Double" />
+          <Property Name="referenciaAlbVenta" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="fkClientesCod" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkClientesNom" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="metrosVenta" Type="Double" />
+          <Property Name="precioTotalVenta" Type="Double" />
+          <Property Name="precioVtaMetro" Type="Double" />
+          <Property Name="referenciaAlbCompra" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="fkProveedorCod" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkProveedorNom" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="metrosCompra" Type="Double" />
+          <Property Name="precioTotalCompra" Type="Double" />
+          <Property Name="precioCompraMetro" Type="Double" />
+          <Property Name="diferenciaMetros" Type="Double" />
+          <Property Name="margen" Type="Double" />
+          <Property Name="margenPorcentaje" Type="Double" />
+        </EntityType>
+        <EntityType Name="PreciosEspeciales">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkclientes" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkarticulo" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fechavalidez" Type="DateTime" Precision="3" />
+          <Property Name="precio" Type="Double" Nullable="false" />
+          <Property Name="descuento" Type="Double" />
+          <NavigationProperty Name="Articulos" Relationship="MarfilModel.FK_Articulo" FromRole="PreciosEspeciales" ToRole="Articulos" />
+          <NavigationProperty Name="Clientes" Relationship="MarfilModel.FK_Clientes" FromRole="PreciosEspeciales" ToRole="Clientes" />
+        </EntityType>
+        <Association Name="FK_Articulo">
+          <End Type="MarfilModel.Articulos" Role="Articulos" Multiplicity="1" />
+          <End Type="MarfilModel.PreciosEspeciales" Role="PreciosEspeciales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PreciosEspeciales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkarticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes">
+          <End Type="MarfilModel.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="MarfilModel.PreciosEspeciales" Role="PreciosEspeciales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkcuentas" />
+            </Principal>
+            <Dependent Role="PreciosEspeciales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkclientes" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17054,6 +17274,75 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="idlineaarticulo" ColumnName="idlineaarticulo" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="fkpresupuestos" ColumnName="fkpresupuestos" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inmuebles">
+            <EntityTypeMapping TypeName="MarfilModel.Inmuebles">
+              <MappingFragment StoreEntitySet="Inmuebles">
+                <ScalarProperty Name="poblaDiferente" ColumnName="poblaDiferente" />
+                <ScalarProperty Name="complemento" ColumnName="complemento" />
+                <ScalarProperty Name="puerta" ColumnName="puerta" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="escalera" ColumnName="escalera" />
+                <ScalarProperty Name="portal" ColumnName="portal" />
+                <ScalarProperty Name="bloque" ColumnName="bloque" />
+                <ScalarProperty Name="califNumero" ColumnName="califNumero" />
+                <ScalarProperty Name="numCasa" ColumnName="numCasa" />
+                <ScalarProperty Name="tipoNumeracion" ColumnName="tipoNumeracion" />
+                <ScalarProperty Name="nombreVia" ColumnName="nombreVia" />
+                <ScalarProperty Name="fkTipoVia" ColumnName="fkTipoVia" />
+                <ScalarProperty Name="codPostal" ColumnName="codPostal" />
+                <ScalarProperty Name="fkMunicipioNom" ColumnName="fkMunicipioNom" />
+                <ScalarProperty Name="fkMunicipioCod" ColumnName="fkMunicipioCod" />
+                <ScalarProperty Name="fkProvinciaCod" ColumnName="fkProvinciaCod" />
+                <ScalarProperty Name="fkPais" ColumnName="fkPais" />
+                <ScalarProperty Name="situacion" ColumnName="situacion" />
+                <ScalarProperty Name="refCatastral" ColumnName="refCatastral" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformeMargen">
+            <EntityTypeMapping TypeName="MarfilModel.InformeMargen">
+              <MappingFragment StoreEntitySet="InformeMargen">
+                <ScalarProperty Name="margenPorcentaje" ColumnName="margenPorcentaje" />
+                <ScalarProperty Name="margen" ColumnName="margen" />
+                <ScalarProperty Name="diferenciaMetros" ColumnName="diferenciaMetros" />
+                <ScalarProperty Name="precioCompraMetro" ColumnName="precioCompraMetro" />
+                <ScalarProperty Name="precioTotalCompra" ColumnName="precioTotalCompra" />
+                <ScalarProperty Name="metrosCompra" ColumnName="metrosCompra" />
+                <ScalarProperty Name="fkProveedorNom" ColumnName="fkProveedorNom" />
+                <ScalarProperty Name="fkProveedorCod" ColumnName="fkProveedorCod" />
+                <ScalarProperty Name="referenciaAlbCompra" ColumnName="referenciaAlbCompra" />
+                <ScalarProperty Name="precioVtaMetro" ColumnName="precioVtaMetro" />
+                <ScalarProperty Name="precioTotalVenta" ColumnName="precioTotalVenta" />
+                <ScalarProperty Name="metrosVenta" ColumnName="metrosVenta" />
+                <ScalarProperty Name="fkClientesNom" ColumnName="fkClientesNom" />
+                <ScalarProperty Name="fkClientesCod" ColumnName="fkClientesCod" />
+                <ScalarProperty Name="referenciaAlbVenta" ColumnName="referenciaAlbVenta" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="tablaId" ColumnName="tablaId" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="fkArticulosNom" ColumnName="fkArticulosNom" />
+                <ScalarProperty Name="fkArticulosCod" ColumnName="fkArticulosCod" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreciosEspeciales">
+            <EntityTypeMapping TypeName="MarfilModel.PreciosEspeciales">
+              <MappingFragment StoreEntitySet="PreciosEspeciales">
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="fechavalidez" ColumnName="fechavalidez" />
+                <ScalarProperty Name="fkarticulo" ColumnName="fkarticulo" />
+                <ScalarProperty Name="fkclientes" ColumnName="fkclientes" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -314,8 +314,11 @@
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
+    <Compile Include="Controllers\InmueblesController.cs" />
+    <Compile Include="Controllers\ListadoInformeMargenController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\FacturasApiController.cs" />
+    <Compile Include="Controllers\PreciosEspecialesController.cs" />
     <Compile Include="Controllers\PresupuestosAsistenteApiController.cs" />
     <Compile Include="Controllers\CuentasTesoreriaApiController.cs" />
     <Compile Include="Controllers\MovimientosTesoreriaController.cs" />
@@ -3540,6 +3543,21 @@
     <Content Include="Views\Oportunidades\Oportunidades.cshtml" />
     <Content Include="Views\Prospectos\_oportunidades.cshtml" />
     <Content Include="Views\Home\CambioEmpresa.cshtml" />
+    <Content Include="Views\Inmuebles\_direccion.cshtml" />
+    <Content Include="Views\Inmuebles\Create.cshtml" />
+    <Content Include="Views\Inmuebles\Delete.cshtml" />
+    <Content Include="Views\Inmuebles\Details.cshtml" />
+    <Content Include="Views\Inmuebles\Edit.cshtml" />
+    <Content Include="Views\Inmuebles\Index.cshtml" />
+    <Content Include="Views\Inmuebles\_general.cshtml" />
+    <Content Include="Views\Inmuebles\_inmuebles.cshtml" />
+    <Content Include="Views\ListadoInformeMargen\InformeMargen.cshtml" />
+    <Content Include="Views\PreciosEspeciales\Create.cshtml" />
+    <Content Include="Views\PreciosEspeciales\Delete.cshtml" />
+    <Content Include="Views\PreciosEspeciales\Details.cshtml" />
+    <Content Include="Views\PreciosEspeciales\Edit.cshtml" />
+    <Content Include="Views\PreciosEspeciales\Index.cshtml" />
+    <Content Include="Views\PreciosEspeciales\_preciosespeciales.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

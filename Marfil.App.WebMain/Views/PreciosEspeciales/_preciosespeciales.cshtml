@@ -1,0 +1,82 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion
+@model Marfil.Dom.Persistencia.Model.FicherosGenerales.PreciosEspecialesModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+    ViewBag.Title = Menuaplicacion.preciosespeciales;
+    var cvclientes = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+}
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkclientes, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvclientes.Name = "Fkclientes";
+            cvclientes.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            cvclientes.Valor = Model.Fkclientes;
+            cvclientes.SoloLectura = !isNuevo;
+            cvclientes.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Clientes + "\"}";
+
+        }
+
+        @Html.Partial("CampoverificacionUI", cvclientes)
+        @Html.ValidationMessageFor(f => Model.Fkclientes, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="col-md-12"><h1></h1></div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkarticulo, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvarticulos.Name = "Fkarticulo";
+            cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+            cvarticulos.Valor = Model.Fkarticulo;
+            cvarticulos.SoloLectura = !isNuevo;
+            cvarticulos.Autofocus = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvarticulos)
+        @Html.ValidationMessageFor(f => Model.Fkarticulo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="col-md-12"><h1></h1></div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechavalidez, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.EditorFor(f => Model.Fechavalidez, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-4 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fechavalidez, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="col-md-12"><h1></h1></div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Precio, new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.TextBoxFor(f => ((PreciosEspecialesModel)Model).Precio, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Precio, "", new { @class = "text-danger" })
+    </div>
+
+
+    @Html.LabelFor(f => Model.Descuento, new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.TextBoxFor(f => ((PreciosEspecialesModel)Model).Descuento, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descuento, "", new { @class = "text-danger" })
+    </div>
+</div>

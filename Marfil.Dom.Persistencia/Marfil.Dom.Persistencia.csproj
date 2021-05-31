@@ -412,6 +412,12 @@
     <Compile Include="IncidenciasCRM.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="InformeMargen.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inmuebles.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Inventarios.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -436,6 +442,7 @@
     <Compile Include="Listados\ListadoCrm.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
+    <Compile Include="Listados\ListadoInformeMargen.cs" />
     <Compile Include="Listados\ListadoMargen.cs" />
     <Compile Include="Listados\ListadosConsultaTesoreria.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
@@ -514,6 +521,7 @@
     <Compile Include="Model\Configuracion\EjerciciosModel.cs" />
     <Compile Include="Model\Configuracion\AlmacenesModel.cs" />
     <Compile Include="Model\Configuracion\IContadoresModel.cs" />
+    <Compile Include="Model\Configuracion\Inmueble\InmueblesModel.cs" />
     <Compile Include="Model\Configuracion\SeriesContablesModel.cs" />
     <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasMotivoBloqueoCuentasModel.cs" />
     <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasTiposAsientosModel.cs" />
@@ -546,6 +554,7 @@
     <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesModel.cs" />
     <Compile Include="Model\Documentos\FacturasCompras\FacturasDuaValidation.cs" />
     <Compile Include="Model\Documentos\GrupoMateriales\GrupoMaterialesModel.cs" />
+    <Compile Include="Model\Documentos\InformeMargenModel.cs" />
     <Compile Include="Model\Documentos\Margen\ListadoMargenQuery.cs" />
     <Compile Include="Model\Documentos\Pedidos\BalancePedidosPe.cs" />
     <Compile Include="Model\Contabilidad\DiarioReport.cs" />
@@ -603,6 +612,7 @@
     <Compile Include="Model\FicherosGenerales\ConsultaVisualModel.cs" />
     <Compile Include="Model\FicherosGenerales\ArticulosTerceroModel.cs" />
     <Compile Include="Model\FicherosGenerales\Criteriosagrupacion.cs" />
+    <Compile Include="Model\FicherosGenerales\PreciosEspecialesModel.cs" />
     <Compile Include="Model\FicherosGenerales\SituacionesTesoreriaModel.cs" />
     <Compile Include="Model\FicherosGenerales\ObrasModel.cs" />
     <Compile Include="Model\FicherosGenerales\ArticulosModel.cs" />
@@ -751,6 +761,9 @@
     <Compile Include="Planesgenerales.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PreciosEspeciales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PreferenciasUsuario.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -856,6 +869,8 @@
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
@@ -881,11 +896,15 @@
     <Compile Include="ServicesView\Servicios\Converter\TrabajosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TransformacioneslotesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\CostesVariablesPeriodoService.cs" />
+    <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
+    <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesLineasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />
     <Compile Include="ServicesView\Servicios\CarteraVencimientosService.cs" />

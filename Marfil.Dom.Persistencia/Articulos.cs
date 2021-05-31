@@ -19,6 +19,7 @@ namespace Marfil.Dom.Persistencia
         {
             this.ArticulosTercero = new HashSet<ArticulosTercero>();
             this.ArticulosComponentes = new HashSet<ArticulosComponentes>();
+            this.PreciosEspeciales = new HashSet<PreciosEspeciales>();
         }
     
         public string empresa { get; set; }
@@ -82,5 +83,7 @@ namespace Marfil.Dom.Persistencia
         public virtual ICollection<ArticulosTercero> ArticulosTercero { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticulosComponentes> ArticulosComponentes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreciosEspeciales> PreciosEspeciales { get; set; }
     }
 }

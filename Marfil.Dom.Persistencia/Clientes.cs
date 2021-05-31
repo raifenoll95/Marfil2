@@ -14,6 +14,12 @@ namespace Marfil.Dom.Persistencia
     
     public partial class Clientes
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Clientes()
+        {
+            this.PreciosEspeciales = new HashSet<PreciosEspeciales>();
+        }
+    
         public string empresa { get; set; }
         public string fkcuentas { get; set; }
         public string fkidiomas { get; set; }
@@ -57,5 +63,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<int> diascondecidos { get; set; }
         public string fktarifas { get; set; }
         public string fkcriteriosagrupacion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreciosEspeciales> PreciosEspeciales { get; set; }
     }
 }

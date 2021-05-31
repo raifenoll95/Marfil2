@@ -37,13 +37,13 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
     public enum Tipogestionlotes
     {
-        [StringValue(typeof(RArticulos),"Singestion")]
+        [StringValue(typeof(RArticulos), "Singestion")]
         Singestion,
         [StringValue(typeof(RArticulos), "Loteopcional")]
         Loteopcional,
         [StringValue(typeof(RArticulos), "Loteobligatorio")]
         Loteobligatorio
-       
+
     }
 
     public class TarifasEspecificasArticulosViewModel
@@ -87,7 +87,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         public bool Obligatorio { get; set; }
     }
-    
+
     public class ArticulosModel : BaseModel<ArticulosModel, Articulos>
     {
         #region Members
@@ -95,9 +95,10 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         //Lista de articulos de tercero
         private List<ArticulosTerceroModel> _articulosTercero = new List<ArticulosTerceroModel>();
         private List<ArticulosComponentesModel> _articulosComponentes = new List<ArticulosComponentesModel>();
-        private List<TarifasSistemaArticulosViewModel> _tarifasSistemaVenta=new List<TarifasSistemaArticulosViewModel>();
+        private List<TarifasSistemaArticulosViewModel> _tarifasSistemaVenta = new List<TarifasSistemaArticulosViewModel>();
         private List<TarifasSistemaArticulosViewModel> _tarifasSistemaCompra = new List<TarifasSistemaArticulosViewModel>();
-        private TarifaEspecificaArticulo _tarifasEspecificasVentas = new TarifaEspecificaArticulo() { Tipo =TipoFlujo.Venta};
+        private List<TarifasSistemaArticulosViewModel> _tarifasSistemaEspecial = new List<TarifasSistemaArticulosViewModel>();
+        private TarifaEspecificaArticulo _tarifasEspecificasVentas = new TarifaEspecificaArticulo() { Tipo = TipoFlujo.Venta };
         private TarifaEspecificaArticulo _tarifasEspecificasCompras = new TarifaEspecificaArticulo() { Tipo = TipoFlujo.Compra };
         private bool _validarmateriales;
         private bool _validarcaracteristicas;
@@ -123,28 +124,28 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         public int Tipofamilia { get; set; }
 
-        
+
         [MaxLength(3, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RArticulos), Name = "Materiales")]
         public string Materiales { get; set; }
 
         public string MaterialesDescripcion { get; set; }
 
-        
+
         [MaxLength(2, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RArticulos), Name = "Caracteristicas")]
         public string Caracteristicas { get; set; }
 
         public string CaracteristicasDescripcion { get; set; }
 
-        
+
         [MaxLength(2, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RArticulos), Name = "Grosores")]
         public string Grosores { get; set; }
 
         public string GrosoresDescripcion { get; set; }
 
-        
+
         [MaxLength(2, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RArticulos), Name = "Acabados")]
         public string Acabados { get; set; }
@@ -218,7 +219,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public string Fkgruposmateriales { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Partidaarancelaria")]
-        [MaxLength(10,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(10, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         public string Partidaarancelaria { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Kilosud")]
@@ -231,7 +232,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public bool Medidalibre { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Labor")]
-        public bool Labor  { get; set; }
+        public bool Labor { get; set; }
 
         public string Fklabores { get; set; }
 
@@ -278,7 +279,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public bool Articulonegocio { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Fkcontadores")]
-        public string Fkcontadores { get; set; }      
+        public string Fkcontadores { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Clasificacion")]
         public string Clasificacion { get; set; }
@@ -299,6 +300,11 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         {
             get { return _tarifasSistemaVenta; }
             set { _tarifasSistemaVenta = value; }
+        }
+        public List<TarifasSistemaArticulosViewModel> TarifasSistemaEspecial
+        {
+            get { return _tarifasSistemaEspecial; }
+            set { _tarifasSistemaEspecial = value; }
         }
 
         public List<ArticulosComponentesModel> ArticulosComponentes
@@ -356,7 +362,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RArticulos), Name = "Movimientos")]
         public string Movimientos { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Fecha")]        
+        [Display(ResourceType = typeof(RArticulos), Name = "Fecha")]
         public DateTime? Fechaultimaentrada { get; set; }
 
         public string Fechaultimaentradacadena
@@ -367,7 +373,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RArticulos), Name = "UltimaEntrada")]
         public string Ultimaentrada { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Fecha")]        
+        [Display(ResourceType = typeof(RArticulos), Name = "Fecha")]
         public DateTime? Fechaultimasalida { get; set; }
 
         public string Fechaultimasalidacadena
@@ -384,7 +390,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public string urlAlbaranEntrada { get; set; }
 
         public int idAlbaranSalida { get; set; }
-        public int modoAlbaranSalida { get; set; }  
+        public int modoAlbaranSalida { get; set; }
         public string urlAlbaranSalida { get; set; }
 
         public Guid? Fkcarpetas { get; set; }
@@ -411,7 +417,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         public double? Grueso { get; set; }
 
-        public bool Permitemodificarlargo { get { return Editarlargo;} }
+        public bool Permitemodificarlargo { get { return Editarlargo; } }
 
         public bool Permitemodificarancho { get { return Editarancho; } }
 
@@ -449,7 +455,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Piezascaja")]
-        [Range(0,9999,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "RangeClient")]
+        [Range(0, 9999, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "RangeClient")]
         public int? Piezascaja { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Categoria")]
@@ -480,13 +486,13 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         public override string DisplayName => RArticulos.TituloEntidad;
 
-       
+
     }
 
     public class ArticulosDocumentosModel
     {
         public string Id { get; set; }
-     
+
         public string Descripcion { get; set; }
 
         public string Descripcion2 { get; set; }
@@ -516,7 +522,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public Tipogestionlotes Tipogestionlotes { get; set; }
 
         public double? Precio { get; set; }
-
+        public double? Descuento { get; set; }
         public double? Coste { get; set; }
 
         public string Fktiposiva { get; set; }
@@ -540,7 +546,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public string Fkcontador { get; set; }
 
         public bool Lotefraccionable { get; set; }
-        
+
         public bool Tipoivavariable { get; set; }
 
         public int? Piezascaja { get; set; }

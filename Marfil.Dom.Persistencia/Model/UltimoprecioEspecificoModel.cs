@@ -13,6 +13,7 @@ namespace Marfil.Dom.Persistencia.Model
         public ResultBusquedas<UltimoprecioEspecificoModel> Especificos { get; set; }
         public ResultBusquedas<UltimopreciosistemaModel> SistemaVenta { get; set; }
         public ResultBusquedas<UltimopreciosistemaModel> SistemaCompra { get; set; }
+        public ResultBusquedas<UltimopreciosistemaModel> SistemaEspecial { get; set; }
     }
 
     public class UltimoprecioEspecificoModel

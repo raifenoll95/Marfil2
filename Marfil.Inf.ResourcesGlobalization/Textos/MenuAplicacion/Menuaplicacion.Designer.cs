@@ -700,6 +700,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Inmuebles.
+        /// </summary>
+        public static string inmuebles {
+            get {
+                return ResourceManager.GetString("inmuebles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Gestión de Inventarios.
         /// </summary>
         public static string inventarios {
@@ -840,6 +849,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string listadoguiasbalances {
             get {
                 return ResourceManager.GetString("listadoguiasbalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Listado de Margen.
+        /// </summary>
+        public static string listadoinformemargen {
+            get {
+                return ResourceManager.GetString("listadoinformemargen", resourceCulture);
             }
         }
         
@@ -1128,6 +1146,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string pedidos {
             get {
                 return ResourceManager.GetString("pedidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Precios Especiales.
+        /// </summary>
+        public static string preciosespeciales {
+            get {
+                return ResourceManager.GetString("preciosespeciales", resourceCulture);
             }
         }
         

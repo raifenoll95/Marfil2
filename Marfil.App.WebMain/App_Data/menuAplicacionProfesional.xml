@@ -23,6 +23,7 @@
     <item name="seriescontables" allowBlock="true" text="series" url="~/SeriesContables/Index" />
     <item name="contadores" text="contadores" url="~/Contadores/Index" />
     <item name="tiposcuentas" text="Tipos de cuentas" url="~/Tiposcuentas/Index" />
+	<item name="inmuebles" text="Inmuebles" url="~/Inmuebles/Index" />
   </item>
   <item name="contabilidad" text="Contabilidad" icono="fa fa-line-chart">
     <item name="movs" allowBlock="true" text="Diario contable" url="~/Movs/Index" />
@@ -107,8 +108,8 @@
         <item name="listadogeneralalbaranes" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosalbaranes/Listado/AlbaranesCabecera" />
         <item name="listadodetalladoalbaranes" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoalbaranes/Listado/AlbaranesDetallado" />
         <item name="listadoproductosalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoProductosAlbaranes/Listado/ProductosEnAlbaranes" />
-        <item name="listadomargen" eslistado="true"  text="Listado Margen" icono="fa fa-file" url="~/ListadoMargen/ListadoMargen" />
-      </item>
+		<item name="listadoinformemargen"  eslistado="true" text="Listado de margen" icono="fa fa-file" url="~/ListadoInformeMargen/Listado/InformeMargen" />
+	  </item>
       <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2" />
       <item name="configurardocumentoslistadomargen" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1025" />
     </item>
@@ -167,7 +168,8 @@
   <item name="produccion" text="Producción" icono="fa fa-star">
     <item name="articulos" text="Artículos" url="~/Articulos/Index" />
     <item name="tarifas"  allowBlock="true" text="Tarifas" url="~/Tarifas/Index" />
-    <item name="obras" text="obras" url="~/Obras/Index" />
+	<item name="preciosespeciales" text="Precios Especiales" url="~/PreciosEspeciales/Index" />
+	<item name="obras" text="obras" url="~/Obras/Index" />
     <item isseparator="true"></item>
     <item name="listado" text="Listados" icono="fa fa-list">
       <item name="listadoarticulos" eslistado="true"  text="Clientes" icono="fa fa-file" url="~/ListadoArticulos/Listado/Articulos" />

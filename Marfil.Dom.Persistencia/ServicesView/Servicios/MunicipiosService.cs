@@ -53,5 +53,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
             return n;
         }
+
+        public IEnumerable<MunicipiosModel> GetMunicipiosProvincia(string codigoprovincia)
+        {
+            return _db.Set<Municipios>().Where(f => f.codigoprovincia == codigoprovincia).ToList().Select(f => _converterModel.GetModelView(f) as MunicipiosModel);
+        }
+
+        public IEnumerable<MunicipiosModel> GetMunicipioNombre(string nombre)
+        {
+            return _db.Set<Municipios>().Where(f => f.nombre == nombre).ToList().Select(f => _converterModel.GetModelView(f) as MunicipiosModel);
+        }
     }
 }
