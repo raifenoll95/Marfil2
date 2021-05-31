@@ -14,7 +14,6 @@ using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Inf.Genericos.Helper;
 using System.Globalization;
-using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -47,7 +46,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var unidadesService = new UnidadesService(_context,_db);
+            var unidadesService = new UnidadesService(_context, _db);
             var propiedadesVisibles = new[] { "Id", "Descripcion", "Fkgruposmateriales", "Fkunidades" };
             var propiedades = Helpers.Helper.getProperties<ArticulosModel>();
             model.ExcludedColumns =
@@ -93,7 +92,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var numeroFamilia = model.Familia ?? "";
                 var clasificacionFamilia = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.clasificacion).SingleOrDefault();
 
-                if(!String.IsNullOrEmpty(clasificacionFamilia))
+                if (!String.IsNullOrEmpty(clasificacionFamilia))
                 {
                     model.Clasificacion = clasificacionFamilia;
                 }
@@ -105,11 +104,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Articulos, _context, _db);
 
-                foreach(var tercero in model.ArticulosTercero)
+                foreach (var tercero in model.ArticulosTercero)
                 {
                     tercero.CodArticulo = model.Id;
 
-                    if(tercero.Descripcion=="")
+                    if (tercero.Descripcion == "")
                     {
                         tercero.Descripcion = model.Descripcion;
                     }
@@ -141,7 +140,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Articulos, _context, _db);
 
-                foreach(var tercero in model.ArticulosTercero)
+                foreach (var tercero in model.ArticulosTercero)
                 {
                     tercero.Empresa = Empresa;
                 }
@@ -173,8 +172,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
-
-        //En la tarifa tenemos que introducir el articulo
         private void ManagementRates(ArticulosModel model, TipoFlujo flujo)
         {
             var vector = flujo == TipoFlujo.Venta ? model.TarifasSistemaVenta : model.TarifasSistemaCompra;
@@ -183,25 +180,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var tarifa = _db.TarifasLin.SingleOrDefault(
                     f => f.empresa == model.Empresa && f.fktarifas == item.Id && f.fkarticulos == model.Id);
 
-                //Buscamos si hay alguna linea 
-                //var tarifa = _db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fkarticulos == model.Id && f.fktarifas == item.Descripcion);
-
                 if (tarifa == null)
                 {
                     tarifa = _db.TarifasLin.Create();
                     tarifa.Unidades = model.Fkunidades;
                     tarifa.empresa = model.Empresa;
                     tarifa.fktarifas = item.Id;
-                    tarifa.fkarticulos = model.Id; //?????????????????????????????????????????????????????????????
+                    tarifa.fkarticulos = model.Id;
                     tarifa.descuento = 0;
-                    tarifa.precio = /*model.Articulocomentariovista ? 0 :*/ item.Precio;
+                    tarifa.precio = model.Articulocomentariovista ? 0 : item.Precio;
                     _db.TarifasLin.Add(tarifa);
                 }
                 else
                 {
                     tarifa.Unidades = model.Fkunidades;
-                    tarifa.precio = /* model.Articulocomentariovista ? 0 :*/ tarifa.precio;
-                    _db.TarifasLin.AddOrUpdate(tarifa);
+                    tarifa.precio = model.Articulocomentariovista ? 0 : item.Precio;
                 }
 
             }
@@ -265,7 +258,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     tarifa.Unidades = model.Fkunidades;
                     tarifa.fkarticulos = model.Id;
                     tarifa.descuento = 0;
-                    tarifa.precio = model.Articulocomentariovista ? 0 : CalcularPrecio(item, model) ;
+                    tarifa.precio = model.Articulocomentariovista ? 0 : CalcularPrecio(item, model);
 
 
 
@@ -313,73 +306,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _converterModel.GetModelView(_db.Articulos.Single(f => f.empresa == Empresa && f.id == id)) as ArticulosModel;
         }
 
-        public ArticulosDocumentosModel GetArticulo(string id, string fkcuenta, string fkmonedas, string fkregimeniva,TipoFlujo flujo=TipoFlujo.Venta)
+        public ArticulosDocumentosModel GetArticulo(string id, string fkcuenta, string fkmonedas, string fkregimeniva, TipoFlujo flujo = TipoFlujo.Venta)
         {
-            var model = _db.Database.SqlQuery<ArticulosDocumentosModel>(GetCadenaSelectArticulo(id, fkcuenta, fkmonedas,
-                fkregimeniva, flujo)).SingleOrDefault();
+            //existe precio especial
+            var PrecioEspecial = _db.Database.SqlQuery<int>(GetCadenaSelectPrecioEspecial(id, fkcuenta)).SingleOrDefault();
 
-            //Transformaciones. En las transformaciones, pedirArticulo es nulo ya que no recoge el campo. SOlo en
-            //los documentos de venta y compra si lo hace
-
-            if(fkcuenta!=null)
-            {
-                //Se recoge el articulo de la bd
-                if (model != null)
-                {
-                    var cuentasService = FService.Instance.GetService(typeof(CuentasModel), _context) as CuentasService;
-                    var cuenta = cuentasService.get(fkcuenta) as CuentasModel;
-
-                    string fkidioma;
-
-                    switch (cuenta.Tiposcuentas)
-                    {
-                        case 0:
-                            var clientesService = FService.Instance.GetService(typeof(ClientesModel), _context) as ClientesService;
-                            var cuentaCliente = clientesService.get(fkcuenta) as ClientesModel;
-                            fkidioma = cuentaCliente.Fkidiomas;
-
-                            if (fkidioma == "ENG")
-                            {
-                                model.Descripcion = model.Descripcion2;
-                            }
-
-                            break;
-                        case 1:
-                            var proveedoresService = FService.Instance.GetService(typeof(ProveedoresModel), _context) as ProveedoresService;
-                            var cuentaProveedor = proveedoresService.get(fkcuenta) as ProveedoresModel;
-                            fkidioma = cuentaProveedor.Fkidiomas;
-
-                            if (fkidioma == "ENG")
-                            {
-                                model.Descripcion = model.Descripcion2;
-                            }
-
-                            break;
-                        case 2:
-                            var acreedoresService = FService.Instance.GetService(typeof(AcreedoresModel), _context) as AcreedoresService;
-                            var cuentaAcreedor = acreedoresService.get(fkcuenta) as AcreedoresModel;
-                            fkidioma = cuentaAcreedor.Fkidiomas;
-
-                            if (fkidioma == "ENG")
-                            {
-                                model.Descripcion = model.Descripcion2;
-                            }
-
-                            break;
-                        default:
-                            // code block
-                            break;
-                    }
-                }
-            }
-
-            
-
-            return model;
+            return _db.Database.SqlQuery<ArticulosDocumentosModel>(GetCadenaSelectArticulo(id, fkcuenta, fkmonedas,
+                fkregimeniva, flujo, PrecioEspecial)).SingleOrDefault();
         }
 
-        private string GetCadenaSelectArticulo(string id, string fkcuenta, string fkmonedas, string fkregimeniva,TipoFlujo flujo)
+        private string GetCadenaSelectPrecioEspecial(string id, string fkcuenta)
         {
+            var sb = new StringBuilder();
+
+            sb.Append("Select id from PreciosEspeciales where empresa = '" + Empresa + "' and fkclientes = '" + fkcuenta + "' and fkarticulo = '" + id + "' and fechavalidez >= '" + DateTime.Today.ToString("yyyy-MM-dd") + " 00:00:00.000'");
+
+            return sb.ToString();
+
+        }
+
+        private string GetCadenaSelectArticulo(string id, string fkcuenta, string fkmonedas, string fkregimeniva, TipoFlujo flujo, int precioEspecial)
+        {
+
+            var hayEspecial = precioEspecial != 0 ? true : false;
+
             var sb = new StringBuilder();
             if (flujo == TipoFlujo.Venta)
             {
@@ -388,7 +338,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                       " isnull(a.editargrueso,0) as [Permitemodificargrueso],mo.id as Fkmonedas,fp.tipofamilia as [Tipofamilia],a.tipogestionlotes as [Tipogestionlotes],isnull(a.lotefraccionable,0) as [Lotefraccionable],a.tipoivavariable as [Tipoivavariable], ");
                 sb.Append(" mo.decimales as Decimalesmonedas, mo.cambiomonedabase as Cambiomonedabase,mo.cambiomonedaadicional as Cambiomonedaadicional,");
                 sb.Append(" ti.id as Fktiposiva, ti.nombre as Descripcioniva, ti.Porcentajeiva as Porcentajeiva,ti.porcentajerecargoequivalente as PorcentajeRecargoEquivalencia,");
-                sb.Append(" isnull(tl.precio, 0.0) as Precio, isnull(a.articulocomentario,0) as Articulocomentario,fp.fkcontador  as Fkcontador ");
+                sb.Append(" isnull(tl.precio, 0.0) as Precio, isnull(tl.descuento, 0.0) as Descuento,isnull(a.articulocomentario,0) as Articulocomentario,fp.fkcontador  as Fkcontador ");
                 sb.Append(" from articulos as a");
                 sb.Append(" inner join Familiasproductos as fp on fp.empresa = a.empresa and fp.id = substring(a.id, 0, 3)");
                 sb.Append(" left join unidades as u on u.id = fp.fkunidadesmedida");
@@ -396,7 +346,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.AppendFormat(" left join prospectos as pro on pro.empresa = a.empresa and pro.fkcuentas = '{0}'", fkcuenta);
                 sb.Append(" left join monedas as mo on mo.id = isnull(cli.fkmonedas, pro.fkmonedas)");
                 sb.AppendFormat(" left join RegimenIva as ri  on ri.empresa = a.empresa and ri.id = isnull({0}, isnull(cli.fkregimeniva, pro.fkregimeniva))", string.IsNullOrEmpty(fkregimeniva) ? "NULL" : "'" + fkregimeniva + "'");
-                sb.Append(" left join TarifasLin as tl on tl.empresa = a.empresa and tl.fktarifas = isnull(cli.fktarifas, pro.fktarifas) and tl.fkarticulos = a.id");
+
+                //Precios Especiales
+                if (hayEspecial)
+                {
+                    sb.AppendFormat(" left join PreciosEspeciales as tl on tl.empresa = a.empresa and tl.fkclientes = '{0}' and tl.fkarticulo = a.id", fkcuenta);
+                }
+                else
+                {
+                    sb.Append(" left join TarifasLin as tl on tl.empresa = a.empresa and tl.fktarifas = isnull(cli.fktarifas, pro.fktarifas) and tl.fkarticulos = a.id");
+                }
+
                 sb.Append(" left join TiposIva as ti on ti.empresa = a.empresa and");
                 sb.Append(" ti.id = (select top 1 case concat(isnull(ri.normal, 0), isnull(ri.recargo, 0), isnull(ri.exentotasa, 0))");
                 sb.Append(" when '100'  then gi.fktiposivasinrecargo");
@@ -430,7 +390,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.Append(" from GruposIvaLin as gi where gi.empresa = a.empresa and gi.fkgruposiva = a.fkgruposiva and gi.desde <= getdate() order by gi.desde desc)");
                 sb.AppendFormat(" where a.empresa = '{0}' and a.id='{1}' and (a.categoria=0 or a.categoria=2)", Empresa, id);
             }
-        
+
 
 
             return sb.ToString();
@@ -489,7 +449,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
         #endregion
 
-        public IEnumerable<ArticulosModel> GetArticulosBusquedas(TipoCategoria flujo= TipoCategoria.Ambas)
+        public IEnumerable<ArticulosModel> GetArticulosBusquedas(TipoCategoria flujo = TipoCategoria.Ambas)
         {
             using (var con = new SqlConnection(_db.Database.Connection.ConnectionString))
             {
@@ -528,7 +488,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private string CadenaBusquedaArticulos(TipoCategoria flujo)
         {
-            var sb=new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("select  art.id,art.descripcionabreviada as Descripcion,SUBSTRING(art.id,0,3) as Fkfamilias, fp.descripcion as Familias ");
             sb.Append(" ,SUBSTRING(art.id,3,3) as Fkmateriales, mp.descripcion as Materiales ");
             sb.Append(" ,SUBSTRING(art.id,6,2) as Fkcaracteristicas, cp.descripcion as Caracteristicas ");
@@ -540,7 +500,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             sb.Append(" left join Caracteristicaslin as cp on cp.empresa=art.empresa and cp.fkcaracteristicas=SUBSTRING(art.id,0,3) AND cp.id=SUBSTRING(art.id,6,2) ");
             sb.Append(" left join Grosores as gp on gp.empresa = art.empresa and gp.id=SUBSTRING(art.id,8,2) ");
             sb.Append(" left join Acabados as ap on ap.empresa = art.empresa and ap.id=SUBSTRING(art.id,10,2) ");
-            sb.AppendFormat(" Where art.empresa=@empresa and (art.categoria=0 or art.categoria={0})",(int)flujo);
+            sb.AppendFormat(" Where art.empresa=@empresa and (art.categoria=0 or art.categoria={0})", (int)flujo);
 
             var a = sb.ToString();
 
@@ -555,20 +515,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return id.Substring(inicio);
         }
 
-        public IEnumerable<ArticulosBusqueda> GetArticulosBusquedasMobile(IArticulosFiltros filtros,out int totales)
+        public IEnumerable<ArticulosBusqueda> GetArticulosBusquedasMobile(IArticulosFiltros filtros, out int totales)
         {
             var cadenabusquedas = CadenaBusquedaArticulos(TipoCategoria.Ambas);
 
             cadenabusquedas += GenerarFiltrosBusquedasMobile(filtros.Filtros);
-            cadenabusquedas +=string.Format(" order by art.id offset {0}*({1}-1) rows fetch next {0} rows only option (recompile)",filtros.RegistrosPagina,filtros.Pagina);
+            cadenabusquedas += string.Format(" order by art.id offset {0}*({1}-1) rows fetch next {0} rows only option (recompile)", filtros.RegistrosPagina, filtros.Pagina);
 
-            totales = _db.Database.SqlQuery<int>("select count(*) from articulos as art where art.empresa=@empresa "+ GenerarFiltrosBusquedasMobile(filtros.Filtros),new SqlParameter("filtros",filtros.Filtros ?? string.Empty),new SqlParameter("empresa",Empresa)).Single();
-            return _db.Database.SqlQuery<ArticulosBusqueda>(cadenabusquedas, new SqlParameter("filtros", filtros.Filtros??string.Empty), new SqlParameter("empresa", Empresa)).ToList();
+            totales = _db.Database.SqlQuery<int>("select count(*) from articulos as art where art.empresa=@empresa " + GenerarFiltrosBusquedasMobile(filtros.Filtros), new SqlParameter("filtros", filtros.Filtros ?? string.Empty), new SqlParameter("empresa", Empresa)).Single();
+            return _db.Database.SqlQuery<ArticulosBusqueda>(cadenabusquedas, new SqlParameter("filtros", filtros.Filtros ?? string.Empty), new SqlParameter("empresa", Empresa)).ToList();
         }
 
         private string GenerarFiltrosBusquedasMobile(string filtros)
         {
-            var sb=new StringBuilder();
+            var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(filtros))
             {
                 sb.AppendFormat(" AND (art.id like @filtros+'%' OR art.descripcion like '%'+@filtros +'%') ");
@@ -581,15 +541,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public void Importar(DataTable dt, int idPeticion, IContextService context)
         {
-            string errores = "";            
+            string errores = "";
             List<ArticulosModel> ListaArticulos = new List<ArticulosModel>();
-            
+
             foreach (DataRow row in dt.Rows)
             {
                 ArticulosModel articulo = new FModel().GetModel<ArticulosModel>(context);
 
                 var codArticulo = row["CodArticulo"].ToString();
-                
+
                 if (codArticulo.Length == 10)
                 {
                     codArticulo = codArticulo.Insert(5, "0");
@@ -749,7 +709,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             try
             {
                 _db.SaveChanges();
-            }            
+            }
             catch (Exception ex)
             {
                 throw ex;
@@ -778,9 +738,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public string descripcionCuenta(string numeroCuenta)
         {
             string descripcion = "";
-            var descripcion2 = _db.Cuentas.Where(f => f.empresa==Empresa && f.id == numeroCuenta).Select(f => f.descripcion).SingleOrDefault();
+            var descripcion2 = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == numeroCuenta).Select(f => f.descripcion).SingleOrDefault();
 
-            if(!String.IsNullOrEmpty(descripcion2))
+            if (!String.IsNullOrEmpty(descripcion2))
             {
                 descripcion = descripcion2;
             }
