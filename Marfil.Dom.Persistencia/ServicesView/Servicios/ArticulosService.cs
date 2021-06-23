@@ -329,13 +329,56 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
 
             var hayEspecial = precioEspecial != 0 ? true : false;
+            string idioma = "";
+
+            if(!string.IsNullOrEmpty(fkcuenta))
+            {
+                //Rai -- Necesito saber si la cuenta que estoy recibiendo es Cliente, Proveedor o Acreedor
+                if (fkcuenta.StartsWith("43"))
+                {
+                    var serviceClientes = FService.Instance.GetService(typeof(ClientesModel), _context, _db) as ClientesService;
+                    var cliente = serviceClientes.get(fkcuenta) as ClientesModel;
+                    idioma = cliente.Fkidiomas;
+                }
+
+                else
+                {
+                    if (fkcuenta.StartsWith("40"))
+                    {
+                        var serviceProveedores = FService.Instance.GetService(typeof(ProveedoresModel), _context, _db) as ProveedoresService;
+                        var proveedor = serviceProveedores.get(fkcuenta) as ProveedoresModel;
+                        idioma = proveedor.Fkidiomas;
+                    }
+
+                    else
+                    {
+                        var serviceAcreedores = FService.Instance.GetService(typeof(AcreedoresModel), _context, _db) as AcreedoresService;
+                        var acreedor = serviceAcreedores.get(fkcuenta) as AcreedoresModel;
+                        idioma = acreedor.Fkidiomas;
+                    }
+                }
+            }
 
             var sb = new StringBuilder();
             if (flujo == TipoFlujo.Venta)
             {
+
                 sb.Append("select a.categoria as Categoria, case when u.tipototal=1 then convert(bit,1) else convert(bit,0) end as Permitemodificarmetros,a.Piezascaja as Piezascaja, " +
-                        " u.id as Fkunidades,u.decimalestotales as [Decimalestotales],u.formula as [Formulas] ,a.id as [Id], a.descripcion as [Descripcion],a.descripcion2 as [Descripcion2],isnull(a.largo,0) as [Largo],isnull(a.ancho,0) as [Ancho],isnull(a.grueso,0) as [Grueso],isnull(a.editarlargo,0) as [Permitemodificarlargo],isnull(a.editarancho,0) as [Permitemodificarancho], " +
+                        " u.id as Fkunidades,u.decimalestotales as [Decimalestotales],u.formula as [Formulas] ,a.id as [Id], ");
+
+                if(idioma.Equals("ENG"))
+                {
+                    sb.Append("a.descripcion2 as [Descripcion]");
+                }
+
+                else
+                {
+                    sb.Append("a.descripcion as [Descripcion]");
+                }
+
+                sb.Append(" , isnull(a.largo, 0) as [Largo], isnull(a.ancho, 0) as [Ancho], isnull(a.grueso, 0) as [Grueso], isnull(a.editarlargo, 0) as [Permitemodificarlargo], isnull(a.editarancho, 0) as [Permitemodificarancho], " +
                       " isnull(a.editargrueso,0) as [Permitemodificargrueso],mo.id as Fkmonedas,fp.tipofamilia as [Tipofamilia],a.tipogestionlotes as [Tipogestionlotes],isnull(a.lotefraccionable,0) as [Lotefraccionable],a.tipoivavariable as [Tipoivavariable], ");
+                        
                 sb.Append(" mo.decimales as Decimalesmonedas, mo.cambiomonedabase as Cambiomonedabase,mo.cambiomonedaadicional as Cambiomonedaadicional,");
                 sb.Append(" ti.id as Fktiposiva, ti.nombre as Descripcioniva, ti.Porcentajeiva as Porcentajeiva,ti.porcentajerecargoequivalente as PorcentajeRecargoEquivalencia,");
                 sb.Append(" isnull(tl.precio, 0.0) as Precio, isnull(tl.descuento, 0.0) as Descuento,isnull(a.articulocomentario,0) as Articulocomentario,fp.fkcontador  as Fkcontador ");
@@ -346,6 +389,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.AppendFormat(" left join prospectos as pro on pro.empresa = a.empresa and pro.fkcuentas = '{0}'", fkcuenta);
                 sb.Append(" left join monedas as mo on mo.id = isnull(cli.fkmonedas, pro.fkmonedas)");
                 sb.AppendFormat(" left join RegimenIva as ri  on ri.empresa = a.empresa and ri.id = isnull({0}, isnull(cli.fkregimeniva, pro.fkregimeniva))", string.IsNullOrEmpty(fkregimeniva) ? "NULL" : "'" + fkregimeniva + "'");
+
+                //sb.Append("select a.categoria as Categoria, case when u.tipototal=1 then convert(bit,1) else convert(bit,0) end as Permitemodificarmetros,a.Piezascaja as Piezascaja, " +
+                //        " u.id as Fkunidades,u.decimalestotales as [Decimalestotales],u.formula as [Formulas] ,a.id as [Id], a.descripcion as [Descripcion],a.descripcion2 as [Descripcion2],isnull(a.largo,0) as [Largo],isnull(a.ancho,0) as [Ancho],isnull(a.grueso,0) as [Grueso],isnull(a.editarlargo,0) as [Permitemodificarlargo],isnull(a.editarancho,0) as [Permitemodificarancho], " +
+                //      " isnull(a.editargrueso,0) as [Permitemodificargrueso],mo.id as Fkmonedas,fp.tipofamilia as [Tipofamilia],a.tipogestionlotes as [Tipogestionlotes],isnull(a.lotefraccionable,0) as [Lotefraccionable],a.tipoivavariable as [Tipoivavariable], ");
+                //sb.Append(" mo.decimales as Decimalesmonedas, mo.cambiomonedabase as Cambiomonedabase,mo.cambiomonedaadicional as Cambiomonedaadicional,");
+                //sb.Append(" ti.id as Fktiposiva, ti.nombre as Descripcioniva, ti.Porcentajeiva as Porcentajeiva,ti.porcentajerecargoequivalente as PorcentajeRecargoEquivalencia,");
+                //sb.Append(" isnull(tl.precio, 0.0) as Precio, isnull(tl.descuento, 0.0) as Descuento,isnull(a.articulocomentario,0) as Articulocomentario,fp.fkcontador  as Fkcontador ");
+                //sb.Append(" from articulos as a");
+                //sb.Append(" inner join Familiasproductos as fp on fp.empresa = a.empresa and fp.id = substring(a.id, 0, 3)");
+                //sb.Append(" left join unidades as u on u.id = fp.fkunidadesmedida");
+                //sb.AppendFormat(" left join clientes as cli on cli.empresa = a.empresa and cli.fkcuentas = '{0}'", fkcuenta);
+                //sb.AppendFormat(" left join prospectos as pro on pro.empresa = a.empresa and pro.fkcuentas = '{0}'", fkcuenta);
+                //sb.Append(" left join monedas as mo on mo.id = isnull(cli.fkmonedas, pro.fkmonedas)");
+                //sb.AppendFormat(" left join RegimenIva as ri  on ri.empresa = a.empresa and ri.id = isnull({0}, isnull(cli.fkregimeniva, pro.fkregimeniva))", string.IsNullOrEmpty(fkregimeniva) ? "NULL" : "'" + fkregimeniva + "'");
 
                 //Precios Especiales
                 if (hayEspecial)

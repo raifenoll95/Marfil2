@@ -984,7 +984,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         private void FinalizarStock(TransformacionesModel original, TransformacionesModel editado)
         {
             var lotesService =new LotesService(_context);
-            CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}",f.Lote,f.Tabla)).Costeneto) ?? 0);
+            CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(f.Lote, f.Tabla.ToString()).Costeneto) ?? 0);
+            //CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}",f.Lote,f.Tabla)).Costeneto) ?? 0);
             RepartirCostesLineas(editado.Lineasentrada, editado.Costes, original.Costes);
 
             ModificarLotesLineas(editado);

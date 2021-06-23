@@ -51,9 +51,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
 
-        public LotesModel GetByReferencia(string referencialote)
+        //public LotesModel GetByReferencia(string referencialote)
+        //{
+        //    var obj = _db.Stockhistorico.Where(f => f.lote + f.loteid == referencialote && f.empresa == _context.Empresa).SingleOrDefault();
+        //    //var obj = _db.Stockhistorico.Single(f => f.lote+f.loteid ==referencialote && f.empresa == _context.Empresa);
+        //    return Get(obj.id.ToString());
+        //}
+
+        public LotesModel GetByReferencia(string lote, string loteid)
         {
-            var obj = _db.Stockhistorico.Single(f => f.lote+f.loteid ==referencialote && f.empresa == _context.Empresa);
+            var obj = _db.Stockhistorico.Where(f => f.lote == lote && f.loteid == loteid && f.empresa == _context.Empresa).SingleOrDefault();
+            //var obj = _db.Stockhistorico.Single(f => f.lote+f.loteid ==referencialote && f.empresa == _context.Empresa);
             return Get(obj.id.ToString());
         }
 

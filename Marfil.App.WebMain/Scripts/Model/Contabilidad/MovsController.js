@@ -111,7 +111,7 @@ var mostrarCuenta = function (codigocuenta, urlcuentas, lineas) {
         $.get(urlcuentas + "?id=" + codigocuenta).success(function (result) {
             $("#maesfkcuentas").val(codigocuenta);
             $("#maesdescripcion").val(result.Descripcion);            
-            $("#maesdebe").val(result.SDebe)
+            $("#maesdebe").val(result.SDebe);
             $("#maeshaber").val(result.SHaber);
             $("#maessaldo").val(result.SSaldo);
         }).error(function (jqXHR, textStatus, errorThrown) {
