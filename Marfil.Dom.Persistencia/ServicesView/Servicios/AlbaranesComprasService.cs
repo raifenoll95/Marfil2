@@ -344,9 +344,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 agrupacion += ",al.empresa,al.Fkunidades,al.Fktiposiva,al.Porcentajerecargoequivalencia,al.Porcentajeiva,al.Decimalesmedidas,al.Decimalesmonedas";
 
-                sb.Append("(select top 1 art.descripcion from articulos as art where art.id=al.fkarticulos and art.empresa=al.empresa) as Descripcion,Min(al.Id) as Id,Sum(al.cantidad) as Cantidad,sum(al.Metros) as Metros,al.Porcentajeiva,Sum(al.Cuotaiva) as Cuotaiva," +
+                sb.Append("(select top 1 al.descripcion) as Descripcion, Min(al.Id) as Id,Sum(al.cantidad) as Cantidad,sum(al.Metros) as Metros,al.Porcentajeiva,Sum(al.Cuotaiva) as Cuotaiva," +
                           " al.Porcentajerecargoequivalencia,sum(al.Cuotarecargoequivalencia) as Cuotarecargoequivalencia,'" + albaran.Fkregimeniva + "' as Fkregimeniva," +
                           " al.Fkunidades, al.Fktiposiva,Sum(al.Importe) as Importe,Sum(al.importedescuento) as Importedescuento,al.Decimalesmedidas,al.Decimalesmonedas, " + string.Join(",", lineas.Select(f => "al." + f.Campoenum.ToString())));
+
+                //sb.Append("(select top 1 art.descripcion from articulos as art where art.id=al.fkarticulos and art.empresa=al.empresa) as Descripcion,Min(al.Id) as Id,Sum(al.cantidad) as Cantidad,sum(al.Metros) as Metros,al.Porcentajeiva,Sum(al.Cuotaiva) as Cuotaiva," +
+                          //" al.Porcentajerecargoequivalencia,sum(al.Cuotarecargoequivalencia) as Cuotarecargoequivalencia,'" + albaran.Fkregimeniva + "' as Fkregimeniva," +
+                          //" al.Fkunidades, al.Fktiposiva,Sum(al.Importe) as Importe,Sum(al.importedescuento) as Importedescuento,al.Decimalesmedidas,al.Decimalesmonedas, " + string.Join(",", lineas.Select(f => "al." + f.Campoenum.ToString())));
 
                 if (!lineas.Any(f => f.Campoenum == CamposAgrupacionAlbaran.Fkarticulos))
                     sb.Append(", al.Fkarticulos");
@@ -355,7 +359,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (!lineas.Any(f => f.Campoenum == CamposAgrupacionAlbaran.Porcentajedescuento))
                     sb.Append(", al.Porcentajedescuento");
                 if (!lineas.Any(f => f.Campoenum == CamposAgrupacionAlbaran.Descripcion))
-                    sb.Append(", (select top 1 art.descripcion from articulos as art where art.id=al.fkarticulos and art.empresa=al.empresa) as Descripcion");
+                    sb.Append(", (select top 1 al.descripcion) as Descripcion");
+                    //sb.Append(", al.Descripcion");
 
 
                 var cadenaCondiciones = "";

@@ -444,7 +444,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 //Costes de las entradas
                 var lotesService = new LotesService(_context);
-                CalcularPrecioPiezasEntrada(model.LineasEntrada, model.LineasSalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}", f.Lote, f.Tabla)).Costeneto) ?? 0);
+                CalcularPrecioPiezasEntrada(model.LineasEntrada, model.LineasSalida.Sum(f => lotesService.GetByReferencia(f.Lote, f.Tabla.ToString()).Costeneto) ?? 0);
+                //CalcularPrecioPiezasEntrada(model.LineasEntrada, model.LineasSalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}", f.Lote, f.Tabla)).Costeneto) ?? 0);
 
                 //Costes adicionales
                 RepartirCostesLineas(model.LineasEntrada, model.Costes);
