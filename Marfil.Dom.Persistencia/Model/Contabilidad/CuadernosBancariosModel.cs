@@ -56,8 +56,10 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         }
 
         #region properties
+        [Required]
         [Display(ResourceType = typeof(RCuadernos), Name = "Id")]
         public int Id { get; set; }
+        [Required]
         public string Empresa { get; set; }
         [Display(ResourceType = typeof(RCuadernos), Name = "Clave")]
         public string Clave { get; set; }
