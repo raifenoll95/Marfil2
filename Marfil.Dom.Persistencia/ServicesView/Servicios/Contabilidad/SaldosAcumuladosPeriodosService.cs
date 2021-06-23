@@ -39,40 +39,29 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
 
                     itemmaes.debe = (itemmaes.debe ?? 0) + (lineas.Where(l => l.esdebe == 1).Sum(l => l.importe) * (multiplo));
                     itemmaes.haber = (itemmaes.haber ?? 0) + (lineas.Where(l => l.esdebe == -1).Sum(l => l.importe) * (multiplo));
-                    itemmaes.saldo = (itemmaes.debe ?? 0) - (itemmaes.haber ?? 0);
 
                     _db.Maes.AddOrUpdate(itemmaes);
                 }
             }
-            //if (model.Ejercicio)//R2
-            //{
-            //    var r2 = movs.Where(w => w.tipoasiento.ToUpper() == "R2");
-            //}
+        }
 
-            //if (model.Existencia) //R3
-            //{
-            //    var r3 = movs.Where(w => w.tipoasiento.ToUpper() == "R3");
-            //}
-            //if (model.Grupos) //R4
-            //{
-            //    var r4 = movs.Where(w => w.tipoasiento.ToUpper() == "R4");
-            //}
+        public DateTime? GetRecalculo(string usuario, int ejercicio)
+        {
+            var p = _db.AcumuladorPeriodos.Where(f=> f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicio).Count();
+            if ( p > 0)
+            {
+                return _db.Set<AcumuladorPeriodos>().Where(f => f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicio).OrderByDescending(t => t.FechaHora).FirstOrDefault().FechaHora;
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
 
-            //if (model.CierreEjercicio)//R5
-            //{
-            //    var r5 = movs.Where(w => w.tipoasiento.ToUpper() == "R5");
-            //}
-
-            //if (model.IncluirAsientosSimulacion)//F2
-            //{
-            //    var f2 = movs.Where(w => w.tipoasiento.ToUpper() == "F2");
-            //}
-
-            //if (model.ExcluirAsientosSimulacion)//F3
-            //{
-            //    var f3 = movs.Where(w => w.tipoasiento.ToUpper() == "F3");
-            //}
-
+        public FiltrosAcumulador GetFiltros(string usuario, int ejercicio)
+        {
+            return _db.FiltrosAcumulador.Where(f => f.empresa == Empresa && f.fkejercicio == ejercicio && f.usuario == usuario).FirstOrDefault();
         }
     }
 }

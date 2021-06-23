@@ -574,7 +574,7 @@
     <value>Guias de Balances</value>
   </data>
   <data name="listadosacomuladorperiodos" xml:space="preserve">
-    <value>Listado Acomulado de Periodos</value>
+    <value>Acumulador de Periodos</value>
   </data>
   <data name="listadosconsultatesoreria" xml:space="preserve">
     <value>Listados de consulta de tesorería</value>

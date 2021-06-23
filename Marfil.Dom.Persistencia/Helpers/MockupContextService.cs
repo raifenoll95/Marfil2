@@ -199,5 +199,10 @@ namespace Marfil.Dom.Persistencia.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public object Set<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

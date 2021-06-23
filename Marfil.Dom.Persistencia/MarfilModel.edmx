@@ -52,6 +52,27 @@
           <Property Name="fkcriteriosagrupacion" Type="varchar" MaxLength="4" />
           <Property Name="previsionpagosperiodicos" Type="int" />
         </EntityType>
+        <EntityType Name="AcumuladorPeriodos">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fkejercicio" Type="int" Nullable="false" />
+          <Property Name="Settings" Type="nvarchar(max)" />
+          <Property Name="EnProceso" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="Recalculo" Type="nvarchar(max)" />
+          <Property Name="fkcuentas" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="nivel" Type="int" Nullable="false" />
+          <Property Name="debe" Type="money" />
+          <Property Name="haber" Type="money" />
+          <Property Name="saldo" Type="money" />
+          <Property Name="DebeEjercicioAnterior" Type="money" />
+          <Property Name="HaberEjercicioAnterior" Type="money" />
+        </EntityType>
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="password" />
@@ -1095,6 +1116,33 @@
           <Property Name="campo" Type="int" Nullable="false" />
           <Property Name="orden" Type="int" />
         </EntityType>
+        <EntityType Name="CuadernosBancarios">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="empresa" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="clave" Type="nvarchar" MaxLength="10" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="30" />
+          <Property Name="banco" Type="nvarchar" MaxLength="25" />
+          <Property Name="tipoFormato" Type="nvarchar" MaxLength="4" />
+          <Property Name="formato" Type="tinyint" />
+          <Property Name="orden" Type="smallint" />
+          <Property Name="posicion" Type="smallint" />
+          <Property Name="longitud" Type="smallint" />
+          <Property Name="tipoCampo" Type="tinyint" />
+          <Property Name="etiquetaIni" Type="nvarchar" MaxLength="250" />
+          <Property Name="campo" Type="nvarchar" MaxLength="250" />
+          <Property Name="obligatorio" Type="tinyint" />
+          <Property Name="etiquetaFin" Type="nvarchar" MaxLength="250" />
+          <Property Name="condicion" Type="nvarchar" MaxLength="250" />
+          <Property Name="descripcionLin" Type="nvarchar" MaxLength="30" />
+          <Property Name="fechaCrea" Type="datetime" />
+          <Property Name="fechaMod" Type="datetime" />
+          <Property Name="usuarioCrea" Type="nvarchar" MaxLength="15" />
+          <Property Name="usuarioMod" Type="nvarchar" MaxLength="15" />
+        </EntityType>
         <EntityType Name="Cuentas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -1856,6 +1904,25 @@
           <Property Name="ruta" Type="nvarchar(max)" />
           <Property Name="tipo" Type="nvarchar" MaxLength="10" />
           <Property Name="fkcarpetas" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FiltrosAcumulador">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="fkejercicio" Type="int" Nullable="false" />
+          <Property Name="fechaDesde" Type="date" />
+          <Property Name="fechaHasta" Type="date" />
+          <Property Name="seccion" Type="nvarchar(max)" />
+          <Property Name="ejercicio" Type="bit" />
+          <Property Name="existencia" Type="bit" />
+          <Property Name="grupos" Type="bit" />
+          <Property Name="cierreEjercicio" Type="bit" />
+          <Property Name="incluirAsientos" Type="bit" />
+          <Property Name="excluirAsientos" Type="bit" />
         </EntityType>
         <EntityType Name="FormasPago">
           <Key>
@@ -5791,6 +5858,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
         <EntityContainer Name="MarfilModelStoreContainer">
           <EntitySet Name="Acabados" EntityType="Self.Acabados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Acreedores" EntityType="Self.Acreedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AcumuladorPeriodos" EntityType="Self.AcumuladorPeriodos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agentes" EntityType="Self.Agentes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Albaranes" EntityType="Self.Albaranes" Schema="dbo" store:Type="Tables" />
@@ -5835,6 +5903,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="CostesVariablesPeriodoLin" EntityType="Self.CostesVariablesPeriodoLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Criteriosagrupacion" EntityType="Self.Criteriosagrupacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CriteriosagrupacionLin" EntityType="Self.CriteriosagrupacionLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CuadernosBancarios" EntityType="Self.CuadernosBancarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cuentas" EntityType="Self.Cuentas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cuentastesoreria" EntityType="Self.Cuentastesoreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Direcciones" EntityType="Self.Direcciones" Schema="dbo" store:Type="Tables" />
@@ -5856,6 +5925,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="FacturasVencimientos" EntityType="Self.FacturasVencimientos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Familiasproductos" EntityType="Self.Familiasproductos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ficheros" EntityType="Self.Ficheros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FiltrosAcumulador" EntityType="Self.FiltrosAcumulador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormasPago" EntityType="Self.FormasPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormasPagoLin" EntityType="Self.FormasPagoLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grosores" EntityType="Self.Grosores" Schema="dbo" store:Type="Tables" />
@@ -6905,6 +6975,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
           </AssociationSet>
+          <EntitySet Name="AcumuladorPeriodos" EntityType="MarfilModel.AcumuladorPeriodos" />
+          <EntitySet Name="FiltrosAcumulador" EntityType="MarfilModel.FiltrosAcumulador" />
+          <EntitySet Name="CuadernosBancarios" EntityType="MarfilModel.CuadernosBancarios" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -12779,6 +12852,73 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AcumuladorPeriodos">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fkejercicio" Type="Int32" Nullable="false" />
+          <Property Name="fkcuentas" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="nivel" Type="Int32" Nullable="false" />
+          <Property Name="debe" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="haber" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="saldo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Settings" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EnProceso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="Recalculo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DebeEjercicioAnterior" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HaberEjercicioAnterior" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="FiltrosAcumulador">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fkejercicio" Type="Int32" Nullable="false" />
+          <Property Name="fechaDesde" Type="DateTime" Precision="0" />
+          <Property Name="fechaHasta" Type="DateTime" Precision="0" />
+          <Property Name="seccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ejercicio" Type="Boolean" />
+          <Property Name="existencia" Type="Boolean" />
+          <Property Name="grupos" Type="Boolean" />
+          <Property Name="cierreEjercicio" Type="Boolean" />
+          <Property Name="incluirAsientos" Type="Boolean" />
+          <Property Name="excluirAsientos" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CuadernosBancarios">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="empresa" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="banco" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="tipoFormato" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="formato" Type="Byte" />
+          <Property Name="orden" Type="Int16" />
+          <Property Name="posicion" Type="Int16" />
+          <Property Name="longitud" Type="Int16" />
+          <Property Name="tipoCampo" Type="Byte" />
+          <Property Name="etiquetaIni" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="campo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="obligatorio" Type="Byte" />
+          <Property Name="etiquetaFin" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="condicion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="descripcionLin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fechaCrea" Type="DateTime" Precision="3" />
+          <Property Name="fechaMod" Type="DateTime" Precision="3" />
+          <Property Name="usuarioCrea" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioMod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17344,6 +17484,73 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="fkclientes" ColumnName="fkclientes" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AcumuladorPeriodos">
+            <EntityTypeMapping TypeName="MarfilModel.AcumuladorPeriodos">
+              <MappingFragment StoreEntitySet="AcumuladorPeriodos">
+                <ScalarProperty Name="HaberEjercicioAnterior" ColumnName="HaberEjercicioAnterior" />
+                <ScalarProperty Name="DebeEjercicioAnterior" ColumnName="DebeEjercicioAnterior" />
+                <ScalarProperty Name="Recalculo" ColumnName="Recalculo" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
+                <ScalarProperty Name="Settings" ColumnName="Settings" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="haber" ColumnName="haber" />
+                <ScalarProperty Name="debe" ColumnName="debe" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
+                <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FiltrosAcumulador">
+            <EntityTypeMapping TypeName="MarfilModel.FiltrosAcumulador">
+              <MappingFragment StoreEntitySet="FiltrosAcumulador">
+                <ScalarProperty Name="excluirAsientos" ColumnName="excluirAsientos" />
+                <ScalarProperty Name="incluirAsientos" ColumnName="incluirAsientos" />
+                <ScalarProperty Name="cierreEjercicio" ColumnName="cierreEjercicio" />
+                <ScalarProperty Name="grupos" ColumnName="grupos" />
+                <ScalarProperty Name="existencia" ColumnName="existencia" />
+                <ScalarProperty Name="ejercicio" ColumnName="ejercicio" />
+                <ScalarProperty Name="seccion" ColumnName="seccion" />
+                <ScalarProperty Name="fechaHasta" ColumnName="fechaHasta" />
+                <ScalarProperty Name="fechaDesde" ColumnName="fechaDesde" />
+                <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CuadernosBancarios">
+            <EntityTypeMapping TypeName="MarfilModel.CuadernosBancarios">
+              <MappingFragment StoreEntitySet="CuadernosBancarios">
+                <ScalarProperty Name="usuarioMod" ColumnName="usuarioMod" />
+                <ScalarProperty Name="usuarioCrea" ColumnName="usuarioCrea" />
+                <ScalarProperty Name="fechaMod" ColumnName="fechaMod" />
+                <ScalarProperty Name="fechaCrea" ColumnName="fechaCrea" />
+                <ScalarProperty Name="descripcionLin" ColumnName="descripcionLin" />
+                <ScalarProperty Name="condicion" ColumnName="condicion" />
+                <ScalarProperty Name="etiquetaFin" ColumnName="etiquetaFin" />
+                <ScalarProperty Name="obligatorio" ColumnName="obligatorio" />
+                <ScalarProperty Name="campo" ColumnName="campo" />
+                <ScalarProperty Name="etiquetaIni" ColumnName="etiquetaIni" />
+                <ScalarProperty Name="tipoCampo" ColumnName="tipoCampo" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="posicion" ColumnName="posicion" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="formato" ColumnName="formato" />
+                <ScalarProperty Name="tipoFormato" ColumnName="tipoFormato" />
+                <ScalarProperty Name="banco" ColumnName="banco" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

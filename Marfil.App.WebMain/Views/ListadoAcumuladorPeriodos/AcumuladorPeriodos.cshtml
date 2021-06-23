@@ -1,8 +1,38 @@
 ﻿@using Resources
+@using Marfil.App.WebMain.Misc
 @model Marfil.Dom.Persistencia.Listados.ListadoAcumuladorPeriodos
 
 @{
     ViewBag.Title = "AcumuladorPeriodos";
+
+    var fechaRecalculo = WebHelper.GetApplicationHelper().GetRecalculo();
+    var filtros = WebHelper.GetApplicationHelper().GetFiltros();
+
+    var listgrupo = WebHelper.GetApplicationHelper().GetListGrupoSecciones().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor,
+
+    }).ToList();
+    listgrupo.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    //Insertamos el valor del filtro de seccion
+    if (filtros != null && filtros.seccion != null)
+    {
+        var selected = listgrupo.Where(x => x.Value == filtros.seccion).First();
+        selected.Selected = true;
+    }
+
+    //Insertamos el valor del filtro de fechas
+    if (filtros != null && filtros.fechaDesde != null)
+    {
+        Model.FechaDesde = filtros.fechaDesde.Value;
+    }
+    if (filtros != null && filtros.fechaHasta != null)
+    {
+        Model.FechaHasta = filtros.fechaHasta.Value;
+    }
+
 }
 
 @Html.HiddenFor(model => model.Empresa)
@@ -22,60 +52,142 @@
     </div>
     <div class="row">
         <div class="form-group">
-            @Html.LabelFor(f => Model.SeccionDesde, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(f => Model.GrupoSeccion, new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @Html.EditorFor(f => Model.SeccionDesde)
+                @Html.DropDownListFor(f => Model.GrupoSeccion, listgrupo, (object)new { @class = "form-control" })
             </div>
-            @Html.LabelFor(f => Model.SeccionHasta, new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(f => Model.SeccionHasta)
-            </div>
+            @if (fechaRecalculo != null)
+            {
+                @Html.LabelFor(f => Model.FechaHora, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(f => Model.FechaHora, (object)new { @class = "form-control", @readonly = true, @Value = fechaRecalculo.HasValue ? fechaRecalculo.Value.ToString("dd/MM/yyyy HH:mm:ss") : "No disponible" })
+                </div>
+            }
         </div>
     </div>
-    <hr />
-    <div class="row">
-        <div class="form-group">
-            @Html.LabelFor(f => Model.Ejercicio, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("Ejercicio", true)
+        <!--<div class="row">
+            <div class="form-group">
+                @Html.LabelFor(f => Model.SeccionDesde, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(f => Model.SeccionDesde)
+                </div>
+                @Html.LabelFor(f => Model.SeccionHasta, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(f => Model.SeccionHasta)
+                </div>
             </div>
-            @Html.LabelFor(f => Model.Existencia, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("Existencia", true)
-            </div>
-            @Html.LabelFor(f => Model.Grupos, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("Grupos", true)
+        </div>-->
+        <hr />
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(f => Model.Ejercicio, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @if (filtros != null && filtros.ejercicio == true)
+                    {
+                        @Html.CheckBox("Ejercicio", true)
+                    }
+                    else if (filtros != null && filtros.ejercicio == false)
+                    {
+                        @Html.CheckBox("Ejercicio")
+                    }
+                    else
+                    {
+                        @Html.CheckBox("Ejercicio")
+                    }
+                </div>
+                @Html.LabelFor(f => Model.Existencia, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @if (filtros != null && filtros.existencia == true)
+                    {
+                        @Html.CheckBox("Existencia", true)
+                    }
+                    else if (filtros != null && filtros.existencia == false)
+                    {
+                        @Html.CheckBox("Existencia")
+                    }
+                    else
+                    {
+                        @Html.CheckBox("Existencia")
+                    }
+                </div>
+                @Html.LabelFor(f => Model.Grupos, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @if (filtros != null && filtros.grupos == true)
+                    {
+                        @Html.CheckBox("Grupos", true)
+                    }
+                    else if (filtros != null && filtros.grupos == false)
+                    {
+                        @Html.CheckBox("Grupos")
+                    }
+                    else
+                    {
+                        @Html.CheckBox("Grupos",true)
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            @Html.LabelFor(f => Model.CierreEjercicio, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("CierreEjercicio", true)
-            </div>
-            @Html.LabelFor(f => Model.IncluirAsientosSimulacion, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("IncluirAsientosSimulacion", true)
-            </div>
-            @Html.LabelFor(f => Model.ExcluirAsientosSimulacion, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("ExcluirAsientosSimulacion", true)
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(f => Model.CierreEjercicio, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @if (filtros != null && filtros.cierreEjercicio == true)
+                    {
+                        @Html.CheckBox("CierreEjercicio", true)
+                    }
+                    else if (filtros != null && filtros.cierreEjercicio == false)
+                    {
+                        @Html.CheckBox("CierreEjercicio")
+                    }
+                    else
+                    {
+                        @Html.CheckBox("CierreEjercicio",true)
+                    }
+                </div>
+                @Html.LabelFor(f => Model.IncluirAsientosSimulacion, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @if (filtros != null && filtros.incluirAsientos == true)
+                    {
+                        @Html.CheckBox("IncluirAsientosSimulacion", true)
+                    }
+                    else if (filtros != null && filtros.incluirAsientos == false)
+                    {
+                        @Html.CheckBox("IncluirAsientosSimulacion")
+                    }
+                    else
+                    {
+                        @Html.CheckBox("IncluirAsientosSimulacion")
+                    }
+                </div>
+                @Html.LabelFor(f => Model.ExcluirAsientosSimulacion, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @if (filtros != null && filtros.excluirAsientos == true)
+                    {
+                        @Html.CheckBox("ExcluirAsientosSimulacion", true)
+                    }
+                    else if (filtros != null && filtros.excluirAsientos == false)
+                    {
+                        @Html.CheckBox("ExcluirAsientosSimulacion")
+                    }
+                    else
+                    {
+                        @Html.CheckBox("ExcluirAsientosSimulacion",true)
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            @Html.LabelFor(f => Model.IncluirAjusteExistenciaPeriodo, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("IncluirAjusteExistenciaPeriodo", true)
-            </div>
-            @Html.LabelFor(f => Model.IncluirProrrateoAmortizaciones, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.CheckBox("IncluirProrrateoAmortizaciones", true)
-            </div>
-        </div>
-    </div>
-</div>
 
+        <!--<div class="row">
+            <div class="form-group">
+                @Html.LabelFor(f => Model.IncluirAjusteExistenciaPeriodo, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.CheckBox("IncluirAjusteExistenciaPeriodo", true)
+                </div>
+                @Html.LabelFor(f => Model.IncluirProrrateoAmortizaciones, new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.CheckBox("IncluirProrrateoAmortizaciones", true)
+                </div>
+            </div>
+        </div>-->
+    <span><strong>Este proceso puede tardar unos minutos</strong></span>
+    </div>

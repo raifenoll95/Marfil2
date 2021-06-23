@@ -253,6 +253,9 @@
         <EntityTypeShape EntityType="MarfilModel.PreciosEspeciales" Width="1.5" PointX="36" PointY="16.125" />
         <AssociationConnector Association="MarfilModel.FK_Articulo" />
         <AssociationConnector Association="MarfilModel.FK_Clientes" />
+        <EntityTypeShape EntityType="MarfilModel.AcumuladorPeriodos" Width="1.5" PointX="9.375" PointY="16.75" />
+        <EntityTypeShape EntityType="MarfilModel.FiltrosAcumulador" Width="1.5" PointX="14.375" PointY="33.75" />
+        <EntityTypeShape EntityType="MarfilModel.CuadernosBancarios" Width="1.5" PointX="40.375" PointY="14.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

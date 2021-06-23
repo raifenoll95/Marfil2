@@ -163,6 +163,9 @@
     <Compile Include="Acreedores.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AcumuladorPeriodos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Administrador.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -353,6 +356,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Ficheros.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FiltrosAcumulador.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FormasPago.cs">

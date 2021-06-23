@@ -197,6 +197,9 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Inmuebles> Inmuebles { get; set; }
         public virtual DbSet<InformeMargen> InformeMargen { get; set; }
         public virtual DbSet<PreciosEspeciales> PreciosEspeciales { get; set; }
+        public virtual DbSet<AcumuladorPeriodos> AcumuladorPeriodos { get; set; }
+        public virtual DbSet<FiltrosAcumulador> FiltrosAcumulador { get; set; }
+        public virtual DbSet<CuadernosBancarios> CuadernosBancarios { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

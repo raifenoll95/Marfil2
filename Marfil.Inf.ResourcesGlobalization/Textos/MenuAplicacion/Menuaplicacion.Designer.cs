@@ -934,7 +934,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Listado Acomulado de Periodos.
+        ///   Busca una cadena traducida similar a Acumulador de Periodos.
         /// </summary>
         public static string listadosacomuladorperiodos {
             get {

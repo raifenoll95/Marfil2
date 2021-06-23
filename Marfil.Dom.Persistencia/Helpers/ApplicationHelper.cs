@@ -21,6 +21,7 @@ using Marfil.Inf.Genericos.NifValidators;
 using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion;
 using Resources;
 using Marfil.Dom.Persistencia.Model.Terceros;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -715,7 +716,27 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         }
 
-#region MonedasModel
+        public DateTime? GetRecalculo()
+        {
+            using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var usuario = _context.Usuario;
+                var ejercicio = int.Parse(_context.Ejercicio);
+                return service.GetRecalculo(usuario,ejercicio);
+            }
+        }
+
+        public FiltrosAcumulador GetFiltros()
+        {
+            using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var usuario = _context.Usuario;
+                var ejercicio = int.Parse(_context.Ejercicio);
+                return service.GetFiltros(usuario,ejercicio);
+            }
+        }
+
+        #region MonedasModel
         public MonedasModel GetMonedaBase()
         {
             

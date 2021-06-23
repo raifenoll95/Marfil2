@@ -92,6 +92,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
         {
             throw new NotImplementedException();
         }
+
+        public object Set<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class LoginService : ILoginService,IDisposable

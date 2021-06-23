@@ -117,46 +117,97 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CierreEjercicio" xml:space="preserve">
-    <value>Excluir documento de Cierre de ejercicio</value>
+  <data name="Alfanumerico" xml:space="preserve">
+    <value>Alfanumérico</value>
   </data>
-  <data name="Ejercicio" xml:space="preserve">
-    <value>Excluir documento de apertura de ejercicio</value>
+  <data name="Año" xml:space="preserve">
+    <value>Año</value>
   </data>
-  <data name="ExcluirAsientosSimulacion" xml:space="preserve">
-    <value>Excluir asientos Vinculados</value>
+  <data name="Banco" xml:space="preserve">
+    <value>Banco</value>
   </data>
-  <data name="Existencia" xml:space="preserve">
-    <value>Excluir docs. De Regularización de existencias</value>
+  <data name="Binario" xml:space="preserve">
+    <value>Binario</value>
   </data>
-  <data name="FechaDesde" xml:space="preserve">
-    <value>Desde Fecha</value>
+  <data name="Campo" xml:space="preserve">
+    <value>Campo</value>
   </data>
-  <data name="FechaHasta" xml:space="preserve">
-    <value>Hasta Fecha</value>
+  <data name="Clave" xml:space="preserve">
+    <value>Fichero Banco</value>
   </data>
-  <data name="FechaHora" xml:space="preserve">
-    <value>Último Recálculo</value>
+  <data name="Condicion" xml:space="preserve">
+    <value>Condición</value>
   </data>
-  <data name="Grupos" xml:space="preserve">
-    <value>Excluir docs. De Regularización Grupos 6 y 7</value>
+  <data name="Descripcion" xml:space="preserve">
+    <value>Descripción</value>
   </data>
-  <data name="GrupoSeccion" xml:space="preserve">
-    <value>Grupo Sección</value>
+  <data name="DescripcionLin" xml:space="preserve">
+    <value>Descripción</value>
   </data>
-  <data name="IncluirAjusteExistenciaPeriodo" xml:space="preserve">
-    <value>Incluir ajuste de existencias del periodo</value>
+  <data name="Dia" xml:space="preserve">
+    <value>Día</value>
   </data>
-  <data name="IncluirAsientosSimulacion" xml:space="preserve">
-    <value>Incluir Asientos de Simulación</value>
+  <data name="EtiquetaFin" xml:space="preserve">
+    <value>Separador Fin</value>
   </data>
-  <data name="IncluirProrrateoAmortizaciones" xml:space="preserve">
-    <value>Incluir prorrateo de amortizaciones</value>
+  <data name="EtiquetaIni" xml:space="preserve">
+    <value>Separador Inicio</value>
   </data>
-  <data name="SeccionDesde" xml:space="preserve">
-    <value>Desde Sección</value>
+  <data name="FechaAAAAMMDD" xml:space="preserve">
+    <value>Fecha (AAAAMMDD)</value>
   </data>
-  <data name="SeccionHasta" xml:space="preserve">
-    <value>Hasta Sección</value>
+  <data name="FechaAAMMDD" xml:space="preserve">
+    <value>Fecha (AAMMDD)</value>
+  </data>
+  <data name="FechaCrea" xml:space="preserve">
+    <value>Fecha Creación</value>
+  </data>
+  <data name="FechaMod" xml:space="preserve">
+    <value>Fecha Modificación</value>
+  </data>
+  <data name="Fijo" xml:space="preserve">
+    <value>Fijo</value>
+  </data>
+  <data name="Formato" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Longitud" xml:space="preserve">
+    <value>Longitud</value>
+  </data>
+  <data name="Mes" xml:space="preserve">
+    <value>Mes</value>
+  </data>
+  <data name="Numerico" xml:space="preserve">
+    <value>Numérico</value>
+  </data>
+  <data name="Obligatorio" xml:space="preserve">
+    <value>Obligatorio</value>
+  </data>
+  <data name="Orden" xml:space="preserve">
+    <value>Número orden de detalle</value>
+  </data>
+  <data name="Posicion" xml:space="preserve">
+    <value>Posición</value>
+  </data>
+  <data name="Tipo Campo" xml:space="preserve">
+    <value>Tipo Campo</value>
+  </data>
+  <data name="TipoFormato" xml:space="preserve">
+    <value>Tipo Formato</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Cuadernos Bancarios</value>
+  </data>
+  <data name="UsuarioCrea" xml:space="preserve">
+    <value>Usuario Creación</value>
+  </data>
+  <data name="UsuarioMod" xml:space="preserve">
+    <value>Usuario Modificación</value>
+  </data>
+  <data name="Variable" xml:space="preserve">
+    <value>Variable</value>
   </data>
 </root>

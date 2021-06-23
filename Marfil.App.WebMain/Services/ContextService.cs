@@ -200,5 +200,10 @@ namespace Marfil.App.WebMain.Services
         {
             return HttpContext.Current.Items[key];
         }
+
+        public object Set<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

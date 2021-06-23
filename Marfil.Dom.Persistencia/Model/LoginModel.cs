@@ -167,6 +167,11 @@ namespace Marfil.Dom.Persistencia.Model
         {
             throw new NotImplementedException();
         }
+
+        public object Set<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ContextConfiguracion : IContextService
@@ -352,6 +357,10 @@ namespace Marfil.Dom.Persistencia.Model
             return HttpContext.Current.Items[key];
         }
 
+        public object Set<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class LoginModel
