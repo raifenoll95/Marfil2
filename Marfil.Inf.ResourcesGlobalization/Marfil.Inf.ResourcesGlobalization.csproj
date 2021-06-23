@@ -403,6 +403,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PreciosEspeciales.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\CuadernosBancarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CuadernosBancarios.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Seguimientos.Designer.cs">
       <DependentUpon>Seguimientos.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -989,6 +994,10 @@
     <EmbeddedResource Include="Textos\Entidades\PreciosEspeciales.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PreciosEspeciales.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\CuadernosBancarios.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CuadernosBancarios.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Seguimientos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
