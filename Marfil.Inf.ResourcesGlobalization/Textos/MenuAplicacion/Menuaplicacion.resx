@@ -591,4 +591,7 @@
   <data name="listadoinformemargen" xml:space="preserve">
     <value>Listado de Margen</value>
   </data>
+  <data name="cuadernosBancarios" xml:space="preserve">
+    <value>Cuadernos Bancarios</value>
+  </data>
 </root>

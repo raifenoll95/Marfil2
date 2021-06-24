@@ -1,0 +1,47 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Contabilidad
+@using Marfil.Dom.Persistencia.Model
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var user = HttpContext.Current.User as ICustomPrincipal;
+    var cuadernosModel = Model as CuadernosBancariosModel;
+}
+
+
+
+
+@using (Html.BeginForm("EditOperacion", "CuadernosBancarios", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+
+        @{
+            ViewData["operacion"] = true;
+        }
+        @Html.Partial("_cuadernosbancarios", Model as CuadernosBancariosModel)
+
+        <div class="form-group margin-top">
+            <div class="col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
+}

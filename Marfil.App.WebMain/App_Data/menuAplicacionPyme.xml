@@ -30,6 +30,8 @@
     <item isseparator="true"></item>
     <item name="cuentas" allowBlock="true" text="Cuentas" url="~/Cuentas/Index" />
     <item isseparator="true"></item>
+	<item name="cuadernosBancarios" allowBlock="true" text="CuadernosBancarios" url="~/CuadernosBancarios/Index" />
+	<item isseparator="true"></item>
     <item name="tesoreria" text="Tesorería" icono="fa fa-money">
       <item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
       <item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />

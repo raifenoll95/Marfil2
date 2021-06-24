@@ -314,6 +314,7 @@
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
+    <Compile Include="Controllers\CuadernosBancariosController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadoInformeMargenController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
@@ -3558,6 +3559,14 @@
     <Content Include="Views\PreciosEspeciales\Edit.cshtml" />
     <Content Include="Views\PreciosEspeciales\Index.cshtml" />
     <Content Include="Views\PreciosEspeciales\_preciosespeciales.cshtml" />
+    <Content Include="Views\CuadernosBancarios\Index.cshtml" />
+    <Content Include="Views\CuadernosBancarios\_direccion.cshtml" />
+    <Content Include="Views\CuadernosBancarios\_general.cshtml" />
+    <Content Include="Views\CuadernosBancarios\_cuadernosbancarios.cshtml" />
+    <Content Include="Views\CuadernosBancarios\Create.cshtml" />
+    <Content Include="Views\CuadernosBancarios\Delete.cshtml" />
+    <Content Include="Views\CuadernosBancarios\Details.cshtml" />
+    <Content Include="Views\CuadernosBancarios\Edit.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

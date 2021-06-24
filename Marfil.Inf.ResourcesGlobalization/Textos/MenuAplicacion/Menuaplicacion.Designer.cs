@@ -475,6 +475,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuadernos Bancarios.
+        /// </summary>
+        public static string cuadernosBancarios {
+            get {
+                return ResourceManager.GetString("cuadernosBancarios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cuentas.
         /// </summary>
         public static string cuentas {
