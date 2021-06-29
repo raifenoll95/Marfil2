@@ -18,21 +18,28 @@
     <dl class="dl-horizontal">
 
         <dt>
-            @Html.DisplayNameFor(f=>objModel.Clave)
+            @Html.DisplayNameFor(f => objModel.Clave)
         </dt>
 
         <dd>
-            @objModel.Id
+            @objModel.Clave
         </dd>
-            <dt>
-                @Html.DisplayNameFor(f => objModel.Descripcion)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(f => objModel.Descripcion)
+        </dt>
 
-            <dd>
-                @objModel.Descripcion
-            </dd>
-        
-       
+        <dd>
+            @objModel.Descripcion
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(f => objModel.Formato)
+        </dt>
+
+        <dd>
+            @objModel.Formato
+        </dd>
+
+
     </dl>
 
     @using (Html.BeginForm()) {

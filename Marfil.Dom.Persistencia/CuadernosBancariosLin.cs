@@ -12,22 +12,11 @@ namespace Marfil.Dom.Persistencia
     using System;
     using System.Collections.Generic;
     
-    public partial class CuadernosBancarios
+    public partial class CuadernosBancariosLin
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CuadernosBancarios()
-        {
-            this.CuadernosBancariosLin = new HashSet<CuadernosBancariosLin>();
-        }
-    
         public int id { get; set; }
         public string empresa { get; set; }
-        public string clave { get; set; }
-        public string descripcion { get; set; }
-        public string banco { get; set; }
-        public Nullable<int> tipoRegistro { get; set; }
-        public string tipoFormato { get; set; }
-        public Nullable<int> formato { get; set; }
+        public Nullable<int> idCab { get; set; }
         public Nullable<short> orden { get; set; }
         public Nullable<short> posicion { get; set; }
         public Nullable<short> longitud { get; set; }
@@ -38,12 +27,7 @@ namespace Marfil.Dom.Persistencia
         public string etiquetaFin { get; set; }
         public string condicion { get; set; }
         public string descripcionLin { get; set; }
-        public Nullable<System.DateTime> fechaCrea { get; set; }
-        public Nullable<System.DateTime> fechaMod { get; set; }
-        public string usuarioCrea { get; set; }
-        public string usuarioMod { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CuadernosBancariosLin> CuadernosBancariosLin { get; set; }
+        public virtual CuadernosBancarios CuadernosBancarios { get; set; }
     }
 }

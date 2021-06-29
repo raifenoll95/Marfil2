@@ -3560,13 +3560,13 @@
     <Content Include="Views\PreciosEspeciales\Index.cshtml" />
     <Content Include="Views\PreciosEspeciales\_preciosespeciales.cshtml" />
     <Content Include="Views\CuadernosBancarios\Index.cshtml" />
-    <Content Include="Views\CuadernosBancarios\_direccion.cshtml" />
     <Content Include="Views\CuadernosBancarios\_general.cshtml" />
     <Content Include="Views\CuadernosBancarios\_cuadernosbancarios.cshtml" />
     <Content Include="Views\CuadernosBancarios\Create.cshtml" />
     <Content Include="Views\CuadernosBancarios\Delete.cshtml" />
     <Content Include="Views\CuadernosBancarios\Details.cshtml" />
     <Content Include="Views\CuadernosBancarios\Edit.cshtml" />
+    <Content Include="Views\CuadernosBancarios\_cuadernosbancarioslin.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

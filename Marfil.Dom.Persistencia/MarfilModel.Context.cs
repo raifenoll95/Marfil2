@@ -200,6 +200,7 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<AcumuladorPeriodos> AcumuladorPeriodos { get; set; }
         public virtual DbSet<FiltrosAcumulador> FiltrosAcumulador { get; set; }
         public virtual DbSet<CuadernosBancarios> CuadernosBancarios { get; set; }
+        public virtual DbSet<CuadernosBancariosLin> CuadernosBancariosLin { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

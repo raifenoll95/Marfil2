@@ -1,7 +1,6 @@
 ﻿@using Marfil.App.WebMain.Misc
 @using Marfil.Dom.Persistencia.Helpers
 @using Marfil.Dom.Persistencia.Model.Contabilidad
-@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @using Resources
 @model CuadernosBancariosModel
 @{
@@ -9,131 +8,132 @@
     var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
 
+    var listBancos = WebHelper.GetApplicationHelper().GetListBancos().Select(f => new SelectListItem()
+    {
+        Text = f.Nombre,
+        Value = f.Nombre,
+
+    }).ToList();
+    listBancos.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    if (isNuevo)
+    {
+        Model.FechaCrea = DateTime.Now;
+        Model.FechaMod = DateTime.Now;
+    }
+    else if (iseditable)
+    {
+        Model.FechaMod = DateTime.Now;
+    }
+
+    ViewData["Formato"] = Model.Formato;
+
 }
 
+@Html.HiddenFor(f => Model.Id)
 @Html.HiddenFor(f => Model.Empresa)
-@Html.HiddenFor(f => Model.DescripcionPais)
-@Html.HiddenFor(f => Model.DescripcionProvincia)
-
-@if (iseditable)
-{
-    @Html.HiddenFor(f => Model.Id)
-    @Html.HiddenFor(f => Model.CodPostal)
-    @Html.HiddenFor(f => Model.FkMunicipioCod)
-}
+@Html.HiddenFor(f => Model.FechaCrea)
+@Html.HiddenFor(f => Model.FechaMod)
 
 
 @*Para desabilitar el dropdown, hay que poner HiddenFor*@
 @if (isreadonly || iseditable)
 {
-    @Html.HiddenFor(f => Model.FkPais)
-    @Html.HiddenFor(f => Model.FkProvinciaCod)
-    @Html.HiddenFor(f => Model.FkMunicipioNom)
+    @Html.HiddenFor(f => Model.Banco)
+    @Html.HiddenFor(f => Model.Formato)
+    @Html.HiddenFor(f => Model.TipoRegistro)
 }
 
 <div class="form-group">
+    @Html.LabelFor(f => Model.Clave, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Clave, isreadonly || iseditable ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
 
-    <!--@Html.LabelFor(f => ((InmueblesModel)Model).Id, new { @class = "control-label col-md-2" })
-    <div class="col-md-1">
-        @Html.TextBoxFor(f => ((InmueblesModel)Model).Id, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control", @ng_blur = "existePk(4,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Inmuebles") + "\",\"" + Url.Action("Edit", "Inmuebles") + "\")" })
-    </div>-->
+    @Html.LabelFor(f => Model.Banco, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @if (isreadonly || iseditable)
+        {
+            @Html.DropDownListFor(f => Model.Banco, listBancos, (object)new { @disabled = "disabled", @class = "form-control" })
+        }
+        else
+        {
+            @Html.DropDownListFor(f => Model.Banco, listBancos, (object)new { @class = "form-control" })
+        }
 
-    @if (iseditable || isreadonly)
-    {
-
-        @Html.LabelFor(f => ((InmueblesModel)Model).Id, new { @class = "control-label col-md-2" })
-        <div class="col-md-1">
-            @Html.TextBoxFor(f => ((InmueblesModel)Model).Id, new { @disabled = "disabled", @class = "form-control" })
-        </div>
-
-    }
-    else
-    {
-        @*<input type="hidden" name="Id" value="-1"/>*@
-
-        @Html.LabelFor(f => ((InmueblesModel)Model).Id, new { @class = "control-label col-md-2" })
-        <div class="col-md-1" @Html.Raw(isNuevo ? "ng-controller=\"VerificaPk\"" : string.Empty)>
-            @Html.TextBoxFor(f => ((InmueblesModel)Model).Id,
-                new
-                     {
-                        @class = "form-control",
-                        @autofocus = "",
-                        @ng_blur = "existePk(4,TipoRellenacod.Generico,\"" + Url.Action("Exists", "Inmuebles") + "\",\"" + Url.Action("Edit", "Inmuebles") + "\")",
-                        @ng_model = "codigo"
-                     })
-        </div>
-
-
-    }
-
-    @Html.LabelFor(f => ((InmueblesModel)Model).Descripcion, new { @class = "control-label col-md-2" })
-    <div class="col-md-7">
-        @Html.TextBoxFor(f => ((InmueblesModel)Model).Descripcion, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
     </div>
 
     <div class="col-md-12"></div>
     <div class="col-md-10 col-md-offset-2">
-        @Html.ValidationMessageFor(f => ((InmueblesModel)Model).Id, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(f => Model.Clave, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => ((InmueblesModel)Model).Situacion, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.TipoRegistro, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
         @if (isreadonly)
         {
-            @Html.EnumDropDownList("Situacion", Model.Situacion, new { @disabled = "disabled", @class = "form-control" })
+            @Html.EnumDropDownList("TipoRegistro", Model.TipoRegistro, new { id = "TipoRegistro", @disabled = "disabled", @class = "form-control" })
         }
         else
         {
-            @Html.EnumDropDownList("Situacion", Model.Situacion, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.EnumDropDownList("TipoRegistro", Model.TipoRegistro, new { id = "TipoRegistro", @class = "form-control" })
+        }
+        @Html.ValidationMessageFor(f => Model.TipoRegistro, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Orden, new { @class = "control-label col-md-3" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Orden, (object)new { id = "Orden", @disabled = "disabled", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Orden, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Formato, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @if (isreadonly || iseditable)
+        {
+            @Html.EnumDropDownList("Formato", Model.Formato, new { id = "Formato", @disabled = "disabled", @class = "form-control" })
+        }
+        else
+        {
+            @Html.EnumDropDownList("Formato", Model.Formato, (object)new { id = "Formato", @class = "form-control" })
+        }
+        @Html.ValidationMessageFor(f => Model.Formato, "", new { @class = "text-danger" })
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+        <span class="fa-2x">
+            @General.LblConfiguracion
+        </span>
+        @if (isNuevo || iseditable)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
         }
 
-        @Html.ValidationMessageFor(f => Model.Situacion, "", new { @class = "text-danger" })
-    </div>
-</div>
 
-<div class="form-group">
-    @Html.LabelFor(f => ((InmueblesModel)Model).RefCatastral, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(f => ((InmueblesModel)Model).RefCatastral, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
     </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(f => Model.FkPais, new { @class = "control-label col-md-2" })
-    <div class="col-md-4">
-        @Html.DropDownListFor(f => Model.FkPais, paises, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(f => Model.FkPais, "", new { @class = "text-danger" })
-    </div>
-
-    @Html.LabelFor(f => Model.FkProvinciaCod, new { @class = "control-label col-md-2" })
-    <div class="col-md-4">
-        @Html.DropDownListFor(f => Model.FkProvinciaCod, provincias, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(f => Model.FkProvinciaCod, "", new { @class = "text-danger" })
+    <div id="partial" class="col-md-10 col-md-offset-2">
+        @Html.Partial("_cuadernosbancarioslin", Model.Lineas/*, new ViewDataDictionary { { "Formato", Model.Formato } }*/)
     </div>
 
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(f => Model.FkMunicipioCod, new { @class = "control-label col-md-2" })
-    <div class="col-md-1">
-        @Html.TextBoxFor(f => ((InmueblesModel)Model).FkMunicipioCod, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control", @readonly = true })
-        @Html.ValidationMessageFor(f => Model.FkMunicipioCod, "", new { @class = "text-danger" })
-    </div>
-
-    @Html.LabelFor(f => Model.FkMunicipioNom, new { @class = "control-label col-md-2" })
-    <div class="col-md-4">
-        @Html.DropDownListFor(f => Model.FkMunicipioNom, municipios, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(f => Model.FkMunicipioNom, "", new { @class = "text-danger" })
-    </div>
-
-    @Html.LabelFor(f => Model.CodPostal, new { @class = "control-label col-md-2" })
-    <div class="col-md-1">
-        @Html.TextBoxFor(f => ((InmueblesModel)Model).CodPostal, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(f => Model.CodPostal, "", new { @class = "text-danger" })
-    </div>
-</div>
 @{
     if (isNuevo)
     {
@@ -143,114 +143,28 @@
 }
 <script type="text/javascript">
 
-    window.onload = lanzarMunicipio;
-
-    // Recargar el combo de provincias al cambiar el de países
-    $("#FkPais").on('change', function () {
-        $.get("/api/ProvinciasPaisesApi/" + this.value).success(function (result) {
-
-            var select = document.getElementById("FkProvinciaCod");
-
-            // Clear Dropdown
-            while (select.firstChild) {
-                select.removeChild(select.firstChild);
-            }
-
-            for (var i = 0; i < result.length; i++) {
-                var option = document.createElement("option")
-                option.value = result[i].Id
-                option.text = result[i].Nombre
-                select.appendChild(option)
-            }
-
-            //cargamos los municipios
-            cargaMunicipios();
-        });
+    // Habilitar/Deshabilitar campo Orden
+    $("#TipoRegistro").on('change', function () {
+        var tipoRegistro = document.getElementById("TipoRegistro");
+        var selectedValue = tipoRegistro.options[tipoRegistro.selectedIndex].value;
+        var orden = document.getElementById("Orden");
+        orden.value = 0;
+        orden.disabled = selectedValue == 1 ? false : true;
     });
 
-    // Recargar el combo de municipios al cambiar el de provincias
-    $("#FkProvinciaCod").on('change', function () {
-
-        $.get('@Url.Action("GetMunicipios","Municipios")' + "?id=" + JSON.stringify(this.value)).success(function (data) {
-            var a = JSON.parse(data);
-            console.log(a.length);
-            var select = document.getElementById("FkMunicipioNom");
-            while (select.firstChild) {
-                select.removeChild(select.firstChild);
-            }
-            for (var i = 0; i < a.length; i++) {
-                var option = document.createElement("option");
-                option.value = a[i].Nombre;
-                option.text = a[i].Nombre;
-                select.appendChild(option);
-            }
-
-            //cargamos el cod
-            cargaMunicipioCod();
-        }).error(function (error) {
-            console.log(error);
-        });
+    $("#Formato").on('change', function () {
+        var formato = this.value;
+        //var selectedValue = formato.options[formato.selectedIndex].value;
+        var lineas = @Html.Raw(Json.Encode(Model.Lineas));
+        $.ajax({
+            url: "/CuadernosBancarios/CuadernosBancariosLin",
+            type: "POST",
+            datatype: "HTML",
+            data: { formato },
+                success: function (data) {
+                    $("#partial").html(data);
+                }
+            })
     });
-
-
-    // Recargar el text de municipiosCod al cambiar el de municipios
-
-    $("#FkMunicipioNom").on('change', function () {
-
-        $.get('@Url.Action("GetMunicipio","Municipios")' + "?nombre=" + JSON.stringify(this.value)).success(function (data) {
-            var a = JSON.parse(data);
-            $("[name='FkMunicipioCod']").val(a.Cod);
-        }).error(function (error) {
-            console.log(error);
-        });
-    });
-
-    function cargaMunicipios() {
-
-        var idprovincia = document.getElementById("FkProvinciaCod");
-        var valor = idprovincia.options[idprovincia.selectedIndex].value;
-        console.log(valor);
-        $.get('@Url.Action("GetMunicipios","Municipios")' + "?id=" + JSON.stringify(valor)).success(function (data) {
-            var a = JSON.parse(data);
-            console.log(a.length);
-            var select = document.getElementById("FkMunicipioNom");
-            while (select.firstChild) {
-                select.removeChild(select.firstChild);
-            }
-            for (var i = 0; i < a.length; i++) {
-                var option = document.createElement("option");
-                option.value = a[i].Nombre;
-                option.text = a[i].Nombre;
-                select.appendChild(option);
-            }
-
-            //cargamos el cod
-            cargaMunicipioCod();
-
-        }).error(function (error) {
-            console.log(error);
-        });
-    }
-
-    function cargaMunicipioCod() {
-
-        var municipio = document.getElementById("FkMunicipioNom");
-        var valor = municipio.options[municipio.selectedIndex].value;
-        console.log(valor);
-
-        $.get('@Url.Action("GetMunicipio","Municipios")' + "?nombre=" + JSON.stringify(valor)).success(function (data) {
-            var a = JSON.parse(data);
-            $("[name='FkMunicipioCod']").val(a.Cod);
-        }).error(function (error) {
-            console.log(error);
-        });
-
-    }
-
-    function lanzarMunicipio() {
-        cargaMunicipios();
-        //setTimeout(cargaMunicipioCod() , 3000);
-    }
-
 
 </script>

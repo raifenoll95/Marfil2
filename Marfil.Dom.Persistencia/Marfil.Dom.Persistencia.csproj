@@ -295,6 +295,9 @@
     <Compile Include="CuadernosBancarios.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CuadernosBancariosLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cuentas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>

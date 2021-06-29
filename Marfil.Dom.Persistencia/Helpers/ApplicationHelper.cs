@@ -835,6 +835,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<BancosModel> GetListBancos()
+        {
+            using (var service = new BancosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetBancos();
+            }
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListTiposVias()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

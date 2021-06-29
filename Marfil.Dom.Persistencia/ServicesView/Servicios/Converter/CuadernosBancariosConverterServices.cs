@@ -37,16 +37,55 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                     item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
                 }
             }
-            result.formato = (byte)viewmodel.Formato;
-            result.tipoCampo = (byte)viewmodel.TipoCampo;
+            result.formato = (int)viewmodel.Formato;
+            result.tipoCampo = (int)viewmodel.TipoCampo;
+
+            result.CuadernosBancariosLin.Clear();
+            foreach (var item in viewmodel.Lineas)
+            {
+                var newitem = _db.CuadernosBancariosLin.Create();
+                newitem.empresa = result.empresa;
+                newitem. idCab= result.id;
+                newitem.id = item.Id;
+                newitem.posicion = item.Posicion;
+                newitem.orden = item.Orden;
+                newitem.obligatorio = item.Obligatorio;
+                newitem.campo = item.Campo;
+                newitem.etiquetaFin = item.EtiquetaFin;
+                newitem.etiquetaIni = item.EtiquetaIni;
+                newitem.condicion = item.Condicion;
+                newitem.descripcionLin = item.DescripcionLin;
+                newitem.longitud = item.Longitud;
+                newitem.tipoCampo = (int)item.TipoCampo;
+                result.CuadernosBancariosLin.Add(newitem);
+            }
 
             return result;
         }
         public override IModelView CreateView(string id)
         {
-            var result = _db.CuadernosBancarios.Single(f => f.empresa == Context.Empresa && f.id == int.Parse(id));
+            var idparse = int.Parse(id);
+            var obj = _db.CuadernosBancarios.Include("CuadernosBancariosLin").Single(f => f.empresa == Context.Empresa && f.id == idparse);
+            var result = GetModelView(obj) as CuadernosBancariosModel;
+            result.Lineas =
+               obj.CuadernosBancariosLin.ToList().Select(
+                   item =>
+                       new CuadernosBancariosLinModel()
+                       {
+                           Id = item.id,
+                           Posicion = item.posicion ?? 0,
+                           Orden = item.orden ?? 0,
+                           Obligatorio = item.obligatorio ?? 0,
+                           Campo = item.campo,
+                           Condicion = item.condicion,
+                           EtiquetaFin = item.etiquetaFin,
+                           EtiquetaIni = item.etiquetaIni,
+                           DescripcionLin = item.descripcionLin,
+                           Longitud = item.longitud ?? 0,
+                           TipoCampo = item.tipoCampo.HasValue ? (CuadernosBancariosLinModel.TipoCampos)item.tipoCampo.Value : CuadernosBancariosLinModel.TipoCampos.Alfanumerico
+                       }).ToList();
 
-            return GetModelView(result);
+            return result;
         }
         public override CuadernosBancarios EditPersitance(IModelView obj)
         {
@@ -70,14 +109,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                     item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
                 }
             }
-            result.formato = (byte)viewmodel.Formato;
-            result.tipoCampo = (byte)viewmodel.TipoCampo;
+            result.formato = (int)viewmodel.Formato;
+            result.tipoCampo = (int)viewmodel.TipoCampo;
+
+            result.CuadernosBancariosLin.Clear();
+            foreach (var item in viewmodel.Lineas)
+            {
+                var newitem = _db.CuadernosBancariosLin.Create();
+                newitem.empresa = result.empresa;
+                newitem.idCab = result.id;
+                newitem.id = item.Id;
+                newitem.posicion = item.Posicion;
+                newitem.orden = item.Orden;
+                newitem.obligatorio = item.Obligatorio;
+                newitem.campo = item.Campo;
+                newitem.etiquetaFin = item.EtiquetaFin;
+                newitem.etiquetaIni = item.EtiquetaIni;
+                newitem.condicion = item.Condicion;
+                newitem.descripcionLin = item.DescripcionLin;
+                newitem.longitud = item.Longitud;
+                newitem.tipoCampo = (int)item.TipoCampo;
+                result.CuadernosBancariosLin.Add(newitem);
+            }
 
             return result;
         }
         public override bool Exists(string id)
         {
-            return _db.CuadernosBancarios.Any(f => f.empresa == Context.Empresa && f.id == int.Parse(id));
+            var idparse = int.Parse(id);
+            return _db.CuadernosBancarios.Any(f => f.empresa == Context.Empresa && f.id == idparse);
         }
 
         public override IModelView GetModelView(CuadernosBancarios obj)

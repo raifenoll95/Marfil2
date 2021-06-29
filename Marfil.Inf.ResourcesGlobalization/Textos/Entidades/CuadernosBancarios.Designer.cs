@@ -97,6 +97,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cabecera.
+        /// </summary>
+        public static string Cabecera {
+            get {
+                return ResourceManager.GetString("Cabecera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Campo.
         /// </summary>
         public static string Campo {
@@ -142,11 +151,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Detalle.
+        /// </summary>
+        public static string Detalle {
+            get {
+                return ResourceManager.GetString("Detalle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Día.
         /// </summary>
         public static string Dia {
             get {
                 return ResourceManager.GetString("Dia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Falta etiqueta de Inicio o de Final.
+        /// </summary>
+        public static string ErrorFaltaEtiqueta {
+            get {
+                return ResourceManager.GetString("ErrorFaltaEtiqueta", resourceCulture);
             }
         }
         
@@ -288,9 +315,9 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Busca una cadena traducida similar a Tipo Campo.
         /// </summary>
-        public static string Tipo_Campo {
+        public static string TipoCampo {
             get {
-                return ResourceManager.GetString("Tipo Campo", resourceCulture);
+                return ResourceManager.GetString("TipoCampo", resourceCulture);
             }
         }
         
@@ -304,11 +331,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Tipo Registro.
+        /// </summary>
+        public static string TipoRegistro {
+            get {
+                return ResourceManager.GetString("TipoRegistro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cuadernos Bancarios.
         /// </summary>
         public static string TituloEntidad {
             get {
                 return ResourceManager.GetString("TituloEntidad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         

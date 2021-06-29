@@ -24,7 +24,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Clave", "Descripcion", "Banco", "TipoFormato"};
+            var propiedadesVisibles = new[] { "Clave", "Descripcion", "Banco", "Formato"};
             var propiedades = Helpers.Helper.getProperties<CuadernosBancariosModel>();
 
             //model.PrimaryColumnns = new[] { "id" };
@@ -32,14 +32,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.OrdenColumnas.Add("Clave", 0);
             model.OrdenColumnas.Add("Descripcion", 1);
             model.OrdenColumnas.Add("Banco", 2);
-            model.OrdenColumnas.Add("TipoFormato", 3);
+            model.OrdenColumnas.Add("Formato", 3);
 
             return model;
         }
 
         public override string GetSelectPrincipal()
         {
-            return string.Format("select clave,descripcion,banco,tipoFormato " +
+            return string.Format("select * " +
                 "from CuadernosBancarios " +
                 "where empresa='{0}'", Empresa);
         }

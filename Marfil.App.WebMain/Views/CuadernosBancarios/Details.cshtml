@@ -12,7 +12,7 @@
 
 
 <div>
-    
+
     @{
         ViewData["readonly"] = true;
     }
@@ -25,9 +25,20 @@
 @if (ViewBag.Modificar)
 {
     <p>
-        <a class="btn btn-info margin-top"  href="@Url.Action("Edit", new {id = ((CuadernosBancariosModel)Model).Id})">
+        <a class="btn btn-info margin-top" href="@Url.Action("Edit", new {id = ((CuadernosBancariosModel)Model).Id})">
             <i class="ace-icon fa fa-pencil bigger-110"></i>
             @General.LblEditar
         </a>
     </p>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }
+)
+
 }

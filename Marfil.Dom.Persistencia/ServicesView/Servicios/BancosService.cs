@@ -25,6 +25,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #endregion
 
+        public IEnumerable<BancosModel> GetBancos()
+        {
+            return _db.Set<Bancos>().ToList().Select(f => _converterModel.GetModelView(f) as BancosModel);
+        }
 
 
     }

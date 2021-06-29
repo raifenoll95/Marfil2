@@ -129,6 +129,9 @@
   <data name="Binario" xml:space="preserve">
     <value>Binario</value>
   </data>
+  <data name="Cabecera" xml:space="preserve">
+    <value>Cabecera</value>
+  </data>
   <data name="Campo" xml:space="preserve">
     <value>Campo</value>
   </data>
@@ -144,8 +147,14 @@
   <data name="DescripcionLin" xml:space="preserve">
     <value>Descripción</value>
   </data>
+  <data name="Detalle" xml:space="preserve">
+    <value>Detalle</value>
+  </data>
   <data name="Dia" xml:space="preserve">
     <value>Día</value>
+  </data>
+  <data name="ErrorFaltaEtiqueta" xml:space="preserve">
+    <value>Falta etiqueta de Inicio o de Final</value>
   </data>
   <data name="EtiquetaFin" xml:space="preserve">
     <value>Separador Fin</value>
@@ -192,14 +201,20 @@
   <data name="Posicion" xml:space="preserve">
     <value>Posición</value>
   </data>
-  <data name="Tipo Campo" xml:space="preserve">
+  <data name="TipoCampo" xml:space="preserve">
     <value>Tipo Campo</value>
   </data>
   <data name="TipoFormato" xml:space="preserve">
     <value>Tipo Formato</value>
   </data>
+  <data name="TipoRegistro" xml:space="preserve">
+    <value>Tipo Registro</value>
+  </data>
   <data name="TituloEntidad" xml:space="preserve">
     <value>Cuadernos Bancarios</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
   </data>
   <data name="UsuarioCrea" xml:space="preserve">
     <value>Usuario Creación</value>
