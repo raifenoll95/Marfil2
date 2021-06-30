@@ -179,7 +179,7 @@ namespace Marfil.App.WebMain.Controllers
         #region Grid Devexpress
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult CuadernosBancariosLin(string registro, string formato)
+        public ActionResult CuadernosBancariosLin(string actRegistro, string registro, string formato)
         {
             var model = Session[session] as List<CuadernosBancariosLinModel>;
 
@@ -199,26 +199,27 @@ namespace Marfil.App.WebMain.Controllers
                         break;
                 }
 
-                if (ViewData["Lineas" + tipoRegistro] != null)
+                if (Session["Lineas" + tipoRegistro] != null)
                 {
-                    //Guardamos las anteriores
-                    ViewData["Lineas" + tipoRegistro] = model;
+                    //Guardamos las anteriores                  
                     foreach (var item in model)
                     {
-                        item.Registro = tipoRegistro;
+                        item.Registro = actRegistro;
                     }
+                    Session["Lineas" + actRegistro] = model;
 
                     //Mostramos las guardadas
-                    model = ViewData["Lineas" + tipoRegistro] as List<CuadernosBancariosLinModel>;
-                } else
+                    model = Session["Lineas" + tipoRegistro] as List<CuadernosBancariosLinModel>;
+                }
+                else
                 {
-                    //Guardamos las anteriores
-                    ViewData["Lineas" + tipoRegistro] = model;
+                    //Guardamos las anteriores                
                     foreach (var item in model)
                     {
-                        item.Registro = tipoRegistro;
+                        item.Registro = actRegistro;
                     }
-                    
+                    Session["Lineas" + actRegistro] = model;
+
                     //Mostrtamos vacías
                     model = new List<CuadernosBancariosLinModel>();
                 }

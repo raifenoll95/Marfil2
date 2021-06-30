@@ -118,7 +118,7 @@
         settings.CommandColumn.VisibleIndex = 8;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
 
-        if (ViewData["Formato"] != null)
+        if (ViewData["Formato"] != null && ViewData["Formato"] != "")
         {
             //var pantalla = sender as MVCxGridView;
             var formato = ViewData["Formato"];

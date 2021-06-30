@@ -27,7 +27,7 @@
     }
 
     ViewData["Formato"] = Model.Formato;
-
+    var actTipoRegistro = Model.TipoRegistro;
 }
 
 @Html.HiddenFor(f => Model.Id)
@@ -129,7 +129,7 @@
 
     </div>
     <div id="partial" class="col-md-10 col-md-offset-2">
-        @Html.Partial("_cuadernosbancarioslin", Model.Lineas/*, new ViewDataDictionary { { "Formato", Model.Formato } }*/)
+        @Html.Partial("_cuadernosbancarioslin", Model.Lineas)
     </div>
 
 </div>
@@ -149,6 +149,7 @@
         var selectedValue = tipoRegistro.options[tipoRegistro.selectedIndex].value;
         var orden = document.getElementById("Orden");
 
+        var actRegistro = "@actTipoRegistro";
         var registro = this.value;
         var formato = null;
         orden.value = 0;
@@ -157,7 +158,7 @@
             url: "/CuadernosBancarios/CuadernosBancariosLin",
             type: "POST",
             datatype: "HTML",
-            data: { registro, formato },
+            data: { actRegistro, registro, formato },
             success: function (data) {
                 $("#partial").html(data);
             }
