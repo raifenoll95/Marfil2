@@ -50,7 +50,7 @@ namespace Marfil.App.WebMain.Controllers
             {
                 if (TempData["model"] == null)
                 {
-                    Session[session] = model.Lineas;
+                    Session[session] = model.Lineas;                 
                 }
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
                 return View(model);
@@ -179,7 +179,7 @@ namespace Marfil.App.WebMain.Controllers
         #region Grid Devexpress
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult CuadernosBancariosLin(string actRegistro, string registro, string formato)
+        public ActionResult CuadernosBancariosLin(string registro, string formato)
         {
             var model = Session[session] as List<CuadernosBancariosLinModel>;
 
@@ -199,30 +199,31 @@ namespace Marfil.App.WebMain.Controllers
                         break;
                 }
 
+                var actRegistro = Session["actRegistro"] as string;
+                Session["tipoRegistro"] = tipoRegistro;
+
                 if (Session["Lineas" + tipoRegistro] != null)
                 {
                     //Guardamos las anteriores                  
-                    foreach (var item in model)
-                    {
-                        item.Registro = actRegistro;
-                    }
-                    Session["Lineas" + actRegistro] = model;
+                    Session["Lineas" + actRegistro] = model.FindAll(f => f.Registro == actRegistro.ToString());
 
                     //Mostramos las guardadas
                     model = Session["Lineas" + tipoRegistro] as List<CuadernosBancariosLinModel>;
                 }
                 else
                 {
-                    //Guardamos las anteriores                
+                    //Guardamos las anteriores
                     foreach (var item in model)
                     {
                         item.Registro = actRegistro;
                     }
-                    Session["Lineas" + actRegistro] = model;
+                    Session["Lineas" + actRegistro] = model.FindAll(f => f.Registro == actRegistro.ToString());
 
                     //Mostrtamos vacías
                     model = new List<CuadernosBancariosLinModel>();
                 }
+
+                Session["actRegistro"] = tipoRegistro;
             }
 
             if (formato != null && formato != "")
@@ -235,7 +236,12 @@ namespace Marfil.App.WebMain.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult CuadernosBancariosLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] CuadernosBancariosLinModel item)
         {
+            var actRegistro = Session["actRegistro"];
+            var tipoRegistro = Session["tipoRegistro"];
+
             var model = Session[session] as List<CuadernosBancariosLinModel>;
+
+
             try
             {
                 if (ModelState.IsValid)
@@ -248,8 +254,10 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
                         item.Id = max;
+                        item.Registro = tipoRegistro != null ? tipoRegistro.ToString() : "";
                         model.Add(item);
-                        Session[session] = model;
+
+                        Session[session] = model;                   
                     }
 
                 }
@@ -260,9 +268,16 @@ namespace Marfil.App.WebMain.Controllers
                 throw;
             }
 
+            if(tipoRegistro != null && tipoRegistro.ToString() != "")
+            {
+                var modelFiltro = model.FindAll(f => f.Registro == tipoRegistro.ToString());
+                return PartialView("_cuadernosbancarioslin", modelFiltro);
+            }
+            else
+            {
+                return PartialView("_cuadernosbancarioslin", model);
+            }
 
-
-            return PartialView("_cuadernosbancarioslin", model);
         }
 
         [HttpPost, ValidateInput(false)]

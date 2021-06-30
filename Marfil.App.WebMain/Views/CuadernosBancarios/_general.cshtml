@@ -27,7 +27,10 @@
     }
 
     ViewData["Formato"] = Model.Formato;
-    var actTipoRegistro = Model.TipoRegistro;
+    Session["actRegistro"] = Model.TipoRegistro.ToString();
+    Session["LineasCabecera"] = null;
+    Session["LineasDetalle"] = null;
+    Session["LineasTotal"] = null;
 }
 
 @Html.HiddenFor(f => Model.Id)
@@ -143,22 +146,19 @@
 }
 <script type="text/javascript">
 
-    // Habilitar/Deshabilitar campo Orden
     $("#TipoRegistro").on('change', function () {
-        var tipoRegistro = document.getElementById("TipoRegistro");
-        var selectedValue = tipoRegistro.options[tipoRegistro.selectedIndex].value;
         var orden = document.getElementById("Orden");
-
-        var actRegistro = "@actTipoRegistro";
         var registro = this.value;
         var formato = null;
+
         orden.value = 0;
-        orden.disabled = selectedValue == 1 ? false : true;
+        orden.disabled = registro == 1 ? false : true;
+
         $.ajax({
             url: "/CuadernosBancarios/CuadernosBancariosLin",
             type: "POST",
             datatype: "HTML",
-            data: { actRegistro, registro, formato },
+            data: { registro, formato },
             success: function (data) {
                 $("#partial").html(data);
             }
