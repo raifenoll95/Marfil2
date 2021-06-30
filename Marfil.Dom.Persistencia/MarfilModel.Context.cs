@@ -14,7 +14,8 @@ namespace Marfil.Dom.Persistencia
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using Marfil.Inf.ResourcesGlobalization.Textos.Entidades;
+
     public partial class MarfilEntities : DbContext
     {
         public MarfilEntities()
