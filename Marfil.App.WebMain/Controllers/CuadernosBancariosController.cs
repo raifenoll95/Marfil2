@@ -179,10 +179,55 @@ namespace Marfil.App.WebMain.Controllers
         #region Grid Devexpress
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult CuadernosBancariosLin(string formato)
+        public ActionResult CuadernosBancariosLin(string registro, string formato)
         {
             var model = Session[session] as List<CuadernosBancariosLinModel>;
-            ViewData["Formato"] = formato == "0" ? "Fijo" : "Variable" ;
+
+            if (registro != null && registro != "")
+            {
+                var tipoRegistro = "";
+                switch (registro)
+                {
+                    case "0":
+                        tipoRegistro = "Cabecera";
+                        break;
+                    case "1":
+                        tipoRegistro = "Detalle";
+                        break;
+                    case "2":
+                        tipoRegistro = "Total";
+                        break;
+                }
+
+                if (ViewData["Lineas" + tipoRegistro] != null)
+                {
+                    //Guardamos las anteriores
+                    ViewData["Lineas" + tipoRegistro] = model;
+                    foreach (var item in model)
+                    {
+                        item.Registro = tipoRegistro;
+                    }
+
+                    //Mostramos las guardadas
+                    model = ViewData["Lineas" + tipoRegistro] as List<CuadernosBancariosLinModel>;
+                } else
+                {
+                    //Guardamos las anteriores
+                    ViewData["Lineas" + tipoRegistro] = model;
+                    foreach (var item in model)
+                    {
+                        item.Registro = tipoRegistro;
+                    }
+                    
+                    //Mostrtamos vacías
+                    model = new List<CuadernosBancariosLinModel>();
+                }
+            }
+
+            if (formato != null && formato != "")
+            {
+                ViewData["Formato"] = formato == "0" ? "Fijo" : "Variable";
+            }         
             return PartialView("_cuadernosbancarioslin", model);
         }
 

@@ -42,6 +42,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
 
         [Display(ResourceType = typeof(RCuadernos), Name = "Orden")]
         public short Orden { get; set; }
+        public string Registro { get; set; }
         [Required]
         [Display(ResourceType = typeof(RCuadernos), Name = "Posicion")]
         public short Posicion { get; set; }
