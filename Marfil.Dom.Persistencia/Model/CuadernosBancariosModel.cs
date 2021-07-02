@@ -133,6 +133,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         [Display(ResourceType = typeof(RCuadernos), Name = "Clave")]
         public string Clave { get; set; }
         [Display(ResourceType = typeof(RCuadernos), Name = "Descripcion")]
+        [StringLength(30, ErrorMessage = "La descripción debe tener 30 caracteres cómo máximo")]
         public string Descripcion { get; set; }
         [Display(ResourceType = typeof(RCuadernos), Name = "Banco")]
         public string Banco { get; set; }

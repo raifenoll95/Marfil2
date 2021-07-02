@@ -87,6 +87,7 @@
         {
             c.FieldName = "EtiquetaIni";
             c.Name = "EtiquetaIni";
+            c.Visible = false;
         });
 
         settings.Columns.Add(c =>
@@ -99,6 +100,7 @@
         {
             c.FieldName = "EtiquetaFin";
             c.Name = "EtiquetaFin";
+            c.Visible = false;
         });
 
         settings.Columns.Add(c =>
@@ -118,10 +120,10 @@
         settings.CommandColumn.VisibleIndex = 8;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
 
-        if (ViewData["Formato"] != null && ViewData["Formato"] != "")
+        if (Session["Formato"] != null && Session["Formato"] != "")
         {
             //var pantalla = sender as MVCxGridView;
-            var formato = ViewData["Formato"];
+            var formato = Session["Formato"];
             settings.Columns["EtiquetaIni"].Visible = formato.ToString() == "Fijo" ? false : true;
             settings.Columns["EtiquetaFin"].Visible = formato.ToString() == "Fijo" ? false : true;
         }

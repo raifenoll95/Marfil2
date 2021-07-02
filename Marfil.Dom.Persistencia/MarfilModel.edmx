@@ -1153,6 +1153,7 @@
           <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="idCab" Type="int" />
           <Property Name="orden" Type="smallint" />
+          <Property Name="registro" Type="nvarchar" MaxLength="250" />
           <Property Name="posicion" Type="smallint" />
           <Property Name="longitud" Type="smallint" />
           <Property Name="tipoCampo" Type="int" />
@@ -12984,6 +12985,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="condicion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="descripcionLin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CuadernosBancarios" Relationship="MarfilModel.FK_CuadernosLin" FromRole="CuadernosBancariosLin" ToRole="CuadernosBancarios" />
+          <Property Name="registro" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_CuadernosLin">
           <End Type="MarfilModel.CuadernosBancarios" Role="CuadernosBancarios" Multiplicity="0..1" />
@@ -17638,6 +17640,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="CuadernosBancariosLin">
             <EntityTypeMapping TypeName="MarfilModel.CuadernosBancariosLin">
               <MappingFragment StoreEntitySet="CuadernosBancariosLin">
+                <ScalarProperty Name="registro" ColumnName="registro" />
                 <ScalarProperty Name="descripcionLin" ColumnName="descripcionLin" />
                 <ScalarProperty Name="condicion" ColumnName="condicion" />
                 <ScalarProperty Name="etiquetaFin" ColumnName="etiquetaFin" />

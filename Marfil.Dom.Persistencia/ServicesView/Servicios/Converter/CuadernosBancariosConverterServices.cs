@@ -56,6 +56,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newitem.condicion = item.Condicion;
                 newitem.descripcionLin = item.DescripcionLin;
                 newitem.longitud = item.Longitud;
+                newitem.registro = item.Registro;
                 newitem.tipoCampo = (int)item.TipoCampo;
                 result.CuadernosBancariosLin.Add(newitem);
             }
@@ -82,6 +83,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                            EtiquetaIni = item.etiquetaIni,
                            DescripcionLin = item.descripcionLin,
                            Longitud = item.longitud ?? 0,
+                           Registro = item.registro,
                            TipoCampo = item.tipoCampo.HasValue ? (CuadernosBancariosLinModel.TipoCampos)item.tipoCampo.Value : CuadernosBancariosLinModel.TipoCampos.Alfanumerico
                        }).ToList();
 
@@ -128,6 +130,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newitem.condicion = item.Condicion;
                 newitem.descripcionLin = item.DescripcionLin;
                 newitem.longitud = item.Longitud;
+                newitem.registro = item.Registro;
                 newitem.tipoCampo = (int)item.TipoCampo;
                 result.CuadernosBancariosLin.Add(newitem);
             }

@@ -26,14 +26,28 @@
         Model.FechaMod = DateTime.Now;
     }
 
-    ViewData["Formato"] = Model.Formato;
+    Session["Formato"] = Model.Formato;
     Session["actRegistro"] = Model.TipoRegistro.ToString();
-    Session["LineasCabecera"] = null;
-    Session["LineasDetalle"] = null;
-    Session["LineasTotal"] = null;
-}
+    Session["tipoRegistro"] = Model.TipoRegistro.ToString(); ;
 
-@Html.HiddenFor(f => Model.Id)
+    if (iseditable)
+    {
+        Session["LineasCabecera"] = Model.Lineas.FindAll(f=>f.Registro=="Cabecera") ;
+        Session["LineasDetalle"] = Model.Lineas.FindAll(f => f.Registro == "Detalle");
+        Session["LineasTotal"] = Model.Lineas.FindAll(f => f.Registro == "Total");
+
+        Model.Lineas = Session["Lineas"+Model.TipoRegistro.ToString()] as List<CuadernosBancariosLinModel>;
+    }
+    else
+    {
+        Session["LineasCabecera"] = null;
+        Session["LineasDetalle"] = null;
+        Session["LineasTotal"] = null;
+    }
+
+    }
+
+    @Html.HiddenFor(f => Model.Id)
 @Html.HiddenFor(f => Model.Empresa)
 @Html.HiddenFor(f => Model.FechaCrea)
 @Html.HiddenFor(f => Model.FechaMod)
@@ -44,7 +58,6 @@
 {
     @Html.HiddenFor(f => Model.Banco)
     @Html.HiddenFor(f => Model.Formato)
-    @Html.HiddenFor(f => Model.TipoRegistro)
 }
 
 <div class="form-group">
@@ -76,6 +89,7 @@
     @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
     <div class="col-md-8">
         @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
     </div>
 </div>
 
@@ -84,7 +98,7 @@
     <div class="col-md-2">
         @if (isreadonly)
         {
-            @Html.EnumDropDownList("TipoRegistro", Model.TipoRegistro, new { id = "TipoRegistro", @readonly = "readonly", @class = "form-control" })
+            @Html.EnumDropDownList("TipoRegistro", Model.TipoRegistro, new { id = "TipoRegistro", @disabled = "disabled", @class = "form-control" })
         }
         else
         {
@@ -95,7 +109,7 @@
 
     @Html.LabelFor(f => Model.Orden, new { @class = "control-label col-md-3" })
     <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Orden, (object)new { id = "Orden", @readonly = "readonly", @class = "form-control" })
+        @Html.TextBoxFor(f => Model.Orden, (object)new { id = "Orden", @disabled = "disabled", @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Orden, "", new { @class = "text-danger" })
     </div>
 
@@ -103,7 +117,7 @@
     <div class="col-md-2">
         @if (isreadonly || iseditable)
         {
-            @Html.EnumDropDownList("Formato", Model.Formato, new { id = "Formato", @readonly = "readonly", @class = "form-control" })
+            @Html.EnumDropDownList("Formato", Model.Formato, new { id = "Formato", @disabled = "disabled", @class = "form-control" })
         }
         else
         {

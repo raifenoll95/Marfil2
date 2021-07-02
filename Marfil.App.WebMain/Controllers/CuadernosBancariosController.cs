@@ -116,6 +116,8 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 Session[session] = ((CuadernosBancariosModel)model).Lineas;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
+                //var modelo = model as CuadernosBancariosModel;
+                //modelo.Lineas = modelo.Lineas.FindAll(f => f.Registro == modelo.TipoRegistro.ToString());
                 return View(model);
             }
         }
@@ -172,11 +174,18 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
-                return View(model);
+                var modelo = model as CuadernosBancariosModel;
+                modelo.Lineas = modelo.Lineas.FindAll(f => f.Registro == modelo.TipoRegistro.ToString());
+                return View(modelo);
             }
         }
 
         #region Grid Devexpress
+        [HttpPost, ValidateInput(false)]
+        public void CuadernosBancariosLinSession(string registro)
+        {
+            Session["tipoRegistro"] = registro;
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult CuadernosBancariosLin(string registro, string formato)
@@ -215,7 +224,7 @@ namespace Marfil.App.WebMain.Controllers
                     //Guardamos las anteriores
                     foreach (var item in model)
                     {
-                        item.Registro = actRegistro;
+                        if (item.Registro == "") { item.Registro = actRegistro; }                      
                     }
                     Session["Lineas" + actRegistro] = model.FindAll(f => f.Registro == actRegistro.ToString());
 
@@ -228,7 +237,7 @@ namespace Marfil.App.WebMain.Controllers
 
             if (formato != null && formato != "")
             {
-                ViewData["Formato"] = formato == "0" ? "Fijo" : "Variable";
+                Session["Formato"] = formato == "0" ? "Fijo" : "Variable";
             }         
             return PartialView("_cuadernosbancarioslin", model);
         }

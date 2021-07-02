@@ -27,6 +27,7 @@ namespace Marfil.Dom.Persistencia
         public string etiquetaFin { get; set; }
         public string condicion { get; set; }
         public string descripcionLin { get; set; }
+        public string registro { get; set; }
     
         public virtual CuadernosBancarios CuadernosBancarios { get; set; }
     }
