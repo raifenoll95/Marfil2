@@ -26,6 +26,7 @@
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
     var campoverificacioncargo = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var campoverificacionabono = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+
 }
 
 <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
@@ -82,12 +83,15 @@
         </div>
 
         @*fecha contable*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.FechaRemesa, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(f => Model.FechaRemesa)
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaRemesa, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.FechaRemesa)
         </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaRemesa, "", new { @class = "text-danger" })
+        </div>
+    </div>
     </div>
 
     @*Cta Cargo 2*@

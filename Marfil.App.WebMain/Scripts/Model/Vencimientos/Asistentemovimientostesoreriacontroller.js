@@ -297,14 +297,15 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
     //Cuando el Circuito Tesoreria cambie, la situacion final de la ultima pantalla debera asignarse
     eventAggregator.RegisterEvent("Circuitotesoreria-Buscarfocus", function (message) {
-
-        $http.get($scope.urlUltimaSituacion + "?circuito=" + JSON.stringify(message)).success(function (data) {
-            var modeloSituacion = JSON.parse(data);
-            $('#SituacionFinal').val(modeloSituacion.Cod);
-            window.document.getElementById("cv-SituacionFinal-descripcion").textContent = modeloSituacion.Descripcion;
-        }).error(function (error) {
-            console.log(error);
-        });
+        if ($scope.urlUltimaSituacion != undefined) {
+            $http.get($scope.urlUltimaSituacion + "?circuito=" + JSON.stringify(message)).success(function (data) {
+                var modeloSituacion = JSON.parse(data);
+                $('#SituacionFinal').val(modeloSituacion.Cod);
+                window.document.getElementById("cv-SituacionFinal-descripcion").textContent = modeloSituacion.Descripcion;
+            }).error(function (error) {
+                console.log(error);
+            });
+        }
     });
 
 

@@ -16,6 +16,12 @@
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Descripcion
+    }).ToList();
+    gruposPago.Insert(0, new SelectListItem() { Value = "", Text = "" });
 
     var listdescripciones = WebHelper.GetApplicationHelper().GetListDescripcionAsientos().Select(f => new SelectListItem()
     {
@@ -93,6 +99,15 @@
                (object)new { @aria_label = "Codigodescripcionasiento", @class = "form-control", @disabled = "disabled" } : iseditable?
                (object)new { @aria_label = "Codigodescripcionasiento", @class = "form-control"} : 
                (object)new { @aria_label = "Codigodescripcionasiento", @ng_model = "Codigodescripcionasiento", @class = "form-control" })
+        </div>
+    </div>
+
+    @*Modo de pago preferido*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmodopagopreferido, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fkmodopagopreferido, gruposPago, new { @class = "form-control", @style = "width: 350px;" })
+            @Html.ValidationMessageFor(f => Model.Fkmodopagopreferido, "", new { @class = "text-danger" })
         </div>
     </div>
 

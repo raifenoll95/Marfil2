@@ -215,7 +215,6 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     //Guardamos las anteriores                  
                     Session["Lineas" + actRegistro] = model.FindAll(f => f.Registro == actRegistro.ToString());
-
                     //Mostramos las guardadas
                     model = Session["Lineas" + tipoRegistro] as List<CuadernosBancariosLinModel>;
                 }

@@ -11,6 +11,11 @@
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
     var isNuevo = !isreadonly && !iseditable;
+    var appService = WebHelper.GetApplicationHelper();
+
+    Model.Monedabase = int.Parse(appService.GetCurrentEmpresa().FkMonedaBase);
+    Model.Monedagiro = int.Parse(appService.GetCurrentEmpresa().FkMonedaBase);
+    Model.Monedafactura = int.Parse(appService.GetCurrentEmpresa().FkMonedaBase);
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -22,6 +27,7 @@
 @Html.HiddenFor(f => Model.Tipo)
 @Html.HiddenFor(f => Model.Monedabase)
 @Html.HiddenFor(f => Model.Monedagiro)
+@Html.HiddenFor(f => Model.Monedafactura)
 @Html.HiddenFor(f => Model.Id)
 @*@Html.HiddenFor(f => Model.Importefactura)*@
 @*@Html.HiddenFor(f => Model.Cambioaplicado)*@
@@ -52,10 +58,10 @@
     </div>
 </div>
 
-    @{
-        if (isNuevo || iseditable)
-        {
-            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
-            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
-        }
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
     }
+}

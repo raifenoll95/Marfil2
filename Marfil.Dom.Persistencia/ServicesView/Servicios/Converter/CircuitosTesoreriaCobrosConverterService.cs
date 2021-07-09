@@ -35,6 +35,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.situacioninicial = viewmodel.Situacioninicial;
             result.situacionfinal = viewmodel.Situacionfinal;
             result.datos = viewmodel.Datos;
+            result.fkmodopagopreferido = viewmodel.Fkmodopagopreferido;
             result.asientocontable = viewmodel.Asientocontable;
             result.documentocartera = viewmodel.Documentocartera;
             result.fecharemesa = viewmodel.Fecharemesa;
@@ -75,6 +76,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.situacioninicial = viewmodel.Situacioninicial;
             result.situacionfinal = viewmodel.Situacionfinal;
             result.datos = viewmodel.Datos;
+            result.fkmodopagopreferido = viewmodel.Fkmodopagopreferido;
             result.documentocartera = viewmodel.Documentocartera;
             result.asientocontable = viewmodel.Asientocontable;
             result.fecharemesa = viewmodel.Fecharemesa;
@@ -116,6 +118,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Situacioninicial = viewmodel.situacioninicial,
                 Situacionfinal = viewmodel.situacionfinal,
                 Datos = viewmodel.datos,
+                Fkmodopagopreferido = viewmodel.fkmodopagopreferido,
                 Documentocartera = viewmodel.documentocartera.Value,
                 Asientocontable = viewmodel.asientocontable.Value,
                 Fecharemesa = viewmodel.fecharemesa.Value,

@@ -40,7 +40,7 @@
         @*CircuitosTesoreria*@
         <div id="cuenta1" class="form-group cuentaa1" onblur="myFunction()">
             @Html.LabelFor(f => Model.Circuitotesoreria, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10" id="Circuitostesoreria">
                 @{
                     cvcircuitos.Name = "Circuitotesoreria";
                     cvcircuitos.Url = Url.Action("CircuitosTesoreriaApi", "Api");
@@ -52,7 +52,7 @@
                 @Html.Partial("CampoverificacionUI", cvcircuitos)
             </div>
             <div class="col-md-10 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.Circuitotesoreria, "", new { @class = "text-danger", @onchange = "onchangeeventcargo1();" })
+                @Html.ValidationMessageFor(f => Model.Circuitotesoreria, "", new { @class = "text-danger",@onchange = "onchangeeventcargo1();"})
             </div>
         </div>
 
@@ -133,3 +133,40 @@
             <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
         </div>
     </form>
+
+    <script type="text/javascript">
+
+        $("#Circuitotesoreria").on('change', function () {
+            var valor = parseInt(this.value);
+
+            if (valor == 13) {
+                const tiempoTranscurrido = Date.now();
+                const hoy = new Date(tiempoTranscurrido);
+                $('#FechaRemesa').val(hoy.toLocaleDateString());
+            } else {
+                $('#FechaRemesa').val('');
+            }
+
+            $.ajax({
+                url: '@Url.Action("ObtenerPreferido","MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    console.log(data);
+                        $("#Fkmodospago").val(data);
+                    }
+                })
+        });
+
+        function formatoFecha(fecha, formato) {
+            const map = {
+                dd: fecha.getDate(),
+                mm: fecha.getMonth() + 1,
+                yyyy: fecha.getFullYear()
+            }
+
+            return formato.replace(/dd|mm|yy|yyy/gi, matched => map[matched])
+        }
+
+    </script>

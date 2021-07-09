@@ -167,9 +167,8 @@
 
         orden.value = 0;
         orden.disabled = registro == 1 ? false : true;
-
         $.ajax({
-            url: "/CuadernosBancarios/CuadernosBancariosLin",
+            url: '@Url.Action("CuadernosBancariosLin", "CuadernosBancarios")',
             type: "POST",
             datatype: "HTML",
             data: { registro, formato },
@@ -183,9 +182,9 @@
         var formato = this.value;
         var registro = null;
         //var selectedValue = formato.options[formato.selectedIndex].value;
-        var lineas = @Html.Raw(Json.Encode(Model.Lineas));
+        //var lineas = @Html.Raw(Json.Encode(Model.Lineas));
         $.ajax({
-            url: "/CuadernosBancarios/CuadernosBancariosLin",
+            url: '@Url.Action("CuadernosBancariosLin", "CuadernosBancarios")',
             type: "POST",
             datatype: "HTML",
             data: { registro, formato },

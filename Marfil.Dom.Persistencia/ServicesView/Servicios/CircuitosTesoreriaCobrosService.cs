@@ -251,5 +251,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return cobrador;
         }
+
+        public string GetPagoPreferido(int? id)
+        {
+            return _db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().fkmodopagopreferido;
+        }
     }
 }

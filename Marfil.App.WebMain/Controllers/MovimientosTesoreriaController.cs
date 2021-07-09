@@ -84,6 +84,26 @@ namespace Marfil.App.WebMain.Controllers
             return RedirectToAction("AsistenteMovimientosTesoreria");
         }
 
+        [HttpGet]
+        public string ObtenerPreferido(int? valor)
+        {
+            var modoPago = "";
+            var cod = "";
+            var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago();
+
+            using ( var service = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService)
+            {
+                modoPago = service.GetPagoPreferido(valor);
+            }
+
+            if (modoPago != null && modoPago != "")
+            {
+                cod = gruposPago.Where(f => f.Descripcion == modoPago).FirstOrDefault().Valor;
+            }
+
+            return cod;
+        }
+
         #endregion
 
     }

@@ -84,6 +84,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "DescripcionAsiento")]
         public string Codigodescripcionasiento { get; set; }
 
+        //Modo de pago preferido
+        [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Fkmodopagopreferido")]
+        public string Fkmodopagopreferido { get; set; }
+
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Datos")]
         public int? Datos { get; set; }
 

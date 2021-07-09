@@ -854,6 +854,7 @@
           <Property Name="situacionfinal" Type="varchar" MaxLength="1" />
           <Property Name="datos" Type="int" />
           <Property Name="asientocontable" Type="bit" />
+          <Property Name="fkmodopagopreferido" Type="varchar" MaxLength="100" />
           <Property Name="fecharemesa" Type="bit" />
           <Property Name="fechapago" Type="bit" />
           <Property Name="liquidariva" Type="bit" />
@@ -12434,6 +12435,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="codigodescripcionasiento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="documentocartera" Type="Boolean" />
           <Property Name="actualizarcobrador" Type="Boolean" />
+          <Property Name="fkmodopagopreferido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GuiasBalances">
           <Key>
@@ -17256,6 +17258,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="CircuitosTesoreriaCobros">
             <EntityTypeMapping TypeName="MarfilModel.CircuitosTesoreriaCobros">
               <MappingFragment StoreEntitySet="CircuitosTesoreriaCobros">
+                <ScalarProperty Name="fkmodopagopreferido" ColumnName="fkmodopagopreferido" />
                 <ScalarProperty Name="actualizarcobrador" ColumnName="actualizarcobrador" />
                 <ScalarProperty Name="documentocartera" ColumnName="documentocartera" />
                 <ScalarProperty Name="codigodescripcionasiento" ColumnName="codigodescripcionasiento" />
