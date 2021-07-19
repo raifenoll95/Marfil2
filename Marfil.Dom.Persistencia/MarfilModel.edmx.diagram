@@ -258,6 +258,7 @@
         <EntityTypeShape EntityType="MarfilModel.CuadernosBancarios" Width="1.5" PointX="40.375" PointY="14.75" />
         <EntityTypeShape EntityType="MarfilModel.CuadernosBancariosLin" Width="1.5" PointX="42.625" PointY="15.625" />
         <AssociationConnector Association="MarfilModel.FK_CuadernosLin" />
+        <EntityTypeShape EntityType="MarfilModel.Remesas" Width="1.5" PointX="41.375" PointY="21.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
