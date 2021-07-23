@@ -45,5 +45,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         #endregion
+
+        public IEnumerable<CuadernosBancariosModel> GetCuadernos()
+        {
+            return _db.Set<CuadernosBancarios>().ToList().Select(f => _converterModel.GetModelView(f) as CuadernosBancariosModel);
+        }
     }
 }

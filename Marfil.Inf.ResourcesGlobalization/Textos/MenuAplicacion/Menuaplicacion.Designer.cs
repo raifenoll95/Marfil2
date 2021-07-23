@@ -376,6 +376,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Conf. de documentos: Remesa.
+        /// </summary>
+        public static string configurardocumentosremesa {
+            get {
+                return ResourceManager.GetString("configurardocumentosremesa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Conf. de documentos: reservas.
         /// </summary>
         public static string configurardocumentosreservas {
@@ -1263,6 +1272,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string regimeniva {
             get {
                 return ResourceManager.GetString("regimeniva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Remesas.
+        /// </summary>
+        public static string remesas {
+            get {
+                return ResourceManager.GetString("remesas", resourceCulture);
             }
         }
         

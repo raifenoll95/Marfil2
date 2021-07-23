@@ -23,6 +23,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 using Marfil.Dom.Persistencia.Helpers;
 using Newtonsoft.Json;
 using Marfil.Dom.Persistencia.Model.Documentos.Margen;
+using Marfil.Dom.Persistencia.Model.Documentos.CarteraVencimientos;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos
 {
@@ -98,6 +99,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos
             else if (tipo == TipoDocumentoImpresion.CarteraVencimientos)
             {
                 return new CarteraVencimientosReport(user, primarykey);
+            }
+            else if (tipo == TipoDocumentoImpresion.Remesa)
+            {
+                return new RemesaReport(user, primarykey);
             }
             else if (tipo == TipoDocumentoImpresion.Asientos)
             {

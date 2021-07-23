@@ -1,0 +1,48 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+
+@model RemesasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Monedabase)
+@Html.HiddenFor(f => Model.Monedagiro)
+@Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Cambioaplicado)
+
+<div id="tabs">
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+        <li><a data-toggle="tab" href="#detalle">Detalle</a></li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div id="general" class="tab-pane fade in active">
+        @Html.Partial("_general", Model)
+    </div>
+    <div id="detalle" class="tab-pane fade margin-bottom">
+            @Html.Partial("_detalle", Model)
+        </div>
+</div>
+
+@*@{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }*@

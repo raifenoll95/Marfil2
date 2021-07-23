@@ -1164,6 +1164,14 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Usuario = context.Usuario;
                 return result as T;
             }
+            else if (typeof(RemesasModel) == typeof(T))
+            {
+                var result = new RemesasModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                result.Usuario = context.Usuario;
+                return result as T;
+            }
             else if (typeof(PrevisionesCarteraModel) == typeof(T))
             {
                 var result = new PrevisionesCarteraModel(context);

@@ -594,4 +594,10 @@
   <data name="cuadernosBancarios" xml:space="preserve">
     <value>Cuadernos Bancarios</value>
   </data>
+  <data name="remesas" xml:space="preserve">
+    <value>Remesas</value>
+  </data>
+  <data name="configurardocumentosremesa" xml:space="preserve">
+    <value>Conf. de documentos: Remesa</value>
+  </data>
 </root>

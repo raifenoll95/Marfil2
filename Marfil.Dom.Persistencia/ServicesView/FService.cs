@@ -168,6 +168,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(VencimientosModel), typeof(VencimientosService));
             _servicesTypes.Add(typeof(CircuitoTesoreriaCobrosModel), typeof(CircuitosTesoreriaCobrosService));
             _servicesTypes.Add(typeof(CarteraVencimientosModel), typeof(CarteraVencimientosService));
+            _servicesTypes.Add(typeof(RemesasModel), typeof(RemesasService));
             //_servicesTypes.Add(typeof(CarteraModel), typeof(CarteraService));
 
             _servicesTypes.Add(typeof(OportunidadesModel), typeof(OportunidadesService));

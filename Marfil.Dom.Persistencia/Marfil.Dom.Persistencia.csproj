@@ -558,7 +558,9 @@
     <Compile Include="Model\CRM\SeguimientosModel.cs" />
     <Compile Include="Model\CuadernosBancariosModel.cs" />
     <Compile Include="Model\Documentos\CarteraVencimientos\CarteraVencimientosReport.cs" />
+    <Compile Include="Model\Documentos\CarteraVencimientos\RemesaReport.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\AsistenteMovimientosTesoreriaModel.cs" />
+    <Compile Include="Model\Documentos\CobrosYPagos\RemesasModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosCarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\CarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\ValidDataAttribute.cs" />
@@ -888,6 +890,7 @@
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
@@ -916,6 +919,7 @@
     <Compile Include="ServicesView\Servicios\CuadernosBancariosService.cs" />
     <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
+    <Compile Include="ServicesView\Servicios\RemesasService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />

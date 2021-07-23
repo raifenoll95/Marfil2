@@ -22,6 +22,7 @@ using Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion;
 using Resources;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -840,6 +841,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             using (var service = new BancosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
             {
                 return service.GetBancos();
+            }
+        }
+
+        public IEnumerable<CuadernosBancariosModel> GetListCuadernos()
+        {
+            using (var service = new CuadernosBancariosServices(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetCuadernos();
             }
         }
 

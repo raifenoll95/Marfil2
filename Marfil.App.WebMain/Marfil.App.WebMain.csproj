@@ -338,6 +338,7 @@
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
     <Compile Include="Controllers\ReferenciasDocumentosRelacionadosFacturasApiController.cs" />
+    <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
@@ -3567,6 +3568,11 @@
     <Content Include="Views\CuadernosBancarios\Details.cshtml" />
     <Content Include="Views\CuadernosBancarios\Edit.cshtml" />
     <Content Include="Views\CuadernosBancarios\_cuadernosbancarioslin.cshtml" />
+    <Content Include="Views\Remesas\Index.cshtml" />
+    <Content Include="Views\Remesas\Details.cshtml" />
+    <Content Include="Views\Remesas\_remesas.cshtml" />
+    <Content Include="Views\Remesas\_general.cshtml" />
+    <Content Include="Views\Remesas\_detalle.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -3583,6 +3589,7 @@
     <Folder Include="App_Data\Ficheros\marfilestable\0001\" />
     <Folder Include="App_Data\Ficheros\Thumbnails\" />
     <Folder Include="assets\css\images\ie6\" />
+    <Folder Include="assets\ficheros\" />
     <Folder Include="Misc\ListIndex\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\cldr\util\" />

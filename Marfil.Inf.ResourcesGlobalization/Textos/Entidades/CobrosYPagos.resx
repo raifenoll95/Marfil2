@@ -351,4 +351,13 @@
   <data name="TituloEntidadCartera" xml:space="preserve">
     <value>Cartera</value>
   </data>
+  <data name="TituloRemesa" xml:space="preserve">
+    <value>Remesa</value>
+  </data>
+  <data name="DescripcionCuenta" xml:space="preserve">
+    <value>Descripción Cuenta</value>
+  </data>
+  <data name="Cuadernos" xml:space="preserve">
+    <value>Cuaderno Bancario</value>
+  </data>
 </root>

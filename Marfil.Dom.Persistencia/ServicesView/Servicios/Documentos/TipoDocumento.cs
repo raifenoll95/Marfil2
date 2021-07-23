@@ -132,6 +132,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
         ImputacionCostes = 1030,
         [StringValue(typeof(RCobrosYPagos), "TituloEntidadCartera")]
         CarteraVencimientos = 1050,
+        [StringValue(typeof(RCobrosYPagos), "TituloRemesa")]
+        Remesa = 1060,
         [StringValue(typeof(RTransformaciones), "TituloEntidadSingularAcabados")]
         TransformacionesAcabados = 2000
     }

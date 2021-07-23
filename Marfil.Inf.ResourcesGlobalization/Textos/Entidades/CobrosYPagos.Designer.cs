@@ -160,6 +160,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuaderno Bancario.
+        /// </summary>
+        public static string Cuadernos {
+            get {
+                return ResourceManager.GetString("Cuadernos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cubierto parcialmente.
         /// </summary>
         public static string Cubierto {
@@ -201,6 +210,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string CuentaTesoreriaCobrador {
             get {
                 return ResourceManager.GetString("CuentaTesoreriaCobrador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descripción Cuenta.
+        /// </summary>
+        public static string DescripcionCuenta {
+            get {
+                return ResourceManager.GetString("DescripcionCuenta", resourceCulture);
             }
         }
         
@@ -732,6 +750,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string TituloEntidadCartera {
             get {
                 return ResourceManager.GetString("TituloEntidadCartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Remesa.
+        /// </summary>
+        public static string TituloRemesa {
+            get {
+                return ResourceManager.GetString("TituloRemesa", resourceCulture);
             }
         }
         

@@ -1,0 +1,120 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Resources
+
+@model RemesasModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+
+    var listCuadernos = WebHelper.GetApplicationHelper().GetListCuadernos().Select(f => new SelectListItem()
+    {
+        Text = f.Clave,
+        Value = f.Clave,
+
+    }).ToList();
+    listCuadernos.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@*Tipo*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipovencimiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipovencimiento", Model.Tipovencimiento, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipovencimiento, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Codigoremesa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Codigoremesa, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+@*Cuenta tesoreria*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkcuentastesoreria, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+
+        @{
+            campoverificacion.Name = "Fkcuentatesoreria";
+            campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
+            campoverificacion.Valor = Model.Fkcuentastesoreria;
+            campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Cuentastesoreria + "}";
+            campoverificacion.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentastesoreria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Importegiro, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Importegiro, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-2">
+        @Html.ValidationMessageFor(f => Model.Importegiro, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Fecharemesa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fecharemesa)
+    </div>
+</div>
+
+<div class="form-group">
+
+    @Html.LabelFor(f => Model.Cuadernos, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Cuadernos, listCuadernos, (object)new { @class = "form-control" })
+    </div>
+
+    <span>
+        <a class="btn btn-success btn-sm" id="imprimir">
+            <i class="fa fa-print"></i>
+            @General.LblImprimir
+        </a>
+    </span>
+
+</div>
+
+<script type="text/javascript">
+
+    $("#imprimir").click( function () {
+
+        var idCuaderno = document.getElementById("Cuadernos");
+        var valorCuaderno = idCuaderno.options[idCuaderno.selectedIndex].value;
+        console.log("Valor " + valorCuaderno);
+        if (valorCuaderno != "" && valorCuaderno != null) {
+            $.ajax({
+                url: '@Url.Action("ImprimirCuaderno", "Remesas")',
+                type: "POST",
+                dataType: "text",
+                data: { valorCuaderno }
+            })
+        } else {
+            alert("Indique un cuaderno para imprimir");
+        }
+
+    });
+
+</script>

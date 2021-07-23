@@ -219,7 +219,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         #endregion
     }
 
-    public class CarteraVencimientosModel : BaseModel<CarteraVencimientosModel, CarteraVencimientos>, IDocument, IGaleria
+    public class CarteraVencimientosModel : BaseModel<CarteraVencimientosModel, Persistencia.CarteraVencimientos>, IDocument, IGaleria
     {
 
         //Lineas

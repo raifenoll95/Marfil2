@@ -563,6 +563,45 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return cartera;
         }
 
+        //-----------------------GENERAR REGISTRO EN REMESA-----------------------
+        public RemesasModel CrearRegistroRemesa(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion)
+        {
+            RemesasModel remesa = new RemesasModel(_context);
+            remesa.Empresa = Empresa;
+            remesa.Tipovencimiento = model.Tipo == "0" ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
+            remesa.Fkseriescontables = model.Tipo == "0" ? _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").Select(f => f.id).SingleOrDefault() :
+                _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").Select(f => f.id).SingleOrDefault();
+            remesa.Situacion = nuevasituacion;
+            remesa.Traza = registro.Traza; //Num Doc. *NF*
+            remesa.Fkcuentas = registro.Fkcuentas;
+            remesa.Importegiro = registro.Importegiro;
+            remesa.Comentario = !String.IsNullOrEmpty(model.Comentario) ? model.Comentario : registro.Comentario;
+            remesa.Fkformaspago = registro.Fkformaspago;
+            remesa.Fkcuentastesoreria = !String.IsNullOrEmpty(model.Fkcuentatesoreria) ? model.Fkcuentatesoreria : registro.Fkcuentatesoreria;
+            remesa.Fechavencimiento = registro.Fechavencimiento;
+            remesa.Fechacreacion = DateTime.Now;
+            remesa.Fecha = DateTime.Now;
+            remesa.Usuario = _context.Usuario;
+            remesa.Letra = !String.IsNullOrEmpty(model.Letra) ? model.Letra : "";
+            remesa.Banco = model.Banco;
+
+            if (nuevasituacion.Equals("R"))
+            {
+                remesa.Fkseriescontablesremesa = model.Fkseriescontables;
+                var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, remesa.Fkseriescontablesremesa);
+                var identificadorsegmentoremesa = "";
+                remesa.Referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<CarteraVencimientos>(_db, remesa.Empresa, remesa.Fkseriescontablesremesa, contador, remesa.Fecha.Value, out identificadorsegmentoremesa);
+                remesa.Identificadorsegmentoremesa = identificadorsegmentoremesa;
+
+                if (!String.IsNullOrEmpty(model.Fecharemesa))
+                {
+                    remesa.Fecharemesa = DateTime.Parse(model.Fecharemesa);
+                }
+            }
+
+            return remesa;
+        }
+
         //Editar Prevision: Situacion, Estado, Importe Asignado, (Pagado y fechapago si es P)
         public void editarSituacionPrevision(VencimientosModel registro, StAsistenteTesoreria model, string situacion, double? impagado)
         {
@@ -656,6 +695,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     var registro = get(prevision) as VencimientosModel;
                     serviceCarteraVencimientos.create(CrearRegistroCartera(registro, model, circuito.situacionfinal));
+
+                    if (circuito.situacionfinal.Equals("R"))
+                    {
+                        serviceCarteraVencimientos.create(CrearRegistroRemesa(registro, model, circuito.situacionfinal));
+                    }
+
                     editarSituacionPrevision(registro, model, circuito.situacionfinal, null);    
                 }  
             }
