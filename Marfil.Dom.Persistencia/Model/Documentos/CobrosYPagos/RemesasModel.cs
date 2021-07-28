@@ -143,6 +143,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Cuadernos")]
         public string Cuadernos { get; set; }
 
+        [Display(ResourceType = typeof(RCobrosYPagos), Name = "Ruta")]
+        public string Ruta { get; set; }
+
         #endregion
 
         public override string DisplayName => RCobrosYPagos.TituloRemesa;

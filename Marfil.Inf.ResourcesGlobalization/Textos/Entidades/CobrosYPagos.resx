@@ -360,4 +360,7 @@
   <data name="Cuadernos" xml:space="preserve">
     <value>Cuaderno Bancario</value>
   </data>
+  <data name="Ruta" xml:space="preserve">
+    <value>Ruta para guardar el archivo, por defecto C:\tmp</value>
+  </data>
 </root>

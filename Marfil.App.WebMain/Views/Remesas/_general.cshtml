@@ -88,12 +88,15 @@
         @Html.DropDownListFor(f => Model.Cuadernos, listCuadernos, (object)new { @class = "form-control" })
     </div>
 
-    <span>
-        <a class="btn btn-success btn-sm" id="imprimir">
-            <i class="fa fa-print"></i>
-            @General.LblImprimir
-        </a>
-    </span>
+    @*<span>
+            <a class="btn btn-success btn-sm" id="imprimir">Crear</a>
+        </span>*@
+
+    @*<span>
+        @Html.ActionLink("Descargar", "ImprimirCuaderno", new { valorCuaderno = Model.Cuadernos })
+    </span>*@
+
+    <a class="btn btn-success btn-sm" id="descargar" href="#">Descargar</a>
 
 </div>
 
@@ -103,18 +106,26 @@
 
         var idCuaderno = document.getElementById("Cuadernos");
         var valorCuaderno = idCuaderno.options[idCuaderno.selectedIndex].value;
-        console.log("Valor " + valorCuaderno);
+        //var ruta = document.getElementById("Ruta").value;
+
         if (valorCuaderno != "" && valorCuaderno != null) {
             $.ajax({
                 url: '@Url.Action("ImprimirCuaderno", "Remesas")',
-                type: "POST",
                 dataType: "text",
-                data: { valorCuaderno }
+                data: {valorCuaderno}
             })
         } else {
             alert("Indique un cuaderno para imprimir");
         }
 
+    });
+
+    $(function () {
+        $("#descargar").click(function () {
+            var uri = '@Url.Action("ImprimirCuaderno", "Remesas", new { valorCuaderno = "xxxx" })';
+            uri = uri.replace('xxxx', $("#Cuadernos").val());
+            $(this).attr("href", uri);
+        });
     });
 
 </script>

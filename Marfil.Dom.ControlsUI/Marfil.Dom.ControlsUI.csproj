@@ -65,6 +65,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -82,6 +83,7 @@
     <Compile Include="Campoidentificador\CampoidentificadorModel.cs" />
     <Compile Include="CampoVerificacion\CampoverificacionModel.cs" />
     <Compile Include="ConvertirProspectosClientes\ConvertirProspectoClienteModel.cs" />
+    <Compile Include="Descarga\FileExtension.cs" />
     <Compile Include="Email\EmailModel.cs" />
     <Compile Include="Login\Constantes.cs" />
     <Compile Include="Login\Ficheros\ContextLoginFicherosModel.cs" />

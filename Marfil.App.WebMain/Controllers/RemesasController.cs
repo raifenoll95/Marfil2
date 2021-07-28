@@ -13,6 +13,10 @@ using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using System.Web.Mvc;
+using System.Threading.Tasks;
+using static Marfil.Dom.ControlsUI.Descarga.FileExtension;
+using Marfil.Dom.Persistencia.Helpers;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -41,30 +45,26 @@ namespace Marfil.App.WebMain.Controllers
             CanEliminar = false;
         }
 
-        [HttpPost]
-        public void ImprimirCuaderno(string valorCuaderno)
+        public FileResult ImprimirCuaderno(string valorCuaderno)
         {
-            Escribir(valorCuaderno);
+            return Escribir(valorCuaderno);
 
             //return "El cuaderno es " + valorCuaderno;
         }
 
-        private void Descargar(string valorCuaderno, string tipoFormato, string filepath)
+        public FileResult Descargar(string filepath)
         {
-            Response.Clear();
-            Response.AddHeader("Content-disposition", "Attachment; Filename=" + valorCuaderno +"."+tipoFormato);
-            Response.ContentType = "Text/Xml";
-            Response.WriteFile(Server.MapPath(filepath));
-            Response.End();
+            return File(filepath, "application/force- download", Path.GetFileName(filepath));
         }
 
-        private void Escribir(string valorCuaderno)
+        public FileResult Escribir(string valorCuaderno)
         {
             List<CuadernosBancariosLin> cabecera = new List<CuadernosBancariosLin>();
             List<CuadernosBancariosLin> detalle = new List<CuadernosBancariosLin>();
             List<CuadernosBancariosLin> total = new List<CuadernosBancariosLin>();
             var tipoFormato = "";
             string filepath = "";
+
 
             using (var service = new RemesasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
             {
@@ -83,9 +83,11 @@ namespace Marfil.App.WebMain.Controllers
                 }
             }
 
+            ////filepath = @"C:\tmp\" + valorCuaderno + "." + tipoFormato;
+            filepath = Server.MapPath(valorCuaderno + "." + tipoFormato);
+
             if (tipoFormato == "txt")//Si es txt
             {
-                filepath = @"C:\Desarrolllo\Documentación\Marfil\" + valorCuaderno + ".txt";
                 using (StreamWriter sw = new StreamWriter(filepath, false))
                 {
                     foreach (var item in cabecera)
@@ -132,7 +134,6 @@ namespace Marfil.App.WebMain.Controllers
             }
             else//si es xml
             {
-                filepath = @"C:\Desarrolllo\Documentación\Marfil\" + valorCuaderno + ".xml";
                 using (StreamWriter sw = new StreamWriter(filepath, false))
                 {
                     foreach (var item in cabecera)
@@ -156,9 +157,84 @@ namespace Marfil.App.WebMain.Controllers
                 }
             }
 
-            //Descargar(valorCuaderno, tipoFormato, filepath);
+            return Descargar(filepath);
+            /*System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            FileInfo file = new FileInfo(filepath);
+
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = ReturnFiletype("." + tipoFormato);
+            response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name + ";");
+            //response.AddHeader("Content-Length", file.Length.ToString());
+            response.TransmitFile(filepath);
+            //response.Flush();
+            response.End();
+            //Descargar(valorCuaderno, tipoFormato, filepath);*/
+
 
         }
+        public static string ReturnFiletype(string fileExtension)
+        {
+            switch (fileExtension)
+            {
+                case ".htm":
+                case ".html":
+                case ".log":
+                    return "text/HTML";
+                case ".txt":
+                    return "text/plain";
+                case ".doc":
+                    return "application/ms-word";
+                case ".tiff":
+                case ".tif":
+                    return "image/tiff";
+                case ".asf":
+                    return "video/x-ms-asf";
+                case ".avi":
+                    return "video/avi";
+                case ".zip":
+                    return "application/zip";
+                case ".xls":
+                case ".csv":
+                    return "application/vnd.ms-excel";
+                case ".gif":
+                    return "image/gif";
+                case ".jpg":
+                case "jpeg":
+                    return "image/jpeg";
+                case ".bmp":
+                    return "image/bmp";
+                case ".wav":
+                    return "audio/wav";
+                case ".mp3":
+                    return "audio/mpeg3";
+                case ".mpg":
+                case "mpeg":
+                    return "video/mpeg";
+                case ".rtf":
+                    return "application/rtf";
+                case ".asp":
+                    return "text/asp";
+                case ".pdf":
+                    return "application/pdf";
+                case ".fdf":
+                    return "application/vnd.fdf";
+                case ".ppt":
+                    return "application/mspowerpoint";
+                case ".dwg":
+                    return "image/vnd.dwg";
+                case ".msg":
+                    return "application/msoutlook";
+                case ".xml":
+                case ".sdxl":
+                    return "application/xml";
+                case ".xdp":
+                    return "application/vnd.adobe.xdp+xml";
+                default:
+                    return "application/octet-stream";
+            }
+        }
+
 
         #region imprimir
 

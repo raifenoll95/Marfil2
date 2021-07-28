@@ -691,6 +691,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ruta para guardar el archivo, por defecto C:\tmp.
+        /// </summary>
+        public static string Ruta {
+            get {
+                return ResourceManager.GetString("Ruta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Situación.
         /// </summary>
         public static string Situación {
