@@ -1,5 +1,6 @@
 ﻿using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<CuadernosBancariosModel> GetCuadernos()
         {
             return _db.Set<CuadernosBancarios>().ToList().Select(f => _converterModel.GetModelView(f) as CuadernosBancariosModel);
+        }
+
+        public string DeleteLin(string id)
+        {
+            var intid = int.Parse(id);
+            var lin = _db.CuadernosBancariosLin.Where(f => f.id == intid).FirstOrDefault();
+
+            if (lin != null)
+            {
+                var registro = _db.CuadernosBancariosLin.Where(f => f.id == intid).FirstOrDefault().registro;
+                _db.CuadernosBancariosLin.Remove(lin);
+                _db.SaveChanges();
+
+                return registro;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+
+        public void DeleteAllLin()
+        {
+            var lin = _db.CuadernosBancariosLin.Where(f => f.idCab == null).ToList();
+
+            if (lin != null)
+            {
+                _db.CuadernosBancariosLin.RemoveRange(lin);
+                _db.SaveChanges();
+
+            }
+
         }
     }
 }

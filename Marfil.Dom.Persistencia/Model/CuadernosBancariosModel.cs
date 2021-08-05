@@ -24,6 +24,8 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
             FechaAAMMDD,
             [StringValue(typeof(RCuadernos), "FechaAAAAMMDD")]
             FechaAAAAMMDD,
+            [StringValue(typeof(RCuadernos), "FechaDDMMAA")]
+            FechaDDMMAA,
             [StringValue(typeof(RCuadernos), "Año")]
             Año,
             [StringValue(typeof(RCuadernos), "Mes")]

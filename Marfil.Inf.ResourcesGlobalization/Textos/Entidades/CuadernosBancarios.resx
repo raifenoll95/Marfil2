@@ -171,6 +171,9 @@
   <data name="FechaCrea" xml:space="preserve">
     <value>Fecha Creación</value>
   </data>
+  <data name="FechaDDMMAA" xml:space="preserve">
+    <value>Fecha (DDMMAA)</value>
+  </data>
   <data name="FechaMod" xml:space="preserve">
     <value>Fecha Modificación</value>
   </data>
@@ -196,7 +199,7 @@
     <value>Obligatorio</value>
   </data>
   <data name="Orden" xml:space="preserve">
-    <value>Número orden de detalle</value>
+    <value>Número orden</value>
   </data>
   <data name="Posicion" xml:space="preserve">
     <value>Posición</value>

@@ -68,7 +68,7 @@ namespace Marfil.App.WebMain.Controllers
 
             using (var service = new RemesasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
             {
-                var idCuaderno = service.GetCuaderno(valorCuaderno);
+                var idCuaderno = service.GetCuadernoId(valorCuaderno);
                 var formato = service.GetFormato(valorCuaderno);
                 cabecera = service.GetCuadernoCabecera(idCuaderno);
                 detalle = service.GetCuadernoDetalle(idCuaderno);
@@ -81,79 +81,82 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     tipoFormato = "xml";
                 }
-            }
 
-            ////filepath = @"C:\tmp\" + valorCuaderno + "." + tipoFormato;
-            filepath = Server.MapPath(valorCuaderno + "." + tipoFormato);
+                ////filepath = @"C:\tmp\" + valorCuaderno + "." + tipoFormato;
+                filepath = Server.MapPath(valorCuaderno + "." + tipoFormato);
+                var tabla = "";
+                var campo = "";
 
-            if (tipoFormato == "txt")//Si es txt
-            {
-                using (StreamWriter sw = new StreamWriter(filepath, false))
+
+                if (tipoFormato == "txt")//Si es txt
                 {
-                    foreach (var item in cabecera)
+                    using (StreamWriter sw = new StreamWriter(filepath, false))
                     {
-                        sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                        if (item.campo == null)
+                        foreach (var item in cabecera)
                         {
-                            sw.Write(" ");
-                        }
-                        else
-                        {
-                            sw.Write(item.campo);
-                        }
+                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                            if (item.campo == null)
+                            {
+                                sw.Write(" ");
+                            }
+                            else
+                            {
+                                sw.Write(service.GetMapeo(item.campo,valorCuaderno));
+                            }
 
+                        }
+                        sw.WriteLine();
+                        foreach (var item in detalle)
+                        {
+                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                            if (item.campo == null)
+                            {
+                                sw.Write(" ");
+                            }
+                            else
+                            {
+                                sw.Write(service.GetMapeo(item.campo, valorCuaderno));
+                            }
+                        }
+                        sw.WriteLine();
+                        foreach (var item in total)
+                        {
+                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                            if (item.campo == null)
+                            {
+                                sw.Write(" ");
+                            }
+                            else
+                            {
+                                sw.Write(service.GetMapeo(item.campo, valorCuaderno));
+                            }
+                        }
+                        sw.Close();
                     }
-                    sw.WriteLine();
-                    foreach (var item in detalle)
-                    {
-                        sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                        if (item.campo == null)
-                        {
-                            sw.Write(" ");
-                        }
-                        else
-                        {
-                            sw.Write(item.campo);
-                        }
-                    }
-                    sw.WriteLine();
-                    foreach (var item in total)
-                    {
-                        sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                        if (item.campo == null)
-                        {
-                            sw.Write(" ");
-                        }
-                        else
-                        {
-                            sw.Write(item.campo);
-                        }
-                    }
-                    sw.Close();
                 }
-            }
-            else//si es xml
-            {
-                using (StreamWriter sw = new StreamWriter(filepath, false))
+                else//si es xml
                 {
-                    foreach (var item in cabecera)
+                    using (StreamWriter sw = new StreamWriter(filepath, false))
                     {
-                        sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                        sw.WriteLine(item.etiquetaIni + " " + item.campo + " " + item.etiquetaFin);
+                        foreach (var item in cabecera)
+                        {
+                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                            sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno) + " " + item.etiquetaFin);
+                        }
+                        sw.WriteLine();
+                        foreach (var item in detalle)
+                        {
+                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                            sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno) + " " + item.etiquetaFin);
+                        }
+                        sw.WriteLine();
+                        foreach (var item in total)
+                        {
+                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                            sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno) + " " + item.etiquetaFin);
+                        }
+                        sw.Close();
                     }
-                    sw.WriteLine();
-                    foreach (var item in detalle)
-                    {
-                        sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                        sw.WriteLine(item.etiquetaIni + " " + item.campo + " " + item.etiquetaFin);
-                    }
-                    sw.WriteLine();
-                    foreach (var item in total)
-                    {
-                        sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                        sw.WriteLine(item.etiquetaIni + " " + item.campo + " " + item.etiquetaFin);
-                    }
-                    sw.Close();
                 }
             }
 

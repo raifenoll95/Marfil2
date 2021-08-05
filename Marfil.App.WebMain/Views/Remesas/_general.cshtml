@@ -123,8 +123,14 @@
     $(function () {
         $("#descargar").click(function () {
             var uri = '@Url.Action("ImprimirCuaderno", "Remesas", new { valorCuaderno = "xxxx" })';
-            uri = uri.replace('xxxx', $("#Cuadernos").val());
-            $(this).attr("href", uri);
+
+            if ($("#Cuadernos").val() != "" && $("#Cuadernos").val() != null ) {
+                uri = uri.replace('xxxx', $("#Cuadernos").val());
+                $(this).attr("href", uri);
+            } else {
+                alert("Indique un cuaderno para imprimir");
+            }
+            
         });
     });
 

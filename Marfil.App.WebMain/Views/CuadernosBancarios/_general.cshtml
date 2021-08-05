@@ -107,11 +107,11 @@
         @Html.ValidationMessageFor(f => Model.TipoRegistro, "", new { @class = "text-danger" })
     </div>
 
-    @Html.LabelFor(f => Model.Orden, new { @class = "control-label col-md-3" })
+    @*@Html.LabelFor(f => Model.Orden, new { @class = "control-label col-md-3" })
     <div class="col-md-1">
         @Html.TextBoxFor(f => Model.Orden, (object)new { id = "Orden", @disabled = "disabled", @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Orden, "", new { @class = "text-danger" })
-    </div>
+    </div>*@
 
     @Html.LabelFor(f => Model.Formato, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
@@ -165,8 +165,8 @@
         var registro = this.value;
         var formato = null;
 
-        orden.value = 0;
-        orden.disabled = registro == 1 ? false : true;
+        //orden.value = 0;
+        //orden.disabled = registro == 1 ? false : true;
         $.ajax({
             url: '@Url.Action("CuadernosBancariosLin", "CuadernosBancarios")',
             type: "POST",

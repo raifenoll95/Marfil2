@@ -2372,6 +2372,17 @@
           <Property Name="haber" Type="money" />
           <Property Name="saldo" Type="money" />
         </EntityType>
+        <EntityType Name="MapeoRemesas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="etiqueta" Type="varchar" MaxLength="255" />
+          <Property Name="tabla" Type="varchar" MaxLength="255" />
+          <Property Name="campo" Type="varchar" MaxLength="255" />
+          <Property Name="enlaces" Type="varchar(max)" />
+          <Property Name="enlaces2" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="Materiales">
           <Key>
             <PropertyRef Name="empresa" />
@@ -6023,6 +6034,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Kit" EntityType="Self.Kit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KitLin" EntityType="Self.KitLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Maes" EntityType="Self.Maes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MapeoRemesas" EntityType="Self.MapeoRemesas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materiales" EntityType="Self.Materiales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialesLin" EntityType="Self.MaterialesLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Monedas" EntityType="Self.Monedas" Schema="dbo" store:Type="Tables" />
@@ -7064,6 +7076,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="CuadernosBancariosLin" EntitySet="CuadernosBancariosLin" />
           </AssociationSet>
           <EntitySet Name="Remesas" EntityType="MarfilModel.Remesas" />
+          <EntitySet Name="MapeoRemesas" EntityType="MarfilModel.MapeoRemesas" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -13081,6 +13094,17 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="identificadorsegmentoremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="importeletra" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="MapeoRemesas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="etiqueta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tabla" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="campo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="enlaces" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="enlaces2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17773,6 +17797,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="traza" ColumnName="traza" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapeoRemesas">
+            <EntityTypeMapping TypeName="MarfilModel.MapeoRemesas">
+              <MappingFragment StoreEntitySet="MapeoRemesas">
+                <ScalarProperty Name="enlaces2" ColumnName="enlaces2" />
+                <ScalarProperty Name="enlaces" ColumnName="enlaces" />
+                <ScalarProperty Name="campo" ColumnName="campo" />
+                <ScalarProperty Name="tabla" ColumnName="tabla" />
+                <ScalarProperty Name="etiqueta" ColumnName="etiqueta" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

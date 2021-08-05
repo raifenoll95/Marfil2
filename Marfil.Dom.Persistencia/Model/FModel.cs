@@ -819,6 +819,14 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(CuadernosBancariosLinModel) == typeof(T))
+            {
+
+                var result = new CuadernosBancariosLinModel();
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
             else if (typeof(AgentesModel) == typeof(T))
             {
                 var result = new AgentesModel(context);

@@ -223,6 +223,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Fecha (DDMMAA).
+        /// </summary>
+        public static string FechaDDMMAA {
+            get {
+                return ResourceManager.GetString("FechaDDMMAA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Fecha Modificación.
         /// </summary>
         public static string FechaMod {
@@ -295,7 +304,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Número orden de detalle.
+        ///   Busca una cadena traducida similar a Número orden.
         /// </summary>
         public static string Orden {
             get {

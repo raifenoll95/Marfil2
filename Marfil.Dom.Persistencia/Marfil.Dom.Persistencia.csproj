@@ -504,6 +504,9 @@
     <Compile Include="Maes.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MapeoRemesas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MarfilEntities.cs" />
     <Compile Include="MarfilModel.Context.cs">
       <AutoGen>True</AutoGen>

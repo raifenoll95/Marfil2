@@ -1,6 +1,7 @@
 ﻿using DevExpress.Web.Mvc;
 using Marfil.App.WebMain.Misc;
 using Marfil.Dom.ControlsUI.Toolbar;
+using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Interfaces;
@@ -180,6 +181,31 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
 
+        public override ActionResult DeleteConfirmed(string id)
+        {
+            try
+            {
+                var modelview = Helper.fModel.GetModel<CuadernosBancariosModel>(ContextService);
+                using (var gestionService = createService(modelview as IModelView))
+                {
+                    using (var cuadernosService = new CuadernosBancariosServices(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
+                    {
+                        var model = gestionService.get(id);               
+                        gestionService.delete(model);
+                        cuadernosService.DeleteAllLin();
+
+                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errors"] = ex.Message;
+                return RedirectToAction("Delete", new { id = id });
+            }
+        }
+
         #region Grid Devexpress
         [HttpPost, ValidateInput(false)]
         public void CuadernosBancariosLinSession(string registro)
@@ -309,6 +335,7 @@ namespace Marfil.App.WebMain.Controllers
                     editItem.Condicion = item.Condicion;
                     editItem.DescripcionLin = item.DescripcionLin;
                     Session[session] = model;
+                    model = model.FindAll(m => m.Registro == editItem.Registro);
                 }
             }
             catch (ValidationException)
@@ -323,10 +350,31 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult CuadernosBancariosLinDelete(string id)
         {
             var intid = int.Parse(id);
-            var model = Session[session] as List<CuadernosBancariosLinModel>;
-            model.Remove(model.Single(f => f.Id == intid));
-            Session[session] = model;
-            return PartialView("_cuadernosbancarioslin", model);
+            var model = Session[session] as List<CuadernosBancariosLinModel>;          
+
+            try
+            {
+                using (var gestionService = new CuadernosBancariosServices(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
+                {
+                    var registro = gestionService.DeleteLin(id);
+
+                    if(registro == "")
+                    {
+                        var regDelete = model.Find(m => m.Id == intid);
+                        registro = regDelete.Registro;
+                    }
+
+                    model.Remove(model.Single(f => f.Id == intid));
+                    Session[session] = model;
+
+                    return PartialView("_cuadernosbancarioslin", model.FindAll(m => m.Registro == registro));
+                }
+            }
+            catch (ValidationException)
+            {
+                throw;
+            }
+
         }
 
         #endregion

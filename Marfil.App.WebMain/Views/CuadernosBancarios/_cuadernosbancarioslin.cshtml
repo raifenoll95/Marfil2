@@ -37,6 +37,7 @@
         settings.Width = Unit.Percentage(100);
         //settings.Height = Unit.Pixel(500);
         settings.SettingsPager.Visible = true;
+        settings.SettingsBehavior.AllowSort = false;
 
         //edition
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLinAddNew" };
@@ -71,9 +72,18 @@
 
         settings.Columns.Add(c =>
         {
+            c.FieldName = "Orden";
+            c.Name = "Orden";
+            c.FixedStyle = GridViewColumnFixedStyle.Left;
+            c.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+        });
+
+        settings.Columns.Add(c =>
+        {
             c.FieldName = "Posicion";
             c.Name = "Posicion";
             c.FixedStyle = GridViewColumnFixedStyle.Left;
+            c.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
         });
 
         settings.Columns.Add(c =>
