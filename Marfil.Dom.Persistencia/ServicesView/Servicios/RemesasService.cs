@@ -64,124 +64,164 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public List<CuadernosBancariosLin> GetCuadernoCabecera(int idCuaderno)
         {
-            return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Cabecera").ToList();
+            return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Cabecera").OrderBy(f => f.orden).ThenBy(f => f.posicion).ToList();
         }
         public List<CuadernosBancariosLin> GetCuadernoDetalle(int idCuaderno)
         {
-            return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Detalle").ToList();
+            return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Detalle").OrderBy(f => f.orden).ThenBy(f => f.posicion).ToList();
         }
         public List<CuadernosBancariosLin> GetCuadernoTotal(int idCuaderno)
         {
-            return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Total").ToList();
+            return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Total").OrderBy(f => f.orden).ThenBy(f => f.posicion).ToList();
         }
 
-        public string GetMapeo(string campo, string cuaderno)
+        public string GetMapeo(string etiqueta, string cuaderno)
         {
-            var tablaMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == campo).FirstOrDefault().tabla;
-            var tablas = _db.MapeoRemesas.ToList();
-            var cuadernoBancario = GetCuaderno(cuaderno);
-            var campoMapeo = "";
-
-            if (tablaMapeo != null)
+            try
             {
-                campoMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == campo && f.tabla == tablaMapeo).FirstOrDefault().campo;
 
-                switch (tablaMapeo)
+                var tablaMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == etiqueta).FirstOrDefault().tabla;
+                //var tablas = _db.MapeoRemesas.ToList();
+                var cuadernoBancario = GetCuaderno(cuaderno);
+                var campoMapeo = "";
+
+                if (tablaMapeo != null)
                 {
-                    case "BancosMandatos":
+                    campoMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == etiqueta && f.tabla == tablaMapeo).FirstOrDefault().campo;
 
-                        if (campoMapeo == "Iban Empresa")
-                        {
-                            var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                            return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
-                        }
-                        else if (campoMapeo == "Bic Empresa")
-                        {
-                            var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                            return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().bic;
-                        }
-                        else if (campoMapeo == "Sufijo Acreedor")
-                        {
-                            return "**SufijoAcreedor**";
-                        }
-                        else if (campoMapeo == "Contrato confirming")
-                        {
-                            return "**ContratoConfirming**";
-                        }
+                    switch (tablaMapeo)
+                    {
+                        case "BancosMandatos":
 
-                        break;
-                    case "Direcciones":
+                            if (etiqueta == "Iban Empresa")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                            }
+                            else if (etiqueta == "Bic Empresa")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().bic;
+                            }
+                            else if (etiqueta == "Sufijo Acreedor")
+                            {
+                                return "**SufijoAcreedor**";
+                            }
+                            else if (etiqueta == "Contrato confirming")
+                            {
+                                return "**ContratoConfirming**";
+                            }
+                            else if (etiqueta == "Iban código")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                return iban.Substring(0,4);
+                            }
+                            else if (etiqueta == "CCC1")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                return iban.Substring(5, 4);
+                            }
+                            else if (etiqueta == "CCC2")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                return iban.Substring(9, 4);
+                            }
+                            else if (etiqueta == "DC")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                return iban.Substring(13, 4);
+                            }
+                            else if (etiqueta == "Cuenta")
+                            {
+                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                return iban.Substring(15, 10);
+                            }
 
-                        if (campoMapeo == "Localidad")
-                        {
-                            return _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().poblacion;
-                        }
-                        else if (campoMapeo == "Direccion")
-                        {
-                            return _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().direccion;
-                        }
+                            break;
+                        case "Direcciones":
 
-                        break;
-                    case "Empresas":
+                            if (etiqueta == "Localidad")
+                            {
+                                return _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().poblacion;
+                            }
+                            else if (etiqueta == "Direccion")
+                            {
+                                return _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().direccion;
+                            }
 
-                        if (campoMapeo == "Código cuenta")
-                        {
-                            return _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                        }
-                        else if (campoMapeo == "Empresa")
-                        {
-                            return _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().nombre;
-                        }
-                        else if (campoMapeo == "Nif Ordenante")
-                        {
-                            return "**NifOrdenante**";
-                        }
-                        else if (campoMapeo == "Nombre ordenante")
-                        {
-                            return "**NombreOrdenante**";
-                        }
+                            break;
+                        case "Empresas":
 
-                        break;
-                    case "Provincias":
+                            if (etiqueta == "Código cuenta")
+                            {
+                                return _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                            }
+                            else if (etiqueta == "Empresa")
+                            {
+                                return _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().nombre;
+                            }
+                            else if (etiqueta == "Nif Ordenante")
+                            {
+                                return "**NifOrdenante**";
+                            }
+                            else if (etiqueta == "Nombre ordenante")
+                            {
+                                return "**NombreOrdenante**";
+                            }
 
-                        if (campoMapeo == "Provincia")
-                        {
-                            var codProv = _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().fkprovincia;
-                            return _db.Provincias.Where(f => f.id == codProv).FirstOrDefault().nombre;
-                        }
+                            break;
+                        case "Provincias":
 
-                        break;
-                    case "Remesas":
+                            if (etiqueta == "Provincia")
+                            {
+                                var codProv = _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().fkprovincia;
+                                return _db.Provincias.Where(f => f.id == codProv).FirstOrDefault().nombre;
+                            }
 
-                        if (campoMapeo == "Fecha envío fichero")
-                        {
-                            return DateTime.Today.ToString();
-                        }
-                        else if (campoMapeo == "Fecha envío ordenes")
-                        {
-                            return DateTime.Today.ToString(); ;
-                        }
+                            break;
+                        case "Remesas":
 
-                        break;
-                    case "Vencimientos":
+                            if (etiqueta == "Fecha envío fichero")
+                            {
+                                return DateTime.Today.ToString();
+                            }
+                            else if (etiqueta == "Fecha envío ordenes")
+                            {
+                                return DateTime.Today.ToString(); ;
+                            }
 
-                        if (campoMapeo == "Fecha de vencimiento")
-                        {
-                            return "**FechaVencimiento**";
-                        }
+                            break;
+                        case "Vencimientos":
 
-                        break;
-                    default:
-                        return "**CampoMapeo**";
-                        break;
+                            if (etiqueta == "Fecha de vencimiento")
+                            {
+                                return "**FechaVencimiento**";
+                            }
+
+                            break;
+                        default:
+                            return "**CampoMapeo**";
+                            break;
+                    }
+
+                    return "**campo**";
+
+                }
+                else
+                {
+                    return "**TablaMapeo**";
                 }
 
-                return "**campo**";
-
             }
-            else
+            catch (Exception ex)
             {
-                return "**TablaMapeo**";
+
+                throw ex;
             }
         }
     }

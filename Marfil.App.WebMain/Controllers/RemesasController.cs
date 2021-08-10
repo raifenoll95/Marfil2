@@ -65,7 +65,6 @@ namespace Marfil.App.WebMain.Controllers
             var tipoFormato = "";
             string filepath = "";
 
-
             using (var service = new RemesasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
             {
                 var idCuaderno = service.GetCuadernoId(valorCuaderno);
@@ -84,54 +83,98 @@ namespace Marfil.App.WebMain.Controllers
 
                 ////filepath = @"C:\tmp\" + valorCuaderno + "." + tipoFormato;
                 filepath = Server.MapPath(valorCuaderno + "." + tipoFormato);
-                var tabla = "";
-                var campo = "";
-
+                var ordenAnterior = -1;
+                int numero = 0;
 
                 if (tipoFormato == "txt")//Si es txt
                 {
                     using (StreamWriter sw = new StreamWriter(filepath, false))
                     {
-                        foreach (var item in cabecera)
+                        try
                         {
-                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                            if (item.campo == null)
-                            {
-                                sw.Write(" ");
-                            }
-                            else
-                            {
-                                sw.Write(service.GetMapeo(item.campo,valorCuaderno));
-                            }
 
+                            foreach (var item in cabecera)
+                            {
+                                //Comprobar si el campo es un número fijo
+                                if (!int.TryParse(item.campo, out numero))
+                                {
+                                    sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                                    if (item.campo == null)
+                                    {
+                                        sw.Write(" ");
+                                    }
+                                    else
+                                    {
+                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno));
+                                    }
+                                }
+                                else
+                                {
+                                    sw.Write(item.campo);
+                                }
+                            }
+                            sw.WriteLine();//Cambio de tipo
+                            foreach (var item in detalle)
+                            {
+                                //Comprobar si el campo es un número fijo
+                                if (!int.TryParse(item.campo, out numero))
+                                {
+                                    //Cambia el orden, cambia la línea
+                                    if (item.orden != ordenAnterior && ordenAnterior != -1)
+                                    {
+                                        sw.WriteLine();
+                                    }
+
+                                    sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                                    if (item.campo == null)
+                                    {
+                                        sw.Write(" ");
+                                    }
+                                    else
+                                    {
+                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno));
+                                    }
+                                    ordenAnterior = (int)item.orden;
+                                }
+                                else
+                                {
+                                    sw.Write(item.campo);
+                                }
+                            }
+                            sw.WriteLine();//Cambio de tipo
+                            foreach (var item in total)
+                            {
+                                //Comprobar si el campo es un número fijo
+                                if (!int.TryParse(item.campo, out numero))
+                                {
+                                    sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                                    if (item.campo == null)
+                                    {
+                                        sw.Write(" ");
+                                    }
+                                    else
+                                    {
+                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno));
+                                    }
+                                }
+                                else
+                                {
+                                    sw.Write(item.campo);
+                                }
+                            }
+                            sw.Close();
                         }
-                        sw.WriteLine();
-                        foreach (var item in detalle)
+                        catch (Exception ex)
                         {
-                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                            if (item.campo == null)
-                            {
-                                sw.Write(" ");
-                            }
-                            else
-                            {
-                                sw.Write(service.GetMapeo(item.campo, valorCuaderno));
-                            }
+                            TempData["errors"] = ex.Message;
+                            sw.WriteLine("**Error en el mapeo de campos del cuaderno bancario**");
+
+                            return File(filepath, "application/force- download", "Error - C68.txt");
                         }
-                        sw.WriteLine();
-                        foreach (var item in total)
+                        finally
                         {
-                            sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
-                            if (item.campo == null)
-                            {
-                                sw.Write(" ");
-                            }
-                            else
-                            {
-                                sw.Write(service.GetMapeo(item.campo, valorCuaderno));
-                            }
+                            sw.Close();
                         }
-                        sw.Close();
                     }
                 }
                 else//si es xml
@@ -143,13 +186,13 @@ namespace Marfil.App.WebMain.Controllers
                             sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
                             sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno) + " " + item.etiquetaFin);
                         }
-                        sw.WriteLine();
+                        sw.WriteLine();//Cambio de tipo
                         foreach (var item in detalle)
                         {
                             sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
                             sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno) + " " + item.etiquetaFin);
                         }
-                        sw.WriteLine();
+                        sw.WriteLine();//Cambio de tipo
                         foreach (var item in total)
                         {
                             sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
