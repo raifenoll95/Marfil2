@@ -17,6 +17,15 @@
 @using Resources
 @model IEnumerable<Marfil.Dom.Persistencia.Model.Contabilidad.CuadernosBancariosLinModel>
 @{
+
+    var listEtiquetas = WebHelper.GetApplicationHelper().GetEtiquetasCuadernos().Select(f => new SelectListItem()
+    {
+        Text = f.Etiqueta,
+        Value = f.Etiqueta,
+
+    }).ToList();
+    listEtiquetas.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
@@ -68,6 +77,7 @@
             comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
 
 
+
         });
 
         settings.Columns.Add(c =>
@@ -104,6 +114,14 @@
         {
             c.FieldName = "Campo";
             c.Name = "Campo";
+            c.FixedStyle = GridViewColumnFixedStyle.Left;
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (SelectListItem i in listEtiquetas)
+                comboBoxProperties.Items.Add(i.Text, i.Value);
+
+            comboBoxProperties.ValueType = typeof(string);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
         });
 
         settings.Columns.Add(c =>

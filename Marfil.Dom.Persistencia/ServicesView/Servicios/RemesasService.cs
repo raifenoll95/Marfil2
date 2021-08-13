@@ -83,11 +83,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var tablaMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == etiqueta).FirstOrDefault().tabla;
                 //var tablas = _db.MapeoRemesas.ToList();
                 var cuadernoBancario = GetCuaderno(cuaderno);
-                var campoMapeo = "";
+                //var campoMapeo = "";
 
                 if (tablaMapeo != null)
                 {
-                    campoMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == etiqueta && f.tabla == tablaMapeo).FirstOrDefault().campo;
+                    //campoMapeo = _db.MapeoRemesas.Where(f => f.etiqueta == etiqueta && f.tabla == tablaMapeo).FirstOrDefault().campo;
 
                     switch (tablaMapeo)
                     {

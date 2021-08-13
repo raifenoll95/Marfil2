@@ -142,7 +142,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Descripción.
+        ///   Busca una cadena traducida similar a Valor Fijo.
         /// </summary>
         public static string DescripcionLin {
             get {

@@ -852,6 +852,13 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<MapeoRemesasModel> GetEtiquetasCuadernos()
+        {
+            using (var service = new MapeoRemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetEtiquetasCampos();
+            }
+        }
         public IEnumerable<TablasVariasGeneralModel> GetListTiposVias()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

@@ -688,6 +688,7 @@
     <Compile Include="Model\HeaderModel.cs" />
     <Compile Include="Listados\ListadosBalancePedidos.cs" />
     <Compile Include="Model\ListIndexModel.cs" />
+    <Compile Include="Model\MapeoRemesasModel.cs" />
     <Compile Include="Model\Mobile\BaseParam.cs" />
     <Compile Include="Model\PermisosModel.cs" />
     <Compile Include="Model\ImportarModel.cs" />
@@ -921,6 +922,7 @@
     <Compile Include="ServicesView\Servicios\CostesVariablesPeriodoService.cs" />
     <Compile Include="ServicesView\Servicios\CuadernosBancariosService.cs" />
     <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
+    <Compile Include="ServicesView\Servicios\MapeoRemesasService.cs" />
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
     <Compile Include="ServicesView\Servicios\RemesasService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
