@@ -859,5 +859,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             edit(model);
             currentValidationService.ModificarCostes = false;
         }
+
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

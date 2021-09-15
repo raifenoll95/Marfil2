@@ -27,6 +27,7 @@ using Resources;
 using RAlbaranesCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -1260,5 +1261,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             currentValidationService.CambiarEstado = false;
         }
 
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -348,6 +348,52 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
+        public virtual async System.Threading.Tasks.Task editAsync(IModelView obj)
+        {
+            var objPersistance = _converterModel.EditPersitance(obj);
+            if (_validationService.ValidarGrabar(objPersistance))
+            {
+                _db.Entry(objPersistance).State = EntityState.Modified;
+                try
+                {
+                   await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null
+                        && ex.InnerException.InnerException != null)
+                    {
+                        var inner = ex.InnerException.InnerException as SqlException;
+                        if (inner != null)
+                        {
+                            if (inner.Number == 2627 || inner.Number == 2601)
+                            {
+                                throw new ValidationException(General.ErrorRegistroExistente);
+                            }
+                        }
+                    }
+
+                    throw;
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    // Retrieve the error messages as a list of strings.
+                    var errorMessages = ex.EntityValidationErrors
+                            .SelectMany(x => x.ValidationErrors)
+                            .Select(x => x.ErrorMessage);
+
+                    // Join the list to a single string.
+                    var fullErrorMessage = string.Join("; ", errorMessages);
+
+                    // Combine the original exception message with the new one.
+                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                    // Throw a new DbEntityValidationException with the improved exception message.
+                    throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+                }
+            }
+        }
+
         public virtual void delete(IModelView obj)
         {
             var objPersistance = _converterModel.EditPersitance(obj);

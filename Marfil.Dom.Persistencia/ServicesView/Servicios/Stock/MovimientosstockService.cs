@@ -11,6 +11,8 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Stock;
 using Resources;
 using RAlbaranesCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras;
 using RAlbaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes;
+using System.Threading;
+
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
 {
     //public enum TipoOperacionService
@@ -194,7 +196,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
         {
             using ( var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
-
+               
                 //METEMOS EN LA TABLA MOVIMIENTOS DE STOCK DE LA BD EL MOVIMIENTO GENERADO
                 GenerarMovimientostock(model, tipooperacion);
 
@@ -221,6 +223,40 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
             }
 
             _db.SaveChanges();
+        }
+
+        public async System.Threading.Tasks.Task GenerarMovimientoAsync(IStockPieza model, TipoOperacionService tipooperacion, string ubicacionDestino = null)
+        {
+            using (var transaction = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
+            {
+                //METEMOS EN LA TABLA MOVIMIENTOS DE STOCK DE LA BD EL MOVIMIENTO GENERADO
+                GenerarMovimientostock(model, tipooperacion);
+
+                //if (tipooperacion != TipoOperacionService.EntradaReclamacion && tipooperacion != TipoOperacionService.SalidaReclamacion)
+                //{
+                //jmm
+                var entrada = model as MovimientosstockModel;
+
+                if (tipooperacion == TipoOperacionService.MovimientoAlmacen)
+                {
+                    entrada.Tipomovimiento = TipoOperacionService.MovimientoAlmacen;
+                    entrada.Ubicaciondestino = Convert.ToInt32(ubicacionDestino);
+                }
+                else if (model is IKitStockPieza)
+                    entrada.Tipomovimiento = TipoOperacionService.MovimientoKit;
+                else if (model is IBundleStockPieza)
+                    entrada.Tipomovimiento = TipoOperacionService.MovimientoBundle;
+
+                var service = new StockService(_context, _db);
+                await service.GestionPiezaAsync(entrada);
+                //}
+
+                //await _db.SaveChangesAsync();
+
+                transaction.Complete();
+            }
+
+            await _db.SaveChangesAsync();
         }
 
         private void GenerarMovimientostock(IStockPieza entrada, TipoOperacionService tipooperacion)

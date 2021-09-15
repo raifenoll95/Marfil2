@@ -75,7 +75,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Total").OrderBy(f => f.orden).ThenBy(f => f.posicion).ToList();
         }
 
-        public string GetMapeo(string etiqueta, string cuaderno)
+        public string GetMapeo(string etiqueta, string cuaderno, int? tipoFecha)
         {
             try
             {
@@ -97,6 +97,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                             {
                                 var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
                                 return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //return "ES6621000418401234567891";
                             }
                             else if (etiqueta == "Bic Empresa")
                             {
@@ -115,30 +116,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                             {
                                 var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
                                 var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var iban = "ES6621000418401234567891";
                                 return iban.Substring(0,4);
                             }
                             else if (etiqueta == "CCC1")
                             {
                                 var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
                                 var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var iban = "ES6621000418401234567891";
                                 return iban.Substring(5, 4);
                             }
                             else if (etiqueta == "CCC2")
                             {
                                 var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
                                 var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var iban = "ES6621000418401234567891";
                                 return iban.Substring(9, 4);
                             }
                             else if (etiqueta == "DC")
                             {
                                 var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
                                 var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var iban = "ES6621000418401234567891";
                                 return iban.Substring(13, 4);
                             }
                             else if (etiqueta == "Cuenta")
                             {
                                 var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
                                 var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var iban = "ES6621000418401234567891";
                                 return iban.Substring(15, 10);
                             }
 
@@ -188,11 +194,32 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                             if (etiqueta == "Fecha envío fichero")
                             {
-                                return DateTime.Today.ToString();
+                                switch (tipoFecha)
+                                {
+                                    case 2:
+                                        return DateTime.Today.ToString("yy/MM/dd");
+                                    case 3:
+                                        return DateTime.Today.ToString("yyyy/MM/dd");
+                                    case 4:
+                                        return DateTime.Today.ToString("dd/MM/yy");
+                                    default:
+                                        return DateTime.Today.ToString("dd/MM/yy");
+                                }
+
                             }
                             else if (etiqueta == "Fecha envío ordenes")
                             {
-                                return DateTime.Today.ToString(); ;
+                                switch (tipoFecha)
+                                {
+                                    case 2:
+                                        return DateTime.Today.ToString("yy/MM/dd");
+                                    case 3:
+                                        return DateTime.Today.ToString("yyyy/MM/dd");
+                                    case 4:
+                                        return DateTime.Today.ToString("dd/MM/yy");
+                                    default:
+                                        return DateTime.Today.ToString("dd/MM/yy");
+                                }
                             }
 
                             break;

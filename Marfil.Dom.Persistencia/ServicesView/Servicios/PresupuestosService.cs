@@ -363,5 +363,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return lineas;
         }
+
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -27,6 +27,7 @@ using Marfil.Dom.Persistencia.Model.Stock;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Stock;
 using Marfil.Inf.Genericos;
 using System.Data.Entity.Migrations;
+using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -662,6 +663,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 Fkmonedas = albaranObj.Fkmonedas.ToString()
             };
+        }
+
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -24,7 +24,7 @@
         Value = f.Etiqueta,
 
     }).ToList();
-    listEtiquetas.Insert(0, new SelectListItem() { Text = "", Value = "" });
+    listEtiquetas.Insert(0, new SelectListItem() { Text = "Blanco", Value = "Blanco" });
 
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
@@ -65,23 +65,6 @@
 
         settings.Columns.Add(c =>
         {
-            c.FieldName = "TipoCampo";
-            c.Name = "TipoCampo";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
-            c.ColumnType = MVCxGridViewColumnType.ComboBox;
-            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
-            foreach (int i in Enum.GetValues(typeof(CuadernosBancariosLinModel.TipoCampos)))
-                comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute((CuadernosBancariosLinModel.TipoCampos)i), i);
-
-            comboBoxProperties.ValueType = typeof(int);
-            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
-
-
-
-        });
-
-        settings.Columns.Add(c =>
-        {
             c.FieldName = "Orden";
             c.Name = "Orden";
             c.FixedStyle = GridViewColumnFixedStyle.Left;
@@ -105,6 +88,21 @@
 
         settings.Columns.Add(c =>
         {
+            c.FieldName = "TipoCampo";
+            c.Name = "TipoCampo";
+            c.FixedStyle = GridViewColumnFixedStyle.Left;
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (int i in Enum.GetValues(typeof(CuadernosBancariosLinModel.TipoCampos)))
+                comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute((CuadernosBancariosLinModel.TipoCampos)i), i);
+
+            comboBoxProperties.ValueType = typeof(int);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+
+        });
+
+        settings.Columns.Add(c =>
+        {
             c.FieldName = "EtiquetaIni";
             c.Name = "EtiquetaIni";
             c.Visible = false;
@@ -116,6 +114,7 @@
             c.Name = "Campo";
             c.FixedStyle = GridViewColumnFixedStyle.Left;
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            c.Width = Unit.Pixel(225);
             var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
             foreach (SelectListItem i in listEtiquetas)
                 comboBoxProperties.Items.Add(i.Text, i.Value);

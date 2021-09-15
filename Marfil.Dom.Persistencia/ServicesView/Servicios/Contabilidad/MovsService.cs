@@ -230,7 +230,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasVentas, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
                     var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasVentas).SingleOrDefault() ?? listEstadosInicial.First();
                                       
-                    service.SetEstado(modelview, nuevoEstado);                                    
+                    service.SetEstadoAsync(modelview, nuevoEstado);                                    
                 }
                 else
                 {
@@ -244,7 +244,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasCompras, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
                     var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasCompras).SingleOrDefault() ?? listEstadosInicial.First();
 
-                    service.SetEstado(modelview, nuevoEstado);
+                    service.SetEstadoAsync(modelview, nuevoEstado);
                 }
                 
                 _db.SaveChanges();

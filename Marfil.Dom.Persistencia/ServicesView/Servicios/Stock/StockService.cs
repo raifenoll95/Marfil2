@@ -147,6 +147,108 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
             }
         }
 
+        public async Task GestionPiezaAsync(MovimientosstockModel model)
+        {
+            if (model.Tipomovimiento == TipoOperacionService.InsertarRecepcionStock && !string.IsNullOrEmpty(model.Lote))
+            {
+                if (_db.Stockactual.Any(f => f.empresa == model.Empresa && f.lote == model.Lote && f.loteid == model.Loteid))
+                {
+                    throw new ValidationException(string.Format(General.ErrorGenerarMovimientoStock, model.Lote, model.Loteid));
+                }
+                _db.Stockactual.Add(CrearNuevaPieza(model));
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.InsertarRecepcionStock)
+            {
+                //Sin gestión de lote
+                if (_db.Stockactual.Any(f => f.empresa == model.Empresa && f.fkarticulos == model.Fkarticulos))
+                    _db.Stockactual.AddOrUpdate(EditarPieza(model));
+                else
+                    _db.Stockactual.Add(CrearNuevaPieza(model));
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.MovimientoRemedir ||
+                    model.Tipomovimiento == TipoOperacionService.MovimientoAlmacen)
+            {
+                if (model.Tipomovimiento == TipoOperacionService.MovimientoAlmacen)
+                    ValidarPerteneceKitOBundle(model);
+
+                var pieza = _db.Stockactual.Any(f => f.empresa == model.Empresa && f.lote == model.Lote && f.loteid == model.Loteid &&
+                    f.fkarticulos == model.Fkarticulos && f.fkalmacenes == model.Fkalmacenes) ?
+                    EditarPieza(model) :
+                    null;
+
+                if (pieza != null)
+                {
+                    _db.Stockactual.AddOrUpdate(pieza);
+                    await _db.SaveChangesAsync();
+                }
+                else
+                    throw new ValidationException(string.Format("No se ha encontrado la pieza {0}{1} en el stock",
+                        string.IsNullOrEmpty(model.Lote) ? model.Fkarticulos : model.Lote, model.Loteid));
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.EliminarCostes ||
+                    model.Tipomovimiento == TipoOperacionService.InsertarCostes)
+            {
+                ModificarCostes(model);
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.MovimientoBundle)
+            {
+                MovimientoBundle(model);
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.MovimientoKit)
+            {
+                MovimientoKit(model);
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.InsertarTraspasosalmacen ||
+                    model.Tipomovimiento == TipoOperacionService.ActualizarTraspasosalmacen ||
+                    model.Tipomovimiento == TipoOperacionService.EliminarTraspasosalmacen)
+            {
+                await TraspasoAlmacenAsync(model);
+            }
+            else if (model.Tipomovimiento == TipoOperacionService.ActualizarRecepcionStock)
+            {
+                ActualizarLineasRecepcion(model);
+            }
+            else
+            {
+                if (model.Tipomovimiento == TipoOperacionService.InsertarDevolucionEntregaStock ||
+                    model.Tipomovimiento == TipoOperacionService.InsertarRecepcionStockDevolucion)
+                {
+                    PermiteRealizarDevolucion(model);
+                }
+
+
+                //SI LA PIEZA ESTA EN STOCK ACTUAL, LA ACTUALIZAS en el historico, Y SI NO LA CREAS en el historico (EN LAS TRANSFORMACIONES AL FINALZIAR SE CREA LA PIEZA)
+                var pieza = _db.Stockactual.Any(f => f.empresa == model.Empresa && f.lote == model.Lote && f.loteid == model.Loteid &&
+                    f.fkarticulos == model.Fkarticulos && f.fkalmacenes == model.Fkalmacenes) ?
+                    EditarPieza(model) :
+                    CrearNuevaPieza(model);
+
+                var actualizar = true;
+
+                if (pieza.cantidadtotal <= 0)//(pieza.cantidaddisponible <= 0)
+                {
+                    var articulosService = FService.Instance.GetService(typeof(ArticulosModel), _context, _db);
+                    var artObj = articulosService.get(model.Fkarticulos) as ArticulosModel;
+                    actualizar = artObj.Stocknegativoautorizado;
+                }
+
+                //ENTRA CUANDO FINALIZAS LA TRANSFORMACION
+                if (actualizar)
+                {
+                    _db.Stockactual.AddOrUpdate(pieza);
+                }
+                //ENTRA CUANDO CREAS LA TRANSFORMACION
+                else if (_db.Stockactual.Any(f => f.empresa == model.Empresa && f.lote == model.Lote && f.loteid == model.Loteid &&
+                        f.fkarticulos == model.Fkarticulos)) //almacen?
+                {
+                    _db.Stockactual.Remove(pieza);
+                }
+                else
+                    throw new ValidationException(string.Format("No se puede modificar la pieza {0}{1} porque ya no está en el stock",
+                        model.Lote, Funciones.RellenaCod(model.Loteid, 3)));
+            }
+        }
+
         public void ActualizarLineasRecepcion(MovimientosstockModel model)
         {
             StockhistoricoAddOrUpdate(model);
@@ -599,6 +701,50 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                 item.costeacicionalvariable = Math.Round((double)((item.costeacicionalvariable ?? 0) + model.Costeadicionalvariable), decimalesmonedas);
 
                 _db.Stockactual.AddOrUpdate(item);                
+            }
+
+            historicoitem.costeadicionalmaterial = Math.Round((double)((historicoitem.costeadicionalmaterial ?? 0) + model.Costeadicionalmaterial), decimalesmonedas);
+            historicoitem.costeadicionalportes = Math.Round((double)((historicoitem.costeadicionalportes ?? 0) + model.Costeadicionalportes), decimalesmonedas);
+            historicoitem.costeadicionalotro = Math.Round((double)((historicoitem.costeadicionalotro ?? 0) + model.Costeadicionalotro), decimalesmonedas);
+            historicoitem.costeacicionalvariable = Math.Round((double)((historicoitem.costeacicionalvariable ?? 0) + model.Costeadicionalvariable), decimalesmonedas);
+
+            _db.Stockhistorico.AddOrUpdate(historicoitem);
+        }
+
+        public async Task TraspasoAlmacenAsync(MovimientosstockModel model)
+        {
+            //var serializer = new Serializer<TraspasosalmacenDiarioStockSerializable>();
+            //var trazabilidad = serializer.SetXml(model.Documentomovimiento);            
+
+            //if (model.Tipomovimiento == TipoOperacionService.ActualizarTraspasosalmacen || 
+            //    model.Tipomovimiento == TipoOperacionService.EliminarTraspasosalmacen)
+            //    almacenorigen = model.Fkalmacenes;
+
+            var item = _db.Stockactual.SingleOrDefault(f =>
+                f.empresa == model.Empresa && f.fkarticulos == model.Fkarticulos && f.lote == model.Lote && f.loteid == model.Loteid);
+
+            _db.Stockactual.Remove(item);
+            await _db.SaveChangesAsync();
+
+            var historicoitem = _db.Stockhistorico.SingleOrDefault(f =>
+                f.empresa == model.Empresa && f.fkarticulos == model.Fkarticulos && f.lote == model.Lote && f.loteid == model.Loteid);
+
+            if (model.Tipomovimiento == TipoOperacionService.InsertarTraspasosalmacen)
+            {
+                item.fkalmacenes = model.Fkalmacenes;
+                item.fkalmaceneszona = model.Fkalmaceneszona;
+                historicoitem.fkalmacenes = model.Fkalmacenes;
+                historicoitem.fkalmaceneszona = model.Fkalmaceneszona;
+            }
+
+            if (item != null)
+            {
+                item.costeadicionalmaterial = Math.Round((double)((item.costeadicionalmaterial ?? 0) + model.Costeadicionalmaterial), decimalesmonedas);
+                item.costeadicionalportes = Math.Round((double)((item.costeadicionalportes ?? 0) + model.Costeadicionalportes), decimalesmonedas);
+                item.costeadicionalotro = Math.Round((double)((item.costeadicionalotro ?? 0) + model.Costeadicionalotro), decimalesmonedas);
+                item.costeacicionalvariable = Math.Round((double)((item.costeacicionalvariable ?? 0) + model.Costeadicionalvariable), decimalesmonedas);
+
+                _db.Stockactual.AddOrUpdate(item);
             }
 
             historicoitem.costeadicionalmaterial = Math.Round((double)((historicoitem.costeadicionalmaterial ?? 0) + model.Costeadicionalmaterial), decimalesmonedas);

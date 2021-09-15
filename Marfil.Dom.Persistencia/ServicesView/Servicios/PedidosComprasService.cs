@@ -25,6 +25,7 @@ using Resources;
 using RPresupuestosCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.PresupuestosCompras;
 using RProspectos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Prospectos;
 using Marfil.Dom.Persistencia.Model.Documentos.Pedidos;
+using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -671,6 +672,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.set("fkestados", nuevoEstado.CampoId);
             edit(model);
             currentValidationService.CambiarEstado = false;
+        }
+
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
         }
     }
 }

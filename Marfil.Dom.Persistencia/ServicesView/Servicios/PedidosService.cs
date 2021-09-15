@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 using Marfil.Dom.ControlsUI.Busquedas;
@@ -595,6 +596,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var service = new BuscarDocumentosService(_db, Empresa);
             return service.Get<PedidosModel,PedidosLinModel,PedidosTotalesModel>(this, referencia);
+        }
+
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -140,6 +140,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.StateMachine
             service.SetEstado(obj, nuevoEstado);
         }
 
+        public async Task SetStateAsync(IDocumentosServices service, IDocument model, EstadosModel nuevoEstado)
+        {
+            var obj = model as IModelView;
+            var objState = model as IDocumentState;
+
+            if (!_estados.Any(f => f.Item1 == objState.Tipoestado(obj.get("Context") as IContextService) && f.Item2 == nuevoEstado.Tipoestado))
+                throw new ValidationException("Invalid transition");
+
+            objState.Fkestados = nuevoEstado.CampoId;
+
+            await service.SetEstadoAsync(obj, nuevoEstado);
+        }
+
         public IEnumerable<TipoEstado> GetStatesFromState(TipoEstado estado)
         {
             return _estados.Where(f => f.Item1 == estado).Select(f => f.Item2);

@@ -33,6 +33,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Stock;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.Helpers;
+using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -1004,6 +1005,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public double cantidadDisponible(string fkarticulo)
         {
             return _db.Stockactual.Where(f => f.empresa == Empresa && f.fkarticulos == fkarticulo).Select(f => f.cantidaddisponible).Sum();
+        }
+
+        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -334,6 +334,75 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
+        private async Task GenerarMovimientosLineasEntradaAsync(IEnumerable<TransformacionesentradaLinModel> lineas, TransformacionesModel nuevo, TipoOperacionService movimiento)
+        {
+            var movimientosStockService = new MovimientosstockService(_context, _db);
+            var articulosService = FService.Instance.GetService(typeof(ArticulosModel), _context, _db) as ArticulosService;
+            var serializer = new Serializer<TransformacionesentradaDiarioStockSerializable>();
+            var vectorArticulos = new Hashtable();
+
+            var operacion = 1;
+
+
+            foreach (var linea in lineas)
+            {
+                ArticulosModel articuloObj;
+                if (vectorArticulos.ContainsKey(linea.Fkarticulos))
+                    articuloObj = vectorArticulos[linea.Fkarticulos] as ArticulosModel;
+                else
+                {
+                    articuloObj = articulosService.get(linea.Fkarticulos) as ArticulosModel;
+                    vectorArticulos.Add(linea.Fkarticulos, articuloObj);
+                }
+
+                var aux = Funciones.ConverterGeneric<TransformacionesEntradaLinSerialized>(linea);
+
+                if (articuloObj?.Gestionstock ?? false)
+                {
+                    var model = new MovimientosstockModel
+                    {
+                        Empresa = nuevo.Empresa,
+                        Fkalmacenes = nuevo.Fkalmacen.ToString(),
+                        Fkalmaceneszona = Funciones.Qint(nuevo.Fkzonas),
+                        Fkarticulos = linea.Fkarticulos,
+                        Referenciaproveedor = "",
+                        Fkcontadorlote = linea.Fkcontadoreslotes,
+                        Lote = linea.Lote,
+                        Loteid = (linea.Tabla ?? 0).ToString(),
+                        Tag = "",
+                        Fkunidadesmedida = linea.Fkunidades,
+                        Cantidad = (linea.Cantidad ?? 0) * operacion,
+                        Largo = linea.Largo ?? 0,
+                        Ancho = linea.Ancho ?? 0,
+                        Grueso = linea.Grueso ?? 0,
+                        Metros = (linea.Metros ?? 0) * operacion,
+                        Pesoneto = ((articuloObj.Kilosud ?? 0) * linea.Metros) * operacion,
+                        Documentomovimiento = serializer.GetXml(
+                            new TransformacionesentradaDiarioStockSerializable
+                            {
+                                Id = nuevo.Id ?? 0,
+                                Referencia = nuevo.Referencia,
+                                Fechadocumento = nuevo.Fechadocumento,
+                                Codigoproveedor = nuevo.Fkproveedores,
+                                Linea = aux
+                            }),
+                        Fkusuarios = Usuarioid,
+                        //Tipooperacion = operacion,
+                        Costeadicionalmaterial = linea.Costeadicionalmaterial,
+                        Costeadicionalotro = linea.Costeadicionalotro,
+                        Costeadicionalvariable = linea.Costeadicionalvariable,
+                        Costeadicionalportes = linea.Costeadicionalportes,
+                        Tipodealmacenlote = linea.Tipodealmacenlote,
+
+                        Tipomovimiento = movimiento
+                    };
+
+                    await movimientosStockService.GenerarMovimientoAsync(model, linea.Nueva ? TipoOperacionService.InsertarTransformacionEntradaStock : TipoOperacionService.ActualizarTransformacionEntradaStock);
+                }
+
+            }
+        }
+
         #endregion
 
         #region Movimientos stock salida
@@ -353,7 +422,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         //    foreach (var item in lineasModificadas)
         //        item.Cantidad *= -1;
         //    var lineasEliminadas = original.Lineassalida.Where(f => !nuevo.Lineassalida.Where(j => !lineasModificadas.Any(h => h.Flagidentifier == f.Flagidentifier)).Any(j => j.Flagidentifier == f.Flagidentifier)).ToList();
-           
+
 
         //    list = lineasModificadas.Union(lineasEliminadas).ToList();
 
@@ -363,7 +432,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         //private void EliminarStockSalida(TransformacionesModel nuevo)
         //{
-           
+
         //    GenerarMovimientosLineasSalida(nuevo.Lineassalida, nuevo, TipoOperacionStock.Entrada, TipoOperacionService.EliminarTransformacionSalidaStock);
         //}
 
@@ -427,6 +496,70 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 };
 
                     movimientosStockService.GenerarMovimiento(model, movimiento);
+                }
+
+            }
+        }
+
+        private async Task GenerarMovimientosLineasSalidaAsync(IEnumerable<TransformacionessalidaLinModel> lineas, TransformacionesModel nuevo, TipoOperacionService movimiento)//, TipoOperacionService serviciotipo = null)
+        {
+            var movimientosStockService = new MovimientosstockService(_context, _db);
+            var articulosService = FService.Instance.GetService(typeof(ArticulosModel), _context, _db) as ArticulosService;
+            var serializer = new Serializer<TransformacionessalidaDiarioStockSerializable>();
+            var vectorArticulos = new Hashtable();
+
+            var operacion = 1;
+            if (movimiento == TipoOperacionService.InsertarTransformacionSalidaStock)
+                operacion = -1;
+
+            foreach (var linea in lineas)
+            {
+                ArticulosModel articuloObj;
+                if (vectorArticulos.ContainsKey(linea.Fkarticulos))
+                    articuloObj = vectorArticulos[linea.Fkarticulos] as ArticulosModel;
+                else
+                {
+                    articuloObj = articulosService.get(linea.Fkarticulos) as ArticulosModel;
+                    vectorArticulos.Add(linea.Fkarticulos, articuloObj);
+                }
+
+                var aux = Funciones.ConverterGeneric<TransformacionesSalidaLinSerialized>(linea);
+
+                if (articuloObj?.Gestionstock ?? false)
+                {
+                    var model = new MovimientosstockModel
+                    {
+                        Empresa = nuevo.Empresa,
+                        Fkalmacenes = nuevo.Fkalmacen.ToString(),
+                        Fkalmaceneszona = Funciones.Qint(nuevo.Fkzonas),
+                        Fkarticulos = linea.Fkarticulos,
+                        Referenciaproveedor = "",
+                        Lote = linea.Lote,
+                        Loteid = (linea.Tabla ?? 0).ToString(),
+                        Tag = "",
+                        Fkunidadesmedida = linea.Fkunidades,
+                        Cantidad = (linea.Cantidad ?? 0) * operacion,
+                        Largo = linea.Largo ?? 0,
+                        Ancho = linea.Ancho ?? 0,
+                        Grueso = linea.Grueso ?? 0,
+                        Metros = (linea.Metros ?? 0) * operacion,
+                        Pesoneto = ((articuloObj.Kilosud ?? 0) * linea.Metros) * operacion,
+                        Documentomovimiento = serializer.GetXml(
+                            new TransformacionessalidaDiarioStockSerializable
+                            {
+                                Id = nuevo.Id ?? 0,
+                                Referencia = nuevo.Referencia,
+                                Fechadocumento = nuevo.Fechadocumento,
+                                Linea = aux
+                            }),
+                        Fkusuarios = Usuarioid,
+                        //Tipooperacion = operacion,
+                        Tipodealmacenlote = linea.Tipodealmacenlote,
+
+                        Tipomovimiento = movimiento
+                    };
+
+                   await movimientosStockService.GenerarMovimientoAsync(model, movimiento);
                 }
 
             }
@@ -981,6 +1114,45 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             currentValidationService.CambiarEstado = false;
         }
 
+        public async Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
+        {
+            var currentValidationService = _validationService as TransformacionesValidation;
+            currentValidationService.CambiarEstado = true;
+
+            using (var tran = TransactionScopeBuilder.CreateTransactionObject())
+            {
+                var editado = model as TransformacionesModel;
+                var original = get(editado.Id.ToString()) as TransformacionesModel;
+
+
+                if (original.Integridadreferencialflag == editado.Integridadreferencialflag)
+                {
+                    var estadosService = FService.Instance.GetService(typeof(EstadosModel), _context, _db) as EstadosService;
+                    var originalStateObj = estadosService.get(original.Fkestados) as EstadosModel;
+                    if (originalStateObj.Tipoestado < TipoEstado.Finalizado)
+                    {
+                        editado.Fkestados = nuevoEstado.CampoId;
+
+                        if (nuevoEstado.Tipoestado == TipoEstado.Finalizado)
+                        {
+                            //RepartirCostesLineas(editado.Lineasentrada, editado.Costes, original.Costes);
+                            await FinalizarStockAsync(original, editado);
+                        }
+                        else
+                            await base.editAsync(editado);
+
+                        await _db.SaveChangesAsync();
+                        tran.Complete();
+                    }
+                    else
+                        throw new Exception("Sólo se pueden modificar transformaciones en estado: Curso o Diseño");
+                }
+                else throw new IntegridadReferencialException(string.Format(General.ErrorIntegridadReferencial, RTransformaciones.TituloEntidad, original.Referencia));
+                
+            }
+            currentValidationService.CambiarEstado = false;
+        }
+
         private void FinalizarStock(TransformacionesModel original, TransformacionesModel editado)
         {
             var lotesService =new LotesService(_context);
@@ -1002,6 +1174,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             GenerarMovimientosLineasEntrada(list, editado, TipoOperacionService.InsertarTransformacionEntradaStock);
+
+        }
+
+        private async Task FinalizarStockAsync(TransformacionesModel original, TransformacionesModel editado)
+        {
+            var lotesService = new LotesService(_context);
+            CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(f.Lote, f.Tabla.ToString()).Costeneto) ?? 0);
+            //CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}",f.Lote,f.Tabla)).Costeneto) ?? 0);
+            RepartirCostesLineas(editado.Lineasentrada, editado.Costes, original.Costes);
+
+            ModificarLotesLineas(editado);
+
+            await base.editAsync(editado);
+
+            //ActualizarStockSalida(original, editado);
+            //ActualizarStockEntrada(original, editado);
+            //(TransformacionesModel original, TransformacionesModel nuevo)
+            var list = editado.Lineasentrada.ToList();
+            foreach (var item in list)
+            {
+                item.Tipodealmacenlote = original.Tipodealmacenlote;
+            }
+
+            await GenerarMovimientosLineasEntradaAsync(list, editado, TipoOperacionService.InsertarTransformacionEntradaStock);
 
         }
 

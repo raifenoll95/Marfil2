@@ -135,11 +135,16 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var gestionService = createService(model))
                     {
+                        using (var cuadernosService = new CuadernosBancariosServices(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
+                        {
 
-                        model.Lineas = Session[session] as List<CuadernosBancariosLinModel>;
-                        gestionService.edit(model);
-                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
-                        return RedirectToAction("Index");
+                            model.Lineas = Session[session] as List<CuadernosBancariosLinModel>;
+                            gestionService.edit(model);
+                            //Elimina lineas con idCab = null
+                            cuadernosService.DeleteAllLin();
+                            TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
                 TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
@@ -192,6 +197,7 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         var model = gestionService.get(id);               
                         gestionService.delete(model);
+                        //Elimina lineas con idCab = null
                         cuadernosService.DeleteAllLin();
 
                         TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
@@ -258,6 +264,9 @@ namespace Marfil.App.WebMain.Controllers
                 }
 
                 Session["actRegistro"] = tipoRegistro;
+            } else
+            {
+                model = Session["Lineas" + Session["tipoRegistro"]] as List<CuadernosBancariosLinModel>;
             }
 
             if (formato != null && formato != "")

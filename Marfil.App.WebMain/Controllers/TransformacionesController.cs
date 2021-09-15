@@ -290,7 +290,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region Cambiar estado
 
-        public ActionResult CambiarEstado(string documentoReferencia, string estadoNuevo, string returnUrl)
+        public async System.Threading.Tasks.Task<ActionResult> CambiarEstado(string documentoReferencia, string estadoNuevo, string returnUrl)
         {
             try
             {
@@ -303,7 +303,16 @@ namespace Marfil.App.WebMain.Controllers
                         var model = service.get(documentoReferencia) as TransformacionesModel;
                         var nuevoEstado = estadosService.get(estadoNuevo) as EstadosModel;
                         var cambiarEstadoService = new MachineStateService();
-                        cambiarEstadoService.SetState(service, model, nuevoEstado);
+                        //Condición para evitar timeout
+                        if (model.Lineassalida.Count >= 5)
+                        {
+                            await cambiarEstadoService.SetStateAsync(service, model, nuevoEstado);
+                        }
+                        else
+                        {
+                            cambiarEstadoService.SetState(service, model, nuevoEstado);
+                        }
+                        
                         TempData[Constantes.VariableMensajeExito] = "Transformación terminada con éxito";
                     }
                 }
