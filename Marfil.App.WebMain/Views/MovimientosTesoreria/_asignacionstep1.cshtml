@@ -136,6 +136,20 @@
 
     <script type="text/javascript">
 
+        function cambio(valor) {
+
+            $.ajax({
+                url: '@Url.Action("ObtenerPreferido","MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    console.log(data);
+                        $("#Fkmodospago").val(data);
+                    }
+                })
+        }
+
         $("#Circuitotesoreria").on('change', function () {
             var valor = parseInt(this.value);
 
@@ -157,6 +171,15 @@
                         $("#Fkmodospago").val(data);
                     }
                 })
+        });
+
+        $('body').on('DOMSubtreeModified', '#Circuitostesoreria', function () {
+            var valor = $("#Circuitotesoreria").val();
+            console.log("Valor = "+valor);
+            if (valor != null && valor != "") {
+                cambio(valor);
+            }
+
         });
 
         function formatoFecha(fecha, formato) {

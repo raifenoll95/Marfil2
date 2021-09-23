@@ -13000,7 +13000,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="banco" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="tipoRegistro" Type="Int32" />
           <Property Name="tipoFormato" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />

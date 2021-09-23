@@ -61,6 +61,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             return _db.CuadernosBancarios.Where(f => f.clave == cuaderno && f.empresa == Empresa).FirstOrDefault().formato;
         }
+        public Remesas GetRemesa(string referencia)
+        {
+            return _db.Remesas.Where(f => f.referenciaremesa == referencia && f.empresa == Empresa).FirstOrDefault();
+        }
 
         public List<CuadernosBancariosLin> GetCuadernoCabecera(int idCuaderno)
         {
@@ -75,7 +79,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.CuadernosBancariosLin.Where(f => f.idCab == idCuaderno && f.empresa == Empresa && f.registro == "Total").OrderBy(f => f.orden).ThenBy(f => f.posicion).ToList();
         }
 
-        public string GetMapeo(string etiqueta, string cuaderno, int? tipoFecha)
+        public string GetMapeo(string etiqueta, string cuaderno, int? tipoFecha, Remesas remesa)
         {
             try
             {
@@ -95,14 +99,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                             if (etiqueta == "Iban Empresa")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().iban;
                                 //return "ES6621000418401234567891";
                             }
                             else if (etiqueta == "Bic Empresa")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().bic;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                return _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().bic;
                             }
                             else if (etiqueta == "Sufijo Acreedor")
                             {
@@ -114,36 +118,36 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                             }
                             else if (etiqueta == "Iban código")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().iban;
                                 //var iban = "ES6621000418401234567891";
                                 return iban.Substring(0,4);
                             }
                             else if (etiqueta == "CCC1")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().iban;
                                 //var iban = "ES6621000418401234567891";
                                 return iban.Substring(5, 4);
                             }
                             else if (etiqueta == "CCC2")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().iban;
                                 //var iban = "ES6621000418401234567891";
                                 return iban.Substring(9, 4);
                             }
                             else if (etiqueta == "DC")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().iban;
                                 //var iban = "ES6621000418401234567891";
                                 return iban.Substring(13, 4);
                             }
                             else if (etiqueta == "Cuenta")
                             {
-                                var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
-                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkCuentaSalidasVariasAlmacen).FirstOrDefault().iban;
+                                //var fkCuentaSalidasVariasAlmacen = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkCuentaSalidasVariasAlmacen;
+                                var iban = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == remesa.fkcuentastesoreria).FirstOrDefault().iban;
                                 //var iban = "ES6621000418401234567891";
                                 return iban.Substring(15, 10);
                             }

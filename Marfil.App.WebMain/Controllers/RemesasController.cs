@@ -19,6 +19,7 @@ using static Marfil.Dom.ControlsUI.Descarga.FileExtension;
 using Marfil.Dom.Persistencia.Helpers;
 using System.Diagnostics;
 using System.Web.UI;
+using Marfil.App.WebMain.Misc;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -37,6 +38,7 @@ namespace Marfil.App.WebMain.Controllers
         public override bool CanModificar { get; set; }
         public override bool CanEliminar { get; set; }
 
+
         protected override void CargarParametros()
         {
             MenuName = "Remesas";
@@ -47,9 +49,9 @@ namespace Marfil.App.WebMain.Controllers
             CanEliminar = false;
         }
 
-        public FileResult ImprimirCuaderno(string valorCuaderno)
+        public FileResult ImprimirCuaderno(string valorCuaderno, string referencia)
         {
-            return Escribir(valorCuaderno);
+            return Escribir(valorCuaderno, referencia);
 
             //return "El cuaderno es " + valorCuaderno;
         }
@@ -59,7 +61,7 @@ namespace Marfil.App.WebMain.Controllers
             return File(filepath, "application/force- download", Path.GetFileName(filepath));
         }
 
-        public FileResult Escribir(string valorCuaderno)
+        public FileResult Escribir(string valorCuaderno, string referencia)
         {
             List<CuadernosBancariosLin> cabecera = new List<CuadernosBancariosLin>();
             List<CuadernosBancariosLin> detalle = new List<CuadernosBancariosLin>();
@@ -71,6 +73,7 @@ namespace Marfil.App.WebMain.Controllers
             {
                 var idCuaderno = service.GetCuadernoId(valorCuaderno);
                 var formato = service.GetFormato(valorCuaderno);
+                var remesa = service.GetRemesa(referencia);
                 cabecera = service.GetCuadernoCabecera(idCuaderno);
                 detalle = service.GetCuadernoDetalle(idCuaderno);
                 total = service.GetCuadernoTotal(idCuaderno);
@@ -83,15 +86,18 @@ namespace Marfil.App.WebMain.Controllers
                     tipoFormato = "xml";
                 }
 
-                ////filepath = @"C:\tmp\" + valorCuaderno + "." + tipoFormato;
-                filepath = Server.MapPath(valorCuaderno + "." + tipoFormato);
-                //Page.Response.Write("<script>consle.log('Ruta cuadernos " + filepath + "');</script>");
+                //filepath = @"C:\inetpub\wwwroot\MarfilBetaEstable\Remesas\" + valorCuaderno + "." + tipoFormato;
+                /*LOCAL*/
+                //filepath = Server.MapPath(valorCuaderno + "." + tipoFormato);
+                filepath = System.Web.HttpContext.Current.Server.MapPath(valorCuaderno + "." + tipoFormato);
+                filepath = filepath.Replace("Remesas","FicherosRemesas");
+
                 var ordenAnterior = -1;
                 int numero = 0;
 
                 if (tipoFormato == "txt")//Si es txt
                 {
-                    using (StreamWriter sw = new StreamWriter(filepath, false))
+                    using (TextWriter sw = new StreamWriter(filepath, false))
                     {
                         try
                         {
@@ -100,18 +106,18 @@ namespace Marfil.App.WebMain.Controllers
                                 //sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
                                 //Comprobar si el campo es un número fijo
                                 if (!int.TryParse(item.campo, out numero))
-                                {                                
+                                {
                                     if (item.campo == "Blanco")
                                     {
                                         sw.Write(" ");
                                     }
-                                    else if(item.campo == "Valor Fijo")
+                                    else if (item.campo == "Valor Fijo")
                                     {
                                         sw.Write(item.descripcionLin);
                                     }
                                     else
                                     {
-                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo));
+                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo, remesa));
                                     }
                                 }
                                 else
@@ -144,7 +150,7 @@ namespace Marfil.App.WebMain.Controllers
                                     }
                                     else
                                     {
-                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo));
+                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo, remesa));
                                     }
                                     ordenAnterior = (int)item.orden;
                                 }
@@ -172,7 +178,7 @@ namespace Marfil.App.WebMain.Controllers
                                     }
                                     else
                                     {
-                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo));
+                                        sw.Write(service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo, remesa));
                                     }
                                 }
                                 else
@@ -188,7 +194,7 @@ namespace Marfil.App.WebMain.Controllers
                             //TempData["errors"] = ex.Message;
                             sw.WriteLine("**Error en el mapeo de campos del cuaderno bancario " + valorCuaderno + "**");
 
-                            return File(filepath, "application/force- download", "Error - "+valorCuaderno+".txt");
+                            return File(filepath, "application/force- download", "Error - " + valorCuaderno + ".txt");
                         }
                         finally
                         {
@@ -198,21 +204,33 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 else//si es xml
                 {
-                    using (StreamWriter sw = new StreamWriter(filepath, false))
+                    using (TextWriter sw = new StreamWriter(filepath, false))
                     {
                         try
                         {
                             foreach (var item in cabecera)
                             {
-                                sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                                //sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
                                 //Comprobar si el campo es un número fijo
                                 if (!int.TryParse(item.campo, out numero))
                                 {
-                                    sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo) + " " + item.etiquetaFin);
+                                    if (item.campo == "Blanco")
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + " " + item.etiquetaFin);
+                                    }
+                                    else if (item.campo == "Valor Fijo")
+                                    {
+                                        sw.WriteLine(item.descripcionLin);
+                                    }
+                                    else
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo, remesa) + item.etiquetaFin);
+                                    }
+                                    
                                 }
                                 else
                                 {
-                                    sw.WriteLine(item.etiquetaIni + " " + item.campo + " " + item.etiquetaFin);
+                                    sw.WriteLine(item.etiquetaIni + item.campo + item.etiquetaFin);
                                 }
                             }
 
@@ -220,7 +238,7 @@ namespace Marfil.App.WebMain.Controllers
 
                             foreach (var item in detalle)
                             {
-                                sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                                //sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
                                 //Comprobar si el campo es un número fijo
                                 if (!int.TryParse(item.campo, out numero))
                                 {
@@ -230,13 +248,24 @@ namespace Marfil.App.WebMain.Controllers
                                         sw.WriteLine();
                                     }
 
-                                    sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo) + " " + item.etiquetaFin);
+                                    if (item.campo == "Blanco")
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + " " + item.etiquetaFin);
+                                    }
+                                    else if (item.campo == "Valor Fijo")
+                                    {
+                                        sw.WriteLine(item.descripcionLin);
+                                    }
+                                    else
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo, remesa) + item.etiquetaFin);
+                                    }
 
                                     ordenAnterior = (int)item.orden;
                                 }
                                 else
                                 {
-                                    sw.WriteLine(item.etiquetaIni + " " + item.campo + " " + item.etiquetaFin);
+                                    sw.WriteLine(item.etiquetaIni + item.campo + item.etiquetaFin);
                                 }
                             }
 
@@ -244,15 +273,26 @@ namespace Marfil.App.WebMain.Controllers
 
                             foreach (var item in total)
                             {
-                                sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
+                                //sw.BaseStream.Seek((long)item.posicion, SeekOrigin.Begin);
                                 //Comprobar si el campo es un número fijo
                                 if (!int.TryParse(item.campo, out numero))
                                 {
-                                    sw.WriteLine(item.etiquetaIni + " " + service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo) + " " + item.etiquetaFin);
+                                    if (item.campo == "Blanco")
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + " " + item.etiquetaFin);
+                                    }
+                                    else if (item.campo == "Valor Fijo")
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + item.descripcionLin + item.etiquetaFin);
+                                    }
+                                    else
+                                    {
+                                        sw.WriteLine(item.etiquetaIni + service.GetMapeo(item.campo, valorCuaderno, item.tipoCampo, remesa) + item.etiquetaFin);
+                                    }
                                 }
                                 else
                                 {
-                                    sw.WriteLine(item.etiquetaIni + " " + item.campo + " " + item.etiquetaFin);
+                                    sw.WriteLine(item.etiquetaIni + item.campo + item.etiquetaFin);
                                 }
                             }
 

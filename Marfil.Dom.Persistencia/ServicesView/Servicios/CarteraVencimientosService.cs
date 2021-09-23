@@ -80,43 +80,91 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
-                var model = obj as CarteraVencimientosModel;
-                
-                if(_db.CarteraVencimientos.Any())
-                {
-                    model.Id = _db.CarteraVencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
-                }
+                var prop = obj.get("DisplayName").ToString();
 
+                if (obj.get("DisplayName").ToString() == "Remesa")
+                {
+                    var model = obj as RemesasModel;
+
+                    if (_db.Remesas.Any())
+                    {
+                        model.Id = _db.Remesas.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
+                    }
+
+                    else
+                    {
+                        model.Id = 0;
+                    }
+
+                    if (!model.Tiponumerofactura.HasValue)
+                    {
+                        model.Tiponumerofactura = 0;
+                    }
+                    if (!model.Monedabase.HasValue)
+                    {
+                        model.Monedabase = 0;
+                    }
+                    if (!model.Monedagiro.HasValue)
+                    {
+                        model.Monedagiro = 0;
+                    }
+
+                    model.Fecha = DateTime.Now;
+                    Conversion c = new Conversion();
+                    model.Importeletra = c.enletras(model.Importegiro.ToString());
+
+                    //Calculo ID
+                    var contador = ServiceHelper.GetNextIdContable<CarteraVencimientos>(_db, Empresa, model.Fkseriescontables);
+                    var identificadorsegmento = "";
+                    model.Referencia = ServiceHelper.GetReferenceContable<CarteraVencimientos>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fecha.Value, out identificadorsegmento);
+                    model.Identificadorsegmento = identificadorsegmento;
+
+                    //Llamamos al base
+                    using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos))) { 
+                        service.create(model);
+                    }
+                    
+                }
                 else
                 {
-                    model.Id = 0;
-                }
+                    var model = obj as CarteraVencimientosModel;
 
-                if(!model.Tiponumerofactura.HasValue)
-                {
-                    model.Tiponumerofactura = 0;
-                }
-                if (!model.Monedabase.HasValue)
-                {
-                    model.Monedabase = 0;
-                }
-                if (!model.Monedagiro.HasValue)
-                {
-                    model.Monedagiro = 0;
-                }
+                    if (_db.CarteraVencimientos.Any())
+                    {
+                        model.Id = _db.CarteraVencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
+                    }
 
-                model.Fecha= DateTime.Now;
-                Conversion c = new Conversion();
-                model.Importeletra = c.enletras(model.Importegiro.ToString());
+                    else
+                    {
+                        model.Id = 0;
+                    }
 
-                //Calculo ID
-                var contador = ServiceHelper.GetNextIdContable<CarteraVencimientos>(_db, Empresa, model.Fkseriescontables);
-                var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReferenceContable<CarteraVencimientos>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fecha.Value, out identificadorsegmento);
-                model.Identificadorsegmento = identificadorsegmento;         
+                    if (!model.Tiponumerofactura.HasValue)
+                    {
+                        model.Tiponumerofactura = 0;
+                    }
+                    if (!model.Monedabase.HasValue)
+                    {
+                        model.Monedabase = 0;
+                    }
+                    if (!model.Monedagiro.HasValue)
+                    {
+                        model.Monedagiro = 0;
+                    }
 
-                //Llamamos al base
-                base.create(model);
+                    model.Fecha = DateTime.Now;
+                    Conversion c = new Conversion();
+                    model.Importeletra = c.enletras(model.Importegiro.ToString());
+
+                    //Calculo ID
+                    var contador = ServiceHelper.GetNextIdContable<CarteraVencimientos>(_db, Empresa, model.Fkseriescontables);
+                    var identificadorsegmento = "";
+                    model.Referencia = ServiceHelper.GetReferenceContable<CarteraVencimientos>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fecha.Value, out identificadorsegmento);
+                    model.Identificadorsegmento = identificadorsegmento;
+
+                    //Llamamos al base
+                    base.create(model);
+                }
 
                 //Guardamos los cambios
                 _db.SaveChanges();

@@ -31,6 +31,9 @@
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
 
+@*ReferenciaRemesa*@
+@Html.HiddenFor(f => Model.Referenciaremesa)
+
 @*Tipo*@
 <div class="form-group">
     @Html.LabelFor(f => Model.Tipovencimiento, new { @class = "control-label col-md-2" })
@@ -93,8 +96,8 @@
         </span>*@
 
     @*<span>
-        @Html.ActionLink("Descargar", "ImprimirCuaderno", new { valorCuaderno = Model.Cuadernos })
-    </span>*@
+            @Html.ActionLink("Descargar", "ImprimirCuaderno", new { valorCuaderno = Model.Cuadernos })
+        </span>*@
 
     <a class="btn btn-success btn-sm" id="descargar" href="#">Descargar</a>
 
@@ -106,7 +109,7 @@
 
         var idCuaderno = document.getElementById("Cuadernos");
         var valorCuaderno = idCuaderno.options[idCuaderno.selectedIndex].value;
-        //var ruta = document.getElementById("Ruta").value;
+        @*var ruta = "@System.Web.HttpContext.Current.Server.MapPath("")";*@
 
         if (valorCuaderno != "" && valorCuaderno != null) {
             $.ajax({
@@ -122,15 +125,18 @@
 
     $(function () {
         $("#descargar").click(function () {
-            var uri = '@Url.Action("ImprimirCuaderno", "Remesas", new { valorCuaderno = "xxxx" })';
+            @*var ruta = "@System.Web.HttpContext.Current.Server.MapPath("")";*@
+            var uri = '@Url.Action("ImprimirCuaderno", "Remesas", new { valorCuaderno = "xxxx", referencia = "yyyy" })';
 
             if ($("#Cuadernos").val() != "" && $("#Cuadernos").val() != null ) {
                 uri = uri.replace('xxxx', $("#Cuadernos").val());
+                uri = uri.replace('yyyy', $("#Referenciaremesa").val());
+                uri = uri.replace('&amp;', '&');
                 $(this).attr("href", uri);
             } else {
                 alert("Indique un cuaderno para imprimir");
             }
-            
+
         });
     });
 

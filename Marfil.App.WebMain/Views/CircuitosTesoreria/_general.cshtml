@@ -165,3 +165,25 @@
             <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
         }
     }
+
+
+<script type="text/javascript">
+
+    // Cartera y Remesa no se puede marcar a la vez
+    $("#Documentocartera").on('change', function () {
+
+        if ($('#Documentocartera').is(":checked") == true) {
+            $("#Fecharemesa").prop("checked", false);
+        }
+
+    });
+
+    $("#Fecharemesa").on('change', function () {
+
+        if ($('#Fecharemesa').is(":checked") == true) {
+            $("#Documentocartera").prop("checked", false);
+        }
+
+    });
+
+</script>

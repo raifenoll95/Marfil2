@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02"> 
+<CstmrDrctDbtInitn> 
+<GrpHdr> 
+*
+<CreDtTm>2021/09/22</CreDtTm>
+
+

@@ -1,0 +1,8 @@
+0359**NifOrdenante****SufijoAcreedor** 00123/09/21 ES1800491500042710151321 
+0659**NifOrdenante****SufijoAcreedor****TablaMapeo**010**NombreOrdenante** 
+0659**NifOrdenante****SufijoAcreedor****TablaMapeo**011**campo** 
+0659**NifOrdenante****SufijoAcreedor****TablaMapeo**012   
+0659**NifOrdenante****SufijoAcreedor****TablaMapeo**013 Alicante  
+0659**NifOrdenante****SufijoAcreedor****TablaMapeo**014*00000000**FechaVencimiento****TablaMapeo**    
+0659**NifOrdenante****SufijoAcreedor****TablaMapeo**015*00000000    **TablaMapeo**
+0859**NifOrdenante****SufijoAcreedor**  **CampoMapeo****CampoMapeo**  

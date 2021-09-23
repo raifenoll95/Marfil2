@@ -933,6 +933,7 @@
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\RemesasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />
     <Compile Include="ServicesView\Servicios\CarteraVencimientosService.cs" />

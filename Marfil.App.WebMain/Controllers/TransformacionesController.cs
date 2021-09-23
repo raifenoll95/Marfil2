@@ -304,16 +304,17 @@ namespace Marfil.App.WebMain.Controllers
                         var nuevoEstado = estadosService.get(estadoNuevo) as EstadosModel;
                         var cambiarEstadoService = new MachineStateService();
                         //Condición para evitar timeout
-                        if (model.Lineassalida.Count >= 5)
+                        if (model.Lineassalida.Count >=100)
                         {
-                            await cambiarEstadoService.SetStateAsync(service, model, nuevoEstado);
+                            TempData["errors"]= "Tiene " + model.Lineassalida.Count + " registros de salida y se permiten un máximo de 100. Divida los registros en 2 o más transformaciones.";
+                            //await cambiarEstadoService.SetStateAsync(service, model, nuevoEstado);
                         }
                         else
                         {
                             cambiarEstadoService.SetState(service, model, nuevoEstado);
-                        }
+                            TempData[Constantes.VariableMensajeExito] = "Transformación terminada con éxito";
+                        }                       
                         
-                        TempData[Constantes.VariableMensajeExito] = "Transformación terminada con éxito";
                     }
                 }
             }
