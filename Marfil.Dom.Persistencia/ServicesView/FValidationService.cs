@@ -105,6 +105,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _validationServices.Add(typeof(FacturasCompras), typeof(FacturasComprasValidation));
             _validationServices.Add(typeof(Transformaciones), typeof(TransformacionesValidation));
             _validationServices.Add(typeof(Transformacioneslotes), typeof(TransformacioneslotesValidation));
+            _validationServices.Add(typeof(Transformacioneslotesnave), typeof(TransformacioneslotesnaveValidation));
             _validationServices.Add(typeof(DivisionLotes), typeof(DivisionLotesValidation));
             _validationServices.Add(typeof(ImputacionCostes), typeof(ImputacionCostesValidation));
 

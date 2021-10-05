@@ -109,6 +109,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(FacturasCompras), typeof(FacturasComprasConverterService));
             _converterServicesTypes.Add(typeof(Transformaciones), typeof(TransformacionesConverterService));
             _converterServicesTypes.Add(typeof(Transformacioneslotes), typeof(TransformacioneslotesConverterService));
+            _converterServicesTypes.Add(typeof(Transformacioneslotesnave), typeof(TransformacioneslotesnaveConverterService));
             _converterServicesTypes.Add(typeof(DivisionLotes), typeof(DivisionLotesConverterService));
             _converterServicesTypes.Add(typeof(ImputacionCostes), typeof(ImputacionCostesConverterService));
 

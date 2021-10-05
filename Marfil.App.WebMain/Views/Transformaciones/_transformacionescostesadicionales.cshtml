@@ -266,10 +266,16 @@
         var valor = s.GetValue();
         var cReferencia = GridViewCosteAdicional.GetEditor("Referenciadocumento");
         var cPorcentaje = GridViewCosteAdicional.GetEditor("Porcentaje");
-        cReferencia.SetEnabled(valor != "Importefijo");
-        cPorcentaje.SetEnabled(valor != "Importefijo");
+        var cReparto = GridViewCosteAdicional.GetEditor("Tiporeparto");
+        cReferencia.SetEnabled(valor != "Importefijo" && valor != "Costexm2" && valor != "Costexm3");
+        cPorcentaje.SetEnabled(valor != "Importefijo" && valor != "Costexm2" && valor != "Costexm3");
         if (valor == "Importefijo") {
             cPorcentaje.SetValue(100);
+        }
+        if (valor == "Costexm2" || valor == "Costexm3") {
+            cPorcentaje.SetValue(100);
+            cReparto.SetValue("Metros");
+            cReparto.SetEnabled();
         }
     }
 

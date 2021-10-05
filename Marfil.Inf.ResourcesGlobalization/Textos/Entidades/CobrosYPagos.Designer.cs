@@ -538,6 +538,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Importe Remesa.
+        /// </summary>
+        public static string ImporteRemesa {
+            get {
+                return ResourceManager.GetString("ImporteRemesa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Inicial.
         /// </summary>
         public static string Inicial {
@@ -597,6 +606,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string MovimientosTesoreria {
             get {
                 return ResourceManager.GetString("MovimientosTesoreria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nº Documentos.
+        /// </summary>
+        public static string NumeroDocumentos {
+            get {
+                return ResourceManager.GetString("NumeroDocumentos", resourceCulture);
             }
         }
         

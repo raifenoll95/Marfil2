@@ -79,6 +79,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Código operario.
+        /// </summary>
+        public static string Codigooperariousuario {
+            get {
+                return ResourceManager.GetString("Codigooperariousuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Configurar email.
         /// </summary>
         public static string ConfiguracionEmail {
@@ -156,6 +165,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Nombre {
             get {
                 return ResourceManager.GetString("Nombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Usuario operario.
+        /// </summary>
+        public static string Operario {
+            get {
+                return ResourceManager.GetString("Operario", resourceCulture);
             }
         }
         

@@ -260,6 +260,11 @@
         <AssociationConnector Association="MarfilModel.FK_CuadernosLin" />
         <EntityTypeShape EntityType="MarfilModel.Remesas" Width="1.5" PointX="41.375" PointY="21.75" />
         <EntityTypeShape EntityType="MarfilModel.MapeoRemesas" Width="1.5" PointX="22.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacioneslotesnave" Width="1.5" PointX="42.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacioneslotesnavecostesadicionales" Width="1.5" PointX="3.25" PointY="54.75" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes" />
+        <EntityTypeShape EntityType="MarfilModel.Transformacioneslotesnavelin" Width="1.5" PointX="44.625" PointY="6.25" />
+        <AssociationConnector Association="MarfilModel.FK_Transformacioneslotesnavelin_Transformacioneslotes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

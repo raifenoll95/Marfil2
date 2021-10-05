@@ -510,7 +510,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
 
         //-----------------------GENERAR REGISTRO EN CARTERA-----------------------
-        public CarteraVencimientosModel CrearRegistroCartera(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion)
+        public CarteraVencimientosModel CrearRegistroCartera(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion, string fkseriescontablesremesa, string identificadorsegmentoremesa, string referenciaremesa)
         {
             CarteraVencimientosModel cartera = new CarteraVencimientosModel(_context);
             cartera.Empresa = Empresa;
@@ -548,13 +548,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             if(nuevasituacion.Equals("R"))
             {
-                cartera.Fkseriescontablesremesa = model.Fkseriescontables;
+                //misma referencia para cada registro
+                cartera.Fkseriescontablesremesa = fkseriescontablesremesa;
+                cartera.Referenciaremesa = referenciaremesa;
+                cartera.Identificadorsegmentoremesa = identificadorsegmentoremesa;
+
+                /*cartera.Fkseriescontablesremesa = model.Fkseriescontables;
                 var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, cartera.Fkseriescontablesremesa);         
                 var identificadorsegmentoremesa = "";
                 cartera.Referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<CarteraVencimientos>(_db, cartera.Empresa, cartera.Fkseriescontablesremesa, contador, cartera.Fecha.Value, out identificadorsegmentoremesa);
-                cartera.Identificadorsegmentoremesa = identificadorsegmentoremesa;
+                cartera.Identificadorsegmentoremesa = identificadorsegmentoremesa;*/
 
-                if(!String.IsNullOrEmpty(model.Fecharemesa))
+                if (!String.IsNullOrEmpty(model.Fecharemesa))
                 {
                     cartera.Fecharemesa = DateTime.Parse(model.Fecharemesa);
                 }               
@@ -564,7 +569,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         //-----------------------GENERAR REGISTRO EN REMESA-----------------------
-        public RemesasModel CrearRegistroRemesa(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion)
+        public RemesasModel CrearRegistroRemesa(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion, string fkseriescontablesremesa, string identificadorsegmentoremesa, string referenciaremesa)
         {
             RemesasModel remesa = new RemesasModel(_context);
             remesa.Empresa = Empresa;
@@ -587,10 +592,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             if (nuevasituacion.Equals("R"))
             {
-                remesa.Fkseriescontablesremesa = model.Fkseriescontables;
-                var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, remesa.Fkseriescontablesremesa);
-                var identificadorsegmentoremesa = "";
-                remesa.Referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<CarteraVencimientos>(_db, remesa.Empresa, remesa.Fkseriescontablesremesa, contador, remesa.Fecha.Value, out identificadorsegmentoremesa);
+                //Misma referencia para cada registro
+                remesa.Fkseriescontablesremesa = fkseriescontablesremesa;
+                remesa.Referenciaremesa = referenciaremesa;
                 remesa.Identificadorsegmentoremesa = identificadorsegmentoremesa;
 
                 if (!String.IsNullOrEmpty(model.Fecharemesa))
@@ -690,15 +694,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //Previsiones----> X-C | X-P | X-R | X-G
             if (esprevision)
             {
-                esprevision = true;         
-                foreach(var prevision in registros)
+                esprevision = true;
+
+                //Asignamos referencia remesa
+                var fkseriescontablesremesa = model.Fkseriescontables;
+                var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, fkseriescontablesremesa);
+                var identificadorsegmentoremesa = "";
+                var referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, fkseriescontablesremesa, contador, DateTime.Now, out identificadorsegmentoremesa);
+
+                foreach (var prevision in registros)
                 {
                     var registro = get(prevision) as VencimientosModel;
-                    serviceCarteraVencimientos.create(CrearRegistroCartera(registro, model, circuito.situacionfinal));
+                    serviceCarteraVencimientos.create(CrearRegistroCartera(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa));
 
                     if (circuito.situacionfinal.Equals("R"))
                     {
-                        serviceCarteraVencimientos.create(CrearRegistroRemesa(registro, model, circuito.situacionfinal));
+                        serviceCarteraVencimientos.create(CrearRegistroRemesa(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa));
                     }
 
                     editarSituacionPrevision(registro, model, circuito.situacionfinal, null);    

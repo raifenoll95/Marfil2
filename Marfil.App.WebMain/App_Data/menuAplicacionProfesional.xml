@@ -36,7 +36,7 @@
       <item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
       <item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
       <item name="carteravencimientos" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/CarteraVencimientos/Index" />
-		<item name="remesas" allowUpdate="true" allowDelete="true" text="Remesas" icono="fa fa-file" url="~/Remesas/Index" />
+	  <item name="remesas" allowUpdate="true" allowDelete="true" text="Remesas" icono="fa fa-file" url="~/Remesas/Index" />
       <item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
       <item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
     </item>
@@ -202,6 +202,7 @@
     <item name="imagenlote" text="Gestión imágenes de lotes" url="~/Lotes/Imagenes"></item>
     <item name="transformaciones" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformaciones/Index"></item>
     <item name="transformacioneslotes" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotes/Index"></item>
+	<item name="transformacioneslotesnave" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotesnave/Index"></item>
     <item name="divisionlotes" allowUpdate="true" allowDelete="true" text="divisionlotes" url="~/DivisionLotes/Index"></item>
     <item name="imputacioncostes" allowUpdate="true" allowDelete="true" text="imputacioncostes" url="~/ImputacionCostes/Index"></item>
     <item isseparator="true"></item>

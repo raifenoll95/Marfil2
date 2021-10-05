@@ -619,6 +619,7 @@
     <Compile Include="Model\Documentos\Presupuestos\PresupuestosReport.cs" />
     <Compile Include="Model\Documentos\Reservas\ReservasModel.cs" />
     <Compile Include="Model\Documentos\Reservas\ReservasReport.cs" />
+    <Compile Include="Model\Documentos\Transformacioneslotesnave\TransformacioneslotesnaveModel.cs" />
     <Compile Include="Model\Documentos\Transformacioneslotes\TransformacioneslotesModel.cs" />
     <Compile Include="Model\Documentos\Transformacioneslotes\TransformacioneslotesReport.cs" />
     <Compile Include="Model\Documentos\Transformaciones\TransformacionesModel.cs" />
@@ -896,6 +897,7 @@
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TransformacioneslotesnaveConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GrosoresConverterService.cs" />
@@ -926,6 +928,7 @@
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
     <Compile Include="ServicesView\Servicios\RemesasService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
+    <Compile Include="ServicesView\Servicios\TransformacioneslotesnaveService.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CuadernosBancariosValidation.cs" />
@@ -934,6 +937,7 @@
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\RemesasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TransformacioneslotesnaveValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />
     <Compile Include="ServicesView\Servicios\CarteraVencimientosService.cs" />
@@ -1330,6 +1334,15 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Transformacionesloteslin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transformacioneslotesnave.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transformacioneslotesnavecostesadicionales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transformacioneslotesnavelin.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Transformacionessalidalin.cs">

@@ -843,6 +843,20 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return service.GetBancos();
             }
         }
+        public double GetTotalRemesa(string referencia)
+        {
+            using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetTotalRemesa(referencia);
+            }
+        }
+        public IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.RemesasModel> GetDesglose(string referencia)
+        {
+            using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetRemesas(referencia);
+            }
+        }
 
         public IEnumerable<CuadernosBancariosModel> GetListCuadernos()
         {

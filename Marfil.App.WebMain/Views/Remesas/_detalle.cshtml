@@ -17,25 +17,29 @@
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
     var cvbancos = FCampoverificacion.Instance.GetModel<BancosModel>(WebHelper.ContextService);
+    var desglose = WebHelper.GetApplicationHelper().GetDesglose(Model.Referenciaremesa);
+
+    Session["referencia"] = Model.Referenciaremesa;
+
 }
+@*
+    <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+    <script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
 
-<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
-<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
-<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
-<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
 
-
-<div class="form-group">
-    @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
-    <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Referencia, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Referencia, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        </div>
+        <div class="col-md-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
     </div>
-    <div class="col-md-2">
-        @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
-    </div>
-</div>
 
-@*Cuenta*@
+    @*Cuenta*
 <div class="form-group">
     @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
@@ -68,9 +72,11 @@
     <div class="col-md-2">
         @Html.EditorFor(f => Model.Fechavencimiento)
     </div>
+</div>*@
+
+<div id="desglose" class="tab-pane fade in active">
+    @Html.Partial("_desglose", desglose)
 </div>
-
-
 
 
 @{

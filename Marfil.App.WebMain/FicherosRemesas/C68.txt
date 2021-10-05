@@ -1,8 +1,8 @@
-0359**NifOrdenante****SufijoAcreedor** 00123/09/21 ES1800491500042710151321 
-0659**NifOrdenante****SufijoAcreedor****TablaMapeo**010**NombreOrdenante** 
-0659**NifOrdenante****SufijoAcreedor****TablaMapeo**011**campo** 
-0659**NifOrdenante****SufijoAcreedor****TablaMapeo**012   
-0659**NifOrdenante****SufijoAcreedor****TablaMapeo**013 Alicante  
-0659**NifOrdenante****SufijoAcreedor****TablaMapeo**014*00000000**FechaVencimiento****TablaMapeo**    
-0659**NifOrdenante****SufijoAcreedor****TablaMapeo**015*00000000    **TablaMapeo**
-0859**NifOrdenante****SufijoAcreedor**  **CampoMapeo****CampoMapeo**  
+0359**NifOrdenante****SufijoAcreedor** 00105/10/21 ES1800491500042710151321 
+0659**NifOrdenante****SufijoAcreedor****Id del Acreedor**010**NombreOrdenante** 
+0659**NifOrdenante****SufijoAcreedor****Id del Acreedor**011Novelda 
+0659**NifOrdenante****SufijoAcreedor****Id del Acreedor**012   
+0659**NifOrdenante****SufijoAcreedor****Id del Acreedor**013 Alicante  
+0659**NifOrdenante****SufijoAcreedor****Id del Acreedor**014*0000000015/04/21**Importe**    
+0659**NifOrdenante****SufijoAcreedor****Id del Acreedor**015*00000000    **Concepto**
+0859**NifOrdenante****SufijoAcreedor**  **Suma de los importes****Nº total de registros**  

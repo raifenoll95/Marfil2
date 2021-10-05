@@ -1456,6 +1456,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Trans. de acabados en nave.
+        /// </summary>
+        public static string transformacioneslotesnave {
+            get {
+                return ResourceManager.GetString("transformacioneslotesnave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Transportistas.
         /// </summary>
         public static string transportistas {

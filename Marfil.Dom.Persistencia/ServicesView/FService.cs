@@ -42,6 +42,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble;
+using Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave;
 
 namespace Marfil.Dom.Persistencia.ServicesView
 {
@@ -149,6 +150,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
 
             _servicesTypes.Add(typeof(TransformacionesModel), typeof(ImputacionCosteservice));
             _servicesTypes.Add(typeof(TransformacioneslotesModel), typeof(TransformacioneslotesService));
+            _servicesTypes.Add(typeof(TransformacioneslotesnaveModel), typeof(TransformacioneslotesnaveService));
             _servicesTypes.Add(typeof(DivisionLotesModel), typeof(DivisionLotesService));
             _servicesTypes.Add(typeof(ImputacionCostesModel), typeof(ImputacionCostesService));
             //stock

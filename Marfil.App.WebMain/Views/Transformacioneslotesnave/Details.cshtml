@@ -1,0 +1,41 @@
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
+@using Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+<div>
+    @{
+        ViewData["readonly"] = true;
+    }
+
+    <div class="form-horizontal">
+        @Html.Partial("_transformaciones", Model as Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave.TransformacioneslotesnaveModel)
+    </div>
+</div>
+@if (ViewBag.Modificar)
+{
+    <div class="margin-top">
+        <a class="btn btn-info no-margin-left" href="@Url.Action("Edit", new {id = ((TransformacioneslotesnaveModel) Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </div>
+}
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

@@ -103,6 +103,10 @@ namespace Marfil.Dom.Persistencia.Model
         public bool Usuario_cliente { get; set; }
 
         public string Codigoclienteusuario { get; set; }
+        [Display(ResourceType = typeof(RUsuarios), Name = "Operario")]
+        public bool Operario { get; set; }
+        [Display(ResourceType = typeof(RUsuarios), Name = "Codigooperariousuario")]
+        public string Codigooperariousuario { get; set; }
 
         public bool IsValidEmailConfiguration
         {

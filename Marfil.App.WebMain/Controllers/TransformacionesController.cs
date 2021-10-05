@@ -304,16 +304,16 @@ namespace Marfil.App.WebMain.Controllers
                         var nuevoEstado = estadosService.get(estadoNuevo) as EstadosModel;
                         var cambiarEstadoService = new MachineStateService();
                         //Condición para evitar timeout
-                        if (model.Lineassalida.Count >=100)
+                        /*if (model.Lineassalida.Count >= 100)
                         {
-                            TempData["errors"]= "Tiene " + model.Lineassalida.Count + " registros de salida y se permiten un máximo de 100. Divida los registros en 2 o más transformaciones.";
+                            TempData["errors"] = "Tiene " + model.Lineassalida.Count + " registros de salida y se permiten un máximo de 100. Divida los registros en 2 o más transformaciones.";
                             //await cambiarEstadoService.SetStateAsync(service, model, nuevoEstado);
                         }
                         else
-                        {
+                        {*/
                             cambiarEstadoService.SetState(service, model, nuevoEstado);
                             TempData[Constantes.VariableMensajeExito] = "Transformación terminada con éxito";
-                        }                       
+                        //}                       
                         
                     }
                 }
@@ -586,8 +586,8 @@ namespace Marfil.App.WebMain.Controllers
                                 totalMetros += Math.Round((double)l.Metros, 3);
                             }
                         }
-                        //item.Total = Math.Round((double)item.Importe * totalMetros, 2);
-                        item.Total = Math.Round((double)(item.Importe * (item.Porcentaje / 100.0)), 2);
+                        item.Total = Math.Round((double)item.Importe * totalMetros, 2);
+                        //item.Total = Math.Round((double)(item.Importe * (item.Porcentaje / 100.0)), 2);
                         model.Add(item);
                         Session[sessioncostes] = model;
                     }
@@ -618,10 +618,36 @@ namespace Marfil.App.WebMain.Controllers
 
                     if (item.Tipodocumento == TipoCosteAdicional.Costexm2 || item.Tipodocumento == TipoCosteAdicional.Costexm3)
                     {
-                        item.Referenciadocumento = string.Empty;
-                        item.Total = 0;
-                    }
+                        /*item.Referenciadocumento = string.Empty;
+                        item.Total = 0;*/
 
+                        item.Referenciadocumento = string.Empty;
+
+                        // Código para calcular el coste adicional cuando tipoDocumento es xm2 o xm3
+                        var tipoDocumento = item.Tipodocumento;
+                        var codUnidadMedida = "-1";
+
+                        if (tipoDocumento == TipoCosteAdicional.Costexm2)
+                        {
+                            codUnidadMedida = "02";
+                        }
+                        else if (tipoDocumento == TipoCosteAdicional.Costexm3)
+                        {
+                            codUnidadMedida = "03";
+                        }
+
+                        var lineas = Session[sessionentrada] as List<TransformacionesentradaLinModel>;
+                        var totalMetros = 0.0d;
+                        foreach (var l in lineas)
+                        {
+                            var unidadMedida = l.Fkunidades;
+                            if (unidadMedida.Equals(codUnidadMedida))
+                            {
+                                totalMetros += Math.Round((double)l.Metros, 3);
+                            }
+                        }
+                        item.Total = Math.Round((double)item.Importe * totalMetros, 2);
+                    }
 
                     editItem.Tipodocumento = item.Tipodocumento;
                     editItem.Referenciadocumento = item.Referenciadocumento;

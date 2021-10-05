@@ -1,0 +1,90 @@
+﻿@using System.Web.Mvc.Html
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@model Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave.TransformacioneslotesnaveModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var incoterm = WebHelper.GetApplicationHelper().GetListIncoterm().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    incoterm.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listunidadnegocio.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvobras = FCampoverificacion.Instance.GetModel<ObrasModel>(WebHelper.ContextService);
+    var cvalmacenes = FCampoverificacion.Instance.GetModel<AlmacenesModel>(WebHelper.ContextService);
+    var cvzonas = FCampoverificacion.Instance.GetModel<AlmacenesZonasModel>(WebHelper.ContextService);
+}
+<div>
+
+   
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkalmacen, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvalmacenes.Name = "Fkalmacen";
+                cvalmacenes.Url = Url.Action("AlmacenesApi", "Api");
+                cvalmacenes.Valor = Model.Fkalmacen?.ToString()??string.Empty;
+                cvalmacenes.SoloLectura = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvalmacenes)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-1">
+            @Html.ValidationMessageFor(f => Model.Fkalmacen, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkzonas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvzonas.Name = "Fkzonas";
+                cvzonas.Url = Url.Action("AlmacenesZonasApi", "Api");
+                cvzonas.Valor = Model.Fkzonas;
+                cvzonas.ControlesAsociados = "[ { \"fkalmacen\":\"Fkalmacen\" } ]";
+                cvzonas.SoloLectura = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvzonas)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkzonas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkoperarios, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                campoverificacion.Name = "Fkoperarios";
+                campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                campoverificacion.Valor = Model.Fkoperarios;
+                campoverificacion.Titulo = "Operarios";
+                campoverificacion.SoloLectura = true;
+                campoverificacion.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Operarios + "\"}";
+            }
+            @Html.Partial("CampoverificacionUI", campoverificacion)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkoperarios, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>

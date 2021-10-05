@@ -1125,7 +1125,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="clave" Type="nvarchar" MaxLength="10" />
-          <Property Name="descripcion" Type="nvarchar" MaxLength="30" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="60" />
           <Property Name="banco" Type="nvarchar" MaxLength="25" />
           <Property Name="tipoRegistro" Type="int" />
           <Property Name="tipoFormato" Type="nvarchar" MaxLength="4" />
@@ -4337,6 +4337,103 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="fkcontadoreslotes" Type="varchar" MaxLength="12" />
           <Property Name="precio" Type="float" />
         </EntityType>
+        <EntityType Name="Transformacioneslotesnave">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkejercicio" Type="int" Nullable="false" />
+          <Property Name="fkseries" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="fkestados" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="fktrabajos" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="identificadorsegmento" Type="nvarchar" MaxLength="12" />
+          <Property Name="referencia" Type="nvarchar" MaxLength="30" />
+          <Property Name="fechadocumento" Type="datetime" />
+          <Property Name="fkalmacen" Type="nvarchar" MaxLength="4" />
+          <Property Name="fkproveedores" Type="varchar" MaxLength="15" />
+          <Property Name="nombreproveedor" Type="nvarchar" MaxLength="200" />
+          <Property Name="notas" Type="ntext" />
+          <Property Name="fktransportista" Type="varchar" MaxLength="15" />
+          <Property Name="referenciadocumentoproveedor" Type="nvarchar" MaxLength="30" />
+          <Property Name="fechadocumentoproveedor" Type="datetime" />
+          <Property Name="nombretransportista" Type="nvarchar" MaxLength="40" />
+          <Property Name="conductor" Type="nvarchar" MaxLength="20" />
+          <Property Name="matricula" Type="nvarchar" MaxLength="12" />
+          <Property Name="fkoperarios" Type="varchar" MaxLength="15" />
+          <Property Name="fkoperadortransporte" Type="varchar" MaxLength="15" />
+          <Property Name="fkzonas" Type="varchar" MaxLength="3" />
+          <Property Name="fkusuarioalta" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fechaalta" Type="datetime" Nullable="false" />
+          <Property Name="fkusuariomodificacion" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fechamodificacion" Type="datetime" Nullable="false" />
+          <Property Name="integridadreferencialflag" Type="uniqueidentifier" />
+          <Property Name="fkcarpetas" Type="uniqueidentifier" />
+          <Property Name="fkmateriales" Type="nvarchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Transformacioneslotesnavecostesadicionales">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="fkTransformacioneslotes" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="fkTransformacioneslotes" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="tipodocumento" Type="int" Nullable="false" />
+          <Property Name="referenciadocumento" Type="nvarchar" MaxLength="30" />
+          <Property Name="importe" Type="float" />
+          <Property Name="porcentaje" Type="float" />
+          <Property Name="total" Type="float" />
+          <Property Name="tipocoste" Type="int" Nullable="false" />
+          <Property Name="tiporeparto" Type="int" Nullable="false" />
+          <Property Name="notas" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Transformacioneslotesnavelin">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="fkTransformacioneslotes" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="fkTransformacioneslotes" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="fkarticulos" Type="nvarchar" MaxLength="15" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="120" />
+          <Property Name="lote" Type="nvarchar" MaxLength="12" />
+          <Property Name="tabla" Type="int" />
+          <Property Name="cantidad" Type="float" />
+          <Property Name="largo" Type="float" />
+          <Property Name="ancho" Type="float" />
+          <Property Name="grueso" Type="float" />
+          <Property Name="fkunidades" Type="nvarchar" MaxLength="2" />
+          <Property Name="metros" Type="float" />
+          <Property Name="notas" Type="ntext" />
+          <Property Name="documentoorigen" Type="nvarchar" MaxLength="15" />
+          <Property Name="documentodestino" Type="nvarchar" MaxLength="15" />
+          <Property Name="canal" Type="nvarchar" MaxLength="3" />
+          <Property Name="revision" Type="nvarchar" MaxLength="1" />
+          <Property Name="decimalesmonedas" Type="int" />
+          <Property Name="decimalesmedidas" Type="int" />
+          <Property Name="bundle" Type="nvarchar" MaxLength="2" />
+          <Property Name="tblnum" Type="int" />
+          <Property Name="contenedor" Type="nvarchar" MaxLength="12" />
+          <Property Name="sello" Type="nvarchar" MaxLength="10" />
+          <Property Name="caja" Type="int" />
+          <Property Name="pesoneto" Type="float" />
+          <Property Name="pesobruto" Type="float" />
+          <Property Name="seccion" Type="nvarchar" MaxLength="4" />
+          <Property Name="costeadicionalmaterial" Type="float" />
+          <Property Name="costeadicionalportes" Type="float" />
+          <Property Name="costeadicionalotro" Type="float" />
+          <Property Name="costeacicionalvariable" Type="float" />
+          <Property Name="orden" Type="int" />
+          <Property Name="flagidentifier" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fkcontadoreslotes" Type="varchar" MaxLength="12" />
+          <Property Name="precio" Type="float" />
+          <Property Name="terminado" Type="bit" />
+        </EntityType>
         <EntityType Name="Transformacionessalidalin">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4614,6 +4711,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="cambiaralmacen" Type="bit" />
           <Property Name="usuario_cliente" Type="bit" />
           <Property Name="codigoclienteusuario" Type="varchar" MaxLength="15" />
+          <Property Name="operario" Type="bit" />
+          <Property Name="codigooperariousuario" Type="varchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="Usuariosactivos">
           <Key>
@@ -5881,6 +5980,34 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes">
+          <End Role="Transformacioneslotes" Type="Self.Transformacioneslotes" Multiplicity="1" />
+          <End Role="Transformacioneslotesnavecostesadicionales" Type="Self.Transformacioneslotesnavecostesadicionales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transformacioneslotes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transformacioneslotesnavecostesadicionales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkTransformacioneslotes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transformacioneslotesnavelin_Transformacioneslotes">
+          <End Role="Transformacioneslotesnave" Type="Self.Transformacioneslotesnave" Multiplicity="1" />
+          <End Role="Transformacioneslotesnavelin" Type="Self.Transformacioneslotesnavelin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transformacioneslotesnave">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transformacioneslotesnavelin">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkTransformacioneslotes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Transformacionessalidalin_Transformacionessalidalin">
           <End Role="Transformaciones" Type="Self.Transformaciones" Multiplicity="1" />
           <End Role="Transformacionessalidalin" Type="Self.Transformacionessalidalin" Multiplicity="*" />
@@ -6106,6 +6233,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Transformacioneslotes" EntityType="Self.Transformacioneslotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transformacioneslotescostesadicionales" EntityType="Self.Transformacioneslotescostesadicionales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transformacionesloteslin" EntityType="Self.Transformacionesloteslin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transformacioneslotesnave" EntityType="Self.Transformacioneslotesnave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transformacioneslotesnavecostesadicionales" EntityType="Self.Transformacioneslotesnavecostesadicionales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transformacioneslotesnavelin" EntityType="Self.Transformacioneslotesnavelin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transformacionessalidalin" EntityType="Self.Transformacionessalidalin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transportistas" EntityType="Self.Transportistas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Traspasosalmacen" EntityType="Self.Traspasosalmacen" Schema="dbo" store:Type="Tables" />
@@ -6561,6 +6691,14 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_Transformacionesloteslin_Transformacioneslotes" Association="Self.FK_Transformacionesloteslin_Transformacioneslotes">
             <End Role="Transformacioneslotes" EntitySet="Transformacioneslotes" />
             <End Role="Transformacionesloteslin" EntitySet="Transformacionesloteslin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes" Association="Self.FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes">
+            <End Role="Transformacioneslotes" EntitySet="Transformacioneslotes" />
+            <End Role="Transformacioneslotesnavecostesadicionales" EntitySet="Transformacioneslotesnavecostesadicionales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transformacioneslotesnavelin_Transformacioneslotes" Association="Self.FK_Transformacioneslotesnavelin_Transformacioneslotes">
+            <End Role="Transformacioneslotesnave" EntitySet="Transformacioneslotesnave" />
+            <End Role="Transformacioneslotesnavelin" EntitySet="Transformacioneslotesnavelin" />
           </AssociationSet>
           <AssociationSet Name="FK_Transformacionessalidalin_Transformacionessalidalin" Association="Self.FK_Transformacionessalidalin_Transformacionessalidalin">
             <End Role="Transformaciones" EntitySet="Transformaciones" />
@@ -7077,6 +7215,17 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           </AssociationSet>
           <EntitySet Name="Remesas" EntityType="MarfilModel.Remesas" />
           <EntitySet Name="MapeoRemesas" EntityType="MarfilModel.MapeoRemesas" />
+          <EntitySet Name="Transformacioneslotesnave" EntityType="MarfilModel.Transformacioneslotesnave" />
+          <EntitySet Name="Transformacioneslotesnavecostesadicionales" EntityType="MarfilModel.Transformacioneslotesnavecostesadicionales" />
+          <AssociationSet Name="FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes" Association="MarfilModel.FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes">
+            <End Role="Transformacioneslotes" EntitySet="Transformacioneslotes" />
+            <End Role="Transformacioneslotesnavecostesadicionales" EntitySet="Transformacioneslotesnavecostesadicionales" />
+          </AssociationSet>
+          <EntitySet Name="Transformacioneslotesnavelin" EntityType="MarfilModel.Transformacioneslotesnavelin" />
+          <AssociationSet Name="FK_Transformacioneslotesnavelin_Transformacioneslotes" Association="MarfilModel.FK_Transformacioneslotesnavelin_Transformacioneslotes">
+            <End Role="Transformacioneslotesnave" EntitySet="Transformacioneslotesnave" />
+            <End Role="Transformacioneslotesnavelin" EntitySet="Transformacioneslotesnavelin" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -8737,6 +8886,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="cambiaralmacen" Type="Boolean" />
           <Property Name="usuario_cliente" Type="Boolean" />
           <Property Name="codigoclienteusuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="operario" Type="Boolean" />
+          <Property Name="codigooperariousuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_AlmacenesZona_Almacenes">
           <End Type="MarfilModel.Almacenes" Role="Almacenes" Multiplicity="1" />
@@ -11126,6 +11277,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <NavigationProperty Name="Transformacionesloteslin" Relationship="MarfilModel.FK_Transformacionesloteslin_Transformacioneslotes" FromRole="Transformacioneslotes" ToRole="Transformacionesloteslin" />
           <Property Name="fkcarpetas" Type="Guid" />
           <Property Name="fkmateriales" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transformacioneslotesnavecostesadicionales" Relationship="MarfilModel.FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes" FromRole="Transformacioneslotes" ToRole="Transformacioneslotesnavecostesadicionales" />
         </EntityType>
         <EntityType Name="Transformacionesloteslin">
           <Key>
@@ -13105,6 +13257,134 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="enlaces" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="enlaces2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Transformacioneslotesnave">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkejercicio" Type="Int32" Nullable="false" />
+          <Property Name="fkseries" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="fkestados" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fktrabajos" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="identificadorsegmento" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fechadocumento" Type="DateTime" Precision="3" />
+          <Property Name="fkalmacen" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="fkproveedores" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="nombreproveedor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fktransportista" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="referenciadocumentoproveedor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fechadocumentoproveedor" Type="DateTime" Precision="3" />
+          <Property Name="nombretransportista" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="conductor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="matricula" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="fkoperarios" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkoperadortransporte" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkzonas" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkusuarioalta" Type="Guid" Nullable="false" />
+          <Property Name="fechaalta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fkusuariomodificacion" Type="Guid" Nullable="false" />
+          <Property Name="fechamodificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="integridadreferencialflag" Type="Guid" />
+          <Property Name="fkcarpetas" Type="Guid" />
+          <Property Name="fkmateriales" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transformacioneslotesnavelin" Relationship="MarfilModel.FK_Transformacioneslotesnavelin_Transformacioneslotes" FromRole="Transformacioneslotesnave" ToRole="Transformacioneslotesnavelin" />
+        </EntityType>
+        <EntityType Name="Transformacioneslotesnavecostesadicionales">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="fkTransformacioneslotes" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="fkTransformacioneslotes" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="tipodocumento" Type="Int32" Nullable="false" />
+          <Property Name="referenciadocumento" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="importe" Type="Double" />
+          <Property Name="porcentaje" Type="Double" />
+          <Property Name="total" Type="Double" />
+          <Property Name="tipocoste" Type="Int32" Nullable="false" />
+          <Property Name="tiporeparto" Type="Int32" Nullable="false" />
+          <Property Name="notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transformacioneslotes" Relationship="MarfilModel.FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes" FromRole="Transformacioneslotesnavecostesadicionales" ToRole="Transformacioneslotes" />
+        </EntityType>
+        <Association Name="FK_Transformacioneslotesnavecostesadicionales_Transformacioneslotes">
+          <End Type="MarfilModel.Transformacioneslotes" Role="Transformacioneslotes" Multiplicity="1" />
+          <End Type="MarfilModel.Transformacioneslotesnavecostesadicionales" Role="Transformacioneslotesnavecostesadicionales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transformacioneslotes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transformacioneslotesnavecostesadicionales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkTransformacioneslotes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Transformacioneslotesnavelin">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="fkTransformacioneslotes" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="fkTransformacioneslotes" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="fkarticulos" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="lote" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="tabla" Type="Int32" />
+          <Property Name="cantidad" Type="Double" />
+          <Property Name="largo" Type="Double" />
+          <Property Name="ancho" Type="Double" />
+          <Property Name="grueso" Type="Double" />
+          <Property Name="fkunidades" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="metros" Type="Double" />
+          <Property Name="notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="documentoorigen" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="documentodestino" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="canal" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="revision" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="decimalesmonedas" Type="Int32" />
+          <Property Name="decimalesmedidas" Type="Int32" />
+          <Property Name="bundle" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="tblnum" Type="Int32" />
+          <Property Name="contenedor" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="sello" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="caja" Type="Int32" />
+          <Property Name="pesoneto" Type="Double" />
+          <Property Name="pesobruto" Type="Double" />
+          <Property Name="seccion" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="costeadicionalmaterial" Type="Double" />
+          <Property Name="costeadicionalportes" Type="Double" />
+          <Property Name="costeadicionalotro" Type="Double" />
+          <Property Name="costeacicionalvariable" Type="Double" />
+          <Property Name="orden" Type="Int32" />
+          <Property Name="flagidentifier" Type="Guid" Nullable="false" />
+          <Property Name="fkcontadoreslotes" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Double" />
+          <Property Name="terminado" Type="Boolean" />
+          <NavigationProperty Name="Transformacioneslotesnave" Relationship="MarfilModel.FK_Transformacioneslotesnavelin_Transformacioneslotes" FromRole="Transformacioneslotesnavelin" ToRole="Transformacioneslotesnave" />
+        </EntityType>
+        <Association Name="FK_Transformacioneslotesnavelin_Transformacioneslotes">
+          <End Type="MarfilModel.Transformacioneslotesnave" Role="Transformacioneslotesnave" Multiplicity="1" />
+          <End Type="MarfilModel.Transformacioneslotesnavelin" Role="Transformacioneslotesnavelin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transformacioneslotesnave">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Transformacioneslotesnavelin">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkTransformacioneslotes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14676,6 +14956,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="MarfilModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="codigooperariousuario" ColumnName="codigooperariousuario" />
+                <ScalarProperty Name="operario" ColumnName="operario" />
                 <ScalarProperty Name="codigoclienteusuario" ColumnName="codigoclienteusuario" />
                 <ScalarProperty Name="usuario_cliente" ColumnName="usuario_cliente" />
                 <ScalarProperty Name="cambiaralmacen" ColumnName="cambiaralmacen" />
@@ -17809,6 +18091,101 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="tabla" ColumnName="tabla" />
                 <ScalarProperty Name="etiqueta" ColumnName="etiqueta" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transformacioneslotesnave">
+            <EntityTypeMapping TypeName="MarfilModel.Transformacioneslotesnave">
+              <MappingFragment StoreEntitySet="Transformacioneslotesnave">
+                <ScalarProperty Name="fkmateriales" ColumnName="fkmateriales" />
+                <ScalarProperty Name="fkcarpetas" ColumnName="fkcarpetas" />
+                <ScalarProperty Name="integridadreferencialflag" ColumnName="integridadreferencialflag" />
+                <ScalarProperty Name="fechamodificacion" ColumnName="fechamodificacion" />
+                <ScalarProperty Name="fkusuariomodificacion" ColumnName="fkusuariomodificacion" />
+                <ScalarProperty Name="fechaalta" ColumnName="fechaalta" />
+                <ScalarProperty Name="fkusuarioalta" ColumnName="fkusuarioalta" />
+                <ScalarProperty Name="fkzonas" ColumnName="fkzonas" />
+                <ScalarProperty Name="fkoperadortransporte" ColumnName="fkoperadortransporte" />
+                <ScalarProperty Name="fkoperarios" ColumnName="fkoperarios" />
+                <ScalarProperty Name="matricula" ColumnName="matricula" />
+                <ScalarProperty Name="conductor" ColumnName="conductor" />
+                <ScalarProperty Name="nombretransportista" ColumnName="nombretransportista" />
+                <ScalarProperty Name="fechadocumentoproveedor" ColumnName="fechadocumentoproveedor" />
+                <ScalarProperty Name="referenciadocumentoproveedor" ColumnName="referenciadocumentoproveedor" />
+                <ScalarProperty Name="fktransportista" ColumnName="fktransportista" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="nombreproveedor" ColumnName="nombreproveedor" />
+                <ScalarProperty Name="fkproveedores" ColumnName="fkproveedores" />
+                <ScalarProperty Name="fkalmacen" ColumnName="fkalmacen" />
+                <ScalarProperty Name="fechadocumento" ColumnName="fechadocumento" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
+                <ScalarProperty Name="fktrabajos" ColumnName="fktrabajos" />
+                <ScalarProperty Name="fkestados" ColumnName="fkestados" />
+                <ScalarProperty Name="fkseries" ColumnName="fkseries" />
+                <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transformacioneslotesnavecostesadicionales">
+            <EntityTypeMapping TypeName="MarfilModel.Transformacioneslotesnavecostesadicionales">
+              <MappingFragment StoreEntitySet="Transformacioneslotesnavecostesadicionales">
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="tiporeparto" ColumnName="tiporeparto" />
+                <ScalarProperty Name="tipocoste" ColumnName="tipocoste" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+                <ScalarProperty Name="importe" ColumnName="importe" />
+                <ScalarProperty Name="referenciadocumento" ColumnName="referenciadocumento" />
+                <ScalarProperty Name="tipodocumento" ColumnName="tipodocumento" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fkTransformacioneslotes" ColumnName="fkTransformacioneslotes" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transformacioneslotesnavelin">
+            <EntityTypeMapping TypeName="MarfilModel.Transformacioneslotesnavelin">
+              <MappingFragment StoreEntitySet="Transformacioneslotesnavelin">
+                <ScalarProperty Name="terminado" ColumnName="terminado" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="fkcontadoreslotes" ColumnName="fkcontadoreslotes" />
+                <ScalarProperty Name="flagidentifier" ColumnName="flagidentifier" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="costeacicionalvariable" ColumnName="costeacicionalvariable" />
+                <ScalarProperty Name="costeadicionalotro" ColumnName="costeadicionalotro" />
+                <ScalarProperty Name="costeadicionalportes" ColumnName="costeadicionalportes" />
+                <ScalarProperty Name="costeadicionalmaterial" ColumnName="costeadicionalmaterial" />
+                <ScalarProperty Name="seccion" ColumnName="seccion" />
+                <ScalarProperty Name="pesobruto" ColumnName="pesobruto" />
+                <ScalarProperty Name="pesoneto" ColumnName="pesoneto" />
+                <ScalarProperty Name="caja" ColumnName="caja" />
+                <ScalarProperty Name="sello" ColumnName="sello" />
+                <ScalarProperty Name="contenedor" ColumnName="contenedor" />
+                <ScalarProperty Name="tblnum" ColumnName="tblnum" />
+                <ScalarProperty Name="bundle" ColumnName="bundle" />
+                <ScalarProperty Name="decimalesmedidas" ColumnName="decimalesmedidas" />
+                <ScalarProperty Name="decimalesmonedas" ColumnName="decimalesmonedas" />
+                <ScalarProperty Name="revision" ColumnName="revision" />
+                <ScalarProperty Name="canal" ColumnName="canal" />
+                <ScalarProperty Name="documentodestino" ColumnName="documentodestino" />
+                <ScalarProperty Name="documentoorigen" ColumnName="documentoorigen" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="metros" ColumnName="metros" />
+                <ScalarProperty Name="fkunidades" ColumnName="fkunidades" />
+                <ScalarProperty Name="grueso" ColumnName="grueso" />
+                <ScalarProperty Name="ancho" ColumnName="ancho" />
+                <ScalarProperty Name="largo" ColumnName="largo" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="tabla" ColumnName="tabla" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fkarticulos" ColumnName="fkarticulos" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fkTransformacioneslotes" ColumnName="fkTransformacioneslotes" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

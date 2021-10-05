@@ -12,14 +12,12 @@ namespace Marfil.Dom.Persistencia
     using System;
     using System.Collections.Generic;
     
-    public partial class Transformacioneslotes
+    public partial class Transformacioneslotesnave
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Transformacioneslotes()
+        public Transformacioneslotesnave()
         {
-            this.Transformacioneslotescostesadicionales = new HashSet<Transformacioneslotescostesadicionales>();
-            this.Transformacionesloteslin = new HashSet<Transformacionesloteslin>();
-            this.Transformacioneslotesnavecostesadicionales = new HashSet<Transformacioneslotesnavecostesadicionales>();
+            this.Transformacioneslotesnavelin = new HashSet<Transformacioneslotesnavelin>();
         }
     
         public string empresa { get; set; }
@@ -53,10 +51,6 @@ namespace Marfil.Dom.Persistencia
         public string fkmateriales { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transformacioneslotescostesadicionales> Transformacioneslotescostesadicionales { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transformacionesloteslin> Transformacionesloteslin { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transformacioneslotesnavecostesadicionales> Transformacioneslotesnavecostesadicionales { get; set; }
+        public virtual ICollection<Transformacioneslotesnavelin> Transformacioneslotesnavelin { get; set; }
     }
 }

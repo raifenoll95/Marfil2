@@ -1411,7 +1411,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Metros.
+        ///   Busca una cadena traducida similar a Total/Metros.
         /// </summary>
         public static string Metros {
             get {

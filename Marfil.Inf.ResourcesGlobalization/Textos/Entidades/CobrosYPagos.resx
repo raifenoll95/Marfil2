@@ -363,4 +363,10 @@
   <data name="Ruta" xml:space="preserve">
     <value>Ruta para guardar el archivo, por defecto C:\tmp</value>
   </data>
+  <data name="ImporteRemesa" xml:space="preserve">
+    <value>Importe Remesa</value>
+  </data>
+  <data name="NumeroDocumentos" xml:space="preserve">
+    <value>Nº Documentos</value>
+  </data>
 </root>

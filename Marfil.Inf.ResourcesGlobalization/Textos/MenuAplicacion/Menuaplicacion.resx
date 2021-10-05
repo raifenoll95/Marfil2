@@ -600,4 +600,7 @@
   <data name="configurardocumentosremesa" xml:space="preserve">
     <value>Conf. de documentos: Remesa</value>
   </data>
+  <data name="transformacioneslotesnave" xml:space="preserve">
+    <value>Trans. de acabados en nave</value>
+  </data>
 </root>

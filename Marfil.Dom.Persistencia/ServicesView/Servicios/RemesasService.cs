@@ -24,7 +24,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Tipovencimiento", "Referenciaremesa", "Fecharemesa", "Fkcuentastesoreria", "Descripcioncuenta", "Referencia", "Importegiro" };
+            var propiedadesVisibles = new[] { "Tipovencimiento", "Referenciaremesa", "Fecharemesa", "Fkcuentastesoreria", "Descripcioncuenta", "NumeroDocumentos", "ImporteRemesa" };
             var propiedades = Helpers.Helper.getProperties<RemesasModel>();
 
             model.PrimaryColumnns = new[] { "Id" };
@@ -34,20 +34,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.OrdenColumnas.Add("Fecharemesa", 2);
             model.OrdenColumnas.Add("Fkcuentastesoreria", 3);
             model.OrdenColumnas.Add("Descripcioncuenta", 4);
-            model.OrdenColumnas.Add("Referencia", 5);
-            model.OrdenColumnas.Add("Importegiro", 6);
+            model.OrdenColumnas.Add("NumeroDocumentos", 5);
+            model.OrdenColumnas.Add("ImporteRemesa", 6);
 
             return model;
         }
 
         public override string GetSelectPrincipal()
         {
-            return string.Format("select i.id,i.tipovencimiento,i.referenciaremesa,i.fecharemesa,i.fkcuentastesoreria,c.descripcion as Descripcioncuenta,i.referencia,i.importegiro from remesas as i " +
-                " inner join cuentas as c on c.id=i.fkcuentastesoreria and c.empresa=i.empresa" +
-                " where i.empresa='{0}'", Empresa);
+            return string.Format("select MAX(i.id) as Id,i.tipovencimiento,i.referenciaremesa,i.fecharemesa,i.fkcuentastesoreria,c.descripcion as Descripcioncuenta,COUNT(*) as NumeroDocumentos,SUM(importegiro) as ImporteRemesa " +
+               "from remesas as i " +
+               "inner join cuentas as c on c.id = i.fkcuentastesoreria and c.empresa = i.empresa "+
+               "where i.empresa = '{0}' group by i.tipovencimiento, i.referenciaremesa, i.fecharemesa, i.fkcuentastesoreria, c.descripcion", Empresa);
         }
 
         #endregion
+
+        public double GetTotalRemesa(string referencia)
+        {
+            var total = 0d;
+            var importes = _db.Remesas.Where(f => f.referenciaremesa == referencia && f.empresa == Empresa).ToList();
+
+            foreach (var item in importes)
+            {
+                total = (double)(total + item.importegiro);
+            }
+
+            return total;
+        }
+
+        public IEnumerable<RemesasModel> GetRemesas(string referencia)
+        {
+            return _db.Remesas.Where(f => f.referenciaremesa == referencia && f.empresa == Empresa ).ToList().Select(f => _converterModel.GetModelView(f) as RemesasModel);
+        }
 
         public int GetCuadernoId(string cuaderno)
         {
@@ -159,7 +178,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                             {
                                 return _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().poblacion;
                             }
-                            else if (etiqueta == "Direccion")
+                            else if (etiqueta == "Dirección")
                             {
                                 return _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == Empresa && f.tipotercero == -1).FirstOrDefault().direccion;
                             }
@@ -231,21 +250,31 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                             if (etiqueta == "Fecha de vencimiento")
                             {
-                                return "**FechaVencimiento**";
+                                switch (tipoFecha)
+                                {
+                                    case 2:
+                                        return remesa.fechavencimiento.HasValue == true ? remesa.fechavencimiento.Value.ToString("yy/MM/dd") : "**FechaVencimiento**";
+                                    case 3:
+                                        return remesa.fechavencimiento.HasValue == true ? remesa.fechavencimiento.Value.ToString("yyyy/MM/dd") : "**FechaVencimiento**";
+                                    case 4:
+                                        return remesa.fechavencimiento.HasValue == true ? remesa.fechavencimiento.Value.ToString("dd/MM/yy") : "**FechaVencimiento**";
+                                    default:
+                                        return remesa.fechavencimiento.HasValue == true ? remesa.fechavencimiento.Value.ToString("dd/MM/yy") : "**FechaVencimiento**";
+                                }
                             }
 
                             break;
                         default:
-                            return "**CampoMapeo**";
+                            return "**"+etiqueta+"**";
                             break;
                     }
 
-                    return "**campo**";
+                    return "**" + etiqueta + "**";
 
                 }
                 else
                 {
-                    return "**TablaMapeo**";
+                    return "**" + etiqueta + "**";
                 }
 
             }

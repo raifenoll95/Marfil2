@@ -53,6 +53,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble;
+using Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave;
 
 namespace Marfil.Dom.Persistencia.Model
 {
@@ -136,6 +137,23 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Fkejercicio = Funciones.Qint(context?.Ejercicio).Value;
                 result.Fkestados = estado.CampoId;
                
+                return result as T;
+            }
+            if (typeof(TransformacioneslotesnaveModel) == typeof(T))
+            {
+                var result = new TransformacioneslotesnaveModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                var almacen = appService.GetCurrentAlmacen();
+                var estadosService =
+                    FService.Instance.GetService(typeof(EstadosModel), context) as EstadosService;
+                var listestados = estadosService.GetStates(DocumentoEstado.Transformacioneslotes);
+                var estado = listestados.First(f => f.Tipoestado == Configuracion.TipoEstado.Curso);
+                result.Empresa = empresa.Id;
+                result.Fkalmacen = almacen.Id;
+                result.Fechadocumento = DateTime.Now;
+                result.Fkejercicio = Funciones.Qint(context?.Ejercicio).Value;
+                result.Fkestados = estado.CampoId;
+
                 return result as T;
             }
             if (typeof(DivisionLotesModel) == typeof(T))

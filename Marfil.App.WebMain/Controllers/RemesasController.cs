@@ -49,6 +49,13 @@ namespace Marfil.App.WebMain.Controllers
             CanEliminar = false;
         }
 
+        [System.Web.Mvc.HttpPost, ValidateInput(false)]
+        public ActionResult DesgloseRemesas()
+        {
+            var model = Session["desglose"];
+            return PartialView("_desglose", model);
+        }
+
         public FileResult ImprimirCuaderno(string valorCuaderno, string referencia)
         {
             return Escribir(valorCuaderno, referencia);

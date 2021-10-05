@@ -553,6 +553,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Transformacioneslotes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\Transformacioneslotesnave.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Transformacioneslotesnave.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Transportistas.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1167,6 +1172,10 @@
     <EmbeddedResource Include="Textos\Entidades\Transformacioneslotes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Transformacioneslotes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Transformacioneslotesnave.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Transformacioneslotesnave.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Transportistas.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Transportistas.fr.resx" />

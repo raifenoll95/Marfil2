@@ -1,17 +1,21 @@
 ﻿@using Marfil.Dom.ControlsUI.Toolbar
 @using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @using Resources
 @model Marfil.Dom.Persistencia.Model.UsuariosModel
 @{
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var issuperuser = Model.Id == Guid.Empty;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
 }
 
-@Html.HiddenFor(f=>Model.Id)
+@Html.HiddenFor(f => Model.Id)
 <div class="form-group">
-    @Html.LabelFor(f => Model.Usuario, htmlAttributes: new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(f => Model.Usuario, isreadonly || issuperuser? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => Model.Usuario, isreadonly || issuperuser ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
     <div class="col-md-12"></div>
     <div class="col-md-10 col-md-offset-2">
@@ -21,20 +25,20 @@
 
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Password, htmlAttributes: new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.PasswordFor(f => Model.Password, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.PasswordFor(f => Model.Password, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
     <div class="col-md-12"></div>
-        <div class="col-md-10 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Password, "", new { @class = "text-danger" })
-        </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Password, "", new { @class = "text-danger" })
     </div>
+</div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Confirmacionpassword, htmlAttributes: new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Confirmacionpassword, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.PasswordFor(f => Model.Confirmacionpassword, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.PasswordFor(f => Model.Confirmacionpassword, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
     <div class="col-md-12"></div>
     <div class="col-md-10 col-md-offset-2">
@@ -66,8 +70,49 @@
     <div class="col-md-offset-1">
         @Html.ValidationMessageFor(f => Model.Cambiaralmacen, "", new { @class = "text-danger" })
     </div>
+
+    @Html.LabelFor(f => Model.Operario, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Operario, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @class = "align-center" })
+    </div>
+    <div class="col-md-offset-1">
+        @Html.ValidationMessageFor(f => Model.Operario, "", new { @class = "text-danger" })
+    </div>
 </div>
 
+<div class="form-group" id="codigoOperario">
+    @Html.LabelFor(f => Model.Codigooperariousuario, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            campoverificacion.Name = "Codigooperariousuario";
+            campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+            campoverificacion.Valor = Model.Codigooperariousuario;
+            campoverificacion.Titulo = "Operarios";
+            campoverificacion.SoloLectura = isreadonly;
+            campoverificacion.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Operarios + "\"}";
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacion)
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Codigooperariousuario, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    //Si check operario se marca, aparece el selector de operario
+    $("#Operario").on('change', function () {
+
+        if ($('#Operario').is(":checked") == true) {
+            $("#codigoOperario").show();
+        } else {
+            $("#codigoOperario").hide();
+        }
+
+    });
+
+
+</script>
 
 
 

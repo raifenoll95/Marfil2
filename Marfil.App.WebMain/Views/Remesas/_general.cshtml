@@ -15,6 +15,7 @@
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var importeRemesa = WebHelper.GetApplicationHelper().GetTotalRemesa(Model.Referenciaremesa);
 
     var listCuadernos = WebHelper.GetApplicationHelper().GetListCuadernos().Select(f => new SelectListItem()
     {
@@ -42,9 +43,9 @@
         @Html.ValidationMessageFor(f => Model.Tipovencimiento, "", new { @class = "text-danger" })
     </div>
 
-    @Html.LabelFor(f => Model.Codigoremesa, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Referenciaremesa, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Codigoremesa, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => Model.Referenciaremesa, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
 </div>
 @*Cuenta tesoreria*@
@@ -70,12 +71,12 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Importegiro, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.ImporteRemesa, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Importegiro, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => importeRemesa, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
     <div class="col-md-2">
-        @Html.ValidationMessageFor(f => Model.Importegiro, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(f => importeRemesa, "", new { @class = "text-danger" })
     </div>
 
     @Html.LabelFor(f => Model.Fecharemesa, new { @class = "control-label col-md-2" })

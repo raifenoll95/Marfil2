@@ -9,7 +9,7 @@
 @using Newtonsoft.Json
 @using Resources
 @using Filter = System.Web.Mvc.Filter
-@model Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes.TransformacioneslotesModel
+@model Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave.TransformacioneslotesnaveModel
 @{
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
@@ -25,20 +25,13 @@
     <div id="tabs">
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
-            <li><a data-toggle="tab" href="#transporte">@General.LblTransporte</a></li>
             <li><a data-toggle="tab" href="#otros">@General.LblOtros</a></li>
             <li><a data-toggle="tab" href="#salida">@Transformaciones.Salida</a></li>
-            <li><a data-toggle="tab" href="#costes">@AlbaranesCompras.CostesAdicionales</a></li>
-            <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
         </ul>
     </div>
     <div class="tab-content">
         <div id="general" class="tab-pane fade in active">
             @Html.Partial("_cabeceratransformaciones", Model)
-        </div>
-
-        <div id="transporte" class="tab-pane fade in">
-            @Html.Partial("_transporte", Model)
         </div>
 
         <div id="otros" class="tab-pane fade in">
@@ -49,12 +42,6 @@
             @Html.Partial("_desglosesalida", Model)
         </div>
 
-        <div id="costes" class="tab-pane fade in">
-            @Html.Partial("_costes", Model)
-        </div>
-        <div id="galeria" class="tab-pane fade">
-            @Html.Partial("_galeriaimagenes", Model.Galeria)
-        </div>   
     </div>
 
 </div>

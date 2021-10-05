@@ -32,9 +32,9 @@
 
     eventAggregator.RegisterEvent("Fkproveedores", function (message) {
         $scope.Fkproveedores = message;
-        debugger;
+        //debugger;
         console.log("abbbbbb");
-        debugger;
+        //debugger;
         if (message == null || message === "") {
             $scope.cliente = "";
         }

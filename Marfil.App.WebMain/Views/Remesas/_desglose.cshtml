@@ -15,20 +15,16 @@
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
 @using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
 @using Resources
-@model IEnumerable<Marfil.Dom.Persistencia.Model.Contabilidad.CuadernosBancariosLinModel>
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.RemesasModel>
 @{
-
-    var listEtiquetas = WebHelper.GetApplicationHelper().GetEtiquetasCuadernos().Select(f => new SelectListItem()
-    {
-        Text = f.Etiqueta,
-        Value = f.Etiqueta,
-
-    }).ToList();
-    listEtiquetas.Insert(0, new SelectListItem() { Text = "Blanco", Value = "Blanco" });
 
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
+
+    var referencia = Session["referencia"].ToString();
+
+    Session["desglose"] = WebHelper.GetApplicationHelper().GetDesglose(referencia);
 
     Html.EnableClientValidation(true);
     Html.EnableUnobtrusiveJavaScript(true);
@@ -40,7 +36,7 @@
         //general
         settings.Name = "GridView";
         settings.KeyFieldName = "Id";
-        settings.CallbackRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLin" };
+        settings.CallbackRouteValues = new { Controller = "Remesas", Action = "DesgloseRemesas" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
         settings.Width = Unit.Percentage(100);
@@ -49,9 +45,9 @@
         settings.SettingsBehavior.AllowSort = false;
 
         //edition
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLinAddNew" };
+        /*settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLinAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLinUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLinDelete" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CuadernosBancarios", Action = "CuadernosBancariosLinDelete" };*/
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsBehavior.ConfirmDelete = false;
         settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
@@ -65,95 +61,41 @@
 
         settings.Columns.Add(c =>
         {
-            c.FieldName = "Orden";
-            c.Name = "Orden";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
-            c.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
-        });
-
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Posicion";
-            c.Name = "Posicion";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
-            c.SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
-        });
-
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Longitud";
-            c.Name = "Longitud";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
-        });
-
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "TipoCampo";
-            c.Name = "TipoCampo";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
-            c.ColumnType = MVCxGridViewColumnType.ComboBox;
-            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
-            foreach (int i in Enum.GetValues(typeof(CuadernosBancariosLinModel.TipoCampos)))
-                comboBoxProperties.Items.Add(Funciones.GetEnumByStringValueAttribute((CuadernosBancariosLinModel.TipoCampos)i), i);
-
-            comboBoxProperties.ValueType = typeof(int);
-            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+            c.FieldName = "Referencia";
+            c.Name = "Referencia";
 
         });
 
         settings.Columns.Add(c =>
         {
-            c.FieldName = "EtiquetaIni";
-            c.Name = "EtiquetaIni";
-            c.Visible = false;
+            c.FieldName = "Fkcuentas";
+            c.Name = "Fkcuentas";
+        });
+        
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Importegiro";
+            c.Name = "Importegiro";
         });
 
         settings.Columns.Add(c =>
         {
-            c.FieldName = "Campo";
-            c.Name = "Campo";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
-            c.ColumnType = MVCxGridViewColumnType.ComboBox;
-            c.Width = Unit.Pixel(225);
-            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
-            foreach (SelectListItem i in listEtiquetas)
-                comboBoxProperties.Items.Add(i.Text, i.Value);
-
-            comboBoxProperties.ValueType = typeof(string);
-            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
-        });
-
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "EtiquetaFin";
-            c.Name = "EtiquetaFin";
-            c.Visible = false;
-        });
-
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "DescripcionLin";
-            c.Name = "DescripcionLin";
+            c.FieldName = "Fechavencimiento";
+            c.Name = "Fechavencimiento";
+            c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
         });
 
         settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
-        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.Visible = false;
         settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowDeleteButton = true;
-        settings.CommandColumn.ShowEditButton = true;
-        settings.CommandColumn.Width = Unit.Pixel(125);
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.Width = Unit.Pixel(150);
         settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
         settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
-        settings.CommandColumn.VisibleIndex = 8;
+        settings.CommandColumn.VisibleIndex = 4;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
 
-        if (Session["Formato"] != null && Session["Formato"] != "")
-        {
-            //var pantalla = sender as MVCxGridView;
-            var formato = Session["Formato"];
-            settings.Columns["EtiquetaIni"].Visible = formato.ToString() == "Fijo" ? false : true;
-            settings.Columns["EtiquetaFin"].Visible = formato.ToString() == "Fijo" ? false : true;
-        }
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
         settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";

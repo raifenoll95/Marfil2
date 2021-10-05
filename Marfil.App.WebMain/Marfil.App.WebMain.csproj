@@ -344,6 +344,7 @@
     <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
+    <Compile Include="Controllers\TransformacioneslotesnaveController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
     <Compile Include="Controllers\CarteraVencimientosController.cs" />
@@ -3259,7 +3260,6 @@
     <Content Include="Views\Transformacioneslotes\_transformaciones.cshtml" />
     <Content Include="Views\Transformacioneslotes\_transformacioneslotescostesadicionales.cshtml" />
     <Content Include="Views\Transformacioneslotes\_transformacionesloteslin.cshtml" />
-    <Content Include="Views\Transformacioneslotes\_transporte.cshtml" />
     <Content Include="Views\Transformacioneslotes\Create.cshtml" />
     <Content Include="Views\Transformacioneslotes\Delete.cshtml" />
     <Content Include="Views\Transformacioneslotes\Details.cshtml" />
@@ -3576,6 +3576,18 @@
     <Content Include="Views\Remesas\_remesas.cshtml" />
     <Content Include="Views\Remesas\_general.cshtml" />
     <Content Include="Views\Remesas\_detalle.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\Index.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\Create.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\Delete.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\Details.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\Edit.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\_transformacioneslotesnavelin.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\_cabeceratransformaciones.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\_desglosesalida.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\_transformaciones.cshtml" />
+    <Content Include="Views\Transformacioneslotes\_transporte.cshtml" />
+    <Content Include="Views\Transformacioneslotesnave\_otros.cshtml" />
+    <Content Include="Views\Remesas\_desglose.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
