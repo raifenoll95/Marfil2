@@ -222,4 +222,10 @@
   <data name="TipoTablaCRM" xml:space="preserve">
     <value>CRM</value>
   </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Clasificación</value>
+  </data>
+  <data name="Codigo" xml:space="preserve">
+    <value>Código</value>
+  </data>
 </root>

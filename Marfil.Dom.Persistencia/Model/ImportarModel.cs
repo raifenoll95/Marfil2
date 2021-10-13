@@ -37,6 +37,8 @@ namespace Marfil.Dom.Persistencia.Model
 
         public string SelectedIdTipoAlmacenLote { get; set; }
 
+        [Display(ResourceType = typeof(General), Name = "LblAlbaranImportar")]
+        public string Albaran { get; set; }
         #endregion
 
         #region CTR

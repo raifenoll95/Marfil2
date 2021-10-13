@@ -1,0 +1,21 @@
+﻿001;CASH;Transferencia gestión de efectivo;Cash
+002;CCRD;Pago tarjeta de crédito;CreditCardPayment
+003;CORT;Pago liquidación de operaciones;TradeSettlementPayment
+004;DCRD;Pago tarjeta de débito;DebitCardPayment
+005;DIVI;Dividendos;Dividend
+006;GOVT;Pago de la administración;GovernmentPayment
+007;HEDG;Cobertura;Hedging
+008;ICCP;Pago tarjeta de crédito irrevocable;IrrevocableCreditCardPayment
+009;IDCP;Pago tarjeta de débito irrevocable;IrrevocableDebitCardPayment
+010;INTC;Pago intra-compañía;IntraCompanyPayment
+011;INTE;Intereses;Interest
+012;LOAN;Préstamos;Loan
+013;PENS;Pago de pensión;PensionPayment
+014;SALA;Nóminas;SalaryPayment
+015;SECU;Valores;Securities
+016;SSBE;Pago asistencia a Seguridad Social;SocialSecurityBenefit
+017;SUPP;Pago a proveedores;SupplierPayment
+018;TAXS;Pago de impuestos;TaxPayment
+019;TRAD;Comercio;Trade
+020;TREA;Pago de tesorería;TreasuryPayment
+021;VATX;Iva;ValueAddedTaxPayment

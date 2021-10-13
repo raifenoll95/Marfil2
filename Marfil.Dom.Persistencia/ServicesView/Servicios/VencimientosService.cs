@@ -515,8 +515,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             CarteraVencimientosModel cartera = new CarteraVencimientosModel(_context);
             cartera.Empresa = Empresa;
             cartera.Tipovencimiento = model.Tipo == "0" ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
-            cartera.Fkseriescontables = model.Tipo == "0" ? _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").Select(f => f.id).SingleOrDefault() :
-                _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").Select(f => f.id).SingleOrDefault();
+            cartera.Fkseriescontables = model.Tipo == "0" ? _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").Select(f => f.id).FirstOrDefault() :
+                _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").Select(f => f.id).FirstOrDefault();
             cartera.Situacion = nuevasituacion;
             cartera.Traza = registro.Traza; //Num Doc. *NF*
             cartera.Fkcuentas = registro.Fkcuentas;

@@ -65,6 +65,12 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
                 $("#FechaRemesa").attr("disabled", !atributos.remesa);
 
+                //Si está habilitada la fechaRemesa, se pone por defecto el día de hoy
+                if ($("#FechaRemesa").is(":disabled") == false) {
+                    var fecha = $("#FechaContable").val();
+                    $("#FechaRemesa").val(fecha);
+                }
+
                 $("#campofechapago").attr("disabled", !atributos.actualizar);
                 $("#FechaPago").attr("disabled", !atributos.actualizar);
 

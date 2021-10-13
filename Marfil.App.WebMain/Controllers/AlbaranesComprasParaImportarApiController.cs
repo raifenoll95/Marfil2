@@ -38,8 +38,8 @@ namespace Marfil.App.WebMain.Controllers
                 var fkalbaraninicio = nvc["fkalbaraninicio"];
                 var fkalbaranfin = nvc["fkalbaranfin"];
 
-                //Todo EL: Crear un nuevo metodo en AlbaranesComprasservice que nos devuelva los AlbaranesCompras que se pueden importar, con un parametro de entrada del cliente
-                var listAlbaranesCompras = service.BuscarAlbaranesComprasImportar(cliente, fkalbaraninicio, fkalbaranfin);
+                //Todo EL: Crear un nuevo metodo en AlbaranesComprasservice que nos devuelva los AlbaranesCompras que se pueden importar
+                var listAlbaranesCompras = service.BuscarAlbaranesComprasImportar("ENV");
                 var estadosService = new EstadosService(ContextService);
                 var estados = estadosService.GetStates(DocumentoEstado.AlbaranesCompras);
                 var result = new ResultBusquedas<AlbaranesComprasModel>()
@@ -49,12 +49,13 @@ namespace Marfil.App.WebMain.Controllers
                 {
                         new ColumnDefinition() { field = "Fkseries", displayName = "Serie", visible = true },
                         new ColumnDefinition() { field = "Referencia", displayName = "Referencia", visible = true },
+                        new ColumnDefinition() { field = "Fkproveedor", displayName = "Proveedor", visible = true },
                         new ColumnDefinition() { field = "Fechadocumentocadena", displayName = "Fecha", visible = true },
                         new ColumnDefinition() { field = "Importebaseimponible", displayName = "Base", visible = true },
-                        new ColumnDefinition() { field = "Porcentajedescuentocomercialcadena", displayName = "%Dto. Cial.", visible = true },
+                        /*new ColumnDefinition() { field = "Porcentajedescuentocomercialcadena", displayName = "%Dto. Cial.", visible = true },
                         new ColumnDefinition() { field = "Porcentajedescuentoprontopagocadena", displayName = "%Dto. P.P.", visible = true },
                         new ColumnDefinition() { field = "Obradescripcion", displayName = "Obra", visible = true },
-                        new ColumnDefinition() { field = "Estadodescripcion", displayName = "Estado", visible = true,filter=new Filter() {type="select",selectOptions=estados.Select(f=>new ComboListItem() { label=f.Descripcion,value=f.Descripcion}).ToList()} },
+                        new ColumnDefinition() { field = "Estadodescripcion", displayName = "Estado", visible = true,filter=new Filter() {type="select",selectOptions=estados.Select(f=>new ComboListItem() { label=f.Descripcion,value=f.Descripcion}).ToList()} },*/
 
                     }
                 };

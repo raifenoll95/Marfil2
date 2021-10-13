@@ -57,6 +57,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Grueso = f.grueso,
                 Fkunidades = f.fkunidades,
                 Metros = f.metros,
+                Terminado = (bool)f.terminado,
                 Notas = f.notas,
                 Canal = f.canal,
                 Revision = f.revision,
@@ -133,6 +134,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.grueso = item.Grueso;
                 newItem.fkunidades = item.Fkunidades;
                 newItem.metros = item.Metros;
+                newItem.terminado = item.Terminado;
                 newItem.notas = item.Notas;
                 newItem.canal = item.Canal;
                 newItem.revision = item.Revision;
@@ -212,6 +214,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.grueso = item.Grueso;
                 newItem.fkunidades = item.Fkunidades;
                 newItem.metros = item.Metros;
+                newItem.terminado = item.Terminado;
                 newItem.notas = item.Notas;
                 newItem.canal = item.Canal;
                 newItem.revision = item.Revision;

@@ -78,10 +78,10 @@ namespace Marfil.App.WebMain.Controllers
             var idPeticion = 0;
             var file = model.Fichero;
             char delimitador = model.Delimitador.ToCharArray()[0];
+            int albaran = int.Parse(model.Albaran);
             string serie = model.SelectedId;
             int tipoLote = Funciones.Qint(model.SelectedIdTipoAlmacenLote) ?? 0;
 
-            // Para que no de error al devolver la vista, en un futuro cambiar esto
             using (var db = MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos))
             {
                 model.Serie = db.Series.Where(f => f.empresa == Empresa && f.entradasvarias == true)
@@ -108,8 +108,6 @@ namespace Marfil.App.WebMain.Controllers
                         string s;
                         int j = 0;
 
-                        dt.Columns.Add("Proveedor");
-                        dt.Columns.Add("Fecha");
                         dt.Columns.Add("CodArticulo");
                         dt.Columns.Add("Descripcion");
                         dt.Columns.Add("Lote");
@@ -118,7 +116,6 @@ namespace Marfil.App.WebMain.Controllers
                         dt.Columns.Add("Largo");
                         dt.Columns.Add("Ancho");
                         dt.Columns.Add("Grueso");
-                        dt.Columns.Add("UM");
                         dt.Columns.Add("Metros");
                         dt.Columns.Add("Precio");                                       
 
@@ -152,7 +149,7 @@ namespace Marfil.App.WebMain.Controllers
                         try
                         {
                             idPeticion = service.CrearPeticionImportacion(ContextService);
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, serie, tipoLote, idPeticion, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, albaran, serie, tipoLote, idPeticion, token));
                             //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
                             sr.Close();
                         }
@@ -186,7 +183,7 @@ namespace Marfil.App.WebMain.Controllers
             return View("ImportarStock", model);
         }
 
-        private async Task GetAsync(DataTable dt, string serie, int tipoLote, int idPeticion, CancellationToken cancellationToken)
+        private async Task GetAsync(DataTable dt, int albaran, string serie, int tipoLote, int idPeticion, CancellationToken cancellationToken)
         {
             try
             {
@@ -194,7 +191,7 @@ namespace Marfil.App.WebMain.Controllers
 
                 using (var service = FService.Instance.GetService(typeof(RecepcionesStockModel), ContextService) as RecepcionStockService)
                 {
-                    await Task.Run(() => service.Importar(dt, serie, tipoLote, idPeticion, ContextService));
+                    await Task.Run(() => service.Importar(dt, albaran, serie, tipoLote, idPeticion, ContextService));
                     return;
                 }
 

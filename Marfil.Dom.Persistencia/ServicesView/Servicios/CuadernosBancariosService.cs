@@ -25,15 +25,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Clave", "Descripcion", "Banco", "Formato"};
+            var propiedadesVisibles = new[] { "TipoVencimiento", "Clave", "Descripcion", "Banco", "Formato"};
             var propiedades = Helpers.Helper.getProperties<CuadernosBancariosModel>();
 
             //model.PrimaryColumnns = new[] { "id" };
             model.ExcludedColumns = propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
-            model.OrdenColumnas.Add("Clave", 0);
-            model.OrdenColumnas.Add("Descripcion", 1);
-            model.OrdenColumnas.Add("Banco", 2);
-            model.OrdenColumnas.Add("Formato", 3);
+            model.OrdenColumnas.Add("TipoVencimiento", 0);
+            model.OrdenColumnas.Add("Clave", 1);
+            model.OrdenColumnas.Add("Descripcion", 2);
+            model.OrdenColumnas.Add("Banco", 3);
+            model.OrdenColumnas.Add("Formato", 4);
 
             return model;
         }
@@ -47,9 +48,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #endregion
 
-        public IEnumerable<CuadernosBancariosModel> GetCuadernos()
+        public IEnumerable<CuadernosBancariosModel> GetCuadernos(string tipoVencimiento)
         {
-            return _db.Set<CuadernosBancarios>().ToList().Select(f => _converterModel.GetModelView(f) as CuadernosBancariosModel);
+            var valor = 0;
+            if (tipoVencimiento == "Pagos")
+            {
+                valor = 1;
+            }
+
+            return _db.Set<CuadernosBancarios>().Where(c => c.tipoVencimiento == valor).ToList().Select(f => _converterModel.GetModelView(f) as CuadernosBancariosModel);
         }
 
         public string DeleteLin(string id)

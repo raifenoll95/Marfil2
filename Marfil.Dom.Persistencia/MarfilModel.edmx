@@ -1144,6 +1144,8 @@
           <Property Name="fechaMod" Type="datetime" />
           <Property Name="usuarioCrea" Type="nvarchar" MaxLength="15" />
           <Property Name="usuarioMod" Type="nvarchar" MaxLength="15" />
+          <Property Name="cuadernoSEPA" Type="int" Nullable="false" />
+          <Property Name="tipoVencimiento" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CuadernosBancariosLin">
           <Key>
@@ -7207,12 +7209,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           </AssociationSet>
           <EntitySet Name="AcumuladorPeriodos" EntityType="MarfilModel.AcumuladorPeriodos" />
           <EntitySet Name="FiltrosAcumulador" EntityType="MarfilModel.FiltrosAcumulador" />
-          <EntitySet Name="CuadernosBancarios" EntityType="MarfilModel.CuadernosBancarios" />
           <EntitySet Name="CuadernosBancariosLin" EntityType="MarfilModel.CuadernosBancariosLin" />
-          <AssociationSet Name="FK_CuadernosLin" Association="MarfilModel.FK_CuadernosLin">
-            <End Role="CuadernosBancarios" EntitySet="CuadernosBancarios" />
-            <End Role="CuadernosBancariosLin" EntitySet="CuadernosBancariosLin" />
-          </AssociationSet>
           <EntitySet Name="Remesas" EntityType="MarfilModel.Remesas" />
           <EntitySet Name="MapeoRemesas" EntityType="MarfilModel.MapeoRemesas" />
           <EntitySet Name="Transformacioneslotesnave" EntityType="MarfilModel.Transformacioneslotesnave" />
@@ -7225,6 +7222,11 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_Transformacioneslotesnavelin_Transformacioneslotes" Association="MarfilModel.FK_Transformacioneslotesnavelin_Transformacioneslotes">
             <End Role="Transformacioneslotesnave" EntitySet="Transformacioneslotesnave" />
             <End Role="Transformacioneslotesnavelin" EntitySet="Transformacioneslotesnavelin" />
+          </AssociationSet>
+          <EntitySet Name="CuadernosBancarios" EntityType="MarfilModel.CuadernosBancarios" />
+          <AssociationSet Name="FK_CuadernosLin" Association="MarfilModel.FK_CuadernosLin">
+            <End Role="CuadernosBancarios" EntitySet="CuadernosBancarios" />
+            <End Role="CuadernosBancariosLin" EntitySet="CuadernosBancariosLin" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
@@ -13144,35 +13146,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="incluirAsientos" Type="Boolean" />
           <Property Name="excluirAsientos" Type="Boolean" />
         </EntityType>
-        <EntityType Name="CuadernosBancarios">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="empresa" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="banco" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="tipoRegistro" Type="Int32" />
-          <Property Name="tipoFormato" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
-          <Property Name="formato" Type="Int32" />
-          <Property Name="orden" Type="Int16" />
-          <Property Name="posicion" Type="Int16" />
-          <Property Name="longitud" Type="Int16" />
-          <Property Name="tipoCampo" Type="Int32" />
-          <Property Name="etiquetaIni" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="campo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="obligatorio" Type="Int32" />
-          <Property Name="etiquetaFin" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="condicion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="descripcionLin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="fechaCrea" Type="DateTime" Precision="3" />
-          <Property Name="fechaMod" Type="DateTime" Precision="3" />
-          <Property Name="usuarioCrea" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="usuarioMod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CuadernosBancariosLin" Relationship="MarfilModel.FK_CuadernosLin" FromRole="CuadernosBancarios" ToRole="CuadernosBancariosLin" />
-        </EntityType>
         <EntityType Name="CuadernosBancariosLin">
           <Key>
             <PropertyRef Name="id" />
@@ -13191,23 +13164,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="etiquetaFin" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="condicion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="descripcionLin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CuadernosBancarios" Relationship="MarfilModel.FK_CuadernosLin" FromRole="CuadernosBancariosLin" ToRole="CuadernosBancarios" />
           <Property Name="registro" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CuadernosBancarios" Relationship="MarfilModel.FK_CuadernosLin" FromRole="CuadernosBancariosLin" ToRole="CuadernosBancarios" />
         </EntityType>
-        <Association Name="FK_CuadernosLin">
-          <End Type="MarfilModel.CuadernosBancarios" Role="CuadernosBancarios" Multiplicity="0..1" />
-          <End Type="MarfilModel.CuadernosBancariosLin" Role="CuadernosBancariosLin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CuadernosBancarios">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CuadernosBancariosLin">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="idCab" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Remesas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -13382,6 +13341,51 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <Dependent Role="Transformacioneslotesnavelin">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="fkTransformacioneslotes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CuadernosBancarios">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="empresa" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="banco" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="tipoRegistro" Type="Int32" />
+          <Property Name="tipoFormato" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="formato" Type="Int32" />
+          <Property Name="orden" Type="Int16" />
+          <Property Name="posicion" Type="Int16" />
+          <Property Name="longitud" Type="Int16" />
+          <Property Name="tipoCampo" Type="Int32" />
+          <Property Name="etiquetaIni" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="campo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="obligatorio" Type="Int32" />
+          <Property Name="etiquetaFin" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="condicion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="descripcionLin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fechaCrea" Type="DateTime" Precision="3" />
+          <Property Name="fechaMod" Type="DateTime" Precision="3" />
+          <Property Name="usuarioCrea" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="usuarioMod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="cuadernoSEPA" Type="Int32" Nullable="false" />
+          <Property Name="tipoVencimiento" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CuadernosBancariosLin" Relationship="MarfilModel.FK_CuadernosLin" FromRole="CuadernosBancarios" ToRole="CuadernosBancariosLin" />
+        </EntityType>
+        <Association Name="FK_CuadernosLin">
+          <End Type="MarfilModel.CuadernosBancarios" Role="CuadernosBancarios" Multiplicity="0..1" />
+          <End Type="MarfilModel.CuadernosBancariosLin" Role="CuadernosBancariosLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuadernosBancarios">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CuadernosBancariosLin">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="idCab" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17996,34 +18000,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CuadernosBancarios">
-            <EntityTypeMapping TypeName="MarfilModel.CuadernosBancarios">
-              <MappingFragment StoreEntitySet="CuadernosBancarios">
-                <ScalarProperty Name="usuarioMod" ColumnName="usuarioMod" />
-                <ScalarProperty Name="usuarioCrea" ColumnName="usuarioCrea" />
-                <ScalarProperty Name="fechaMod" ColumnName="fechaMod" />
-                <ScalarProperty Name="fechaCrea" ColumnName="fechaCrea" />
-                <ScalarProperty Name="descripcionLin" ColumnName="descripcionLin" />
-                <ScalarProperty Name="condicion" ColumnName="condicion" />
-                <ScalarProperty Name="etiquetaFin" ColumnName="etiquetaFin" />
-                <ScalarProperty Name="obligatorio" ColumnName="obligatorio" />
-                <ScalarProperty Name="campo" ColumnName="campo" />
-                <ScalarProperty Name="etiquetaIni" ColumnName="etiquetaIni" />
-                <ScalarProperty Name="tipoCampo" ColumnName="tipoCampo" />
-                <ScalarProperty Name="longitud" ColumnName="longitud" />
-                <ScalarProperty Name="posicion" ColumnName="posicion" />
-                <ScalarProperty Name="orden" ColumnName="orden" />
-                <ScalarProperty Name="formato" ColumnName="formato" />
-                <ScalarProperty Name="tipoFormato" ColumnName="tipoFormato" />
-                <ScalarProperty Name="tipoRegistro" ColumnName="tipoRegistro" />
-                <ScalarProperty Name="banco" ColumnName="banco" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="clave" ColumnName="clave" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CuadernosBancariosLin">
             <EntityTypeMapping TypeName="MarfilModel.CuadernosBancariosLin">
               <MappingFragment StoreEntitySet="CuadernosBancariosLin">
@@ -18186,6 +18162,36 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="fkTransformacioneslotes" ColumnName="fkTransformacioneslotes" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CuadernosBancarios">
+            <EntityTypeMapping TypeName="MarfilModel.CuadernosBancarios">
+              <MappingFragment StoreEntitySet="CuadernosBancarios">
+                <ScalarProperty Name="tipoVencimiento" ColumnName="tipoVencimiento" />
+                <ScalarProperty Name="cuadernoSEPA" ColumnName="cuadernoSEPA" />
+                <ScalarProperty Name="usuarioMod" ColumnName="usuarioMod" />
+                <ScalarProperty Name="usuarioCrea" ColumnName="usuarioCrea" />
+                <ScalarProperty Name="fechaMod" ColumnName="fechaMod" />
+                <ScalarProperty Name="fechaCrea" ColumnName="fechaCrea" />
+                <ScalarProperty Name="descripcionLin" ColumnName="descripcionLin" />
+                <ScalarProperty Name="condicion" ColumnName="condicion" />
+                <ScalarProperty Name="etiquetaFin" ColumnName="etiquetaFin" />
+                <ScalarProperty Name="obligatorio" ColumnName="obligatorio" />
+                <ScalarProperty Name="campo" ColumnName="campo" />
+                <ScalarProperty Name="etiquetaIni" ColumnName="etiquetaIni" />
+                <ScalarProperty Name="tipoCampo" ColumnName="tipoCampo" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="posicion" ColumnName="posicion" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="formato" ColumnName="formato" />
+                <ScalarProperty Name="tipoFormato" ColumnName="tipoFormato" />
+                <ScalarProperty Name="tipoRegistro" ColumnName="tipoRegistro" />
+                <ScalarProperty Name="banco" ColumnName="banco" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

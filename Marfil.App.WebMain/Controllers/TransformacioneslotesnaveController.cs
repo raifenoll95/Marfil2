@@ -260,7 +260,7 @@ namespace Marfil.App.WebMain.Controllers
             return PartialView("_Transformacioneslotesnavelin", model);
         }
 
-        [ValidateInput(false)]
+        [HttpPost, ValidateInput(false)]
         public ActionResult Terminar(int key)
         {
             var model = Session[session] as List<TransformacioneslotesnaveLinModel>;
@@ -276,7 +276,7 @@ namespace Marfil.App.WebMain.Controllers
                 service.TerminarBD(key, transformacionId, editItem);
             }
 
-                return PartialView("_Transformacioneslotesnavelin", model);
+            return PartialView("_Transformacioneslotesnavelin", model);
         }
     }
 }

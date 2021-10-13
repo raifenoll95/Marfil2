@@ -736,6 +736,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Albarán (Sólo serie ENV).
+        /// </summary>
+        public static string LblAlbaranImportar {
+            get {
+                return ResourceManager.GetString("LblAlbaranImportar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ampliar.
         /// </summary>
         public static string LblAmpliar {
@@ -1645,6 +1654,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Importar.
+        /// </summary>
+        public static string LblImportar2 {
+            get {
+                return ResourceManager.GetString("LblImportar2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Importar Artículos.
         /// </summary>
         public static string LblImportarArticulos {
@@ -1654,7 +1672,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a .
+        ///   Busca una cadena traducida similar a Importar Stock.
         /// </summary>
         public static string LblImportarStock {
             get {

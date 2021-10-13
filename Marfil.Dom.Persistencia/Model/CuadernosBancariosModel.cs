@@ -109,6 +109,31 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
             [StringValue(typeof(RCuadernos), "Binario")]
             Binario
         }
+
+        public enum Tipovencimiento
+        {
+            [StringValue(typeof(RCuadernos), "Cobros")]
+            Cobros,
+            [StringValue(typeof(RCuadernos), "Pagos")]
+            Pagos
+        }
+
+        public enum TipoSEPA
+        {
+            [StringValue(typeof(RCuadernos), "SEPABlanco")]
+            SEPABlanco,
+            [StringValue(typeof(RCuadernos), "CORE")]
+            CORE,
+            [StringValue(typeof(RCuadernos), "COREXML")]
+            COREXML,
+            [StringValue(typeof(RCuadernos), "B2B")]
+            B2B,
+            [StringValue(typeof(RCuadernos), "B2BXML")]
+            B2BXML,
+            [StringValue(typeof(RCuadernos), "XML")]
+            XML
+        }
+
         #region CTR
 
         public CuadernosBancariosModel()
@@ -173,6 +198,20 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public string UsuarioCrea { get; set; }
         [Display(ResourceType = typeof(RCuadernos), Name = "UsuarioMod")]
         public string UsuarioMod { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "CuadernoSEPA")]
+        public TipoSEPA CuadernoSEPA { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "EsCORE")]
+        public bool EsCORE { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "EsCOREXML")]
+        public bool EsCOREXML { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "EsB2B")]
+        public bool EsB2B { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "EsB2BXML")]
+        public bool EsB2BXML { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "EsXML")]
+        public bool EsXML { get; set; }
+        [Display(ResourceType = typeof(RCuadernos), Name = "TipoVencimiento")]
+        public Tipovencimiento TipoVencimiento { get; set; }
         public List<CuadernosBancariosLinModel> Lineas
         {
             get { return _lineas; }

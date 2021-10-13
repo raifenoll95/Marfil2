@@ -16,8 +16,9 @@
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var importeRemesa = WebHelper.GetApplicationHelper().GetTotalRemesa(Model.Referenciaremesa);
+    var vencimiento = Model.Tipovencimiento.ToString();
 
-    var listCuadernos = WebHelper.GetApplicationHelper().GetListCuadernos().Select(f => new SelectListItem()
+    var listCuadernos = WebHelper.GetApplicationHelper().GetListCuadernos(vencimiento).Select(f => new SelectListItem()
     {
         Text = f.Clave,
         Value = f.Clave,

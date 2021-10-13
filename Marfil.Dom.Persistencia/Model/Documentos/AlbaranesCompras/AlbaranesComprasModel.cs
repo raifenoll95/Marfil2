@@ -716,6 +716,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
         [Required]
         [Display(ResourceType = typeof(RAlbaranesCompras), Name = "Fkarticulos")]
         public string Fkarticulos { get; set; }
+        public int Fkalbaranes { get; set; }
 
         [MaxLength(120, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RAlbaranesCompras), Name = "Descripcion")]

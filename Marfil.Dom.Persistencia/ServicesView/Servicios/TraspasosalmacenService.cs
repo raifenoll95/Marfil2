@@ -94,9 +94,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override string GetSelectPrincipal()
         {
-            return "select t.*,a.descripcion as [Almacenorigen],a2.descripcion as [Almacendestino] from Traspasosalmacen as t " +
+            return string.Format("select t.*,a.descripcion as [Almacenorigen],a2.descripcion as [Almacendestino] from Traspasosalmacen as t " +
                    "inner join almacenes as a on a.empresa=t.empresa and a.id= t.fkalmacen " +
-                   " inner join almacenes as a2 on a2.empresa= t.empresa and a2.id= t.fkalmacendestino";
+                   "inner join almacenes as a2 on a2.empresa= t.empresa and a2.id= t.fkalmacendestino " +
+                   "where t.empresa = '{0}'", Empresa);
         }
 
         #endregion

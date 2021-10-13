@@ -42,6 +42,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.DateTime> fechaMod { get; set; }
         public string usuarioCrea { get; set; }
         public string usuarioMod { get; set; }
+        public int cuadernoSEPA { get; set; }
+        public int tipoVencimiento { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuadernosBancariosLin> CuadernosBancariosLin { get; set; }

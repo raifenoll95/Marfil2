@@ -32,11 +32,11 @@
 
     if (iseditable)
     {
-        Session["LineasCabecera"] = Model.Lineas.FindAll(f=>f.Registro=="Cabecera") ;
+        Session["LineasCabecera"] = Model.Lineas.FindAll(f => f.Registro == "Cabecera");
         Session["LineasDetalle"] = Model.Lineas.FindAll(f => f.Registro == "Detalle");
         Session["LineasTotal"] = Model.Lineas.FindAll(f => f.Registro == "Total");
 
-        Model.Lineas = Session["Lineas"+Model.TipoRegistro.ToString()] as List<CuadernosBancariosLinModel>;
+        Model.Lineas = Session["Lineas" + Model.TipoRegistro.ToString()] as List<CuadernosBancariosLinModel>;
     }
     else
     {
@@ -45,9 +45,9 @@
         Session["LineasTotal"] = null;
     }
 
-    }
+}
 
-    @Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Id)
 @Html.HiddenFor(f => Model.Empresa)
 @Html.HiddenFor(f => Model.FechaCrea)
 @Html.HiddenFor(f => Model.FechaMod)
@@ -59,6 +59,21 @@
     @Html.HiddenFor(f => Model.Banco)
     @Html.HiddenFor(f => Model.Formato)
 }
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.TipoVencimiento, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("TipoVencimiento", Model.TipoVencimiento, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.TipoVencimiento, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.CuadernoSEPA, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("CuadernoSEPA", Model.CuadernoSEPA, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.CuadernoSEPA, "", new { @class = "text-danger" })
+    </div>
+
+</div>
 
 <div class="form-group">
     @Html.LabelFor(f => Model.Clave, new { @class = "control-label col-md-2" })
@@ -93,105 +108,11 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(f => Model.TipoRegistro, new { @class = "control-label col-md-2" })
-    <div class="col-md-2">
-        @if (isreadonly)
+
+    @{
+        if (isNuevo)
         {
-            @Html.EnumDropDownList("TipoRegistro", Model.TipoRegistro, new { id = "TipoRegistro", @disabled = "disabled", @class = "form-control" })
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
         }
-        else
-        {
-            @Html.EnumDropDownList("TipoRegistro", Model.TipoRegistro, new { id = "TipoRegistro", @class = "form-control" })
-        }
-        @Html.ValidationMessageFor(f => Model.TipoRegistro, "", new { @class = "text-danger" })
-    </div>
-
-    @*@Html.LabelFor(f => Model.Orden, new { @class = "control-label col-md-3" })
-    <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Orden, (object)new { id = "Orden", @disabled = "disabled", @class = "form-control" })
-        @Html.ValidationMessageFor(f => Model.Orden, "", new { @class = "text-danger" })
-    </div>*@
-
-    @Html.LabelFor(f => Model.Formato, new { @class = "control-label col-md-2" })
-    <div class="col-md-2">
-        @if (isreadonly || iseditable)
-        {
-            @Html.EnumDropDownList("Formato", Model.Formato, new { id = "Formato", @disabled = "disabled", @class = "form-control" })
-        }
-        else
-        {
-            @Html.EnumDropDownList("Formato", Model.Formato, (object)new { id = "Formato", @class = "form-control" })
-        }
-        @Html.ValidationMessageFor(f => Model.Formato, "", new { @class = "text-danger" })
-    </div>
-
-</div>
-
-<div class="form-group">
-    <div class="col-md-10 col-md-offset-2">
-        <span class="fa-2x">
-            @General.LblConfiguracion
-        </span>
-        @if (isNuevo || iseditable)
-        {
-            <span class="pull-right">
-                <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
-                    <i class="fa fa-plus"></i>
-                    @General.BtnNuevoRegistro
-                </a>
-            </span>
-        }
-
-
-    </div>
-    <div id="partial" class="col-md-10 col-md-offset-2">
-        @Html.Partial("_cuadernosbancarioslin", Model.Lineas)
-    </div>
-
-</div>
-
-@{
-    if (isNuevo)
-    {
-        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
     }
-}
-<script type="text/javascript">
-
-    $("#TipoRegistro").on('change', function () {
-        var orden = document.getElementById("Orden");
-        var registro = this.value;
-        var formato = null;
-
-        //orden.value = 0;
-        //orden.disabled = registro == 1 ? false : true;
-        $.ajax({
-            url: '@Url.Action("CuadernosBancariosLin", "CuadernosBancarios")',
-            type: "POST",
-            datatype: "HTML",
-            data: { registro, formato },
-            success: function (data) {
-                $("#partial").html(data);
-            }
-        })
-    });
-
-    $("#Formato").on('change', function () {
-        var formato = this.value;
-        var registro = null;
-        //var selectedValue = formato.options[formato.selectedIndex].value;
-        //var lineas = @Html.Raw(Json.Encode(Model.Lineas));
-        $.ajax({
-            url: '@Url.Action("CuadernosBancariosLin", "CuadernosBancarios")',
-            type: "POST",
-            datatype: "HTML",
-            data: { registro, formato },
-                success: function (data) {
-                    $("#partial").html(data);
-                }
-            })
-    });
-
-</script>

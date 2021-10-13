@@ -633,6 +633,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 throw new ValidationException(Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Presupuestos.ErrorNoExisteSerieAsociada);
         }
 
+        public IEnumerable<AlbaranesComprasModel> GetAlbaranesImportar()
+        {
+            var primerDía = new DateTime(DateTime.Now.Year, 1, 1);
+            var list = _db.AlbaranesCompras.Where(
+                      f =>
+                          f.empresa == Empresa && f.fkseries == "ENV" && f.fechadocumento >= primerDía && f.fechadocumento <= DateTime.Now
+                      ).ToList().Select(f => _converterModel.GetModelView(f) as AlbaranesComprasModel).ToList();
+            return list;
+        }
+
         public IEnumerable<AlbaranesComprasLinModel> ImportarLineas(int maxId, IEnumerable<ILineaImportar> linea)
         {
             return linea.Where(f => f.Cantidad != 0).Select(f => _importarService.ImportarLinea(f)).Select(f => ConvertILineaImportarToPedidoLinModel(++maxId, f));
@@ -742,6 +752,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
             }
+
+            return list;
+
+
+
+
+        }
+
+        public IEnumerable<AlbaranesComprasModel> BuscarAlbaranesComprasImportar(string serie)
+        {
+            var primerDía = new DateTime(DateTime.Now.Year,1,1);
+            var list = _db.AlbaranesCompras.Where(
+                      f =>
+                          f.empresa == Empresa && f.fkseries == serie && f.fechadocumento >= primerDía && f.fechadocumento <= DateTime.Now
+                      ).ToList().Select(f => _converterModel.GetModelView(f) as AlbaranesComprasModel).ToList();
 
             return list;
 

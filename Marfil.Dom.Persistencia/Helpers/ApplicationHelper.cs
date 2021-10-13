@@ -23,6 +23,7 @@ using Resources;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -354,7 +355,7 @@ namespace Marfil.Dom.Persistencia.Helpers
 
                 var importarStockItem = new MenuItemJavascriptModel()
                 {
-                    text = General.LblImportarArticulos,
+                    text = General.LblImportar2,
                     link = "",
                     icono = "fa fa-industry"
                 };
@@ -370,7 +371,7 @@ namespace Marfil.Dom.Persistencia.Helpers
                 {
                     text = General.LblImportarStock,
                     link = helper.Content("~/Importar/ImportarStock"),
-                    icono = "fa fa-user"
+                    icono = "fa fa-star"
                 };
 
                 importarStockItem.items = new[]
@@ -843,6 +844,13 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return service.GetBancos();
             }
         }
+        public IEnumerable<AlbaranesComprasModel> GetListAlbaranesImportar()
+        {
+            using (var service = new AlbaranesComprasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetAlbaranesImportar();
+            }
+        }
         public double GetTotalRemesa(string referencia)
         {
             using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -850,6 +858,15 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return service.GetTotalRemesa(referencia);
             }
         }
+
+        public string GetNombreCuenta(string cuenta)
+        {
+            using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetNombreCuenta(cuenta);
+            }
+        }
+
         public IEnumerable<Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.RemesasModel> GetDesglose(string referencia)
         {
             using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -858,11 +875,11 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
-        public IEnumerable<CuadernosBancariosModel> GetListCuadernos()
+        public IEnumerable<CuadernosBancariosModel> GetListCuadernos(string tipoVencimiento)
         {
             using (var service = new CuadernosBancariosServices(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
             {
-                return service.GetCuadernos();
+                return service.GetCuadernos(tipoVencimiento);
             }
         }
 

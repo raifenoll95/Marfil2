@@ -58,6 +58,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 lineaLotes.largo = lineaLotesNave.Largo;
                 lineaLotes.ancho = lineaLotesNave.Ancho;
+                lineaLotes.orden = lineaLotesNave.Orden;
 
                 _db.SaveChanges();
                 tran.Complete();

@@ -866,7 +866,7 @@
     <value>Peticiones asíncronas</value>
   </data>
   <data name="LblImportarStock" xml:space="preserve">
-    <value />
+    <value>Importar Stock</value>
   </data>
   <data name="LblSerie" xml:space="preserve">
     <value>Serie</value>
@@ -939,5 +939,11 @@
   </data>
   <data name="LblBuscarComponente" xml:space="preserve">
     <value>Buscar componente</value>
+  </data>
+  <data name="LblAlbaranImportar" xml:space="preserve">
+    <value>Albarán (Sólo serie ENV)</value>
+  </data>
+  <data name="LblImportar2" xml:space="preserve">
+    <value>Importar</value>
   </data>
 </root>

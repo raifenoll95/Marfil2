@@ -30,8 +30,6 @@
     <item isseparator="true"></item>
     <item name="cuentas" allowBlock="true" text="Cuentas" url="~/Cuentas/Index" />
     <item isseparator="true"></item>
-	<item name="cuadernosBancarios" allowBlock="true" text="CuadernosBancarios" url="~/CuadernosBancarios/Index" />
-	<item isseparator="true"></item>
     <item name="tesoreria" text="Tesorería" icono="fa fa-money">
       <item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
       <item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
@@ -48,21 +46,22 @@
       <item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
       <item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
     </item>
+	<item name="configuracion" text="Configuración" icono="fa fa-cog">
+		  <item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
+		  <item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />
+		  <item name="regimeniva" text="Régimen de IVA" url="~/RegimenIva/Index" />
+		  <item isseparator="true"></item>
+		  <item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
+		  <item isseparator="true"></item>
+		  <item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
+		  <item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" icono="fa fa-file" url="~/CircuitosTesoreria/Index" />
+		  <item name="cuadernosBancarios" allowBlock="true" text="CuadernosBancarios" url="~/CuadernosBancarios/Index" />
+	</item>	  
     <item name="configurardocumentosdiario" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1000" />
     <item name="configurardocumentosmayor" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1010" />
     <item name="configurardocumentossumas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1015" />
     <item name="configurardocumentoscartera" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1050" />
 	<item name="configurardocumentosremesa" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1060" />
-    <item name="configuracion" text="Configuración" icono="fa fa-cog">
-      <item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
-      <item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />
-      <item name="regimeniva" text="Régimen de IVA" url="~/RegimenIva/Index" />
-      <item isseparator="true"></item>
-      <item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
-      <item isseparator="true"></item>
-      <item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
-      <item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" icono="fa fa-file" url="~/CircuitosTesoreria/Index" />
-    </item>
   </item>
   <item name="terceros" text="Terceros" icono="fa fa-group">
     <item name="clientes" allowBlock="true" text="Clientes" url="~/Clientes/Index" />

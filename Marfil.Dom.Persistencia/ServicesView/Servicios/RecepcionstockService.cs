@@ -1420,20 +1420,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #region Importar
 
-        public void Importar(DataTable dt, string serie, int tipoLote, int idPeticion, IContextService context)
+        public void Importar(DataTable dt, int idalbaran, string serie, int tipoLote, int idPeticion, IContextService context)
         {
             // Ordenar por Referencia
             DataView dv = dt.DefaultView;
-            dv.Sort = "Proveedor asc, Fecha asc";
+            dv.Sort = "Tabla desc";
             DataTable sorted = dv.ToTable();
 
             string errores = "";
             var moneda = _db.Empresas.Where(f => f.id == Empresa).Select(f => f.fkMonedabase).SingleOrDefault();
 
-            List<RecepcionesStockModel> ListaAlbaranes = new List<RecepcionesStockModel>();
-            RecepcionesStockModel albaran = new FModel().GetModel<RecepcionesStockModel>(context);
+            List<AlbaranesComprasModel> ListaAlbaranes = new List<AlbaranesComprasModel>();
+            //RecepcionesStockModel albaran = new FModel().GetModel<RecepcionesStockModel>(context);
 
-            albaran.Fkproveedores = sorted.Rows[0]["Proveedor"].ToString();
+            AlbaranesComprasModel albaran = _db.AlbaranesCompras.Where(f => f.empresa == Empresa && f.id == idalbaran).ToList().Select(f => _converterModel.GetModelView(f) as AlbaranesComprasModel).FirstOrDefault();
+            ListaAlbaranes.Add(albaran);
+
+            //13/10/2021 - El albaran ya esta creado, solo se insertan las líneas
+            /*albaran.Fkproveedores = sorted.Rows[0]["Proveedor"].ToString();
             albaran.Fechadocumento = Convert.ToDateTime("01/01/" + Convert.ToDateTime(sorted.Rows[0]["Fecha"].ToString()).Year);
             albaran.Fkseries = serie;
             albaran.Fkejercicio = _db.Ejercicios.Where(f => f.empresa == Empresa && f.desde <= albaran.Fechadocumento
@@ -1443,14 +1447,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             albaran.Fkformaspago = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == albaran.Fkproveedores).Select(f => f.fkformaspago).SingleOrDefault();
             albaran.Fkregimeniva = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == albaran.Fkproveedores).Select(f => f.fkregimeniva).SingleOrDefault();
             albaran.Fkcriteriosagrupacion = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == albaran.Fkproveedores).Select(f => f.fkcriteriosagrupacion).SingleOrDefault();
-            albaran.Tipodealmacenlote = (TipoAlmacenlote)tipoLote;
+            albaran.Tipodealmacenlote = (TipoAlmacenlote)tipoLote;*/
 
             foreach (DataRow row in sorted.Rows)
             {
-
+                //13/10/2021 - El albaran ya esta creado, solo se insertan las líneas
                 // Si cambia el proveedor generamos un nuevo albaran
                 // Si cambia la fecha generamos un nuevo albaran del mismo proveedor pero fecha diferente                
-                if (albaran.Fkproveedores != row["Proveedor"].ToString() ||
+                /*if (albaran.Fkproveedores != row["Proveedor"].ToString() ||
                     albaran.Fechadocumento.Value.Year != DateTime.Parse(row["Fecha"].ToString()).Year)
                 {
                     ListaAlbaranes.Add(albaran);
@@ -1466,10 +1470,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     albaran.Fkregimeniva = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == albaran.Fkproveedores).Select(f => f.fkregimeniva).SingleOrDefault();
                     albaran.Fkcriteriosagrupacion = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == albaran.Fkproveedores).Select(f => f.fkcriteriosagrupacion).SingleOrDefault();
                     albaran.Tipodealmacenlote = (TipoAlmacenlote)tipoLote;
-                }
+                }*/
 
                 AlbaranesComprasLinModel linea = new AlbaranesComprasLinModel();
-                linea.Id = albaran.Lineas.Count + 1;
+                linea.Id = albaran.Lineas.Count + 1;               
+                linea.Fkalbaranes = albaran.Id;
                 linea.Fkarticulos = row["CodArticulo"].ToString();
                 linea.Descripcion = row["Descripcion"].ToString();
                 linea.Lote = row["Lote"].ToString();
@@ -1478,7 +1483,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 linea.Largo = double.Parse(row["Largo"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                 linea.Ancho = double.Parse(row["Ancho"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                 linea.Grueso = double.Parse(row["Grueso"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                linea.Fkunidades = row["UM"].ToString();
+                linea.Fkunidades = _db.Familiasproductos.Where(f => f.id == linea.Fkarticulos.Substring(0, 2)).FirstOrDefault().fkunidadesmedida;
                 linea.Metros = double.Parse(row["Metros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                 linea.Precio = double.Parse(row["Precio"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                 linea.Importe = Math.Round((double)(linea.Metros * linea.Precio), 2);
@@ -1510,7 +1515,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 try
                 {
-                    create(itemAlbaran);
+                    edit(itemAlbaran);
                 }
                 catch (Exception ex)
                 {

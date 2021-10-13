@@ -123,6 +123,12 @@
   <data name="Año" xml:space="preserve">
     <value>Año</value>
   </data>
+  <data name="B2B" xml:space="preserve">
+    <value>B2B</value>
+  </data>
+  <data name="B2BXML" xml:space="preserve">
+    <value>B2B,XML</value>
+  </data>
   <data name="Banco" xml:space="preserve">
     <value>Banco</value>
   </data>
@@ -138,8 +144,20 @@
   <data name="Clave" xml:space="preserve">
     <value>Fichero Banco</value>
   </data>
+  <data name="Cobros" xml:space="preserve">
+    <value>Cobros</value>
+  </data>
   <data name="Condicion" xml:space="preserve">
     <value>Condición</value>
+  </data>
+  <data name="CORE" xml:space="preserve">
+    <value>CORE</value>
+  </data>
+  <data name="COREXML" xml:space="preserve">
+    <value>CORE,XML</value>
+  </data>
+  <data name="CuadernoSEPA" xml:space="preserve">
+    <value>Cuaderno SEPA</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
     <value>Descripción</value>
@@ -201,8 +219,14 @@
   <data name="Orden" xml:space="preserve">
     <value>Número orden</value>
   </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>Pagos</value>
+  </data>
   <data name="Posicion" xml:space="preserve">
     <value>Posición</value>
+  </data>
+  <data name="SEPABlanco" xml:space="preserve">
+    <value />
   </data>
   <data name="TipoCampo" xml:space="preserve">
     <value>Tipo Campo</value>
@@ -212,6 +236,9 @@
   </data>
   <data name="TipoRegistro" xml:space="preserve">
     <value>Tipo Registro</value>
+  </data>
+  <data name="TipoVencimiento" xml:space="preserve">
+    <value>Tipo de Cuaderno</value>
   </data>
   <data name="TituloEntidad" xml:space="preserve">
     <value>Cuadernos Bancarios</value>
@@ -227,5 +254,8 @@
   </data>
   <data name="Variable" xml:space="preserve">
     <value>Variable</value>
+  </data>
+  <data name="XML" xml:space="preserve">
+    <value>XML</value>
   </data>
 </root>

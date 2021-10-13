@@ -34,8 +34,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
             }
             DataSource.Queries.Add(new CustomSqlQuery("proveedores", "SELECT * FROM [Proveedores]"));
             DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT * FROM [Empresas]"));
+            DataSource.Queries.Add(new CustomSqlQuery("direcciones", "SELECT * FROM [Direcciones] WHERE defecto = 1"));
             DataSource.Queries.Add(mainQuery);
             DataSource.Queries.Add(new CustomSqlQuery("Traspasosalmacenlin", "SELECT * FROM [TraspasosalmacenLin]"));
+            DataSource.Queries.Add(new CustomSqlQuery("unidades", "SELECT id, textocorto AS [Unidadesdescripcion], textocorto2 AS [Unidadesdescripcion2] FROM Unidades"));
 
 
             // Create a master-detail relation between the queries.
@@ -49,6 +51,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
 
             DataSource.Relations.Add("Traspasosalmacen", "empresa", new[] {
                     new RelationColumnInfo("empresa", "id")});
+
+            DataSource.Relations.Add("Traspasosalmacen", "direcciones", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fkalmacen", "fkentidad")});
+
+            DataSource.Relations.Add("Traspasosalmacenlin", "unidades", new[] {
+                    new RelationColumnInfo("fkunidades", "id")});
 
 
 

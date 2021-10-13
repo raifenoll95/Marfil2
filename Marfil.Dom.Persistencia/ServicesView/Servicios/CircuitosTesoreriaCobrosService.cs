@@ -148,7 +148,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public bool Remesa(string circuito)
         {
             var idcircuito = Int32.Parse(circuito);
-            return _db.CircuitosTesoreriaCobros.Any(f => f.empresa == Empresa && f.id == idcircuito && f.fecharemesa == true && f.situacionfinal == "R");
+            return _db.CircuitosTesoreriaCobros.Any(f => f.empresa == Empresa && f.id == idcircuito && f.fecharemesa == true /*&& f.situacionfinal == "R"*/);
         }
 
         public CuentasModel Cuentacargo2(string circuito)

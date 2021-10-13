@@ -79,6 +79,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a B2B.
+        /// </summary>
+        public static string B2B {
+            get {
+                return ResourceManager.GetString("B2B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a B2B,XML.
+        /// </summary>
+        public static string B2BXML {
+            get {
+                return ResourceManager.GetString("B2BXML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Banco.
         /// </summary>
         public static string Banco {
@@ -124,11 +142,47 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cobros.
+        /// </summary>
+        public static string Cobros {
+            get {
+                return ResourceManager.GetString("Cobros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Condición.
         /// </summary>
         public static string Condicion {
             get {
                 return ResourceManager.GetString("Condicion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a CORE.
+        /// </summary>
+        public static string CORE {
+            get {
+                return ResourceManager.GetString("CORE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a CORE,XML.
+        /// </summary>
+        public static string COREXML {
+            get {
+                return ResourceManager.GetString("COREXML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuaderno SEPA.
+        /// </summary>
+        public static string CuadernoSEPA {
+            get {
+                return ResourceManager.GetString("CuadernoSEPA", resourceCulture);
             }
         }
         
@@ -313,11 +367,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Pagos.
+        /// </summary>
+        public static string Pagos {
+            get {
+                return ResourceManager.GetString("Pagos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Posición.
         /// </summary>
         public static string Posicion {
             get {
                 return ResourceManager.GetString("Posicion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
+        public static string SEPABlanco {
+            get {
+                return ResourceManager.GetString("SEPABlanco", resourceCulture);
             }
         }
         
@@ -345,6 +417,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string TipoRegistro {
             get {
                 return ResourceManager.GetString("TipoRegistro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tipo de Cuaderno.
+        /// </summary>
+        public static string TipoVencimiento {
+            get {
+                return ResourceManager.GetString("TipoVencimiento", resourceCulture);
             }
         }
         
@@ -390,6 +471,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Variable {
             get {
                 return ResourceManager.GetString("Variable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a XML.
+        /// </summary>
+        public static string XML {
+            get {
+                return ResourceManager.GetString("XML", resourceCulture);
             }
         }
     }

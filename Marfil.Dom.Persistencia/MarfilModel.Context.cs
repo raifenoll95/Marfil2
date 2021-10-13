@@ -199,13 +199,13 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<PreciosEspeciales> PreciosEspeciales { get; set; }
         public virtual DbSet<AcumuladorPeriodos> AcumuladorPeriodos { get; set; }
         public virtual DbSet<FiltrosAcumulador> FiltrosAcumulador { get; set; }
-        public virtual DbSet<CuadernosBancarios> CuadernosBancarios { get; set; }
         public virtual DbSet<CuadernosBancariosLin> CuadernosBancariosLin { get; set; }
         public virtual DbSet<Remesas> Remesas { get; set; }
         public virtual DbSet<MapeoRemesas> MapeoRemesas { get; set; }
         public virtual DbSet<Transformacioneslotesnave> Transformacioneslotesnave { get; set; }
         public virtual DbSet<Transformacioneslotesnavecostesadicionales> Transformacioneslotesnavecostesadicionales { get; set; }
         public virtual DbSet<Transformacioneslotesnavelin> Transformacioneslotesnavelin { get; set; }
+        public virtual DbSet<CuadernosBancarios> CuadernosBancarios { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

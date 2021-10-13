@@ -39,7 +39,7 @@
         settings.CallbackRouteValues = new { Controller = "Remesas", Action = "DesgloseRemesas" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
-        settings.Width = Unit.Percentage(100);
+        //settings.Width = Unit.Percentage(100);
         //settings.Height = Unit.Pixel(500);
         settings.SettingsPager.Visible = true;
         settings.SettingsBehavior.AllowSort = false;
@@ -71,7 +71,15 @@
             c.FieldName = "Fkcuentas";
             c.Name = "Fkcuentas";
         });
-        
+
+        settings.Columns.Add(c =>
+        {
+            c.Name = "Nombre";
+            c.Caption = "Nombre";
+            c.Width = Unit.Pixel(200);
+        });
+
+
         settings.Columns.Add(c =>
         {
             c.FieldName = "Importegiro";
@@ -95,7 +103,15 @@
         settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
         settings.CommandColumn.VisibleIndex = 4;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
-
+        settings.CustomColumnDisplayText = (sender, e) =>
+        {
+            if (e.Column.Name == "Fkcuentas")
+            {
+                Session["fkcuentas"] = e.Value.ToString();
+            }
+            if (e.Column.Name != "Nombre") return;
+            e.DisplayText = WebHelper.GetApplicationHelper().GetNombreCuenta(Session["fkcuentas"].ToString());
+        };
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
         settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";

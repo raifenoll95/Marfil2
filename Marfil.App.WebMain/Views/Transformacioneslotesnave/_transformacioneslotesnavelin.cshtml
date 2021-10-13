@@ -15,7 +15,7 @@
         listcanales = WebHelper.GetApplicationHelper().GetListCanales().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
         listcanales.Insert(0, new SelectListItem() { Value = "", Text = "" });
     }
-
+    Session["esTerminado"] = 0;
     Html.EnableClientValidation(true);
     Html.EnableUnobtrusiveJavaScript(true);
 }
@@ -26,7 +26,10 @@
         //general
         settings.Name = "GridViewLineasSalida";
         settings.KeyFieldName = "Id";
-        settings.CallbackRouteValues = new { Controller = "Transformacioneslotesnave", Action = "TransformacioneslotesnaveLin" };
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Transformacioneslotesnave",
+            Action = "TransformacioneslotesnaveLin" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
         settings.Width = Unit.Percentage(100);
@@ -34,7 +37,7 @@
         settings.SettingsPager.Visible = true;
 
 
-        //edition        
+        //edition
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Transformacioneslotesnave", Action = "TransformacioneslotesnaveLinUpdate" };
         //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Transformacioneslotes", Action = "TransformacioneslotesLinDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
@@ -46,6 +49,7 @@
         settings.Columns.Add(c =>
         {
             c.FieldName = "Terminado";
+            c.Visible = false;
         });
         settings.Columns.Add(j =>
         {
@@ -178,22 +182,30 @@
 
         settings.Settings.ShowFooter = true;
 
+        settings.HtmlRowPrepared = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data)
+                if (Convert.ToInt32(e.GetValue("Terminado")) == 1)
+                {
+                    e.Row.BackColor = System.Drawing.Color.Green;
+                }
+
+        };
+        settings.CommandButtonInitialize = (s, b) =>
+        {
+            object fieldValue = (s as MVCxGridView).GetRowValues(b.VisibleIndex, "Terminado");
+            if (Convert.ToInt32(fieldValue) == 1)
+            {
+                if (b.ButtonType == DevExpress.Web.ColumnCommandButtonType.Edit)
+                    b.Visible = false;
+            }
+
+        };
+
         settings.CommandColumn.Visible = isreadonly;
         if (!isreadonly)
         {
             settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
-
-
-            settings.HtmlRowPrepared = (sender, e) =>
-            {
-                if (e.RowType == GridViewRowType.Data)
-                    if (Convert.ToInt32(e.GetValue("Terminado")) == 1)
-                    {
-                        e.Row.Enabled = false;
-                        e.Row.BackColor = System.Drawing.Color.Green;
-                    }
-
-            };
 
             //settings.ClientSideEvents.FocusedRowChanged = "OnGridFocusedRowChanged";
 
@@ -266,11 +278,11 @@
 
     }
 
-}
-@grid.Bind(Model).GetHtml()
-@if (!isreadonly)
-{
-<script type="text/javascript">
+                }
+                @grid.Bind(Model).GetHtml()
+                @if (!isreadonly)
+                        {
+                    <script type="text/javascript">
 
 
 
@@ -470,11 +482,11 @@
             type: "POST",
             data: { key },
             success: function (data) {
-                alert("Terminado");
+                GridViewLineasSalida.Refresh();
             }
         });
 
     }
 
-</script>
-}
+                    </script>
+                        }

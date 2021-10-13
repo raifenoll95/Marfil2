@@ -68,6 +68,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.Remesas.Where(f => f.referenciaremesa == referencia && f.empresa == Empresa ).ToList().Select(f => _converterModel.GetModelView(f) as RemesasModel);
         }
 
+        public string GetNombreCuenta(string cuenta)
+        {
+            return _db.Cuentas.Where(f => f.id == cuenta && f.empresa == Empresa).FirstOrDefault().descripcion;
+        }
+
         public int GetCuadernoId(string cuaderno)
         {
             return _db.CuadernosBancarios.Where(f => f.clave == cuaderno && f.empresa == Empresa).FirstOrDefault().id;

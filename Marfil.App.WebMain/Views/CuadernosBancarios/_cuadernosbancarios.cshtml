@@ -12,12 +12,15 @@
     <div id="tabs">
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
-
+            <li><a data-toggle="tab" href="#detalle">Detalle</a></li>
         </ul>
     </div>
     <div class="tab-content">
         <div id="general" class="tab-pane fade in active">
             @Html.Partial("_general", Model)
+        </div>
+        <div id="detalle" class="tab-pane fade">
+            @Html.Partial("_detalle", Model)
         </div>
     </div>
 
