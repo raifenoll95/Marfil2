@@ -6,6 +6,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
     $scope.urlObtenerCuentaCargo;
     $scope.urlObtenerCuentaAbono;
     $scope.urlObtenerDescripcionCobrador;
+    $scope.urlObtenerEjercicio;
 
 
     //Seccion Mandato
@@ -25,11 +26,12 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
 
     //Init
-    $scope.init = function (UrlCompletarDatosCircuito, urlObtenerCuentaCargo, urlObtenerCuentaAbono, urlObtenerDescripcionCobrador) {
+    $scope.init = function (UrlCompletarDatosCircuito, urlObtenerCuentaCargo, urlObtenerCuentaAbono, urlObtenerDescripcionCobrador, urlObtenerEjercicio) {
         $scope.UrlCompletarDatosCircuito = UrlCompletarDatosCircuito;
         $scope.urlObtenerCuentaCargo = urlObtenerCuentaCargo;
         $scope.urlObtenerCuentaAbono = urlObtenerCuentaAbono;
         $scope.urlObtenerDescripcionCobrador = urlObtenerDescripcionCobrador;
+        $scope.urlObtenerEjercicio = urlObtenerEjercicio;
     }
 
     //Se le llama desde el index cshtml. Tiene los datos de la primera pantalla, llamaremos a un controlador que llamara a un servicio
@@ -52,7 +54,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                 $("#btnbuscarFkcuentatesoreria").attr("disabled", !atributos.cobrador);
                 $("#Fkcuentatesoreria").attr("disabled", !atributos.cobrador);
 
-                if (atributos.cobrador) {
+                if (atributos.cobrador && filas[0].FkcuentaTesoreria != null) {
                     $('#Fkcuentatesoreria').val(filas[0].FkcuentaTesoreria);
                     $http.get($scope.urlObtenerDescripcionCobrador + "?cuenta=" + filas[0].FkcuentaTesoreria).success(function (data) {
                         var modelo = JSON.parse(data);
@@ -63,13 +65,22 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                 $("#btnbuscarFkseriescontables").attr("disabled", !atributos.remesa);
                 $("#Fkseriescontables").attr("disabled", !atributos.remesa);
 
+                if ($("#Fkseriescontables").is(":disabled") == false) {
+                    $http.get($scope.urlObtenerEjercicio).success(function (data) {
+                        var modelo = JSON.parse(data);
+                        $("#Fkseriescontables").val(modelo.FkseriescontablesREM);
+                        window.document.getElementById("cv-Fkseriescontables-descripcion").textContent = modelo.DescSerieContable;
+                    });
+                    //cv-Fkseriescontables-descripcion
+                };
+
                 $("#FechaRemesa").attr("disabled", !atributos.remesa);
 
                 //Si está habilitada la fechaRemesa, se pone por defecto el día de hoy
                 if ($("#FechaRemesa").is(":disabled") == false) {
                     var fecha = $("#FechaContable").val();
                     $("#FechaRemesa").val(fecha);
-                }
+                };
 
                 $("#campofechapago").attr("disabled", !atributos.actualizar);
                 $("#FechaPago").attr("disabled", !atributos.actualizar);
@@ -97,9 +108,11 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
             //Cuenta Cargo
             $http.get($scope.urlObtenerCuentaCargo + "?circuito=" + circuito).success(function (data) {
                 var modelo = JSON.parse(data);
-                $('#Cuentacargo2').val(modelo.Id);
-                window.document.getElementById("cv-Cuentacargo2-descripcion").textContent = modelo.Descripcion;
-                $scope.descCargo = modelo.Descripcion;
+                if (modelo != null) {
+                    $('#Cuentacargo2').val(modelo.Id);
+                    window.document.getElementById("cv-Cuentacargo2-descripcion").textContent = modelo.Descripcion;
+                    $scope.descCargo = modelo.Descripcion;
+                }               
             }).error(function (error) {
                 console.log("error call to obtener cuenta cargo 2");
             });
@@ -107,9 +120,11 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
             //Cuenta Abono
             $http.get($scope.urlObtenerCuentaAbono + "?circuito=" + circuito).success(function (data) {
                 var modelo = JSON.parse(data);
-                $('#Cuentaabono2').val(modelo.Id);
-                window.document.getElementById("cv-Cuentaabono2-descripcion").textContent = modelo.Descripcion;
-                $scope.descAbono = modelo.Descripcion;
+                if (modelo != null) {
+                    $('#Cuentaabono2').val(modelo.Id);
+                    window.document.getElementById("cv-Cuentaabono2-descripcion").textContent = modelo.Descripcion;
+                    $scope.descAbono = modelo.Descripcion;
+                }
             }).error(function (error) {
                 console.log("error call to obtener cuenta abono 2");
             });
@@ -119,7 +134,25 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
     //Ultima pantalla, van a generar los registros de cartera
     eventAggregator.RegisterEvent("_generarmovimientostesoreria", function (data) {
 
-        $scope.generarmovimientostesoreria();
+        var fkCuentasTesoreria = $('#Fkcuentatesoreria').val();
+        var fkSeriesContables = $('#Fkseriescontables').val();
+
+        if ($("#Fkseriescontables").is(":disabled") == false) {
+
+            if (fkCuentasTesoreria != null && fkSeriesContables != null && fkCuentasTesoreria != "" && fkSeriesContables != "") {
+                $scope.generarmovimientostesoreria();
+            } else {
+                alert("Cobrador y Serie deben tener valor");
+            }
+
+        } else {
+
+            if (fkCuentasTesoreria != null && fkCuentasTesoreria != "") {
+                $scope.generarmovimientostesoreria();
+            } else {
+                alert("Cobrador debe tener valor");
+            }
+        }
     });
 
 

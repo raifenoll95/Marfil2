@@ -78,7 +78,7 @@ namespace Marfil.App.WebMain.Controllers
             var idPeticion = 0;
             var file = model.Fichero;
             char delimitador = model.Delimitador.ToCharArray()[0];
-            int albaran = int.Parse(model.Albaran);
+            int albaran = model.Albaran != null ? int.Parse(model.Albaran) : 0;
             string serie = model.SelectedId;
             int tipoLote = Funciones.Qint(model.SelectedIdTipoAlmacenLote) ?? 0;
 
@@ -96,87 +96,94 @@ namespace Marfil.App.WebMain.Controllers
 
             if (ModelState.IsValid)
             {
-                if (file != null && file.ContentLength > 0)
+                if (albaran != 0)
                 {
-                    if (file.FileName.ToLower().EndsWith(".csv"))
+                    if (file != null && file.ContentLength > 0)
                     {
-                        var service = FService.Instance.GetService(typeof(RecepcionesStockModel), ContextService) as RecepcionStockService;
-                        StreamReader sr = new StreamReader(file.InputStream, Encoding.UTF8);
-                        StringBuilder sb = new StringBuilder();
-                        DataTable dt = new DataTable();
-                        DataRow dr;
-                        string s;
-                        int j = 0;
-
-                        dt.Columns.Add("CodArticulo");
-                        dt.Columns.Add("Descripcion");
-                        dt.Columns.Add("Lote");
-                        dt.Columns.Add("Tabla");
-                        dt.Columns.Add("Cantidad");                        
-                        dt.Columns.Add("Largo");
-                        dt.Columns.Add("Ancho");
-                        dt.Columns.Add("Grueso");
-                        dt.Columns.Add("Metros");
-                        dt.Columns.Add("Precio");                                       
-
-                        while (!sr.EndOfStream)
+                        if (file.FileName.ToLower().EndsWith(".csv"))
                         {
-                            while ((s = sr.ReadLine()) != null)
+                            var service = FService.Instance.GetService(typeof(RecepcionesStockModel), ContextService) as RecepcionStockService;
+                            StreamReader sr = new StreamReader(file.InputStream, Encoding.UTF8);
+                            StringBuilder sb = new StringBuilder();
+                            DataTable dt = new DataTable();
+                            DataRow dr;
+                            string s;
+                            int j = 0;
+
+                            dt.Columns.Add("CodArticulo");
+                            dt.Columns.Add("Descripcion");
+                            dt.Columns.Add("Lote");
+                            dt.Columns.Add("Tabla");
+                            dt.Columns.Add("Cantidad");
+                            dt.Columns.Add("Largo");
+                            dt.Columns.Add("Ancho");
+                            dt.Columns.Add("Grueso");
+                            dt.Columns.Add("Metros");
+                            dt.Columns.Add("Precio");
+
+                            while (!sr.EndOfStream)
                             {
-                                //Ignorar cabecera                    
-                                if (j > 0 || !model.Cabecera)
+                                while ((s = sr.ReadLine()) != null)
                                 {
-                                    string[] str = s.Split(delimitador);
-                                    dr = dt.NewRow();
-
-                                    for (int i = 0; i < dt.Columns.Count; i++)
+                                    //Ignorar cabecera                    
+                                    if (j > 0 || !model.Cabecera)
                                     {
-                                        try
-                                        {
-                                            dr[dt.Columns[i]] = str[i].Replace("\"", string.Empty).ToString() ?? string.Empty;
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            ModelState.AddModelError("File", General.ErrorDelimitadorFormato);
-                                            return View("ImportarStock", model);
-                                        }
-                                    }
-                                    dt.Rows.Add(dr);
-                                }
-                                j++;
-                            }
-                        }
-                        try
-                        {
-                            idPeticion = service.CrearPeticionImportacion(ContextService);
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, albaran, serie, tipoLote, idPeticion, token));
-                            //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
-                            sr.Close();
-                        }
-                        catch (ValidationException ex)
-                        {
-                            if (string.IsNullOrEmpty(ex.Message))
-                            {
-                                TempData["Errors"] = null;
-                            }
-                            else
-                            {
-                                TempData["Errors"] = ex.Message;
-                            }
-                        }
+                                        string[] str = s.Split(delimitador);
+                                        dr = dt.NewRow();
 
-                        //TempData["Success"] = "Importado correctamente!";
-                        TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas";
-                        return RedirectToAction("ImportarStock", "Importar");
+                                        for (int i = 0; i < dt.Columns.Count; i++)
+                                        {
+                                            try
+                                            {
+                                                dr[dt.Columns[i]] = str[i].Replace("\"", string.Empty).ToString() ?? string.Empty;
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                ModelState.AddModelError("File", General.ErrorDelimitadorFormato);
+                                                return View("ImportarStock", model);
+                                            }
+                                        }
+                                        dt.Rows.Add(dr);
+                                    }
+                                    j++;
+                                }
+                            }
+                            try
+                            {
+                                idPeticion = service.CrearPeticionImportacion(ContextService);
+                                HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, albaran, serie, tipoLote, idPeticion, token));
+                                //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
+                                sr.Close();
+                            }
+                            catch (ValidationException ex)
+                            {
+                                if (string.IsNullOrEmpty(ex.Message))
+                                {
+                                    TempData["Errors"] = null;
+                                }
+                                else
+                                {
+                                    TempData["Errors"] = ex.Message;
+                                }
+                            }
+
+                            //TempData["Success"] = "Importado correctamente!";
+                            TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas";
+                            return RedirectToAction("ImportarStock", "Importar");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("File", General.ErrorFormatoFichero);
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("File", General.ErrorFormatoFichero);
+                        ModelState.AddModelError("File", General.ErrorFichero);
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("File", General.ErrorFichero);
+                    ModelState.AddModelError("File", "El albarán indicado no es correcto");
                 }
             }
 

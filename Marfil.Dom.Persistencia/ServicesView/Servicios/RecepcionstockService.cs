@@ -25,6 +25,8 @@ using Marfil.Inf.Genericos.Helper;
 using RAlbaranesCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras;
 using System.Data.Entity.Migrations;
 using System.Globalization;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.StateMachine;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Converter;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -1514,7 +1516,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             foreach (var itemAlbaran in ListaAlbaranes)
             {
                 try
-                {
+                {                  
                     edit(itemAlbaran);
                 }
                 catch (Exception ex)
@@ -1548,6 +1550,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             _db.SaveChanges();
 
             return item.id;
+        }
+        public override IModelView get(string id)
+        {
+            ((AlbaranesComprasConverterService)_converterModel).Ejercicio = EjercicioId;
+            return base.get(id);
         }
 
         #endregion

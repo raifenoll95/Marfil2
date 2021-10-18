@@ -638,7 +638,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var primerDía = new DateTime(DateTime.Now.Year, 1, 1);
             var list = _db.AlbaranesCompras.Where(
                       f =>
-                          f.empresa == Empresa && f.fkseries == "ENV" && f.fechadocumento >= primerDía && f.fechadocumento <= DateTime.Now
+                          f.empresa == Empresa && f.fkseries == "ENV" && f.fechadocumento >= primerDía && f.fechadocumento <= DateTime.Now && f.fkestados != "99-003"
                       ).ToList().Select(f => _converterModel.GetModelView(f) as AlbaranesComprasModel).ToList();
             return list;
         }

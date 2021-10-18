@@ -11,6 +11,8 @@ using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -36,5 +38,16 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         #endregion
+
+        public ActionResult obtenerEjercicio()
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var id = ContextService.Ejercicio;
+            var servicioEjecicios = FService.Instance.GetService(typeof(EjerciciosModel), ContextService) as EjerciciosService;
+            var EjercicioModel = servicioEjecicios.get(id) as EjerciciosModel;
+            EjercicioModel.DescSerieContable = servicioEjecicios.DescSerieContable(EjercicioModel.FkseriescontablesREM); 
+            var data = JsonConvert.SerializeObject(EjercicioModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

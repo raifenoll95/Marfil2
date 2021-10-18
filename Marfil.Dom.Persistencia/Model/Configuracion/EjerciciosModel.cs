@@ -80,7 +80,7 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
 
         [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesINM")]
         public string FkseriescontablesINM { get; set; }
-
+        public string DescSerieContable { get; set; }
         public string DesdeCadena {
             get { return Desde?.ToShortDateString().ToString(CultureInfo.CurrentUICulture) ?? string.Empty; }
         }

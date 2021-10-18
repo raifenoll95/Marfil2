@@ -26,6 +26,7 @@
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
     var campoverificacioncargo = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var campoverificacionabono = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvcircuitos = FCampoverificacion.Instance.GetModel<CircuitoTesoreriaCobrosModel>(WebHelper.ContextService);
 
 }
 
@@ -83,15 +84,15 @@
         </div>
 
         @*fecha contable*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.FechaRemesa, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.EditorFor(f => Model.FechaRemesa)
+        <div class="form-group">
+            @Html.LabelFor(f => Model.FechaRemesa, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(f => Model.FechaRemesa)
+            </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.FechaRemesa, "", new { @class = "text-danger" })
+            </div>
         </div>
-        <div class="col-md-10 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.FechaRemesa, "", new { @class = "text-danger" })
-        </div>
-    </div>
     </div>
 
     @*Cta Cargo 2*@
@@ -175,17 +176,17 @@
         <div class="col-md-2">
             @Html.EditorFor(f => Model.FechaPago)
         </div>
-    </div>    
+    </div>
 
-        @*Observaciones*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.Comentario, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(f => Model.Comentario, (object)new { @class = "form-control", @autofocus = "" })
-                @Html.ValidationMessageFor(f => Model.Comentario, "", new { @class = "text-danger" })
-            </div>
+    @*Observaciones*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Comentario, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(f => Model.Comentario, (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => Model.Comentario, "", new { @class = "text-danger" })
         </div>
-        <div class="form-group col-md-4" align="right">
-            <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
-        </div>
+    </div>
+    <div class="form-group col-md-4" align="right">
+        <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+    </div>
 </form>
