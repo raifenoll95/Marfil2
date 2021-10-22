@@ -16,7 +16,9 @@ namespace Marfil.Dom.Persistencia.Model
         [StringValue(typeof(RPeticiones), "EstadoPeticionEnCurso")]        
         EnCurso,        
         [StringValue(typeof(RPeticiones), "EstadoPeticionError")]
-        Error,        
+        Error,
+        [StringValue(typeof(RPeticiones), "EstadoPeticionFinalizadaLogs")]
+        FinalizadaLogs,
         [StringValue(typeof(RPeticiones), "EstadoPeticionFinalizada")]
         Finalizada
     }

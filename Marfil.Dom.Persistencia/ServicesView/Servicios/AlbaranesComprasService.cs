@@ -635,10 +635,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public IEnumerable<AlbaranesComprasModel> GetAlbaranesImportar()
         {
-            var primerDía = new DateTime(DateTime.Now.Year, 1, 1);
+            //Albaranes de compra entradas varias, de este mes, que no estén finalizados y no tengan ya líneas
+            var primerDía = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var serieEstradasVarias = _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == "ALC" && f.entradasvarias == true).FirstOrDefault().id;
             var list = _db.AlbaranesCompras.Where(
                       f =>
-                          f.empresa == Empresa && f.fkseries == "ENV" && f.fechadocumento >= primerDía && f.fechadocumento <= DateTime.Now && f.fkestados != "99-003"
+                          f.empresa == Empresa && f.fkseries == serieEstradasVarias && f.fechadocumento >= primerDía && f.fechadocumento <= DateTime.Now 
+                          && f.fkestados != "99-003" && f.AlbaranesComprasLin.Count == 0
                       ).ToList().Select(f => _converterModel.GetModelView(f) as AlbaranesComprasModel).ToList();
             return list;
         }

@@ -7,6 +7,21 @@
     var toolbarModel = Model as IToolbar;
     ViewBag.Title = "Importar Artículos"; //toolbarModel.Toolbar.Titulo;
 
+    var listTarifas = WebHelper.GetApplicationHelper().GetListTarifas().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Id,
+
+    }).ToList();
+    listTarifas.Insert(0, new SelectListItem() { Text = "", Value = "" });
+
+    var listFamilias = WebHelper.GetApplicationHelper().GetListFamiliaArticulos().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Id,
+
+    }).ToList();
+
 }
 
 
@@ -16,57 +31,141 @@
     <h3 class="green center">Seleccionar fichero y delimitador de contenido</h3>
     <br />    
 
-    <div class="alert alert-info" align="center">
+    @*<div class="alert alert-info" align="center">
         <p>Contenido del fichero: </p>  
         <br />     
         <table border="1" align="center">
             <thead>
-                <tr>       
-                    <th class="bolder center" style="min-width:120px">Código artículo</th>
+                <tr>
+                    <th class="bolder center" style="min-width:100px">Tiempo Fabricación</th>
+                    <th class="bolder center" style="min-width:100px">Cód. artículo</th>
                     <th class="bolder center" style="min-width:100px">Descripción</th>
                     <th class="bolder center" style="min-width:100px">Descripción 2</th>
+                    <th class="bolder center" style="min-width:100px">P. Arancelaria</th>
                     <th class="bolder center" style="min-width:80px">Largo</th>
-                    <th class="bolder center" style="min-width:80px">Ancho</th>                    
+                    <th class="bolder center" style="min-width:80px">Ancho</th>
                     <th class="bolder center" style="min-width:80px">Grueso</th>
-                    <th class="bolder center" style="min-width:100px">KilosUd</th>
-                    <th class="bolder center" style="min-width:80px">Medida libre</th>
+                    <th class="bolder center" style="min-width:100px">Coste Materia Prima</th>
+                    <th class="bolder center" style="min-width:100px">Porcentaje Merma</th>
+                    <th class="bolder center" style="min-width:100px">Coste Elab.Materia Prima</th>
+                    <th class="bolder center" style="min-width:100px">Coste Fabricación</th>
+                    <th class="bolder center" style="min-width:100px">Otros Costes</th>
+                    <th class="bolder center" style="min-width:100px">Costes Portes</th>
+                    <th class="bolder center" style="min-width:100px">Costes Indirecto</th>
+                    <th class="bolder center" style="min-width:100px">Coste</th>
+                    <th class="bolder center" style="min-width:100px">Precio Venta 1</th>
+                    <th class="bolder center" style="min-width:100px">Precio Venta 2</th>
+                    <th class="bolder center" style="min-width:100px">Precio Venta 3</th>
+                    <th class="bolder center" style="min-width:100px">Unidad Medida</th>
+                    <th class="bolder center" style="min-width:80px">KilosUd</th>
+                    <th class="bolder center" style="min-width:100px">Rendimiento</th>
+                    <th class="bolder center" style="min-width:100px">Cód. Contable</th>
+                    <th class="bolder center" style="min-width:100px">Exist. Mínima Metros</th>
+                    <th class="bolder center" style="min-width:100px">Exist. Máxima Metros</th>
+                    <th class="bolder center" style="min-width:100px">Web</th>
+                    <th class="bolder center" style="min-width:100px">Notas</th>
+                    <th class="bolder center" style="min-width:100px">Piezas Cajas</th>
+                    <th class="bolder center" style="min-width:100px">Precio Mín. Venta</th>
                     <th class="bolder center" style="min-width:100px">Excluir comisiones</th>
+                    <th class="bolder center" style="min-width:100px">Labor</th>
+                    <th class="bolder center" style="min-width:80px">Medida libre</th>
+                    <th class="bolder center" style="min-width:100px">Lote Único</th>
+                    <th class="bolder center" style="min-width:100px">Lote</th>
+                    <th class="bolder center" style="min-width:100px">Relación</th>
+                    <th class="bolder center" style="min-width:100px">Nom. Labor</th>
+                    <th class="bolder center" style="min-width:100px">Exist. Mínima Unidades</th>
+                    <th class="bolder center" style="min-width:100px">Exist. Máxima Unidades</th>
+                    <th class="bolder center" style="min-width:100px">Stock</th>
+                    <th class="bolder center" style="min-width:100px">Esq. Fab.</th>
+                    <th class="bolder center" style="min-width:100px">Grupo</th>
                     <th class="bolder center" style="min-width:100px">Exento retención</th>
-                    <th class="bolder center" style="min-width:100px">Precio venta</th>
-                    <th class="bolder center" style="min-width:100px">Precio compra</th>
+                    <th class="bolder center" style="min-width:100px">Fact. Comp.</th>
+                    <th class="bolder center" style="min-width:100px">Ean13</th>
+
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="center">Código artículo siguiendo la
-                                       estructura de códigos de Marfil 
-                                       (Familia|Materiales|Caracerísticas|
-                                       Grosores|Acabados)</td>
                     <td class="center"></td>
-                    <td class="center"></td>    
-                    <td class="center"></td>                
-                    <td class="center"></td>                
-                    <td class="center"></td>     
-                    <td class="center"></td>     
-                    <td class="center"></td>   
-                    <td class="center"></td>   
-                    <td class="center"></td>   
-                    <td class="center"></td>   
-                    <td class="center"></td>   
+                    <td class="center">
+                        Código artículo siguiendo la
+                        estructura de códigos de Marfil
+                        (Familia|Materiales|Caracerísticas|
+                        Grosores|Acabados)
+                    </td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div>*@
     
     <br />
 
     <div class="form-group">
 
         @using (Html.BeginForm("ImportarArticulos", "Importar", new { ImportarModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
+        {
+            @Html.LabelFor(f => Model.Familia, new { @class = "control-label col-md-4", @style = "text-align: right" })
+            @Html.DropDownListFor(f => Model.Familia, listFamilias, new { @class = "col-md-2" })
+            <br />
+            <br />
+            @Html.LabelFor(f => Model.Tarifa1, new { @class = "control-label col-md-1", @style = "text-align: right" })
+            @Html.DropDownListFor(f => Model.Tarifa1, listTarifas, new { @class = "col-md-2" })
+
+            @Html.LabelFor(f => Model.Tarifa2, new { @class = "control-label col-md-1", @style = "text-align: right" })
+            @Html.DropDownListFor(f => Model.Tarifa2, listTarifas, new { @class = "col-md-2" })
+
+            @Html.LabelFor(f => Model.Tarifa3, new { @class = "control-label col-md-1", @style = "text-align: right" })
+            @Html.DropDownListFor(f => Model.Tarifa3, listTarifas, new { @class = "col-md-2" })
+            <br />
+            <br />
             @Html.LabelFor(f => Model.Fichero, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.TextBoxFor(f => Model.Fichero, new { @type = "file" })
-            <br />            
+            <br />
             @Html.LabelFor(f => Model.Cabecera, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.CheckBoxFor(f => Model.Cabecera)
             <br />
@@ -86,7 +185,7 @@
             <p class="alert alert-success" id="successMessage" align="center">@TempData["Success"]</p>
         }
         @if (TempData["Errors"] != null)
-        {                    
+        {
             <pre class="alert alert-danger" id="divErrorMessage" align="center">@TempData["Errors"]</pre>
         }
     </div>    

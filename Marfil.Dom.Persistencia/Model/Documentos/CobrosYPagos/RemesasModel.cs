@@ -172,17 +172,17 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
             using (var db = MarfilEntities.ConnectToSqlServer(user.BaseDatos))
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
-                var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.CarteraVencimientos.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
+                var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.Remesa.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
                 var service = new DocumentosUsuarioService(db);
                 {
                     var lst =
-                        service.GetDocumentos(TipoDocumentoImpresion.CarteraVencimientos, user.Id)
+                        service.GetDocumentos(TipoDocumentoImpresion.Remesa, user.Id)
                             .Where(f => f.Tiporeport == TipoReport.Report);
                     return new DocumentosBotonImprimirModel()
                     {
-                        Tipo = TipoDocumentoImpresion.CarteraVencimientos,
+                        Tipo = TipoDocumentoImpresion.Remesa,
                         Lineas = lst.Select(f => f.Nombre),
-                        Primarykey = Referencia,
+                        Primarykey = Referenciaremesa,
                         Defecto = doc?.Name
                     };
                 }

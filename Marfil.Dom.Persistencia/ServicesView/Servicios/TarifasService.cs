@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Terceros;
@@ -189,6 +190,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var tarifa = _db.Tarifas.Where(f => f.empresa == Empresa && f.valorarcomponentes == true).FirstOrDefault();
             var precio = tarifa != null ? _db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifa.id && f.fkarticulos == componente).Select(f => f.precio).SingleOrDefault() : null; 
             return precio;
+        }
+
+        public IEnumerable<TarifasModel> GetTarifas()
+        {
+            return _db.Tarifas.Where(f => f.empresa == Empresa && f.tipotarifa == 0 && f.tipoflujo == 0).ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).ToList(); 
+        }
+
+        public TarifasModel GetTarifaCompleta(string id)
+        {
+            return _db.Tarifas.Where(f => f.empresa == Empresa && f.id == id).Include("TarifasLin").ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).FirstOrDefault();
         }
     }
 }

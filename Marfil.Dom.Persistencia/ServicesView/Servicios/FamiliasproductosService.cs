@@ -98,5 +98,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var familiacodigo = ArticulosService.GetCodigoFamilia(articulo);
             ValidarDimensiones(familiacodigo, largo, ancho, grueso, articulo);
         }
+
+        internal IEnumerable<FamiliasproductosModel> GetListFamiliaArticulos()
+        {
+            return _db.Familiasproductos.Where(f => f.empresa == Empresa).ToList().Select(f => _converterModel.GetModelView(f) as FamiliasproductosModel).ToList();
+        }
     }
 }

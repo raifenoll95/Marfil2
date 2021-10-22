@@ -433,11 +433,11 @@ namespace Marfil.App.WebMain.Controllers
             {
                 Icono = "fa fa-print",
                 Texto = General.LblImprimir,
-                Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Referencia, tipo = TipoDocumentos.Remesa, reportId = objModel.DocumentosImpresion.Defecto }),
+                Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Referenciaremesa, tipo = TipoDocumentos.Remesa, reportId = objModel.DocumentosImpresion.Defecto }),
                 Target = "_blank",
                 Items = objModel.DocumentosImpresion.Lineas.Select(f => new ToolbarActionModel()
                 {
-                    Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Referencia, tipo = TipoDocumentos.Remesa, reportId = f }),
+                    Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Referenciaremesa, tipo = TipoDocumentos.Remesa, reportId = f }),
                     Texto = f,
                     Target = "_blank"
                 })

@@ -941,9 +941,21 @@
     <value>Buscar componente</value>
   </data>
   <data name="LblAlbaranImportar" xml:space="preserve">
-    <value>Albarán (Sólo serie ENV)</value>
+    <value>Albarán (Entradas Varias)</value>
   </data>
   <data name="LblImportar2" xml:space="preserve">
     <value>Importar</value>
+  </data>
+  <data name="LblTarifa1" xml:space="preserve">
+    <value>Tarifa 1</value>
+  </data>
+  <data name="LblTarifa2" xml:space="preserve">
+    <value>Tarifa 2</value>
+  </data>
+  <data name="LblTarifa3" xml:space="preserve">
+    <value>Tarifa 3</value>
+  </data>
+  <data name="LblFamilia" xml:space="preserve">
+    <value>Familia</value>
   </data>
 </root>

@@ -80,7 +80,7 @@ namespace Marfil.App.WebMain.Controllers
             char delimitador = model.Delimitador.ToCharArray()[0];
             int albaran = model.Albaran != null ? int.Parse(model.Albaran) : 0;
             string serie = model.SelectedId;
-            int tipoLote = Funciones.Qint(model.SelectedIdTipoAlmacenLote) ?? 0;
+            //int tipoLote = Funciones.Qint(model.SelectedIdTipoAlmacenLote) ?? 0;
 
             using (var db = MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos))
             {
@@ -111,7 +111,6 @@ namespace Marfil.App.WebMain.Controllers
                             int j = 0;
 
                             dt.Columns.Add("CodArticulo");
-                            dt.Columns.Add("Descripcion");
                             dt.Columns.Add("Lote");
                             dt.Columns.Add("Tabla");
                             dt.Columns.Add("Cantidad");
@@ -151,7 +150,7 @@ namespace Marfil.App.WebMain.Controllers
                             try
                             {
                                 idPeticion = service.CrearPeticionImportacion(ContextService);
-                                HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, albaran, serie, tipoLote, idPeticion, token));
+                                HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, albaran, serie, idPeticion, token));
                                 //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
                                 sr.Close();
                             }
@@ -190,7 +189,7 @@ namespace Marfil.App.WebMain.Controllers
             return View("ImportarStock", model);
         }
 
-        private async Task GetAsync(DataTable dt, int albaran, string serie, int tipoLote, int idPeticion, CancellationToken cancellationToken)
+        private async Task GetAsync(DataTable dt, int albaran, string serie, int idPeticion, CancellationToken cancellationToken)
         {
             try
             {
@@ -198,7 +197,7 @@ namespace Marfil.App.WebMain.Controllers
 
                 using (var service = FService.Instance.GetService(typeof(RecepcionesStockModel), ContextService) as RecepcionStockService)
                 {
-                    await Task.Run(() => service.Importar(dt, albaran, serie, tipoLote, idPeticion, ContextService));
+                    await Task.Run(() => service.Importar(dt, albaran, serie, idPeticion, ContextService));
                     return;
                 }
 
@@ -252,20 +251,52 @@ namespace Marfil.App.WebMain.Controllers
                         DataTable dt = new DataTable();
                         DataRow dr;
                         string s;
-                        int j = 0;                        
-                        
+                        int j = 0;
+
+                        dt.Columns.Add("TiempoFab");
                         dt.Columns.Add("CodArticulo");                        
                         dt.Columns.Add("Descripcion");
-                        dt.Columns.Add("Descripcion2");                        
+                        dt.Columns.Add("Descripcion2");
+                        dt.Columns.Add("PartidaArancelaria");
                         dt.Columns.Add("Largo");
                         dt.Columns.Add("Ancho");
                         dt.Columns.Add("Grueso");
+                        dt.Columns.Add("CosteMateriaPrima");
+                        dt.Columns.Add("PorcentajeMerma");
+                        dt.Columns.Add("CosteElaboracionMateriaPrima");
+                        dt.Columns.Add("CosteFabricacion");
+                        dt.Columns.Add("OtrosCostes");
+                        dt.Columns.Add("CostesPortes");
+                        dt.Columns.Add("CosteIndirecto");
+                        dt.Columns.Add("Coste");
+                        dt.Columns.Add("PVenta1");
+                        dt.Columns.Add("PVenta2");
+                        dt.Columns.Add("PVenta3");
+                        dt.Columns.Add("UnidadMedida");//No se usa
                         dt.Columns.Add("KilosUd");
-                        dt.Columns.Add("MedidaLibre");
+                        dt.Columns.Add("Rendimiento");
+                        dt.Columns.Add("CodContable");//No se usa
+                        dt.Columns.Add("ExistenciasMinimasMetros");
+                        dt.Columns.Add("ExistenciasMaximasMetros");
+                        dt.Columns.Add("Web");
+                        //dt.Columns.Add("Notas");
+                        dt.Columns.Add("PiezasCaja");
+                        dt.Columns.Add("PrecioMinimoVenta");
                         dt.Columns.Add("ExcluirComisiones");
+                        dt.Columns.Add("Labor");
+                        dt.Columns.Add("MedidaLibre");
+                        dt.Columns.Add("LoteUnico");//No se usa
+                        dt.Columns.Add("Lote");//No se usa
+                        //dt.Columns.Add("Relac");//No se usa
+                        dt.Columns.Add("NomLabor");//No se usa
+                        dt.Columns.Add("ExistenciasMinimasUnidades");
+                        dt.Columns.Add("ExistenciasMaximasUnidades");
+                        dt.Columns.Add("Stock");//No se usa
+                        dt.Columns.Add("EsqFab");//No se usa
+                        dt.Columns.Add("Grupo");//No se usa
                         dt.Columns.Add("ExentoRetencion");
-                        dt.Columns.Add("PrecioVenta");
-                        dt.Columns.Add("PrecioCompra");                        
+                        dt.Columns.Add("FactprComp");//No se usa
+                        dt.Columns.Add("Ean13");
 
                         while (!sr.EndOfStream)
                         {
@@ -297,7 +328,7 @@ namespace Marfil.App.WebMain.Controllers
                         try
                         {
                             idPeticion = service.CrearPeticionImportacion(ContextService);
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncArticulos(dt, idPeticion, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncArticulos(dt, idPeticion, token, model));
                             //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
                             sr.Close();
                         }
@@ -331,7 +362,7 @@ namespace Marfil.App.WebMain.Controllers
             return View("ImportarArticulos", model);
         }
 
-        private async Task GetAsyncArticulos(DataTable dt, int idPeticion, CancellationToken cancellationToken)
+        private async Task GetAsyncArticulos(DataTable dt, int idPeticion, CancellationToken cancellationToken, ImportarModel model)
         {
             try
             {
@@ -339,7 +370,7 @@ namespace Marfil.App.WebMain.Controllers
 
                 using (var service = FService.Instance.GetService(typeof(ArticulosModel), ContextService) as ArticulosService)
                 {
-                    await Task.Run(() => service.Importar(dt, idPeticion, ContextService));
+                    await Task.Run(() => service.Importar(dt, idPeticion, ContextService, model));
                     return;
                 }
 

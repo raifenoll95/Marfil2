@@ -851,6 +851,13 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return service.GetAlbaranesImportar();
             }
         }
+        public IEnumerable<TarifasModel> GetListTarifas()
+        {
+            using (var service = new TarifasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetTarifas();
+            }
+        }
         public double GetTotalRemesa(string referencia)
         {
             using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -1050,6 +1057,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
             {
                 return service.GetListFamiliaMateriales();
+            }
+        }
+
+        public IEnumerable<FamiliasproductosModel> GetListFamiliaArticulos()
+        {
+            using (var service = new FamiliasproductosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetListFamiliaArticulos();
             }
         }
 

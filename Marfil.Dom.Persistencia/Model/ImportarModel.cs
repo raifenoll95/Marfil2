@@ -39,6 +39,18 @@ namespace Marfil.Dom.Persistencia.Model
 
         [Display(ResourceType = typeof(General), Name = "LblAlbaranImportar")]
         public string Albaran { get; set; }
+
+        [Display(ResourceType = typeof(General), Name = "LblTarifa1")]
+        public string Tarifa1 { get; set; }
+
+        [Display(ResourceType = typeof(General), Name = "LblTarifa2")]
+        public string Tarifa2 { get; set; }
+
+        [Display(ResourceType = typeof(General), Name = "LblTarifa3")]
+        public string Tarifa3 { get; set; }
+
+        [Display(ResourceType = typeof(General), Name = "LblFamilia")]
+        public string Familia { get; set; }
         #endregion
 
         #region CTR

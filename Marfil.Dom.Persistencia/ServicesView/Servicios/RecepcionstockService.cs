@@ -1422,20 +1422,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #region Importar
 
-        public void Importar(DataTable dt, int idalbaran, string serie, int tipoLote, int idPeticion, IContextService context)
+        public void Importar(DataTable dt, int idalbaran, string serie, int idPeticion, IContextService context)
         {
             // Ordenar por Referencia
             DataView dv = dt.DefaultView;
-            dv.Sort = "Tabla desc";
+            dv.Sort = "Tabla asc";
             DataTable sorted = dv.ToTable();
 
             string errores = "";
+            var vuelta = 0;
             var moneda = _db.Empresas.Where(f => f.id == Empresa).Select(f => f.fkMonedabase).SingleOrDefault();
 
             List<AlbaranesComprasModel> ListaAlbaranes = new List<AlbaranesComprasModel>();
             //RecepcionesStockModel albaran = new FModel().GetModel<RecepcionesStockModel>(context);
+            var tipoAlmacenLote = _db.AlbaranesCompras.Where(f => f.empresa == Empresa && f.id == idalbaran).FirstOrDefault().tipoalmacenlote;
+            
 
             AlbaranesComprasModel albaran = _db.AlbaranesCompras.Where(f => f.empresa == Empresa && f.id == idalbaran).ToList().Select(f => _converterModel.GetModelView(f) as AlbaranesComprasModel).FirstOrDefault();
+            albaran.Tipodealmacenlote = (TipoAlmacenlote)tipoAlmacenLote;
+            albaran.set("fkestados", "99-002");
             ListaAlbaranes.Add(albaran);
 
             //13/10/2021 - El albaran ya esta creado, solo se insertan las líneas
@@ -1473,12 +1478,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     albaran.Fkcriteriosagrupacion = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == albaran.Fkproveedores).Select(f => f.fkcriteriosagrupacion).SingleOrDefault();
                     albaran.Tipodealmacenlote = (TipoAlmacenlote)tipoLote;
                 }*/
+                vuelta++;
 
+                var codArticulo = row["CodArticulo"].ToString();
+                if (codArticulo.Length == 10)
+                {
+                    codArticulo = codArticulo.Insert(5, "0");
+                }
+                if (codArticulo.Length != 11)
+                {
+                    errores += "Línea " + vuelta + " - " + codArticulo + "El código del artículo no tiene la longitud correcta" + Environment.NewLine;
+                    continue;
+                }
+                var existeArticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == codArticulo).FirstOrDefault();
+                if (existeArticulo == null)
+                {
+                    errores += "Línea " + vuelta + " - " + codArticulo + "No existe el articulo" + Environment.NewLine;
+                    continue;
+                }
+                
                 AlbaranesComprasLinModel linea = new AlbaranesComprasLinModel();
                 linea.Id = albaran.Lineas.Count + 1;               
                 linea.Fkalbaranes = albaran.Id;
-                linea.Fkarticulos = row["CodArticulo"].ToString();
-                linea.Descripcion = row["Descripcion"].ToString();
+                linea.Fkarticulos = codArticulo;
+                linea.Descripcion = _db.Articulos.Where(f => f.empresa == Empresa && f.id == codArticulo).FirstOrDefault().descripcion;
                 linea.Lote = row["Lote"].ToString();
                 linea.Tabla = int.Parse(row["Tabla"].ToString());
                 linea.Cantidad = double.Parse(row["Cantidad"].ToString());
@@ -1527,8 +1550,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var item = _db.PeticionesAsincronas.Where(f => f.empresa == context.Empresa && f.id == idPeticion).SingleOrDefault();
 
-            item.estado = (int)EstadoPeticion.Finalizada;
-            item.resultado = errores;
+            if (errores == "")
+            {
+                item.estado = (int)EstadoPeticion.Finalizada;
+                item.resultado = errores;
+            }
+            else
+            {
+                item.estado = (int)EstadoPeticion.FinalizadaLogs;
+                item.resultado = errores;
+            }
+            
 
             _db.PeticionesAsincronas.AddOrUpdate(item);
             _db.SaveChanges();

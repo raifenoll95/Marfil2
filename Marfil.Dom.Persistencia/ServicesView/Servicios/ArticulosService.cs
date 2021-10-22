@@ -331,7 +331,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var hayEspecial = precioEspecial != 0 ? true : false;
             string idioma = "";
 
-            if(!string.IsNullOrEmpty(fkcuenta))
+            if (!string.IsNullOrEmpty(fkcuenta))
             {
                 //Rai -- Necesito saber si la cuenta que estoy recibiendo es Cliente, Proveedor o Acreedor
                 if (fkcuenta.StartsWith("43"))
@@ -366,7 +366,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.Append("select a.categoria as Categoria, case when u.tipototal=1 then convert(bit,1) else convert(bit,0) end as Permitemodificarmetros,a.Piezascaja as Piezascaja, " +
                         " u.id as Fkunidades,u.decimalestotales as [Decimalestotales],u.formula as [Formulas] ,a.id as [Id], ");
 
-                if(idioma.Equals("ENG"))
+                if (idioma.Equals("ENG"))
                 {
                     sb.Append("a.descripcion2 as [Descripcion]");
                 }
@@ -378,7 +378,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 sb.Append(" , isnull(a.largo, 0) as [Largo], isnull(a.ancho, 0) as [Ancho], isnull(a.grueso, 0) as [Grueso], isnull(a.editarlargo, 0) as [Permitemodificarlargo], isnull(a.editarancho, 0) as [Permitemodificarancho], " +
                       " isnull(a.editargrueso,0) as [Permitemodificargrueso],mo.id as Fkmonedas,fp.tipofamilia as [Tipofamilia],a.tipogestionlotes as [Tipogestionlotes],isnull(a.lotefraccionable,0) as [Lotefraccionable],a.tipoivavariable as [Tipoivavariable], ");
-                        
+
                 sb.Append(" mo.decimales as Decimalesmonedas, mo.cambiomonedabase as Cambiomonedabase,mo.cambiomonedaadicional as Cambiomonedaadicional,");
                 sb.Append(" ti.id as Fktiposiva, ti.nombre as Descripcioniva, ti.Porcentajeiva as Porcentajeiva,ti.porcentajerecargoequivalente as PorcentajeRecargoEquivalencia,");
                 sb.Append(" isnull(tl.precio, 0.0) as Precio, isnull(tl.descuento, 0.0) as Descuento,isnull(a.articulocomentario,0) as Articulocomentario,fp.fkcontador  as Fkcontador ");
@@ -596,10 +596,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #region Importar
 
-        public void Importar(DataTable dt, int idPeticion, IContextService context)
+        public void Importar(DataTable dt, int idPeticion, IContextService context, ImportarModel model)
         {
             string errores = "";
             List<ArticulosModel> ListaArticulos = new List<ArticulosModel>();
+            List<TarifasModel> ListaTarifas = new List<TarifasModel>();
+            using (var service = new TarifasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                TarifasModel tarifa1 = service.GetTarifaCompleta(model.Tarifa1);
+                ListaTarifas.Add(tarifa1);
+                TarifasModel tarifa2 = service.GetTarifaCompleta(model.Tarifa2);
+                ListaTarifas.Add(tarifa2);
+                TarifasModel tarifa3 = service.GetTarifaCompleta(model.Tarifa3);
+                ListaTarifas.Add(tarifa3);
+            }
 
             foreach (DataRow row in dt.Rows)
             {
@@ -634,35 +644,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var familia = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == codFamilia).SingleOrDefault();
                     if (familia == null)
                     {
-                        errores += codArticulo + "No existe la familia" + Environment.NewLine;
+                        errores += codArticulo + " No existe la familia" + Environment.NewLine;
                         continue;
                     }
 
                     var materiales = _db.Materiales.Where(f => f.empresa == Empresa && f.id == codMateriales).SingleOrDefault();
                     if (materiales == null)
                     {
-                        errores += codArticulo + "No existe el material" + Environment.NewLine;
+                        errores += codArticulo + " No existe el material" + Environment.NewLine;
                         continue;
                     }
 
                     var caracteristicas = _db.CaracteristicasLin.Where(f => f.empresa == Empresa && f.fkcaracteristicas == codFamilia && f.id == codCaracteristicas).SingleOrDefault();
                     if (caracteristicas == null)
                     {
-                        errores += codArticulo + "No existe la caracteristicas" + Environment.NewLine;
+                        errores += codArticulo + " No existe la caracteristicas" + Environment.NewLine;
                         continue;
                     }
 
                     var grosores = _db.Grosores.Where(f => f.empresa == Empresa && f.id == codGrosores).SingleOrDefault();
                     if (grosores == null)
                     {
-                        errores += codArticulo + "No existe el grosor" + Environment.NewLine;
+                        errores += codArticulo + " No existe el grosor" + Environment.NewLine;
                         continue;
                     }
 
                     var acabados = _db.Acabados.Where(f => f.empresa == Empresa && f.id == codAcabados).SingleOrDefault();
                     if (acabados == null)
                     {
-                        errores += codArticulo + "No existe el acabado" + Environment.NewLine;
+                        errores += codArticulo + " No existe el acabado" + Environment.NewLine;
                         continue;
                     }
 
@@ -677,6 +687,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Descripcion = row["Descripcion"].ToString();
                     articulo.Descripcion2 = row["Descripcion2"].ToString();
                     articulo.Descripcionabreviada = row["Descripcion"].ToString();
+                    articulo.Partidaarancelaria = row["PartidaArancelaria"].ToString();
+                    articulo.Ean13 = row["Ean13"].ToString();
 
                     articulo.Categoria = (TipoCategoria)familia.categoria;
                     articulo.Gestionarcaducidad = (bool)familia.gestionarcaducidad;
@@ -694,10 +706,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Stocknegativoautorizado = (bool)familia.stocknegativoautorizado;
                     articulo.Lotefraccionable = familia.lotefraccionable;
                     articulo.Fkcontadores = familia.fkcontador;
-                    articulo.Existenciasminimasmetros = familia.existenciasminimasmetros;
+                    /*articulo.Existenciasminimasmetros = familia.existenciasminimasmetros;
                     articulo.Existenciasmaximasmetros = familia.existenciasmaximasmetros;
                     articulo.Existenciasminimasunidades = familia.existenciasminimasunidades;
-                    articulo.Existenciasmaximasunidades = familia.existenciasmaximasunidades;
+                    articulo.Existenciasmaximasunidades = familia.existenciasmaximasunidades;*/
 
                     articulo.Validarmateriales = (bool)familia.validarmaterial;
                     articulo.Validarcaracteristicas = (bool)familia.validarcaracteristica;
@@ -708,26 +720,92 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Ancho = double.Parse(row["Ancho"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Grueso = double.Parse(row["Grueso"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Kilosud = double.Parse(row["KilosUd"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Existenciasminimasmetros = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    //var exitsencias = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','));
+                    articulo.Existenciasminimasunidades = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Existenciasmaximasunidades = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Costemateriaprima = double.Parse(row["CosteMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Porcentajemerma = double.Parse(row["PorcentajeMerma"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Costeelaboracionmateriaprima = double.Parse(row["CosteElaboracionMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Costefabricacion = double.Parse(row["CosteFabricacion"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Otroscostes = double.Parse(row["OtrosCostes"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Costeportes = double.Parse(row["CostesPortes"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Costeindirecto = double.Parse(row["CosteIndirecto"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Coste = double.Parse(row["Coste"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Rendimientom2m3 = double.Parse(row["Rendimiento"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Piezascaja = int.Parse(row["PiezasCaja"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Preciominimoventa = double.Parse(row["PrecioMinimoVenta"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Tiempostandardfabricacion = double.Parse(row["TiempoFab"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
 
                     if (row["MedidaLibre"].ToString().ToLower() == "verdadero" || row["MedidaLibre"].ToString().ToLower() == "v")
                         articulo.Medidalibre = true;
                     else
                         articulo.Medidalibre = false;
 
-                    if (row["ExcluirComisiones"].ToString().ToLower() == "verdadero" || row["MedidaLibre"].ToString().ToLower() == "v")
-                        articulo.Medidalibre = true;
+                    if (row["ExcluirComisiones"].ToString().ToLower() == "verdadero" || row["ExcluirComisiones"].ToString().ToLower() == "v")
+                        articulo.Excluircomisiones = true;
                     else
-                        articulo.Medidalibre = false;
+                        articulo.Excluircomisiones = false;
 
-                    if (row["ExentoRetencion"].ToString().ToLower() == "verdadero" || row["MedidaLibre"].ToString().ToLower() == "v")
-                        articulo.Medidalibre = true;
+                    if (row["ExentoRetencion"].ToString().ToLower() == "verdadero" || row["ExentoRetencion"].ToString().ToLower() == "v")
+                        articulo.Exentoretencion = true;
                     else
-                        articulo.Medidalibre = false;
+                        articulo.Exentoretencion = false;
 
-                    articulo.TarifasSistemaVenta[0].Precio = double.Parse(row["PrecioVenta"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    articulo.TarifasSistemaCompra[0].Precio = double.Parse(row["PrecioCompra"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    if (row["Web"].ToString().ToLower() == "verdadero" || row["Web"].ToString().ToLower() == "v")
+                        articulo.Web = true;
+                    else
+                        articulo.Web = false;
+
+                    if (row["Labor"].ToString().ToLower() == "verdadero" || row["Labor"].ToString().ToLower() == "v")
+                        articulo.Labor = true;
+                    else
+                        articulo.Labor = false;
+
+                    /*articulo.TarifasSistemaVenta[0].Precio = double.Parse(row["PrecioVenta"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.TarifasSistemaCompra[0].Precio = double.Parse(row["PrecioCompra"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));*/
 
                     ListaArticulos.Add(articulo);
+
+                    //Asignamos las tarifas. Si no tiene, la creamos a 0
+                    if (model.Tarifa1 != null)
+                    {
+                        TarifasLinModel tarifa1Lin = new TarifasLinModel();
+                        tarifa1Lin.Fkarticulos = codArticulo;
+                        tarifa1Lin.Precio = double.Parse(row["PVenta1"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        tarifa1Lin.Descuento = 0;
+                        tarifa1Lin.Unidades = articulo.Fkunidades;
+                        //tarifa1.Lineas.Add(tarifa1Lin);
+
+                        ListaTarifas[0].Lineas.Add(tarifa1Lin);
+                    }
+                    if (model.Tarifa2 != null)
+                    {
+                        TarifasLinModel tarifa2Lin = new TarifasLinModel();
+                        tarifa2Lin.Fkarticulos = codArticulo;
+                        tarifa2Lin.Precio = double.Parse(row["PVenta2"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        tarifa2Lin.Descuento = 0;
+                        tarifa2Lin.Unidades = articulo.Fkunidades;
+                        //tarifa1.Lineas.Add(tarifa2Lin);
+
+                        ListaTarifas[1].Lineas.Add(tarifa2Lin);
+                    }
+                    if (model.Tarifa3 != null)
+                    { 
+                        TarifasLinModel tarifa3Lin = new TarifasLinModel();
+                        tarifa3Lin.Fkarticulos = codArticulo;
+                        tarifa3Lin.Precio = double.Parse(row["PVenta3"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        tarifa3Lin.Descuento = 0;
+                        tarifa3Lin.Unidades = articulo.Fkunidades;
+                        //tarifa1.Lineas.Add(tarifa3Lin);
+
+                        ListaTarifas[2].Lineas.Add(tarifa3Lin);
+                    }
+                }
+                else
+                {
+                    errores += codArticulo + " El código del artículo ya existe" + Environment.NewLine;
                 }
             }
 
@@ -744,6 +822,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //    }
             //}
 
+            //Creamos los articulos
             foreach (var art in ListaArticulos)
             {
                 try
@@ -756,10 +835,34 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
             }
 
+            //Creamos las líneas de las tarifas
+            using (var service = new TarifasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                foreach (var tarifa in ListaTarifas)
+                {
+                    try
+                    {
+                        service.edit(tarifa);
+                    }
+                    catch (Exception ex)
+                    {
+                        errores += tarifa.Id + ";" + tarifa.Descripcion + ";" + ex.Message + Environment.NewLine;
+                    }
+                }
+            }
+
             var item = _db.PeticionesAsincronas.Where(f => f.empresa == context.Empresa && f.id == idPeticion).SingleOrDefault();
 
-            item.estado = (int)EstadoPeticion.Finalizada;
-            item.resultado = errores;
+            if (errores == "")
+            {
+                item.estado = (int)EstadoPeticion.Finalizada;
+                item.resultado = errores;
+            }
+            else
+            {
+                item.estado = (int)EstadoPeticion.FinalizadaLogs;
+                item.resultado = errores;
+            }
 
             _db.PeticionesAsincronas.AddOrUpdate(item);
 

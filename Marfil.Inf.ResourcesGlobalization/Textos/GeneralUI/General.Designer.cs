@@ -736,7 +736,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Albarán (Sólo serie ENV).
+        ///   Busca una cadena traducida similar a Albarán (Entradas Varias).
         /// </summary>
         public static string LblAlbaranImportar {
             get {
@@ -1398,6 +1398,15 @@ namespace Resources {
         public static string lblFacturasRecibidas {
             get {
                 return ResourceManager.GetString("lblFacturasRecibidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Familia.
+        /// </summary>
+        public static string LblFamilia {
+            get {
+                return ResourceManager.GetString("LblFamilia", resourceCulture);
             }
         }
         
@@ -2145,6 +2154,33 @@ namespace Resources {
         public static string LblSinDesglose {
             get {
                 return ResourceManager.GetString("LblSinDesglose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tarifa 1.
+        /// </summary>
+        public static string LblTarifa1 {
+            get {
+                return ResourceManager.GetString("LblTarifa1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tarifa 2.
+        /// </summary>
+        public static string LblTarifa2 {
+            get {
+                return ResourceManager.GetString("LblTarifa2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tarifa 3.
+        /// </summary>
+        public static string LblTarifa3 {
+            get {
+                return ResourceManager.GetString("LblTarifa3", resourceCulture);
             }
         }
         

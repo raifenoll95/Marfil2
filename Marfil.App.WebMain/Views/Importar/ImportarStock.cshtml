@@ -36,7 +36,6 @@
             <thead>
                 <tr>
                     <th class="bolder center" style="min-width:120px">Cod. Artículo</th>
-                    <th class="bolder center" style="min-width:100px">Descripción</th>
                     <th class="bolder center" style="min-width:80px">Lote</th>
                     <th class="bolder center" style="min-width:80px">Tabla</th>
                     <th class="bolder center" style="min-width:100px">Cantidad</th>
@@ -49,7 +48,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="center"></td>
                     <td class="center"></td>
                     <td class="center"></td>
                     <td class="center"></td>
@@ -88,11 +86,11 @@
             @*@Html.LabelFor(f => Model.Serie, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.DropDownListFor(f => Model.SelectedId, Model.Serie, new { @class = "col-md-2" })
             <br />
-            <br />*@
+            <br />
             @Html.LabelFor(f => Model.TipoLote, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.DropDownListFor(f => Model.SelectedIdTipoAlmacenLote, Model.TipoLote, new { @class = "col-md-2" })
             <br />
-            <br />
+            <br />*@
             <label class="control-label col-md-4" align="right"></label>
             <input type="submit" value="Importar" class="btn btn-default" />
         }

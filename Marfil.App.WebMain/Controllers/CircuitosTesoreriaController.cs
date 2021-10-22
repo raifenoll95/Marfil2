@@ -14,6 +14,7 @@ using System.Web.Script.Serialization;
 using Marfil.Dom.Persistencia.ServicesView;
 using Newtonsoft.Json;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -207,6 +208,17 @@ namespace Marfil.App.WebMain.Controllers
             var servicioCircuitosTesoreria = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService;
             var CuentaModel = servicioCircuitosTesoreria.Cuentaabono2(circuito) as CuentasModel;
             var data = JsonConvert.SerializeObject(CuentaModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult obtenerEjercicio()
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var id = ContextService.Ejercicio;
+            var servicioEjecicios = FService.Instance.GetService(typeof(EjerciciosModel), ContextService) as EjerciciosService;
+            var EjercicioModel = servicioEjecicios.get(id) as EjerciciosModel;
+            EjercicioModel.DescSerieContable = servicioEjecicios.DescSerieContable(EjercicioModel.FkseriescontablesREM);
+            var data = JsonConvert.SerializeObject(EjercicioModel, Formatting.Indented);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
