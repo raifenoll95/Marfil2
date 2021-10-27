@@ -369,4 +369,13 @@
   <data name="NumeroDocumentos" xml:space="preserve">
     <value>Nº Documentos</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value>Referencia remesa</value>
+  </data>
+  <data name="Anulada" xml:space="preserve">
+    <value>Anulada</value>
+  </data>
+  <data name="Valida" xml:space="preserve">
+    <value>Valida</value>
+  </data>
 </root>

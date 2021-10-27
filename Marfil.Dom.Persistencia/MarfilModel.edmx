@@ -882,6 +882,7 @@
           <Property Name="codigodescripcionasiento" Type="varchar" MaxLength="3" />
           <Property Name="documentocartera" Type="bit" />
           <Property Name="actualizarcobrador" Type="bit" />
+          <Property Name="anularremesa" Type="bit" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -3508,6 +3509,7 @@
           <Property Name="referenciaremesa" Type="varchar" MaxLength="30" />
           <Property Name="identificadorsegmentoremesa" Type="varchar" MaxLength="12" />
           <Property Name="importeletra" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
         </EntityType>
         <EntityType Name="Reservasstock">
           <Key>
@@ -7210,7 +7212,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="AcumuladorPeriodos" EntityType="MarfilModel.AcumuladorPeriodos" />
           <EntitySet Name="FiltrosAcumulador" EntityType="MarfilModel.FiltrosAcumulador" />
           <EntitySet Name="CuadernosBancariosLin" EntityType="MarfilModel.CuadernosBancariosLin" />
-          <EntitySet Name="Remesas" EntityType="MarfilModel.Remesas" />
           <EntitySet Name="MapeoRemesas" EntityType="MarfilModel.MapeoRemesas" />
           <EntitySet Name="Transformacioneslotesnave" EntityType="MarfilModel.Transformacioneslotesnave" />
           <EntitySet Name="Transformacioneslotesnavecostesadicionales" EntityType="MarfilModel.Transformacioneslotesnavecostesadicionales" />
@@ -7228,6 +7229,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="CuadernosBancarios" EntitySet="CuadernosBancarios" />
             <End Role="CuadernosBancariosLin" EntitySet="CuadernosBancariosLin" />
           </AssociationSet>
+          <EntitySet Name="Remesas" EntityType="MarfilModel.Remesas" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -12643,6 +12645,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="documentocartera" Type="Boolean" />
           <Property Name="actualizarcobrador" Type="Boolean" />
           <Property Name="fkmodopagopreferido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="anularremesa" Type="Boolean" />
         </EntityType>
         <EntityType Name="GuiasBalances">
           <Key>
@@ -13167,44 +13170,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="registro" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CuadernosBancarios" Relationship="MarfilModel.FK_CuadernosLin" FromRole="CuadernosBancariosLin" ToRole="CuadernosBancarios" />
         </EntityType>
-        <EntityType Name="Remesas">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="tipovencimiento" Type="Int32" />
-          <Property Name="usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="fkcuentas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="fechacreacion" Type="DateTime" Precision="3" />
-          <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
-          <Property Name="fechadescuento" Type="DateTime" Precision="3" />
-          <Property Name="fechapago" Type="DateTime" Precision="3" />
-          <Property Name="fecharemesa" Type="DateTime" Precision="3" />
-          <Property Name="monedabase" Type="Int32" />
-          <Property Name="monedagiro" Type="Int32" />
-          <Property Name="importegiro" Type="Double" />
-          <Property Name="cambioaplicado" Type="Double" />
-          <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="mandato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="codigoremesa" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="tiponumerofactura" Type="Int32" />
-          <Property Name="fkformaspago" Type="Int32" />
-          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="identificadorsegmento" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Precision="3" />
-          <Property Name="letra" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="banco" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="referenciaremesa" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="identificadorsegmentoremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="importeletra" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="MapeoRemesas">
           <Key>
             <PropertyRef Name="id" />
@@ -13389,6 +13354,45 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Remesas">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="tipovencimiento" Type="Int32" />
+          <Property Name="usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="fkcuentas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fechacreacion" Type="DateTime" Precision="3" />
+          <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
+          <Property Name="fechadescuento" Type="DateTime" Precision="3" />
+          <Property Name="fechapago" Type="DateTime" Precision="3" />
+          <Property Name="fecharemesa" Type="DateTime" Precision="3" />
+          <Property Name="monedabase" Type="Int32" />
+          <Property Name="monedagiro" Type="Int32" />
+          <Property Name="importegiro" Type="Double" />
+          <Property Name="cambioaplicado" Type="Double" />
+          <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="mandato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="codigoremesa" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="tiponumerofactura" Type="Int32" />
+          <Property Name="fkformaspago" Type="Int32" />
+          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="identificadorsegmento" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="letra" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="banco" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="referenciaremesa" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="identificadorsegmentoremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="importeletra" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17646,6 +17650,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="CircuitosTesoreriaCobros">
             <EntityTypeMapping TypeName="MarfilModel.CircuitosTesoreriaCobros">
               <MappingFragment StoreEntitySet="CircuitosTesoreriaCobros">
+                <ScalarProperty Name="anularremesa" ColumnName="anularremesa" />
                 <ScalarProperty Name="fkmodopagopreferido" ColumnName="fkmodopagopreferido" />
                 <ScalarProperty Name="actualizarcobrador" ColumnName="actualizarcobrador" />
                 <ScalarProperty Name="documentocartera" ColumnName="documentocartera" />
@@ -18020,44 +18025,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Remesas">
-            <EntityTypeMapping TypeName="MarfilModel.Remesas">
-              <MappingFragment StoreEntitySet="Remesas">
-                <ScalarProperty Name="importeletra" ColumnName="importeletra" />
-                <ScalarProperty Name="identificadorsegmentoremesa" ColumnName="identificadorsegmentoremesa" />
-                <ScalarProperty Name="referenciaremesa" ColumnName="referenciaremesa" />
-                <ScalarProperty Name="fkseriescontablesremesa" ColumnName="fkseriescontablesremesa" />
-                <ScalarProperty Name="banco" ColumnName="banco" />
-                <ScalarProperty Name="letra" ColumnName="letra" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
-                <ScalarProperty Name="referencia" ColumnName="referencia" />
-                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
-                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
-                <ScalarProperty Name="tiponumerofactura" ColumnName="tiponumerofactura" />
-                <ScalarProperty Name="codigoremesa" ColumnName="codigoremesa" />
-                <ScalarProperty Name="comentario" ColumnName="comentario" />
-                <ScalarProperty Name="situacion" ColumnName="situacion" />
-                <ScalarProperty Name="mandato" ColumnName="mandato" />
-                <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
-                <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
-                <ScalarProperty Name="importegiro" ColumnName="importegiro" />
-                <ScalarProperty Name="monedagiro" ColumnName="monedagiro" />
-                <ScalarProperty Name="monedabase" ColumnName="monedabase" />
-                <ScalarProperty Name="fecharemesa" ColumnName="fecharemesa" />
-                <ScalarProperty Name="fechapago" ColumnName="fechapago" />
-                <ScalarProperty Name="fechadescuento" ColumnName="fechadescuento" />
-                <ScalarProperty Name="fechavencimiento" ColumnName="fechavencimiento" />
-                <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
-                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="tipovencimiento" ColumnName="tipovencimiento" />
-                <ScalarProperty Name="traza" ColumnName="traza" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MapeoRemesas">
             <EntityTypeMapping TypeName="MarfilModel.MapeoRemesas">
               <MappingFragment StoreEntitySet="MapeoRemesas">
@@ -18192,6 +18159,45 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="clave" ColumnName="clave" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Remesas">
+            <EntityTypeMapping TypeName="MarfilModel.Remesas">
+              <MappingFragment StoreEntitySet="Remesas">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="importeletra" ColumnName="importeletra" />
+                <ScalarProperty Name="identificadorsegmentoremesa" ColumnName="identificadorsegmentoremesa" />
+                <ScalarProperty Name="referenciaremesa" ColumnName="referenciaremesa" />
+                <ScalarProperty Name="fkseriescontablesremesa" ColumnName="fkseriescontablesremesa" />
+                <ScalarProperty Name="banco" ColumnName="banco" />
+                <ScalarProperty Name="letra" ColumnName="letra" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
+                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
+                <ScalarProperty Name="tiponumerofactura" ColumnName="tiponumerofactura" />
+                <ScalarProperty Name="codigoremesa" ColumnName="codigoremesa" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="situacion" ColumnName="situacion" />
+                <ScalarProperty Name="mandato" ColumnName="mandato" />
+                <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
+                <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
+                <ScalarProperty Name="importegiro" ColumnName="importegiro" />
+                <ScalarProperty Name="monedagiro" ColumnName="monedagiro" />
+                <ScalarProperty Name="monedabase" ColumnName="monedabase" />
+                <ScalarProperty Name="fecharemesa" ColumnName="fecharemesa" />
+                <ScalarProperty Name="fechapago" ColumnName="fechapago" />
+                <ScalarProperty Name="fechadescuento" ColumnName="fechadescuento" />
+                <ScalarProperty Name="fechavencimiento" ColumnName="fechavencimiento" />
+                <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
+                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="tipovencimiento" ColumnName="tipovencimiento" />
+                <ScalarProperty Name="traza" ColumnName="traza" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

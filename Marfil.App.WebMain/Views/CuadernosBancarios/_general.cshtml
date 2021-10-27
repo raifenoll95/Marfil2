@@ -69,7 +69,7 @@
 
     @Html.LabelFor(f => Model.CuadernoSEPA, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.EnumDropDownList("CuadernoSEPA", Model.CuadernoSEPA, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+        @Html.EnumDropDownList("CuadernoSEPA", Model.CuadernoSEPA, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.CuadernoSEPA, "", new { @class = "text-danger" })
     </div>
 
@@ -83,7 +83,7 @@
 
     @Html.LabelFor(f => Model.Banco, new { @class = "control-label col-md-2" })
     <div class="col-md-4">
-        @if (isreadonly || iseditable)
+        @if (isreadonly)
         {
             @Html.DropDownListFor(f => Model.Banco, listBancos, (object)new { @disabled = "disabled", @class = "form-control" })
         }

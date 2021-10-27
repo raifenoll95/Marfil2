@@ -61,6 +61,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Anulada.
+        /// </summary>
+        public static string Anulada {
+            get {
+                return ResourceManager.GetString("Anulada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Asignado.
         /// </summary>
         public static string Asignadoimporte {
@@ -736,6 +745,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Referencia remesa.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tipo.
         /// </summary>
         public static string Tipo {
@@ -813,6 +831,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Usuario {
             get {
                 return ResourceManager.GetString("Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Valida.
+        /// </summary>
+        public static string Valida {
+            get {
+                return ResourceManager.GetString("Valida", resourceCulture);
             }
         }
     }

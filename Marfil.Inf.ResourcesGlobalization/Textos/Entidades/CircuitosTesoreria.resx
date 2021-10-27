@@ -219,4 +219,7 @@
   <data name="Fkmodopagopreferido" xml:space="preserve">
     <value>Modo de pago preferido</value>
   </data>
+  <data name="Anularremesa" xml:space="preserve">
+    <value>Anulación remesa</value>
+  </data>
 </root>

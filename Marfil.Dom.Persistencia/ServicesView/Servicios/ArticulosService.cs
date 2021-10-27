@@ -695,6 +695,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Fkguiascontables = familia.fkguiascontables;
                     articulo.Fkgruposiva = familia.fkgruposiva;
                     articulo.Tipofamilia = (int)(familia.tipofamilia ?? 0);
+                    articulo.Consumibles = (bool)familia.consumibles;
 
                     articulo.Fkunidades = familia.fkunidadesmedida;
                     articulo.Editarlargo = (bool)familia.editarlargo;
@@ -722,7 +723,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Kilosud = double.Parse(row["KilosUd"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Existenciasminimasmetros = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    //var exitsencias = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','));
                     articulo.Existenciasminimasunidades = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Existenciasmaximasunidades = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Costemateriaprima = double.Parse(row["CosteMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));

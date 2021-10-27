@@ -256,5 +256,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             return _db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().fkmodopagopreferido;
         }
+        public bool esAnular(int? id)
+        {
+            return (bool)_db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().anularremesa;
+        }
+
     }
 }

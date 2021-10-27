@@ -1,7 +1,9 @@
 ﻿using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using System;
 using System.Collections.Generic;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Converter;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Tipovencimiento", "Referenciaremesa", "Fecharemesa", "Fkcuentastesoreria", "Descripcioncuenta", "NumeroDocumentos", "ImporteRemesa" };
+            var propiedadesVisibles = new[] { "Tipovencimiento", "Referenciaremesa", "Fecharemesa", "Fkcuentastesoreria", "Descripcioncuenta", "NumeroDocumentos", "ImporteRemesa", "Estado" };
             var propiedades = Helpers.Helper.getProperties<RemesasModel>();
 
             model.PrimaryColumnns = new[] { "Id" };
@@ -36,19 +38,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.OrdenColumnas.Add("Descripcioncuenta", 4);
             model.OrdenColumnas.Add("NumeroDocumentos", 5);
             model.OrdenColumnas.Add("ImporteRemesa", 6);
+            model.OrdenColumnas.Add("Estado", 7);
 
             return model;
         }
 
         public override string GetSelectPrincipal()
         {
-            return string.Format("select MAX(i.id) as Id,i.tipovencimiento,i.referenciaremesa,i.fecharemesa,i.fkcuentastesoreria,c.descripcion as Descripcioncuenta,COUNT(*) as NumeroDocumentos,SUM(importegiro) as ImporteRemesa " +
+            return string.Format("select MAX(i.id) as Id,i.tipovencimiento,i.referenciaremesa,i.fecharemesa,i.fkcuentastesoreria,c.descripcion as Descripcioncuenta,COUNT(*) as NumeroDocumentos,SUM(importegiro) as ImporteRemesa, i.estado " +
                "from remesas as i " +
                "inner join cuentas as c on c.id = i.fkcuentastesoreria and c.empresa = i.empresa "+
-               "where i.empresa = '{0}' group by i.tipovencimiento, i.referenciaremesa, i.fecharemesa, i.fkcuentastesoreria, c.descripcion", Empresa);
+               "where i.empresa = '{0}' group by i.tipovencimiento, i.referenciaremesa, i.fecharemesa, i.fkcuentastesoreria, c.descripcion, i.estado", Empresa);
         }
 
         #endregion
+
+        public IModelView getModel(int id)
+        {
+            var model = _db.Remesas.Where(f => f.id == id).ToList().Select(f => _converterModel.GetModelView(f) as RemesasModel).FirstOrDefault();
+
+            return model;
+        }
 
         public double GetTotalRemesa(string referencia)
         {

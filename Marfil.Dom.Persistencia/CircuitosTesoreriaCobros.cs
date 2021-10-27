@@ -49,5 +49,6 @@ namespace Marfil.Dom.Persistencia
         public Nullable<bool> documentocartera { get; set; }
         public Nullable<bool> actualizarcobrador { get; set; }
         public string fkmodopagopreferido { get; set; }
+        public Nullable<bool> anularremesa { get; set; }
     }
 }

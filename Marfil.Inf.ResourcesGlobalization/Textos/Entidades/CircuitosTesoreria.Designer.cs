@@ -70,6 +70,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Anulación remesa.
+        /// </summary>
+        public static string Anularremesa {
+            get {
+                return ResourceManager.GetString("Anularremesa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Generar asiento contable.
         /// </summary>
         public static string Asientocontable {

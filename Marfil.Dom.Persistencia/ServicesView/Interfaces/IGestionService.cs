@@ -25,7 +25,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Interfaces
         string Empresa { get; set; }
         List<string> WarningList { get; }
         ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller);
-        EmpresaModel get(object empresa);
+        //EmpresaModel get(object empresa);
         IEnumerable<IModelView> getAll();
         IEnumerable<T> GetAll<T>() where T : IModelView;
         IModelView get(string id);

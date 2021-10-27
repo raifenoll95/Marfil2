@@ -452,10 +452,5 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var entitySet = objectSet.EntitySet;
             return entitySet.ElementType.KeyMembers.ToList().Select(f => f.Name);
         }
-
-        public EmpresaModel get(object empresa)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -28,6 +28,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         public string FechaHasta { get; set; }
         public string FechaContable { get; set; }
         public string Fecharemesa { get; set; }
+        public string Referenciaremesa { get; set; }
 
         public string Vencimientos { get; set; }
 
@@ -110,6 +111,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Fecharemesa")]
         public DateTime? FechaRemesa { get; set; }
+
+        [Display(ResourceType = typeof(RCobrosYPagos), Name = "Referenciaremesa")]
+        public string ReferenciaRemesa { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "SituacionFinal")]
         public string SituacionFinal { get; set; }

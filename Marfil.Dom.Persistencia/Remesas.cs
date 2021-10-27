@@ -46,5 +46,6 @@ namespace Marfil.Dom.Persistencia
         public string referenciaremesa { get; set; }
         public string identificadorsegmentoremesa { get; set; }
         public string importeletra { get; set; }
+        public Nullable<int> estado { get; set; }
     }
 }

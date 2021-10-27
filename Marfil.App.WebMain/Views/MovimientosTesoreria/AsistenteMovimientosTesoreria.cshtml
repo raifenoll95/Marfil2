@@ -108,7 +108,7 @@
                             Titulo: "Vencimientos disponibles",
                             Params: "{\"Tipoasignacion\":\"" + $("#Tipo").val() + "\",\"Circuitotesoreria\":\"" + $("#Circuitotesoreria").val() + "\",\"Fkmodospago\":\"" + $("#Fkmodospago").val()
                                 + "\",\"TerceroDesde\":\"" + $("#TerceroDesde").val() + "\",\"TerceroHasta\":\"" + $("#TerceroHasta").val() + "\",\"FechaDesde\":\"" + $("#FechaDesde").val() +
-                                "\",\"FechaHasta\":\"" + $("#FechaHasta").val() + "\"}"
+                                "\",\"FechaHasta\":\"" + $("#FechaHasta").val() + "\",\"ReferenciaRemesa\":\"" + $("#ReferenciaRemesa").val() + "\"}"
                         };
 
                         eventAggregator.Publish("_buscarvencimientosasociados", data);

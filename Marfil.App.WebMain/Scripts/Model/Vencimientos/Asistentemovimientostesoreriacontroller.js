@@ -146,12 +146,12 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
             }
 
         } else {
-
-            if (fkCuentasTesoreria != null && fkCuentasTesoreria != "") {
-                $scope.generarmovimientostesoreria();
+            $scope.generarmovimientostesoreria();
+            /*if (fkCuentasTesoreria != null && fkCuentasTesoreria != "") {
+                
             } else {
                 alert("Cobrador debe tener valor");
-            }
+            }*/
         }
     });
 
@@ -226,6 +226,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
         $scope.gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
             $scope.gridApi.selection.selectRow(newRowCol.row.entity);
         });
+
     };
 
     $scope.gridOptionsvencimientos.rowTemplate = '<div role=\"gridcell\"  ng-dblclick="grid.appScope.onDblClick(row)" ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ui-grid-cell></div>';
@@ -274,6 +275,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                 url: $scope.Url, method: "GET", params: JSON.parse($scope.params)
             })
            .success(function (response) {
+               var anularRemesa = $('#ReferenciaRemesa').val();
                $scope.selected = null;
                $scope.gridApi.grid.clearAllFilters();
 
@@ -284,7 +286,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                $scope.gridApi.grid.enableHorizontalScrollbar = 2;
                $scope.gridOptionsvencimientos.minWidth = 150;
                $scope.gridApi.core.refresh();
-               $scope.gridApi.core.handleWindowResize();
+               $scope.gridApi.core.handleWindowResize();              
                $timeout(function () {
 
                    $("[name='columnheader-0']")[0].focus();
@@ -293,6 +295,17 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                            $scope.scrollToFocus(0, 0);
                        }
                    });
+
+                   //Anular remesa se marcan todos los registros
+                   if (anularRemesa != null && anularRemesa != "") {
+                       var index = 0;
+                       //$scope.gridApi.grid.modifyRows($scope.gridOptionsvencimientos.data);
+                       $scope.gridOptionsvencimientos.data.forEach(function () {
+                           $scope.gridApi.selection.selectRow($scope.gridOptionsvencimientos.data[index]);
+                           index++;
+                       });
+                       //$scope.gridOptionsvencimientos = { enableRowSelection: false, enableRowHeaderSelection: false, enableCellEdit: false };
+                   }
 
                });
 

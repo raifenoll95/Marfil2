@@ -52,6 +52,14 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         Total
     }
 
+    public enum TipoEstadoRemesa
+    {
+        [StringValue(typeof(RCobrosYPagos), "Valida")]
+        Valida,
+        [StringValue(typeof(RCobrosYPagos), "Anulada")]
+        Anulada
+    }
+
     public enum TipoSituacion
     {
         [StringValue(typeof(RCobrosYPagos), "Inicial")]

@@ -14,6 +14,7 @@
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
     var isNuevo = !isreadonly && !iseditable;
+    var anulada = Model.Estado == TipoEstadoRemesa.Anulada;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var importeRemesa = WebHelper.GetApplicationHelper().GetTotalRemesa(Model.Referenciaremesa);
     var vencimiento = Model.Tipovencimiento.ToString();
@@ -47,6 +48,11 @@
     @Html.LabelFor(f => Model.Referenciaremesa, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
         @Html.TextBoxFor(f => Model.Referenciaremesa, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+
+    @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Estado, new { @class = "form-control", @readonly = "readonly" })
     </div>
 </div>
 @*Cuenta tesoreria*@
@@ -90,7 +96,7 @@
 
     @Html.LabelFor(f => Model.Cuadernos, new { @class = "control-label col-md-2" })
     <div class="col-md-4">
-        @Html.DropDownListFor(f => Model.Cuadernos, listCuadernos, (object)new { @class = "form-control" })
+        @Html.DropDownListFor(f => Model.Cuadernos, listCuadernos, anulada ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
     </div>
 
     @*<span>

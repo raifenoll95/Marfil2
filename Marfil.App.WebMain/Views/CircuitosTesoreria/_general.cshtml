@@ -112,36 +112,36 @@
     </div>
 
     @*Booleanos*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Documentocartera, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.CheckBoxFor(f => Model.Documentocartera, (object)new { @readonly = isreadonly })
-        </div>
-        @Html.LabelFor(f => Model.Fecharemesa, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.CheckBoxFor(f => Model.Fecharemesa, (object)new { @readonly = isreadonly })
-        </div>
-        @Html.LabelFor(f => Model.Fechapago, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.CheckBoxFor(f => Model.Fechapago, (object)new { @readonly = isreadonly })
-        </div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Documentocartera, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Documentocartera, (object)new { @readonly = isreadonly })
     </div>
+    @Html.LabelFor(f => Model.Fecharemesa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Fecharemesa, (object)new { @readonly = isreadonly })
+    </div>
+    @Html.LabelFor(f => Model.Anularremesa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Anularremesa, (object)new { @readonly = isreadonly })
+    </div>
+</div>
 
     @*Booleanos*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Liquidariva, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.CheckBoxFor(f => Model.Liquidariva, (object)new { @readonly = isreadonly })
-        </div>
-        @Html.LabelFor(f => Model.Conciliacion, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.CheckBoxFor(f => Model.Conciliacion, (object)new { @readonly = isreadonly })
-        </div>
-        @Html.LabelFor(f => Model.Datosdocumento, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.CheckBoxFor(f => Model.Datosdocumento, (object)new { @readonly = isreadonly })
-        </div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Liquidariva, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Liquidariva, (object)new { @readonly = isreadonly })
     </div>
+    @Html.LabelFor(f => Model.Conciliacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Conciliacion, (object)new { @readonly = isreadonly })
+    </div>
+    @Html.LabelFor(f => Model.Fechapago, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Fechapago, (object)new { @readonly = isreadonly })
+    </div>
+</div>
 
     <hr />
 
@@ -153,6 +153,10 @@
         @Html.LabelFor(f => Model.Asientocontable, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
             @Html.CheckBoxFor(f => Model.Asientocontable, (object)new { @readonly = isreadonly })
+        </div>
+        @Html.LabelFor(f => Model.Datosdocumento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Datosdocumento, (object)new { @readonly = isreadonly })
         </div>
     </div>
 

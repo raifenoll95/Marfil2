@@ -24,117 +24,128 @@
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
 
-    <form class="form-horizontal" id="step1-form">
+<form class="form-horizontal" id="step1-form">
 
-        <br />
+    <br />
 
-        @*Tipo*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.Tipo, new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EnumDropDownList("Tipo", Model.Tipo, (object)new { @class = "tipo-select", @style = "width: 350px;" })
-                @Html.ValidationMessageFor(f => Model.Tipo, "", new { @class = "text-danger" })
-            </div>
+    @*Tipo*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipo, new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EnumDropDownList("Tipo", Model.Tipo, (object)new { @class = "tipo-select", @style = "width: 350px;" })
+            @Html.ValidationMessageFor(f => Model.Tipo, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        @*CircuitosTesoreria*@
-        <div id="cuenta1" class="form-group cuentaa1" onblur="myFunction()">
-            @Html.LabelFor(f => Model.Circuitotesoreria, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" id="Circuitostesoreria">
-                @{
-                    cvcircuitos.Name = "Circuitotesoreria";
-                    cvcircuitos.Url = Url.Action("CircuitosTesoreriaApi", "Api");
-                    cvcircuitos.Valor = Model.Circuitotesoreria;
-                    cvcircuitos.Titulo = "Circuitos de tesorería";
-                    cvcircuitos.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
-                    cvcircuitos.Obligatorio = true;
-                }
-                @Html.Partial("CampoverificacionUI", cvcircuitos)
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.Circuitotesoreria, "", new { @class = "text-danger",@onchange = "onchangeeventcargo1();"})
-            </div>
+    @*CircuitosTesoreria*@
+    <div id="cuenta1" class="form-group cuentaa1" onblur="myFunction()">
+        @Html.LabelFor(f => Model.Circuitotesoreria, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="Circuitostesoreria">
+            @{
+                cvcircuitos.Name = "Circuitotesoreria";
+                cvcircuitos.Url = Url.Action("CircuitosTesoreriaApi", "Api");
+                cvcircuitos.Valor = Model.Circuitotesoreria;
+                cvcircuitos.Titulo = "Circuitos de tesorería";
+                cvcircuitos.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
+                cvcircuitos.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvcircuitos)
         </div>
-
-        @*Grupos Modo pago*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.Fkmodospago, new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.DropDownListFor(f => Model.Fkmodospago, gruposPago.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control", @style = "width: 350px;" })
-                @Html.ValidationMessageFor(f => Model.Fkmodospago, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Circuitotesoreria, "", new { @class = "text-danger", @onchange = "onchangeeventcargo1();" })
         </div>
+    </div>
 
-        @*Tercero desde hasta*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.TerceroDesde, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    cvcuentas.Name = "TerceroDesde";
-                    cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
-                    cvcuentas.Valor = Model.TerceroDesde;
-                    cvcuentas.Titulo = "TerceroDesde";
-                    /*campoverificacion.SoloLectura = isreadonly;*/
-                }
-                @Html.Partial("CampoverificacionUI", cvcuentas)
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.TerceroDesde, "", new { @class = "text-danger" })
-            </div>
+    @*Grupos Modo pago*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkmodospago, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(f => Model.Fkmodospago, gruposPago.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control", @style = "width: 350px;" })
+            @Html.ValidationMessageFor(f => Model.Fkmodospago, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-
-        <div class="form-group">
-            @Html.LabelFor(f => Model.TerceroHasta, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    cvcuentas.Name = "TerceroHasta";
-                    cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
-                    cvcuentas.Valor = Model.TerceroHasta;
-                    cvcuentas.Titulo = "TerceroHasta";
-                    /*campoverificacion.SoloLectura = isreadonly;*/
-                }
-                @Html.Partial("CampoverificacionUI", cvcuentas)
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.TerceroHasta, "", new { @class = "text-danger" })
-            </div>
+    @*Tercero desde hasta*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.TerceroDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentas.Name = "TerceroDesde";
+                cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvcuentas.Valor = Model.TerceroDesde;
+                cvcuentas.Titulo = "TerceroDesde";
+                /*campoverificacion.SoloLectura = isreadonly;*/
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
         </div>
-
-        @*Fecha desde hasta*@
-
-        <div class="form-group">
-            @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(f => Model.FechaDesde)
-            </div>
-            @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(f => Model.FechaHasta)
-            </div>
-            <div class="col-md-12"></div>
-            <div class="col-md-4 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-4 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.TerceroDesde, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        @*Fecha*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(f => Model.FechaContable)
-            </div>
-        </div>   
 
-        <div class="form-group col-md-4" align="right">
-            <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.TerceroHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentas.Name = "TerceroHasta";
+                cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
+                cvcuentas.Valor = Model.TerceroHasta;
+                cvcuentas.Titulo = "TerceroHasta";
+                /*campoverificacion.SoloLectura = isreadonly;*/
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
         </div>
-    </form>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.TerceroHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-    <script type="text/javascript">
+    @*Referencia remesa*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ReferenciaRemesa, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(f => Model.ReferenciaRemesa, new { @disabled = "disabled" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ReferenciaRemesa, "", new { @class = "text-danger"})
+        </div>
+    </div>
+
+    @*Fecha desde hasta*@
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaDesde)
+        </div>
+        @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(f => Model.FechaHasta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*Fecha*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.FechaContable)
+        </div>
+    </div>
+
+    <div class="form-group col-md-4" align="right">
+        <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+    </div>
+</form>
+
+<script type="text/javascript">
 
         function cambio(valor) {
 
@@ -144,10 +155,28 @@
                 type: "GET",
                 data: { valor },
                 success: function (data) {
-                    console.log(data);
-                        $("#Fkmodospago").val(data);
+                    $("#Fkmodospago").val(data);
+                }
+            })
+
+            $.ajax({
+                url: '@Url.Action("AnularRemesa", "MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    if (data == "False") {
+                        $("#ReferenciaRemesa").prop('disabled', true);
+                        $("#TerceroDesde").prop('disabled', false);
+                        $("#TerceroHasta").prop('disabled', false);
+                        $("#ReferenciaRemesa").val("");
+                    } else {
+                        $("#ReferenciaRemesa").prop('disabled', false);
+                        $("#TerceroDesde").prop('disabled', true);
+                        $("#TerceroHasta").prop('disabled', true);                      
                     }
-                })
+                }
+            })
         }
 
         $("#Circuitotesoreria").on('change', function () {
@@ -161,21 +190,40 @@
                 $('#FechaRemesa').val('');
             }
 
+            //Modo de pago
             $.ajax({
                 url: '@Url.Action("ObtenerPreferido","MovimientosTesoreria")',
                 dataType: "text",
                 type: "GET",
                 data: { valor },
                 success: function (data) {
-                    console.log(data);
-                        $("#Fkmodospago").val(data);
+                    $("#Fkmodospago").val(data);
+                }
+            })
+
+            //Habilitar remesa
+            $.ajax({
+                url: '@Url.Action("AnularRemesa", "MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    if (data == "False") {
+                        $("#ReferenciaRemesa").prop('disabled', true);
+                        $("#TerceroDesde").prop('disabled', false);
+                        $("#TerceroHasta").prop('disabled', false);
+                        $("#ReferenciaRemesa").val("");
+                    } else {
+                        $("#ReferenciaRemesa").prop('disabled', false);
+                        $("#TerceroDesde").prop('disabled', true);
+                        $("#TerceroHasta").prop('disabled', true);
                     }
-                })
+                }
+            })
         });
 
         $('body').on('DOMSubtreeModified', '#Circuitostesoreria', function () {
             var valor = $("#Circuitotesoreria").val();
-            console.log("Valor = "+valor);
             if (valor != null && valor != "") {
                 cambio(valor);
             }
@@ -192,4 +240,4 @@
             return formato.replace(/dd|mm|yy|yyy/gi, matched => map[matched])
         }
 
-    </script>
+</script>

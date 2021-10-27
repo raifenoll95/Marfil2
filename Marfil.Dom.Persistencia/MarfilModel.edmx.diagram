@@ -256,7 +256,6 @@
         <EntityTypeShape EntityType="MarfilModel.AcumuladorPeriodos" Width="1.5" PointX="9.375" PointY="16.75" />
         <EntityTypeShape EntityType="MarfilModel.FiltrosAcumulador" Width="1.5" PointX="14.375" PointY="33.75" />
         <EntityTypeShape EntityType="MarfilModel.CuadernosBancariosLin" Width="1.5" PointX="42.625" PointY="15.625" />
-        <EntityTypeShape EntityType="MarfilModel.Remesas" Width="1.5" PointX="41.375" PointY="21.75" />
         <EntityTypeShape EntityType="MarfilModel.MapeoRemesas" Width="1.5" PointX="22.375" PointY="11.75" />
         <EntityTypeShape EntityType="MarfilModel.Transformacioneslotesnave" Width="1.5" PointX="42.375" PointY="0.75" />
         <EntityTypeShape EntityType="MarfilModel.Transformacioneslotesnavecostesadicionales" Width="1.5" PointX="3.25" PointY="54.75" />
@@ -265,6 +264,7 @@
         <AssociationConnector Association="MarfilModel.FK_Transformacioneslotesnavelin_Transformacioneslotes" />
         <EntityTypeShape EntityType="MarfilModel.CuadernosBancarios" Width="1.5" PointX="40.375" PointY="14.625" />
         <AssociationConnector Association="MarfilModel.FK_CuadernosLin" />
+        <EntityTypeShape EntityType="MarfilModel.Remesas" Width="1.5" PointX="41.375" PointY="21.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

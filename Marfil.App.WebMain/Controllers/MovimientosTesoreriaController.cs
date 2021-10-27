@@ -69,7 +69,16 @@ namespace Marfil.App.WebMain.Controllers
                                 VencimientosService)
                     {
                         service.AsignarMovimientosTesoreria(model);
-                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        var esRemesable = service.GetRemesable(model.Circuitotesoreria);
+                        if (esRemesable)
+                        {                           
+                            var referencia = service.GetDocumentoCreado(model);
+                            TempData[Constantes.VariableMensajeExito] = referencia != null && referencia != "" ? General.MensajeExitoOperacion + ". Se ha creado la remesa " + referencia : General.MensajeExitoOperacion;
+                        }
+                        else
+                        {
+                            TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        }
                     }
                 }
                 else
@@ -102,6 +111,19 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             return cod;
+        }
+
+        [HttpGet]
+        public bool AnularRemesa(int? valor)
+        {
+            var anular = false;
+
+            using (var service = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService)
+            {
+                anular = service.esAnular(valor);
+            }
+
+            return anular;
         }
 
         #endregion

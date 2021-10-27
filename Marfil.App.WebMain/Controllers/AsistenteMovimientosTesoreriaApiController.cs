@@ -37,10 +37,11 @@ namespace Marfil.App.WebMain.Controllers
                     var TerceroHasta = nvc["TerceroHasta"];
                     var FechaDesde = nvc["FechaDesde"];
                     var FechaHasta = nvc["FechaHasta"];
+                    var ReferenciaRemesa = nvc["ReferenciaRemesa"];
 
                 var result = new ResultBusquedas<GridAsistenteMovimientosTesoreriaModel>()
                     {
-                        values = service.getVencimientosMovimientosTesoreria(tipoasignacion, circuitotesoreria, fkmodospago, TerceroDesde, TerceroHasta, FechaDesde, FechaHasta),
+                        values = service.getVencimientosMovimientosTesoreria(tipoasignacion, circuitotesoreria, fkmodospago, TerceroDesde, TerceroHasta, FechaDesde, FechaHasta, ReferenciaRemesa),
                         columns = new[]
                         {
                             new ColumnDefinition() { field = "Id", displayName = "Id", visible = false},

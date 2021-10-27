@@ -39,6 +39,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.asientocontable = viewmodel.Asientocontable;
             result.documentocartera = viewmodel.Documentocartera;
             result.fecharemesa = viewmodel.Fecharemesa;
+            result.anularremesa = viewmodel.Anularremesa;
             result.fechapago = viewmodel.Fechapago;
             result.liquidariva = viewmodel.Liquidariva;
             result.conciliacion = viewmodel.Conciliacion;
@@ -80,6 +81,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.documentocartera = viewmodel.Documentocartera;
             result.asientocontable = viewmodel.Asientocontable;
             result.fecharemesa = viewmodel.Fecharemesa;
+            result.anularremesa = viewmodel.Anularremesa;
             result.fechapago = viewmodel.Fechapago;
             result.liquidariva = viewmodel.Liquidariva;
             result.conciliacion = viewmodel.Conciliacion;
@@ -122,6 +124,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Documentocartera = viewmodel.documentocartera.Value,
                 Asientocontable = viewmodel.asientocontable.Value,
                 Fecharemesa = viewmodel.fecharemesa.Value,
+                Anularremesa = viewmodel.anularremesa.Value,
                 Fechapago = viewmodel.fechapago.Value,
                 Liquidariva = viewmodel.liquidariva.Value,
                 Conciliacion = viewmodel.conciliacion.Value,

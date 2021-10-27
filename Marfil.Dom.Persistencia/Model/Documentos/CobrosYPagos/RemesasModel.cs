@@ -152,6 +152,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "ImporteRemesa")]
         public double ImporteRemesa { get; set; }
 
+        [Display(ResourceType = typeof(RCobrosYPagos), Name = "Estado")]
+        public TipoEstadoRemesa Estado { get; set; }
+
         #endregion
 
         public override string DisplayName => RCobrosYPagos.TituloRemesa;

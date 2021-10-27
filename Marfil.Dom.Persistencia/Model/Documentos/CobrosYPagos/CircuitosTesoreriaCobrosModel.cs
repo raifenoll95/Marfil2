@@ -97,6 +97,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Fecharemesa")]
         public bool Fecharemesa { get; set; }
 
+        [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Anularremesa")]
+        public bool Anularremesa { get; set; }
+
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Fechapago")]
         public bool Fechapago { get; set; }
 
