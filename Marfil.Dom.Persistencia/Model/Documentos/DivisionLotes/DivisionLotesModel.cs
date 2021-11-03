@@ -212,7 +212,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.DivisionLotes.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(Context,db);
                 {
                     var lst =
                         service.GetDocumentosParaImprimir(TipoDocumentoImpresion.DivisionLotes, user.Id)

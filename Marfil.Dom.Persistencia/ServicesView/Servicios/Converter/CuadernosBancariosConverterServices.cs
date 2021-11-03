@@ -39,6 +39,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             }
             result.formato = (int)viewmodel.Formato;
             result.tipoCampo = (int)viewmodel.TipoCampo;
+            result.banco = viewmodel.Banco;
 
             result.CuadernosBancariosLin.Clear();
             foreach (var item in viewmodel.Lineas)

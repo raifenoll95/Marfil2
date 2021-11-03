@@ -514,7 +514,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.Traspasosalmacen.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(Context, db);
                 {
                     var lst =
                         service.GetDocumentos(TipoDocumentoImpresion.Traspasosalmacen, user.Id)

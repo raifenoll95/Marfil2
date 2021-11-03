@@ -201,4 +201,10 @@
   <data name="Estadofinal" xml:space="preserve">
     <value>Estado final doc.</value>
   </data>
+  <data name="Cancelacionriesgoremesa" xml:space="preserve">
+    <value>Días cancelación del riesgo de la remesa</value>
+  </data>
+  <data name="Tesoreria" xml:space="preserve">
+    <value>Tesorería</value>
+  </data>
 </root>

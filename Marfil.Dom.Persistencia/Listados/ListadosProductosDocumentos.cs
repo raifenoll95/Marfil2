@@ -205,6 +205,10 @@ namespace Marfil.Dom.Persistencia.Listados
             Fkzonaclientelabel = tipo <= ListadoTipoDocumento.Facturas ? RClientes.Fkzonacliente : RProveedores.Fkzonaproveedor;
             Agrupacion = "1";
             _claveajena = tipo.ToString();
+            if (_claveajena == "AlbaranesCompras")
+            {
+                _claveajena = "Albaranes";
+            }
             ConfiguracionColumnas.Add("Precio", new ConfiguracionColumnasModel() { Decimales = new ConfiguracionDecimalesColumnasModel() { Columna = "_decimales" } });
             ConfiguracionColumnas.Add("% Dto.", new ConfiguracionColumnasModel() { Decimales = new ConfiguracionDecimalesColumnasModel() { Columna = "_decimales" } });
             ConfiguracionColumnas.Add("Subtotal", new ConfiguracionColumnasModel() { Decimales = new ConfiguracionDecimalesColumnasModel() { Columna = "_decimales" } });

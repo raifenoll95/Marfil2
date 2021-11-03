@@ -495,6 +495,15 @@ namespace Marfil.App.WebMain.Controllers
             return result;
         }
 
+        [HttpGet]
+        public string CambiarDescripcion(string cuenta)
+        {
+            using (var service = new CuentasService(ContextService))
+            {
+                return service.GetDescripcionCuenta(cuenta);
+            }
+        }
+
         #endregion
     }
 }

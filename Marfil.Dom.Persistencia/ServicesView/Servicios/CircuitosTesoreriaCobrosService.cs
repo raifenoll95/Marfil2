@@ -129,6 +129,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.CircuitosTesoreriaCobros.Any(f => f.empresa == Empresa && f.id == idcircuito && f.datosdocumento == true);
         }
 
+        public bool ActualizarCuentaTesoreria(string circuito)
+        {
+            var idcircuito = Int32.Parse(circuito);
+            return _db.CircuitosTesoreriaCobros.Any(f => f.empresa == Empresa && f.id == idcircuito && f.actualizarcobrador == true);
+        }
+
+        public bool DesvalorizacionCartera(string circuito)
+        {
+            var idcircuito = Int32.Parse(circuito);
+            return _db.CircuitosTesoreriaCobros.Any(f => f.empresa == Empresa && f.id == idcircuito && f.desvalorizacioncartera == true);
+        }
+
         public bool ImporteCargo2(string circuito)
         {
             var idcircuito = Int32.Parse(circuito);
@@ -259,6 +271,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public bool esAnular(int? id)
         {
             return (bool)_db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().anularremesa;
+        }
+
+        public bool GetActualizarCuenta(int id)
+        {
+            return (bool)_db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().actualizarcobrador;
+        }
+
+        public bool GetDesvalorizacion(int id)
+        {
+            return (bool)_db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().desvalorizacioncartera;
+        }
+
+        public bool GetSolicitarDatos(int id)
+        {
+            return (bool)_db.CircuitosTesoreriaCobros.Where(f => f.id == id && f.empresa == Empresa).FirstOrDefault().datosdocumento;
         }
 
     }

@@ -230,7 +230,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.Transformaciones.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(Context, db);
                 {
                     var lst =
                         service.GetDocumentosParaImprimir(TipoDocumentoImpresion.Transformaciones, user.Id)

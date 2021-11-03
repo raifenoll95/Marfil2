@@ -56,8 +56,12 @@
 @*Para desabilitar el dropdown, hay que poner HiddenFor*@
 @if (isreadonly || iseditable)
 {
-    @Html.HiddenFor(f => Model.Banco)
     @Html.HiddenFor(f => Model.Formato)
+}
+
+@if (isreadonly)
+{
+    @Html.HiddenFor(f => Model.Banco)
 }
 
 <div class="form-group">
@@ -109,10 +113,10 @@
 </div>
 
 
-    @{
-        if (isNuevo)
-        {
-            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
-            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
-        }
+@{
+    if (isNuevo)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
     }
+}

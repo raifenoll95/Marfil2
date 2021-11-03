@@ -380,7 +380,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 if (!String.IsNullOrEmpty(referenciaRemesa))
                 {
-                    registroscartera = registroscartera.Where(f => f.referenciaremesa == referenciaRemesa).ToList();
+                    var anulada = _db.Remesas.Where(f=> f.empresa == Empresa && f.referenciaremesa == referenciaRemesa.ToUpper()).FirstOrDefault().estado;
+                    //Si ya está anulada no mostramos registros
+                    if (anulada == 0) {
+                        registroscartera = registroscartera.Where(f => f.referenciaremesa == referenciaRemesa.ToUpper()).ToList();
+                    }
+                    else
+                    {
+                        registroscartera.Clear();
+                    }                  
                 }
 
                 foreach (var venc in registroscartera.OrderBy(f => f.fkcuentas).ThenBy(f => f.fechavencimiento).ThenBy(f => f.importegiro))
@@ -608,7 +616,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         //-----------------------GENERAR REGISTRO EN REMESA-----------------------
-        public RemesasModel CrearRegistroRemesa(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion, string fkseriescontablesremesa, string identificadorsegmentoremesa, string referenciaremesa)
+        public RemesasModel CrearRegistroRemesa(VencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion, string fkseriescontablesremesa, string identificadorsegmentoremesa, string referenciaremesa, string referencia)
         {
             RemesasModel remesa = new RemesasModel(_context);
             remesa.Empresa = Empresa;
@@ -628,6 +636,49 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             remesa.Usuario = _context.Usuario;
             remesa.Letra = !String.IsNullOrEmpty(model.Letra) ? model.Letra : "";
             remesa.Banco = model.Banco;
+
+            remesa.Referencia = referencia;
+
+            var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == nuevasituacion).FirstOrDefault().remesable;
+            if ((bool)esRemesable)
+            {
+                //Misma referencia para cada registro
+                remesa.Fkseriescontablesremesa = fkseriescontablesremesa;
+                remesa.Referenciaremesa = referenciaremesa;
+                remesa.Identificadorsegmentoremesa = identificadorsegmentoremesa;
+
+                if (!String.IsNullOrEmpty(model.Fecharemesa))
+                {
+                    remesa.Fecharemesa = DateTime.Parse(model.Fecharemesa);
+                }
+            }
+
+            return remesa;
+        }
+
+        //-----------------------GENERAR REGISTRO EN REMESA-----------------------
+        public RemesasModel CrearRegistroRemesa(CarteraVencimientosModel registro, StAsistenteTesoreria model, string nuevasituacion, string fkseriescontablesremesa, string identificadorsegmentoremesa, string referenciaremesa, string referencia)
+        {
+            RemesasModel remesa = new RemesasModel(_context);
+            remesa.Empresa = Empresa;
+            remesa.Tipovencimiento = model.Tipo == "0" ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
+            remesa.Fkseriescontables = model.Tipo == "0" ? _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").Select(f => f.id).FirstOrDefault() :
+                _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").Select(f => f.id).FirstOrDefault();
+            remesa.Situacion = nuevasituacion;
+            remesa.Traza = registro.Traza; //Num Doc. *NF*
+            remesa.Fkcuentas = registro.Fkcuentas;
+            remesa.Importegiro = registro.Importegiro;
+            remesa.Comentario = !String.IsNullOrEmpty(model.Comentario) ? model.Comentario : registro.Comentario;
+            remesa.Fkformaspago = registro.Fkformaspago;
+            remesa.Fkcuentastesoreria = !String.IsNullOrEmpty(model.Fkcuentatesoreria) ? model.Fkcuentatesoreria : registro.Fkcuentastesoreria;
+            remesa.Fechavencimiento = registro.Fechavencimiento;
+            remesa.Fechacreacion = DateTime.Now;
+            remesa.Fecha = DateTime.Now;
+            remesa.Usuario = _context.Usuario;
+            remesa.Letra = !String.IsNullOrEmpty(model.Letra) ? model.Letra : "";
+            remesa.Banco = model.Banco;
+
+            remesa.Referencia = registro.Referencia;
 
             var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == nuevasituacion).FirstOrDefault().remesable;
             if ((bool)esRemesable)
@@ -671,10 +722,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         //Editar Cartera: Situacion, (fechapago si es P), (fecha remesa y documento remesa si es remesa) y lineas de previsiones
-        public void editarSituacionCartera(CarteraVencimientosModel cartera, StAsistenteTesoreria model, string situacion, bool? anularremesa)
+        public void editarSituacionCartera(CarteraVencimientosModel cartera, StAsistenteTesoreria model, string situacion, bool? anularremesa, string fkseriescontablesremesa, string referenciaremesa, string identificadorsegmentoremesa, bool esprevision)
         {
             var carteraService = new CarteraVencimientosService(_context);
             cartera.Situacion = situacion;
+            cartera.Fkcuentastesoreria = model.Fkcuentatesoreria;
             var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == situacion).FirstOrDefault().remesable;
 
             if (situacion.Equals("P"))
@@ -694,19 +746,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             if((bool)esRemesable)
             {
-                cartera.Fkseriescontablesremesa = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "REM").Select(f => f.id).SingleOrDefault() ?? "";
-                var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, cartera.Fkseriescontablesremesa);             
-                var identificadorsegmentoremesa = "";
+                cartera.Fkseriescontablesremesa = fkseriescontablesremesa;
+
                 if (!(bool)anularremesa)
                 {
-                    var vencimiento = get(cartera.Id.ToString()) as VencimientosModel;
-                    cartera.Referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<CarteraVencimientos>(_db, cartera.Empresa, cartera.Fkseriescontablesremesa, contador, cartera.Fechacreacion.Value, out identificadorsegmentoremesa);
+                    cartera.Referenciaremesa = referenciaremesa;
                     cartera.Identificadorsegmentoremesa = identificadorsegmentoremesa;
                     if (!String.IsNullOrEmpty(model.Fecharemesa))
                     {
                         cartera.Fecharemesa = DateTime.Parse(model.Fecharemesa);
                     }
-                    carteraService.create(CrearRegistroRemesa(vencimiento, model, situacion, cartera.Fkseriescontablesremesa, identificadorsegmentoremesa, cartera.Referenciaremesa));
+                    carteraService.create(CrearRegistroRemesa(cartera, model, situacion, cartera.Fkseriescontablesremesa, identificadorsegmentoremesa, cartera.Referenciaremesa, cartera.Referencia));
                 }               
             }
 
@@ -757,8 +807,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if ((bool)esRemesable)
                 {
                     fkseriescontablesremesa = model.Fkseriescontables;
-                    var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, fkseriescontablesremesa);
-                    referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<CarteraVencimientos>(_db, Empresa, fkseriescontablesremesa, contador, DateTime.Now, out identificadorsegmentoremesa);
+                    var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa);
+                    referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa, contador, DateTime.Now, out identificadorsegmentoremesa);
 
                 }
 
@@ -769,7 +819,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     if ((bool)esRemesable)
                     {
-                        serviceCarteraVencimientos.create(CrearRegistroRemesa(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa));
+                        serviceCarteraVencimientos.create(CrearRegistroRemesa(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa, ""));
                     }
 
                     editarSituacionPrevision(registro, model, circuito.situacionfinal, null);
@@ -782,14 +832,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var carteraService = new CarteraVencimientosService(_context);
                 var remesaService = new RemesasService(_context);
                 var situacionFinalCircuito = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id == idcircuito).Select(f => f.situacionfinal).SingleOrDefault() ?? "";
+                var fkseriescontablesremesa = "";
+                var identificadorsegmentoremesa = "";
+                var referenciaremesa = "";
+                var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
+                //Asignamos referencia remesa
+                if ((bool)esRemesable)
+                {
+                    fkseriescontablesremesa = model.Fkseriescontables;
+                    var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa);
+                    referenciaremesa = ServiceHelper.GetReferenceContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa, contador, DateTime.Now, out identificadorsegmentoremesa);
+
+                }
 
                 foreach (var id in registros)
                 {
                     var carteraModel = carteraService.get(id) as CarteraVencimientosModel;
                     var referenciaRemesa = carteraModel.Referenciaremesa;
-                    editarSituacionCartera(carteraModel, model, circuito.situacionfinal,circuito.anularremesa);
+                    editarSituacionCartera(carteraModel, model, circuito.situacionfinal,circuito.anularremesa, fkseriescontablesremesa, referenciaremesa, identificadorsegmentoremesa, esprevision);
                     if ((bool)circuito.anularremesa)
-                    {
+                    {                     
                         var remesaid = _db.Remesas.Where(f => f.empresa == Empresa && f.referenciaremesa == referenciaRemesa && f.referencia == carteraModel.Referencia && f.estado == 0).FirstOrDefault().id;
                         var remesaModel = remesaService.getModel(remesaid) as RemesasModel;
                         editarEstadoRemesa(remesaModel, model, circuito.situacionfinal);
@@ -1170,7 +1232,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 if (comentario.Contains("*FA*"))
                 {
-                    comentario = comentario.Replace("*FA*", DateTime.Now.ToString());
+                    comentario = comentario.Replace("*FA*", DateTime.Now.ToString().Split(' ')[0]);
                 }
 
                 //Tipo Importe 1

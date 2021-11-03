@@ -50,15 +50,16 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
             $http.get($scope.UrlCompletarDatosCircuito + "?circuito=" + circuito).success(function (data) {
                 var atributos = JSON.parse(data);
+                //Hay un check específico para el cambio de cuenta
+                //$("#Fkcuentatesoreria").attr("disabled", !atributos.cobrador);
+                $("#btnbuscarFkcuentatesoreria").attr("disabled", !atributos.actualizarcuenta);
+                $("#Fkcuentatesoreria").attr("readonly", !atributos.actualizarcuenta);
 
-                $("#btnbuscarFkcuentatesoreria").attr("disabled", !atributos.cobrador);
-                $("#Fkcuentatesoreria").attr("disabled", !atributos.cobrador);
-
-                if (atributos.cobrador && filas[0].FkcuentaTesoreria != null) {
+                if (filas[0].FkcuentaTesoreria != null) {
                     $('#Fkcuentatesoreria').val(filas[0].FkcuentaTesoreria);
                     $http.get($scope.urlObtenerDescripcionCobrador + "?cuenta=" + filas[0].FkcuentaTesoreria).success(function (data) {
                         var modelo = JSON.parse(data);
-                        window.document.getElementById("cv-Fkcuentatesoreria-descripcion").textContent = modelo.Descripcion;
+                        window.document.getElementById("lblFkcuentatesoreria").textContent = modelo.Descripcion;
                     });
                 }
 
@@ -139,7 +140,9 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
         if ($("#Fkseriescontables").is(":disabled") == false) {
 
-            if (fkCuentasTesoreria != null && fkSeriesContables != null && fkCuentasTesoreria != "" && fkSeriesContables != "") {
+            if (fkCuentasTesoreria != null && fkSeriesContables != null && $("#Fkcuentatesoreria").is(":disabled") == true) {
+                $scope.generarmovimientostesoreria();
+            } else if (fkCuentasTesoreria != null && fkSeriesContables != null && fkCuentasTesoreria != "" && fkSeriesContables != "") {
                 $scope.generarmovimientostesoreria();
             } else {
                 alert("Cobrador y Serie deben tener valor");

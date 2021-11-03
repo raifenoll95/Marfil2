@@ -29,7 +29,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             
             using (var db = MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos))
-            using (var service = new DocumentosUsuarioService(db))
+            using (var service = new DocumentosUsuarioService(ContextService, db))
             {
                 var model = new DocumentosWrapperModel();
                 var tipoDocumento = (TipoDocumentoImpresion) Enum.Parse(typeof (TipoDocumentoImpresion), id);
@@ -68,7 +68,7 @@ namespace Marfil.App.WebMain.Controllers
                 ModelState.AddModelError("", TempData["errors"].ToString());
            
             using (var db = MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos))
-            using (var service = new DocumentosUsuarioService(db))
+            using (var service = new DocumentosUsuarioService(ContextService, db))
             {
                 TipoDocumentoImpresion tipoDocumento;
                 Guid usuario;
@@ -104,7 +104,7 @@ namespace Marfil.App.WebMain.Controllers
             {
                
                 using(var db= MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos))
-                using (var service = new DocumentosUsuarioService(db))
+                using (var service = new DocumentosUsuarioService(ContextService, db))
                 {
                     TipoDocumentoImpresion tipoDocumento;
                     Guid usuario;

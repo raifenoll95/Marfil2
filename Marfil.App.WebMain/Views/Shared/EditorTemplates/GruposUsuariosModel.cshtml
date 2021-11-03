@@ -46,7 +46,7 @@
                             <input type="hidden" name="usuarios.usuarios[{{$index}}].Id" value="{{ item.Id }}" />
                             <input type="hidden" name="usuarios.usuarios[{{$index}}].Usuario" value="{{ item.Usuario }}" />
                             <div class="pos-rel">
-                                <input aria-label="Id" aria-labelledby="{{item.Id}}" id="{{ item.Id }}" name="{{ item.Id }}" type="checkbox" class="ace" ng-model="item.Selected" ng-checked="item.Selected" />
+                                <input aria-label="Id" aria-labelledby="{{item.Id}}" id="{{ item.Id }}" name="{{ item.Id }}" type="checkbox" class="ace" ng-model="item.selected" ng-checked="item.selected" />
                                 <label for="{{item.Id}}"  class="lbl"></label>
                             </div>
                         </td>
@@ -98,7 +98,9 @@
             };
 
             $scope.removeItems = function () {
-                var filtrados = $scope.usuarios.filter(function (item) { return item.selected === true; });
+                var filtrados = $scope.usuarios.filter(function (item) {
+                    return item.selected === true;
+                });
                 for (var i = 0; i < filtrados.length; i++) {
                     var index = $scope.usuarios.indexOf(filtrados[i]);
                     if (index >= 0) {

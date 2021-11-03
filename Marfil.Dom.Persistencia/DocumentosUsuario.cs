@@ -20,5 +20,6 @@ namespace Marfil.Dom.Persistencia
         public int tipoprivacidad { get; set; }
         public int tiporeport { get; set; }
         public byte[] datos { get; set; }
+        public string empresa { get; set; }
     }
 }

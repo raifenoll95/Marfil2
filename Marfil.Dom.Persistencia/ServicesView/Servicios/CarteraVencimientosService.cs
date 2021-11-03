@@ -114,11 +114,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     model.Importeletra = c.enletras(model.Importegiro.ToString());
 
                     //Calculo ID cartera 
-                    var contador = ServiceHelper.GetNextIdContable<CarteraVencimientos>(_db, Empresa, model.Fkseriescontables);
+                    //var contador = ServiceHelper.GetNextIdContable<CarteraVencimientos>(_db, Empresa, model.Fkseriescontables);
                     var identificadorsegmento = "";
-                    var lastCarteraId = _db.CarteraVencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max();
-                    var referenciaCartera = _db.CarteraVencimientos.Where(f => f.empresa == Empresa && f.id == lastCarteraId).FirstOrDefault().referencia;
-                    model.Referencia = referenciaCartera;
+                    var referenciaCartera = "";
+                    if (model.Referencia == "")
+                    {
+                        var lastCarteraId = _db.CarteraVencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max();
+                        referenciaCartera = _db.CarteraVencimientos.Where(f => f.empresa == Empresa && f.id == lastCarteraId).FirstOrDefault().referencia;
+                        model.Referencia = referenciaCartera;
+                        model.Identificadorsegmento = identificadorsegmento;
+                    }
                     model.Identificadorsegmento = identificadorsegmento;
 
                     //Llamamos al base

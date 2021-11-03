@@ -65,6 +65,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipocircuito = (int)viewmodel.Tipocircuito;
             result.codigodescripcionasiento = viewmodel.Codigodescripcionasiento;
             result.actualizarcobrador = viewmodel.Actualizarcobrador;
+            result.desvalorizacioncartera = viewmodel.Desvalorizacioncartera;
             return result;
         }
 
@@ -107,6 +108,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipocircuito = (int)viewmodel.Tipocircuito;
             result.codigodescripcionasiento = viewmodel.Codigodescripcionasiento;
             result.actualizarcobrador = viewmodel.Actualizarcobrador;
+            result.desvalorizacioncartera = viewmodel.Desvalorizacioncartera;
             return result;
         }
 
@@ -149,8 +151,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Desccuentaabonorel = viewmodel.desccuentaabonorel,
                 Tipocircuito = (TipoCircuito)viewmodel.tipocircuito,
                 Codigodescripcionasiento = viewmodel.codigodescripcionasiento,
-                Actualizarcobrador = viewmodel.actualizarcobrador.Value
-            };
+                Actualizarcobrador = viewmodel.actualizarcobrador.Value,
+                Desvalorizacioncartera = viewmodel.desvalorizacioncartera
+        };
            
             return result;
         }

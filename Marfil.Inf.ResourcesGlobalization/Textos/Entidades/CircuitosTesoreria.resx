@@ -222,4 +222,7 @@
   <data name="Anularremesa" xml:space="preserve">
     <value>Anulación remesa</value>
   </data>
+  <data name="Desvalorizacioncartera" xml:space="preserve">
+    <value>Desvalorización cartera</value>
+  </data>
 </root>

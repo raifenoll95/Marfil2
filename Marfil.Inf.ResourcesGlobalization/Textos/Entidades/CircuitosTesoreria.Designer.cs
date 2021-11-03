@@ -205,6 +205,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Desvalorización cartera.
+        /// </summary>
+        public static string Desvalorizacioncartera {
+            get {
+                return ResourceManager.GetString("Desvalorizacioncartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Documento cartera.
         /// </summary>
         public static string Documentocartera {

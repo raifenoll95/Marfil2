@@ -48,7 +48,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return string.Format("select MAX(i.id) as Id,i.tipovencimiento,i.referenciaremesa,i.fecharemesa,i.fkcuentastesoreria,c.descripcion as Descripcioncuenta,COUNT(*) as NumeroDocumentos,SUM(importegiro) as ImporteRemesa, i.estado " +
                "from remesas as i " +
                "inner join cuentas as c on c.id = i.fkcuentastesoreria and c.empresa = i.empresa "+
-               "where i.empresa = '{0}' group by i.tipovencimiento, i.referenciaremesa, i.fecharemesa, i.fkcuentastesoreria, c.descripcion, i.estado", Empresa);
+               "where i.empresa = '{0}' group by i.tipovencimiento, i.referenciaremesa, i.fecharemesa, i.fkcuentastesoreria, c.descripcion, i.estado order by i.referenciaremesa desc", Empresa);
         }
 
         #endregion

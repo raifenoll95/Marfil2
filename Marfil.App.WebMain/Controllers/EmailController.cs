@@ -142,7 +142,7 @@ namespace Marfil.App.WebMain.Controllers
             {
 
               
-                using (var service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
+                using (var service = new DocumentosUsuarioService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
                 {
                     var vector = item.Url.Split(';');
                     var primarykey = vector[0];

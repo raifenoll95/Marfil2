@@ -18,6 +18,7 @@
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
     var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
     var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago();
+
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -173,7 +174,19 @@
                     } else {
                         $("#ReferenciaRemesa").prop('disabled', false);
                         $("#TerceroDesde").prop('disabled', true);
-                        $("#TerceroHasta").prop('disabled', true);                      
+                        $("#TerceroHasta").prop('disabled', true);
+                    }
+                }
+            })
+
+            $.ajax({
+                url: '@Url.Action("GetDesvalorizacion", "MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    if (data != "") {
+                        $("#FechaHasta").val(data);
                     }
                 }
             })
@@ -220,15 +233,75 @@
                     }
                 }
             })
+
+            //Fecha vencimiento Hasta
+            $.ajax({
+                url: '@Url.Action("GetDesvalorizacion", "MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    if (data != "") {
+                        $("#FechaHasta").val(data);
+                    }
+
+                }
+            })
         });
 
-        $('body').on('DOMSubtreeModified', '#Circuitostesoreria', function () {
-            var valor = $("#Circuitotesoreria").val();
-            if (valor != null && valor != "") {
-                cambio(valor);
-            }
+    $('#Circuitostesoreria').on('DOMSubtreeModified', function () {
+        var valor = $("#Circuitotesoreria").val();
+        if (valor != null && valor != "") {
+            //console.log('El valor es ' + valor);
+            //cambio(valor);
 
-        });
+            //Modo de pago
+            $.ajax({
+                url: '@Url.Action("ObtenerPreferido","MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    $("#Fkmodospago").val(data);
+                }
+            });
+
+            //Habilitar remesa
+            $.ajax({
+                url: '@Url.Action("AnularRemesa", "MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    if (data == "False") {
+                        $("#ReferenciaRemesa").prop('disabled', true);
+                        $("#TerceroDesde").prop('disabled', false);
+                        $("#TerceroHasta").prop('disabled', false);
+                        $("#ReferenciaRemesa").val("");
+                    } else {
+                        $("#ReferenciaRemesa").prop('disabled', false);
+                        $("#TerceroDesde").prop('disabled', true);
+                        $("#TerceroHasta").prop('disabled', true);
+                    }
+                }
+            });
+
+            //Fecha vencimiento Hasta
+            $.ajax({
+                url: '@Url.Action("GetDesvalorizacion", "MovimientosTesoreria")',
+                dataType: "text",
+                type: "GET",
+                data: { valor },
+                success: function (data) {
+                    if (data != "") {
+                        $("#FechaHasta").val(data);
+                    }
+
+                }
+            });
+        }
+
+    });
 
         function formatoFecha(fecha, formato) {
             const map = {

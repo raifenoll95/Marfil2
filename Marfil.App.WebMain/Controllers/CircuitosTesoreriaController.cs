@@ -188,7 +188,9 @@ namespace Marfil.App.WebMain.Controllers
                 importeabono2 = servicioCircuitosTesoreria.ImporteAbono2(circuito),
                 codigomanual = servicioCircuitosTesoreria.CodigoManual(circuito),
                 cobrador = servicioCircuitosTesoreria.ExisteCobrador(circuito),
-                remesa = servicioCircuitosTesoreria.Remesa(circuito)
+                remesa = servicioCircuitosTesoreria.Remesa(circuito),
+                actualizarcuenta = servicioCircuitosTesoreria.ActualizarCuentaTesoreria(circuito),
+                desvalorizacioncartera = servicioCircuitosTesoreria.DesvalorizacionCartera(circuito)
             });
             return Json(data, JsonRequestBehavior.AllowGet);
         }

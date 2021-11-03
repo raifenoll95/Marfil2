@@ -1086,6 +1086,22 @@ namespace Marfil.Dom.Persistencia.Helpers
         }
         */
 
+        public bool GetActualizarCuenta(int circuito)
+        {
+            using (var service = new CircuitosTesoreriaCobrosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetActualizarCuenta(circuito);
+            }
+        }
+
+        public bool GetSolicitarDatos(int circuito)
+        {
+            using (var service = new CircuitosTesoreriaCobrosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetSolicitarDatos(circuito);
+            }
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListLabores()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

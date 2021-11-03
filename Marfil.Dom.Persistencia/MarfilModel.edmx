@@ -883,6 +883,7 @@
           <Property Name="documentocartera" Type="bit" />
           <Property Name="actualizarcobrador" Type="bit" />
           <Property Name="anularremesa" Type="bit" />
+          <Property Name="desvalorizacioncartera" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -1377,6 +1378,7 @@
           <Property Name="tipoprivacidad" Type="int" Nullable="false" />
           <Property Name="tiporeport" Type="int" Nullable="false" />
           <Property Name="datos" Type="varbinary(max)" />
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
         </EntityType>
         <EntityType Name="Ejercicios">
           <Key>
@@ -5891,7 +5893,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RolesUsuarios_Usuarios">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="RolesUsuarios" Type="Self.RolesUsuarios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuarios">
@@ -7620,6 +7624,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="tipoprivacidad" Type="Int32" Nullable="false" />
           <Property Name="tiporeport" Type="Int32" Nullable="false" />
           <Property Name="datos" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Estados">
           <Key>
@@ -12646,6 +12651,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="actualizarcobrador" Type="Boolean" />
           <Property Name="fkmodopagopreferido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="anularremesa" Type="Boolean" />
+          <Property Name="desvalorizacioncartera" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="GuiasBalances">
           <Key>
@@ -13763,6 +13769,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="DocumentosUsuario">
             <EntityTypeMapping TypeName="MarfilModel.DocumentosUsuario">
               <MappingFragment StoreEntitySet="DocumentosUsuario">
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
                 <ScalarProperty Name="datos" ColumnName="datos" />
                 <ScalarProperty Name="tiporeport" ColumnName="tiporeport" />
                 <ScalarProperty Name="tipoprivacidad" ColumnName="tipoprivacidad" />
@@ -17650,6 +17657,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="CircuitosTesoreriaCobros">
             <EntityTypeMapping TypeName="MarfilModel.CircuitosTesoreriaCobros">
               <MappingFragment StoreEntitySet="CircuitosTesoreriaCobros">
+                <ScalarProperty Name="desvalorizacioncartera" ColumnName="desvalorizacioncartera" />
                 <ScalarProperty Name="anularremesa" ColumnName="anularremesa" />
                 <ScalarProperty Name="fkmodopagopreferido" ColumnName="fkmodopagopreferido" />
                 <ScalarProperty Name="actualizarcobrador" ColumnName="actualizarcobrador" />

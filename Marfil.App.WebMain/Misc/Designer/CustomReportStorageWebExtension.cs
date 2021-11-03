@@ -11,6 +11,7 @@ using DevExpress.XtraReports.UI;
 using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Documentos;
+using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 
 namespace Marfil.App.WebMain.Misc.Designer
@@ -38,12 +39,13 @@ namespace Marfil.App.WebMain.Misc.Designer
                 Fkalmacen = serializeModel.Fkalmacen
             };
         }
+
         private DocumentosUsuarioService _service;
         private ICustomPrincipal _user;
+        private IContextService _context;
 
         public CustomReportStorageWebExtension()
-        {
-            
+        {            
         }
 
 
@@ -53,7 +55,8 @@ namespace Marfil.App.WebMain.Misc.Designer
                 return false;
 
             _user = GetCustomPrincipal();
-            _service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
+            //_context = GetContext(_user);
+            _service = new DocumentosUsuarioService(_user.Empresa,MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
             // Check if the URL is available in the report storage.
             TipoDocumentoImpresion tipoDocumentoImpresion;
             Guid usuario;
@@ -66,7 +69,9 @@ namespace Marfil.App.WebMain.Misc.Designer
         public override byte[] GetData(string url)
         {
             _user = GetCustomPrincipal();
-            _service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
+            _context = _user as IContextService;
+            //_context = GetContext(_user);
+            _service = new DocumentosUsuarioService(_user.Empresa, MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
             // Get the report data from the storage.
             TipoDocumentoImpresion TipoDocumentoImpresion;
             Guid usuario;
@@ -81,7 +86,9 @@ namespace Marfil.App.WebMain.Misc.Designer
         public override Dictionary<string, string> GetUrls()
         {
             _user = GetCustomPrincipal();
-            _service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
+            _context = _user as IContextService;
+            //_context = GetContext(_user);
+            _service = new DocumentosUsuarioService(_user.Empresa, MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
             // Get URLs and display names for all reports available in the storage.
             var result= new Dictionary<string, string>();
             try
@@ -118,7 +125,9 @@ namespace Marfil.App.WebMain.Misc.Designer
                 return;
 
             _user = GetCustomPrincipal();
-            _service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
+            _context = _user as IContextService;
+            //_context = GetContext(_user);
+            _service = new DocumentosUsuarioService(_user.Empresa, MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
             // Write a report to the storage under the specified URL.
             using (var stream = new MemoryStream())
             {
@@ -141,7 +150,9 @@ namespace Marfil.App.WebMain.Misc.Designer
                 throw new Exception("No se pude guardar el nuevo report");
 
             _user = GetCustomPrincipal();
-            _service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
+            _context = _user as IContextService;
+            //_context = GetContext(_user);
+            _service = new DocumentosUsuarioService(_user.Empresa, MarfilEntities.ConnectToSqlServer(_user.BaseDatos));
             using (var stream = new MemoryStream())
             {
                 var objTag = report.Name;

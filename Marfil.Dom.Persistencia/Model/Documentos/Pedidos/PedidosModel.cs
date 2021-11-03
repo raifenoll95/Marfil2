@@ -407,7 +407,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.PedidosVentas.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(Context, db);
                 {
                     var lst =
                         service.GetDocumentos(TipoDocumentoImpresion.PedidosVentas, user.Id)

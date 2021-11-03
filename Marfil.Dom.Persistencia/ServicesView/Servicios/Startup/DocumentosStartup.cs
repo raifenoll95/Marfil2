@@ -39,7 +39,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
         public DocumentosStartup(IContextService context,MarfilEntities db)
         {
             _context = context;
-            _documentosService = new DocumentosUsuarioService(db);
+            _documentosService = new DocumentosUsuarioService(_context,db);
         }
 
         #endregion

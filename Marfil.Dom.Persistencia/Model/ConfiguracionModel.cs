@@ -572,6 +572,14 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Estadoincidenciastotal = value; }
         }
 
+        //Tesorería
+        [Display(ResourceType = typeof(RConfiguracion), Name = "Cancelacionriesgoremesa")]
+        public int Cancelacionriesgoremesa
+        {
+            get { return Model.Cancelacionriesgoremesa; }
+            set { Model.Cancelacionriesgoremesa = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -692,6 +700,8 @@ namespace Marfil.Dom.Persistencia.Model
 
         public string Estadoincidenciasinicial { get; set; }
         public string Estadoincidenciastotal { get; set; }
+
+        public int Cancelacionriesgoremesa { get; set; }
 
     }
 }

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Marfil.Dom.Persistencia.Model;
 using System.Data.Entity.Migrations;
+using Newtonsoft.Json;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -59,6 +62,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.cargadatos = valor;
             _db.Configuracion.AddOrUpdate(model);
             _db.SaveChanges(); 
+        }
+
+        public int GetDiasDesvalorizacion()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Cancelacionriesgoremesa");
+            var dias = int.Parse(nodo[0].InnerText);
+            return dias;
         }
     }
 

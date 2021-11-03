@@ -200,15 +200,15 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public string UsuarioMod { get; set; }
         [Display(ResourceType = typeof(RCuadernos), Name = "CuadernoSEPA")]
         public TipoSEPA CuadernoSEPA { get; set; }
-        [Display(ResourceType = typeof(RCuadernos), Name = "EsCORE")]
+        
         public bool EsCORE { get; set; }
-        [Display(ResourceType = typeof(RCuadernos), Name = "EsCOREXML")]
+        
         public bool EsCOREXML { get; set; }
-        [Display(ResourceType = typeof(RCuadernos), Name = "EsB2B")]
+        
         public bool EsB2B { get; set; }
-        [Display(ResourceType = typeof(RCuadernos), Name = "EsB2BXML")]
+        
         public bool EsB2BXML { get; set; }
-        [Display(ResourceType = typeof(RCuadernos), Name = "EsXML")]
+        
         public bool EsXML { get; set; }
         [Display(ResourceType = typeof(RCuadernos), Name = "TipoVencimiento")]
         public Tipovencimiento TipoVencimiento { get; set; }

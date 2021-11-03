@@ -649,7 +649,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GetDocumentosImpresionMantenimiento( user.Id, TipoDocumentoImpresion.AlbaranesVentas.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(Context, db);
                 {
                     var lst =
                         service.GetDocumentos(TipoDocumentoImpresion.AlbaranesVentas, user.Id)

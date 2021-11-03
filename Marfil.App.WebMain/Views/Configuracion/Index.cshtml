@@ -35,7 +35,7 @@
                             <li><a data-toggle="tab" href="#documentoscompras">@Configuracionaplicacion.DocumentosCompras</a></li>
                             <li><a data-toggle="tab" href="#transformaciones">@Transformaciones.TituloEntidadSingular</a></li>
                             <li><a data-toggle="tab" href="#crm">@CRM.TituloEntidad</a></li>
-                           
+                            <li><a data-toggle="tab" href="#tesoreria">@Configuracionaplicacion.Tesoreria</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -87,6 +87,9 @@
                         </div>
                         <div id="crm" class="tab-pane fade margin-bottom">
                             @Html.Partial("_crm", Model)
+                        </div>
+                        <div id="tesoreria" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_tesoreria", Model)
                         </div>
                     </div>
                 </div>

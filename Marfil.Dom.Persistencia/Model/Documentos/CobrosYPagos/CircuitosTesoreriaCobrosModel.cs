@@ -118,6 +118,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Documentocartera")]
         public bool Documentocartera { get; set; }
 
+        [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Desvalorizacioncartera")]
+        public bool Desvalorizacioncartera { get; set; }
+
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Cuentacargo1")]
         public String Cuentacargo1 { get; set; }
 

@@ -52,6 +52,8 @@ namespace Marfil.Dom.Persistencia.Model.Diseñador
         [Display(ResourceType = typeof(RDocumentos), Name = "Nombre")]
         public string Nombre { get; set; }
 
+        public string Empresa { get; set; }
+
         public byte[] Datos { get; set; }
 
         [Display(ResourceType = typeof(RDocumentos), Name = "Action")]

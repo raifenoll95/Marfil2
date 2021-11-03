@@ -130,7 +130,7 @@ namespace Marfil.App.WebMain.Misc
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GePreferencia(TiposPreferencias.DocumentoImpresionDefecto, user.Id, tipo.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(ContextService,db);
                 {
                     var lst =
                         service.GetDocumentos(tipo, user.Id)

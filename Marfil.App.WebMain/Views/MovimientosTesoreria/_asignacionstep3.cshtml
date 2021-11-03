@@ -28,6 +28,9 @@
     var campoverificacionabono = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvcircuitos = FCampoverificacion.Instance.GetModel<CircuitoTesoreriaCobrosModel>(WebHelper.ContextService);
 
+    //var actualizarCuenta = WebHelper.GetApplicationHelper().GetActualizarCuenta(int.Parse(Model.Circuitotesoreria));
+   // var solictarDatos = WebHelper.GetApplicationHelper().GetSolicitarDatos(int.Parse(Model.Circuitotesoreria));
+
 }
 
 <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
@@ -190,3 +193,55 @@
         <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
     </div>
 </form>
+
+<script type="text/javascript">
+
+        function cambio(cuenta) {
+            console.log(cuenta);
+            $.ajax({
+                 url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    document.getElementById("lblFkcuentatesoreria").textContent = data;
+                }
+            });
+        }
+
+        $("#Fkcuentatesoreria").on('change', function () {
+            var cuenta = this.value;
+            console.log(cuenta);
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    console.log(data);
+                    document.getElementById("lblFkcuentatesoreria").textContent = data;
+                }
+            })
+        });
+
+    $('#Fkcuentatesoreria').on('DOMSubtreeModified', function () {
+        var cuenta = $("#Fkcuentatesoreria").val();
+        console.log("LA CUENTA ES " + cuenta);
+        if (cuenta != null && cuenta != "") {
+            //cambio(cuenta);
+            console.log("LA CUENTA2 ES " + cuenta);
+            $.ajax({
+                 url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    console.log(data);
+                    document.getElementById("lblFkcuentatesoreria").textContent = data;
+                }
+            });
+        }
+
+    });
+
+</script>

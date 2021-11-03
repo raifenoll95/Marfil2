@@ -6,6 +6,8 @@ using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.App.WebMain.Misc;
 using Resources;
 using System.Linq;
+using Marfil.Dom.Persistencia.Model;
+using System.Globalization;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -124,6 +126,31 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             return anular;
+        }
+
+        [HttpGet]
+        public string GetDesvalorizacion(int valor)
+        {
+            using (var service = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService)
+            {
+                var desvalorizacion = service.GetDesvalorizacion(valor);
+                if (desvalorizacion)
+                {
+                    var diasDesvalorizacion = GetDiasDesvalorizacion();
+                    return DateTime.Today.Date.AddDays(-diasDesvalorizacion).ToString("dd/MM/yyyy");
+                } else
+                {
+                    return "";
+                }
+            }
+        }
+
+        public int GetDiasDesvalorizacion()
+        {
+            using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
+            {
+                return service.GetDiasDesvalorizacion();
+            }
         }
 
         #endregion

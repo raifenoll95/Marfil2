@@ -20,14 +20,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
        
         private const char Separator = ';';
         private readonly MarfilEntities _db;
+        public IContextService _context;
+        private string _empresa;
+        public string Empresa
+        {
+            get { return _empresa; }
+        }
 
         #endregion
 
         #region CTR
 
-        public DocumentosUsuarioService(MarfilEntities db)
+        public DocumentosUsuarioService(IContextService context, MarfilEntities db)
         {
             _db = db;
+            _context = context;
+            _empresa = _context.Empresa;
+        }
+        public DocumentosUsuarioService(string empresa, MarfilEntities db)
+        {
+            _db = db;
+            _empresa = empresa;
         }
 
         #endregion
@@ -37,7 +50,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
             var servicePreferencias = new PreferenciasUsuarioService(_db);
             var doc = servicePreferencias.GePreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
             var defectoName = doc != null ? doc.Name : string.Empty;
-            return _db.DocumentosUsuario.Where(f => (f.fkusuario == usuario || f.fkusuario==Guid.Empty) && f.tipo == (int)tipoDocumento).ToList().Select(f => new DocumentosModel() { Defecto = defectoName == f.nombre, Tipo = tipoDocumento, CustomId = CreateCustomId(tipoDocumento, f.fkusuario, f.nombre), Nombre = f.nombre, Usuario = f.fkusuario == Guid.Empty ? "Admin" : _db.Usuarios.Single(j => j.id == f.fkusuario).usuario, Tipoprivacidad = (TipoPrivacidadDocumento)f.tipoprivacidad, Tiporeport = (TipoReport)f.tiporeport }).ToList().OrderByDescending(f => f.Defecto);
+            return _db.DocumentosUsuario.Where(f => f.empresa == Empresa && (f.fkusuario == usuario || f.fkusuario==Guid.Empty) && f.tipo == (int)tipoDocumento).ToList().Select(f => new DocumentosModel() { Defecto = defectoName == f.nombre, Tipo = tipoDocumento, CustomId = CreateCustomId(tipoDocumento, f.fkusuario, f.nombre), Nombre = f.nombre, Usuario = f.fkusuario == Guid.Empty ? "Admin" : _db.Usuarios.Single(j => j.id == f.fkusuario).usuario, Tipoprivacidad = (TipoPrivacidadDocumento)f.tipoprivacidad, Tiporeport = (TipoReport)f.tiporeport }).ToList().OrderByDescending(f => f.Defecto);
         }
 
         public IEnumerable<DocumentosModel> GetDocumentos(TipoDocumentoImpresion tipoDocumento, Guid usuario)
@@ -46,13 +59,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
             var doc = servicePreferencias.GePreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
             var defectoName = doc != null ? doc.Name : string.Empty;
             return _db.DocumentosUsuario.Where
-                (f => ((f.fkusuario == usuario && f.tipo == (int)tipoDocumento) || (f.tipoprivacidad == 0 && f.tipo == (int)tipoDocumento)))
+                (f => f.empresa == Empresa && ((f.fkusuario == usuario && f.tipo == (int)tipoDocumento) || (f.tipoprivacidad == 0 && f.tipo == (int)tipoDocumento)))
                 .ToList().Select(f=>new DocumentosModel() { Defecto= defectoName == f.nombre,  Tipo = tipoDocumento,CustomId = CreateCustomId(tipoDocumento,f.fkusuario,f.nombre),Nombre=f.nombre,Usuario=f.fkusuario == Guid.Empty ? "Admin": _db.Usuarios.Single(j=>j.id==f.fkusuario).usuario,Tipoprivacidad = (TipoPrivacidadDocumento)f.tipoprivacidad,Tiporeport = (TipoReport)f.tiporeport}).ToList().OrderByDescending(f=>f.Defecto);
         }
 
         public bool ExisteDocumento(TipoDocumentoImpresion tipoDocumento, Guid usuario, string name, TipoPrivacidadDocumento privacidad = TipoPrivacidadDocumento.Publico)
         {
-            return                 _db.DocumentosUsuario.Any(f => f.fkusuario == usuario && f.tipo == (int) tipoDocumento && f.nombre == name && f.tipoprivacidad == (int)privacidad);
+            return                 _db.DocumentosUsuario.Any(f => f.empresa == Empresa && f.fkusuario == usuario && f.tipo == (int) tipoDocumento && f.nombre == name && f.tipoprivacidad == (int)privacidad);
         }
 
         public DocumentosModel GetDocumento(TipoDocumentoImpresion tipoDocumento, Guid usuario, string name)
@@ -60,11 +73,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
             var servicePreferencias = new PreferenciasUsuarioService(_db);
             var doc = servicePreferencias.GePreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
             var defectoName = doc != null ? doc.Name : string.Empty;
-            var documento = _db.DocumentosUsuario.SingleOrDefault(f => (f.fkusuario == usuario || f.fkusuario == Guid.Empty) && f.tipo == (int)tipoDocumento && f.nombre == name);
+            var documento = _db.DocumentosUsuario.SingleOrDefault(f => f.empresa == Empresa && (f.fkusuario == usuario || f.fkusuario == Guid.Empty) && f.tipo == (int)tipoDocumento && f.nombre == name);
             if (documento != null)
             {
                 return new DocumentosModel()
                 {
+                    Empresa = Empresa,
                     Defecto = defectoName == documento.nombre,
                     Tipo = tipoDocumento,
                     CustomId = CreateCustomId(tipoDocumento, documento.fkusuario, documento.nombre),
@@ -80,11 +94,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
 
         public DocumentosModel GetDocumentoParaImprimir(TipoDocumentoImpresion tipoDocumento, Guid usuario, string name)
         {
-            var documento = _db.DocumentosUsuario.SingleOrDefault(f =>( f.fkusuario == usuario ||f.fkusuario==Guid.Empty )&& f.tipo == (int)tipoDocumento && f.nombre == name);
+            var documento = _db.DocumentosUsuario.SingleOrDefault(f => f.empresa == Empresa && ( f.fkusuario == usuario ||f.fkusuario==Guid.Empty )&& f.tipo == (int)tipoDocumento && f.nombre == name);
             if (documento != null)
             {
                 return new DocumentosModel()
                 {
+                    Empresa = Empresa,
                     Tipo = tipoDocumento,
                     CustomId = CreateCustomId(tipoDocumento, documento.fkusuario, documento.nombre),
                     Nombre = documento.nombre,
@@ -102,9 +117,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
 
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
-                var item = _db.DocumentosUsuario.SingleOrDefault(f => f.fkusuario == usuario && f.tipo == (int)tipoDocumento && f.nombre == name) ??
+                var item = _db.DocumentosUsuario.SingleOrDefault(f => f.empresa == Empresa && f.fkusuario == usuario && f.tipo == (int)tipoDocumento && f.nombre == name) ??
                            _db.DocumentosUsuario.Create();
 
+                item.empresa = Empresa;
                 item.fkusuario = usuario;
                 item.tipo = (int)tipoDocumento;
                 item.nombre = name;
@@ -133,7 +149,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
         {
             var documento =
                 _db.DocumentosUsuario.SingleOrDefault(
-                    f => f.fkusuario == usuario && f.tipo == (int) tipoDocumento && f.nombre == name);
+                    f => f.empresa == Empresa && f.fkusuario == usuario && f.tipo == (int) tipoDocumento && f.nombre == name);
 
             var service = new PreferenciasUsuarioService(_db);
             var doc=service.GePreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto");

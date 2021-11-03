@@ -47,7 +47,7 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult Index(string reportId, string returnUrl, bool nuevo)
         {
           
-            var service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var service = new DocumentosUsuarioService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var userService = FService.Instance.GetService(typeof(UsuariosModel),ContextService) as UsuariosService;
 
             TipoDocumentoImpresion tipoDocumento;
@@ -83,7 +83,7 @@ namespace Marfil.App.WebMain.Controllers
 
             
             var reportByteVector = ReportDesignerExtension.GetReportXml("Reportdesigner");
-            var service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var service = new DocumentosUsuarioService(ContextService,MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var tipoDocumento = (TipoDocumentoImpresion)Enum.Parse(typeof(TipoDocumentoImpresion), parametros["tipodocumento"]);
             var tipoprivacidad = (TipoPrivacidadDocumento)Enum.Parse(typeof(TipoPrivacidadDocumento), parametros["tipoprivacidad"]);
             var tiporeport = (TipoReport)Enum.Parse(typeof(TipoReport), parametros["tiporeport"]);
@@ -109,7 +109,7 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult Export(string id)
         {
             
-            var service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var service = new DocumentosUsuarioService(ContextService,MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             TipoDocumentoImpresion tipoDocumento;
             Guid usuario;
             string name;
@@ -178,7 +178,7 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult Visualizar(string tipo, string reportId, string primarykey)
         {
            
-            var service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var service = new DocumentosUsuarioService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
 
             TipoDocumentoImpresion tipoDocumento = (TipoDocumentoImpresion)Enum.Parse(typeof(TipoDocumentoImpresion), tipo);
             Guid usuario = ContextService.Id;
@@ -207,7 +207,7 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult Descargar(string tipo, string reportId, string primarykey)
         {
             
-            var service = new DocumentosUsuarioService(MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var service = new DocumentosUsuarioService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
 
             var tipoDocumento = (TipoDocumentoImpresion)Enum.Parse(typeof(TipoDocumentoImpresion), tipo);
             Guid usuario = ContextService.Id;

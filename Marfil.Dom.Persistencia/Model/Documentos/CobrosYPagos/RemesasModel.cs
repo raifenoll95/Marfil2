@@ -176,11 +176,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
                 var doc = servicePreferencias.GetDocumentosImpresionMantenimiento(user.Id, TipoDocumentoImpresion.Remesa.ToString(), "Defecto") as PreferenciaDocumentoImpresionDefecto;
-                var service = new DocumentosUsuarioService(db);
+                var service = new DocumentosUsuarioService(Context, db);
                 {
                     var lst =
                         service.GetDocumentos(TipoDocumentoImpresion.Remesa, user.Id)
-                            .Where(f => f.Tiporeport == TipoReport.Report);
+                            .Where(f =>f.Tiporeport == TipoReport.Report);
                     return new DocumentosBotonImprimirModel()
                     {
                         Tipo = TipoDocumentoImpresion.Remesa,
