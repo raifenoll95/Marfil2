@@ -958,4 +958,7 @@
   <data name="LblFamilia" xml:space="preserve">
     <value>Familia</value>
   </data>
+  <data name="LblMensajeConfirmacionAnulado" xml:space="preserve">
+    <value>Va a crear un asiento nuevo de anulación ¿Desea continuar?</value>
+  </data>
 </root>

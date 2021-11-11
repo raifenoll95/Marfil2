@@ -1007,11 +1007,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.Stockactual.Where(f => f.empresa == Empresa && f.fkarticulos == fkarticulo).Select(f => f.cantidaddisponible).Sum();
         }
 
-        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
     }
 }

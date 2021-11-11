@@ -1,0 +1,16 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Invertirasiento, new {@class = "control-label col-md-4"})
+        <div class="col-md-1">
+            @Html.CheckBoxFor(f => Model.Invertirasiento)
+        </div>
+    </div>
+
+
+
+

@@ -632,11 +632,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
-        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
     }
 }

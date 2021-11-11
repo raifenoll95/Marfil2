@@ -580,6 +580,14 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Cancelacionriesgoremesa = value; }
         }
 
+        //Contabilidad
+        [Display(ResourceType = typeof(RConfiguracion), Name = "Invertirasiento")]
+        public bool Invertirasiento
+        {
+            get { return Model.Invertirasiento; }
+            set { Model.Invertirasiento = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -702,6 +710,7 @@ namespace Marfil.Dom.Persistencia.Model
         public string Estadoincidenciastotal { get; set; }
 
         public int Cancelacionriesgoremesa { get; set; }
+        public bool Invertirasiento { get; set; }
 
     }
 }

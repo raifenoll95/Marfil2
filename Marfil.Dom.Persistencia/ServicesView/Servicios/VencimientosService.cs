@@ -804,7 +804,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
 
                 //Asignamos referencia remesa
-                if ((bool)esRemesable)
+                if ((bool)esRemesable && circuito.anularremesa == false)
                 {
                     fkseriescontablesremesa = model.Fkseriescontables;
                     var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa);
@@ -837,7 +837,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var referenciaremesa = "";
                 var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
                 //Asignamos referencia remesa
-                if ((bool)esRemesable)
+                if ((bool)esRemesable && circuito.anularremesa == false)
                 {
                     fkseriescontablesremesa = model.Fkseriescontables;
                     var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa);

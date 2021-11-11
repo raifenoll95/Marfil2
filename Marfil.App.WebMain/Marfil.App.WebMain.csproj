@@ -3601,6 +3601,7 @@
     <Content Include="Views\Remesas\_desglose.cshtml" />
     <Content Include="Views\CuadernosBancarios\_detalle.cshtml" />
     <Content Include="Views\Configuracion\_tesoreria.cshtml" />
+    <Content Include="Views\Configuracion\_contabilidad.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

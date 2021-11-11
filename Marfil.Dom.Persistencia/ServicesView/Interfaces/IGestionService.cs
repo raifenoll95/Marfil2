@@ -18,7 +18,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Interfaces
     public interface IDocumentosServices
     {
         void SetEstado(IModelView model, EstadosModel nuevoEstado);
-        Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado);
     }
     public interface IGestionService:IDisposable 
     {

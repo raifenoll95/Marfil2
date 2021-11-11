@@ -76,7 +76,7 @@ namespace Marfil.App.WebMain.Controllers
                         {                           
                             var referencia = service.GetDocumentoCreado(model);
                             TempData[Constantes.VariableMensajeExito] = referencia != null && referencia != "" ? General.MensajeExitoOperacion + ". Se ha creado la remesa " + referencia : General.MensajeExitoOperacion;
-                        }
+                        } 
                         else
                         {
                             TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
@@ -89,7 +89,7 @@ namespace Marfil.App.WebMain.Controllers
             }
             catch (Exception ex)
             {
-                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                TempData[Constantes.VariableMensajeWarning] = ex.InnerException;
             }
 
             return RedirectToAction("AsistenteMovimientosTesoreria");

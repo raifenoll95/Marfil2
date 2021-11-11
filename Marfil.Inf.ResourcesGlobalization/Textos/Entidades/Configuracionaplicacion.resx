@@ -207,4 +207,10 @@
   <data name="Tesoreria" xml:space="preserve">
     <value>Tesorería</value>
   </data>
+  <data name="Contabilidad" xml:space="preserve">
+    <value>Contabilidad</value>
+  </data>
+  <data name="Invertirasiento" xml:space="preserve">
+    <value>Invertir asiento al anular un documento del diario</value>
+  </data>
 </root>

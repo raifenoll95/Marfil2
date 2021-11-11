@@ -1807,6 +1807,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Va a crear un asiento nuevo de anulación ¿Desea continuar?.
+        /// </summary>
+        public static string LblMensajeConfirmacionAnulado {
+            get {
+                return ResourceManager.GetString("LblMensajeConfirmacionAnulado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Está apunto de eliminar el registro.¿Desea continuar?.
         /// </summary>
         public static string LblMensajeConfirmacionBorrado {

@@ -730,9 +730,5 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == "FRA" && f.id == model.Fkseries).Select(f => f.rectificativa).SingleOrDefault();
         }
 
-        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

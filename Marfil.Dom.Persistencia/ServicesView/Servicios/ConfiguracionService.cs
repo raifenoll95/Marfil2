@@ -75,6 +75,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var dias = int.Parse(nodo[0].InnerText);
             return dias;
         }
+
+        public string GetInvertirAsiento()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Invertirasiento");
+            var invertir = nodo[0].InnerText;
+            return invertir;
+        }
     }
 
 }

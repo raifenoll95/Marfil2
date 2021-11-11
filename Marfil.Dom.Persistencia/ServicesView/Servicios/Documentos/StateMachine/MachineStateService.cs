@@ -150,7 +150,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.StateMachine
 
             objState.Fkestados = nuevoEstado.CampoId;
 
-            await service.SetEstadoAsync(obj, nuevoEstado);
+            service.SetEstado(obj, nuevoEstado);
         }
 
         public IEnumerable<TipoEstado> GetStatesFromState(TipoEstado estado)

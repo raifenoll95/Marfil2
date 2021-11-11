@@ -97,6 +97,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Contabilidad.
+        /// </summary>
+        public static string Contabilidad {
+            get {
+                return ResourceManager.GetString("Contabilidad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descontar descuento comercial.
         /// </summary>
         public static string Descontardescuentocomercial {
@@ -273,6 +282,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Gestionarrevisiones {
             get {
                 return ResourceManager.GetString("Gestionarrevisiones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invertir asiento al anular un documento del diario.
+        /// </summary>
+        public static string Invertirasiento {
+            get {
+                return ResourceManager.GetString("Invertirasiento", resourceCulture);
             }
         }
         

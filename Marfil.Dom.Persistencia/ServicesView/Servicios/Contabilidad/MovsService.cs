@@ -209,10 +209,50 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
+                //Nov2021 - Cambio legal, no se permite borrar asientos
                 var model = obj as MovsModel;
-                base.delete(obj);
+                var modelAnul = obj as MovsModel;
+                /*base.delete(obj);
                 var maesService = new MaesService(_context, _db);
-                maesService.GenerarMovimiento(model, TipoOperacionMaes.Baja);
+                maesService.GenerarMovimiento(model, TipoOperacionMaes.Baja);*/
+
+                var serviceConfig = new ConfiguracionService(_context, _db);
+                var invertir = serviceConfig.GetInvertirAsiento();
+
+                if (invertir == "false")
+                {
+                    foreach (var item in modelAnul.Lineas)
+                    {
+                        item.Debe = item.Debe * -1;
+                        item.Haber = item.Haber * -1;
+                    }
+                    modelAnul.Debe = modelAnul.Debe * -1;
+                    modelAnul.Haber = modelAnul.Haber * -1;
+                }
+                else
+                {
+                    foreach (var item in modelAnul.Lineas)
+                    {
+                        var debeLin = item.Debe;
+                        var haberLin = item.Haber;
+
+                        item.Debe = haberLin;
+                        item.Haber = debeLin;
+                    }
+                    var debe = modelAnul.Debe;
+                    var haber = modelAnul.Haber;
+
+                    modelAnul.Debe = haber;
+                    modelAnul.Haber = debe;
+
+                }
+                
+                modelAnul.Id = _db.Movs.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
+                modelAnul.Fecha = DateTime.Now;
+                modelAnul.Descripcionasiento = "ANULACIÓN " + model.Descripcionasiento;
+
+                create(modelAnul);
+                //Nov2021
 
                 //cambiar estado factura relacionado
                 var serie = model.Traza.Split('-')[0];
@@ -230,7 +270,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasVentas, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
                     var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasVentas).SingleOrDefault() ?? listEstadosInicial.First();
                                       
-                    service.SetEstadoAsync(modelview, nuevoEstado);                                    
+                    service.SetEstado(modelview, nuevoEstado);                                    
                 }
                 else
                 {
@@ -244,7 +284,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasCompras, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
                     var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasCompras).SingleOrDefault() ?? listEstadosInicial.First();
 
-                    service.SetEstadoAsync(modelview, nuevoEstado);
+                    service.SetEstado(modelview, nuevoEstado);
                 }
                 
                 _db.SaveChanges();

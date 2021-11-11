@@ -597,10 +597,5 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var service = new BuscarDocumentosService(_db, Empresa);
             return service.Get<PedidosModel,PedidosLinModel,PedidosTotalesModel>(this, referencia);
         }
-
-        public Task SetEstadoAsync(IModelView model, EstadosModel nuevoEstado)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
