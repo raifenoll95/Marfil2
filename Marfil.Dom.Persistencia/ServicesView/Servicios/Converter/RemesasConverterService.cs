@@ -46,7 +46,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fechapago = viewmodel.Fechapago;
             result.monedabase = viewmodel.Monedabase;
             result.monedagiro = viewmodel.Monedagiro;
-            result.importegiro = viewmodel.Importegiro;
+            result.importegiro = Math.Round((double)viewmodel.Importegiro, 2);
             result.cambioaplicado = viewmodel.Cambioaplicado;
             result.fkcuentastesoreria = viewmodel.Fkcuentastesoreria;
             result.mandato = viewmodel.Mandato;
@@ -88,7 +88,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fechapago = viewmodel.Fechapago;
             result.monedabase = viewmodel.Monedabase;
             result.monedagiro = viewmodel.Monedagiro;
-            result.importegiro = viewmodel.Importegiro;
+            result.importegiro = Math.Round((double)viewmodel.Importegiro, 2);
             result.cambioaplicado = viewmodel.Cambioaplicado;
             result.fkcuentastesoreria = viewmodel.Fkcuentastesoreria;
             result.mandato = viewmodel.Mandato;

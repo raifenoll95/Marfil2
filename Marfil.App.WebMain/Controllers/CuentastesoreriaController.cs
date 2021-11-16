@@ -138,6 +138,7 @@ namespace Marfil.App.WebMain.Controllers
             var CuentaModel = servicioCuentasTesoreria.get(cuenta) as CuentasModel;
             var data = JsonConvert.SerializeObject(CuentaModel, Formatting.Indented);
             return Json(data, JsonRequestBehavior.AllowGet);
+            //return CuentaModel.Descripcion;
         }
 
 

@@ -252,9 +252,8 @@
     $('#Circuitostesoreria').on('DOMSubtreeModified', function () {
         var valor = $("#Circuitotesoreria").val();
         if (valor != null && valor != "") {
-            //console.log('El valor es ' + valor);
-            //cambio(valor);
 
+            //cambio(valor);
             //Modo de pago
             $.ajax({
                 url: '@Url.Action("ObtenerPreferido","MovimientosTesoreria")',

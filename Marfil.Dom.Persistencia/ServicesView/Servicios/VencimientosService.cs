@@ -229,7 +229,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Id = linea.codcartera,
                     Referencia = cartera.referencia,
                     Fkcuentas = cartera.fkcuentas,
-                    Importegiro = cartera.importegiro.Value,
+                    Importegiro = Math.Round(cartera.importegiro.Value,2),
                     Fechavencimiento = cartera.fechavencimiento,
                     Fecha = cartera.fecha,
                     Situacion = cartera.situacion,
@@ -264,7 +264,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Traza = vencimiento.traza,
                     FechaStrfactura = vencimiento.fechafactura.ToString().Split(' ')[0],
                     FechaStrvencimiento = vencimiento.fechavencimiento.ToString().Split(' ')[0],
-                    Importegiro = vencimiento.importegiro.Value - vencimiento.importeasignado.Value,
+                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value,2),
                     Fkformaspago = vencimiento.fkformaspago,
                     FormaPago = formapago,
                     Fkcuentatesoreria = vencimiento.fkcuentatesoreria
@@ -334,7 +334,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fkcuentas = venc.fkcuentas,
                         FkcuentasDescripcion = descripcioncuenta,
                         Fechavencimiento = venc.fechavencimiento.ToString().Split(' ')[0],
-                        Importegiro = venc.importegiro - venc.importeasignado,
+                        Importegiro = Math.Round((double)(venc.importegiro - venc.importeasignado), 2),
                         ImporteAsignado = venc.importeasignado,
                         Situacion = venc.situacion,
                         Fkformaspago = formapago,
@@ -405,7 +405,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fkcuentas = venc.fkcuentas,
                         FkcuentasDescripcion = descripcioncuenta,
                         Fechavencimiento = venc.fechavencimiento.ToString().Split(' ')[0],
-                        Importegiro = venc.importegiro,
+                        Importegiro = Math.Round((double)venc.importegiro, 2),
                         ImporteAsignado = null,
                         Situacion = venc.situacion,
                         Fkformaspago = formapago,
@@ -815,6 +815,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var prevision in registros)
                 {
                     var registro = get(prevision) as VencimientosModel;
+                    registro.Importegiro = Math.Round((double)registro.Importegiro, 2);
                     serviceCarteraVencimientos.create(CrearRegistroCartera(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa));
 
                     if ((bool)esRemesable)
@@ -848,6 +849,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var id in registros)
                 {
                     var carteraModel = carteraService.get(id) as CarteraVencimientosModel;
+                    carteraModel.Importegiro = Math.Round((double)carteraModel.Importegiro, 2);
                     var referenciaRemesa = carteraModel.Referenciaremesa;
                     editarSituacionCartera(carteraModel, model, circuito.situacionfinal,circuito.anularremesa, fkseriescontablesremesa, referenciaremesa, identificadorsegmentoremesa, esprevision);
                     if ((bool)circuito.anularremesa)

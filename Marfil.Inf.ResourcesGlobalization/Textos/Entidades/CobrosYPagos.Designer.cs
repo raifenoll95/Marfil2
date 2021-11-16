@@ -448,6 +448,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Generada.
+        /// </summary>
+        public static string Generada {
+            get {
+                return ResourceManager.GetString("Generada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Importe Vto..
         /// </summary>
         public static string Giroimporte {

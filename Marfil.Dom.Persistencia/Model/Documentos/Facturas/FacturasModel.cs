@@ -895,7 +895,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
         [Display(ResourceType = typeof(RFacturas), Name = "Importevencimiento")]
         public string SImporetevencimiento
         {
-            get { return (Importevencimiento ?? 0.0).ToString("N" + Decimalesmonedas); }
+            get { return (Importevencimiento ?? 0).ToString("N" + Decimalesmonedas); }
             set { Importevencimiento = Funciones.Qdouble(value); }
         }
         public int? Decimalesmonedas { get; set; }

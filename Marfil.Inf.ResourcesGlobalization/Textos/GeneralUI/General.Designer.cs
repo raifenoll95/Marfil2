@@ -772,6 +772,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Anular asiento.
+        /// </summary>
+        public static string LblAnular {
+            get {
+                return ResourceManager.GetString("LblAnular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a aquí.
         /// </summary>
         public static string LblAqui {

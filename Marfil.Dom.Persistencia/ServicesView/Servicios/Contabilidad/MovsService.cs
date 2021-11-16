@@ -255,36 +255,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //Nov2021
 
                 //cambiar estado factura relacionado
-                var serie = model.Traza.Split('-')[0];
-                var tipoDocumento = _db.Series.Where(f => f.empresa == Empresa && f.id == serie).Select(f => f.tipodocumento).SingleOrDefault();                
-
-                if (tipoDocumento == "FRA")
+                if (model.Traza != null && model.Traza != "")
                 {
-                    var service = FService.Instance.GetService(typeof(FacturasModel), _context) as FacturasService;
-                    var idFactura = _db.Facturas.Where(f => f.empresa == Empresa && f.referencia == model.Traza).Select(f => f.id).SingleOrDefault().ToString();
+                    var serie = model.Traza.Split('-')[0];
+                    var tipoDocumento = _db.Series.Where(f => f.empresa == Empresa && f.id == serie).Select(f => f.tipodocumento).SingleOrDefault();
 
-                    var _converterModel = FConverterModel.Instance.CreateConverterModelService<FacturasModel, Facturas>(_context, _db, Empresa);
-                    var modelview = _converterModel.CreateView(idFactura);                    
+                    if (tipoDocumento == "FRA")
+                    {
+                        var service = FService.Instance.GetService(typeof(FacturasModel), _context) as FacturasService;
+                        var idFactura = _db.Facturas.Where(f => f.empresa == Empresa && f.referencia == model.Traza).Select(f => f.id).SingleOrDefault().ToString();
 
-                    var serviceEstados = new EstadosService(_context);
-                    var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasVentas, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
-                    var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasVentas).SingleOrDefault() ?? listEstadosInicial.First();
-                                      
-                    service.SetEstado(modelview, nuevoEstado);                                    
-                }
-                else
-                {
-                    var service = FService.Instance.GetService(typeof(FacturasComprasModel), _context) as FacturasComprasService;
-                    var idFactura = _db.FacturasCompras.Where(f => f.empresa == Empresa && f.referencia == model.Traza).Select(f => f.id).SingleOrDefault().ToString();
+                        var _converterModel = FConverterModel.Instance.CreateConverterModelService<FacturasModel, Facturas>(_context, _db, Empresa);
+                        var modelview = _converterModel.CreateView(idFactura);
 
-                    var _converterModel = FConverterModel.Instance.CreateConverterModelService<FacturasComprasModel, FacturasCompras>(_context, _db, Empresa);
-                    var modelview = _converterModel.CreateView(idFactura);
+                        var serviceEstados = new EstadosService(_context);
+                        var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasVentas, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
+                        var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasVentas).SingleOrDefault() ?? listEstadosInicial.First();
 
-                    var serviceEstados = new EstadosService(_context);
-                    var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasCompras, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
-                    var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasCompras).SingleOrDefault() ?? listEstadosInicial.First();
+                        service.SetEstado(modelview, nuevoEstado);
+                    }
+                    else
+                    {
+                        var service = FService.Instance.GetService(typeof(FacturasComprasModel), _context) as FacturasComprasService;
+                        var idFactura = _db.FacturasCompras.Where(f => f.empresa == Empresa && f.referencia == model.Traza).Select(f => f.id).SingleOrDefault().ToString();
 
-                    service.SetEstado(modelview, nuevoEstado);
+                        var _converterModel = FConverterModel.Instance.CreateConverterModelService<FacturasComprasModel, FacturasCompras>(_context, _db, Empresa);
+                        var modelview = _converterModel.CreateView(idFactura);
+
+                        var serviceEstados = new EstadosService(_context);
+                        var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.FacturasCompras, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
+                        var nuevoEstado = listEstadosInicial.Where(f => f.Documento == DocumentoEstado.FacturasCompras).SingleOrDefault() ?? listEstadosInicial.First();
+
+                        service.SetEstado(modelview, nuevoEstado);
+                    }
                 }
                 
                 _db.SaveChanges();
@@ -292,9 +295,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
         }
-
-
-
         #endregion
 
 

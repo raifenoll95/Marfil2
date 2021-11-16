@@ -135,8 +135,26 @@ app.controller('CampoverificacionController', [
                 console.log("control asociado: " + controlAsociado + " " + message);
                 $scope.valor = message;
                 var element = window.document.getElementById($scope.controlAsociado);
+
+                //Tesoreria
+                if (controlAsociado == "Fkcuentatesoreria") {
+                    var cvelement = window.document.getElementById("cv-" + $scope.controlAsociado + "-descripcion");
+                }
+                //
+
                 if (element) {
-                    element.value=message;
+                    element.value = message;
+
+                    //Tesoreria
+                    if (cvelement) {
+                        var cuenta = message;
+                        $http.get("/Cuentastesoreria/obtenerCuentaTesoreria" + "?cuenta=" + cuenta).success(function (data) {
+                            var modelo = JSON.parse(data);
+                            cvelement.textContent = modelo.Descripcion;
+                        });
+                    }
+                    //
+
                     element.focus();
                 }
                 $scope.lostFocus(); 

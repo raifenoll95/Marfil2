@@ -29,7 +29,7 @@
     var cvcircuitos = FCampoverificacion.Instance.GetModel<CircuitoTesoreriaCobrosModel>(WebHelper.ContextService);
 
     //var actualizarCuenta = WebHelper.GetApplicationHelper().GetActualizarCuenta(int.Parse(Model.Circuitotesoreria));
-   // var solictarDatos = WebHelper.GetApplicationHelper().GetSolicitarDatos(int.Parse(Model.Circuitotesoreria));
+    // var solictarDatos = WebHelper.GetApplicationHelper().GetSolicitarDatos(int.Parse(Model.Circuitotesoreria));
 
 }
 
@@ -53,7 +53,7 @@
     @*Cobrador, si en las cuentas hay alguna 'C'*@
     <div class="form-group">
         @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-10" id="Cuentas">
             @{
                 cvcuentastesoreria.Name = "Fkcuentatesoreria";
                 cvcuentastesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
@@ -196,52 +196,58 @@
 
 <script type="text/javascript">
 
-        function cambio(cuenta) {
-            console.log(cuenta);
-            $.ajax({
-                 url: '@Url.Action("CambiarDescripcion", "Cuentas")',
-                dataType: "text",
-                type: "GET",
-                data: { cuenta },
-                success: function (data) {
-                    document.getElementById("lblFkcuentatesoreria").textContent = data;
-                }
-            });
-        }
+    /*$(document).ready(function() {
+        cambio();
+    });*/
 
-        $("#Fkcuentatesoreria").on('change', function () {
-            var cuenta = this.value;
-            console.log(cuenta);
+        function cambio() {
+            var cuenta = $("#Fkcuentatesoreria").val();
+            console.log("onLoad - " + cuenta);
             $.ajax({
                 url: '@Url.Action("CambiarDescripcion", "Cuentas")',
                 dataType: "text",
                 type: "GET",
                 data: { cuenta },
                 success: function (data) {
-                    console.log(data);
-                    document.getElementById("lblFkcuentatesoreria").textContent = data;
-                }
-            })
-        });
-
-    $('#Fkcuentatesoreria').on('DOMSubtreeModified', function () {
-        var cuenta = $("#Fkcuentatesoreria").val();
-        console.log("LA CUENTA ES " + cuenta);
-        if (cuenta != null && cuenta != "") {
-            //cambio(cuenta);
-            console.log("LA CUENTA2 ES " + cuenta);
-            $.ajax({
-                 url: '@Url.Action("CambiarDescripcion", "Cuentas")',
-                dataType: "text",
-                type: "GET",
-                data: { cuenta },
-                success: function (data) {
-                    console.log(data);
-                    document.getElementById("lblFkcuentatesoreria").textContent = data;
+                    $("#cv-Fkcuentatesoreria-descripcion").val(data);
                 }
             });
         }
 
-    });
+        $("#Fkcuentatesoreria").on('change', function () {
+            var cuenta = this.value;
+            console.log("Onchange Cuenta - " + cuenta);
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    console.log("Onchange - " + data);
+                    //$("#cv-Fkcuentatesoreria-descripcion").empty();
+                    $("#cv-Fkcuentatesoreria-descripcion").text(data);
+                }
+            })
+        });
+
+    @*$('#Fkcuentatesoreria').one('DOMSubtreeModified', function () {
+        var cuenta = $("#Fkcuentatesoreria").val();
+        console.log("DOM CUENTA - " + cuenta);
+        if (cuenta != null && cuenta != "") {
+            //cambio(cuenta);
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    console.log("DOM - " + data);
+                    //$("#cv-Fkcuentatesoreria-descripcion").empty();
+                    $("#cv-Fkcuentatesoreria-descripcion").text(data);
+                }
+            });
+        }
+
+    });*@
 
 </script>

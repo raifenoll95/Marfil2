@@ -378,4 +378,7 @@
   <data name="Valida" xml:space="preserve">
     <value>Valida</value>
   </data>
+  <data name="Generada" xml:space="preserve">
+    <value>Generada</value>
+  </data>
 </root>

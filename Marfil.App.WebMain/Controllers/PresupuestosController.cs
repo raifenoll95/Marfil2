@@ -292,12 +292,16 @@ namespace Marfil.App.WebMain.Controllers
                 Url = Url.Action("Clonar", new { id = objModel.Id })
             });
 
-            result.Add(new ToolbarActionModel()
+            //Si es finalizado no se muestra el botón
+            if (objModel.Fkestados != "99-003")
             {
-                Icono = "fa fa-cubes",
-                Texto = General.Presupuestar,
-                Url = Url.Action("Fabricar", new { id = objModel.Id })
-            });
+                result.Add(new ToolbarActionModel()
+                {
+                    Icono = "fa fa-cubes",
+                    Texto = General.Presupuestar,
+                    Url = Url.Action("Fabricar", new { id = objModel.Id })
+                });
+            }          
 
             result.Add(new ToolbarSeparatorModel());
             result.Add(CreateComboImprimir(objModel));
@@ -662,16 +666,17 @@ namespace Marfil.App.WebMain.Controllers
                     }
 
                     gestionService.edit(model);
-                    TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;     
+                    TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                 }
             }
 
             catch (Exception ex)
             {
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                
             }
-
             return RedirectToAction("Index");
+
         }
 
         #region componentes

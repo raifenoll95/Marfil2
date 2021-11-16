@@ -65,6 +65,7 @@ namespace Marfil.App.WebMain.Controllers
 
         public FileResult Descargar(string filepath)
         {
+
             return File(filepath, "application/force- download", Path.GetFileName(filepath));
         }
 
@@ -318,6 +319,9 @@ namespace Marfil.App.WebMain.Controllers
                         }
                     }
                 }
+
+                //Remesa cambia a Generada
+                service.CambiarEstado(remesa);
             }
 
             return Descargar(filepath);

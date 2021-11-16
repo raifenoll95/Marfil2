@@ -299,5 +299,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 throw ex;
             }
         }
+
+        public void CambiarEstado(Remesas remesa)
+        {
+            remesa.estado = (int)TipoEstadoRemesa.Generada;
+
+            _db.SaveChanges();
+        }
     }
 }

@@ -1,247 +1,256 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <xml>
-  <item name="ficheros" text="Ficheros generales" icono="fa fa-folder">
-    <item name="mantformaspago" allowBlock="true" text="Formas de pago" url="~/FormasPago/Index" />
-    <item name="situacionestesoreria" allowUpdate="true" allowDelete="true" text="situacionestesoreria" url="~/SituacionesTesoreria/Index"></item>
-    <item name="estados" allowBlock="true" text="estados" url="~/Estados/Index" />
-    <item name="tablasvarias" text="Tablas varias" url="~/TablasVarias/Index" allowDelete="false" allowCreate="false" />
-    <item name="seccionesanaliticas" url="~/SeccionesAnaliticas/Index" allowBlock="true" />
-    <item name="unidades" text="Unidades de medida" url="~/Unidades/Index" />
-    <item isseparator="true"></item>
-    <item name="monedas" text="Monedas" url="~/Monedas/Index" />
-    <item name="cambiosmonedas" allowCreate="false" allowDelete="false" text="Gestión de cambios de monedas" url="~/Cambios/Index" />
-    <item isseparator="true"></item>
-    <item name="bancos" text="Bancos" url="~/Bancos/Index" />
-    <item name="municipios" text="Municipios" url="~/Municipios/Index" />
-    <item name="provincias" text="Provincias" url="~/Provincias/Index" />
-    <item name="puertos" text="Puertos" url="~/Puertos/Index" />
-    <item isseparator="true"></item>
-    <item name="criteriosagrupacion" text="Criterios de agrupación  " url="~/Criteriosagrupacion/Index" />
-  </item>
-  <item name="configuracion" icono="fa fa-cog" text="Configuración" isAdmin="false">
-    <item name="seriesdocumentos" allowBlock="true" text="series" url="~/Series/Index" />
-    <item name="seriescontables" allowBlock="true" text="series" url="~/SeriesContables/Index" />
-    <item name="contadores" text="contadores" url="~/Contadores/Index" />
-    <item name="tiposcuentas" text="Tipos de cuentas" url="~/Tiposcuentas/Index" />
-	<item name="inmuebles" text="Inmuebles" url="~/Inmuebles/Index" />
-  </item>
-  <item name="contabilidad" text="Contabilidad" icono="fa fa-line-chart">
-    <item name="movs" allowBlock="true" text="Diario contable" url="~/Movs/Index" />
-    <item isseparator="true"></item>
-    <item name="cuentas" allowBlock="true" text="Cuentas" url="~/Cuentas/Index" />
-    <item isseparator="true"></item>
-    <item name="tesoreria" text="Tesorería" icono="fa fa-money">
-      <item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
-      <item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
-      <item name="carteravencimientos" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/CarteraVencimientos/Index" />
-	  <item name="remesas" allowUpdate="true" allowDelete="true" text="Remesas" icono="fa fa-file" url="~/Remesas/Index" />
-      <item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
-      <item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
-    </item>
-    <item name="listado" text="Listados" icono="fa fa-list">
-      <item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />
-      <item name="listadomayor" eslistado="true" text="Mayor" icono="fa fa-file" url="~/ListadosMayor/Listado/Mayor" />
-      <item name="listadobalancesumasysaldos" eslistado="true" text="Sumas y saldos" icono="fa fa-file" url="~/ListadosBalanceSumasYSaldos/Listado/SumasYSaldos" />
-      <item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances/Index" />
-      <item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
-      <item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
-    </item>
-	<item name="configuracion" text="Configuración" icono="fa fa-cog">
-      <item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
-      <item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />
-      <item name="regimeniva" text="Régimen de IVA" url="~/RegimenIva/Index" />
-      <item isseparator="true"></item>
-      <item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
-      <item isseparator="true"></item>
-      <item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
-      <item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" icono="fa fa-file" url="~/CircuitosTesoreria/Index" />
-	  <item name="cuadernosBancarios" allowBlock="true" text="CuadernosBancarios" url="~/CuadernosBancarios/Index" />
-    </item>
-    <item name="configurardocumentosdiario" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1000" />
-    <item name="configurardocumentosmayor" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1010" />
-    <item name="configurardocumentossumas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1015" />
-    <item name="configurardocumentoscartera" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1050" />
-	<item name="configurardocumentosremesa" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1060" />   
-  </item>
-  <item name="terceros" text="Terceros" icono="fa fa-group">
-    <item name="clientes" allowBlock="true" text="Clientes" url="~/Clientes/Index" />
-    <item name="proveedores" allowBlock="true" text="Proveedores" url="~/Proveedores/Index" />
-    <item name="acreedores" allowBlock="true" text="Acreedores" url="~/Acreedores/Index" />
-    <item name="cuentastesoreria" allowBlock="true" text="Cuentas de tesoreria" url="~/Cuentastesoreria/Index" />
-    <item name="operarios" allowBlock="true" text="Operarios" url="~/Operarios/Index" />
-    <item name="agentes" allowBlock="true" text="Agentes" url="~/Agentes/Index" />
-    <item name="comerciales" allowBlock="true" text="Comerciales" url="~/Comerciales/Index" />
-    <item name="prospectos" allowBlock="true" text="Prospectos" url="~/Prospectos/Index" />
-    <item name="transportistas" allowBlock="true" text="Transportistas" url="~/Transportistas/Index" />
-    <item name="aseguradoras" allowBlock="true" text="Compañías de seguros" url="~/Aseguradoras/Index" />
-    <item isseparator="true"></item>
-    <item name="listado" text="Listados" icono="fa fa-list">
-      <item name="listadoterceros" eslistado="true" text="Clientes" icono="fa fa-file" url="~/ListadosTerceros/Listado/TercerosGeneral" />
-    </item>
-  </item>
-  <item name="ventas" text="Ventas" icono="fa fa-tags">
-    <item name="headerpresupuestos" text="Presupuestos" icono="fa fa-folder-o">
-      <item name="presupuestos" text="Gestión de presupuestos" icono="fa fa-file" url="~/Presupuestos/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralpresupuestos" eslistado="true" text="Listado de general" icono="fa fa-file" url="~/ListadosPresupuestos/Listado/PresupuestosCabecera" />
-        <item name="listadodetalladopresupuestos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoPresupuestos/Listado/PresupuestosDetallado" />
-        <item name="listadoproductospresupuestos"  eslistado="true" text="Listado productos en presupuestos" icono="fa fa-file" url="~/ListadoProductosPresupuestos/Listado/ProductosEnPresupuestos" />
-      </item>
-      <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/0" />
-    </item>
-    <item name="headerpedidos" text="pedidos" icono="fa fa-folder-o">
-      <item name="pedidos" text="Gestión de pedidos" icono="fa fa-file" url="~/pedidos/Index" />
-      <item name="reservas" text="Gestión de reservas" icono="fa fa-file" url="~/Reservasstock/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralpedidos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadospedidos/Listado/PedidosCabecera" />
-        <item name="listadodetalladopedidos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopedidos/Listado/PedidosDetallado" />
-        <item name="listadoproductospedidos" eslistado="true"  text="Listado productos en pedidos" icono="fa fa-file" url="~/ListadoProductosPedidos/Listado/ProductosEnPedidos" />
-        <item name="listadoreservasmaterial" eslistado="true"  text="Listado productos en pedidos" icono="fa fa-file" url="~/ListadoReservas/Listado/ListadosReservas" />
-        <item name="listadosbalancepedidos" eslistado="true"  text="Listado balance pedidos" icono="fa fa-file" url="~/ListadosBalancePedidos/ListadosBalancePedidos" />
-      </item>
-      <item name="asistentepedidoscompras" excluirConAA="true" text="Gestión de reservas" icono="fa fa-magic" url="~/Pedidos/AsistentePedidosCompra" />
-      <item name="configurardocumentospedidos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1" />
-      <item name="configurardocumentosreservas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/50" />
-      <item name="configurardocumentosbalancepedidos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1020" />
-    </item>
-    <item name="headeralbaranes" text="albaranes" icono="fa fa-folder-o">
-      <item name="albaranes" text="Gestión de albaranes" icono="fa fa-file" url="~/Albaranes/Index" />
-      <item name="entregasstock" text="Gestión de albaranes" icono="fa fa-file" url="~/EntregasStock/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralalbaranes" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosalbaranes/Listado/AlbaranesCabecera" />
-        <item name="listadodetalladoalbaranes" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoalbaranes/Listado/AlbaranesDetallado" />
-        <item name="listadoproductosalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoProductosAlbaranes/Listado/ProductosEnAlbaranes" />
-		<item name="listadoinformemargen"  eslistado="true" text="Listado de margen" icono="fa fa-file" url="~/ListadoInformeMargen/Listado/InformeMargen" />      
-	  </item> 
-		<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2" />
-      <item name="configurardocumentoslistadomargen" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1025" />
-    </item>
-    <item name="headerfacturas" text="facturas" icono="fa fa-folder-o">
-      <item name="facturas" allowCreate="false" text="Gestión de facturas" icono="fa fa-file" url="~/Facturas/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralfacturas" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosfacturas/Listado/FacturasCabecera" />
-        <item name="listadodetalladofacturas" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladofacturas/Listado/FacturasDetallado" />
-        <item name="listadoproductosfacturas" eslistado="true"  text="Listado productos en facturas" icono="fa fa-file" url="~/ListadoProductosFacturas/Listado/ProductosEnFacturas" />
-        <item name="listadoscomision" eslistado="true"  text="Listado de comisiones" icono="fa fa-file" url="~/ListadosComisiones/Listado/Comisiones" />
-      </item>
-      <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/3" />
-      <item name="procesofacturacion"  text="Asistente de facturación" icono="fa fa-magic" url="~/Facturas/AsistenteFacturacion" />
-    </item>
-  </item>
-  <item name="compras" text="Compras" icono="fa fa-tags">
-    <item name="headerpresupuestos" text="albaranes" icono="fa fa-folder-o">
-      <item name="presupuestos" text="Presupuestos" icono="fa fa-file" url="~/PresupuestosCompras/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralpresupuestos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadospresupuestoscompras/Listado/PresupuestosComprasCabecera" />
-        <item name="listadodetalladopresupuestos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopresupuestoscompras/Listado/PresupuestosComprasDetallado" />
-        <item name="listadoproductospresupuestos" eslistado="true"  text="Listado productos en presupuestos" icono="fa fa-file" url="~/ListadoProductosPresupuestosCompras/Listado/ProductosEnPresupuestosCompras" />
-      </item>
-      <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/4" />
-    </item>
-    <item name="headerpedidos" text="pedidos" icono="fa fa-folder-o">
-      <item name="pedidos" text="Gestión de pedidos" icono="fa fa-file" url="~/PedidosCompras/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralpedidos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/ListadospedidosCompras/Listado/PedidosComprasCabecera" />
-        <item name="listadodetalladopedidos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopedidoscompras/Listado/PedidosComprasDetallado" />
-        <item name="listadoproductospedidos" eslistado="true"  text="Listado productos en pedidos" icono="fa fa-file" url="~/ListadoProductosPedidoscompras/Listado/ProductosEnPedidosCompras" />
-      </item>
-      <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/5" />
-    </item>
-    <item name="headeralbaranes" text="albaranes" icono="fa fa-folder-o">
-      <item name="recepcionesstock" text="Gestión de albaranes" icono="fa fa-file" url="~/RecepcionesStock/Index" />
-      <item name="albaranescompras" text="Gestión de albaranes" icono="fa fa-file" url="~/AlbaranesCompras/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralalbaranes" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosalbaranescompras/Listado/AlbaranesComprasCabecera" />
-        <item name="listadodetalladoalbaranes" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoalbaranescompras/Listado/AlbaranesComprasDetallado" />
-        <item name="listadoproductosalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoProductosAlbaranesCompras/Listado/ProductosEnAlbaranesCompras" />
-        <item name="listadostockalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoStockAlbaranesCompras/Listado/StockAlbaranesCompras" />
-      </item>
-      <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/6" />
-    </item>
-    <item name="headerfacturas" text="facturas" icono="fa fa-folder-o">
-      <item name="facturascompras" allowCreate="false" text="Gestión de facturas" icono="fa fa-file" url="~/FacturasCompras/Index" />
-      <item name="listado" text="Listados" icono="fa fa-list">
-        <item name="listadogeneralfacturas" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/ListadosfacturasCompras/Listado/FacturasComprasCabecera" />
-        <item name="listadodetalladofacturas" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladofacturasCompras/Listado/FacturasComprasDetallado" />
-        <item name="listadoproductosfacturas" eslistado="true"  text="Listado productos en facturas" icono="fa fa-file" url="~/ListadoProductosFacturasCompras/Listado/ProductosEnFacturasCompras" />
-      </item>
-      <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/7" />
-    </item>
-  </item>
-  <item name="produccion" text="Producción" icono="fa fa-star">
-    <item name="articulos" text="Artículos" url="~/Articulos/Index" />
-    <item name="tarifas"  allowBlock="true" text="Tarifas" url="~/Tarifas/Index" />
-	<item name="preciosespeciales" text="Precios Especiales" url="~/PreciosEspeciales/Index" />
-	<item name="obras" text="obras" url="~/Obras/Index" />
-    <item isseparator="true"></item>
-    <item name="listado" text="Listados" icono="fa fa-list">
-      <item name="listadoarticulos" eslistado="true"  text="Clientes" icono="fa fa-file" url="~/ListadoArticulos/Listado/Articulos" />
-    </item>
-    <item isseparator="true"></item>
-    <item name="configuracion" text="Configuración" icono="fa fa-cog">
-      <item name="familiasproductos" text="Familias" url="~/Familiasproductos/Index" />
-      <item name="materiales" text="Materiales" url="~/Materiales/Index" />
-      <item name="caracteristicas" text="Características" url="~/Caracteristicas/Index" />
-      <item name="grosores" text="Grosores" url="~/Grosores/Index" />
-      <item name="acabados" text="Acabados" url="~/Acabados/Index" />
-      <item name="grupomateriales" allowUpdate="true" allowDelete="true" text="grupomateriales" url="~/GrupoMateriales/Index"></item>
-      <item isseparator="true"></item>
-      <item name="incidencias" text="incidencias" url="~/Incidencias/Index"></item>
-      <item name="contadores" text="contadores" url="~/ContadoresLotes/Index" />
-      <item isseparator="true"></item>
-      <item name="trabajos" text="trabajos" url="~/Trabajos/Index" />
-      <item name="tareas" text="tareas" url="~/Tareas/Index" />
-    </item>
-  </item>
-  <item name="stock" text="Stock" icono="fa fa-industry">
-    <item name="consultavisual" allowUpdate="true" allowDelete="true" text="consultavisual" url="~/ConsultaVisual/Almacenes"></item>
-    <item name="traspasosalmacen" allowUpdate="false" allowDelete="false" text="traspasosalmacen" url="~/Traspasosalmacen/Index"></item>
-    <item name="asistenteremedir" text="bundle" url="~/RecepcionesStock/AsistenteRemedir"></item>
-    <item name="lotes" text="bundle" url="~/Lotes/Index"></item>
-    <item name="imagenlote" text="Gestión imágenes de lotes" url="~/Lotes/Imagenes"></item>
-    <item name="transformaciones" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformaciones/Index"></item>
-    <item name="transformacioneslotes" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotes/Index"></item>
-	<item name="transformacioneslotesnave" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotesnave/Index"></item>
-    <item name="divisionlotes" allowUpdate="true" allowDelete="true" text="divisionlotes" url="~/DivisionLotes/Index"></item>
-    <item name="imputacioncostes" allowUpdate="true" allowDelete="true" text="imputacioncostes" url="~/ImputacionCostes/Index"></item>
-    <item isseparator="true"></item>
-    <item name="cambioubicacion" text="almacenes" url="~/Movimientosalmacen/CambioUbicacion"></item>
-    <item name="bundle" text="bundle" url="~/Bundle/Index"></item>
-    <item name="kit" text="Kit" url="~/Kit/Index"></item>
-    <item isseparator="true"></item>
-    <item name="inventarios" allowUpdate="false" text="inventarios" url="~/Inventarios/Index"></item>
-    <item name="almacen" text="almacenes" url="~/almacenes/Index"></item>
-    <item name="listado" text="Listados" icono="fa fa-list">
-      <item name="listadolotes" eslistado="true"  text="Lotes" icono="fa fa-file" url="~/ListadosLotes/Listado/Informelotes" />
-      <item name="listadostock" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStock/Listado/General" />
-      <item name="listadostockvalorado" eslistado="true"  text="Stock valorado" icono="fa fa-file" url="~/ListadosStockValorado/Listado/GeneralValorado"/>
-      <item name="listadostockdisponible" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStockDisponible/Listado/StockAgrupadoDisponibleArticulo" />
-      <item name="listadosstocksalidas" eslistado="true"  text="Salidas" icono="fa fa-file" url="~/ListadosStockSalidas/Listado/Salidas" />
-      <item name="diariostock" text="Diario Stock" icono="fa fa-file" url="~/DiarioStock/Index" />
-      <item name="listadosbundles" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoBundles/Listado/ListadosBundles" />
-      <item name="listadoskits" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoKits/Listado/ListadoKits" />
-    </item>
-    <item name="configurardocumentoskit" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/30" />
-    <item name="configurardocumentosbundle" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/40" />
-    <item name="configurardocumentostraspasos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/60" />
-    <item name="configurardocumentosinventarios" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/70" />
-    <item name="configurardocumentostransformaciones" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/80" />
-    <item name="configurardocumentostransformacionesacabados" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2000" />
-  </item>
-  <item name="CRM" text="CRM" icono="fa fa-users">
-    <item name="oportunidades" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/Oportunidades/Index"></item>
-    <item name="proyectos" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/Proyectos/Index"></item>
-    <item name="campañas" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/Campañas/Index"></item>
-    <item name="incidenciascrm" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/IncidenciasCRM/Index"></item>
-    <item name="seguimientos" allowCreate="false"  allowUpdate="true" allowDelete="true" text="seguimientos" url="~/Seguimientos/Index"></item>
-    <item name="configuracion" icono="fa fa-cog" text="Configuración" isAdmin="false">
-      <item name="costesvariablesperiodo" allowCreate="true" allowUpdate="true" allowDelete="true" text="costesvariablesperiodo" url="~/CostesVariablesPeriodo/Index" />
-    </item>
-    <item name="listado" text="Listados" icono="fa fa-list">
-      <item name="listadocrm" eslistado="true"  text="CRM" icono="fa fa-file" url="~/ListadoCrm/Listado/ListadoCrm" />
-    </item>
-
-  </item>
-  <item name="gestiondocumental" excluirConAA="true" text="gestiondocumental" icono="fa fa-folder-open" url="~/GestionDocumental/Index"/>
-  <item name="ayuda" text="ayuda" icono="fa fa-question" target="_blank" url="http://www.marfilb2b.info/help" />
+	<!--Ventas-->
+	<item name="ventas" text="Ventas" icono="fa fa-tags">
+		<item name="headerpresupuestos" text="Presupuestos" icono="fa fa-folder-o">
+			<item name="presupuestos" text="Gestión de presupuestos" icono="fa fa-file" url="~/Presupuestos/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralpresupuestos" eslistado="true" text="Listado de general" icono="fa fa-file" url="~/ListadosPresupuestos/Listado/PresupuestosCabecera" />
+				<item name="listadodetalladopresupuestos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoPresupuestos/Listado/PresupuestosDetallado" />
+				<item name="listadoproductospresupuestos"  eslistado="true" text="Listado productos en presupuestos" icono="fa fa-file" url="~/ListadoProductosPresupuestos/Listado/ProductosEnPresupuestos" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/0" />
+		</item>
+		<item name="headerpedidos" text="pedidos" icono="fa fa-folder-o">
+			<item name="pedidos" text="Gestión de pedidos" icono="fa fa-file" url="~/pedidos/Index" />
+			<item name="reservas" text="Gestión de reservas" icono="fa fa-file" url="~/Reservasstock/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralpedidos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadospedidos/Listado/PedidosCabecera" />
+				<item name="listadodetalladopedidos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopedidos/Listado/PedidosDetallado" />
+				<item name="listadoproductospedidos" eslistado="true"  text="Listado productos en pedidos" icono="fa fa-file" url="~/ListadoProductosPedidos/Listado/ProductosEnPedidos" />
+				<item name="listadoreservasmaterial" eslistado="true"  text="Listado productos en pedidos" icono="fa fa-file" url="~/ListadoReservas/Listado/ListadosReservas" />
+				<item name="listadosbalancepedidos" eslistado="true"  text="Listado balance pedidos" icono="fa fa-file" url="~/ListadosBalancePedidos/ListadosBalancePedidos" />
+			</item>
+			<item name="asistentepedidoscompras" excluirConAA="true" text="Gestión de reservas" icono="fa fa-magic" url="~/Pedidos/AsistentePedidosCompra" />
+			<item name="configurardocumentospedidos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1" />
+			<item name="configurardocumentosreservas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/50" />
+			<item name="configurardocumentosbalancepedidos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1020" />
+		</item>
+		<item name="headeralbaranes" text="albaranes" icono="fa fa-folder-o">
+			<item name="albaranes" text="Gestión de albaranes" icono="fa fa-file" url="~/Albaranes/Index" />
+			<item name="entregasstock" text="Gestión de albaranes" icono="fa fa-file" url="~/EntregasStock/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralalbaranes" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosalbaranes/Listado/AlbaranesCabecera" />
+				<item name="listadodetalladoalbaranes" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoalbaranes/Listado/AlbaranesDetallado" />
+				<item name="listadoproductosalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoProductosAlbaranes/Listado/ProductosEnAlbaranes" />
+				<item name="listadoinformemargen"  eslistado="true" text="Listado de margen" icono="fa fa-file" url="~/ListadoInformeMargen/Listado/InformeMargen" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2" />
+			<item name="configurardocumentoslistadomargen" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1025" />
+		</item>
+		<item name="headerfacturas" text="facturas" icono="fa fa-folder-o">
+			<item name="facturas" allowCreate="false" text="Gestión de facturas" icono="fa fa-file" url="~/Facturas/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralfacturas" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosfacturas/Listado/FacturasCabecera" />
+				<item name="listadodetalladofacturas" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladofacturas/Listado/FacturasDetallado" />
+				<item name="listadoproductosfacturas" eslistado="true"  text="Listado productos en facturas" icono="fa fa-file" url="~/ListadoProductosFacturas/Listado/ProductosEnFacturas" />
+				<item name="listadoscomision" eslistado="true"  text="Listado de comisiones" icono="fa fa-file" url="~/ListadosComisiones/Listado/Comisiones" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/3" />
+			<item name="procesofacturacion"  text="Asistente de facturación" icono="fa fa-magic" url="~/Facturas/AsistenteFacturacion" />
+		</item>
+	</item>
+	<!--Compras-->
+	<item name="compras" text="Compras" icono="fa fa-tags">
+		<item name="headerpresupuestos" text="albaranes" icono="fa fa-folder-o">
+			<item name="presupuestos" text="Presupuestos" icono="fa fa-file" url="~/PresupuestosCompras/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralpresupuestos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadospresupuestoscompras/Listado/PresupuestosComprasCabecera" />
+				<item name="listadodetalladopresupuestos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopresupuestoscompras/Listado/PresupuestosComprasDetallado" />
+				<item name="listadoproductospresupuestos" eslistado="true"  text="Listado productos en presupuestos" icono="fa fa-file" url="~/ListadoProductosPresupuestosCompras/Listado/ProductosEnPresupuestosCompras" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/4" />
+		</item>
+		<item name="headerpedidos" text="pedidos" icono="fa fa-folder-o">
+			<item name="pedidos" text="Gestión de pedidos" icono="fa fa-file" url="~/PedidosCompras/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralpedidos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/ListadospedidosCompras/Listado/PedidosComprasCabecera" />
+				<item name="listadodetalladopedidos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopedidoscompras/Listado/PedidosComprasDetallado" />
+				<item name="listadoproductospedidos" eslistado="true"  text="Listado productos en pedidos" icono="fa fa-file" url="~/ListadoProductosPedidoscompras/Listado/ProductosEnPedidosCompras" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/5" />
+		</item>
+		<item name="headeralbaranes" text="albaranes" icono="fa fa-folder-o">
+			<item name="recepcionesstock" text="Gestión de albaranes" icono="fa fa-file" url="~/RecepcionesStock/Index" />
+			<item name="albaranescompras" text="Gestión de albaranes" icono="fa fa-file" url="~/AlbaranesCompras/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralalbaranes" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosalbaranescompras/Listado/AlbaranesComprasCabecera" />
+				<item name="listadodetalladoalbaranes" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoalbaranescompras/Listado/AlbaranesComprasDetallado" />
+				<item name="listadoproductosalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoProductosAlbaranesCompras/Listado/ProductosEnAlbaranesCompras" />
+				<item name="listadostockalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoStockAlbaranesCompras/Listado/StockAlbaranesCompras" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/6" />
+		</item>
+		<item name="headerfacturas" text="facturas" icono="fa fa-folder-o">
+			<item name="facturascompras" allowCreate="false" text="Gestión de facturas" icono="fa fa-file" url="~/FacturasCompras/Index" />
+			<item name="listado" text="Listados" icono="fa fa-list">
+				<item name="listadogeneralfacturas" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/ListadosfacturasCompras/Listado/FacturasComprasCabecera" />
+				<item name="listadodetalladofacturas" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladofacturasCompras/Listado/FacturasComprasDetallado" />
+				<item name="listadoproductosfacturas" eslistado="true"  text="Listado productos en facturas" icono="fa fa-file" url="~/ListadoProductosFacturasCompras/Listado/ProductosEnFacturasCompras" />
+			</item>
+			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/7" />
+		</item>
+	</item>
+	<!--Stock-->
+	<item name="stock" text="Stock" icono="fa fa-industry">
+		<item name="consultavisual" allowUpdate="true" allowDelete="true" text="consultavisual" url="~/ConsultaVisual/Almacenes"></item>
+		<item name="traspasosalmacen" allowUpdate="false" allowDelete="false" text="traspasosalmacen" url="~/Traspasosalmacen/Index"></item>
+		<item name="asistenteremedir" text="bundle" url="~/RecepcionesStock/AsistenteRemedir"></item>
+		<item name="lotes" text="bundle" url="~/Lotes/Index"></item>
+		<item name="imagenlote" text="Gestión imágenes de lotes" url="~/Lotes/Imagenes"></item>
+		<item name="transformaciones" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformaciones/Index"></item>
+		<item name="transformacioneslotes" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotes/Index"></item>
+		<!--<item name="transformacioneslotesnave" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotesnave/Index"></item>-->
+		<item name="divisionlotes" allowUpdate="true" allowDelete="true" text="divisionlotes" url="~/DivisionLotes/Index"></item>
+		<item name="imputacioncostes" allowUpdate="true" allowDelete="true" text="imputacioncostes" url="~/ImputacionCostes/Index"></item>
+		<item isseparator="true"></item>
+		<item name="cambioubicacion" text="almacenes" url="~/Movimientosalmacen/CambioUbicacion"></item>
+		<item name="bundle" text="bundle" url="~/Bundle/Index"></item>
+		<item name="kit" text="Kit" url="~/Kit/Index"></item>
+		<item isseparator="true"></item>
+		<item name="inventarios" allowUpdate="false" text="inventarios" url="~/Inventarios/Index"></item>
+		<item name="almacen" text="almacenes" url="~/almacenes/Index"></item>
+		<item name="listado" text="Listados" icono="fa fa-list">
+			<item name="listadolotes" eslistado="true"  text="Lotes" icono="fa fa-file" url="~/ListadosLotes/Listado/Informelotes" />
+			<item name="listadostock" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStock/Listado/General" />
+			<item name="listadostockvalorado" eslistado="true"  text="Stock valorado" icono="fa fa-file" url="~/ListadosStockValorado/Listado/GeneralValorado"/>
+			<item name="listadostockdisponible" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStockDisponible/Listado/StockAgrupadoDisponibleArticulo" />
+			<item name="listadosstocksalidas" eslistado="true"  text="Salidas" icono="fa fa-file" url="~/ListadosStockSalidas/Listado/Salidas" />
+			<item name="diariostock" text="Diario Stock" icono="fa fa-file" url="~/DiarioStock/Index" />
+			<item name="listadosbundles" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoBundles/Listado/ListadosBundles" />
+			<item name="listadoskits" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoKits/Listado/ListadoKits" />
+		</item>
+		<item name="configurardocumentoskit" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/30" />
+		<item name="configurardocumentosbundle" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/40" />
+		<item name="configurardocumentostraspasos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/60" />
+		<item name="configurardocumentosinventarios" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/70" />
+		<item name="configurardocumentostransformaciones" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/80" />
+		<item name="configurardocumentostransformacionesacabados" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2000" />
+	</item>
+	<!--Contabilidad-->
+	<item name="contabilidad" text="Contabilidad" icono="fa fa-line-chart">
+		<item name="movs" allowBlock="true" text="Diario contable" url="~/Movs/Index" />
+		<item isseparator="true"></item>
+		<item name="cuentas" allowBlock="true" text="Cuentas" url="~/Cuentas/Index" />
+		<item isseparator="true"></item>
+		<item name="tesoreria" text="Tesorería" icono="fa fa-money">
+			<item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
+			<item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
+			<item name="carteravencimientos" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/CarteraVencimientos/Index" />
+			<item name="remesas" allowUpdate="true" allowDelete="true" text="Remesas" icono="fa fa-file" url="~/Remesas/Index" />
+			<item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
+			<item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
+		</item>
+		<item name="listado" text="Listados" icono="fa fa-list">
+			<item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />
+			<item name="listadomayor" eslistado="true" text="Mayor" icono="fa fa-file" url="~/ListadosMayor/Listado/Mayor" />
+			<item name="listadobalancesumasysaldos" eslistado="true" text="Sumas y saldos" icono="fa fa-file" url="~/ListadosBalanceSumasYSaldos/Listado/SumasYSaldos" />
+			<item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances/Index" />
+			<item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
+			<item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
+		</item>
+		<item name="configuracion" text="Configuración" icono="fa fa-cog">
+			<item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
+			<item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />
+			<item name="regimeniva" text="Régimen de IVA" url="~/RegimenIva/Index" />
+			<item isseparator="true"></item>
+			<item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
+			<item isseparator="true"></item>
+			<item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
+			<item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" icono="fa fa-file" url="~/CircuitosTesoreria/Index" />
+			<item name="cuadernosBancarios" allowBlock="true" text="CuadernosBancarios" url="~/CuadernosBancarios/Index" />
+		</item>
+		<item name="configurardocumentosdiario" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1000" />
+		<item name="configurardocumentosmayor" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1010" />
+		<item name="configurardocumentossumas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1015" />
+		<item name="configurardocumentoscartera" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1050" />
+		<item name="configurardocumentosremesa" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1060" />
+	</item>
+	<!--Terceros-->
+	<item name="terceros" text="Terceros" icono="fa fa-group">
+		<item name="clientes" allowBlock="true" text="Clientes" url="~/Clientes/Index" />
+		<item name="proveedores" allowBlock="true" text="Proveedores" url="~/Proveedores/Index" />
+		<item name="acreedores" allowBlock="true" text="Acreedores" url="~/Acreedores/Index" />
+		<item name="cuentastesoreria" allowBlock="true" text="Cuentas de tesoreria" url="~/Cuentastesoreria/Index" />
+		<item name="operarios" allowBlock="true" text="Operarios" url="~/Operarios/Index" />
+		<item name="agentes" allowBlock="true" text="Agentes" url="~/Agentes/Index" />
+		<item name="comerciales" allowBlock="true" text="Comerciales" url="~/Comerciales/Index" />
+		<item name="prospectos" allowBlock="true" text="Prospectos" url="~/Prospectos/Index" />
+		<item name="transportistas" allowBlock="true" text="Transportistas" url="~/Transportistas/Index" />
+		<item name="aseguradoras" allowBlock="true" text="Compañías de seguros" url="~/Aseguradoras/Index" />
+		<item isseparator="true"></item>
+		<item name="listado" text="Listados" icono="fa fa-list">
+			<item name="listadoterceros" eslistado="true" text="Clientes" icono="fa fa-file" url="~/ListadosTerceros/Listado/TercerosGeneral" />
+		</item>
+	</item>
+	<!--Gestión-->
+	<item name="produccion" text="Producción" icono="fa fa-star">
+		<item name="articulos" text="Artículos" url="~/Articulos/Index" />
+		<item name="tarifas"  allowBlock="true" text="Tarifas" url="~/Tarifas/Index" />
+		<item name="preciosespeciales" text="Precios Especiales" url="~/PreciosEspeciales/Index" />
+		<item name="obras" text="obras" url="~/Obras/Index" />
+		<item isseparator="true"></item>
+		<item name="listado" text="Listados" icono="fa fa-list">
+			<item name="listadoarticulos" eslistado="true"  text="Clientes" icono="fa fa-file" url="~/ListadoArticulos/Listado/Articulos" />
+		</item>
+		<item isseparator="true"></item>
+		<item name="configuracion" text="Configuración" icono="fa fa-cog">
+			<item name="familiasproductos" text="Familias" url="~/Familiasproductos/Index" />
+			<item name="materiales" text="Materiales" url="~/Materiales/Index" />
+			<item name="caracteristicas" text="Características" url="~/Caracteristicas/Index" />
+			<item name="grosores" text="Grosores" url="~/Grosores/Index" />
+			<item name="acabados" text="Acabados" url="~/Acabados/Index" />
+			<item name="grupomateriales" allowUpdate="true" allowDelete="true" text="grupomateriales" url="~/GrupoMateriales/Index"></item>
+			<item isseparator="true"></item>
+			<item name="incidencias" text="incidencias" url="~/Incidencias/Index"></item>
+			<item name="contadores" text="contadores" url="~/ContadoresLotes/Index" />
+			<item isseparator="true"></item>
+			<item name="trabajos" text="trabajos" url="~/Trabajos/Index" />
+			<item name="tareas" text="tareas" url="~/Tareas/Index" />
+		</item>
+	</item>
+	<!--CRM-->
+	<item name="CRM" text="CRM" icono="fa fa-users">
+		<item name="oportunidades" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/Oportunidades/Index"></item>
+		<item name="proyectos" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/Proyectos/Index"></item>
+		<item name="campañas" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/Campañas/Index"></item>
+		<item name="incidenciascrm" allowCreate="true" allowUpdate="true" allowDelete="true" text="oportunidades" url="~/IncidenciasCRM/Index"></item>
+		<item name="seguimientos" allowCreate="false"  allowUpdate="true" allowDelete="true" text="seguimientos" url="~/Seguimientos/Index"></item>
+		<item name="configuracion" icono="fa fa-cog" text="Configuración" isAdmin="false">
+			<item name="costesvariablesperiodo" allowCreate="true" allowUpdate="true" allowDelete="true" text="costesvariablesperiodo" url="~/CostesVariablesPeriodo/Index" />
+		</item>
+		<item name="listado" text="Listados" icono="fa fa-list">
+			<item name="listadocrm" eslistado="true"  text="CRM" icono="fa fa-file" url="~/ListadoCrm/Listado/ListadoCrm" />
+		</item>
+	</item>
+	<!--Ficheros Generales-->
+	<item name="ficheros" text="Ficheros generales" icono="fa fa-folder">
+		<item name="mantformaspago" allowBlock="true" text="Formas de pago" url="~/FormasPago/Index" />
+		<item name="situacionestesoreria" allowUpdate="true" allowDelete="true" text="situacionestesoreria" url="~/SituacionesTesoreria/Index"></item>
+		<item name="estados" allowBlock="true" text="estados" url="~/Estados/Index" />
+		<item name="tablasvarias" text="Tablas varias" url="~/TablasVarias/Index" allowDelete="false" allowCreate="false" />
+		<item name="seccionesanaliticas" url="~/SeccionesAnaliticas/Index" allowBlock="true" />
+		<item name="unidades" text="Unidades de medida" url="~/Unidades/Index" />
+		<item isseparator="true"></item>
+		<item name="monedas" text="Monedas" url="~/Monedas/Index" />
+		<item name="cambiosmonedas" allowCreate="false" allowDelete="false" text="Gestión de cambios de monedas" url="~/Cambios/Index" />
+		<item isseparator="true"></item>
+		<item name="bancos" text="Bancos" url="~/Bancos/Index" />
+		<item name="municipios" text="Municipios" url="~/Municipios/Index" />
+		<item name="provincias" text="Provincias" url="~/Provincias/Index" />
+		<item name="puertos" text="Puertos" url="~/Puertos/Index" />
+		<item isseparator="true"></item>
+		<item name="criteriosagrupacion" text="Criterios de agrupación  " url="~/Criteriosagrupacion/Index" />
+	</item>
+	<!--Configuración-->
+	<item name="configuracion" icono="fa fa-cog" text="Configuración" isAdmin="false">
+		<item name="seriesdocumentos" allowBlock="true" text="series" url="~/Series/Index" />
+		<item name="seriescontables" allowBlock="true" text="series" url="~/SeriesContables/Index" />
+		<item name="contadores" text="contadores" url="~/Contadores/Index" />
+		<item name="tiposcuentas" text="Tipos de cuentas" url="~/Tiposcuentas/Index" />
+		<item name="inmuebles" text="Inmuebles" url="~/Inmuebles/Index" />
+	</item>
+	<!--Gestión documental y Ayuda-->
+	<item name="gestiondocumental" excluirConAA="true" text="gestiondocumental" icono="fa fa-folder-open" url="~/GestionDocumental/Index"/>
+	<item name="ayuda" text="ayuda" icono="fa fa-question" target="_blank" url="http://www.marfilb2b.info/help" />
 </xml>

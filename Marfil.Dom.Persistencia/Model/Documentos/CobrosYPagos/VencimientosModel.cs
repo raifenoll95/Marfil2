@@ -57,7 +57,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [StringValue(typeof(RCobrosYPagos), "Valida")]
         Valida,
         [StringValue(typeof(RCobrosYPagos), "Anulada")]
-        Anulada
+        Anulada,
+        [StringValue(typeof(RCobrosYPagos), "Generada")]
+        Generada
     }
 
     public enum TipoSituacion

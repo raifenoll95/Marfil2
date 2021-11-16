@@ -474,7 +474,7 @@
                         sbpedidos.Append("]");
                         sb.AppendLine(string.Format("<a href='javascript:ModalDocumentosAsociados(&#39;Facturas&#39;,&#39;{0}&#39;);' class=\"btn-xs btn btn-info\">", sbpedidos.ToString()));
                         sb.AppendLine("<i class=\"fa fa-eye\"></i>");
-                        sb.AppendLine(General.LblVer + " " + Facturas.TituloEntidad);
+                        sb.AppendLine(General.LblVer + " " + Facturas.TituloEntidadSingular);
                         sb.AppendLine("</a>");
 
                         ViewContext.Writer.Write(sb.ToString());

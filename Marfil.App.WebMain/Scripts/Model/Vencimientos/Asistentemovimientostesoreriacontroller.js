@@ -42,7 +42,6 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
     //Segunda pantalla, generamos los datos de la tercera pantalla
     eventAggregator.RegisterEvent("_generarImporteCircuitos", function (data) {
-
         if ($scope.gridApi.selection.getSelectedCount() >= 1) {
 
             var filas = $scope.gridApi.selection.getSelectedRows();
@@ -59,7 +58,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                     $('#Fkcuentatesoreria').val(filas[0].FkcuentaTesoreria);
                     $http.get($scope.urlObtenerDescripcionCobrador + "?cuenta=" + filas[0].FkcuentaTesoreria).success(function (data) {
                         var modelo = JSON.parse(data);
-                        window.document.getElementById("lblFkcuentatesoreria").textContent = modelo.Descripcion;
+                        document.getElementById("cv-Fkcuentatesoreria-descripcion").textContent = modelo.Descripcion;
                     });
                 }
 

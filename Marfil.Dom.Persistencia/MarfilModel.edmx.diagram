@@ -31,7 +31,7 @@
         <EntityTypeShape EntityType="MarfilModel.Estados" Width="1.5" PointX="35.75" PointY="14.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FacturasLin" Width="1.5" PointX="17.875" PointY="1.875" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FacturasTotales" Width="1.5" PointX="17.875" PointY="0.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.FacturasVencimientos" Width="1.5" PointX="17.875" PointY="2.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.FacturasVencimientos" Width="1.5" PointX="17.875" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MarfilModel.Ficheros" Width="1.5" PointX="33" PointY="7" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FormasPago" Width="1.5" PointX="30.75" PointY="1" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FormasPagoLin" Width="1.5" PointX="33" PointY="2.125" IsExpanded="false" />

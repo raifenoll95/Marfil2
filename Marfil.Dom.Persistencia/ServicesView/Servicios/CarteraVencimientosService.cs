@@ -60,7 +60,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Append(" select c.*, cuen.descripcion as Descripcioncuenta ");
             result.Append(" from CarteraVencimientos as c ");
             result.AppendFormat(" left join Cuentas as cuen on cuen.id = c.fkcuentas and cuen.empresa ='{0}' ", _context.Empresa);
-            result.AppendFormat(" where c.empresa ='{0}' ", _context.Empresa);
+            result.AppendFormat(" where c.empresa ='{0}' order by c.referencia desc", _context.Empresa);
 
             return result.ToString();
         }
