@@ -19,6 +19,8 @@ namespace Marfil.Dom.Persistencia
         {
             this.GuiasBalances = new HashSet<GuiasBalances>();
             this.GuiasBalancesLineas = new HashSet<GuiasBalancesLineas>();
+            this.ReportGuiasBalances = new HashSet<ReportGuiasBalances>();
+            this.ReportGuiasBalancesLineas = new HashSet<ReportGuiasBalancesLineas>();
         }
     
         public int Id { get; set; }
@@ -28,5 +30,9 @@ namespace Marfil.Dom.Persistencia
         public virtual ICollection<GuiasBalances> GuiasBalances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportGuiasBalances> ReportGuiasBalances { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportGuiasBalancesLineas> ReportGuiasBalancesLineas { get; set; }
     }
 }

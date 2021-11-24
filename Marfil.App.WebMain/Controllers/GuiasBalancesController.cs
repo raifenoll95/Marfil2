@@ -13,6 +13,7 @@ using DevExpress.Web.Mvc;
 using Marfil.Dom.Persistencia.ServicesView;
 using Resources;
 using Marfil.App.WebMain.Misc;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -258,5 +259,17 @@ namespace Marfil.App.WebMain.Controllers
         void SetListGuiasBalancesLineas(List<GuiasBalancesLineasModel> guiasBalancesLineas) => Session[SessionGuiasBalancesLineas] = guiasBalancesLineas;
         List<GuiasBalancesLineasModel> GetListGuiasBalancesLineas => Session[SessionGuiasBalancesLineas] as List<GuiasBalancesLineasModel>;
         #endregion
+
+        [HttpGet]
+        public bool CuentasNoAsignadas()
+        {
+            var cuentas = false;
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                cuentas = service.HayCuentasNoAsignadas();
+            }
+
+            return cuentas;
+        }
     }
 }

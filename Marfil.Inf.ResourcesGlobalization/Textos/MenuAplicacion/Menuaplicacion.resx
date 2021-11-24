@@ -603,4 +603,10 @@
   <data name="transformacioneslotesnave" xml:space="preserve">
     <value>Trans. de acabados en nave</value>
   </data>
+  <data name="listadoperdidasyganancias" xml:space="preserve">
+    <value>Listado Pérdidas y Ganancias</value>
+  </data>
+  <data name="configurardocumentosguiasbalances" xml:space="preserve">
+    <value>Conf. de docs: Perdidas y Ganancias</value>
+  </data>
 </root>

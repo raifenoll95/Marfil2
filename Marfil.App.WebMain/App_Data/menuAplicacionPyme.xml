@@ -112,6 +112,7 @@
 			<item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances" />
 			<item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
 			<item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
+			<item name="listadoperdidasyganancias" eslistado="true" text="Listado Pérdidas y Ganancias" icono="fa fa-file" url="~/ListadoPerdidasYGanancias/Listado/PerdidasYGanancias" />
 		</item>
 		<item name="configuracion" text="Configuración" icono="fa fa-cog">
 			<item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
@@ -129,6 +130,7 @@
 		<item name="configurardocumentossumas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1015" />
 		<item name="configurardocumentoscartera" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1050" />
 		<item name="configurardocumentosremesa" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1060" />
+		<item name="configurardocumentosguiasbalances" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1021" />
 	</item>
 	<!--Terceros-->
 	<item name="terceros" text="Terceros" icono="fa fa-group">

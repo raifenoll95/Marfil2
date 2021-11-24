@@ -122,6 +122,7 @@ namespace Marfil.Dom.Persistencia.Listados
         public const string ListadoGuiasBalancesLineas = "GuiasBalancesLineas";
         public const string ListadoAcumuladorPeriodos = "AcumuladorPeriodos";
         public const string ConsultaTesoreria = "ConsultaTesoreria";
+        public const string PerdidasYGanancias = "PerdidasYGanancias";
 
         // CRM
         public const string ListadoCrm = "ListadoCrm";
@@ -187,6 +188,7 @@ namespace Marfil.Dom.Persistencia.Listados
             //_dictionary.Add(ListadoGuiasBalancesLineas, typeof(ListadoGuiasBalancesLineas));
             _dictionary.Add(ListadoAcumuladorPeriodos, typeof(ListadoAcumuladorPeriodos));
             _dictionary.Add(ConsultaTesoreria, typeof(ListadosConsultaTesoreria));
+            _dictionary.Add(PerdidasYGanancias, typeof(ListadoPerdidasYGanancias));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));
@@ -247,6 +249,7 @@ namespace Marfil.Dom.Persistencia.Listados
             //_dictionaryController.Add(ListadoGuiasBalances, "GuiasBalances");
             _dictionaryController.Add(ListadoAcumuladorPeriodos, "ListadoAcumuladorPeriodos");
             _dictionaryController.Add(ConsultaTesoreria, "ListadosConsultaTesoreria");
+            _dictionaryController.Add(PerdidasYGanancias, "ListadoPerdidasYGanancias");
 
             // CRM
             _dictionaryController.Add(ListadoCrm, "ListadoCrm");

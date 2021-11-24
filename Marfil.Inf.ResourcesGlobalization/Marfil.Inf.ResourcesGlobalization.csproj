@@ -408,6 +408,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CuadernosBancarios.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\PerdidasYGanancias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerdidasYGanancias.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Seguimientos.Designer.cs">
       <DependentUpon>Seguimientos.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1003,6 +1008,10 @@
     <EmbeddedResource Include="Textos\Entidades\CuadernosBancarios.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CuadernosBancarios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PerdidasYGanancias.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PerdidasYGanancias.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Seguimientos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

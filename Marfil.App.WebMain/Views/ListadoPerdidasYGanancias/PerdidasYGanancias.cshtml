@@ -1,0 +1,119 @@
+﻿@using Resources
+@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Listados.ListadoPerdidasYGanancias
+
+@{
+    ViewBag.Title = "PerdidasYGanancias";
+
+    var fechaRecalculo = WebHelper.GetApplicationHelper().GetRecalculo();
+    var filtros = WebHelper.GetApplicationHelper().GetFiltros();
+
+    var listguia = WebHelper.GetApplicationHelper().GetListTipoGuia().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Id.ToString(),
+
+    }).ToList();
+
+    var listejercicios = new List<SelectListItem>();
+    var acumulado = WebHelper.GetApplicationHelper().GetFiltroAcumulador();
+
+    listejercicios.Insert(0, new SelectListItem() { Text = "Todo el ejercicio", Value = WebHelper.GetApplicationHelper().GetCurrentEjercicio().Id.ToString() });
+
+    if (acumulado != null && acumulado != "")
+    {
+        listejercicios.Insert(1, new SelectListItem() { Text = "Periodo acumulado", Value = acumulado });
+    }
+
+}
+
+@Html.HiddenFor(model => model.Empresa)
+@*@Html.HiddenFor(model => model.fkEjercicio)*@
+<div class="col-md-10">
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Ejercicio, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(f => Model.Ejercicio, listejercicios, (object)new { @class = "form-control" })
+            </div>
+            @Html.LabelFor(f => Model.Guia, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(f => Model.Guia, listguia, (object)new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Lineassinsaldo, new { @class = "control-label col-md-3" })
+            <div class="col-md-2">
+                @Html.CheckBox("Lineassinsaldo")
+            </div>
+            @Html.LabelFor(f => Model.Desglosarniveltres, new { @class = "control-label col-md-4" })
+            <div class="col-md-2">
+                @Html.CheckBox("Desglosarniveltres")
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+        // [1] Botón Limpiar
+        parentButtonListar.insertBefore(button, parentButtonListar.children[1])
+
+    }, false);
+
+    function imprimir() {
+
+        var data = {
+            Ejercicio: document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value,
+            Guia: document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value,
+            SinSaldo: document.getElementById('Lineassinsaldo').value,
+            Desglosar: document.getElementById('Desglosarniveltres').value
+        };
+
+        var dataSerialized = JSON.stringify(data);
+
+        console.log(dataSerialized);
+
+        @*window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Defecto');
+
+        //Imprimir cuentas no asignadas
+        $.ajax({
+            url: '@Url.Action("CuentasNoAsignadas", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            success: function (data) {
+                if (data) {
+                    if (confirm("Hay cuentas no asignadas, ¿Mostrar?")) {
+                        console.log('Sí');
+                    } else {
+                        console.log('No');
+                    }
+                }              
+            }
+        });*@
+
+    };
+
+
+</script>

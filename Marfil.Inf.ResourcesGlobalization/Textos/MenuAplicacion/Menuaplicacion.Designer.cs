@@ -331,6 +331,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Conf. de docs: Perdidas y Ganancias.
+        /// </summary>
+        public static string configurardocumentosguiasbalances {
+            get {
+                return ResourceManager.GetString("configurardocumentosguiasbalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Conf. de documentos: inventarios.
         /// </summary>
         public static string configurardocumentosinventarios {
@@ -903,6 +912,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string listadomayor {
             get {
                 return ResourceManager.GetString("listadomayor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Listado Pérdidas y Ganancias.
+        /// </summary>
+        public static string listadoperdidasyganancias {
+            get {
+                return ResourceManager.GetString("listadoperdidasyganancias", resourceCulture);
             }
         }
         

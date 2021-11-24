@@ -12,26 +12,31 @@ namespace Marfil.Dom.Persistencia
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoInforme
+    public partial class ReportGuiasBalances
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoInforme()
+        public ReportGuiasBalances()
         {
-            this.GuiasBalances = new HashSet<GuiasBalances>();
-            this.GuiasBalancesLineas = new HashSet<GuiasBalancesLineas>();
-            this.ReportGuiasBalances = new HashSet<ReportGuiasBalances>();
             this.ReportGuiasBalancesLineas = new HashSet<ReportGuiasBalancesLineas>();
         }
     
         public int Id { get; set; }
-        public string Descripcion { get; set; }
+        public Nullable<int> InformeId { get; set; }
+        public Nullable<int> GuiaId { get; set; }
+        public string textogrupo { get; set; }
+        public string orden { get; set; }
+        public string actpas { get; set; }
+        public string detfor { get; set; }
+        public string formula { get; set; }
+        public string regdig { get; set; }
+        public string descrip { get; set; }
+        public string listado { get; set; }
+        public Nullable<decimal> saldo { get; set; }
+        public Nullable<decimal> saldoea { get; set; }
+        public string listacuentas { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GuiasBalances> GuiasBalances { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReportGuiasBalances> ReportGuiasBalances { get; set; }
+        public virtual TipoGuia TipoGuia { get; set; }
+        public virtual TipoInforme TipoInforme { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReportGuiasBalancesLineas> ReportGuiasBalancesLineas { get; set; }
     }

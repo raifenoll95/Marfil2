@@ -329,6 +329,7 @@
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
+    <Compile Include="Controllers\ListadoPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ListadoInformeMargenController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\FacturasApiController.cs" />
@@ -3602,6 +3603,7 @@
     <Content Include="Views\CuadernosBancarios\_detalle.cshtml" />
     <Content Include="Views\Configuracion\_tesoreria.cshtml" />
     <Content Include="Views\Configuracion\_contabilidad.cshtml" />
+    <Content Include="Views\ListadoPerdidasYGanancias\PerdidasYGanancias.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

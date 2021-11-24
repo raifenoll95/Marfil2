@@ -50,5 +50,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             var a = _db.Database.SqlQuery<T>("select *, InformeId as TipoInformeE, GuiaId as TipoGuiaE from guiasbalances").ToList();
             return a;
         }
+
+        public string GetFiltroAcumulador()
+        {
+            var ejercicioParse = int.Parse(_context.Ejercicio);
+            var registro = _db.FiltrosAcumulador.Where(f => f.empresa == Empresa && f.fkejercicio == ejercicioParse && f.usuario == _context.Usuario).FirstOrDefault();
+            if (registro != null)
+            {
+                return _context.Ejercicio + "-" + _context.Usuario;
+            } else
+            {
+                return "";
+            }
+        }
+
+        public bool HayCuentasNoAsignadas()
+        {
+            var cuentas = _db.CuentasNoAsignadas.Where(f => f.procesado == false).Count();
+
+            if (cuentas > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

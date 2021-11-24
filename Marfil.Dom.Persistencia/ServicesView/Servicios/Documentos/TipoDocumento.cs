@@ -127,6 +127,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
         [StringValue(typeof(RTiposdocumentoscontables), "EnumPrevisionPagos")]
         BalancePedidos = 1020,
         [StringValue(typeof(RTiposdocumentoscontables), "EnumPrevisionPagos")]
+        PerdidasYGanancias = 1021,
+        [StringValue(typeof(RTiposdocumentoscontables), "EnumPrevisionPagos")]
         ListadoMargen = 1025,
         [StringValue(typeof(RImputacionCostes), "TituloEntidadSingular")]
         ImputacionCostes = 1030,

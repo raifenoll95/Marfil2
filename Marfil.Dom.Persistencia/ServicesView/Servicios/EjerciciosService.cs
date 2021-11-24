@@ -126,5 +126,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             return _db.SeriesContables.Where(f => f.empresa == Empresa && f.id == id).FirstOrDefault().descripcion;
         }
+
+        public IEnumerable<string> GetEjercicio(string id)
+        {
+            var idparse = int.Parse(id);
+            return (IEnumerable<string>)_db.Ejercicios.Where(f => f.empresa == Empresa && f.id == idparse).Select(f => f.id).ToList();
+        }
     }
 }

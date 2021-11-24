@@ -142,6 +142,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
             DataSource.Queries.Add(new CustomSqlQuery("Empresa", "SELECT id, nombre FROM Empresas WHERE id = '" + user.Empresa + "'"));
             DataSource.Queries.Add(new CustomSqlQuery("Ejercicios", "SELECT empresa, id, descripcion FROM Ejercicios WHERE id = '" + user.Ejercicio + "'"));
+            DataSource.Queries.Add(new CustomSqlQuery("Movs", "SELECT * FROM Movs"));
+            DataSource.Queries.Add(new CustomSqlQuery("MovsLin", "SELECT * FROM MovsLin"));
 
             DataSource.Queries.Add(mainQuery);
 
@@ -151,6 +153,17 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Relations.Add("Cuentas", "Ejercicios", new[] {
                    new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("fkejercicio", "id")});
+
+            DataSource.Relations.Add("Movs", "Empresa", new[] {
+                    new RelationColumnInfo("empresa", "id")});
+
+            DataSource.Relations.Add("Movs", "Ejercicios", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fkejercicio", "id")});
+
+            DataSource.Relations.Add("Movs", "MovsLin", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("id", "fkmovs")});
 
             DataSource.RebuildResultSchema();
 

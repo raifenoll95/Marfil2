@@ -265,6 +265,14 @@
         <EntityTypeShape EntityType="MarfilModel.CuadernosBancarios" Width="1.5" PointX="40.375" PointY="14.625" />
         <AssociationConnector Association="MarfilModel.FK_CuadernosLin" />
         <EntityTypeShape EntityType="MarfilModel.Remesas" Width="1.5" PointX="41.375" PointY="21.75" />
+        <EntityTypeShape EntityType="MarfilModel.CuentasNoAsignadas" Width="1.5" PointX="31.375" PointY="33.75" />
+        <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalances" Width="1.5" PointX="42.625" PointY="30.5" />
+        <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesLineas" Width="1.5" PointX="44.875" PointY="28.625" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalances_TipoGuia" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalances_TipoInforme" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineas_GuiasBalances" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineas_TipoGuia" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineas_TipoInforme" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

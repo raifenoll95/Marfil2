@@ -206,6 +206,9 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Transformacioneslotesnavelin> Transformacioneslotesnavelin { get; set; }
         public virtual DbSet<CuadernosBancarios> CuadernosBancarios { get; set; }
         public virtual DbSet<Remesas> Remesas { get; set; }
+        public virtual DbSet<CuentasNoAsignadas> CuentasNoAsignadas { get; set; }
+        public virtual DbSet<ReportGuiasBalances> ReportGuiasBalances { get; set; }
+        public virtual DbSet<ReportGuiasBalancesLineas> ReportGuiasBalancesLineas { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

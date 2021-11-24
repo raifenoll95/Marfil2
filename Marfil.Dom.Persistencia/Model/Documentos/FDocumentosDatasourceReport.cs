@@ -155,6 +155,16 @@ namespace Marfil.Dom.Persistencia.Model.Documentos
 
                 return new ListadoMargenQuery(user, dictionary);
             }
+            else if (tipo == TipoDocumentoImpresion.PerdidasYGanancias)
+            {
+                Dictionary<string, object> dictionary = null;
+                if (primarykey.IsValidJson())
+                {
+                    dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(primarykey);
+                }
+
+                return new PerdidasYGananciasReport(user, dictionary);
+            }
 
             throw new NotImplementedException(string.Format("Tipo de documento {0} no implementado", tipo));
         }

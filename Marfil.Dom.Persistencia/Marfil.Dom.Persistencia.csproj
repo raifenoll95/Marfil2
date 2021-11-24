@@ -301,6 +301,9 @@
     <Compile Include="Cuentas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CuentasNoAsignadas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cuentastesoreria.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -456,6 +459,7 @@
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
     <Compile Include="Listados\ListadoInformeMargen.cs" />
     <Compile Include="Listados\ListadoMargen.cs" />
+    <Compile Include="Listados\ListadoPerdidasYGanancias.cs" />
     <Compile Include="Listados\ListadosConsultaTesoreria.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
     <Compile Include="Listados\ListadosMayor.cs" />
@@ -550,6 +554,7 @@
     <Compile Include="Model\Configuracion\Cuentas\GuiascontablesModel.cs" />
     <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasEstadosStock.cs" />
     <Compile Include="Model\Configuracion\EstadosModel.cs" />
+    <Compile Include="Model\Contabilidad\PerdidasYGananciasReport.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesLineasModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesModel.cs" />
     <Compile Include="Model\Contabilidad\SaldosAcumuladorPeriodosModel.cs" />
@@ -833,6 +838,12 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Remesas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportGuiasBalances.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportGuiasBalancesLineas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Reservasstock.cs">

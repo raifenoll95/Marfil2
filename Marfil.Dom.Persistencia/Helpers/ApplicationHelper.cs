@@ -691,6 +691,15 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         }
 
+        public string GetFiltroAcumulador(){
+
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), _context) as GuiasBalancesService)
+            {
+                return service.GetFiltroAcumulador();
+            }
+
+        }
+
         public  AlmacenesModel GetCurrentAlmacen()
         {
             
@@ -1397,6 +1406,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
 
             return Enumerable.Empty<Tuple<string, string>>();
+        }
+
+        public IEnumerable<string> GetEjercicio()
+        {
+            using (var service = FService.Instance.GetService(typeof(EjerciciosModel), _context) as EjerciciosService)
+            {
+                return service.GetEjercicio(_context.Ejercicio);
+            }
         }
 
 
