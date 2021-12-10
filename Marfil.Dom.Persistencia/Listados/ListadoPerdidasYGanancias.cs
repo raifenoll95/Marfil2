@@ -87,17 +87,6 @@ namespace Marfil.Dom.Persistencia.Listados
                 //flag = true;
             }
 
-            if (!Lineassinsaldo)
-            {
-                if (flag)
-                    sb.Append(" AND ");
-
-                sb.Append(" saldo > 0");
-                ValoresParametros["SIN_SALDO"] = Lineassinsaldo;
-
-                flag = true;
-            }
-
             if (Desglosarniveltres)
             {
                 /*if (flag)
@@ -108,6 +97,39 @@ namespace Marfil.Dom.Persistencia.Listados
                 //flag = true;
             }
 
+            if (!Lineassinsaldo)
+            {
+                if (flag)
+                    sb.Append(" AND ");
+
+                if (Desglosarniveltres)
+                {
+                    sb.Append(" cab.Id = lin.GuiasBalancesId and cab.GuiaId = lin.GuiaId and cab.InformeId = lin.InformeId and cab.orden = lin.orden and lin.saldo <> 0");
+                }
+                else
+                {
+                    sb.Append(" saldo <> 0 or saldo is null");
+                }
+                    
+                ValoresParametros["SIN_SALDO"] = Lineassinsaldo;
+
+                flag = true;
+            }
+            else
+            {
+                if (flag)
+                    sb.Append(" AND ");
+
+                if (Desglosarniveltres)
+                {
+                    sb.Append(" cab.Id = lin.GuiasBalancesId and cab.GuiaId = lin.GuiaId and cab.InformeId = lin.InformeId and cab.orden = lin.orden");
+                }
+
+                ValoresParametros["SIN_SALDO"] = Lineassinsaldo;
+
+                flag = true;
+            }          
+
             ExecuteProcedure(Context, ValoresParametros);
             return sb.ToString();
         }
@@ -115,7 +137,14 @@ namespace Marfil.Dom.Persistencia.Listados
         internal override string GenerarSelect()
         {
             var sb = new StringBuilder();
-            sb.Append("Select orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo from ReportGuiasBalances");
+            if (Desglosarniveltres)
+            {
+                sb.Append("SELECT cab.orden as Orden, cab.descrip as [Descripción], lin.cuenta as Cuenta, lin.saldo as Saldo FROM ReportGuiasBalances cab, ReportGuiasBalancesLineas lin");
+            }
+            else
+            {
+                sb.Append("Select orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo from ReportGuiasBalances");
+            }        
 
             return sb.ToString();
         }

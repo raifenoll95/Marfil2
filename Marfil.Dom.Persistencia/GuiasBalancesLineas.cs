@@ -14,17 +14,15 @@ namespace Marfil.Dom.Persistencia
     
     public partial class GuiasBalancesLineas
     {
-        public int Id { get; set; }
-        public Nullable<int> InformeId { get; set; }
-        public Nullable<int> GuiaId { get; set; }
-        public Nullable<int> GuiasBalancesId { get; set; }
+        public int id { get; set; }
+        public Nullable<int> guiasBalancesId { get; set; }
+        public Nullable<int> informeId { get; set; }
+        public Nullable<int> guiaId { get; set; }
         public string orden { get; set; }
         public string cuenta { get; set; }
         public string signo { get; set; }
         public string signoea { get; set; }
     
         public virtual GuiasBalances GuiasBalances { get; set; }
-        public virtual TipoGuia TipoGuia { get; set; }
-        public virtual TipoInforme TipoInforme { get; set; }
     }
 }

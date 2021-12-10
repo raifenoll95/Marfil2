@@ -27,7 +27,6 @@
         <EntityTypeShape EntityType="MarfilModel.Cuentas" Width="1.5" PointX="27.75" PointY="34.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Cuentastesoreria" Width="1.5" PointX="34.75" PointY="31.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MarfilModel.Direcciones" Width="1.5" PointX="34.75" PointY="34.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.DocumentosUsuario" Width="1.5" PointX="35.75" PointY="0.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Estados" Width="1.5" PointX="35.75" PointY="14.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FacturasLin" Width="1.5" PointX="17.875" PointY="1.875" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FacturasTotales" Width="1.5" PointX="17.875" PointY="0.875" IsExpanded="false" />
@@ -227,15 +226,8 @@
         <EntityTypeShape EntityType="MarfilModel.ListadoStockValorado" Width="1.5" PointX="7.375" PointY="15.75" />
         <EntityTypeShape EntityType="MarfilModel.Lotes" Width="1.5" PointX="38.375" PointY="38.75" />
         <EntityTypeShape EntityType="MarfilModel.CircuitosTesoreriaCobros" Width="1.5" PointX="39.375" PointY="24.75" />
-        <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="32.625" PointY="25" />
-        <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.875" PointY="25.25" />
         <EntityTypeShape EntityType="MarfilModel.TipoGuia" Width="1.5" PointX="30.375" PointY="26" />
         <EntityTypeShape EntityType="MarfilModel.TipoInforme" Width="1.5" PointX="30.375" PointY="29" />
-        <AssociationConnector Association="MarfilModel.FK_GuiasBalances_TipoGuia" />
-        <AssociationConnector Association="MarfilModel.FK_GuiasBalances_TipoInforme" />
-        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
-        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" />
-        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" />
         <EntityTypeShape EntityType="MarfilModel.CarteraVencimientos" Width="1.5" PointX="40.375" PointY="34.125" />
         <EntityTypeShape EntityType="MarfilModel.PrevisionesCartera" Width="1.5" PointX="42.625" PointY="36.625" />
         <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="40.375" PointY="48.125" />
@@ -273,6 +265,10 @@
         <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineas_GuiasBalances" />
         <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineas_TipoGuia" />
         <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineas_TipoInforme" />
+        <EntityTypeShape EntityType="MarfilModel.DocumentosUsuario" Width="1.5" PointX="23.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="32.375" PointY="25" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.625" PointY="25.25" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

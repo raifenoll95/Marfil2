@@ -290,7 +290,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region Cambiar estado
 
-        public async System.Threading.Tasks.Task<ActionResult> CambiarEstado(string documentoReferencia, string estadoNuevo, string returnUrl)
+        public ActionResult CambiarEstado(string documentoReferencia, string estadoNuevo, string returnUrl)
         {
             try
             {
@@ -320,7 +320,7 @@ namespace Marfil.App.WebMain.Controllers
             }
             catch (Exception ex)
             {
-                TempData["errors"] = ex.Message;
+                TempData["errors"] = ex.InnerException;
             }
             return Redirect(returnUrl);
         }

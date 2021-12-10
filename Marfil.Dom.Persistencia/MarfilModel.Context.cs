@@ -49,7 +49,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Cuentas> Cuentas { get; set; }
         public virtual DbSet<Cuentastesoreria> Cuentastesoreria { get; set; }
         public virtual DbSet<Direcciones> Direcciones { get; set; }
-        public virtual DbSet<DocumentosUsuario> DocumentosUsuario { get; set; }
         public virtual DbSet<Estados> Estados { get; set; }
         public virtual DbSet<FacturasLin> FacturasLin { get; set; }
         public virtual DbSet<FacturasTotales> FacturasTotales { get; set; }
@@ -183,8 +182,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<ListadoStockValorado> ListadoStockValorado { get; set; }
         public virtual DbSet<Lotes> Lotes { get; set; }
         public virtual DbSet<CircuitosTesoreriaCobros> CircuitosTesoreriaCobros { get; set; }
-        public virtual DbSet<GuiasBalances> GuiasBalances { get; set; }
-        public virtual DbSet<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
         public virtual DbSet<TipoGuia> TipoGuia { get; set; }
         public virtual DbSet<TipoInforme> TipoInforme { get; set; }
         public virtual DbSet<CarteraVencimientos> CarteraVencimientos { get; set; }
@@ -209,6 +206,9 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<CuentasNoAsignadas> CuentasNoAsignadas { get; set; }
         public virtual DbSet<ReportGuiasBalances> ReportGuiasBalances { get; set; }
         public virtual DbSet<ReportGuiasBalancesLineas> ReportGuiasBalancesLineas { get; set; }
+        public virtual DbSet<DocumentosUsuario> DocumentosUsuario { get; set; }
+        public virtual DbSet<GuiasBalances> GuiasBalances { get; set; }
+        public virtual DbSet<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

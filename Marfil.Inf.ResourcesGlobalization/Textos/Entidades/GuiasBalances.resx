@@ -123,6 +123,12 @@
   <data name="Balca" xml:space="preserve">
     <value>Balca</value>
   </data>
+  <data name="CPGAN" xml:space="preserve">
+    <value>CPGAN</value>
+  </data>
+  <data name="CPGFU" xml:space="preserve">
+    <value>CPGFU</value>
+  </data>
   <data name="CTAPG" xml:space="preserve">
     <value>CTAPG</value>
   </data>
@@ -170,5 +176,11 @@
   </data>
   <data name="TipoGuia6" xml:space="preserve">
     <value>PYME</value>
+  </data>
+  <data name="TipoGuia7" xml:space="preserve">
+    <value>ESTANDAR</value>
+  </data>
+  <data name="TipoGuia8" xml:space="preserve">
+    <value>INF. GESTI</value>
   </data>
 </root>

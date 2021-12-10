@@ -1,85 +1,105 @@
-﻿@using Marfil.Dom.Persistencia.Model.Contabilidad
-@using Marfil.App.WebMain.Misc
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Contabilidad
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
 @model GuiasBalancesModel
 @{
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
     var listTipoInforme = WebHelper.GetApplicationHelper().GetListTipoInforme().Select(f => new SelectListItem() { Value = f.Id.ToString(), Text = f.Descripcion }).ToList();
     var listTipoGuia = WebHelper.GetApplicationHelper().GetListTipoGuia().Select(f => new SelectListItem() { Value = f.Id.ToString(), Text = f.Descripcion }).ToList();
+
+    var listActpas = WebHelper.GetApplicationHelper().GetListActpas().Select(f => new SelectListItem() { Value = f.Value, Text = f.Text }).ToList();
+    var listFormula = WebHelper.GetApplicationHelper().GetListDetfor().Select(f => new SelectListItem() { Value = f.Value, Text = f.Text }).ToList();
+
 }
 
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-@Html.HiddenFor(model => model.Id)
+@if (iseditable)
+{
+    @Html.HiddenFor(f => Model.Id)
+}
+
 <div class="form-group">
-    @Html.LabelFor(model => model.InformeId, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.InformeId, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(model => model.InformeId, listTipoInforme, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.InformeId, "", new { @class = "text-danger" })
+        @Html.EnumDropDownList("InformeId", Model.InformeId, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.InformeId, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.GuiaId, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.GuiaId, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(model => model.GuiaId, listTipoGuia, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.GuiaId, "", new { @class = "text-danger" })
+        @Html.EnumDropDownList("GuiaId", Model.GuiaId, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.GuiaId, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.TextoGrupo, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.TextoGrupo, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.TextoGrupo, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.TextoGrupo, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(f => Model.TextoGrupo, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.TextoGrupo, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Orden, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Orden, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.Orden, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Orden, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(f => Model.Orden, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Orden, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Actpas, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Actpas, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @*@Html.TextBoxFor(model => model.Actpas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })*@
-        @Html.DropDownListFor(model => model.Actpas, new SelectList(Model.ListActpas,""), isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Actpas, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(f => Model.Actpas, listActpas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Actpas, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Detfor, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Detfor, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(model => model.Detfor, new SelectList(Model.ListFormula), isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.DropDownListFor(f => Model.Detfor, listFormula, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
         @*@Html.TextBoxFor(model => model.Detfor, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })*@
-        @Html.ValidationMessageFor(model => model.Detfor, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(f => Model.Detfor, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.RegDig, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Formula, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.RegDig, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.RegDig, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(f => Model.Formula, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Formula, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Descrip, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.RegDig, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.Descrip, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Descrip, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(f => Model.RegDig, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.RegDig, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Listado, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Descrip, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.Listado, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Listado, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(f => Model.Descrip, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Descrip, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Listado, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Listado, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Listado, "", new { @class = "text-danger" })
     </div>
 </div>

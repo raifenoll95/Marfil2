@@ -117,25 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cuenta" xml:space="preserve">
-    <value />
+  <data name="Cuenta" xml:space="preserve">
+    <value>Cuenta</value>
   </data>
-  <data name="guia" xml:space="preserve">
-    <value />
+  <data name="Guia" xml:space="preserve">
+    <value>Guía</value>
   </data>
   <data name="GuiasBalancesId" xml:space="preserve">
-    <value />
+    <value>Guía Balances Id</value>
   </data>
-  <data name="informe" xml:space="preserve">
-    <value />
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
   </data>
-  <data name="orden" xml:space="preserve">
-    <value />
+  <data name="Informe" xml:space="preserve">
+    <value>Informe</value>
   </data>
-  <data name="signo" xml:space="preserve">
-    <value />
+  <data name="Orden" xml:space="preserve">
+    <value>Orden</value>
   </data>
-  <data name="signoea" xml:space="preserve">
-    <value />
+  <data name="Signo" xml:space="preserve">
+    <value>Signo</value>
+  </data>
+  <data name="Signoea" xml:space="preserve">
+    <value>Signo EA</value>
   </data>
 </root>

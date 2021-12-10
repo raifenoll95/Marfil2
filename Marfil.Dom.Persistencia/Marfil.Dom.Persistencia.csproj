@@ -555,7 +555,6 @@
     <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasEstadosStock.cs" />
     <Compile Include="Model\Configuracion\EstadosModel.cs" />
     <Compile Include="Model\Contabilidad\PerdidasYGananciasReport.cs" />
-    <Compile Include="Model\Contabilidad\GuiasBalancesLineasModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesModel.cs" />
     <Compile Include="Model\Contabilidad\SaldosAcumuladorPeriodosModel.cs" />
     <Compile Include="Model\Contabilidad\SelectSumasYSaldos.cs" />
@@ -893,7 +892,6 @@
     <Compile Include="ServicesView\Servicios\ArticulosTerceroService.cs" />
     <Compile Include="ServicesView\Servicios\Cartera\VencimientosService.cs" />
     <Compile Include="ServicesView\Servicios\ConsultaVisualService.cs" />
-    <Compile Include="ServicesView\Servicios\Contabilidad\GuiasBalancesLineasService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\GuiasBalancesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\IMaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MaesService.cs" />
@@ -905,7 +903,6 @@
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CuadernosBancariosConverterServices.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
-    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
@@ -945,7 +942,6 @@
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CuadernosBancariosValidation.cs" />
-    <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesLineasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />

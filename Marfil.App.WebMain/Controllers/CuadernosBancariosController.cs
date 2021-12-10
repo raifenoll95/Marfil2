@@ -46,6 +46,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             if (TempData["errors"] != null)
                 ModelState.AddModelError("", TempData["errors"].ToString());
+
             var model = TempData["model"] == null ? Helper.fModel.GetModel<CuadernosBancariosModel>(ContextService) : TempData["model"] as CuadernosBancariosModel;
             using (var gestionService = createService(model))
             {

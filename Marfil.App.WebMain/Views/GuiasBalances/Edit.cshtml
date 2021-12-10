@@ -1,27 +1,46 @@
-﻿@using Marfil.Dom.Persistencia.Model.Interfaces
-@using Marfil.Dom.Persistencia.Model.Contabilidad
-
+﻿@using Marfil.Dom.ControlsUI.Busquedas
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
+@using Newtonsoft.Json
+@using Resources
 @model IModelView
+@{
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+    var modelview = Model as Marfil.Dom.Persistencia.Model.Contabilidad.GuiasBalancesModel;
+   
+}
 
 
-@using (Html.BeginForm("EditOperacion", "GuiasBalances", FormMethod.Post, new { @class = "form-horizontal" }))
+
+
+@using (Html.BeginForm("EditOperacion", "GuiasBalances", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
+
+
         @{
             ViewData["operacion"] = "Edit";
         }
-        @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
-        <div class="form-group margin-top">
-            <div class="col-md-10">
-                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
-                    <i class="ace-icon fa fa-check bigger-110"></i>
-                    Guardar
-                </button>
-            </div>
+        @Html.Partial("_guiasbalances", Model as Marfil.Dom.Persistencia.Model.Contabilidad.GuiasBalancesModel)
+
+        <div class="margin-top">
+
+
+            <button class="btn btn-info no-margin-left" type="Submit" ng-disabled="!MainFormIsEnable">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                @General.BtnGuardar
+            </button>
+
         </div>
+
     </div>
-}
+            }
 
 
 @section GridView
@@ -34,3 +53,4 @@
 )
 
 }
+

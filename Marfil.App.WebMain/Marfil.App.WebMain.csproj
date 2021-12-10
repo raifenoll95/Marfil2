@@ -3526,15 +3526,6 @@
     <Content Include="Views\Vencimientos\_cartera.cshtml" />
     <Content Include="Views\VencimientosCompra\_cartera.cshtml" />
     <Content Include="Views\VencimientosCompra\_carteralin.cshtml" />
-    <Content Include="Views\GuiasBalances\Create.cshtml" />
-    <Content Include="Views\GuiasBalances\Delete.cshtml" />
-    <Content Include="Views\GuiasBalances\Details.cshtml" />
-    <Content Include="Views\GuiasBalances\Edit.cshtml" />
-    <Content Include="Views\GuiasBalances\Index.cshtml" />
-    <Content Include="Views\GuiasBalances\_general.cshtml" />
-    <Content Include="Views\GuiasBalances\_GuiasBalances.cshtml" />
-    <Content Include="Views\GuiasBalances\_GuiasBalancesLineas.cshtml" />
-    <Content Include="Views\GuiasBalances\_GuiasBalancesLineasGrid.cshtml" />
     <Content Include="Views\ListadoAcumuladorPeriodos\AcumuladorPeriodos.cshtml" />
     <Content Include="Views\MovimientosTesoreria\_asignacionstep1.cshtml" />
     <Content Include="Views\MovimientosTesoreria\_asignacionstep2.cshtml" />
@@ -3604,6 +3595,15 @@
     <Content Include="Views\Configuracion\_tesoreria.cshtml" />
     <Content Include="Views\Configuracion\_contabilidad.cshtml" />
     <Content Include="Views\ListadoPerdidasYGanancias\PerdidasYGanancias.cshtml" />
+    <Content Include="Views\GuiasBalances\Create.cshtml" />
+    <Content Include="Views\GuiasBalances\Delete.cshtml" />
+    <Content Include="Views\GuiasBalances\Details.cshtml" />
+    <Content Include="Views\GuiasBalances\Edit.cshtml" />
+    <Content Include="Views\GuiasBalances\Index.cshtml" />
+    <Content Include="Views\GuiasBalances\_guiasbalances.cshtml" />
+    <Content Include="Views\GuiasBalances\_general.cshtml" />
+    <Content Include="Views\GuiasBalances\_detalle.cshtml" />
+    <Content Include="Views\GuiasBalances\_lineasGridView.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

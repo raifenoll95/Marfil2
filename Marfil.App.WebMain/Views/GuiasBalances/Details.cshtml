@@ -1,27 +1,33 @@
-﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+﻿@using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 @using Marfil.Dom.Persistencia.Model.Contabilidad
-
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Resources
+@model IModelView
 @{
-    //ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
-    ViewData["readonly"] = true;
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
 }
-
 <div>
+    @{
+        ViewData["readonly"] = true;
+    }
+
     <div class="form-horizontal">
-        @Html.AntiForgeryToken()
-        @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
+        @Html.Partial("_guiasbalances", Model as GuiasBalancesModel)
     </div>
 </div>
-
 @if (ViewBag.Modificar)
 {
-    <p class="margin-top">
-        <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((GuiasBalancesModel)Model).Id})">
+    <div class="margin-top">
+        <a class="btn btn-info no-margin-left" href="@Url.Action("Edit", new {id = ((GuiasBalancesModel) Model).Id})">
             <i class="ace-icon fa fa-pencil bigger-110"></i>
-            Editar
+            @General.LblEditar
         </a>
-    </p>
+    </div>
 }
+
 @section GridView
 {
     @Html.DevExpress().GetStyleSheets(
@@ -30,7 +36,5 @@
     @Html.DevExpress().GetScripts(
     new Script { ExtensionSuite = ExtensionSuite.GridView }
 )
+
 }
-
-
-

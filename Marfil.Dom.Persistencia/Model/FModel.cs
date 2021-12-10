@@ -1211,10 +1211,16 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
-            else if(typeof(GuiasBalancesModel) == typeof(T))
+            else if (typeof(GuiasBalancesModel) == typeof(T))
             {
-                var result = new GuiasBalancesModel(context);
-                var empresa = appService.GetCurrentEmpresa();
+
+                var result = new GuiasBalancesModel();
+                return result as T;
+            }
+            else if (typeof(GuiasBalancesLineasModel) == typeof(T))
+            {
+
+                var result = new GuiasBalancesLineasModel();
                 return result as T;
             }
             var ctor = typeof(T).GetConstructor(new[] { typeof(IContextService) });

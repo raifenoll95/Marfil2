@@ -19,36 +19,28 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
 
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
-            //var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var fmodel = new FModel();
-            var obj = fmodel.GetModel<GuiasBalancesModel>(_context);
-            var instance = obj as IModelView;
-            var extension = obj as IModelViewExtension;
-            var display = obj as ICanDisplayName;
-            var model = new ListIndexModel()
-            {
-                Entidad = display.DisplayName,
-                List = GetAllGuiasBalances<GuiasBalancesModel>(),
-                PrimaryColumnns = extension.primaryKey.Select(f => f.Name).ToList(),
-                VarSessionName = "__" + t.Name,
-                Properties = instance.getProperties(),
-                Controller = controller,
-                PermiteEliminar = canEliminar,
-                PermiteModificar = canModificar,
-                ExcludedColumns = new[] { "Toolbar" }
-            };
-            var propiedadesVisibles = new[] { "TipoInformeE", "TipoGuiaE", "TextoGrupo", "Orden", "Actpas", "Detfor", "Formula", "RegDig", "Descrip", "Listado" };
-            var propiedades = Helpers.Helper.getProperties<GuiasBalancesModel>();
-            model.ExcludedColumns =
-                propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
-            model.FiltroColumnas.Add("Id", FiltroColumnas.EmpiezaPor);
-            //model.ColumnasCombo.Add("Fkgruposmateriales", ListGruposmateriales());
+            var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
+            var propiedadesVisibles = new[] { "InformeId", "GuiaId", "TextoGrupo", "Orden", "Actpas", "Detfor", "Formula", "RegDig", "Descrip", "Listado" };
+            var propiedades = Helpers.Helper.getProperties<CuadernosBancariosModel>();
+
+            //model.PrimaryColumnns = new[] { "id" };
+            model.ExcludedColumns = propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
+            model.OrdenColumnas.Add("InformeId", 0);
+            model.OrdenColumnas.Add("GuiaId", 1);
+            model.OrdenColumnas.Add("TextoGrupo", 2);
+            model.OrdenColumnas.Add("Orden", 3);
+            model.OrdenColumnas.Add("Actpas", 4);
+            model.OrdenColumnas.Add("Detfor", 5);
+            model.OrdenColumnas.Add("Formula", 6);
+            model.OrdenColumnas.Add("RegDig", 7);
+            model.OrdenColumnas.Add("Descrip", 8);
+            model.OrdenColumnas.Add("Listado", 9);
+
             return model;
         }
-        public IEnumerable<T> GetAllGuiasBalances<T>() where T : GuiasBalancesModel
+        public override string GetSelectPrincipal()
         {
-            var a = _db.Database.SqlQuery<T>("select *, InformeId as TipoInformeE, GuiaId as TipoGuiaE from guiasbalances").ToList();
-            return a;
+            return string.Format("select * from GuiasBalances");
         }
 
         public string GetFiltroAcumulador()
@@ -74,6 +66,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             }
 
             return false;
+        }
+
+        public void DeleteAllLin()
+        {
+            var lin = _db.GuiasBalancesLineas.Where(f => f.guiasBalancesId == null).ToList();
+
+            if (lin != null)
+            {
+                _db.GuiasBalancesLineas.RemoveRange(lin);
+                _db.SaveChanges();
+
+            }
+
         }
     }
 }

@@ -72,7 +72,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
                 if (SinSaldo == "false")
                 {
-                    mainQuery.Sql += "where saldo > 0";
+                    mainQuery.Sql += "where saldo <> 0 or saldo is null";
+                    
                     ValoresParametros["SIN_SALDO"] = false;
 
                     //flag = true;
@@ -92,6 +93,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             }
                        
             DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineas", "SELECT * FROM ReportGuiasBalancesLineas"));
+            DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadas", "SELECT * FROM CuentasNoAsignadas"));
 
             DataSource.Queries.Add(mainQuery);
 

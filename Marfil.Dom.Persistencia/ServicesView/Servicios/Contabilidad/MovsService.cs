@@ -333,7 +333,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (DataRow row in sorted.Rows)
                 {
                     // Referencia, a quien pertenece el MovsLin a añadir
-                    var referenciacsv = row["Referencia"].ToString();
+                    var referenciacsv = row["Referencia"].ToString();       
                     var cabecera = ListaMovs.Where(f => f.Referencialibre == referenciacsv).SingleOrDefault();
 
                     // Crear documento si no existe
@@ -342,6 +342,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         // Crear cabecera/documento 
                         documento = new FModel().GetModel<MovsModel>(context);
                         documento.Referencialibre = referenciacsv;
+                        if (referenciacsv != "")
+                        {
+                            documento.Referencialibreint = int.Parse(referenciacsv);
+                        }                       
 
                         // Tipo de asiento T.V 72
                         // F1 Normal en blanco
@@ -435,7 +439,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     cabecera.Lineas.Add(linea);
                 }
 
-                foreach (var mov in ListaMovs)
+                // Ordenados por lista del csv
+                List<MovsModel> ListaMovsOrdenados = ListaMovs.OrderBy(f => f.Referencialibreint).ToList();
+
+                foreach (var mov in ListaMovsOrdenados)
                 {
                     try
                     {

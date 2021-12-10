@@ -20,9 +20,9 @@ namespace Marfil.Dom.Persistencia
             this.GuiasBalancesLineas = new HashSet<GuiasBalancesLineas>();
         }
     
-        public int Id { get; set; }
-        public Nullable<int> InformeId { get; set; }
-        public Nullable<int> GuiaId { get; set; }
+        public int id { get; set; }
+        public Nullable<int> informeId { get; set; }
+        public Nullable<int> guiaId { get; set; }
         public string textogrupo { get; set; }
         public string orden { get; set; }
         public string actpas { get; set; }
@@ -32,8 +32,6 @@ namespace Marfil.Dom.Persistencia
         public string descrip { get; set; }
         public string listado { get; set; }
     
-        public virtual TipoGuia TipoGuia { get; set; }
-        public virtual TipoInforme TipoInforme { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
     }

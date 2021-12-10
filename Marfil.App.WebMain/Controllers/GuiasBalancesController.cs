@@ -14,6 +14,7 @@ using Marfil.Dom.Persistencia.ServicesView;
 using Resources;
 using Marfil.App.WebMain.Misc;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
+using Marfil.Dom.Persistencia;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -23,8 +24,7 @@ namespace Marfil.App.WebMain.Controllers
         public GuiasBalancesController(IContextService context) : base(context)
         {
         }
-
-        string SessionGuiasBalancesLineas = "_SGuiasBalancesLineas";
+        private const string session = "_guiasBalances_";
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -40,38 +40,43 @@ namespace Marfil.App.WebMain.Controllers
             CanModificar = true;
             CanEliminar = true;
         }
+
         #region Create
         public override ActionResult Create()
         {
             if (TempData["errors"] != null)
                 ModelState.AddModelError("", TempData["errors"].ToString());
 
-            using (var gestionService = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService))
+            var model = TempData["model"] == null ? Helper.fModel.GetModel<GuiasBalancesModel>(ContextService) : TempData["model"] as GuiasBalancesModel;
+            using (var gestionService = createService(model))
             {
-                var modelview = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService) as IModelView;
-                if (TempData["model"] != null)
-                    modelview = TempData["model"] as IModelView;
-                ((IToolbar)modelview).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, modelview);
-                return View(modelview);
+                if (TempData["model"] == null)
+                {
+                    Session[session] = model.Lineas;
+                }
+
+                ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
+                return View(model);
             }
         }
+
         public override ActionResult CreateOperacion(GuiasBalancesModel model)
         {
             try
             {
-                var a = 3;
-
-                var modelview = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService);
-                model.GuiasBalancesLineas = GetListGuiasBalancesLineas.ToList();
-
-                using (var gestionService = createService(modelview))
+                using (var gestionService = createService(model))
                 {
-                    ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
-                    if (ModelState.IsValid)
+                    using (var guiasBalancesService = new GuiasBalancesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
                     {
-                        gestionService.create(model);
-                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
-                        return RedirectToAction("Index");
+                        if (ModelState.IsValid)
+                        {
+                            model.Lineas = Session[session] as List<GuiasBalancesLineasModel>;
+                            gestionService.create(model);
+                            //Elimina lineas con idCab = null
+                            guiasBalancesService.DeleteAllLin();
+                            TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
                 TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
@@ -108,9 +113,9 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     return HttpNotFound();
                 }
-
+                Session[session] = ((GuiasBalancesModel)model).Lineas;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
-                SetListGuiasBalancesLineas(((GuiasBalancesModel)model).GuiasBalancesLineas);
+                //SetListGuiasBalancesLineas(((GuiasBalancesModel)model).Lineas);
                 return View(model);
             }
         }
@@ -127,10 +132,15 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var gestionService = createService(model))
                     {
-                        model.GuiasBalancesLineas = GetListGuiasBalancesLineas.ToList();
-                        gestionService.edit(model);
-                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
-                        return RedirectToAction("Index");
+                        using (var guiasBalancesService = new GuiasBalancesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
+                        {
+                            model.Lineas = Session[session] as List<GuiasBalancesLineasModel>;
+                            gestionService.edit(model);
+                            //Elimina lineas con idCab = null
+                            guiasBalancesService.DeleteAllLin();
+                            TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
                 TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
@@ -138,14 +148,14 @@ namespace Marfil.App.WebMain.Controllers
                     .Select(x => x.ErrorMessage));
                 TempData["model"] = model;
                 //return base.EditOperacion(model);
-                return RedirectToAction("Edit", new { id = model.Id });
+                return RedirectToAction("Edit", new { id = new { id = obj.get(objExt.primaryKey.First().Name) } });
             }
             catch (Exception ex)
             {
                 model.Context = ContextService;
                 TempData["errors"] = ex.Message;
                 TempData["model"] = model;
-                return RedirectToAction("Edit", new { id = model.Id });
+                return RedirectToAction("Edit", new { id = new { id = obj.get(objExt.primaryKey.First().Name) } });
             }
         }
         #endregion
@@ -166,6 +176,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     return HttpNotFound();
                 }
+                Session[session] = newModel.Lineas;
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 return View(model);
@@ -184,47 +195,57 @@ namespace Marfil.App.WebMain.Controllers
         }
         #endregion
 
-        #region Gias de Balances Lineas
+        #region Guias de Balances Lineas
         [ValidateInput(false)]
-        public ActionResult GuiasBalancesLineas() => PartialView("_GuiasBalancesLineasGrid", GetListGuiasBalancesLineas);
+        public ActionResult GuiasBalancesLineas()
+        {
+            var modelLineas = Session[session] as List<GuiasBalancesLineasModel>;
+            return PartialView("_lineasGridView", modelLineas);
+        }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult GuiasBalancesLineasAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
+        public ActionResult GuiasBalancesLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
         {
-            var items = GetListGuiasBalancesLineas;
-            item.Id = items.Count() + 1;
+            var model = Session[session] as List<GuiasBalancesLineasModel>;
             try
             {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && !model.Any(f => item.Id == f.Id))
                 {
-                    items.Add(item);
-                    SetListGuiasBalancesLineas(items);
+                    var max = model.Any() ? model.Max(f => f.Id) : 0;
+                    item.Id = max + 1;
+                    model.Add(item);
+
+                    Session[session] = model;
+
                 }
             }
-            catch (Exception ex)
+            catch (ValidationException)
             {
+                model.Remove(item);
                 throw;
             }
-            return PartialView("_GuiasBalancesLineasGrid", items);
+            return PartialView("_lineasGridView", model);
         }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult GuiasBalancesLineasUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
         {
-            var items = GetListGuiasBalancesLineas;
+            var model = Session[session] as List<GuiasBalancesLineasModel>;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var EditItem = items.Single(s => s.Id == item.Id);
-                    EditItem.GuiaId = item.GuiaId;
-                    EditItem.GuiasBalancesId = item.GuiasBalancesId;
+                    var EditItem = model.Single(s => s.Id == item.Id);
+                    //EditItem.GuiaId = item.GuiaId;
+                    //EditItem.GuiasBalancesId = item.GuiasBalancesId;
                     EditItem.Id = item.Id;
-                    EditItem.InformeId = item.InformeId;
-                    EditItem.orden = item.orden;
-                    EditItem.signo = item.signo;
-                    EditItem.signoea = item.signoea;
-                    SetListGuiasBalancesLineas(items);
+                    //EditItem.InformeId = item.InformeId;
+                    //EditItem.Orden = item.Orden;
+                    EditItem.Cuenta = item.Cuenta;
+                    EditItem.Signo = item.Signo;
+                    EditItem.Signoea = item.Signoea;
+
+                    Session[session] = model;
                 }
             }
             catch (Exception ex)
@@ -232,32 +253,20 @@ namespace Marfil.App.WebMain.Controllers
                 throw;
             }
 
-            return PartialView("_GuiasBalancesLineasGrid", items);
+            return PartialView("_lineasGridView", model);
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult GuiasBalancesLineasDelete(int id)
+        public ActionResult GuiasBalancesLineasDelete(string id)
         {
-            var items = GetListGuiasBalancesLineas;
-            items.Remove(items.Single(s => s.Id == id));
+            var intid = int.Parse(id);
+            var model = Session[session] as List<GuiasBalancesLineasModel>;
+            model.Remove(model.Single(f => f.Id == intid));
+            Session[session] = model;
 
-            //Ir actualizando los ID en caso de que sufran cambios (eliminacion de lineas) EN CASO DE QUE QUEDEN LINEAS
-            if (items.Count() >= 1)
-            {
-                int count = 1;
-                foreach (var linea in items)
-                {
-
-                    linea.Id = count;
-                    count++;
-                }
-            }
-
-            return PartialView("_GuiasBalancesLineasGrid", items);
+            return PartialView("_lineasGridView", model);
         }
 
-        void SetListGuiasBalancesLineas(List<GuiasBalancesLineasModel> guiasBalancesLineas) => Session[SessionGuiasBalancesLineas] = guiasBalancesLineas;
-        List<GuiasBalancesLineasModel> GetListGuiasBalancesLineas => Session[SessionGuiasBalancesLineas] as List<GuiasBalancesLineasModel>;
         #endregion
 
         [HttpGet]

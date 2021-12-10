@@ -86,6 +86,8 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad.Movs
 
         [Display(ResourceType = typeof(RMovs), Name = "ReferenciaLibre")]
         public string Referencialibre { get; set; }
+        [Display(ResourceType = typeof(RMovs), Name = "ReferenciaLibre")]
+        public int Referencialibreint { get; set; }
 
         [Display(ResourceType = typeof(RMovs), Name = "Referencia")]
         public string Referencia { get; set; }

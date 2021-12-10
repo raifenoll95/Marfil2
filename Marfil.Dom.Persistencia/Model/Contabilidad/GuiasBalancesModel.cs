@@ -7,47 +7,128 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RGuiasBalances = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.GuiasBalances;
+using RGuiasBLineas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.GuiasBalancesLineas;
+
 
 namespace Marfil.Dom.Persistencia.Model.Contabilidad
 {
-    public enum TipoInformeE
+    public class GuiasBalancesLineasModel
     {
-        [StringValue(typeof(RGuiasBalances), "Balca")]
-        Balca = 1,
-        [StringValue(typeof(RGuiasBalances), "CTAPG")]
-        Ctapg = 2,
-    }
-    public enum TipoGuiaE
-    {
-        [StringValue(typeof(RGuiasBalances), "TipoGuia1")]
-        Abreviada = 1,
-        [StringValue(typeof(RGuiasBalances), "TipoGuia2")]
-        Abreviado = 2,
-        [StringValue(typeof(RGuiasBalances), "TipoGuia3")]
-        COOP_ABREVIA = 3,
-        [StringValue(typeof(RGuiasBalances), "TipoGuia4")]
-        COOP_NORMAL = 4,
-        [StringValue(typeof(RGuiasBalances), "TipoGuia5")]
-        NORMAL = 5,
-        [StringValue(typeof(RGuiasBalances), "TipoGuia6")]
-        PYME = 6
+        public enum TipoInformeE
+        {
+            [StringValue(typeof(RGuiasBalances), "Balca")]
+            Balca,
+            [StringValue(typeof(RGuiasBalances), "CTAPG")]
+            Ctapg,
+            [StringValue(typeof(RGuiasBalances), "CPGAN")]
+            Cpgan,
+            [StringValue(typeof(RGuiasBalances), "CPGFU")]
+            Cpgfu
+        }
+
+        public enum TipoGuiaE
+        {
+            [StringValue(typeof(RGuiasBalances), "TipoGuia1")]
+            Abreviada,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia2")]
+            Abreviado,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia3")]
+            COOP_ABREVIA,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia4")]
+            COOP_NORMAL,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia5")]
+            NORMAL,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia6")]
+            PYME,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia7")]
+            ESTANDAR,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia8")]
+            INFGESTI
+        }
+
+        #region Propiedades
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Id")]
+        public int Id { get; set; }
+        
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Informe")]
+        public TipoInformeE InformeId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Guia")]
+        public TipoGuiaE GuiaId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "GuiasBalancesId")]
+        public int GuiasBalancesId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Orden")]
+        public string Orden { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Cuenta")]
+        public string Cuenta { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Signo")]
+        public string Signo { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "Signoea")]
+        public string Signoea { get; set; }
+        #endregion
     }
 
-    //http://localhost:55459/GuiasBalances/Index
     public class GuiasBalancesModel : BaseModel<GuiasBalancesModel, GuiasBalances>
     {
-        public override string DisplayName => "Guias Contables";
+        public enum TipoInformeE
+        {
+            [StringValue(typeof(RGuiasBalances), "Balca")]
+            Balca,
+            [StringValue(typeof(RGuiasBalances), "CTAPG")]
+            Ctapg,
+            [StringValue(typeof(RGuiasBalances), "CPGAN")]
+            Cpgan,
+            [StringValue(typeof(RGuiasBalances), "CPGFU")]
+            Cpgfu
+        }
+
+        public enum TipoGuiaE
+        {
+            [StringValue(typeof(RGuiasBalances), "TipoGuia1")]
+            Abreviada,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia2")]
+            Abreviado,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia3")]
+            COOP_ABREVIA,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia4")]
+            COOP_NORMAL,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia5")]
+            NORMAL,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia6")]
+            PYME,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia7")]
+            ESTANDAR,
+            [StringValue(typeof(RGuiasBalances), "TipoGuia8")]
+            INFGESTI
+        }
+
+        public GuiasBalancesModel()
+        {
+
+        }
+        public GuiasBalancesModel(IContextService context) : base(context)
+        {
+        }
+
+        private List<GuiasBalancesLineasModel> _lineas = new List<GuiasBalancesLineasModel>();
+
+        public override string DisplayName => "Guias Balances";
 
         public int Id { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
 
-        public int InformeId { get; set; }
+        public TipoInformeE InformeId { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
-        public int GuiaId { get; set; }
+        public TipoGuiaE GuiaId { get; set; }
 
-        [Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
+        /*[Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
         public TipoInforme TipoInforme { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
@@ -57,7 +138,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public TipoInformeE TipoInformeE { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
-        public TipoGuiaE TipoGuiaE { get; set; }
+        public TipoGuiaE TipoGuiaE { get; set; }*/
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "TextoGrupo")]
         public string TextoGrupo { get; set; }
@@ -83,47 +164,12 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Listado")]
         public string Listado { get; set; }
 
-        private List<GuiasBalancesLineasModel> _GuiasBalancesLineas;
-
-        public List<GuiasBalancesLineasModel> GuiasBalancesLineas
+        public List<GuiasBalancesLineasModel> Lineas
         {
-            get { return _GuiasBalancesLineas; }
-            set { _GuiasBalancesLineas = value; }
+            get { return _lineas; }
+            set { _lineas = value; }
         }
 
-        private List<string> listFormula;
-        public List<string> ListFormula
-        {
-
-            get { return listFormula; }
-            set { listFormula = value; }
-        }
-
-        private List<string> listActpas;
-        public List<string> ListActpas
-        {
-            get { return listActpas; }
-            set { listActpas = value; }
-        }
-
-        public GuiasBalancesModel()
-        {
-
-        }
-        public GuiasBalancesModel(IContextService context) : base(context)
-        {
-            GuiasBalancesLineas = new List<GuiasBalancesLineasModel>();
-            ListFormula = new List<string>();
-            ListActpas = new List<string>();
-
-            ListActpas.Add("A");
-            ListActpas.Add("P");
-
-            ListFormula.Add("D");
-            ListFormula.Add("T");
-            ListFormula.Add("F");
-            ListFormula.Add("G");
-        }
         public override object generateId(string id)
         {
             return int.Parse(id);

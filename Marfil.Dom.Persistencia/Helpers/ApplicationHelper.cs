@@ -1212,6 +1212,29 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<SelectListItem> GetListActpas()
+        {
+            List<SelectListItem>  ListActpas = new List<SelectListItem>();
+
+            ListActpas.Add(new SelectListItem() { Value = "A", Text = "Activo" });
+            ListActpas.Add(new SelectListItem() { Value = "P", Text = "Pasivo" });
+
+            return ListActpas;
+        }
+
+        public IEnumerable<SelectListItem> GetListDetfor()
+        {
+            List<SelectListItem> ListFormula = new List<SelectListItem>();
+
+            ListFormula.Add(new SelectListItem() { Value = "D", Text = "Detalle" });
+            ListFormula.Add(new SelectListItem() { Value = "T", Text = "Título" });
+            ListFormula.Add(new SelectListItem() { Value = "F", Text = "Fórmula" });
+            ListFormula.Add(new SelectListItem() { Value = "G", Text = "Gran Total" });
+            ListFormula.Add(new SelectListItem() { Value = "Z", Text = "Gran Título" });
+
+            return ListFormula;
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListGrupoIncidencias()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

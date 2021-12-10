@@ -16,29 +16,34 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         {
                 
         }
-
-        public override IModelView GetModelView(GuiasBalances obj)
+        public override IModelView CreateView(string id)
         {
-            var result = base.GetModelView(obj) as GuiasBalancesModel;
-            result.GuiasBalancesLineas = obj.GuiasBalancesLineas.Where(w=> w.InformeId == obj.InformeId && w.GuiaId == obj.GuiaId).ToList().Select(g => new GuiasBalancesLineasModel()
-            {
-                TipoGuia = g.TipoGuia,
-                TipoInforme =  g.TipoInforme,
-                cuenta = g.cuenta,
-                GuiaId = g.GuiaId.Value,
-                GuiasBalancesId = g.GuiasBalancesId,
-                Id = g.Id,
-                InformeId = g.InformeId.Value,
-                orden = g.orden,
-                signo = g.signo,
-                signoea = g.signoea
-            }).ToList();
+            var idparse = int.Parse(id);
+            var obj = _db.GuiasBalances.Include("GuiasBalancesLineas").Single(f => f.id == idparse);
+            var result = GetModelView(obj) as GuiasBalancesModel;
+            result.TextoGrupo = obj.textogrupo;
+            result.RegDig = obj.regdig;
+            result.Lineas =
+               obj.GuiasBalancesLineas.ToList().Select(
+                   item =>
+                       new GuiasBalancesLineasModel()
+                       {
+                           Id = item.id,
+                           GuiaId = (GuiasBalancesLineasModel.TipoGuiaE)item.guiaId,
+                           Orden = item.orden,
+                           InformeId = (GuiasBalancesLineasModel.TipoInformeE)item.informeId,
+                           GuiasBalancesId = (int)item.guiasBalancesId,
+                           Cuenta = item.cuenta,
+                           Signo = item.signo,
+                           Signoea = item.signoea
+                       }).ToList();
 
             return result;
         }
+
         public override GuiasBalances CreatePersitance(IModelView obj)
         {
-            var viewmodel = base.CreatePersitance(obj);
+            var viewmodel = obj as GuiasBalancesModel;
             var result = _db.GuiasBalances.Create();
 
             foreach (var item in result.GetType().GetProperties())
@@ -59,20 +64,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 }
             }
 
+            /*result.guiaId = (int)viewmodel.GuiaId;
+            result.informeId = (int)viewmodel.InformeId;
+            result.textogrupo = viewmodel.TextoGrupo;
+            result.regdig = viewmodel.RegDig;*/
+
             result.GuiasBalancesLineas.Clear();
-            foreach (var item in viewmodel.GuiasBalancesLineas)
+            foreach (var item in viewmodel.Lineas)
             {
-                var newItem = _db.Set<GuiasBalancesLineas>().Create();
-                newItem.cuenta = item.cuenta;
-                newItem.GuiaId = item.GuiaId;
-                newItem.GuiasBalancesId = item.GuiasBalancesId;
-                newItem.Id = item.Id;
-                newItem.InformeId = item.InformeId;
-                newItem.orden = item.orden;
-                newItem.signo = item.signo;
-                newItem.signoea = item.signoea;
-                newItem.TipoGuia = item.TipoGuia;
-                newItem.TipoInforme = item.TipoInforme;
+                var newItem = _db.GuiasBalancesLineas.Create();
+                newItem.cuenta = item.Cuenta;
+                newItem.guiaId = (int)result.guiaId;//misma que de la cabecera
+                newItem.guiasBalancesId = (int)result.id;//misma que de la cabecera
+                newItem.id = item.Id;
+                newItem.informeId = (int)result.informeId;//misma que de la cabecera
+                newItem.orden = result.orden;//misma que de la cabecera
+                newItem.signo = item.Signo;
+                newItem.signoea = item.Signoea;
                 result.GuiasBalancesLineas.Add(newItem);
             }
             return result;
@@ -80,7 +88,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override GuiasBalances EditPersitance(IModelView obj)
         {
             var viewmodel = obj as GuiasBalancesModel;
-            var result = _db.GuiasBalances.Where(w => w.Id == viewmodel.Id).Include(i=> i.GuiasBalancesLineas).ToList().Single();
+            var result = _db.Set<GuiasBalances>().Single(f => f.id == viewmodel.Id);
 
             foreach (var item in result.GetType().GetProperties())
             {
@@ -100,23 +108,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 }
             }
 
+            /*result.guiaId = (int)viewmodel.GuiaId;
+            result.informeId = (int)viewmodel.InformeId;
+            result.textogrupo = viewmodel.TextoGrupo;
+            result.regdig = viewmodel.RegDig;*/
+
             result.GuiasBalancesLineas.Clear();
-            foreach (var item in viewmodel.GuiasBalancesLineas)
+            foreach (var item in viewmodel.Lineas)
             {
-                var newItem = _db.Set<GuiasBalancesLineas>().Create();
-                newItem.cuenta = item.cuenta;
-                newItem.GuiaId = item.GuiaId;
-                newItem.GuiasBalancesId = item.GuiasBalancesId;
-                newItem.Id = item.Id;
-                newItem.InformeId = item.InformeId;
-                newItem.orden = item.orden;
-                newItem.signo = item.signo;
-                newItem.signoea = item.signoea;
-                newItem.TipoGuia = item.TipoGuia;
-                newItem.TipoInforme = item.TipoInforme;
+                var newItem = _db.GuiasBalancesLineas.Create();
+                newItem.cuenta = item.Cuenta;
+                newItem.guiaId = (int)result.guiaId;
+                newItem.guiasBalancesId = (int)result.id;
+                newItem.id = item.Id;
+                newItem.informeId = (int)result.informeId;
+                newItem.orden = result.orden;
+                newItem.signo = item.Signo;
+                newItem.signoea = item.Signoea;
                 result.GuiasBalancesLineas.Add(newItem);
             }
             return result;
         }
+
     }
 }

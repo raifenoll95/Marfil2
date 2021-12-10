@@ -17,8 +17,6 @@ namespace Marfil.Dom.Persistencia
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoInforme()
         {
-            this.GuiasBalances = new HashSet<GuiasBalances>();
-            this.GuiasBalancesLineas = new HashSet<GuiasBalancesLineas>();
             this.ReportGuiasBalances = new HashSet<ReportGuiasBalances>();
             this.ReportGuiasBalancesLineas = new HashSet<ReportGuiasBalancesLineas>();
         }
@@ -26,10 +24,6 @@ namespace Marfil.Dom.Persistencia
         public int Id { get; set; }
         public string Descripcion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GuiasBalances> GuiasBalances { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReportGuiasBalances> ReportGuiasBalances { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
