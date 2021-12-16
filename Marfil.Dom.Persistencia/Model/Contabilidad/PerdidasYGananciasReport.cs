@@ -25,7 +25,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource = new SqlDataSource("Report", new MsSqlConnectionParameters(server, user.BaseDatos, usuario, password, MsSqlAuthorizationType.SqlServer));
             DataSource.Name = "Report";            
 
-            var mainQuery = new CustomSqlQuery("ReportGuiasBalances", "Select orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo from ReportGuiasBalances");            
+            var mainQuery = new CustomSqlQuery("ReportGuiasBalances", "Select * from ReportGuiasBalances");            
 
             if (dictionary != null)
             {
@@ -65,7 +65,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                     /*if (flag)
                         sb.Append(" AND ");*/
 
-                    ValoresParametros["GUIA"] = Guia;
+                    //En la tabla el orden empieza en 0. se resta uno al valor.
+                    var valorguia = int.Parse(Guia) - 1;
+
+                    ValoresParametros["GUIA"] = valorguia.ToString();
 
                     //flag = true;
                 }

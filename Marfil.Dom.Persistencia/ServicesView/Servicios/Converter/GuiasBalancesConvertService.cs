@@ -65,9 +65,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             }
 
             /*result.guiaId = (int)viewmodel.GuiaId;
-            result.informeId = (int)viewmodel.InformeId;
+            result.informeId = (int)viewmodel.InformeId;*/
             result.textogrupo = viewmodel.TextoGrupo;
-            result.regdig = viewmodel.RegDig;*/
+            result.regdig = viewmodel.RegDig;
 
             result.GuiasBalancesLineas.Clear();
             foreach (var item in viewmodel.Lineas)
@@ -109,9 +109,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             }
 
             /*result.guiaId = (int)viewmodel.GuiaId;
-            result.informeId = (int)viewmodel.InformeId;
+            result.informeId = (int)viewmodel.InformeId;*/
             result.textogrupo = viewmodel.TextoGrupo;
-            result.regdig = viewmodel.RegDig;*/
+            result.regdig = viewmodel.RegDig;
 
             result.GuiasBalancesLineas.Clear();
             foreach (var item in viewmodel.Lineas)

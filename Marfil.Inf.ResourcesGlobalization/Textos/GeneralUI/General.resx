@@ -964,4 +964,7 @@
   <data name="LblAnular" xml:space="preserve">
     <value>Anular asiento</value>
   </data>
+  <data name="Configuracion" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
 </root>

@@ -68,6 +68,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             return false;
         }
 
+        public string GuiaInformeConf()
+        {
+            var Guia = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().guiaperdidas;
+
+            return Guia;
+        }
+
         public void DeleteAllLin()
         {
             var lin = _db.GuiasBalancesLineas.Where(f => f.guiasBalancesId == null).ToList();

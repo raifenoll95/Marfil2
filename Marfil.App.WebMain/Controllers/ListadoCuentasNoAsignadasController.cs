@@ -8,10 +8,11 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios;
 
 namespace Marfil.App.WebMain.Controllers
 {
-    public class ListadoPerdidasYGananciasController : ListadosController<ListadoPerdidasYGanancias>
+    public class ListadoCuentasNoAsignadasController : ListadosController<ListadoCuentasNoAsignadas>
     {
-        public ListadoPerdidasYGananciasController(IContextService context) : base(context)
+        public ListadoCuentasNoAsignadasController(IContextService context) : base(context)
         {
         }
+
     }
 }

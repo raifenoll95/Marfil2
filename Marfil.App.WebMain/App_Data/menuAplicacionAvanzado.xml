@@ -144,8 +144,7 @@
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />
 			<item name="listadomayor" eslistado="true" text="Mayor" icono="fa fa-file" url="~/ListadosMayor/Listado/Mayor" />
-			<item name="listadobalancesumasysaldos" eslistado="true" text="Sumas y saldos" icono="fa fa-file" url="~/ListadosBalanceSumasYSaldos/Listado/SumasYSaldos" />
-			<item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances/Index" />
+			<item name="listadobalancesumasysaldos" eslistado="true" text="Sumas y saldos" icono="fa fa-file" url="~/ListadosBalanceSumasYSaldos/Listado/SumasYSaldos" />			
 			<item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
 			<item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
 			<item name="listadoperdidasyganancias" eslistado="true" text="Listado Pérdidas y Ganancias" icono="fa fa-file" url="~/ListadoPerdidasYGanancias/Listado/PerdidasYGanancias" />
@@ -158,7 +157,8 @@
 			<item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
 			<item isseparator="true"></item>
 			<item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
-			<item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" icono="fa fa-file" url="~/CircuitosTesoreria/Index" />
+			<item name="listadoguiasbalances" text="Guias de Balances" url="~/GuiasBalances/Index" />
+			<item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" url="~/CircuitosTesoreria/Index" />
 			<item name="cuadernosBancarios" allowBlock="true" text="CuadernosBancarios" url="~/CuadernosBancarios/Index" />
 		</item>
 		<item name="configurardocumentosdiario" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1000" />

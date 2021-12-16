@@ -455,6 +455,7 @@
     <Compile Include="Listados\FListadosModel.cs" />
     <Compile Include="Listados\ListadoAcumuladorPeriodos.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />
+    <Compile Include="Listados\ListadoCuentasNoAsignadas.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
     <Compile Include="Listados\ListadoInformeMargen.cs" />

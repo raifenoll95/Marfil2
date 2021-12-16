@@ -279,6 +279,26 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             return cuentas;
+
+        }
+
+        [HttpGet]
+        public string GuiaInforme()
+        {
+            var Guia = "0";
+            var intGuia = 0;
+
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                Guia = service.GuiaInformeConf();
+
+                //Diferencia de empezar el listado en 0
+                intGuia = int.Parse(Guia) + 1;
+                Guia = intGuia.ToString();
+            }
+
+            return Guia;
+
         }
     }
 }

@@ -1212,6 +1212,46 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<SelectListItem> GetListTipoGuiaCTPG()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "1", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "6", Text = "PYME" });
+
+            return List;
+        }
+
+        public IEnumerable<SelectListItem> GetListTipoGuiaPG()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "0", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "2", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "4", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "PYME" });
+
+            return List;
+        }
+
+        public IEnumerable<SelectListItem> GetListTipoGuiaBALCA()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "1", Text = "Abreviado" });
+            List.Add(new SelectListItem() { Value = "2", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "4", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "PYME" });
+
+            return List;
+        }
+
+
         public IEnumerable<SelectListItem> GetListActpas()
         {
             List<SelectListItem>  ListActpas = new List<SelectListItem>();
@@ -1233,6 +1273,17 @@ namespace Marfil.Dom.Persistencia.Helpers
             ListFormula.Add(new SelectListItem() { Value = "Z", Text = "Gran Título" });
 
             return ListFormula;
+        }
+
+        public bool ExistenCuentasNoAsignadas()
+        {
+            var cuentas = false;
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                cuentas = service.HayCuentasNoAsignadas();
+            }
+
+            return cuentas;
         }
 
         public IEnumerable<TablasVariasGeneralModel> GetListGrupoIncidencias()

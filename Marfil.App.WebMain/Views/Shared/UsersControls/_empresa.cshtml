@@ -8,6 +8,7 @@
         <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
         <li><a data-toggle="tab" href="#actividad">@General.LblActividad</a></li>
         <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
+        <li><a data-toggle="tab" href="#configuracion">@General.Configuracion</a></li>
         <li><a data-toggle="tab" href="#contabilidad">@General.Contabilidad</a></li>
         <li><a data-toggle="tab" href="#ejercicios">@Ejercicios.TituloEntidad</a></li>
         <li><a data-toggle="tab" href="#gestion">@Ejercicios.Gestion</a></li>
@@ -22,6 +23,9 @@
     </div>
     <div id="direcciones" class="tab-pane fade margin-bottom">
         @Html.Partial("UsersControls/Empresa/_direcciones", Model)
+    </div>
+    <div id="configuracion" class="tab-pane fade margin-bottom">
+        @Html.Partial("UsersControls/Empresa/_configuracion", Model)
     </div>
     <div id="contabilidad" class="tab-pane fade margin-bottom">
         @Html.Partial("UsersControls/Empresa/_contabilidad", Model)

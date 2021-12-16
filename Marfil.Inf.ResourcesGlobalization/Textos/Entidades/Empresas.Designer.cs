@@ -115,7 +115,16 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Guía de balance de cuentas anuales.
+        ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias.
+        /// </summary>
+        public static string CuentaPG {
+            get {
+                return ResourceManager.GetString("CuentaPG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuentas balance cuentas anuales.
         /// </summary>
         public static string CuentasAnuales {
             get {
@@ -124,7 +133,16 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Guía de cuentas perdidas y ganancias.
+        ///   Busca una cadena traducida similar a Cuentas de existencias.
+        /// </summary>
+        public static string CuentasExistencias {
+            get {
+                return ResourceManager.GetString("CuentasExistencias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuentas informe pérdidas y ganancias.
         /// </summary>
         public static string CuentasPerdidas {
             get {
@@ -277,7 +295,25 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Balance de cuentas.
+        ///   Busca una cadena traducida similar a Guía de balance de cuentas anuales.
+        /// </summary>
+        public static string GuiaAnuales {
+            get {
+                return ResourceManager.GetString("GuiaAnuales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Guía de cuentas perdidas y ganancias.
+        /// </summary>
+        public static string GuiaPerdidas {
+            get {
+                return ResourceManager.GetString("GuiaPerdidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Balances de cuentas.
         /// </summary>
         public static string LblConfiguracionBalance {
             get {

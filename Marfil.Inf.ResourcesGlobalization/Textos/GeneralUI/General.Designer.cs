@@ -178,6 +178,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Configuración.
+        /// </summary>
+        public static string Configuracion {
+            get {
+                return ResourceManager.GetString("Configuracion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Configurador de documentos: {0}.
         /// </summary>
         public static string ConfiguradorDocumentos {

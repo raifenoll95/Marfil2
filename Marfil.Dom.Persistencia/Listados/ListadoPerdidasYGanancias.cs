@@ -82,7 +82,10 @@ namespace Marfil.Dom.Persistencia.Listados
                 /*if (flag)
                     sb.Append(" AND ");*/
 
-                ValoresParametros["GUIA"] = Guia;
+                //En la tabla el orden empieza en 0. se resta uno al valor.
+                var valorguia = int.Parse(Guia) - 1;
+
+                ValoresParametros["GUIA"] = valorguia.ToString();
 
                 //flag = true;
             }

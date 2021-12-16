@@ -5,13 +5,12 @@
 @{
     ViewBag.Title = "PerdidasYGanancias";
 
-    var fechaRecalculo = WebHelper.GetApplicationHelper().GetRecalculo();
-    var filtros = WebHelper.GetApplicationHelper().GetFiltros();
+    var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadas();
 
-    var listguia = WebHelper.GetApplicationHelper().GetListTipoGuia().Select(f => new SelectListItem()
+    var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCTPG().Select(f => new SelectListItem()
     {
-        Text = f.Descripcion,
-        Value = f.Id.ToString(),
+        Text = f.Text,
+        Value = f.Value,
 
     }).ToList();
 
@@ -59,8 +58,9 @@
 
 <script type="text/javascript">
 
+    window.onload = init;
 
-    @*document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
         var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
 
@@ -82,6 +82,27 @@
 
     }, false);
 
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "listCuentas"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", listar)
+
+        var i = document.createElement('i')
+        //i.className = "fa fa-print"
+        i.innerText = "Listado Cuentas no asignadas"
+
+        button.appendChild(i)
+
+        parentButtonListar.insertBefore(button, parentButtonListar.children[2])
+
+    }, false);
+
     function imprimir() {
 
         var data = {
@@ -95,7 +116,7 @@
 
         console.log(dataSerialized);
 
-        @*window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Defecto');
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Cta. Pérdidas y Ganancias');
 
         //Imprimir cuentas no asignadas
         $.ajax({
@@ -103,17 +124,54 @@
             dataType: "text",
             type: "GET",
             success: function (data) {
-                if (data) {
-                    if (confirm("Hay cuentas no asignadas, ¿Mostrar?")) {
-                        console.log('Sí');
-                    } else {
-                        console.log('No');
-                    }
-                }              
+                var isTrueSet = (data === 'True');
+                if (isTrueSet == false) {
+                    //$("#listCuentas").prop('disabled', true);
+                    $("#listCuentas").hide();
+                } else {
+                    //$("#listCuentas").prop('disabled', false);
+                    $("#listCuentas").show();
+                }
             }
         });
 
-    };*@
+    };
+
+    function listar() {
+
+        window.open('@Url.Action("Listado", "ListadoCuentasNoAsignadas")' + '/CuentasNoAsignadas');
+
+    };
+
+    function init() {
+        //Comprobar si hay cuentas no asignadas
+        $.ajax({
+            url: '@Url.Action("CuentasNoAsignadas", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            success: function (data) {
+                var isTrueSet = (data === 'True');
+                if (isTrueSet == false) {
+                    //$("#listCuentas").prop('disabled', true);
+                    $("#listCuentas").hide();
+                } else {
+                    //$("#listCuentas").prop('disabled', false);
+                    $("#listCuentas").show();
+                }
+            }
+        });
+
+        //Configuración de Guia
+        $.ajax({
+            url: '@Url.Action("GuiaInforme", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            success: function (data) {
+                $('#Guia').val(data);
+            }
+        });
+    }
+
 
 
 </script>

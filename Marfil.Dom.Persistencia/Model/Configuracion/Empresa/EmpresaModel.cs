@@ -123,6 +123,18 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
         [Display(ResourceType = typeof(REmpresas), Name = "CuentasPerdidas")]
         public string CuentasPerdidas { get; set; }
 
+        [Display(ResourceType = typeof(REmpresas), Name = "CuentasExistencias")]
+        public string CuentasExistencias { get; set; }
+
+        [Display(ResourceType = typeof(REmpresas), Name = "CuentaPG")]
+        public string CuentaPG { get; set; }
+
+        [Display(ResourceType = typeof(REmpresas), Name = "GuiaAnuales")]
+        public string GuiaAnuales { get; set; }
+
+        [Display(ResourceType = typeof(REmpresas), Name = "GuiaPerdidas")]
+        public string GuiaPerdidas { get; set; }
+
         [Display(ResourceType = typeof(REmpresas), Name = "Datosregistrales")]
         public string Datosregistrales { get; set; }
 

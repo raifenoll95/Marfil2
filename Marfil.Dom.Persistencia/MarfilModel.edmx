@@ -1455,6 +1455,10 @@
           <Property Name="fkCuentaSalidasVariasAlmacen" Type="varchar" MaxLength="15" />
           <Property Name="ean13" Type="varchar" MaxLength="10" />
           <Property Name="decimalesprecios" Type="int" />
+          <Property Name="guiaanuales" Type="nvarchar" MaxLength="100" />
+          <Property Name="guiaperdidas" Type="nvarchar" MaxLength="100" />
+          <Property Name="cuentasexistencias" Type="nvarchar" MaxLength="100" />
+          <Property Name="cuentaPG" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Estados">
           <Key>
@@ -5853,30 +5857,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ReportGuiasBalances_TipoGuia">
-          <End Role="TipoGuia" Type="Self.TipoGuia" Multiplicity="0..1" />
-          <End Role="ReportGuiasBalances" Type="Self.ReportGuiasBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoGuia">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReportGuiasBalances">
-              <PropertyRef Name="GuiaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReportGuiasBalances_TipoInforme">
-          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="0..1" />
-          <End Role="ReportGuiasBalances" Type="Self.ReportGuiasBalances" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoInforme">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReportGuiasBalances">
-              <PropertyRef Name="InformeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ReportGuiasBalancesLineas_GuiasBalances">
           <End Role="ReportGuiasBalances" Type="Self.ReportGuiasBalances" Multiplicity="0..1" />
           <End Role="ReportGuiasBalancesLineas" Type="Self.ReportGuiasBalancesLineas" Multiplicity="*" />
@@ -5886,30 +5866,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Principal>
             <Dependent Role="ReportGuiasBalancesLineas">
               <PropertyRef Name="GuiasBalancesId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReportGuiasBalancesLineas_TipoGuia">
-          <End Role="TipoGuia" Type="Self.TipoGuia" Multiplicity="0..1" />
-          <End Role="ReportGuiasBalancesLineas" Type="Self.ReportGuiasBalancesLineas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoGuia">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReportGuiasBalancesLineas">
-              <PropertyRef Name="GuiaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReportGuiasBalancesLineas_TipoInforme">
-          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="0..1" />
-          <End Role="ReportGuiasBalancesLineas" Type="Self.ReportGuiasBalancesLineas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoInforme">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReportGuiasBalancesLineas">
-              <PropertyRef Name="InformeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6708,24 +6664,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Presupuestos" EntitySet="Presupuestos" />
             <End Role="PresupuestosTotales" EntitySet="PresupuestosTotales" />
           </AssociationSet>
-          <AssociationSet Name="FK_ReportGuiasBalances_TipoGuia" Association="Self.FK_ReportGuiasBalances_TipoGuia">
-            <End Role="TipoGuia" EntitySet="TipoGuia" />
-            <End Role="ReportGuiasBalances" EntitySet="ReportGuiasBalances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportGuiasBalances_TipoInforme" Association="Self.FK_ReportGuiasBalances_TipoInforme">
-            <End Role="TipoInforme" EntitySet="TipoInforme" />
-            <End Role="ReportGuiasBalances" EntitySet="ReportGuiasBalances" />
-          </AssociationSet>
           <AssociationSet Name="FK_ReportGuiasBalancesLineas_GuiasBalances" Association="Self.FK_ReportGuiasBalancesLineas_GuiasBalances">
             <End Role="ReportGuiasBalances" EntitySet="ReportGuiasBalances" />
-            <End Role="ReportGuiasBalancesLineas" EntitySet="ReportGuiasBalancesLineas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportGuiasBalancesLineas_TipoGuia" Association="Self.FK_ReportGuiasBalancesLineas_TipoGuia">
-            <End Role="TipoGuia" EntitySet="TipoGuia" />
-            <End Role="ReportGuiasBalancesLineas" EntitySet="ReportGuiasBalancesLineas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportGuiasBalancesLineas_TipoInforme" Association="Self.FK_ReportGuiasBalancesLineas_TipoInforme">
-            <End Role="TipoInforme" EntitySet="TipoInforme" />
             <End Role="ReportGuiasBalancesLineas" EntitySet="ReportGuiasBalancesLineas" />
           </AssociationSet>
           <AssociationSet Name="FK_ReservasstockLin_Reservasstock" Association="Self.FK_ReservasstockLin_Reservasstock">
@@ -11652,6 +11592,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="decimalesprecios" Type="Int32" />
           <NavigationProperty Name="Empresas1" Relationship="MarfilModel.FK_Empresas_Empresas" FromRole="Empresas" ToRole="Empresas1" />
           <NavigationProperty Name="Empresas2" Relationship="MarfilModel.FK_Empresas_Empresas" FromRole="Empresas1" ToRole="Empresas" />
+          <Property Name="guiaanuales" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="guiaperdidas" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cuentasexistencias" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cuentaPG" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MovsLin">
           <Key>
@@ -17011,6 +16955,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="MarfilModel.Empresas">
               <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="cuentaPG" ColumnName="cuentaPG" />
+                <ScalarProperty Name="cuentasexistencias" ColumnName="cuentasexistencias" />
+                <ScalarProperty Name="guiaperdidas" ColumnName="guiaperdidas" />
+                <ScalarProperty Name="guiaanuales" ColumnName="guiaanuales" />
                 <ScalarProperty Name="decimalesprecios" ColumnName="decimalesprecios" />
                 <ScalarProperty Name="ean13" ColumnName="ean13" />
                 <ScalarProperty Name="fkCuentaSalidasVariasAlmacen" ColumnName="fkCuentaSalidasVariasAlmacen" />

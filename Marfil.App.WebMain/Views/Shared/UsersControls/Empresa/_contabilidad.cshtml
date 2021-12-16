@@ -1,6 +1,7 @@
 ﻿@using Marfil.App.WebMain.Misc
 @using Marfil.Dom.ControlsUI.CampoVerificacion
 @using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
 @using Marfil.Dom.Persistencia.Model.Iva
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
@@ -8,105 +9,125 @@
 @{
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     bool isEdicion = ViewData["operacion"] != null ? (string)ViewData["operacion"] == "Edit" : false;
+    var isNuevo = !isreadonly && !isEdicion;
     var cvejercicios = FCampoverificacion.Instance.GetModel<EjerciciosModel>(WebHelper.ContextService);
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService); //Obtenemos un objeto de cuentasModel con sus atributos
+
+    var listguiaCTPG = WebHelper.GetApplicationHelper().GetListTipoGuiaPG().Select(f => new SelectListItem()
+    {
+        Text = f.Text,
+        Value = f.Value,
+        Selected = f.Text == "NORMAL" ? true : false
+
+    }).ToList();
+
+    var listguiaBALCA = WebHelper.GetApplicationHelper().GetListTipoGuiaBALCA().Select(f => new SelectListItem()
+    {
+        Text = f.Text,
+        Value = f.Value,
+        Selected = f.Text == "NORMAL" ? true : false
+
+    }).ToList();
 }
+
 @{
     if (isEdicion)
     {
         <input type="hidden" name="DigitosCuentas" value="@Model.DigitosCuentas" />
-            <input type="hidden" name="NivelCuentas" value="@Model.NivelCuentas" />
+        <input type="hidden" name="NivelCuentas" value="@Model.NivelCuentas" />
     }
 }
-<h4>@Empresas.LblConfiguracionMonedas</h4>
-<div class="form-group">
-    @Html.LabelFor(f => Model.FkMonedaBase, new {@class = "control-label col-md-2"})
-    <div class="col-md-10">
-        @Html.Partial("CampoverificacionUI", new CampoverificacionModel()
-   {
-       Name = "FkMonedaBase",
-       CampoIdentificador = "Id",
-       Url = Url.Action("MonedasApi", "Api"),
-       CampoDescripcion = "Descripcion",
-       Valor = Model.FkMonedaBase,
-       Titulo = "Monedas",
-       SoloLectura = isreadonly || isEdicion,
-       Obligatorio=true,
-       Params = isEdicion ? "": "{ \"todas\":\"true\"}"
-   })
-
-       
-    </div>
-    <div class="col-md-10 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.FkMonedaBase, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(f => Model.FkMonedaAdicional, new {@class = "control-label col-md-2"})
-    <div class="col-md-10">
-        @Html.Partial("CampoverificacionUI", new CampoverificacionModel()
-   {
-       Name = "FkMonedaAdicional",
-       CampoIdentificador = "Id",
-       Url = Url.Action("MonedasApi", "Api"),
-       CampoDescripcion = "Descripcion",
-       Valor = Model.FkMonedaAdicional,
-       Titulo = "Monedas",
-       SoloLectura = isreadonly,
-       Params = isEdicion ? "" : "{ \"todas\":\"true\"}"
-   })
-
-    </div>
-    <div class="col-md-10 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.FkMonedaAdicional, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(f => Model.Decimalesprecios, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(f => Model.Decimalesprecios, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
-        @Html.ValidationMessageFor(f => Model.Decimalesprecios, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<h4>@Empresas.LblConfiguracionCuentas</h4>
-<div class="form-group">
-    
-    @Html.LabelFor(f => Model.DigitosCuentas, new {@class = "control-label col-md-2"})
-    <div class="col-md-10">
-        @Html.DropDownListFor(f => Model.DigitosCuentas, (new[] { "8", "9", "10" }).Select(f => new SelectListItem() { Value = f, Text = f }), isreadonly || isEdicion ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
-        @Html.ValidationMessageFor(f => Model.DigitosCuentas, "", new {@class = "text-danger"})
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(f => Model.NivelCuentas, new {@class = "control-label col-md-2"})
-    <div class="col-md-10">
-        @Html.DropDownListFor(f => Model.NivelCuentas, (new[] {"3", "4", "5"}).Select(f => new SelectListItem() {Value = f, Text = f}), isreadonly || isEdicion ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled" } : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.NivelCuentas, "", new {@class = "text-danger"})
-    </div>
-</div>
-
 <h4>@Empresas.LblConfiguracionBalance</h4>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.CuentasAnuales, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.GuiaAnuales, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(f => Model.CuentasAnuales, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.CuentasAnuales, "", new {@class = "text-danger"})
+        @Html.DropDownListFor(f => Model.GuiaAnuales, listguiaBALCA, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.GuiaAnuales, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.CuentasAnuales, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.CuentasAnuales, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else if (isNuevo)
+        {
+            @Html.TextBoxFor(f => Model.CuentasAnuales, (object)new { @class = "form-control", @autofocus = "", @Value = "1;2;3;4;5" })
+        }
+        else
+        {
+            @Html.TextBoxFor(f => Model.CuentasAnuales, (object)new { @class = "form-control", @autofocus = "" })
+        }
+        @Html.ValidationMessageFor(f => Model.CuentasAnuales, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.CuentasPerdidas, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.GuiaPerdidas, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(f => Model.CuentasPerdidas, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.CuentasPerdidas, "", new {@class = "text-danger"})
+        @Html.DropDownListFor(f => Model.GuiaPerdidas, listguiaCTPG, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.GuiaPerdidas, "", new { @class = "text-danger" })
     </div>
 </div>
 
+<div class="form-group">
+    @Html.LabelFor(f => Model.CuentasPerdidas, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.CuentasPerdidas, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else if (isNuevo)
+        {
+            @Html.TextBoxFor(f => Model.CuentasPerdidas, (object)new { @class = "form-control", @autofocus = "", @Value = "6;7" })
+        }
+        else
+        {
+            @Html.TextBoxFor(f => Model.CuentasPerdidas, (object)new { @class = "form-control", @autofocus = "" })
+        }
 
+        @Html.ValidationMessageFor(f => Model.CuentasPerdidas, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CuentasExistencias, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.CuentasExistencias, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else if (isNuevo)
+        {
+            @Html.TextBoxFor(f => Model.CuentasExistencias, (object)new { @class = "form-control", @autofocus = "", @Value = "3" })
+        }
+        else
+        {
+            @Html.TextBoxFor(f => Model.CuentasExistencias, (object)new { @class = "form-control", @autofocus = "" })
+        }
+
+        @Html.ValidationMessageFor(f => Model.CuentasExistencias, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.CuentaPG, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvcuentas.Name = "CuentaPG";
+            cvcuentas.Url = Url.Action("CuentasApi", "Api");
+            cvcuentas.Valor = Model.CuentaPG;
+            cvcuentas.SoloLectura = isreadonly;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvcuentas)
+        @Html.ValidationMessageFor(f => Model.CuentaPG, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 
 

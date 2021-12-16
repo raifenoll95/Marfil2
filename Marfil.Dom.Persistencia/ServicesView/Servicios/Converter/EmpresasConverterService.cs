@@ -66,6 +66,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.nivelcuentas = Funciones.Qint(viewmodel.NivelCuentas);
             result.cuentasanuales = viewmodel.CuentasAnuales;
             result.cuentasperdidas = viewmodel.CuentasPerdidas;
+            result.cuentasexistencias = viewmodel.CuentasExistencias;
+            result.cuentaPG = viewmodel.CuentaPG;
+            result.guiaanuales = viewmodel.GuiaAnuales;
+            result.guiaperdidas = viewmodel.GuiaPerdidas;
             result.criterioiva = (int)viewmodel.Criterioiva;
             result.liquidacioniva = (int)viewmodel.Liquidacioniva;
             result.tipoempresa = viewmodel.TipoEmpresa;
@@ -102,6 +106,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.nivelcuentas = Funciones.Qint(viewmodel.NivelCuentas);
             result.cuentasanuales = viewmodel.CuentasAnuales;
             result.cuentasperdidas = viewmodel.CuentasPerdidas;
+            result.cuentasexistencias = viewmodel.CuentasExistencias;
+            result.cuentaPG = viewmodel.CuentaPG;
+            result.guiaanuales = viewmodel.GuiaAnuales;
+            result.guiaperdidas = viewmodel.GuiaPerdidas;
             result.criterioiva = (int)viewmodel.Criterioiva;
             result.liquidacioniva = (int)viewmodel.Liquidacioniva;
             result.tipoempresa = viewmodel.TipoEmpresa;
@@ -136,6 +144,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.NivelCuentas = obj.nivelcuentas.HasValue ? obj.nivelcuentas.ToString() : string.Empty;
             result.CuentasAnuales = obj.cuentasanuales;
             result.CuentasPerdidas = obj.cuentasperdidas;
+            result.CuentasExistencias = obj.cuentasexistencias;
+            result.CuentaPG = obj.cuentaPG;
+            result.GuiaAnuales = obj.guiaanuales;
+            result.GuiaPerdidas = obj.guiaperdidas;
             result.Liquidacioniva = (LiquidacionIva)obj.liquidacioniva.Value;
             result.Criterioiva = (CriterioIva)obj.criterioiva.Value;
             result.TipoEmpresa =obj.tipoempresa;

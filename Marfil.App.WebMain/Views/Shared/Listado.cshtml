@@ -18,13 +18,13 @@
                     @General.LblListar
                 </button>
 
-                <button class="btn btn-gray" type="Reset">
+                <button id="limpiar" class="btn btn-gray" type="Reset">
                     <i class="ace-icon fa fa-recycle bigger-110"></i>
                     @General.LblLimpiar
                 </button>
 
                 <div class="pull-right">
-                    <a href="@Url.Action("Index","Configuraciongraficas",new {id =Model.IdListado})" class="btn btn-success">
+                    <a href="@Url.Action("Index","Configuraciongraficas",new {id =Model.IdListado})" id="grafica" class="btn btn-success">
                         <i class="fa fa-bar-chart"></i>
                         @General.LblConfigurarGraficas
                     </a>
