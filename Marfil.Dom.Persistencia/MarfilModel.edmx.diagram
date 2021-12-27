@@ -269,6 +269,7 @@
         <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="32.375" PointY="25" />
         <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.625" PointY="25.25" />
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
+        <EntityTypeShape EntityType="MarfilModel.FiltrosPYG" Width="1.5" PointX="24.375" PointY="13.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -16,6 +16,9 @@ using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Resources;
 using Marfil.Dom.Persistencia;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -277,6 +280,17 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             return PartialView("_Transformacioneslotesnavelin", model);
+        }
+
+        public string Imprimir(int key)
+        {
+            var model = Session[session] as List<TransformacioneslotesnaveLinModel>;
+            var transformacionId = int.Parse(Session["id"].ToString());
+            var editItem = model.Single(f => f.Id == key);
+
+            var data = JsonConvert.SerializeObject(editItem);
+
+            return data;
         }
     }
 }

@@ -209,6 +209,7 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<DocumentosUsuario> DocumentosUsuario { get; set; }
         public virtual DbSet<GuiasBalances> GuiasBalances { get; set; }
         public virtual DbSet<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
+        public virtual DbSet<FiltrosPYG> FiltrosPYG { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

@@ -92,7 +92,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                     //flag = true;
                 }
 
-                ExecuteProcedure(user.BaseDatos, ValoresParametros);
+                //ExecuteProcedure(user.BaseDatos, ValoresParametros);
             }
                        
             DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineas", "SELECT * FROM ReportGuiasBalancesLineas"));

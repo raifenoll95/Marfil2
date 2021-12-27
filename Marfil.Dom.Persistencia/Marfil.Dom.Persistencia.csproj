@@ -370,6 +370,9 @@
     <Compile Include="FiltrosAcumulador.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FiltrosPYG.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FormasPago.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>

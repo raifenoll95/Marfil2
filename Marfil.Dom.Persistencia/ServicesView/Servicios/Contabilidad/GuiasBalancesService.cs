@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
 {
     public interface IGuiasBalances { }
-    public class GuiasBalancesService : GestionService<GuiasBalancesModel,GuiasBalances> , IGuiasBalances
+    public class GuiasBalancesService : GestionService<GuiasBalancesModel, GuiasBalances>, IGuiasBalances
     {
-        public GuiasBalancesService(IContextService context, MarfilEntities db = null) : base(context,db)
+        public GuiasBalancesService(IContextService context, MarfilEntities db = null) : base(context, db)
         {
 
         }
@@ -50,7 +50,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             if (registro != null)
             {
                 return _context.Ejercicio + "-" + _context.Usuario;
-            } else
+            }
+            else
             {
                 return "";
             }
@@ -86,6 +87,61 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
 
             }
 
+        }
+
+        public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulado)
+        {
+            var filtrosPYG = _db.FiltrosPYG.Where(f => f.empresa == Empresa).FirstOrDefault();
+
+            var ejercicio = "";
+            var guia = "";
+            var fecha = "";
+            var text = "";
+
+            if (filtrosPYG != null)
+            {
+                fecha = filtrosPYG.fechaCalculo.HasValue ? filtrosPYG.fechaCalculo.Value.ToString("dd/MM/yyyy HH:mm:ss") : "Fecha de cálculo no disponible";
+
+
+
+                if (filtrosPYG.usuario != null)
+                {
+                    ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
+                }
+                else
+                {
+                    ejercicio = "Todo el ejercicio ";
+                }
+
+                switch (filtrosPYG.guia)
+                {
+                    case "0":
+                        guia = " Abreviado ";
+                        break;
+                    case "2":
+                        guia = " COOP_ABREVIA ";
+                        break;
+                    case "3":
+                        guia = " COOP_NORMAL ";
+                        break;
+                    case "4":
+                        guia = " NORMAL ";
+                        break;
+                    case "5":
+                        guia = " PYME ";
+                        break;
+                    default:
+                        break;
+                }
+
+                text = ejercicio + " | " + guia + " | " + fecha;
+            }
+            else
+            {
+                text = "No existe ningún cálculo";
+            }
+
+            return text;
         }
     }
 }

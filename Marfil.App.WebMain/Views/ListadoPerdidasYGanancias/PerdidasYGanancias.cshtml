@@ -6,6 +6,8 @@
     ViewBag.Title = "PerdidasYGanancias";
 
     var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadas();
+    var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado);
 
     var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCTPG().Select(f => new SelectListItem()
     {
@@ -15,13 +17,17 @@
     }).ToList();
 
     var listejercicios = new List<SelectListItem>();
-    var acumulado = WebHelper.GetApplicationHelper().GetFiltroAcumulador();
+    var userAcumulado = WebHelper.GetApplicationHelper().GetFiltroAcumulador();
 
     listejercicios.Insert(0, new SelectListItem() { Text = "Todo el ejercicio", Value = WebHelper.GetApplicationHelper().GetCurrentEjercicio().Id.ToString() });
 
-    if (acumulado != null && acumulado != "")
+    if (userAcumulado != null && userAcumulado != "")
     {
-        listejercicios.Insert(1, new SelectListItem() { Text = "Periodo acumulado", Value = acumulado });
+        listejercicios.Insert(1, new SelectListItem()
+        {
+            Text = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion,
+            Value = userAcumulado
+        });
     }
 
 }
@@ -32,11 +38,16 @@
     <div class="row">
         <div class="form-group">
             @Html.LabelFor(f => Model.Ejercicio, new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
+            <div class="col-md-6">
                 @Html.DropDownListFor(f => Model.Ejercicio, listejercicios, (object)new { @class = "form-control" })
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
             @Html.LabelFor(f => Model.Guia, new { @class = "control-label col-md-2" })
-            <div class="col-md-4">
+            <div class="col-md-6">
                 @Html.DropDownListFor(f => Model.Guia, listguia, (object)new { @class = "form-control" })
             </div>
         </div>
@@ -52,6 +63,24 @@
             <div class="col-md-2">
                 @Html.CheckBox("Desglosarniveltres")
             </div>
+        </div>
+    </div>
+
+    <div class="row row-centered">
+        <div class="form-group">
+            <input class="btn btn-success" type="button" id="botonCalculo" value="Calcular Listado" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="form-group">
+            @if (textRecalculo != null && textRecalculo != "")
+            {
+                @Html.LabelFor(f => Model.Recalculo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculo })
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -103,6 +132,26 @@
 
     }, false);
 
+    $("#botonCalculo").click(function () {
+        var Ejercicio = document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value;
+        var Guia = document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value;
+        var SinSaldo = document.getElementById('Lineassinsaldo').value;
+        var Desglosar = document.getElementById('Desglosarniveltres').value;
+
+        $.ajax({
+            url: '@Url.Action("Calculo", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            data: { Ejercicio, Guia, SinSaldo, Desglosar },
+            success: function (data) {
+                location.reload();
+            }
+        });
+    });
+
+    $('#limpiar').hide();
+    $('#grafica').hide();
+
     function imprimir() {
 
         var data = {
@@ -116,7 +165,7 @@
 
         console.log(dataSerialized);
 
-        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Cta. Pérdidas y Ganancias');
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Cuenta Perdidas y Ganancias');
 
         //Imprimir cuentas no asignadas
         $.ajax({
@@ -172,6 +221,10 @@
         });
     }
 
-
-
 </script>
+
+<style type="text/css">
+    .row-centered {
+        text-align: center;
+    }
+</style>

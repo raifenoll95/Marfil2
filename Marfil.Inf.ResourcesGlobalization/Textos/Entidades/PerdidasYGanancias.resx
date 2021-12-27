@@ -129,4 +129,7 @@
   <data name="Lineassinsaldo" xml:space="preserve">
     <value>Imprimir líneas sin saldos</value>
   </data>
+  <data name="Recalculo" xml:space="preserve">
+    <value>Último cálculo</value>
+  </data>
 </root>

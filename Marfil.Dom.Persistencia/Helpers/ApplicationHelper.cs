@@ -1286,6 +1286,17 @@ namespace Marfil.Dom.Persistencia.Helpers
             return cuentas;
         }
 
+        public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador)
+        {
+            var text = "";
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.TextRecalculoPYG(filtrosAcumulador);
+            }
+
+            return text;
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListGrupoIncidencias()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

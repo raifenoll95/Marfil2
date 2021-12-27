@@ -285,10 +285,6 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
 {
 <script type="text/javascript">
 
-
-
-
-
         //Start search articulos
         function OnKeyPressArticulosSalida(s, e) {
             console.log("onkeypress");
@@ -484,27 +480,17 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
             data: { key },
             success: function (data) {
                 GridViewLineasSalida.Refresh();
+                console.log("refresh");
+            }
+        });
 
-                @*GridViewLineasSalida.GetRowValues(e.visibleIndex, 'Fkarticulos;Lote;Tabla;Cantidad;SLargo;SAncho;SGrueso;SMetros', function (values) {
+        $.ajax({
+            url: '@Url.Action("Imprimir", "Transformacioneslotesnave")',
+            type: "GET",
+            data: { key },
+            success: function (data) {
 
-                    var datos = {
-                        Referencia: document.getElementById('Referencia').value,
-                        Articulo: values[0],
-                        Lote: values[1],
-                        Tabla: values[2],
-                        Cantidad: values[3],
-                        Largo: values[4],
-                        Ancho: values[5],
-                        Grueso: values[6],
-                        Metros: values[7]
-                    };
-
-                    var dataSerialized = JSON.stringify(datos);
-                    console.log(dataSerialized);
-
-                    window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=TransformacionesAcabados&reportId=Nuevo');
-
-                });*@
+                window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + data + '&tipo=TransformacionesAcabados&reportId=Nuevo');
 
             }
         });

@@ -95,5 +95,14 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
                 return ResourceManager.GetString("Lineassinsaldo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Último cálculo.
+        /// </summary>
+        public static string Recalculo {
+            get {
+                return ResourceManager.GetString("Recalculo", resourceCulture);
+            }
+        }
     }
 }

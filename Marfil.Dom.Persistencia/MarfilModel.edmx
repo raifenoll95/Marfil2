@@ -1970,6 +1970,18 @@
           <Property Name="incluirAsientos" Type="bit" />
           <Property Name="excluirAsientos" Type="bit" />
         </EntityType>
+        <EntityType Name="FiltrosPYG">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="20" />
+          <Property Name="fkejercicio" Type="int" Nullable="false" />
+          <Property Name="guia" Type="varchar" MaxLength="25" />
+          <Property Name="fechaCalculo" Type="datetime" />
+        </EntityType>
         <EntityType Name="FormasPago">
           <Key>
             <PropertyRef Name="id" />
@@ -6165,6 +6177,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Familiasproductos" EntityType="Self.Familiasproductos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ficheros" EntityType="Self.Ficheros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FiltrosAcumulador" EntityType="Self.FiltrosAcumulador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FiltrosPYG" EntityType="Self.FiltrosPYG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormasPago" EntityType="Self.FormasPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormasPagoLin" EntityType="Self.FormasPagoLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grosores" EntityType="Self.Grosores" Schema="dbo" store:Type="Tables" />
@@ -7249,6 +7262,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="GuiasBalances" EntitySet="GuiasBalances" />
             <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
           </AssociationSet>
+          <EntitySet Name="FiltrosPYG" EntityType="MarfilModel.FiltrosPYG" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -13481,6 +13495,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FiltrosPYG">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fkejercicio" Type="Int32" Nullable="false" />
+          <Property Name="guia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="fechaCalculo" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -18342,6 +18368,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="informeId" ColumnName="informeId" />
                 <ScalarProperty Name="guiasBalancesId" ColumnName="guiasBalancesId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FiltrosPYG">
+            <EntityTypeMapping TypeName="MarfilModel.FiltrosPYG">
+              <MappingFragment StoreEntitySet="FiltrosPYG">
+                <ScalarProperty Name="fechaCalculo" ColumnName="fechaCalculo" />
+                <ScalarProperty Name="guia" ColumnName="guia" />
+                <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

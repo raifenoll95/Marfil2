@@ -33,6 +33,8 @@ namespace Marfil.Dom.Persistencia.Listados
         public bool Lineassinsaldo { get; set; }
         [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Desglosarniveltres")]
         public bool Desglosarniveltres { get; set; }
+        [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Recalculo")]
+        public string Recalculo { get; set; }
 
         #endregion
 
@@ -133,7 +135,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 flag = true;
             }          
 
-            ExecuteProcedure(Context, ValoresParametros);
+            //ExecuteProcedure(Context, ValoresParametros);
             return sb.ToString();
         }
 
