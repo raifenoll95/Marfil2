@@ -20,6 +20,10 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
     {
         [StringValue(typeof(REjecicios),"EstadoEjercicioAbierto")]
         Abierto,
+        [StringValue(typeof(REjecicios), "EstadoEjercicioExistencias")]
+        Existencias,
+        [StringValue(typeof(REjecicios), "EstadoEjercicioGrupos")]
+        Grupos,
         [StringValue(typeof(REjecicios), "EstadoEjercicioCerrado")]
         Cerrado
     }

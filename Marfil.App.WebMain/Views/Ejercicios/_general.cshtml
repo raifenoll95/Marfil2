@@ -70,7 +70,7 @@ else
 <div class="form-group">
     @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.EnumDropDownListFor(f => Model.Estado, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.EnumDropDownListFor(f => Model.Estado, isreadonly || iseditable ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
     </div>
 </div>

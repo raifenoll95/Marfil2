@@ -35,8 +35,9 @@ namespace Marfil.App.WebMain.Controllers
 
                 var vector = service.getAll().
                     Select(f => (SeriesContablesModel)f).
-                    Where(f => f.Bloqueado == false && 
-                            (string.IsNullOrEmpty(f.Fkejercicios) || f.Fkejercicios == ContextService.Ejercicio));
+                    Where(f => f.Bloqueado == false);
+                    //Busqueda de series, no comprobamos el ejercicio Ene-2022
+                    //&& (string.IsNullOrEmpty(f.Fkejercicios) || f.Fkejercicios == ContextService.Ejercicio));
                 if (!string.IsNullOrEmpty(tipodocumento))
                 {
                     if (tipodocumento == "0" || tipodocumento == "CRC")
@@ -115,7 +116,7 @@ namespace Marfil.App.WebMain.Controllers
                     list = service.get(tipodocumento + "-" + id) as SeriesContablesModel;
                 }
 
-                if (!list.Bloqueado && ((string.IsNullOrEmpty(list.Fkejercicios) || list.Fkejercicios == ContextService.Ejercicio)))
+                if (!list.Bloqueado /*&& ((string.IsNullOrEmpty(list.Fkejercicios) || list.Fkejercicios == ContextService.Ejercicio))*/)
                 {
                     var response = Request.CreateResponse(HttpStatusCode.OK);
                     response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
