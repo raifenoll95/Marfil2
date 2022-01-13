@@ -1,0 +1,47 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias.AsistenteRegularizacionExistenciasModel
+@{
+    
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fecharegularizacion, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fecharegularizacion)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fecharegularizacion, "", new { @class = "text-danger", @id = "fecharegularizacionerror" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioExistenciasIniciales, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioExistenciasIniciales, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioExistenciasIniciales, "", new { @class = "text-danger"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioExistenciasFinales, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioExistenciasFinales, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioExistenciasFinales, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</form>

@@ -327,6 +327,7 @@
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
+    <Compile Include="Controllers\AsistenteRegularizacionExistenciasApiController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasController.cs" />
@@ -353,6 +354,7 @@
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
     <Compile Include="Controllers\ReferenciasDocumentosRelacionadosFacturasApiController.cs" />
+    <Compile Include="Controllers\RegularizacionExistenciasController.cs" />
     <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
@@ -624,6 +626,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\configuracionayuda.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\contadorasientos.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\contador.xml">
@@ -2487,6 +2492,7 @@
     <Content Include="Scripts\UserControls\Obras\ObrasController.js" />
     <Content Include="Scripts\UserControls\Provincias\ProvinciasController.js" />
     <Content Include="Scripts\UserControls\Importarlineas\Importarlineas.js" />
+    <Content Include="Scripts\UserControls\Regularizacion\regularizacionexistenciascontroller.js" />
     <Content Include="Scripts\UserControls\Stock\remedircontroller.js" />
     <Content Include="Scripts\UserControls\Ultimoprecio\UltimoprecioCtrl.js" />
     <Content Include="Scripts\VistaPrincipal\MainController.js" />
@@ -3607,6 +3613,10 @@
     <Content Include="Views\GuiasBalances\_lineasGridView.cshtml" />
     <Content Include="Views\ListadoCuentasNoAsignadas\CuentasNoAsignadas.cshtml" />
     <Content Include="Views\Shared\UsersControls\Empresa\_configuracion.cshtml" />
+    <Content Include="Views\RegularizacionExistencias\AsistenteRegularizacionExistencias.cshtml" />
+    <Content Include="Views\RegularizacionExistencias\_procesoregularizacionexistenciasstep1.cshtml" />
+    <Content Include="Views\RegularizacionExistencias\_procesoregularizacionexistenciasstep2.cshtml" />
+    <Content Include="Views\RegularizacionExistencias\_procesoregularizacionexistenciasstep3.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

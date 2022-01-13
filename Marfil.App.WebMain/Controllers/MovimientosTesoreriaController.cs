@@ -95,6 +95,8 @@ namespace Marfil.App.WebMain.Controllers
             return RedirectToAction("AsistenteMovimientosTesoreria");
         }
 
+        #endregion
+
         [HttpGet]
         public string ObtenerPreferido(int? valor)
         {
@@ -153,7 +155,7 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
 
-        #endregion
+        
 
     }
 }

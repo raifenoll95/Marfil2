@@ -609,4 +609,10 @@
   <data name="configurardocumentosguiasbalances" xml:space="preserve">
     <value>Conf. de docs: Perdidas y Ganancias</value>
   </data>
+  <data name="cierreycuentas" xml:space="preserve">
+    <value>Cierre y cuentas anuales</value>
+  </data>
+  <data name="regularizacionexistencias" xml:space="preserve">
+    <value>Regularización de existencias</value>
+  </data>
 </root>

@@ -241,6 +241,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cierre y cuentas anuales.
+        /// </summary>
+        public static string cierreycuentas {
+            get {
+                return ResourceManager.GetString("cierreycuentas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Circuitos de tesorería.
         /// </summary>
         public static string circuitotesoreriacobros {
@@ -1290,6 +1299,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string regimeniva {
             get {
                 return ResourceManager.GetString("regimeniva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Regularización de existencias.
+        /// </summary>
+        public static string regularizacionexistencias {
+            get {
+                return ResourceManager.GetString("regularizacionexistencias", resourceCulture);
             }
         }
         

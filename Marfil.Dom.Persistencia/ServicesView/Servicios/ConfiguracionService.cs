@@ -87,6 +87,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var invertir = nodo[0].InnerText;
             return invertir;
         }
+
+        public string GetComentarioIni()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioExistenciasIniciales");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioFin()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioExistenciasFinales");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
     }
 
 }

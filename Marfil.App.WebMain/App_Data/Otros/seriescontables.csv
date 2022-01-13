@@ -1,0 +1,9 @@
+﻿AST;AST;Asientos;978;AST;NULL
+CRC;CRC;Cartera de cobros;978;AST;NULL
+CRP;CRP;Cartera de pagos;978;AST;NULL
+INM;INM;Inmovilizado;978;AST;NULL
+IVR;IVR;IVA repercutido;978;AST;NULL
+IVS;IVS;IVA soportado;978;AST;NULL
+PRC;PRC;Previsión de cobros;978;AST;NULL
+PRP;PRP;Previsión de pagos;978;AST;NULL
+REM;REM;Remesas de cobros y pagos;978;AST;NULL

@@ -54,6 +54,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble;
 using Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotesnave;
+using Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias;
 
 namespace Marfil.Dom.Persistencia.Model
 {
@@ -212,6 +213,19 @@ namespace Marfil.Dom.Persistencia.Model
                 using (var service = FService.Instance.GetService(typeof(CriteriosagrupacionModel), context))
                 {
                     result.Criteriosagrupacion = service.getAll().Select(f => (CriteriosagrupacionModel)f);
+                }
+
+                return result as T;
+            }
+            else if (typeof(AsistenteRegularizacionExistenciasModel) == typeof(T))
+            {
+                var result = new AsistenteRegularizacionExistenciasModel();
+                result.Fecharegularizacion = new DateTime(DateTime.Now.Year, 12, 31);
+
+                using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), context) as ConfiguracionService)
+                {
+                    result.ComentarioExistenciasIniciales = service.GetComentarioIni();
+                    result.ComentarioExistenciasFinales = service.GetComentarioFin();
                 }
 
                 return result as T;

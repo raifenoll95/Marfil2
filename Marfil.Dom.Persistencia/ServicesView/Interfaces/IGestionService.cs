@@ -37,7 +37,5 @@ namespace Marfil.Dom.Persistencia.ServicesView.Interfaces
         string NextRegister(string id);
         string PreviousRegister(string id);
         string GetSelectPrincipal();
-       
-
     }
 }

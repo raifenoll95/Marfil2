@@ -85,7 +85,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
                 Tipocircuito = (TipoCircuito)Int32.Parse(vector[30]),
                 Codigodescripcionasiento = vector[31],
                 Documentocartera = string.Equals(vector[32], '0') ? false : true,
-                Actualizarcobrador = string.Equals(vector[33], '0') ? false : true
+                Actualizarcobrador = string.Equals(vector[33], '0') ? false : true,
+                Anularremesa = string.Equals(vector[34], '0') ? false : true,
+                Desvalorizacioncartera = string.Equals(vector[35], '0') ? false : true,
+                Fkmodopagopreferido = vector[36]
             };
 
             if(!string.Equals(vector[5],"NULL"))

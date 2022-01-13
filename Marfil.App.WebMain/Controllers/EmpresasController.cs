@@ -25,6 +25,7 @@ using System.Data;
 using System.Text;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.ControlsUI.NifCif;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -85,6 +86,7 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         gestionService.create(model);
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarPlanContabilidad(model, token));
+                        HostingEnvironment.QueueBackgroundWorkItem(async token => await generarSeriesContables(model, token));
                         TempData["Success"] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
                     }
@@ -165,6 +167,67 @@ namespace Marfil.App.WebMain.Controllers
             };
 
             var service = new CuentasService(newContext);
+
+            service.create(model);
+        }
+
+        //Series contables en segundo plano
+        public async Task generarSeriesContables(EmpresaModel model, CancellationToken cancellationToken)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var service = new SeriesContablesService(ContextService);
+                var csvFile = ContextService.ServerMapPath("~/App_data/Otros/seriescontables.csv");
+
+                using (var reader = new StreamReader(csvFile, Encoding.Default, true))
+                {
+                    var contenido = reader.ReadToEnd();
+                    await Task.Run(() => CrearSeriesContables(contenido, model));
+                }
+            }
+            catch (TaskCanceledException tce)
+            {
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public void CrearSeriesContables(string xml, EmpresaModel model)
+        {
+            var lineas = xml.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (var item in lineas)
+            {
+                if (!string.IsNullOrEmpty(item))
+                    CrearSerieContable(item, model);
+            }
+
+        }
+
+        public void CrearSerieContable(string linea, EmpresaModel empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = ContextService.BaseDatos,
+                Empresa = empresa.Id,
+                Id = ContextService.Id,
+                RoleId = ContextService.RoleId
+            };
+
+            var vector = linea.Split(';');
+            var model = new SeriesContablesModel()
+            {
+                Empresa = empresa.Id,
+                Tipodocumento = vector[0],
+                Id = vector[1],
+                Descripcion = vector[2],
+                Fkmonedas = int.Parse(vector[3]),
+                Fkcontadores = vector[4],
+                Fkejercicios = vector[5]
+            };
+
+            var service = new SeriesContablesService(newContext);
 
             service.create(model);
         }

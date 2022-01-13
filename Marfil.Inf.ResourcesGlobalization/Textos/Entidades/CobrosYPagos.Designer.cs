@@ -106,6 +106,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Asistente de regularización de existencias.
+        /// </summary>
+        public static string AsistenteRegularizacionExistencias {
+            get {
+                return ResourceManager.GetString("AsistenteRegularizacionExistencias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Banco librado.
         /// </summary>
         public static string Banco {
@@ -156,6 +165,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Comentario {
             get {
                 return ResourceManager.GetString("Comentario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario existencias finales.
+        /// </summary>
+        public static string ComentarioExistenciasFinales {
+            get {
+                return ResourceManager.GetString("ComentarioExistenciasFinales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario existencias iniciales.
+        /// </summary>
+        public static string ComentarioExistenciasIniciales {
+            get {
+                return ResourceManager.GetString("ComentarioExistenciasIniciales", resourceCulture);
             }
         }
         
@@ -376,6 +403,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Fecha de regularización.
+        /// </summary>
+        public static string Fecharegularizacion {
+            get {
+                return ResourceManager.GetString("Fecharegularizacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Fecha remesa.
         /// </summary>
         public static string Fecharemesa {
@@ -453,6 +489,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Generada {
             get {
                 return ResourceManager.GetString("Generada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Generar Regularización.
+        /// </summary>
+        public static string GenerarRegularizacionExistencias {
+            get {
+                return ResourceManager.GetString("GenerarRegularizacionExistencias", resourceCulture);
             }
         }
         

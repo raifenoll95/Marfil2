@@ -381,4 +381,19 @@
   <data name="Generada" xml:space="preserve">
     <value>Generada</value>
   </data>
+  <data name="AsistenteRegularizacionExistencias" xml:space="preserve">
+    <value>Asistente de regularización de existencias</value>
+  </data>
+  <data name="GenerarRegularizacionExistencias" xml:space="preserve">
+    <value>Generar Regularización</value>
+  </data>
+  <data name="ComentarioExistenciasFinales" xml:space="preserve">
+    <value>Comentario existencias finales</value>
+  </data>
+  <data name="ComentarioExistenciasIniciales" xml:space="preserve">
+    <value>Comentario existencias iniciales</value>
+  </data>
+  <data name="Fecharegularizacion" xml:space="preserve">
+    <value>Fecha de regularización</value>
+  </data>
 </root>

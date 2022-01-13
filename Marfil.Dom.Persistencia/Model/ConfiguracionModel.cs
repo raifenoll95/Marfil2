@@ -588,6 +588,55 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Invertirasiento = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioExistenciasIniciales")]
+        public string ComentarioExistenciasIniciales
+        {
+            get { return Model.ComentarioExistenciasIniciales; }
+            set { Model.ComentarioExistenciasIniciales = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioExistenciasFinales")]
+        public string ComentarioExistenciasFinales
+        {
+            get { return Model.ComentarioExistenciasFinales; }
+            set { Model.ComentarioExistenciasFinales = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioDebePYG")]
+        public string ComentarioDebePYG
+        {
+            get { return Model.ComentarioDebePYG; }
+            set { Model.ComentarioDebePYG = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioHaberPYG")]
+        public string ComentarioHaberPYG
+        {
+            get { return Model.ComentarioHaberPYG; }
+            set { Model.ComentarioHaberPYG = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioCuentasDetalle")]
+        public string ComentarioCuentasDetalle
+        {
+            get { return Model.ComentarioCuentasDetalle; }
+            set { Model.ComentarioCuentasDetalle = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioCierreEjercicio")]
+        public string ComentarioCierreEjercicio
+        {
+            get { return Model.ComentarioCierreEjercicio; }
+            set { Model.ComentarioCierreEjercicio = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioAperturaEjercicio")]
+        public string ComentarioAperturaEjercicio
+        {
+            get { return Model.ComentarioAperturaEjercicio; }
+            set { Model.ComentarioAperturaEjercicio = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -712,5 +761,12 @@ namespace Marfil.Dom.Persistencia.Model
         public int Cancelacionriesgoremesa { get; set; }
         public bool Invertirasiento { get; set; }
 
+        public string ComentarioExistenciasIniciales { get; set; }
+        public string ComentarioExistenciasFinales { get; set; }
+        public string ComentarioDebePYG { get; set; }
+        public string ComentarioHaberPYG { get; set; }
+        public string ComentarioCuentasDetalle { get; set; }
+        public string ComentarioCierreEjercicio { get; set; }
+        public string ComentarioAperturaEjercicio { get; set; }
     }
 }

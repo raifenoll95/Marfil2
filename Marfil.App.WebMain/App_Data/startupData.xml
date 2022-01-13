@@ -17,6 +17,12 @@
     <descripcion>Listado de situaciones de tesorería: Contiene una lista de las principales situaciones de tesorería</descripcion>
     <data>~/App_Data/Otros/situacionestesoreria.csv</data>
   </item>
+	
+  <item id="circuitostesoreria">
+    <titulo>Circuitos de tesorería</titulo>
+    <descripcion>Listado de circuitos de tesorería: Contiene una lista de los principales circuitos de tesorería</descripcion>
+    <data>~/App_Data/Otros/circuitostesoreria.csv</data>
+  </item>
 
   <item id="bancos">
     <titulo>Bancos</titulo>

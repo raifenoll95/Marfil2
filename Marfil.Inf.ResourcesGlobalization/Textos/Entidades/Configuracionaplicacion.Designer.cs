@@ -79,6 +79,69 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Comentario apertura ejercicio.
+        /// </summary>
+        public static string ComentarioAperturaEjercicio {
+            get {
+                return ResourceManager.GetString("ComentarioAperturaEjercicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario cierre de ejercicio.
+        /// </summary>
+        public static string ComentarioCierreEjercicio {
+            get {
+                return ResourceManager.GetString("ComentarioCierreEjercicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario cuentas detalle.
+        /// </summary>
+        public static string ComentarioCuentasDetalle {
+            get {
+                return ResourceManager.GetString("ComentarioCuentasDetalle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario Debe cuenta PyG.
+        /// </summary>
+        public static string ComentarioDebePYG {
+            get {
+                return ResourceManager.GetString("ComentarioDebePYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario existencias finales.
+        /// </summary>
+        public static string ComentarioExistenciasFinales {
+            get {
+                return ResourceManager.GetString("ComentarioExistenciasFinales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario existencias iniciales.
+        /// </summary>
+        public static string ComentarioExistenciasIniciales {
+            get {
+                return ResourceManager.GetString("ComentarioExistenciasIniciales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario Haber cuenta PyG.
+        /// </summary>
+        public static string ComentarioHaberPYG {
+            get {
+                return ResourceManager.GetString("ComentarioHaberPYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Canal obligatorio.
         /// </summary>
         public static string ComprasCanalObligatorio {

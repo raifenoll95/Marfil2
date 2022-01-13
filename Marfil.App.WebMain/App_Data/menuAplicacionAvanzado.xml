@@ -141,6 +141,9 @@
 			<item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
 			<item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
 		</item>
+		<item name="cierreycuentas" text="Cierre y cuentas anuales" icono="fa fa-folder-o">
+			<item name="regularizacionexistencias" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionExistencias/AsistenteRegularizacionExistencias" />
+		</item>
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />
 			<item name="listadomayor" eslistado="true" text="Mayor" icono="fa fa-file" url="~/ListadosMayor/Listado/Mayor" />

@@ -8,6 +8,7 @@ using Marfil.Dom.ControlsUI.Bloqueo;
 using Marfil.Dom.ControlsUI.NifCif;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RCuentas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas;
 namespace Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
@@ -107,5 +108,27 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
 
         public override string DisplayName => RCuentas.TituloEntidad;
         public DateTime Fechaalta { get; set; }
+    }
+
+    public class CuentasRegularizacionModel : CuentasModel
+    {
+        [Display(ResourceType = typeof(RCuentas), Name = "Id")]
+        public string Cuentaexistencias { get; set; }
+        public decimal? Saldoexistenciasiniciales { get; set; }
+        public string SSaldoexistenciasiniciales
+        {
+            ///get { return (Importe ?? 0).ToString(string.Format("N{0}", (Decimalesmonedas ?? 0))); }
+            get { return (Saldoexistenciasiniciales ?? 0).ToString(string.Format("N{0}", (2))); }
+            set { Saldoexistenciasiniciales = (Funciones.Qdecimal(value) ?? 0); }
+        }
+        public string Cuentavariacion { get; set; }
+        public decimal? Saldoexistenciasfinales { get; set; }
+        public string SSaldoexistenciasfinales
+        {
+            ///get { return (Importe ?? 0).ToString(string.Format("N{0}", (Decimalesmonedas ?? 0))); }
+            get { return (Saldoexistenciasfinales ?? 0).ToString(string.Format("N{0}", (2))); }
+            set { Saldoexistenciasfinales = (Funciones.Qdecimal(value) ?? 0); }
+        }
+
     }
 }

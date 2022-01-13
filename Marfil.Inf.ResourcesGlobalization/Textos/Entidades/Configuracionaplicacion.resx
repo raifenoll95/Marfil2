@@ -213,4 +213,25 @@
   <data name="Invertirasiento" xml:space="preserve">
     <value>Invertir asiento al anular un documento del diario</value>
   </data>
+  <data name="ComentarioCuentasDetalle" xml:space="preserve">
+    <value>Comentario cuentas detalle</value>
+  </data>
+  <data name="ComentarioDebePYG" xml:space="preserve">
+    <value>Comentario Debe cuenta PyG</value>
+  </data>
+  <data name="ComentarioExistenciasFinales" xml:space="preserve">
+    <value>Comentario existencias finales</value>
+  </data>
+  <data name="ComentarioExistenciasIniciales" xml:space="preserve">
+    <value>Comentario existencias iniciales</value>
+  </data>
+  <data name="ComentarioHaberPYG" xml:space="preserve">
+    <value>Comentario Haber cuenta PyG</value>
+  </data>
+  <data name="ComentarioAperturaEjercicio" xml:space="preserve">
+    <value>Comentario apertura ejercicio</value>
+  </data>
+  <data name="ComentarioCierreEjercicio" xml:space="preserve">
+    <value>Comentario cierre de ejercicio</value>
+  </data>
 </root>

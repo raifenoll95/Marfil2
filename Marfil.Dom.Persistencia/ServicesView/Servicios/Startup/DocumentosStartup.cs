@@ -85,7 +85,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
                         Tipoprivacidad = (TipoPrivacidadDocumento)Enum.Parse(typeof(TipoPrivacidadDocumento), vector[2]),
                         Tiporeport = (TipoReport)Enum.Parse(typeof(TipoReport), vector[3]),
                         Datos = stream.ToArray(),
-                        Defecto = Funciones.Qbool(vector[5])
+                        Defecto = Funciones.Qbool(vector[5]),
+                        Empresa = _context.Empresa
 
                     };
 

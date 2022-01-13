@@ -859,5 +859,38 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 return input.PadRight(length, ' ');
         }
 
+        public IEnumerable<CuentasRegularizacionModel> BuscarCuentasExistencias()
+        {
+            var ejericicio = int.Parse(_context.Ejercicio);
+            var cuentaexistencias = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().cuentasexistencias;
+            //las cuentas de existencia
+            var listacuentas = _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0 && f.id.StartsWith(cuentaexistencias))
+                                .Select(
+                                        f => new CuentasRegularizacionModel()
+                                        {
+                                            Cuentaexistencias = f.id,
+                                            Saldoexistenciasiniciales = 0,
+                                            Cuentavariacion = "",
+                                            Saldoexistenciasfinales = 0
+                                        }).ToList();
+
+            //obtenemos los saldos
+            foreach (var item in listacuentas)
+            {
+                if (_db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentaexistencias).FirstOrDefault() != null) {
+                    var saldo = _db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentaexistencias).FirstOrDefault().saldo;
+                    item.Saldoexistenciasiniciales = saldo;
+
+                }
+                else
+                {
+                    item.Saldoexistenciasiniciales = 0;
+                }
+                
+            }
+
+
+            return listacuentas;
+        }
     }
 }

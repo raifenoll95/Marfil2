@@ -1288,5 +1288,106 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return linea;
         }
+
+        public MovsModel GenerarAsientoRegularizacionExistencias(string fecharegularizacion, string comentarioiniciales, string comentariofinales, string[] listacuentasexistencias, string[] listasaldoiniciales, string[] listacuentasvariacion, string[] listaimportefinales)
+        {
+            //Comprobamos el estado del ejercicio
+            var serviceEjercicios = new EjerciciosService(_context);
+            var idejerc = int.Parse(_context.Ejercicio);
+            var ejercicio = serviceEjercicios.getAll().Where(f => ((Model.Configuracion.EjerciciosModel)f).Id == idejerc).Select(f => f as Model.Configuracion.EjerciciosModel).FirstOrDefault();
+
+            if (ejercicio.Estado != Model.Configuracion.EstadoEjercicio.Abierto)
+            {
+                throw new ValidationException("No se puede realizar una regularización de existencias en un ejercicio que no esté abierto");
+            }
+
+            var registros = listacuentasexistencias.Length;
+
+            //Cabecera del asiento
+            MovsModel documento = new FModel().GetModel<MovsModel>(_context);
+            var appService = new ApplicationHelper(_context);
+            documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+            documento.Fecha = DateTime.ParseExact(fecharegularizacion, "dd/MM/yyyy",System.Globalization.CultureInfo.InvariantCulture);
+            documento.Tipoasiento = "R3";
+            documento.Codigodescripcionasiento = "";
+            documento.Descripcionasiento = "REGULARIZACION EXISTENCIAS";
+            documento.Referencia = "";
+            documento.Canalcontable = "";
+
+            //recorremos los registros para su tratamiento
+            for (int i = 0; i < registros; i++)
+            {
+                var cuentavariacion = listacuentasvariacion[i];
+
+                if (cuentavariacion != "" && _db.Cuentas.Where(f => f.id == cuentavariacion).FirstOrDefault() == null)
+                {
+                    throw new ValidationException("La cuenta de variación " + listacuentasvariacion[i] + " no existe en el plan contable");
+                }
+
+                //Si ambos importes son 0 no se procesa
+                if (listasaldoiniciales[i] == "0" && listaimportefinales[i] == "0")
+                {
+                    continue;
+                }
+                else if (listasaldoiniciales[i] != "0")
+                {
+                    if (listacuentasvariacion[i] == "" || listacuentasvariacion[i] == null)
+                    {
+                        throw new ValidationException("Si existe una cuenta con saldo de existencia inicial, se debe indicar una cuenta de variación.");
+                    }
+
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasvariacion[i], double.Parse(listasaldoiniciales[i]),comentarioiniciales));
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasexistencias[i], double.Parse(listasaldoiniciales[i]), comentarioiniciales));
+                }
+                else if (listaimportefinales[i] != "0")
+                {                 
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasexistencias[i], double.Parse(listaimportefinales[i]), comentariofinales));
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasvariacion[i], double.Parse(listaimportefinales[i]), comentariofinales));
+                }
+
+            }           
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            int id = 0;
+
+            //Suma debe y haber
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+
+            if (documento.Saldo != 0)
+            {
+                throw new ValidationException("Asiento descuadrado. Transacción cancelada.");
+            }
+
+            else
+            {
+                documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
+                documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
+
+                //Create
+                var serviceMovs = new MovsService(_context);
+                serviceMovs.create(documento);
+            }
+
+            //Cambiamos el estado del ejercicio;
+            ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Existencias;
+            _db.SaveChanges();
+
+            return documento;
+        }
     }
 }

@@ -1,6 +1,9 @@
 AST;Asientos;Accounting entries;false
+CRC;Cartera de cobros;Collection portfolio;false
+CRP;Cartera de pagos;Payment portfolio;false
 INM;Inmovilizado;Assets;false
 IVR;IVA repercutido;Output VAT;false
 IVS;IVA soportado;Input VAT;false
 PRC;Previsión cobros;Collection forecast;false
 PRP;Previsión pagos;Payments forecast;false
+REM;Remesa contable;Bank remittance;
