@@ -104,6 +104,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
             return _db.CarteraVencimientos.Where(f => f.empresa == Empresa && f.id == carteraId).FirstOrDefault().referenciaremesa;
         }
+
         #endregion
 
         public string getFacturaByTraza(string traza)
@@ -1289,7 +1290,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return linea;
         }
 
-        public MovsModel GenerarAsientoRegularizacionExistencias(string fecharegularizacion, string comentarioiniciales, string comentariofinales, string[] listacuentasexistencias, string[] listasaldoiniciales, string[] listacuentasvariacion, string[] listaimportefinales)
+        //AsistenteRegularizacionExistencias
+        public MovsModel GenerarAsientoRegularizacionExistencias(string fecharegularizacion, string seriecontable, string comentarioiniciales, string comentariofinales, string[] listacuentasexistencias, string[] listasaldoiniciales, string[] listacuentasvariacion, string[] listaimportefinales)
         {
             //Comprobamos el estado del ejercicio
             var serviceEjercicios = new EjerciciosService(_context);
@@ -1298,7 +1300,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             if (ejercicio.Estado != Model.Configuracion.EstadoEjercicio.Abierto)
             {
-                throw new ValidationException("No se puede realizar una regularización de existencias en un ejercicio que no esté abierto");
+                throw new ValidationException("No se puede realizar una regularización de existencias en un ejercicio que no esté en estado Abierto");
             }
 
             var registros = listacuentasexistencias.Length;
@@ -1306,11 +1308,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //Cabecera del asiento
             MovsModel documento = new FModel().GetModel<MovsModel>(_context);
             var appService = new ApplicationHelper(_context);
-            documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+            documento.Fkseriescontables = seriecontable;
             documento.Fecha = DateTime.ParseExact(fecharegularizacion, "dd/MM/yyyy",System.Globalization.CultureInfo.InvariantCulture);
             documento.Tipoasiento = "R3";
             documento.Codigodescripcionasiento = "";
-            documento.Descripcionasiento = "REGULARIZACION EXISTENCIAS";
+            documento.Descripcionasiento = "REGULARIZACIÓN EXISTENCIAS";
             documento.Referencia = "";
             documento.Canalcontable = "";
 
@@ -1333,16 +1335,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     if (listacuentasvariacion[i] == "" || listacuentasvariacion[i] == null)
                     {
-                        throw new ValidationException("Si existe una cuenta con saldo de existencia inicial, se debe indicar una cuenta de variación.");
+                        throw new ValidationException("Si existe una cuenta con saldo de existencias inicial, se debe indicar una cuenta de variación.");
                     }
 
-                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasvariacion[i], double.Parse(listasaldoiniciales[i]),comentarioiniciales));
-                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasexistencias[i], double.Parse(listasaldoiniciales[i]), comentarioiniciales));
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasvariacion[i], double.Parse(listasaldoiniciales[i], System.Globalization.CultureInfo.InvariantCulture), comentarioiniciales));
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasexistencias[i], double.Parse(listasaldoiniciales[i], System.Globalization.CultureInfo.InvariantCulture), comentarioiniciales));
+
+                    //Puede existir saldos iniciales y finales la vez
+                    if (listaimportefinales[i] != "0")
+                    {
+                        documento.Lineas.Add(generarDebeOHaber(true, listacuentasexistencias[i], double.Parse(listaimportefinales[i], System.Globalization.CultureInfo.InvariantCulture), comentariofinales));
+                        documento.Lineas.Add(generarDebeOHaber(false, listacuentasvariacion[i], double.Parse(listaimportefinales[i], System.Globalization.CultureInfo.InvariantCulture), comentariofinales));
+                    }
                 }
                 else if (listaimportefinales[i] != "0")
                 {                 
-                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasexistencias[i], double.Parse(listaimportefinales[i]), comentariofinales));
-                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasvariacion[i], double.Parse(listaimportefinales[i]), comentariofinales));
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasexistencias[i], double.Parse(listaimportefinales[i], System.Globalization.CultureInfo.InvariantCulture), comentariofinales));
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasvariacion[i], double.Parse(listaimportefinales[i], System.Globalization.CultureInfo.InvariantCulture), comentariofinales));
                 }
 
             }           
@@ -1388,6 +1397,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             _db.SaveChanges();
 
             return documento;
+        }
+
+        //AsistenteRegularizacionGrupos
+        public void GenerarAsientoRegularizacionGrupos(string fecharegularizacion, string seriecontable, string cuentapyg, string comentariodebepyg, string comentariohaberpyg, string comentariocuentasdetalle, string[] listacuentasgrupos, string[] listasaldodeudor, string[] listasaldoacreedor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

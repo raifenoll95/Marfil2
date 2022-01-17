@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RCobrosYPagos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.CobrosYPagos;
 using RConfiguracion = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Configuracionaplicacion;
+using RMovs = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Movs;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias
 {
@@ -43,6 +44,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias
         
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Fecharegularizacion")]
         public DateTime Fecharegularizacion { get; set; }
+        [Display(ResourceType = typeof(RMovs), Name = "Fkseriescontables")]
+        public string Fkseriescontables { get; set; }
         [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioExistenciasIniciales")]
         public string ComentarioExistenciasIniciales { get; set; }
         [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioExistenciasFinales")]

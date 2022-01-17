@@ -22,6 +22,7 @@ namespace Marfil.Dom.Persistencia.Model
         }
 
         [Required]
+        [MaxLength(30)]
         [Display(ResourceType = typeof(RGrupos), Name = "Role")]
         public string Role { get; set; }
 

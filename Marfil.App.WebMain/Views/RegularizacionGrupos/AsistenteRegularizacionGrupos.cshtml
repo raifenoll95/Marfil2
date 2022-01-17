@@ -1,7 +1,7 @@
 ﻿@using Marfil.Dom.Persistencia.Model.Interfaces
 @using Marfil.Dom.Persistencia.Model;
 @using Resources
-@model Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias.AsistenteRegularizacionExistenciasModel
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteRegularizacionGruposModel
 @{
     var toolbarModel = Model as IToolbar;
     ViewBag.Title = toolbarModel.Toolbar.Titulo;
@@ -10,8 +10,8 @@
 
 <script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
 <script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
-<script src="@Url.Content("~/Scripts/UserControls/Regularizacion/regularizacionexistenciascontroller.js")"></script>
-<div ng-controller="AsistenteRegularizacionExistenciasCrtl">
+<script src="@Url.Content("~/Scripts/UserControls/Regularizacion/regularizaciongruposcontroller.js")"></script>
+<div ng-controller="AsistenteRegularizacionGruposCrtl">
 
     <div id="fuelux-wizard-container">
         <div>
@@ -24,7 +24,7 @@
 
                 <li data-step="2">
                     <span class="step">2</span>
-                    <span class="title">Completar Regularización</span>
+                    <span class="title">Cuentas Regularización</span>
                 </li>
 
                 <li data-step="3">
@@ -44,21 +44,21 @@
             <div class="step-pane" data-step="1">
                 <div>
                     <h3 class="green center">Previo Regularización</h3>
-                    @Html.Partial("_procesoregularizacionexistenciasstep1", Model)
+                    @Html.Partial("_procesoregularizaciongruposstep1", Model)
                 </div>
             </div>
 
             <div class="step-pane" data-step="2">
                 <div>
                     <h3 class="green center">Completar Regularización</h3>
-                    @Html.Partial("_procesoregularizacionexistenciasstep2", Model)
+                    @Html.Partial("_procesoregularizaciongruposstep2", Model)
                 </div>
             </div>
 
             <div class="step-pane" data-step="3">
                 <div class="center">
 
-                    @Html.Partial("_procesoregularizacionexistenciasstep3", Model)
+                    @Html.Partial("_procesoregularizaciongruposstep3", Model)
                 </div>
             </div>
 
@@ -107,16 +107,22 @@
                         $("#fecharegularizacionerror").show();
                          e.preventDefault();
 
+                    } else if ($("[name='CuentaPYG']").val() === "") {
+
+                        $("#cuentapygerror").html("El campo Cuenta es obligatorio");
+                        $("#cuentapygerror").show();
+                        e.preventDefault();
+
                     } else {
                         var data = {
-                            Url: "@Url.Action("AsistenteRegularizacionExistenciasApi", "Api")",
-                            campoIdentificador: "Cuentasexistencias",
+                            Url: "@Url.Action("AsistenteRegularizacionGruposApi", "Api")",
+                            campoIdentificador: "Cuentasgrupos",
                             IdComponenteasociado: "",
                             IdFormulariomodal: "",
-                            Titulo: "Cuentas de existencias"
+                            Titulo: "Cuentas grupos 6 y 7"
                         };
 
-                        eventAggregator.Publish("_buscarcuentasexistencias", data);
+                        eventAggregator.Publish("_buscarcuentasgrupos", data);
 
 
                     }
@@ -143,18 +149,18 @@
 }
 
 
-@using (Html.BeginForm("GenerarAsientoContable", "RegularizacionExistencias", FormMethod.Post, new { @id = "generarasiento" }))
+@using (Html.BeginForm("GenerarAsientoContable", "RegularizacionGrupos", FormMethod.Post, new { @id = "generarasiento" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="fecharegularizacion" value="" />
     <input type="hidden" name="seriecontable" value="" />
-    <input type="hidden" name="comentarioiniciales" value="" />
-    <input type="hidden" name="comentariofinales" value="" />
-    <input type="hidden" name="cuentasexistencias" value="" />
-    <input type="hidden" name="saldoiniciales" value="" />
-    <input type="hidden" name="cuentasvariacion" value="" />
-    <input type="hidden" name="importefinales" value="" />
-
+    <input type="hidden" name="cuentapyg" value="" />
+    <input type="hidden" name="comentariodebepyg" value="" />
+    <input type="hidden" name="comentariohaberpyg" value="" />
+    <input type="hidden" name="comentariocuentasdetalle" value="" />
+    <input type="hidden" name="cuentasgrupos" value="" />
+    <input type="hidden" name="saldodeudor" value="" />
+    <input type="hidden" name="saldoacreedor" value="" />
 }
 
 

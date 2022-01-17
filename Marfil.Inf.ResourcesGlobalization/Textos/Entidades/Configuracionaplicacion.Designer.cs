@@ -169,6 +169,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias.
+        /// </summary>
+        public static string CuentaPYG {
+            get {
+                return ResourceManager.GetString("CuentaPYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descontar descuento comercial.
         /// </summary>
         public static string Descontardescuentocomercial {

@@ -53,6 +53,12 @@
         </div>
     </div>
 
+    <div class="row row-centered">
+        <div class="form-group">
+            <input class="btn btn-success" type="button" id="botonCalculo" value="Calcular Listado" />
+        </div>
+    </div>
+    <hr />
     <div class="row">
         <div class="form-group">
             @Html.LabelFor(f => Model.Lineassinsaldo, new { @class = "control-label col-md-3" })
@@ -65,13 +71,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row row-centered">
-        <div class="form-group">
-            <input class="btn btn-success" type="button" id="botonCalculo" value="Calcular Listado" />
-        </div>
-    </div>
-    <hr />
     <div class="row">
         <div class="form-group">
             @if (textRecalculo != null && textRecalculo != "")

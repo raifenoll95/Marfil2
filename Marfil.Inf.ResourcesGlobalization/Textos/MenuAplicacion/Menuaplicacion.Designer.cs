@@ -1312,6 +1312,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Regularización de grupos 6 y 7.
+        /// </summary>
+        public static string regularizaciongrupos {
+            get {
+                return ResourceManager.GetString("regularizaciongrupos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Remesas.
         /// </summary>
         public static string remesas {

@@ -2,15 +2,15 @@
 @using Marfil.Dom.Persistencia.Model.Interfaces
 @using Marfil.Dom.Persistencia.Model;
 @using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Configuracion
 @using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 @using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
-@using Marfil.Dom.Persistencia.Helpers
-@using Marfil.Dom.Persistencia.Model.Configuracion
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
 @using Resources
-@model Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias.AsistenteRegularizacionExistenciasModel
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteRegularizacionGruposModel
 @{
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvseriecontable = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
 }
 
@@ -48,23 +48,49 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioExistenciasIniciales, new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @Html.TextBoxFor(f => Model.ComentarioExistenciasIniciales, new { @class = "form-control" })
+        @Html.LabelFor(f => Model.CuentaPYG, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="Cuentas">
+            @{
+                cvcuentas.Name = "CuentaPYG";
+                cvcuentas.Url = Url.Action("CuentasApi", "Api");
+                cvcuentas.Valor = Model.CuentaPYG;
+                cvcuentas.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
+
         </div>
-        <div class="col-md-12"></div>
-        <div class="col-md-4 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.ComentarioExistenciasIniciales, "", new { @class = "text-danger" })
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.CuentaPYG, "", new { @class = "text-danger", @id = "cuentapygerror" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioExistenciasFinales, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(f => Model.ComentarioDebePYG, new { @class = "control-label col-md-2" })
         <div class="col-md-6">
-            @Html.TextBoxFor(f => Model.ComentarioExistenciasFinales, new { @class = "form-control" })
+            @Html.TextBoxFor(f => Model.ComentarioDebePYG, new { @class = "form-control" })
         </div>
         <div class="col-md-12"></div>
         <div class="col-md-4 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.ComentarioExistenciasFinales, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(f => Model.ComentarioDebePYG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioHaberPYG, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioHaberPYG, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioHaberPYG, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioCuentasDetalle, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioCuentasDetalle, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioCuentasDetalle, "", new { @class = "text-danger" })
         </div>
     </div>
 </form>

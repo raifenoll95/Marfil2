@@ -1,6 +1,6 @@
-﻿app.controller('AsistenteRegularizacionExistenciasCrtl', ['$scope', '$rootScope', '$http', '$interval', 'uiGridConstants', '$timeout', function ($scope, $rootScope, $http, $interval, $uiGridConstants, $timeout) {
+﻿app.controller('AsistenteRegularizacionGruposCrtl', ['$scope', '$rootScope', '$http', '$interval', 'uiGridConstants', '$timeout', function ($scope, $rootScope, $http, $interval, $uiGridConstants, $timeout) {
     
-    eventAggregator.RegisterEvent("_buscarcuentasexistencias", function (data) {
+    eventAggregator.RegisterEvent("_buscarcuentasgrupos", function (data) {
         $scope.params = data.Params;
         $scope.load(data.campoIdentificador, data.IdComponenteasociado, data.IdFormulariomodal, data.Url, data.Titulo);
     });
@@ -142,7 +142,7 @@
 
                if ($scope.gridOptions.data == []) {
 
-                   $("#registrosseleccionadoserror").html("NO SE ENCUENTRAN CUENTAS DE EXISTENCIAS EN EL PLAN CONTABLE DE LA EMPRESA");
+                   $("#registrosseleccionadoserror").html("NO HAY NINGUNA CUENTA/SALDO DE LOS GRUPOS 6 ó 7");
                    e.preventDefault();
                }
 
@@ -171,32 +171,32 @@
         var rows = $scope.gridApi.selection.getSelectedRows();
         var fecharegularizacion = $("#Fecharegularizacion").val();
         var seriecontable = $("#Fkseriescontables").val();
-        var comentarioiniciales = $("#ComentarioExistenciasIniciales").val();
-        var comentariofinales = $("[name='ComentarioExistenciasFinales']").val();
+        var cuentapyg = $("#CuentaPYG").val();
+        var comentariodebepyg = $("[name='ComentarioDebePYG']").val();
+        var comentariohaberpyg = $("[name='ComentarioHaberPYG']").val();
+        var comentariocuentasdetalle = $("[name='ComentarioCuentasDetalle']").val();
 
-        var cuentasexistencias=$.map(rows, function(v){
-            return v.Cuentaexistencias;
+        var cuentasgrupos=$.map(rows, function(v){
+            return v.Cuentagrupos;
         }).join(';');
-        var saldoiniciales = $.map(rows, function (v) {
-            return v.Saldoexistenciasiniciales;
+        var saldodeudor = $.map(rows, function (v) {
+            return v.SaldoDeudor;
         }).join(';');
-        var cuentasvariacion = $.map(rows, function (v) {
-            return v.Cuentavariacion;
-        }).join(';');
-        var importefinales = $.map(rows, function (v) {
-            return v.Saldoexistenciasfinales;
+        var saldoacreedor = $.map(rows, function (v) {
+            return v.SaldoAcreedor;
         }).join(';');
 
 
         $("#generarasiento input[name='fecharegularizacion']").val(fecharegularizacion);
         $("#generarasiento input[name='seriecontable']").val(seriecontable);
-        $("#generarasiento input[name='comentarioiniciales']").val(comentarioiniciales);
-        $("#generarasiento input[name='comentariofinales']").val(comentariofinales);
+        $("#generarasiento input[name='cuentapyg']").val(cuentapyg);
+        $("#generarasiento input[name='comentariodebepyg']").val(comentariodebepyg);
+        $("#generarasiento input[name='comentariohaberpyg']").val(comentariohaberpyg);
+        $("#generarasiento input[name='comentariocuentasdetalle']").val(comentariocuentasdetalle);
 
-        $("#generarasiento input[name='cuentasexistencias']").val(cuentasexistencias);
-        $("#generarasiento input[name='saldoiniciales']").val(saldoiniciales);
-        $("#generarasiento input[name='cuentasvariacion']").val(cuentasvariacion);
-        $("#generarasiento input[name='importefinales']").val(importefinales);
+        $("#generarasiento input[name='cuentasgrupos']").val(cuentasgrupos);
+        $("#generarasiento input[name='saldodeudor']").val(saldodeudor);
+        $("#generarasiento input[name='saldoacreedor']").val(saldoacreedor);
         
 
         $("#generarasiento").submit();

@@ -50,10 +50,11 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad.Movs
 
         public MovsModel(IContextService context) : base(context)
         {
-            //using (var db = MarfilEntities.ConnectToSqlServer(context.BaseDatos))
-            //{
-            //    Fkseriescontables = db.SeriesContables.Where(f => f.empresa == context.Empresa && f.fkejercicios == context.Ejercicio).Select(f => f.id)/*.SingleOrDefault()*/;
-            //}
+            using (var db = MarfilEntities.ConnectToSqlServer(context.BaseDatos))
+            {
+                var idejerc = int.Parse(context.Ejercicio);
+                Fkseriescontables = db.Ejercicios.Where(f => f.empresa == context.Empresa && f.id == idejerc).Select(f => f.fkseriescontablesAST).SingleOrDefault();
+            }
         }
 
         #endregion

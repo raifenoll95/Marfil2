@@ -892,5 +892,53 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return listacuentas;
         }
+
+        public IEnumerable<CuentasRegularizacionGruposModel> BuscarCuentasGrupos6y7()
+        {
+            var ejericicio = int.Parse(_context.Ejercicio);
+            var cuentaspyg = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().cuentasperdidas;
+            var listacuentaspyg = cuentaspyg.Split(';');
+            var pref1 = listacuentaspyg[0];
+            var pref2 = listacuentaspyg[1];
+
+            //las cuentas de grupos 6 y 7
+            var listacuentas = _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0 && (f.id.StartsWith(pref1) || f.id.StartsWith(pref2)))
+                                .Select(
+                                        f => new CuentasRegularizacionGruposModel()
+                                        {
+                                            Cuentagrupos = f.id,
+                                            SaldoDeudor = 0,
+                                            SaldoAcreedor = 0
+                                        }).ToList();
+
+            //obtenemos los saldos
+            foreach (var item in listacuentas)
+            {
+                if (_db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentagrupos).FirstOrDefault() != null)
+                {
+                    var saldo = _db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentagrupos).FirstOrDefault().saldo;
+
+                    if (saldo > 0)
+                    {
+                        item.SaldoDeudor = saldo;
+                    } 
+                    else if (saldo < 0)
+                    {
+                        item.SaldoAcreedor = saldo * -1;//Valor absoluto
+                    }
+                    else
+                    {
+                        item.SaldoAcreedor = 0;
+                        item.SaldoDeudor = 0;
+                    }
+
+                }
+
+            }
+
+            listacuentas.RemoveAll(y => y.SaldoAcreedor == 0 && y.SaldoDeudor == 0);
+
+            return listacuentas;
+        }
     }
 }

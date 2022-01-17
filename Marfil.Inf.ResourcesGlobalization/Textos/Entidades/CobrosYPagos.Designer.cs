@@ -115,6 +115,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Asistente regularización de grupos 6 y 7.
+        /// </summary>
+        public static string AsistenteRegularizacionGrupos {
+            get {
+                return ResourceManager.GetString("AsistenteRegularizacionGrupos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Banco librado.
         /// </summary>
         public static string Banco {

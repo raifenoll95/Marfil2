@@ -234,4 +234,7 @@
   <data name="ComentarioCierreEjercicio" xml:space="preserve">
     <value>Comentario cierre de ejercicio</value>
   </data>
+  <data name="CuentaPYG" xml:space="preserve">
+    <value>Cuenta de pérdidas y ganancias</value>
+  </data>
 </root>

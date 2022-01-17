@@ -396,4 +396,7 @@
   <data name="Fecharegularizacion" xml:space="preserve">
     <value>Fecha de regularización</value>
   </data>
+  <data name="AsistenteRegularizacionGrupos" xml:space="preserve">
+    <value>Asistente regularización de grupos 6 y 7</value>
+  </data>
 </root>

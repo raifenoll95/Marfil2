@@ -131,4 +131,25 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
         }
 
     }
+
+    public class CuentasRegularizacionGruposModel : CuentasModel
+    {
+        [Display(ResourceType = typeof(RCuentas), Name = "Id")]
+        public string Cuentagrupos { get; set; }
+        public decimal? SaldoDeudor { get; set; }
+        public string SSaldoDeudor
+        {
+            ///get { return (Importe ?? 0).ToString(string.Format("N{0}", (Decimalesmonedas ?? 0))); }
+            get { return (SaldoDeudor ?? 0).ToString(string.Format("N{0}", (2))); }
+            set { SaldoDeudor = (Funciones.Qdecimal(value) ?? 0); }
+        }
+        public decimal? SaldoAcreedor { get; set; }
+        public string SSaldoAcreedor
+        {
+            ///get { return (Importe ?? 0).ToString(string.Format("N{0}", (Decimalesmonedas ?? 0))); }
+            get { return (SaldoAcreedor ?? 0).ToString(string.Format("N{0}", (2))); }
+            set { SaldoAcreedor = (Funciones.Qdecimal(value) ?? 0); }
+        }
+
+    }
 }

@@ -76,6 +76,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return dias;
         }
 
+        public DateTime GetFechaHastaEjercicio()
+        {
+            var idejerc = int.Parse(_context.Ejercicio);
+            return (DateTime)_db.Ejercicios.Where(f => f.id == idejerc).FirstOrDefault().hasta;
+        }
+
+        public string GetSerieContable()
+        {
+            return _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+        }
+
         public string GetInvertirAsiento()
         {
             XmlDocument doc = new XmlDocument();
@@ -108,6 +119,42 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             XmlElement datosParse = doc.DocumentElement;
 
             XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioExistenciasFinales");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioDetalle()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioCuentasDetalle");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioHaber()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioHaberPYG");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioDebe()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioDebePYG");
             var comentario = nodo[0].InnerText;
             return comentario;
         }
