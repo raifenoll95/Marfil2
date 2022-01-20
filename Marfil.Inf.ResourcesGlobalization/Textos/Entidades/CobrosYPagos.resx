@@ -399,4 +399,13 @@
   <data name="AsistenteRegularizacionGrupos" xml:space="preserve">
     <value>Asistente regularización de grupos 6 y 7</value>
   </data>
+  <data name="Fechaapertura" xml:space="preserve">
+    <value>Fecha Apertura</value>
+  </data>
+  <data name="Fechacierre" xml:space="preserve">
+    <value>Fecha Cierre</value>
+  </data>
+  <data name="AsistenteRegularizacionCierreApertura" xml:space="preserve">
+    <value>Asistente cierre / apertura</value>
+  </data>
 </root>

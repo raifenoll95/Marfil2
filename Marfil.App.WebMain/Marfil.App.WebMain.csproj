@@ -328,6 +328,7 @@
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
     <Compile Include="Controllers\AsistenteRegularizacionExistenciasApiController.cs" />
+    <Compile Include="Controllers\AsistenteRegularizacionCierreAperturaApiController.cs" />
     <Compile Include="Controllers\AsistenteRegularizacionGruposApiController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
@@ -355,6 +356,7 @@
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
     <Compile Include="Controllers\ReferenciasDocumentosRelacionadosFacturasApiController.cs" />
+    <Compile Include="Controllers\RegularizacionCierreAperturaController.cs" />
     <Compile Include="Controllers\RegularizacionExistenciasController.cs" />
     <Compile Include="Controllers\RegularizacionGruposController.cs" />
     <Compile Include="Controllers\RemesasController.cs" />
@@ -2494,6 +2496,7 @@
     <Content Include="Scripts\UserControls\Obras\ObrasController.js" />
     <Content Include="Scripts\UserControls\Provincias\ProvinciasController.js" />
     <Content Include="Scripts\UserControls\Importarlineas\Importarlineas.js" />
+    <Content Include="Scripts\UserControls\Regularizacion\regularizacioncierreaperturacontroller.js" />
     <Content Include="Scripts\UserControls\Regularizacion\regularizaciongruposcontroller.js" />
     <Content Include="Scripts\UserControls\Regularizacion\regularizacionexistenciascontroller.js" />
     <Content Include="Scripts\UserControls\Stock\remedircontroller.js" />
@@ -3624,6 +3627,10 @@
     <Content Include="Views\RegularizacionGrupos\_procesoregularizaciongruposstep3.cshtml" />
     <Content Include="Views\RegularizacionGrupos\_procesoregularizaciongruposstep2.cshtml" />
     <Content Include="Views\RegularizacionGrupos\_procesoregularizaciongruposstep1.cshtml" />
+    <Content Include="Views\RegularizacionCierreApertura\AsistenteRegularizacionCierreApertura.cshtml" />
+    <Content Include="Views\RegularizacionCierreApertura\_procesoregularizacioncierreaperturastep1.cshtml" />
+    <Content Include="Views\RegularizacionCierreApertura\_procesoregularizacioncierreaperturastep2.cshtml" />
+    <Content Include="Views\RegularizacionCierreApertura\_procesoregularizacioncierreaperturastep3.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

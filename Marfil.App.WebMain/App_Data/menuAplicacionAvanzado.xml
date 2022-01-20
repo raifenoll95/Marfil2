@@ -144,6 +144,7 @@
 		<item name="cierreycuentas" text="Cierre y cuentas anuales" icono="fa fa-folder-o">
 			<item name="regularizacionexistencias" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionExistencias/AsistenteRegularizacionExistencias" />
 			<item name="regularizaciongrupos" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionGrupos/AsistenteRegularizacionGrupos" />
+			<item name="regularizacioncierreapertura" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionCierreApertura/AsistenteRegularizacionCierreApertura" />
 		</item>
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />

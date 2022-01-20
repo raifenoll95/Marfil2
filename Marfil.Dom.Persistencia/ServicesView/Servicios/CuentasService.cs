@@ -25,6 +25,7 @@ using Marfil.Dom.ControlsUI.NifCif;
 using System.Data.Common;
 using System.Dynamic;
 using System.Data.Entity.Migrations;
+using System.Globalization;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -922,6 +923,50 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         item.SaldoDeudor = saldo;
                     } 
+                    else if (saldo < 0)
+                    {
+                        item.SaldoAcreedor = saldo * -1;//Valor absoluto
+                    }
+                    else
+                    {
+                        item.SaldoAcreedor = 0;
+                        item.SaldoDeudor = 0;
+                    }
+
+                }
+
+            }
+
+            listacuentas.RemoveAll(y => y.SaldoAcreedor == 0 && y.SaldoDeudor == 0);
+
+            return listacuentas;
+        }
+
+        public IEnumerable<CuentasRegularizacionGruposModel> BuscarCuentasCierreApertura()
+        {
+            var ejericicio = int.Parse(_context.Ejercicio);
+
+            //Todo el plan contable de nivel 0
+            var listacuentas = _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0)
+                                .Select(
+                                        f => new CuentasRegularizacionGruposModel()
+                                        {
+                                            Cuentagrupos = f.id,
+                                            SaldoDeudor = 0,
+                                            SaldoAcreedor = 0
+                                        }).ToList();
+
+            //obtenemos los saldos
+            foreach (var item in listacuentas)
+            {
+                if (_db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentagrupos).FirstOrDefault() != null)
+                {
+                    var saldo = _db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentagrupos).FirstOrDefault().saldo;
+
+                    if (saldo > 0)
+                    {
+                        item.SaldoDeudor = saldo;
+                    }
                     else if (saldo < 0)
                     {
                         item.SaldoAcreedor = saldo * -1;//Valor absoluto

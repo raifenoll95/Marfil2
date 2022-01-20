@@ -79,11 +79,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Comentario.
+        /// </summary>
+        public static string ComentarioApertura {
+            get {
+                return ResourceManager.GetString("ComentarioApertura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Comentario apertura ejercicio.
         /// </summary>
         public static string ComentarioAperturaEjercicio {
             get {
                 return ResourceManager.GetString("ComentarioAperturaEjercicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comentario.
+        /// </summary>
+        public static string ComentarioCierre {
+            get {
+                return ResourceManager.GetString("ComentarioCierre", resourceCulture);
             }
         }
         

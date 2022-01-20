@@ -237,4 +237,10 @@
   <data name="CuentaPYG" xml:space="preserve">
     <value>Cuenta de pérdidas y ganancias</value>
   </data>
+  <data name="ComentarioApertura" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
+  <data name="ComentarioCierre" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
 </root>

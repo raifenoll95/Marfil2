@@ -1,0 +1,64 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteCierreAperturaModel
+@{
+
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    <h4 style="text-align: left !important">Datos Cierre</h4>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechacierre, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechacierre)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fechacierre, "", new { @class = "text-danger", @id = "fechacierreerror" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioCierre, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioCierre, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioCierre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <h4 style="text-align: left !important">Datos Apertura</h4>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechaapertura, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechaapertura)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fechaapertura, "", new { @class = "text-danger", @id = "fechaaperturaerror" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioApertura, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioApertura, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioApertura, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</form>

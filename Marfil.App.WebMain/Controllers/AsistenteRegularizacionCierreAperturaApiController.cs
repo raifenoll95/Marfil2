@@ -18,9 +18,9 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 
 namespace Marfil.App.WebMain.Controllers
 {
-    public class AsistenteRegularizacionGruposApiController : ApiBaseController
+    public class AsistenteRegularizacionCierreAperturaApiController : ApiBaseController
     {
-        public AsistenteRegularizacionGruposApiController(IContextService context) : base(context)
+        public AsistenteRegularizacionCierreAperturaApiController(IContextService context) : base(context)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Marfil.App.WebMain.Controllers
 
                 var result = new ResultBusquedas<CuentasRegularizacionGruposModel>()
                 {
-                    values = service.BuscarCuentasGrupos6y7(),
+                    values = service.BuscarCuentasCierreApertura(),
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Cuentagrupos", displayName = "Cuenta", visible = true, width=150},

@@ -618,4 +618,7 @@
   <data name="regularizaciongrupos" xml:space="preserve">
     <value>Regularización de grupos 6 y 7</value>
   </data>
+  <data name="regularizacioncierreapertura" xml:space="preserve">
+    <value>Cierre y Apertura</value>
+  </data>
 </root>

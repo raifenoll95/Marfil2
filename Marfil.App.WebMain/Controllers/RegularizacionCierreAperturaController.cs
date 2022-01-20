@@ -14,8 +14,7 @@ using System.Web.Mvc;
 
 namespace Marfil.App.WebMain.Controllers
 {
-    [Authorize]
-    public class RegularizacionGruposController : GenericController<AsistenteRegularizacionGruposModel>
+    public class RegularizacionCierreAperturaController : GenericController<AsistenteCierreAperturaModel>
     {
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
@@ -25,8 +24,8 @@ namespace Marfil.App.WebMain.Controllers
 
         protected override void CargarParametros()
         {
-            MenuName = "regularizaciongrupos";
-            var permisos = appService.GetPermisosMenu("regularizaciongrupos");
+            MenuName = "regularizacioncierreapertura";
+            var permisos = appService.GetPermisosMenu("regularizacioncierreapertura");
             IsActivado = permisos.IsActivado;
             CanCrear = permisos.CanCrear;
             CanModificar = permisos.CanModificar;
@@ -36,7 +35,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region CTR
 
-        public RegularizacionGruposController(IContextService context) : base(context)
+        public RegularizacionCierreAperturaController(IContextService context) : base(context)
         {
 
         }
@@ -44,49 +43,55 @@ namespace Marfil.App.WebMain.Controllers
         #endregion
 
         #region index
-
         //Redirigir a la pantalla principal
         public override ActionResult Index()
         {
-            return RedirectToAction("AsistenteRegularizacionGrupos");
+            return RedirectToAction("AsistenteRegularizacionCierreApertura");
         }
 
-        public ActionResult AsistenteRegularizacionGrupos()
+        public ActionResult AsistenteRegularizacionCierreApertura()
         {
-            using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
+            try
             {
-                return View(new AsistenteRegularizacionGruposModel(ContextService)
+                using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
                 {
-                    Fecharegularizacion = service.GetFechaHastaEjercicio(),
-                    Fkseriescontables = service.GetSerieContable(),
-                    ComentarioDebePYG = service.GetComentarioDebe(),
-                    ComentarioHaberPYG = service.GetComentarioHaber(),
-                    ComentarioCuentasDetalle = service.GetComentarioDetalle()
-                });
+                    return View(new AsistenteCierreAperturaModel(ContextService)
+                    {
+                        Fechacierre = service.GetFechaHastaEjercicio(),
+                        Fechaapertura = service.GetFechaDesdeEjercicioSig(),
+                        ComentarioCierre = service.GetComentarioCierre(),
+                        ComentarioApertura = service.GetComentarioApertura()
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                return Redirect("~/");
+            }           
         }
 
         //Fin del asistente
         [HttpPost]
-        public ActionResult GenerarAsientoContable(string fecharegularizacion, string seriecontable, string cuentapyg, string comentariodebepyg, string comentariohaberpyg, string comentariocuentasdetalle, string cuentasgrupos, string saldodeudor, string saldoacreedor)
+        public ActionResult GenerarAsientoContable(string fechacierre, string fechaapertura, string comentariocierre, string comentarioapertura, string cuentas, string saldodeudor, string saldoacreedor)
         {
-            var model = Helper.fModel.GetModel<MovsModel>(ContextService);
             try
             {
                 using (var service = FService.Instance.GetService(typeof(VencimientosModel), ContextService) as VencimientosService)
                 {
-                    var listacuentasgrupos = cuentasgrupos.Split(';');
+                    var listacuentas = cuentas.Split(';');
                     var listasaldodeudor = saldodeudor.Split(';');
                     var listasaldoacreedor = saldoacreedor.Split(';');
 
-                    service.GenerarAsientoRegularizacionGrupos(fecharegularizacion, seriecontable, cuentapyg, comentariodebepyg, comentariohaberpyg, comentariocuentasdetalle, listacuentasgrupos, listasaldodeudor, listasaldoacreedor);
-                    TempData[Constantes.VariableMensajeExito] = string.Format("Se ha generado correctamente el asiento");
+                    service.GenerarAsientoCierreApertura(fechacierre, fechaapertura, comentariocierre, comentarioapertura, listacuentas, listasaldodeudor, listasaldoacreedor);
+                    TempData[Constantes.VariableMensajeExito] = string.Format("Se han generado correctamente los asientos");
                 }
             }
             catch (Exception ex)
             {
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
-                return RedirectToAction("AsistenteRegularizacionGrupos");
+                return RedirectToAction("AsistenteRegularizacionCierreApertura");
             }
 
             return RedirectToAction("Index", "Movs");

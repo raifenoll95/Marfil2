@@ -7,7 +7,7 @@
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
 @using Resources
-@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteRegularizacionGruposModel
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteCierreAperturaModel
 @{
 
     var cvseries = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
@@ -19,7 +19,7 @@
 </form>
 
 <div style="margin-top:40px !important">
-    <h4 style="text-align: left !important">Saldos grupos 6 y 7</h4>
+    <h4 style="text-align: left !important">Saldos plan contable</h4>
 
     <span class="field-validation-valid text-danger"  id="registrosseleccionadoserror"></span>
 

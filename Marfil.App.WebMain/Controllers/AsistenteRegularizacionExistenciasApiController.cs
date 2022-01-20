@@ -37,7 +37,7 @@ namespace Marfil.App.WebMain.Controllers
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Cuentaexistencias", displayName = "Cta. Existencias", visible = true, width=150},
-                        new ColumnDefinition() { field = "Saldoexistenciasiniciales", displayName = "Saldo Exist. Iniciales", visible = true, width=150, type = "number"},
+                        new ColumnDefinition() { field = "SSaldoexistenciasiniciales", displayName = "Saldo Exist. Iniciales", visible = true, width=150, type = "number"},
                         new ColumnDefinition() { field = "Cuentavariacion", displayName = "Cta. Variación Ex.", visible = true, width=150, enableCellEdit = true},
                         new ColumnDefinition() { field = "Saldoexistenciasfinales", displayName = "Importe Exist. Finales", visible = true, width=200, enableCellEdit = true, type = "number"},
 

@@ -106,6 +106,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Asistente cierre / apertura.
+        /// </summary>
+        public static string AsistenteRegularizacionCierreApertura {
+            get {
+                return ResourceManager.GetString("AsistenteRegularizacionCierreApertura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Asistente de regularización de existencias.
         /// </summary>
         public static string AsistenteRegularizacionExistencias {
@@ -318,6 +327,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string FacturaVenta {
             get {
                 return ResourceManager.GetString("FacturaVenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Apertura.
+        /// </summary>
+        public static string Fechaapertura {
+            get {
+                return ResourceManager.GetString("Fechaapertura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Cierre.
+        /// </summary>
+        public static string Fechacierre {
+            get {
+                return ResourceManager.GetString("Fechacierre", resourceCulture);
             }
         }
         

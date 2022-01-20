@@ -1394,7 +1394,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             //Cambiamos el estado del ejercicio;
             ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Existencias;
-            _db.SaveChanges();
+            var serviceEjercicio = new EjerciciosService(_context);
+            serviceEjercicio.edit(ejercicio);
 
             return documento;
         }
@@ -1402,7 +1403,330 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         //AsistenteRegularizacionGrupos
         public void GenerarAsientoRegularizacionGrupos(string fecharegularizacion, string seriecontable, string cuentapyg, string comentariodebepyg, string comentariohaberpyg, string comentariocuentasdetalle, string[] listacuentasgrupos, string[] listasaldodeudor, string[] listasaldoacreedor)
         {
-            throw new NotImplementedException();
+            decimal totaldeudor = 0;
+            decimal totalacreedor = 0;
+            var appService = new ApplicationHelper(_context);
+
+            //Comprobamos el estado del ejercicio
+            var serviceEjercicios = new EjerciciosService(_context);
+            var idejerc = int.Parse(_context.Ejercicio);
+            var ejercicio = serviceEjercicios.getAll().Where(f => ((Model.Configuracion.EjerciciosModel)f).Id == idejerc).Select(f => f as Model.Configuracion.EjerciciosModel).FirstOrDefault();
+
+            if (ejercicio.Estado != Model.Configuracion.EstadoEjercicio.Existencias)
+            {
+                throw new ValidationException("No se puede realizar una regularización de grupos 6 y 7 en un ejercicio que no esté en estado Regularización Existencias");
+            }
+
+            var registros = listacuentasgrupos.Length;
+
+            //Saldo total deudor y acreedor
+            foreach (var item in listasaldodeudor)
+            {
+                totaldeudor += decimal.Parse(item, CultureInfo.InvariantCulture);
+            }
+            foreach (var item in listasaldoacreedor)
+            {
+                totalacreedor += decimal.Parse(item, CultureInfo.InvariantCulture);
+            }
+
+            CrearAsientoDeudor(fecharegularizacion, seriecontable, cuentapyg, comentariodebepyg, comentariocuentasdetalle, listacuentasgrupos, listasaldodeudor, totaldeudor, appService, registros);
+            CrearAsientoAcreedor(fecharegularizacion, seriecontable, cuentapyg, comentariohaberpyg, comentariocuentasdetalle, listacuentasgrupos, listasaldoacreedor, totaldeudor, totalacreedor, appService, registros);
+
+            //Cambiamos el estado del ejercicio;
+            ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Grupos;
+            var serviceEjercicio = new EjerciciosService(_context);
+            serviceEjercicio.edit(ejercicio);
+        }
+
+        private void CrearAsientoAcreedor(string fecharegularizacion, string seriecontable, string cuentapyg, string comentariohaberpyg, string comentariocuentasdetalle, string[] listacuentasgrupos, string[] listasaldoacreedor, decimal totaldeudor, decimal totalacreedor, ApplicationHelper appService, int registros)
+        {
+            /******Asiento Acreedor******/
+            //Cabecera del asiento acreedor
+            MovsModel documento = new FModel().GetModel<MovsModel>(_context);
+            documento.Fkseriescontables = seriecontable;
+            documento.Fecha = DateTime.ParseExact(fecharegularizacion, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            documento.Tipoasiento = "R4";
+            documento.Codigodescripcionasiento = "";
+            documento.Descripcionasiento = comentariohaberpyg;
+            documento.Referencia = "";
+            documento.Canalcontable = "";
+
+            //recorremos los registros deudores para su tratamiento
+            for (int i = 0; i < registros; i++)
+            {
+                if (listasaldoacreedor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentasgrupos[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentariocuentasdetalle));
+                }
+
+            }
+
+            //Línea total acreedor
+            if (totaldeudor > 0)
+            {
+                documento.Lineas.Add(generarDebeOHaber(false, cuentapyg, double.Parse(totalacreedor.ToString()), comentariohaberpyg));
+            }
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            int id = 0;
+
+            //Suma debe y haber
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+
+            if (documento.Saldo != 0)
+            {
+                throw new ValidationException("Asiento acreedor descuadrado. Transacción cancelada.");
+            }
+
+            else
+            {
+                documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
+                documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
+
+                //Create
+                var serviceMovs = new MovsService(_context);
+                serviceMovs.create(documento);
+            }
+            /******Asiento Acreedor******/
+        }
+
+        private void CrearAsientoDeudor(string fecharegularizacion, string seriecontable, string cuentapyg, string comentariodebepyg, string comentariocuentasdetalle, string[] listacuentasgrupos, string[] listasaldodeudor, decimal totaldeudor, ApplicationHelper appService, int registros)
+        {
+            /******Asiento Deudor******/
+            //Cabecera del asiento deudor
+            MovsModel documento = new FModel().GetModel<MovsModel>(_context);
+            documento.Fkseriescontables = seriecontable;
+            documento.Fecha = DateTime.ParseExact(fecharegularizacion, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            documento.Tipoasiento = "R4";
+            documento.Codigodescripcionasiento = "";
+            documento.Descripcionasiento = comentariodebepyg;
+            documento.Referencia = "";
+            documento.Canalcontable = "";
+
+            //Línea total deudor
+            if (totaldeudor > 0)
+            {
+                documento.Lineas.Add(generarDebeOHaber(true, cuentapyg, double.Parse(totaldeudor.ToString()), comentariodebepyg));
+            }
+
+            //recorremos los registros deudores para su tratamiento
+            for (int i = 0; i < registros; i++)
+            {
+                if (listasaldodeudor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentasgrupos[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentariocuentasdetalle));
+                }
+
+            }
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            int id = 0;
+
+            //Suma debe y haber
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+
+            if (documento.Saldo != 0)
+            {
+                throw new ValidationException("Asiento deudor descuadrado. Transacción cancelada.");
+            }
+
+            else
+            {
+                documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
+                documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
+
+                //Create
+                var serviceMovs = new MovsService(_context);
+                serviceMovs.create(documento);
+            }
+            /******Asiento Deudor******/
+        }
+
+        public void GenerarAsientoCierreApertura(string fechacierre, string fechaapertura, string comentariocierre, string comentarioapertura, string[] listacuentas, string[] listasaldodeudor, string[] listasaldoacreedor)
+        {
+            var appService = new ApplicationHelper(_context);
+
+            //Comprobamos el estado del ejercicio
+            var serviceEjercicios = new EjerciciosService(_context);
+            var idejerc = int.Parse(_context.Ejercicio);
+            var ejercicio = serviceEjercicios.getAll().Where(f => ((Model.Configuracion.EjerciciosModel)f).Id == idejerc).Select(f => f as Model.Configuracion.EjerciciosModel).FirstOrDefault();
+
+            if (ejercicio.Estado != Model.Configuracion.EstadoEjercicio.Grupos)
+            {
+                throw new ValidationException("No se puede realizar el cierre de un ejercicio que no esté en estado Regularización Grupos 6 y 7");
+            }
+
+            var registros = listacuentas.Length;
+
+            //CrearAsientoCierre(fechacierre, comentariocierre, listacuentas, listasaldodeudor, listasaldoacreedor, appService, registros);
+            CrearAsientoApertura(fechaapertura, comentarioapertura, listacuentas, listasaldodeudor, listasaldoacreedor, appService, registros);
+
+            //Cambiamos el estado del ejercicio;
+            ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Cerrado;
+            var serviceEjercicio = new EjerciciosService(_context);
+            serviceEjercicio.edit(ejercicio);
+        }
+
+        private void CrearAsientoCierre(string fechacierre, string comentariocierre, string[] listacuentas, string[] listasaldodeudor, string[] listasaldoacreedor, ApplicationHelper appService, int registros)
+        {
+            /******Asiento Cierre******/
+            //Cabecera del asiento cierre
+            MovsModel documento = new FModel().GetModel<MovsModel>(_context);
+            documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+            documento.Fecha = DateTime.ParseExact(fechacierre, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            documento.Tipoasiento = "R5";
+            documento.Codigodescripcionasiento = "";
+            documento.Descripcionasiento = comentariocierre;
+            documento.Referencia = "";
+            documento.Canalcontable = "";
+
+            //recorremos los registros para su tratamiento
+            for (int i = 0; i < registros; i++)
+            {
+                if (listasaldoacreedor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentas[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentariocierre));
+                }
+                else if (listasaldodeudor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentariocierre));         
+                }
+
+            }
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            int id = 0;
+
+            //Suma debe y haber
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+
+            if (documento.Saldo != 0)
+            {
+                throw new ValidationException("Asiento de cierre descuadrado. Transacción cancelada.");
+            }
+
+            else
+            {
+                documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
+                documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
+
+                //Create
+                var serviceMovs = new MovsService(_context);
+                serviceMovs.create(documento);
+            }
+            /******Asiento Cierre******/
+        }
+
+        private void CrearAsientoApertura(string fechaapertura, string comentarioapertura, string[] listacuentas, string[] listasaldodeudor, string[] listasaldoacreedor, ApplicationHelper appService, int registros)
+        {
+            /******Asiento Apertura******/
+            //Cabecera del asiento apertura
+            MovsModel documento = new FModel().GetModel<MovsModel>(_context);
+            var idejercact = int.Parse(_context.Ejercicio);
+            documento.Fkejercicio = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente
+            documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+            documento.Fecha = DateTime.ParseExact(fechaapertura, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            documento.Tipoasiento = "R2";
+            documento.Codigodescripcionasiento = "";
+            documento.Descripcionasiento = comentarioapertura;
+            documento.Referencia = "";
+            documento.Canalcontable = "";
+
+            //recorremos los registros para su tratamiento
+            for (int i = 0; i < registros; i++)
+            {
+                if (listasaldoacreedor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
+                }
+                else if (listasaldodeudor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
+                }
+
+            }
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            int id = 0;
+
+            //Suma debe y haber
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+
+            if (documento.Saldo != 0)
+            {
+                throw new ValidationException("Asiento de apertura descuadrado. Transacción cancelada.");
+            }
+
+            else
+            {
+                documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
+                documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
+
+                //Create
+                var serviceMovs = new MovsService(_context);
+                serviceMovs.create(documento);
+            }
+            /******Asiento Cierre******/
         }
     }
 }

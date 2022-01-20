@@ -8,6 +8,7 @@ using System.Data.Entity.Migrations;
 using Newtonsoft.Json;
 using System.Xml.Linq;
 using System.Xml;
+using Marfil.Dom.Persistencia.Helpers;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -80,6 +81,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var idejerc = int.Parse(_context.Ejercicio);
             return (DateTime)_db.Ejercicios.Where(f => f.id == idejerc).FirstOrDefault().hasta;
+        }
+
+        public DateTime GetFechaDesdeEjercicioSig()
+        {
+            var idejercact = int.Parse(_context.Ejercicio);
+            var idejercsig = 0;
+
+            if (_db.Ejercicios.Where(f => f.fkejercicios == idejercact).SingleOrDefault() != null)
+            {
+                idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();
+            }
+            else
+            {
+                throw new ValidationException("No se ha creado todavia el ejercicio de apertura.");
+            }       
+
+            return (DateTime)_db.Ejercicios.Where(f => f.id == idejercsig).FirstOrDefault().desde;
         }
 
         public string GetSerieContable()
@@ -155,6 +173,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             XmlElement datosParse = doc.DocumentElement;
 
             XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioDebePYG");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioApertura()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioAperturaEjercicio");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioCierre()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioCierreEjercicio");
             var comentario = nodo[0].InnerText;
             return comentario;
         }

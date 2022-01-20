@@ -1303,6 +1303,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cierre y Apertura.
+        /// </summary>
+        public static string regularizacioncierreapertura {
+            get {
+                return ResourceManager.GetString("regularizacioncierreapertura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Regularización de existencias.
         /// </summary>
         public static string regularizacionexistencias {
