@@ -212,46 +212,53 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //Nov2021 - Cambio legal, no se permite borrar asientos
                 var model = obj as MovsModel;
                 var modelAnul = obj as MovsModel;
-                /*base.delete(obj);
-                var maesService = new MaesService(_context, _db);
-                maesService.GenerarMovimiento(model, TipoOperacionMaes.Baja);*/
 
-                var serviceConfig = new ConfiguracionService(_context, _db);
-                var invertir = serviceConfig.GetInvertirAsiento();
-
-                if (invertir == "false")
+                //Ene2022 - Si el asiento es Normal - F1 se anula, si no se elimina
+                if (model.Tipoasiento != "F1")
                 {
-                    foreach (var item in modelAnul.Lineas)
-                    {
-                        item.Debe = item.Debe * -1;
-                        item.Haber = item.Haber * -1;
-                    }
-                    modelAnul.Debe = modelAnul.Debe * -1;
-                    modelAnul.Haber = modelAnul.Haber * -1;
+                    base.delete(obj);
+                    var maesService = new MaesService(_context, _db);
+                    maesService.GenerarMovimiento(model, TipoOperacionMaes.Baja);
                 }
                 else
                 {
-                    foreach (var item in modelAnul.Lineas)
+                    var serviceConfig = new ConfiguracionService(_context, _db);
+                    var invertir = serviceConfig.GetInvertirAsiento();
+
+                    if (invertir == "false")
                     {
-                        var debeLin = item.Debe;
-                        var haberLin = item.Haber;
-
-                        item.Debe = haberLin;
-                        item.Haber = debeLin;
+                        foreach (var item in modelAnul.Lineas)
+                        {
+                            item.Debe = item.Debe * -1;
+                            item.Haber = item.Haber * -1;
+                        }
+                        modelAnul.Debe = modelAnul.Debe * -1;
+                        modelAnul.Haber = modelAnul.Haber * -1;
                     }
-                    var debe = modelAnul.Debe;
-                    var haber = modelAnul.Haber;
+                    else
+                    {
+                        foreach (var item in modelAnul.Lineas)
+                        {
+                            var debeLin = item.Debe;
+                            var haberLin = item.Haber;
 
-                    modelAnul.Debe = haber;
-                    modelAnul.Haber = debe;
+                            item.Debe = haberLin;
+                            item.Haber = debeLin;
+                        }
+                        var debe = modelAnul.Debe;
+                        var haber = modelAnul.Haber;
 
+                        modelAnul.Debe = haber;
+                        modelAnul.Haber = debe;
+
+                    }
+
+                    modelAnul.Id = _db.Movs.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
+                    modelAnul.Fecha = model.Fecha;
+                    modelAnul.Descripcionasiento = "ANULACIÓN " + model.Descripcionasiento;
+
+                    create(modelAnul);
                 }
-                
-                modelAnul.Id = _db.Movs.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
-                modelAnul.Fecha = DateTime.Now;
-                modelAnul.Descripcionasiento = "ANULACIÓN " + model.Descripcionasiento;
-
-                create(modelAnul);
                 //Nov2021
 
                 //cambiar estado factura relacionado

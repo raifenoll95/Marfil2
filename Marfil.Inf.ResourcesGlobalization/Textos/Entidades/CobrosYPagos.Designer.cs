@@ -133,6 +133,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Asistente para revertir estado del ejercicio.
+        /// </summary>
+        public static string AsistenteRevertirEjercicio {
+            get {
+                return ResourceManager.GetString("AsistenteRevertirEjercicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Banco librado.
         /// </summary>
         public static string Banco {

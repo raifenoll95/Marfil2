@@ -1,6 +1,7 @@
 ﻿using Marfil.App.WebMain.Misc;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Documentos.Regularizacion;
@@ -53,17 +54,39 @@ namespace Marfil.App.WebMain.Controllers
 
         public ActionResult AsistenteRegularizacionGrupos()
         {
-            using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
+            try
             {
-                return View(new AsistenteRegularizacionGruposModel(ContextService)
+                var appService = new ApplicationHelper(ContextService);
+
+                //Comprobamos el estado del ejercicio
+                var serviceEjercicios = new EjerciciosService(ContextService);
+                var idejerc = int.Parse(ContextService.Ejercicio);
+                var ejercicio = serviceEjercicios.getAll().Where(f => ((EjerciciosModel)f).Id == idejerc).Select(f => f as EjerciciosModel).FirstOrDefault();
+
+                if (ejercicio.Estado != EstadoEjercicio.Existencias)
                 {
-                    Fecharegularizacion = service.GetFechaHastaEjercicio(),
-                    Fkseriescontables = service.GetSerieContable(),
-                    ComentarioDebePYG = service.GetComentarioDebe(),
-                    ComentarioHaberPYG = service.GetComentarioHaber(),
-                    ComentarioCuentasDetalle = service.GetComentarioDetalle()
-                });
+                    throw new ValidationException("No se puede realizar una regularización de grupos 6 y 7 en un ejercicio que no esté en estado Regularización Existencias");
+                }
+
+                using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
+                {
+                    return View(new AsistenteRegularizacionGruposModel(ContextService)
+                    {
+                        Fecharegularizacion = service.GetFechaHastaEjercicio(),
+                        Fkseriescontables = service.GetSerieContable(),
+                        ComentarioDebePYG = service.GetComentarioDebe(),
+                        ComentarioHaberPYG = service.GetComentarioHaber(),
+                        ComentarioCuentasDetalle = service.GetComentarioDetalle()
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                return Redirect("~/");
+            }
+            
         }
 
         //Fin del asistente

@@ -243,4 +243,7 @@
   <data name="ComentarioCierre" xml:space="preserve">
     <value>Comentario</value>
   </data>
+  <data name="EstadoEjercicioRevertir" xml:space="preserve">
+    <value>Estado al que se va a revertir el ejercicio</value>
+  </data>
 </root>

@@ -259,6 +259,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Estado al que se va a revertir el ejercicio.
+        /// </summary>
+        public static string EstadoEjercicioRevertir {
+            get {
+                return ResourceManager.GetString("EstadoEjercicioRevertir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Estado entregada.
         /// </summary>
         public static string Estadoentregada {

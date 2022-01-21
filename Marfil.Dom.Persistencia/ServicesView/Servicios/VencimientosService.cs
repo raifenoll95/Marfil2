@@ -1588,7 +1588,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var registros = listacuentas.Length;
 
-            //CrearAsientoCierre(fechacierre, comentariocierre, listacuentas, listasaldodeudor, listasaldoacreedor, appService, registros);
+            CrearAsientoCierre(fechacierre, comentariocierre, listacuentas, listasaldodeudor, listasaldoacreedor, appService, registros);
             CrearAsientoApertura(fechaapertura, comentarioapertura, listacuentas, listasaldodeudor, listasaldoacreedor, appService, registros);
 
             //Cambiamos el estado del ejercicio;
@@ -1668,14 +1668,33 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //Cabecera del asiento apertura
             MovsModel documento = new FModel().GetModel<MovsModel>(_context);
             var idejercact = int.Parse(_context.Ejercicio);
-            documento.Fkejercicio = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente
-            documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
-            documento.Fecha = DateTime.ParseExact(fechaapertura, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            documento.Tipoasiento = "R2";
-            documento.Codigodescripcionasiento = "";
-            documento.Descripcionasiento = comentarioapertura;
-            documento.Referencia = "";
-            documento.Canalcontable = "";
+            var idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente;
+
+            //Si ya existe un asiento de apertura lo sobreescribimos
+            var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R2").Include(b => b.MovsLin).ToList().Single();
+
+            if (result != null)
+            {
+                documento.Fkejercicio = result.fkejercicio;
+                documento.Fkseriescontables = result.fkseriescontables;
+                documento.Fecha = result.fecha;
+                documento.Tipoasiento = result.tipoasiento;
+                documento.Codigodescripcionasiento = result.codigodescripcionasiento;
+                documento.Descripcionasiento = result.descripcionasiento;
+                documento.Referencia = result.referencia;
+                documento.Canalcontable = result.canalcontable;
+            }
+            else
+            {
+                documento.Fkejercicio = idejercsig;
+                documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+                documento.Fecha = DateTime.ParseExact(fechaapertura, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                documento.Tipoasiento = "R2";
+                documento.Codigodescripcionasiento = "";
+                documento.Descripcionasiento = comentarioapertura;
+                documento.Referencia = "";
+                documento.Canalcontable = "";
+            }
 
             //recorremos los registros para su tratamiento
             for (int i = 0; i < registros; i++)
@@ -1721,10 +1740,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
                 documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
-
-                //Create
                 var serviceMovs = new MovsService(_context);
-                serviceMovs.create(documento);
+
+                //Si ya existe un asiento de apertura lo sobreescribimos
+                if (result != null)
+                {
+                    //Edit
+                    serviceMovs.edit(documento);
+                }
+                else
+                {
+                    //Create
+                    serviceMovs.create(documento);
+                }
+                    
             }
             /******Asiento Cierre******/
         }

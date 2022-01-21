@@ -629,6 +629,7 @@
     <Compile Include="Model\Documentos\Regularizacion\AsistenteCierreAperturaModel.cs" />
     <Compile Include="Model\Documentos\Regularizacion\AsistenteRegularizacionExistenciasModel.cs" />
     <Compile Include="Model\Documentos\Regularizacion\AsistenteRegularizacionGruposModel.cs" />
+    <Compile Include="Model\Documentos\Regularizacion\AsistenteRervertirEstadoEjercicioModel.cs" />
     <Compile Include="Model\Documentos\Reservas\ReservasModel.cs" />
     <Compile Include="Model\Documentos\Reservas\ReservasReport.cs" />
     <Compile Include="Model\Documentos\Transformacioneslotesnave\TransformacioneslotesnaveModel.cs" />

@@ -408,4 +408,7 @@
   <data name="AsistenteRegularizacionCierreApertura" xml:space="preserve">
     <value>Asistente cierre / apertura</value>
   </data>
+  <data name="AsistenteRevertirEjercicio" xml:space="preserve">
+    <value>Asistente para revertir estado del ejercicio</value>
+  </data>
 </root>

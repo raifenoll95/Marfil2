@@ -1,6 +1,7 @@
 ﻿using Marfil.App.WebMain.Misc;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias;
@@ -53,16 +54,38 @@ namespace Marfil.App.WebMain.Controllers
 
         public ActionResult AsistenteRegularizacionExistencias()
         {
-            using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
+            try
             {
-                return View(new AsistenteRegularizacionExistenciasModel(ContextService)
+                var appService = new ApplicationHelper(ContextService);
+
+                //Comprobamos el estado del ejercicio
+                var serviceEjercicios = new EjerciciosService(ContextService);
+                var idejerc = int.Parse(ContextService.Ejercicio);
+                var ejercicio = serviceEjercicios.getAll().Where(f => ((EjerciciosModel)f).Id == idejerc).Select(f => f as EjerciciosModel).FirstOrDefault();
+
+                if (ejercicio.Estado != EstadoEjercicio.Abierto)
                 {
-                    Fecharegularizacion = service.GetFechaHastaEjercicio(),
-                    Fkseriescontables = service.GetSerieContable(),
-                    ComentarioExistenciasIniciales = service.GetComentarioIni(),
-                    ComentarioExistenciasFinales = service.GetComentarioFin()
-                });
+                    throw new ValidationException("No se puede realizar una regularización de existencias en un ejercicio que no esté en estado Abierto");
+                }
+
+                using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
+                {
+                    return View(new AsistenteRegularizacionExistenciasModel(ContextService)
+                    {
+                        Fecharegularizacion = service.GetFechaHastaEjercicio(),
+                        Fkseriescontables = service.GetSerieContable(),
+                        ComentarioExistenciasIniciales = service.GetComentarioIni(),
+                        ComentarioExistenciasFinales = service.GetComentarioFin()
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                return Redirect("~/");
+            }
+            
         }
 
         #endregion
