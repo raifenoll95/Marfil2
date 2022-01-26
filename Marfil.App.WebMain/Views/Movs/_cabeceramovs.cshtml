@@ -118,7 +118,7 @@ else
 
     @Html.LabelFor(f => Model.Tipoasiento, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.DropDownListFor(f => Model.Tipoasiento, tiposasientoauto ? listatiposasientosauto : listatiposasientos, isreadonly || tiposasientoauto ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.DropDownListFor(f => Model.Tipoasiento, tiposasientoauto ? listatiposasientosauto : listatiposasientos, isreadonly || tiposasientoauto ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
     </div>
     <div class="col-md-12"></div>
     <div class="col-md-2 col-md-offset-2">

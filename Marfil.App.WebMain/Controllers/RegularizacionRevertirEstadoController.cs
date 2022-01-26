@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace Marfil.App.WebMain.Controllers
 {
-    public class RegularizacionCierreAperturaController : GenericController<AsistenteCierreAperturaModel>
+    public class RegularizacionRevertirEstadoController : GenericController<AsistenteRervertirEstadoEjercicioModel>
     {
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
@@ -24,8 +24,8 @@ namespace Marfil.App.WebMain.Controllers
 
         protected override void CargarParametros()
         {
-            MenuName = "regularizacioncierreapertura";
-            var permisos = appService.GetPermisosMenu("regularizacioncierreapertura");
+            MenuName = "regularizacionrevertirestado";
+            var permisos = appService.GetPermisosMenu("regularizacionrevertirestado");
             IsActivado = permisos.IsActivado;
             CanCrear = permisos.CanCrear;
             CanModificar = permisos.CanModificar;
@@ -35,7 +35,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region CTR
 
-        public RegularizacionCierreAperturaController(IContextService context) : base(context)
+        public RegularizacionRevertirEstadoController(IContextService context) : base(context)
         {
 
         }
@@ -46,26 +46,22 @@ namespace Marfil.App.WebMain.Controllers
         //Redirigir a la pantalla principal
         public override ActionResult Index()
         {
-            return RedirectToAction("AsistenteRegularizacionCierreApertura");
+            return RedirectToAction("AsistenteRegularizacionRevertirEstado");
         }
 
-        public ActionResult AsistenteRegularizacionCierreApertura()
+        public ActionResult AsistenteRegularizacionRevertirEstado()
         {
             try
             {
                 using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
                 {
                     var estadoact = service.GetEstadoEjercicio();
-                    if (estadoact == 3)
+                    if (estadoact == 0)
                     {
-                        throw new ValidationException("El ejercicio ya está cerrado");
+                        throw new ValidationException("Un ejercicio en estado Abierto no se puede revertir");
                     }
-                    return View(new AsistenteCierreAperturaModel(ContextService)
+                    return View(new AsistenteRervertirEstadoEjercicioModel(ContextService)
                     {
-                        Fechacierre = service.GetFechaHastaEjercicio(),
-                        Fechaapertura = service.GetFechaDesdeEjercicioSig(),
-                        ComentarioCierre = service.GetComentarioCierre(),
-                        ComentarioApertura = service.GetComentarioApertura()
                     });
                 }
             }
@@ -74,29 +70,25 @@ namespace Marfil.App.WebMain.Controllers
 
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
                 return Redirect("~/");
-            }           
+            }
         }
 
         //Fin del asistente
         [HttpPost]
-        public ActionResult GenerarAsientoContable(string fechacierre, string fechaapertura, string comentariocierre, string comentarioapertura, string cuentas, string saldodeudor, string saldoacreedor)
+        public ActionResult GenerarAsientoContable(string estado)
         {
             try
             {
                 using (var service = FService.Instance.GetService(typeof(VencimientosModel), ContextService) as VencimientosService)
                 {
-                    var listacuentas = cuentas.Split(';');
-                    var listasaldodeudor = saldodeudor.Split(';');
-                    var listasaldoacreedor = saldoacreedor.Split(';');
-
-                    service.GenerarAsientoCierreApertura(fechacierre, fechaapertura, comentariocierre, comentarioapertura, listacuentas, listasaldodeudor, listasaldoacreedor);
-                    TempData[Constantes.VariableMensajeExito] = string.Format("Se han generado correctamente los asientos");
+                    service.AnularAsientos(estado);
+                    TempData[Constantes.VariableMensajeExito] = string.Format("Se han revertido correctamente el/los asiento/s");
                 }
             }
             catch (Exception ex)
             {
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
-                return RedirectToAction("AsistenteRegularizacionCierreApertura");
+                return RedirectToAction("AsistenteRegularizacionRevertirEstado");
             }
 
             return RedirectToAction("Index", "Movs");

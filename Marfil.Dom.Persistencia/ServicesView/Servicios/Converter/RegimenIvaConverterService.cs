@@ -68,6 +68,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipofacturarecibida = viewmodel.TipoFacturaRecibida;
             result.regimenespecialemitida = viewmodel.RegimenEspecialEmitida;
             result.regimenespecialrecibida = viewmodel.RegimenEspecialRecibida;
+            result.tipooperacionclassic = viewmodel.Tipooperacionclassic;
             return result;
         }
 
@@ -100,6 +101,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipofacturarecibida = viewmodel.TipoFacturaRecibida;
             result.regimenespecialemitida = viewmodel.RegimenEspecialEmitida;
             result.regimenespecialrecibida = viewmodel.RegimenEspecialRecibida;
+            result.tipooperacionclassic = viewmodel.Tipooperacionclassic;
             return result;
         }
 
@@ -131,7 +133,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 TipoFacturaEmitida = obj.tipofacturaemitida,
                 TipoFacturaRecibida=obj.tipofacturarecibida,
                 RegimenEspecialEmitida=obj.regimenespecialemitida,
-                RegimenEspecialRecibida=obj.regimenespecialrecibida
+                RegimenEspecialRecibida=obj.regimenespecialrecibida,
+                Tipooperacionclassic = (int)obj.tipooperacionclassic
         };
 
             return result;

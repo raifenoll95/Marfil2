@@ -1330,6 +1330,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Revertir estado del ejercicio.
+        /// </summary>
+        public static string regularizacionrevertirestado {
+            get {
+                return ResourceManager.GetString("regularizacionrevertirestado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Remesas.
         /// </summary>
         public static string remesas {

@@ -108,7 +108,6 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad.Movs
             get { return Fecha?.ToShortDateString().ToString(CultureInfo.InvariantCulture) ?? ""; }
         }
 
-        [Required]
         [Display(ResourceType = typeof(RMovs), Name = "TipoAsiento")]
         //public string Tipoasiento { get; set; }
         public string Tipoasiento { get; set; }

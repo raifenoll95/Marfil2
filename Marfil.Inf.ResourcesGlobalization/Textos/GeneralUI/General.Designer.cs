@@ -2122,6 +2122,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Revertir asiento contable.
+        /// </summary>
+        public static string LblRevertirAsientoContable {
+            get {
+                return ResourceManager.GetString("LblRevertirAsientoContable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Saldar pedido.
         /// </summary>
         public static string LblSaldarPedido {

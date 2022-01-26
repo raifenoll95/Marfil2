@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
@@ -131,6 +132,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var idparse = int.Parse(id);
             return (IEnumerable<string>)_db.Ejercicios.Where(f => f.empresa == Empresa && f.id == idparse).Select(f => f.id).ToList();
+        }
+
+        public List<SelectListItem> GetEstadosEjerciciosRevertir(string id)
+        {
+            var idparse = int.Parse(id);
+            var estado = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == idparse).Select(f => f.estado).FirstOrDefault();
+            List<SelectListItem> listaestados = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text="Abierto", Value="0"},
+                new SelectListItem() { Text="Regularización de existencias", Value="1"},
+                new SelectListItem() { Text="Regularización de grupos 6 y 7", Value="2"}
+            };
+
+            if (estado == 1)
+            {                
+                listaestados.RemoveAt(2);
+                listaestados.RemoveAt(1);
+            }
+            else if (estado == 2)
+            {
+                listaestados.RemoveAt(2);
+            }
+
+            return listaestados;
+        }
+
+        public string GetGetEstadoEjercicioAct(string id)
+        {
+            var serviceEjercicios = new EjerciciosService(_context);
+            var idejerc = int.Parse(_context.Ejercicio);
+            var ejercicio = serviceEjercicios.getAll().Where(f => ((Model.Configuracion.EjerciciosModel)f).Id == idejerc).Select(f => f as Model.Configuracion.EjerciciosModel).FirstOrDefault();
+
+            return ejercicio.Estado.ToString();
         }
     }
 }

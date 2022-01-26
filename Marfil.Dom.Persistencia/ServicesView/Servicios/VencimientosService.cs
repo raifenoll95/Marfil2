@@ -1670,19 +1670,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var idejercact = int.Parse(_context.Ejercicio);
             var idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente;
 
-            //Si ya existe un asiento de apertura lo sobreescribimos
-            var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R2").Include(b => b.MovsLin).ToList().Single();
-
-            if (result != null)
+            //Si ya existe un asiento de apertura lo sobreescribimos           
+            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).ToList().Single() != null)
             {
+                var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).ToList().Single();
+
+                documento.Id = result.id;
                 documento.Fkejercicio = result.fkejercicio;
                 documento.Fkseriescontables = result.fkseriescontables;
                 documento.Fecha = result.fecha;
-                documento.Tipoasiento = result.tipoasiento;
+                documento.Tipoasiento = "R2";
                 documento.Codigodescripcionasiento = result.codigodescripcionasiento;
                 documento.Descripcionasiento = result.descripcionasiento;
                 documento.Referencia = result.referencia;
                 documento.Canalcontable = result.canalcontable;
+                documento.Integridadreferencial = result.integridadreferencial;
+                documento.Identificadorsegmento = result.identificadorsegmento;
             }
             else
             {
@@ -1697,15 +1700,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             //recorremos los registros para su tratamiento
-            for (int i = 0; i < registros; i++)
+            for (int i = registros - 1; i >= 0; i--)
             {
-                if (listasaldoacreedor[i] != "0")
-                {
-                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
-                }
-                else if (listasaldodeudor[i] != "0")
+                if (listasaldodeudor[i] != "0")
                 {
                     documento.Lineas.Add(generarDebeOHaber(true, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
+                }               
+                else if (listasaldoacreedor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
                 }
 
             }
@@ -1743,7 +1746,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var serviceMovs = new MovsService(_context);
 
                 //Si ya existe un asiento de apertura lo sobreescribimos
-                if (result != null)
+                if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).ToList().Single() != null)
                 {
                     //Edit
                     serviceMovs.edit(documento);
@@ -1756,6 +1759,91 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     
             }
             /******Asiento Cierre******/
+        }
+
+        public void AnularAsientos(string estado)
+        {
+            var appService = new ApplicationHelper(_context);
+            var serviceMovs = new MovsService(_context);
+
+            //Comprobamos el estado del ejercicio
+            var serviceEjercicios = new EjerciciosService(_context);
+            var idejerc = int.Parse(_context.Ejercicio);
+            var ejercicio = serviceEjercicios.getAll().Where(f => ((Model.Configuracion.EjerciciosModel)f).Id == idejerc).Select(f => f as Model.Configuracion.EjerciciosModel).FirstOrDefault();
+
+            //Buscamos los asientos que hay que anular y cambiamos el estado del ejercicio;
+            switch (estado)
+            {
+                case "0":
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R5").FirstOrDefault() != null)
+                    {
+                        var asientocierre = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R5").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientocierre);
+                        serviceMovs.delete(result);
+                    }
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault() != null)
+                    {
+                        var asientogruposdeudor = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientogruposdeudor);
+                        serviceMovs.delete(result);
+                    }
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault() != null)
+                    {
+                        var asientogruposacreedor = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientogruposacreedor);
+                        serviceMovs.delete(result);
+                    }
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R3").FirstOrDefault() != null)
+                    {
+                        var asientoexistencias = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R3").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientoexistencias);
+                        serviceMovs.delete(result);
+                    }
+
+                    ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Abierto;
+                    break;
+                case "1":
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R5").FirstOrDefault() != null)
+                    {
+                        var asientocierre = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R5").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientocierre);
+                        serviceMovs.delete(result);
+                    }
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault() != null)
+                    {
+                        var asientogruposdeudor = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientogruposdeudor);
+                        serviceMovs.delete(result);
+                    }
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault() != null)
+                    {
+                        var asientogruposacreedor = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R4").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientogruposacreedor);
+                        serviceMovs.delete(result);
+                    }
+
+                    ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Existencias;
+                    break;
+                case "2":
+
+                    if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R5").FirstOrDefault() != null)
+                    {
+                        var asientocierre = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejerc && f.tipoasiento == "R5").FirstOrDefault().id;
+                        var result = serviceMovs.GetById(asientocierre);
+                        serviceMovs.delete(result);
+                    }
+
+                    ejercicio.Estado = Model.Configuracion.EstadoEjercicio.Grupos;
+                    break;
+            }
+
+            serviceEjercicios.edit(ejercicio);
         }
     }
 }

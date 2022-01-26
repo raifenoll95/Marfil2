@@ -18,7 +18,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Regularizacion
         public ToolbarAsistenteCierreAperturaModel()
         {
             Operacion = TipoOperacion.Custom;
-            Titulo = RCobrosYPagos.GenerarRegularizacionExistencias;
+            Titulo = RCobrosYPagos.CierreApertura;
         }
 
         public override string GetCustomTexto()

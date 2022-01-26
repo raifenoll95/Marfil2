@@ -133,7 +133,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Asistente para revertir estado del ejercicio.
+        ///   Busca una cadena traducida similar a Asistente para revertir estado del cierre.
         /// </summary>
         public static string AsistenteRevertirEjercicio {
             get {
@@ -165,6 +165,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Cartera {
             get {
                 return ResourceManager.GetString("Cartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cierre y Apertura del ejercicio.
+        /// </summary>
+        public static string CierreApertura {
+            get {
+                return ResourceManager.GetString("CierreApertura", resourceCulture);
             }
         }
         
@@ -813,6 +822,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string REMESA {
             get {
                 return ResourceManager.GetString("REMESA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Revertir estado del cierre.
+        /// </summary>
+        public static string RevertirEstado {
+            get {
+                return ResourceManager.GetString("RevertirEstado", resourceCulture);
             }
         }
         

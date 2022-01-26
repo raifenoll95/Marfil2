@@ -103,6 +103,10 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegimenIva), Name = "RegimenEspecialRecibida")]
         public string RegimenEspecialRecibida { get; set; }
 
+        [Display(ResourceType = typeof(RRegimenIva), Name = "Tipooperacionclassic")]
+        [Range(1, 99)]
+        public int Tipooperacionclassic { get; set; }
+
         #endregion
 
         #region CTR

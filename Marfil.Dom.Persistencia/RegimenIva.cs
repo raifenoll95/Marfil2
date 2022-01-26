@@ -39,5 +39,6 @@ namespace Marfil.Dom.Persistencia
         public string regimenespecialemitida { get; set; }
         public string tipofacturarecibida { get; set; }
         public string regimenespecialrecibida { get; set; }
+        public Nullable<int> tipooperacionclassic { get; set; }
     }
 }

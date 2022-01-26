@@ -359,6 +359,7 @@
     <Compile Include="Controllers\RegularizacionCierreAperturaController.cs" />
     <Compile Include="Controllers\RegularizacionExistenciasController.cs" />
     <Compile Include="Controllers\RegularizacionGruposController.cs" />
+    <Compile Include="Controllers\RegularizacionRevertirEstadoController.cs" />
     <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
@@ -2496,6 +2497,7 @@
     <Content Include="Scripts\UserControls\Obras\ObrasController.js" />
     <Content Include="Scripts\UserControls\Provincias\ProvinciasController.js" />
     <Content Include="Scripts\UserControls\Importarlineas\Importarlineas.js" />
+    <Content Include="Scripts\UserControls\Regularizacion\regularizacionrevertirestadocontroller.js" />
     <Content Include="Scripts\UserControls\Regularizacion\regularizacioncierreaperturacontroller.js" />
     <Content Include="Scripts\UserControls\Regularizacion\regularizaciongruposcontroller.js" />
     <Content Include="Scripts\UserControls\Regularizacion\regularizacionexistenciascontroller.js" />
@@ -3631,6 +3633,9 @@
     <Content Include="Views\RegularizacionCierreApertura\_procesoregularizacioncierreaperturastep1.cshtml" />
     <Content Include="Views\RegularizacionCierreApertura\_procesoregularizacioncierreaperturastep2.cshtml" />
     <Content Include="Views\RegularizacionCierreApertura\_procesoregularizacioncierreaperturastep3.cshtml" />
+    <Content Include="Views\RegularizacionRevertirEstado\AsistenteRegularizacionRevertirEstado.cshtml" />
+    <Content Include="Views\RegularizacionRevertirEstado\_procesoregularizacionrevertirestadostep1.cshtml" />
+    <Content Include="Views\RegularizacionRevertirEstado\_procesoregularizacionrevertirestadostep2.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

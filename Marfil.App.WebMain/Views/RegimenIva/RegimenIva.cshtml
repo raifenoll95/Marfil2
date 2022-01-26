@@ -163,6 +163,11 @@
                 @Html.CheckBoxFor(f => Model.Incluirmodelo347, isreadonly ? (object)new { @autofocus = "", @disabled = "disabled" } : (object)new { @autofocus = "" })
                 @Html.ValidationMessageFor(f => Model.Incluirmodelo347, "", new { @class = "text-danger" })
             </div>
+            @Html.LabelFor(f => Model.Tipooperacionclassic, new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(f => Model.Tipooperacionclassic, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+                @Html.ValidationMessageFor(f => Model.Tipooperacionclassic, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">

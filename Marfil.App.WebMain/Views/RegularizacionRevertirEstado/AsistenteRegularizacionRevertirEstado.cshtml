@@ -1,0 +1,125 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteRervertirEstadoEjercicioModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+}
+
+
+<script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
+<script src="@Url.Content("~/Scripts/UserControls/Regularizacion/regularizacionrevertirestadocontroller.js")"></script>
+<div ng-controller="AsistenteRegularizacionRevertirEstadoCrtl">
+
+    <div id="fuelux-wizard-container">
+        <div>
+            <!-- #section:plugins/fuelux.wizard.steps -->
+            <ul class="steps">
+                <li data-step="1" class="active">
+                    <span class="step">1</span>
+                    <span class="title">Estado al que revertir</span>
+                </li>
+
+                <!--<li data-step="2">
+                    <span class="step">2</span>
+                    <span class="title">Cuentas Cierre / Apertura</span>
+                </li>-->
+
+                <li data-step="2">
+                    <span class="step">2</span>
+                    <span class="title">Fin</span>
+                </li>
+
+            </ul>
+
+            <!-- /section:plugins/fuelux.wizard.steps -->
+        </div>
+
+        <hr />
+
+        <!-- #section:plugins/fuelux.wizard.container -->
+        <div class="step-content pos-rel">
+            <div class="step-pane" data-step="1">
+                <div>
+                    <h3 class="green center">Estado al que revertir</h3>
+                    @Html.Partial("_procesoregularizacionrevertirestadostep1", Model)
+                </div>
+            </div>
+
+            @*<div class="step-pane" data-step="2">
+                <div>
+                    <h3 class="green center">Cuentas Cierre / Apertura</h3>
+                    @Html.Partial("_procesoregularizacioncierreaperturastep2", Model)
+                </div>
+            </div>*@
+
+            <div class="step-pane" data-step="2">
+                <div class="center">
+
+                    @Html.Partial("_procesoregularizacionrevertirestadostep2", Model)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- /section:plugins/fuelux.wizard.container -->
+    </div>
+
+    <hr />
+    <div class="wizard-actions">
+        <!-- #section:plugins/fuelux.wizard.buttons -->
+        <button class="btn btn-prev">
+            <i class="ace-icon fa fa-arrow-left"></i>
+            @General.LblAnterior
+        </button>
+
+        <button class="btn btn-success btn-next" data-last="@General.LblRevertirAsientoContable">
+            @General.LblSiguiente
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+
+        <!-- /section:plugins/fuelux.wizard.buttons -->
+    </div>
+
+
+</div>
+
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            var $validation = false;
+            $('#fuelux-wizard-container').ace_wizard().on('actionclicked.fu.wizard', function(e, info) {
+                if (info.step == 1) {
+                    var flag = false;
+
+                    if (!$("#step1-form").validate().form()) {
+                        e.preventDefault();
+                    }
+
+                } else if (info.step == 2 && info.direction != "previous") {
+
+                    eventAggregator.Publish("_generarasientocontable");
+
+                } 
+            });
+
+        });
+    </script>
+
+}
+
+
+@using (Html.BeginForm("GenerarAsientoContable", "RegularizacionRevertirEstado", FormMethod.Post, new { @id = "generarasiento" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="estado" value="" />
+}
+
+
+

@@ -72,16 +72,35 @@ namespace Marfil.App.WebMain.Controllers
         {
             if (TempData["errors"] != null)
                 ModelState.AddModelError("", TempData["errors"].ToString());
-
-
-            using (var gestionService = FService.Instance.GetService(typeof(MovsModel), ContextService))
+            
+            try
             {
-                var model = TempData["model"] as MovsModel ?? Helper.fModel.GetModel<MovsModel>(ContextService);
-                Session[session] = model.Lineas;
-                
-                ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
-                return View(model);
+                //Si ya se ha comenzado el proceso de cierre no se permite crear asientos nuevos
+                using (var gestionService = FService.Instance.GetService(typeof(EjerciciosModel), ContextService) as EjerciciosService)
+                {
+                    var estadoejercicio = gestionService.GetGetEstadoEjercicioAct(ContextService.Ejercicio);
+                    if (estadoejercicio != "Abierto")
+                    {
+                        throw new ValidationException("Ejercicio en proceso de cierre, ya no se pueden añadir asientos");
+                    }
+                }
+
+                using (var gestionService = FService.Instance.GetService(typeof(MovsModel), ContextService))
+                {
+                    var model = TempData["model"] as MovsModel ?? Helper.fModel.GetModel<MovsModel>(ContextService);
+                    Session[session] = model.Lineas;
+
+                    ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
+                    return View(model);
+                }
+
             }
+            catch (Exception ex)
+            {
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                return RedirectToAction("Index", "Movs");
+            }
+
         }
 
         [HttpPost]
@@ -208,7 +227,29 @@ namespace Marfil.App.WebMain.Controllers
         }
 
 
+        public override ActionResult DeleteConfirmed(string id)
+        {
+            try
+            {
+                var newModel = Helper.fModel.GetModel<MovsModel>(ContextService);
+                using (var gestionService = createService(newModel))
+                {
 
+                    var model = gestionService.get(id) as MovsModel;
+                    if (model.Tipoasiento == "R1" || model.Tipoasiento == "R2" || model.Tipoasiento == "R3" || model.Tipoasiento == "R4" || model.Tipoasiento == "R5")
+                    {
+                        throw new ValidationException("No se puedo borrar manualmente un asiento de tipo automático");
+                    }
+                }
+                return base.DeleteConfirmed(id);
+            }
+            catch (Exception ex)
+            {
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+                return RedirectToAction("Index", "Movs");
+            }
+            
+        }
 
 
 

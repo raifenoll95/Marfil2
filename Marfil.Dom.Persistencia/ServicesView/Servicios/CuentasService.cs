@@ -983,7 +983,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             listacuentas.RemoveAll(y => y.SaldoAcreedor == 0 && y.SaldoDeudor == 0);
 
-            return listacuentas.OrderBy(c => c.SaldoDeudor).ThenBy(n => n.Cuentagrupos);
+            return listacuentas.OrderByDescending(c => c.SaldoAcreedor).ThenBy(n => n.SaldoDeudor);
         }
     }
 }

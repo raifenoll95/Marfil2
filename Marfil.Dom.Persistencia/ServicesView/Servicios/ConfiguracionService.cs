@@ -77,6 +77,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return dias;
         }
 
+        public int GetEstadoEjercicio()
+        {
+            var idejerc = int.Parse(_context.Ejercicio);
+            return (int)_db.Ejercicios.Where(f => f.id == idejerc).FirstOrDefault().estado;
+        }
+
         public DateTime GetFechaHastaEjercicio()
         {
             var idejerc = int.Parse(_context.Ejercicio);

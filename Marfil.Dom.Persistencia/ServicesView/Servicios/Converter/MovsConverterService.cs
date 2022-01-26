@@ -115,7 +115,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override Movs EditPersitance(IModelView obj)
         {
             var viewmodel = obj as MovsModel;
-           var result = _db.Movs.Where(f => f.empresa == viewmodel.Empresa && f.id == viewmodel.Id).Include(b => b.MovsLin).ToList().Single();
+            var result = _db.Movs.Where(f => f.empresa == viewmodel.Empresa && f.id == viewmodel.Id).Include(b => b.MovsLin).ToList().Single();
+            //Los asiento automáticos no se cambian
+            var esasientoauto = false;
+            var tipoasientoauto = "";
+            if (result.tipoasiento == "R1" || result.tipoasiento == "R2" || result.tipoasiento == "R3" || result.tipoasiento == "R4" || result.tipoasiento == "R5")
+            {
+                esasientoauto = true;
+                tipoasientoauto = result.tipoasiento;
+            }
             //todo asignar
             foreach (var item in result.GetType().GetProperties())
             {
@@ -137,6 +145,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             //todo asignar contador y referencia
             result.fechamodificacion = DateTime.Now;
             result.fkusuariomodificacion = Context.Id;
+
+            if (esasientoauto)
+            {
+                result.tipoasiento = tipoasientoauto;
+            }
 
             result.MovsLin.Clear();
 

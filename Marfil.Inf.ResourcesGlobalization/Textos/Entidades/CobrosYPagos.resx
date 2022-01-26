@@ -409,6 +409,12 @@
     <value>Asistente cierre / apertura</value>
   </data>
   <data name="AsistenteRevertirEjercicio" xml:space="preserve">
-    <value>Asistente para revertir estado del ejercicio</value>
+    <value>Asistente para revertir estado del cierre</value>
+  </data>
+  <data name="CierreApertura" xml:space="preserve">
+    <value>Cierre y Apertura del ejercicio</value>
+  </data>
+  <data name="RevertirEstado" xml:space="preserve">
+    <value>Revertir estado del cierre</value>
   </data>
 </root>

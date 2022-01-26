@@ -1,0 +1,49 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteRervertirEstadoEjercicioModel
+@{
+    var estado = WebHelper.GetApplicationHelper().GetEstadoEjercicioAct();
+    var estadotext = "";
+
+    if (estado == "Existencias")
+    {
+        estadotext = "Regularización de existencias";
+    }
+    else if (estado == "Grupos")
+    {
+        estadotext = "Regularización de grupos 6 y 7";
+    }
+    else
+    {
+        estadotext = "Cerrado";
+    }
+
+    var listaestados = WebHelper.GetApplicationHelper().GetEstadosEjercicios();
+
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    <h4 style="text-align: left !important">Estado actual del ejercicio: @estadotext</h4>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(f => Model.EstadoEjercicioRevertir, new { @class = "control-label col-md-3" })
+        <div class="col-md-3">
+            @Html.DropDownListFor(f => Model.EstadoEjercicioRevertir, listaestados, (object)new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.EstadoEjercicioRevertir, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</form>

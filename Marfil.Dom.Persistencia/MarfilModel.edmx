@@ -3504,6 +3504,7 @@
           <Property Name="regimenespecialemitida" Type="nvarchar" MaxLength="3" />
           <Property Name="tipofacturarecibida" Type="nvarchar" MaxLength="3" />
           <Property Name="regimenespecialrecibida" Type="nvarchar" MaxLength="3" />
+          <Property Name="tipooperacionclassic" Type="int" />
         </EntityType>
         <EntityType Name="Remesas">
           <Key>
@@ -8703,6 +8704,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="regimenespecialemitida" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="tipofacturarecibida" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="regimenespecialrecibida" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="tipooperacionclassic" Type="Int32" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -14860,6 +14862,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegimenIva">
             <EntityTypeMapping TypeName="MarfilModel.RegimenIva">
               <MappingFragment StoreEntitySet="RegimenIva">
+                <ScalarProperty Name="tipooperacionclassic" ColumnName="tipooperacionclassic" />
                 <ScalarProperty Name="regimenespecialrecibida" ColumnName="regimenespecialrecibida" />
                 <ScalarProperty Name="tipofacturarecibida" ColumnName="tipofacturarecibida" />
                 <ScalarProperty Name="regimenespecialemitida" ColumnName="regimenespecialemitida" />

@@ -1501,6 +1501,21 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public List<SelectListItem> GetEstadosEjercicios()
+        {
+            using (var service = FService.Instance.GetService(typeof(EjerciciosModel), _context) as EjerciciosService)
+            {
+                return service.GetEstadosEjerciciosRevertir(_context.Ejercicio);
+            }
+        }
+
+        public string GetEstadoEjercicioAct()
+        {
+            using (var service = FService.Instance.GetService(typeof(EjerciciosModel), _context) as EjerciciosService)
+            {
+                return service.GetGetEstadoEjercicioAct(_context.Ejercicio);
+            }
+        }
 
         #endregion
 

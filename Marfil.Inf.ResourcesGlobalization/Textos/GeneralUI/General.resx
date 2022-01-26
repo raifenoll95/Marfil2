@@ -967,4 +967,7 @@
   <data name="Configuracion" xml:space="preserve">
     <value>Configuración</value>
   </data>
+  <data name="LblRevertirAsientoContable" xml:space="preserve">
+    <value>Revertir asiento contable</value>
+  </data>
 </root>

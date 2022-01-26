@@ -144,6 +144,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _converterModel.GetModelView(obj) as MovsModel;
         }
 
+        public MovsModel GetById(int id)
+        {
+            var obj =
+                _db.Movs.Include("MovsLin")
+                    .Single(f => f.empresa == Empresa && f.id == id);
+
+            ((MovsConverterService)_converterModel).Ejercicio = EjercicioId;
+            return _converterModel.GetModelView(obj) as MovsModel;
+        }
+
         public override IModelView get(string id)
         {
             ((MovsConverterService)_converterModel).Ejercicio = EjercicioId;
@@ -213,8 +223,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var model = obj as MovsModel;
                 var modelAnul = obj as MovsModel;
 
-                //Ene2022 - Si el asiento es Normal - F1 se anula, si no se elimina
-                if (model.Tipoasiento != "F1")
+                //Ene2022 - Si el asiento es Normal - F1 o Contabilizadas - F4 se anula, si no se elimina
+                if (model.Tipoasiento != "F1" || model.Tipoasiento != "F4")
                 {
                     base.delete(obj);
                     var maesService = new MaesService(_context, _db);
@@ -1026,8 +1036,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var ejercicio = _db.Ejercicios.Where(e => e.empresa == Empresa && e.id == factura.Fkejercicio).SingleOrDefault();
             var FkSerieContable = ejercicio.fkseriescontablesAST;
 
-            //tipoasientodefecto
-            var tipoAsientoDefecto = app.GetListTiposAsientos().Where(f => f.Defecto).Select(f => f.Valor).SingleOrDefault();
+            //tipoasientodefecto - Ene2022 => Se ha incluido el tipo F4 para estos casos 
+            //var tipoAsientoDefecto = app.GetListTiposAsientos().Where(f => f.Defecto).Select(f => f.Valor).SingleOrDefault();
+            var tipoAsientoDefecto = "F4";
 
             //guia contable defecto
             string GuiaContDef = _db.Guiascontables.Where(g=> g.defecto ).FirstOrDefault()?.id;

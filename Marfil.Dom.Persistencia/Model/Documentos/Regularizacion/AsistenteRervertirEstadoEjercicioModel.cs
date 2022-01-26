@@ -18,7 +18,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Regularizacion
         public ToolbarAsistenteRervertirEstadoEjercicioModel()
         {
             Operacion = TipoOperacion.Custom;
-            Titulo = RCobrosYPagos.GenerarRegularizacionExistencias;
+            Titulo = RCobrosYPagos.RevertirEstado;
         }
 
         public override string GetCustomTexto()
@@ -27,7 +27,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Regularizacion
         }
     }
 
-    public class AsistenteRervertirEstadoEjercicioModel
+    public class AsistenteRervertirEstadoEjercicioModel : IToolbar
     {
         #region Members
 
