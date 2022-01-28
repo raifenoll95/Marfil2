@@ -246,4 +246,16 @@
   <data name="EstadoEjercicioRevertir" xml:space="preserve">
     <value>Estado al que se va a revertir el ejercicio</value>
   </data>
+  <data name="ComentarioAperturaProvisional" xml:space="preserve">
+    <value>Comentario apertura provisional</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>Desde cuenta</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>Hasta cuenta</value>
+  </data>
+  <data name="CuentaReapertura" xml:space="preserve">
+    <value>Cuenta de reapertura provisional</value>
+  </data>
 </root>

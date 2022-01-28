@@ -624,4 +624,7 @@
   <data name="regularizacionrevertirestado" xml:space="preserve">
     <value>Revertir estado del ejercicio</value>
   </data>
+  <data name="aperturaprovisional" xml:space="preserve">
+    <value>Apertura provisional</value>
+  </data>
 </root>

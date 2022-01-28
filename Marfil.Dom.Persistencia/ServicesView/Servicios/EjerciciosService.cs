@@ -81,7 +81,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         (DateTime.Now <= f.hasta))?.id.ToString() ?? GetEjercicioUltimoAbierto(empresa, db);
         }
 
-
         public string GetEjercicioUltimoAbierto(string empresa, MarfilEntities db = null)
         {
             return
@@ -165,6 +164,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var ejercicio = serviceEjercicios.getAll().Where(f => ((Model.Configuracion.EjerciciosModel)f).Id == idejerc).Select(f => f as Model.Configuracion.EjerciciosModel).FirstOrDefault();
 
             return ejercicio.Estado.ToString();
+        }
+
+        public string GetCuentaDesdeProvisional()
+        {
+            var cuentasbalances = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().cuentasanuales;
+            var primeraCuenta = cuentasbalances.Split(';')[0];
+
+            return _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0 && f.id.StartsWith(primeraCuenta)).FirstOrDefault().id;
+        }
+
+        public string GetCuentaHastaProvisional()
+        {
+            var cuentasbalances = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().cuentasanuales;
+            var numCuentas = cuentasbalances.Split(';').Length;
+            var ultimaCuenta = cuentasbalances.Split(';')[numCuentas-1];
+
+            return _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0 && f.id.StartsWith(ultimaCuenta)).OrderByDescending(s => s.id).FirstOrDefault().id;
         }
     }
 }

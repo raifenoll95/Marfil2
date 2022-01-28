@@ -626,6 +626,7 @@
     <Compile Include="Model\Documentos\PresupuestosCompras\PresupuestosComprasReport.cs" />
     <Compile Include="Model\Documentos\Presupuestos\PresupuestosModel.cs" />
     <Compile Include="Model\Documentos\Presupuestos\PresupuestosReport.cs" />
+    <Compile Include="Model\Documentos\Regularizacion\AsistenteAperturaProvisionalModel.cs" />
     <Compile Include="Model\Documentos\Regularizacion\AsistenteCierreAperturaModel.cs" />
     <Compile Include="Model\Documentos\Regularizacion\AsistenteRegularizacionExistenciasModel.cs" />
     <Compile Include="Model\Documentos\Regularizacion\AsistenteRegularizacionGruposModel.cs" />

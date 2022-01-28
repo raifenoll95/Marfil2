@@ -35,12 +35,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var model = obj as VencimientosModel;
 
-                if(model.Importeasignado == null)
+                if (model.Importeasignado == null)
                 {
                     model.Importeasignado = 0;
                 }
-                
-                if(_db.Vencimientos.Any())
+
+                if (_db.Vencimientos.Any())
                 {
                     model.Id = _db.Vencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
                 }
@@ -100,7 +100,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
             else
             {
-                carteraId = int.Parse(model.Vencimientos.Split(';')[0]);            
+                carteraId = int.Parse(model.Vencimientos.Split(';')[0]);
             }
             return _db.CarteraVencimientos.Where(f => f.empresa == Empresa && f.id == carteraId).FirstOrDefault().referenciaremesa;
         }
@@ -230,7 +230,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Id = linea.codcartera,
                     Referencia = cartera.referencia,
                     Fkcuentas = cartera.fkcuentas,
-                    Importegiro = Math.Round(cartera.importegiro.Value,2),
+                    Importegiro = Math.Round(cartera.importegiro.Value, 2),
                     Fechavencimiento = cartera.fechavencimiento,
                     Fecha = cartera.fecha,
                     Situacion = cartera.situacion,
@@ -265,7 +265,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Traza = vencimiento.traza,
                     FechaStrfactura = vencimiento.fechafactura.ToString().Split(' ')[0],
                     FechaStrvencimiento = vencimiento.fechavencimiento.ToString().Split(' ')[0],
-                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value,2),
+                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value, 2),
                     Fkformaspago = vencimiento.fkformaspago,
                     FormaPago = formapago,
                     Fkcuentatesoreria = vencimiento.fkcuentatesoreria
@@ -349,7 +349,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             else
             {
                 var tipo = string.Equals(Int32.Parse(tipoasignacion), (int)TipoVencimiento.Cobros) ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
-                var registroscartera = _db.CarteraVencimientos.Where(f => f.empresa == Empresa ).ToList();
+                var registroscartera = _db.CarteraVencimientos.Where(f => f.empresa == Empresa).ToList();
 
                 if (String.IsNullOrEmpty(referenciaRemesa))
                 {
@@ -381,15 +381,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 if (!String.IsNullOrEmpty(referenciaRemesa))
                 {
-                    var anulada = _db.Remesas.Where(f=> f.empresa == Empresa && f.referenciaremesa == referenciaRemesa.ToUpper()).FirstOrDefault().estado;
+                    var anulada = _db.Remesas.Where(f => f.empresa == Empresa && f.referenciaremesa == referenciaRemesa.ToUpper()).FirstOrDefault().estado;
                     //Si ya está anulada no mostramos registros
-                    if (anulada == 0) {
+                    if (anulada == 0)
+                    {
                         registroscartera = registroscartera.Where(f => f.referenciaremesa == referenciaRemesa.ToUpper()).ToList();
                     }
                     else
                     {
                         registroscartera.Clear();
-                    }                  
+                    }
                 }
 
                 foreach (var venc in registroscartera.OrderBy(f => f.fkcuentas).ThenBy(f => f.fechavencimiento).ThenBy(f => f.importegiro))
@@ -425,8 +426,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public void AsignarCartera(StAsistenteTesoreria model)
         {
             var vencimientosAux = model.Vencimientos.Split(';');
-            List<String> vencimientos = new List<String>();      
-            foreach(var aux in vencimientosAux)
+            List<String> vencimientos = new List<String>();
+            foreach (var aux in vencimientosAux)
             {
                 vencimientos.Add(aux);
             }
@@ -441,7 +442,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             cartera.Tipovencimiento = model.Tipo == "0" ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
             cartera.Fkseriescontables = model.Tipo == "0" ? _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").Select(f => f.id).SingleOrDefault() :
                 _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").Select(f => f.id).SingleOrDefault();
-            cartera.Situacion = circuito.situacionfinal;    
+            cartera.Situacion = circuito.situacionfinal;
             cartera.Fkcuentas = model.Fkcuentas;
             cartera.Importegiro = double.Parse(model.ImportePantalla3, CultureInfo.InvariantCulture);
             cartera.Comentario = model.Comentario;
@@ -455,7 +456,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             cartera.Fecha = DateTime.Now;
             cartera.Usuario = _context.Usuario;
             cartera.Letra = model.Letra;
-            cartera.Banco = model.Banco;  
+            cartera.Banco = model.Banco;
 
             //Asignar importes completos
             if (String.IsNullOrEmpty(model.Importe))
@@ -492,7 +493,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var vencimientoId in vencimientos)
                 {
                     //Quedan previsiones por cubrir
-                    if(importeaux > 0)
+                    if (importeaux > 0)
                     {
                         var vencimiento = get(vencimientoId) as VencimientosModel;
                         var restante = vencimiento.Importegiro - vencimiento.Importeasignado;
@@ -515,7 +516,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         {
                             vencimiento.Situacion = model.Tipo == "0" ? "X" : "Y";
                             vencimiento.Importeasignado = vencimiento.Importeasignado + importeaux;
-                            vencimiento.Estado = TipoEstado.CubiertoParcial;                
+                            vencimiento.Estado = TipoEstado.CubiertoParcial;
 
                             cartera.LineasCartera.Add(new PrevisionesCarteraModel(_context)
                             {
@@ -529,7 +530,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                         previsionesAuxiliares.Add(vencimiento);
                         //edit(vencimiento);
-                    }             
+                    }
                 }
 
                 //--------------------!!!!!!Explicacion¡¡¡¡¡¡¡------------------
@@ -537,7 +538,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //que son las previsiones editadas, si se genera excepcion, se corta y manda el mensaje. Si consigue crear el asiento, editamos las previsiones y generamos la cartera.
 
                 List<String> idVencimientosAuxiliares = new List<String>();
-                foreach(var v in previsionesAuxiliares)
+                foreach (var v in previsionesAuxiliares)
                 {
                     idVencimientosAuxiliares.Add(v.Id.ToString());
                 }
@@ -545,13 +546,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
 
                 //Actualizar Previsiones
-                foreach(var auxiliar in previsionesAuxiliares)
+                foreach (var auxiliar in previsionesAuxiliares)
                 {
                     edit(auxiliar);
                 }
 
                 serviceCarteraVencimientos.create(cartera);
-            }          
+            }
         }
 
 
@@ -594,7 +595,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
             }
 
-            if((bool)esRemesable)
+            if ((bool)esRemesable)
             {
                 //misma referencia para cada registro
                 cartera.Fkseriescontablesremesa = fkseriescontablesremesa;
@@ -610,7 +611,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (!String.IsNullOrEmpty(model.Fecharemesa))
                 {
                     cartera.Fecharemesa = DateTime.Parse(model.Fecharemesa);
-                }               
+                }
             }
 
             return cartera;
@@ -705,13 +706,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             registro.Estado = TipoEstado.Total;
             registro.Situacion = situacion;
 
-            if(situacion.Equals("P"))
+            if (situacion.Equals("P"))
             {
                 registro.Importepagado = registro.Importegiro;
                 if (!String.IsNullOrEmpty(model.FechaPago))
                 {
                     registro.Fechapago = DateTime.Parse(model.FechaPago);
-                } 
+                }
             }
 
             if (situacion.Equals("I")) //-> Prevision de 100 con dos registros en cartera de 40 y 60. El de 40 pasa a impagado. 100 - 40 = 60
@@ -745,7 +746,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 cartera.Fecharemesa = null;
             }
 
-            if((bool)esRemesable)
+            if ((bool)esRemesable)
             {
                 cartera.Fkseriescontablesremesa = fkseriescontablesremesa;
 
@@ -758,7 +759,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         cartera.Fecharemesa = DateTime.Parse(model.Fecharemesa);
                     }
                     carteraService.create(CrearRegistroRemesa(cartera, model, situacion, cartera.Fkseriescontablesremesa, identificadorsegmentoremesa, cartera.Referenciaremesa, cartera.Referencia));
-                }               
+                }
             }
 
             foreach (var registro in cartera.LineasPrevisiones)
@@ -852,14 +853,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var carteraModel = carteraService.get(id) as CarteraVencimientosModel;
                     carteraModel.Importegiro = Math.Round((double)carteraModel.Importegiro, 2);
                     var referenciaRemesa = carteraModel.Referenciaremesa;
-                    editarSituacionCartera(carteraModel, model, circuito.situacionfinal,circuito.anularremesa, fkseriescontablesremesa, referenciaremesa, identificadorsegmentoremesa, esprevision);
+                    editarSituacionCartera(carteraModel, model, circuito.situacionfinal, circuito.anularremesa, fkseriescontablesremesa, referenciaremesa, identificadorsegmentoremesa, esprevision);
                     if ((bool)circuito.anularremesa)
-                    {                     
+                    {
                         var remesaid = _db.Remesas.Where(f => f.empresa == Empresa && f.referenciaremesa == referenciaRemesa && f.referencia == carteraModel.Referencia && f.estado == 0).FirstOrDefault().id;
                         var remesaModel = remesaService.getModel(remesaid) as RemesasModel;
                         editarEstadoRemesa(remesaModel, model, circuito.situacionfinal);
                     }
-                    
+
                 }
             }
         }
@@ -931,9 +932,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             int id = 0;
 
             //Suma debe y haber
-            foreach(var linea in documento.Lineas)
+            foreach (var linea in documento.Lineas)
             {
-                if(linea.Esdebe == 1)
+                if (linea.Esdebe == 1)
                 {
                     documento.Debe = documento.Debe + linea.Importe;
                 }
@@ -947,7 +948,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             documento.Saldo = documento.Debe - documento.Haber;
 
-            if(documento.Saldo != 0)
+            if (documento.Saldo != 0)
             {
                 throw new ValidationException("Asiento descuadrado. Transacción cancelada.");
             }
@@ -960,24 +961,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //Create
                 var serviceMovs = new MovsService(_context);
                 serviceMovs.create(documento);
-            }     
+            }
         }
 
 
         //Generar Lineas del asiento
         public List<MovsLinModel> generarLineas(bool debe, MovsModel documento, TipoImporte tipo, string cuenta, string descripcion, List<String> registros, bool esprevision, StAsistenteTesoreria model)
         {
-            if(tipo == TipoImporte.Importelineapunteada)
+            if (tipo == TipoImporte.Importelineapunteada)
             {
                 documento.Lineas = generarLineasTipoLineaPunteada(debe, documento, cuenta, descripcion, registros, esprevision, model, tipo);
             }
 
-            else if(tipo == TipoImporte.Sumaimportelineaspunteadas)
+            else if (tipo == TipoImporte.Sumaimportelineaspunteadas)
             {
                 documento.Lineas = generarLineasTipoSumaImportes(debe, documento, cuenta, descripcion, registros, esprevision, model, tipo);
             }
 
-            else if(tipo == TipoImporte.Importecuentacargo2)
+            else if (tipo == TipoImporte.Importecuentacargo2)
             {
                 documento.Lineas = generarLineasTipoImporteCargo2Abono2(debe, documento, cuenta, descripcion, registros, esprevision, model.ImporteCargo2, model, tipo);
             }
@@ -1017,7 +1018,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             string cuentatercero = nombrecuenta; //Resultado
             string cuentaregistro = "";
 
-            if(esprevision)
+            if (esprevision)
             {
                 var prevision = get(registro) as VencimientosModel;
                 cuentaregistro = prevision.Fkcuentas;
@@ -1041,7 +1042,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return cuentatercero;
         }
-        
+
 
         public List<MovsLinModel> generarLineasTipoLineaPunteada(bool debe, MovsModel documento, string cuenta, string descripcioncuenta, List<String> registros, bool esprevision, StAsistenteTesoreria model, TipoImporte tipo)
         {
@@ -1049,10 +1050,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             foreach (var registro in registros)
             {
-                if(esprevision)
+                if (esprevision)
                 {
                     var vencimiento = get(registro) as VencimientosModel;
-                    string cuentatercero = getFullNameCuenta(esprevision, registro, cuenta,  model.Fkcuentatesoreria);
+                    string cuentatercero = getFullNameCuenta(esprevision, registro, cuenta, model.Fkcuentatesoreria);
 
                     documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, vencimiento.Importegiro,
                                 getComentario(tipo, registro, vencimiento.Fkcuentas, descripcioncuenta, model, registros, esprevision)));
@@ -1104,7 +1105,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             string cuentatercero = getFullNameCuenta(esprevision, registros[0], cuenta, model.Fkcuentatesoreria); //Le pasamos el primero, no tiene sentido un importe y multiples cuentas
 
-            documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, importeLineasPunteadas(registros,esprevision),
+            documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, importeLineasPunteadas(registros, esprevision),
                     getComentario(tipo, null, null, descripcioncuenta, model, registros, esprevision)));
 
             return documento.Lineas;
@@ -1112,28 +1113,28 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public List<MovsLinModel> generarImporteLineasPunteadasMenosOtroImporte(bool esprevision, bool debe, MovsModel documento, string cuenta, string descripcioncuenta, string otroimporte, List<String> registros, StAsistenteTesoreria model, TipoImporte tipo)
         {
-            if(!String.IsNullOrEmpty(otroimporte))
+            if (!String.IsNullOrEmpty(otroimporte))
             {
                 var importe = importeLineasPunteadas(registros, esprevision) - Convert.ToDouble(otroimporte);
                 string cuentatercero = getFullNameCuenta(esprevision, registros[0], cuenta, model.Fkcuentatesoreria); //Le pasamos el primero, no tiene sentido un importe y multiples cuentas
 
                 documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, Convert.ToDouble(importe),
                     getComentario(tipo, null, null, descripcioncuenta, model, registros, esprevision)));
-            }         
+            }
 
             return documento.Lineas;
         }
 
         public List<MovsLinModel> generarImporteLineasPunteadasMasOtroImporte(bool esprevision, bool debe, MovsModel documento, string cuenta, string descripcioncuenta, string otroimporte, List<String> registros, StAsistenteTesoreria model, TipoImporte tipo)
         {
-            if(!String.IsNullOrEmpty(otroimporte))
+            if (!String.IsNullOrEmpty(otroimporte))
             {
                 var importe = importeLineasPunteadas(registros, esprevision) + Convert.ToDouble(otroimporte);
                 string cuentatercero = getFullNameCuenta(esprevision, registros[0], cuenta, model.Fkcuentatesoreria); //Le pasamos el primero, no tiene sentido un importe y multiples cuentas
 
                 documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, Convert.ToDouble(importe),
                     getComentario(tipo, null, null, descripcioncuenta, model, registros, esprevision)));
-            }         
+            }
 
             return documento.Lineas;
         }
@@ -1141,12 +1142,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         //Se crea una linea con la cuenta de cargo 2 y el importe que el usuario ha puesto en la 3 pantalla del asistente
         public List<MovsLinModel> generarLineasTipoImporteCargo2Abono2(bool debe, MovsModel documento, string cuenta, string descripcioncuenta, List<String> registros, bool esprevision, string importe, StAsistenteTesoreria model, TipoImporte tipo)
         {
-            if(!String.IsNullOrEmpty(importe))
+            if (!String.IsNullOrEmpty(importe))
             {
                 documento.Lineas.Add(generarDebeOHaber(debe, cuenta, Convert.ToDouble(importe),
                 getComentario(tipo, null, null, descripcioncuenta, model, registros, esprevision)));
             }
-                
+
             return documento.Lineas;
         }
 
@@ -1157,7 +1158,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var serviceCartera = new CarteraVencimientosService(_context);
             string comentario = comentary;
 
-            if(!String.IsNullOrEmpty(comentario))
+            if (!String.IsNullOrEmpty(comentario))
             {
                 if (comentario.Contains("*CO*") && !String.IsNullOrEmpty(model.Fkcuentatesoreria))
                 {
@@ -1309,7 +1310,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             MovsModel documento = new FModel().GetModel<MovsModel>(_context);
             var appService = new ApplicationHelper(_context);
             documento.Fkseriescontables = seriecontable;
-            documento.Fecha = DateTime.ParseExact(fecharegularizacion, "dd/MM/yyyy",System.Globalization.CultureInfo.InvariantCulture);
+            documento.Fecha = DateTime.ParseExact(fecharegularizacion, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             documento.Tipoasiento = "R3";
             documento.Codigodescripcionasiento = "";
             documento.Descripcionasiento = "REGULARIZACIÓN EXISTENCIAS";
@@ -1349,12 +1350,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                 }
                 else if (listaimportefinales[i] != "0")
-                {                 
+                {
                     documento.Lineas.Add(generarDebeOHaber(true, listacuentasexistencias[i], double.Parse(listaimportefinales[i], System.Globalization.CultureInfo.InvariantCulture), comentariofinales));
                     documento.Lineas.Add(generarDebeOHaber(false, listacuentasvariacion[i], double.Parse(listaimportefinales[i], System.Globalization.CultureInfo.InvariantCulture), comentariofinales));
                 }
 
-            }           
+            }
 
             documento.Debe = 0;
             documento.Haber = 0;
@@ -1619,7 +1620,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else if (listasaldodeudor[i] != "0")
                 {
-                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentariocierre));         
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentariocierre));
                 }
 
             }
@@ -1681,7 +1682,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 documento.Fecha = result.fecha;
                 documento.Tipoasiento = "R2";
                 documento.Codigodescripcionasiento = result.codigodescripcionasiento;
-                documento.Descripcionasiento = result.descripcionasiento;
+                documento.Descripcionasiento = comentarioapertura;
                 documento.Referencia = result.referencia;
                 documento.Canalcontable = result.canalcontable;
                 documento.Integridadreferencial = result.integridadreferencial;
@@ -1705,7 +1706,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (listasaldodeudor[i] != "0")
                 {
                     documento.Lineas.Add(generarDebeOHaber(true, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
-                }               
+                }
                 else if (listasaldoacreedor[i] != "0")
                 {
                     documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioapertura));
@@ -1756,7 +1757,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     //Create
                     serviceMovs.create(documento);
                 }
-                    
+
             }
             /******Asiento Cierre******/
         }
@@ -1844,6 +1845,147 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             serviceEjercicios.edit(ejercicio);
+        }
+
+        public void GenerarAsientoAperturaProvisional(string fechaapertura, string comentarioaperturaprovisional, string cuentaaperturaprovisional, string[] listacuentas, string[] listasaldodeudor, string[] listasaldoacreedor)
+        {
+            var appService = new ApplicationHelper(_context);
+
+            var registros = listacuentas.Length;
+
+            /******Asiento Apertura******/
+            //Cabecera del asiento apertura
+            MovsModel documento = new FModel().GetModel<MovsModel>(_context);
+            var idejercact = int.Parse(_context.Ejercicio);
+            var idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente;
+
+            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R2").FirstOrDefault() != null)
+            {
+                throw new ValidationException("Ejercicio ya tiene asiento de apertura definitivo");
+            }
+
+            //Si ya existe un asiento de apertura provisional lo sobreescribimos           
+            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R1").FirstOrDefault() != null)
+            {
+                var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R1").Include(b => b.MovsLin).ToList().Single();
+
+                documento.Id = result.id;
+                documento.Fkejercicio = result.fkejercicio;
+                documento.Fkseriescontables = result.fkseriescontables;
+                documento.Fecha = result.fecha;
+                documento.Tipoasiento = result.tipoasiento;
+                documento.Codigodescripcionasiento = result.codigodescripcionasiento;
+                documento.Descripcionasiento = result.descripcionasiento;
+                documento.Referencia = result.referencia;
+                documento.Canalcontable = result.canalcontable;
+                documento.Integridadreferencial = result.integridadreferencial;
+                documento.Identificadorsegmento = result.identificadorsegmento;
+            }
+            else
+            {
+                documento.Fkejercicio = idejercsig;
+                documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
+                documento.Fecha = DateTime.ParseExact(fechaapertura, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                documento.Tipoasiento = "R1";
+                documento.Codigodescripcionasiento = "";
+                documento.Descripcionasiento = comentarioaperturaprovisional;
+                documento.Referencia = "";
+                documento.Canalcontable = "";
+            }
+
+            //recorremos los registros para su tratamiento
+            for (int i = 0; i < registros; i++)
+            {
+                if (listasaldodeudor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(true, listacuentas[i], double.Parse(listasaldodeudor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioaperturaprovisional));
+                }
+                else if (listasaldoacreedor[i] != "0")
+                {
+                    documento.Lineas.Add(generarDebeOHaber(false, listacuentas[i], double.Parse(listasaldoacreedor[i], System.Globalization.CultureInfo.InvariantCulture), comentarioaperturaprovisional));
+                }
+
+            }
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            int id = 0;
+
+            //Suma debe y haber previo
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+            //No debe de cuadrar
+            if (documento.Saldo < 0)
+            {
+                var resto = (documento.Saldo * -1).ToString();
+                documento.Lineas.Add(generarDebeOHaber(true, cuentaaperturaprovisional, double.Parse(resto), comentarioaperturaprovisional));
+
+            }
+            else if (documento.Saldo > 0)
+            {
+                var resto = documento.SSaldo;
+                documento.Lineas.Add(generarDebeOHaber(false, cuentaaperturaprovisional, double.Parse(resto), comentarioaperturaprovisional));
+            }
+
+            documento.Debe = 0;
+            documento.Haber = 0;
+            id = 0;
+
+            //Suma debe y haber posterior
+            foreach (var linea in documento.Lineas)
+            {
+                if (linea.Esdebe == 1)
+                {
+                    documento.Debe = documento.Debe + linea.Importe;
+                }
+
+                if (linea.Esdebe == -1)
+                {
+                    documento.Haber = documento.Haber + linea.Importe;
+                }
+                linea.Id = id++;
+            }
+
+            documento.Saldo = documento.Debe - documento.Haber;
+
+
+            if (documento.Saldo != 0)
+            {
+                throw new ValidationException("Asiento de apertura provisional descuadrado. Transacción cancelada.");
+            }
+            else
+            {
+                documento.Generar = GenerarMovimientoAPartirDe.AsignarCartera;
+                documento.Fkmonedas = Funciones.Qint(appService.GetCurrentEmpresa().FkMonedaBase);
+                var serviceMovs = new MovsService(_context);
+
+                //Si ya existe un asiento de apertura provisional lo sobreescribimos
+                if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R1").FirstOrDefault() != null)
+                {
+                    //Edit
+                    serviceMovs.edit(documento);
+                }
+                else
+                {
+                    //Create
+                    serviceMovs.create(documento);
+                }
+
+            }
+
         }
     }
 }

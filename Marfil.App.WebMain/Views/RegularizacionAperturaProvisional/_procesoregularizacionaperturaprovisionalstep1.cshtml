@@ -1,0 +1,88 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteAperturaProvisionalModel
+@{
+    var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
+
+
+<form class="form-horizontal" id="step1-form">
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fechaapertura, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.Fechaapertura)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fechaapertura, "", new { @class = "text-danger", @id = "fechaaperturaerror" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.ComentarioAperturaProvisional, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.ComentarioAperturaProvisional, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-4 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.ComentarioAperturaProvisional, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaDesde, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="Cuentas">
+            @{
+                cvcuentas.Name = "CuentaDesde";
+                cvcuentas.Url = Url.Action("CuentasApi", "Api");
+                cvcuentas.Valor = Model.CuentaDesde;
+                cvcuentas.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.CuentaDesde, "", new { @class = "text-danger", @id = "cuentadesdeerror" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaHasta, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="Cuentas">
+            @{
+                cvcuentas.Name = "CuentaHasta";
+                cvcuentas.Url = Url.Action("CuentasApi", "Api");
+                cvcuentas.Valor = Model.CuentaHasta;
+                cvcuentas.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.CuentaHasta, "", new { @class = "text-danger", @id = "cuentahastaerror" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(f => Model.CuentaReapertura, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="Cuentas">
+            @{
+                cvcuentas.Name = "CuentaReapertura";
+                cvcuentas.Url = Url.Action("CuentasApi", "Api");
+                cvcuentas.Valor = Model.CuentaReapertura;
+                cvcuentas.Obligatorio = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
+
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.CuentaReapertura, "", new { @class = "text-danger", @id = "cuentaaperturaerror" })
+        </div>
+    </div>
+
+</form>

@@ -97,6 +97,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Comentario apertura provisional.
+        /// </summary>
+        public static string ComentarioAperturaProvisional {
+            get {
+                return ResourceManager.GetString("ComentarioAperturaProvisional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Comentario.
         /// </summary>
         public static string ComentarioCierre {
@@ -187,11 +196,38 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Desde cuenta.
+        /// </summary>
+        public static string CuentaDesde {
+            get {
+                return ResourceManager.GetString("CuentaDesde", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hasta cuenta.
+        /// </summary>
+        public static string CuentaHasta {
+            get {
+                return ResourceManager.GetString("CuentaHasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias.
         /// </summary>
         public static string CuentaPYG {
             get {
                 return ResourceManager.GetString("CuentaPYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta de reapertura provisional.
+        /// </summary>
+        public static string CuentaReapertura {
+            get {
+                return ResourceManager.GetString("CuentaReapertura", resourceCulture);
             }
         }
         

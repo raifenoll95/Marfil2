@@ -148,7 +148,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             if (esasientoauto)
             {
-                result.tipoasiento = tipoasientoauto;
+                // Solo se permite pasar de apertura provisional a apertura definitiva
+                if (!(result.tipoasiento == "R2" && tipoasientoauto == "R1"))
+                {
+                    result.tipoasiento = tipoasientoauto;
+                }                
             }
 
             result.MovsLin.Clear();

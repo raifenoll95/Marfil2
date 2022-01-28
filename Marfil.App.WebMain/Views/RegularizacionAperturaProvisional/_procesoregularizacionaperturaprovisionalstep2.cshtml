@@ -1,0 +1,28 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteAperturaProvisionalModel
+@{
+
+}
+
+
+<form class="form-horizontal" id="step2-form">
+</form>
+
+<div style="margin-top:40px !important">
+    <h4 style="text-align: left !important">Saldos plan contable</h4>
+
+    <span class="field-validation-valid text-danger"  id="registrosseleccionadoserror"></span>
+
+    <span ng-show="loading">@General.LblLoading</span>
+    <div ui-grid="gridOptions" ng-keydown="keydown" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-selection class="grid"></div>
+    <input type="hidden" value="{{registros}}" name="registrosseleccionados"/>
+
+</div>

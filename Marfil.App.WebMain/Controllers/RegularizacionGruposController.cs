@@ -74,6 +74,7 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         Fecharegularizacion = service.GetFechaHastaEjercicio(),
                         Fkseriescontables = service.GetSerieContable(),
+                        CuentaPYG = service.GetCuentaPYG(),
                         ComentarioDebePYG = service.GetComentarioDebe(),
                         ComentarioHaberPYG = service.GetComentarioHaber(),
                         ComentarioCuentasDetalle = service.GetComentarioDetalle()

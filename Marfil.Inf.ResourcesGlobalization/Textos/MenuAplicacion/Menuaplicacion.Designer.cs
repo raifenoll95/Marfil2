@@ -124,6 +124,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Apertura provisional.
+        /// </summary>
+        public static string aperturaprovisional {
+            get {
+                return ResourceManager.GetString("aperturaprovisional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Artículos.
         /// </summary>
         public static string articulos {

@@ -104,7 +104,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }       
 
             return (DateTime)_db.Ejercicios.Where(f => f.id == idejercsig).FirstOrDefault().desde;
-        }
+        }     
 
         public string GetSerieContable()
         {
@@ -183,6 +183,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return comentario;
         }
 
+        public string GetCuentaPYG()
+        {
+            return _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().cuentaPG ?? "";
+        }
+
         public string GetComentarioApertura()
         {
             XmlDocument doc = new XmlDocument();
@@ -203,6 +208,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             XmlElement datosParse = doc.DocumentElement;
 
             XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioCierreEjercicio");
+            var comentario = nodo[0].InnerText;
+            return comentario;
+        }
+
+        public string GetComentarioAperturaProvisional()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("ComentarioAperturaProvisional");
             var comentario = nodo[0].InnerText;
             return comentario;
         }

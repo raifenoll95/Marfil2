@@ -4,8 +4,7 @@ using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
-using Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias;
-using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Dom.Persistencia.Model.Documentos.Regularizacion;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
@@ -16,8 +15,7 @@ using System.Web.Mvc;
 
 namespace Marfil.App.WebMain.Controllers
 {
-    [Authorize]
-    public class RegularizacionExistenciasController : GenericController<AsistenteRegularizacionExistenciasModel>
+    public class RegularizacionAperturaProvisionalController : GenericController<AsistenteAperturaProvisionalModel>
     {
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
@@ -27,8 +25,8 @@ namespace Marfil.App.WebMain.Controllers
 
         protected override void CargarParametros()
         {
-            MenuName = "regularizacionexistencias";
-            var permisos = appService.GetPermisosMenu("regularizacionexistencias");
+            MenuName = "aperturaprovisional";
+            var permisos = appService.GetPermisosMenu("aperturaprovisional");
             IsActivado = permisos.IsActivado;
             CanCrear = permisos.CanCrear;
             CanModificar = permisos.CanModificar;
@@ -38,7 +36,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region CTR
 
-        public RegularizacionExistenciasController(IContextService context) : base(context)
+        public RegularizacionAperturaProvisionalController(IContextService context) : base(context)
         {
 
         }
@@ -50,10 +48,10 @@ namespace Marfil.App.WebMain.Controllers
         //Redirigir a la pantalla principal
         public override ActionResult Index()
         {
-            return RedirectToAction("AsistenteRegularizacionExistencias");
+            return RedirectToAction("AsistenteAperturaProvisional");
         }
 
-        public ActionResult AsistenteRegularizacionExistencias()
+        public ActionResult AsistenteAperturaProvisional()
         {
             try
             {
@@ -64,23 +62,20 @@ namespace Marfil.App.WebMain.Controllers
                 var idejerc = int.Parse(ContextService.Ejercicio);
                 var ejercicio = serviceEjercicios.getAll().Where(f => ((EjerciciosModel)f).Id == idejerc).Select(f => f as EjerciciosModel).FirstOrDefault();
 
-                if (ejercicio.Estado != EstadoEjercicio.Abierto)
+                if (ejercicio.Estado != EstadoEjercicio.Existencias && ejercicio.Estado != EstadoEjercicio.Abierto)
                 {
-                    throw new ValidationException("No se puede realizar una regularización de existencias en un ejercicio que no esté en estado Abierto");
+                    throw new ValidationException("Ejercicio anterior en proceso de cierre");
                 }
 
-                var model = new AsistenteRegularizacionExistenciasModel(ContextService);
                 using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
                 {
-                    
-                    model.Fecharegularizacion = service.GetFechaHastaEjercicio();
-                    model.Fkseriescontables = service.GetSerieContable();
-                    model.ComentarioExistenciasIniciales = service.GetComentarioIni();
-                    model.ComentarioExistenciasFinales = service.GetComentarioFin();
-                    //Ayuda
-                    var aux = model as IToolbar;
-                    aux.Toolbar.Acciones = HelpItem();
-                    return View(model);
+                    return View(new AsistenteAperturaProvisionalModel (ContextService)
+                    {
+                        Fechaapertura = service.GetFechaDesdeEjercicioSig(),
+                        ComentarioAperturaProvisional = service.GetComentarioAperturaProvisional(),
+                        CuentaDesde = serviceEjercicios.GetCuentaDesdeProvisional(),
+                        CuentaHasta = serviceEjercicios.GetCuentaHastaProvisional()
+                    });
                 }
             }
             catch (Exception ex)
@@ -89,38 +84,35 @@ namespace Marfil.App.WebMain.Controllers
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
                 return Redirect("~/");
             }
-            
-        }
 
-        #endregion
+        }
 
         //Fin del asistente
         [HttpPost]
-        public ActionResult GenerarAsientoContable(string fecharegularizacion, string seriecontable, string comentarioiniciales, string comentariofinales, string cuentasexistencias, string saldoiniciales, string cuentasvariacion, string importefinales)
+        public ActionResult GenerarAsientoContable(string fechaapertura, string comentarioaperturaprovisional, string cuentaaperturaprovisional, string cuentas, string saldodeudor, string saldoacreedor)
         {
             var model = Helper.fModel.GetModel<MovsModel>(ContextService);
             try
             {
                 using (var service = FService.Instance.GetService(typeof(VencimientosModel), ContextService) as VencimientosService)
                 {
-                    var listacuentasexistencias = cuentasexistencias.Split(';');
-                    var listasaldoiniciales = saldoiniciales.Split(';');
-                    var listacuentasvariacion = cuentasvariacion.Split(';');
-                    var listaimportefinales = importefinales.Split(';');
+                    var listacuentas = cuentas.Split(';');
+                    var listasaldodeudor = saldodeudor.Split(';');
+                    var listasaldoacreedor = saldoacreedor.Split(';');
 
-                    model =  service.GenerarAsientoRegularizacionExistencias(fecharegularizacion, seriecontable, comentarioiniciales, comentariofinales, listacuentasexistencias, listasaldoiniciales, listacuentasvariacion, listaimportefinales);
-                    TempData[Constantes.VariableMensajeExito] = string.Format("Se ha generado correctamente el asiento");
+                    service.GenerarAsientoAperturaProvisional(fechaapertura, comentarioaperturaprovisional, cuentaaperturaprovisional, listacuentas, listasaldodeudor, listasaldoacreedor);
+                    TempData[Constantes.VariableMensajeExito] = string.Format("Se ha generado correctamente el asiento de apertura provisional");
                 }
             }
             catch (Exception ex)
             {
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
-                return RedirectToAction("AsistenteRegularizacionExistencias");
+                return RedirectToAction("AsistenteAperturaProvisional");
             }
 
-            //return RedirectToAction("AsistenteRegularizacionExistencias");
-            return RedirectToAction("Details", "Movs", new { id = model.Id });
+            return Redirect("~/");
         }
 
+        #endregion
     }
 }

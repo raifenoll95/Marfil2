@@ -637,6 +637,13 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.ComentarioAperturaEjercicio = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioAperturaProvisional")]
+        public string ComentarioAperturaProvisional
+        {
+            get { return Model.ComentarioAperturaProvisional; }
+            set { Model.ComentarioAperturaProvisional = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -768,5 +775,6 @@ namespace Marfil.Dom.Persistencia.Model
         public string ComentarioCuentasDetalle { get; set; }
         public string ComentarioCierreEjercicio { get; set; }
         public string ComentarioAperturaEjercicio { get; set; }
+        public string ComentarioAperturaProvisional { get; set; }
     }
 }

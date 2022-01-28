@@ -70,6 +70,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Apertura Provisional.
+        /// </summary>
+        public static string AperturaProvisional {
+            get {
+                return ResourceManager.GetString("AperturaProvisional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Asignado.
         /// </summary>
         public static string Asignadoimporte {
@@ -84,6 +93,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string AsignarCartera {
             get {
                 return ResourceManager.GetString("AsignarCartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Asistente apertura provisional.
+        /// </summary>
+        public static string AsistenteAperturaProvisional {
+            get {
+                return ResourceManager.GetString("AsistenteAperturaProvisional", resourceCulture);
             }
         }
         
@@ -264,6 +282,33 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Cuentacargo2 {
             get {
                 return ResourceManager.GetString("Cuentacargo2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Desde Cuenta.
+        /// </summary>
+        public static string CuentaDesde {
+            get {
+                return ResourceManager.GetString("CuentaDesde", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hasta Cuenta.
+        /// </summary>
+        public static string CuentaHasta {
+            get {
+                return ResourceManager.GetString("CuentaHasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta de reapertura provisional.
+        /// </summary>
+        public static string CuentaReapertura {
+            get {
+                return ResourceManager.GetString("CuentaReapertura", resourceCulture);
             }
         }
         

@@ -1,17 +1,17 @@
 ﻿@using Marfil.Dom.Persistencia.Model.Interfaces
 @using Marfil.Dom.Persistencia.Model;
 @using Resources
-@model Marfil.Dom.Persistencia.Model.Documentos.RegularizacionExistencias.AsistenteRegularizacionExistenciasModel
+@model Marfil.Dom.Persistencia.Model.Documentos.Regularizacion.AsistenteAperturaProvisionalModel
 @{
     var toolbarModel = Model as IToolbar;
     ViewBag.Title = toolbarModel.Toolbar.Titulo;
 }
 
-<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+
 <script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
 <script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
-<script src="@Url.Content("~/Scripts/UserControls/Regularizacion/regularizacionexistenciascontroller.js")"></script>
-<div ng-controller="AsistenteRegularizacionExistenciasCrtl">
+<script src="@Url.Content("~/Scripts/UserControls/Regularizacion/regularizacionaperturaprovisionalcontroller.js")"></script>
+<div ng-controller="AsistenteRegularizacionAperturaProvisionalCrtl">
 
     <div id="fuelux-wizard-container">
         <div>
@@ -19,12 +19,12 @@
             <ul class="steps">
                 <li data-step="1" class="active">
                     <span class="step">1</span>
-                    <span class="title">Previo Regularización</span>
+                    <span class="title">Previo Apertura Provisional</span>
                 </li>
 
                 <li data-step="2">
                     <span class="step">2</span>
-                    <span class="title">Completar Regularización</span>
+                    <span class="title">Cuentas Apertura Provisional</span>
                 </li>
 
                 <li data-step="3">
@@ -43,22 +43,22 @@
         <div class="step-content pos-rel">
             <div class="step-pane" data-step="1">
                 <div>
-                    <h3 class="green center">Previo Regularización</h3>
-                    @Html.Partial("_procesoregularizacionexistenciasstep1", Model)
+                    <h3 class="green center">Previo Apertura Provisional</h3>
+                    @Html.Partial("_procesoregularizacionaperturaprovisionalstep1", Model)
                 </div>
             </div>
 
             <div class="step-pane" data-step="2">
                 <div>
-                    <h3 class="green center">Completar Regularización</h3>
-                    @Html.Partial("_procesoregularizacionexistenciasstep2", Model)
+                    <h3 class="green center">Cuentas Apertura Provisional</h3>
+                    @Html.Partial("_procesoregularizacionaperturaprovisionalstep2", Model)
                 </div>
             </div>
 
             <div class="step-pane" data-step="3">
                 <div class="center">
 
-                    @Html.Partial("_procesoregularizacionexistenciasstep3", Model)
+                    @Html.Partial("_procesoregularizacionaperturaprovisionalstep3", Model)
                 </div>
             </div>
 
@@ -101,23 +101,23 @@
                     if (!$("#step1-form").validate().form()) {
                         e.preventDefault();
                     }
-                    if ($("[name='Fecharegularizacion']").val() === "") {
+                    if ($("[name='Fechaapertura']").val() === "") {
 
-                        $("#fecharegularizacionerror").html("El campo Fecha es obligatorio");
-                        $("#fecharegularizacionerror").show();
-                         e.preventDefault();
+                        $("#fechaaperturaerror").html("El campo Fecha de apertura es obligatoria");
+                        $("#fechaaperturaerror").show();
+                        e.preventDefault();
 
                     } else {
                         var data = {
-                            Url: "@Url.Action("AsistenteRegularizacionExistenciasApi", "Api")",
-                            campoIdentificador: "Cuentasexistencias",
+                            Url: "@Url.Action("AsistenteAperturaProvisionalApi", "Api")",
+                            campoIdentificador: "Cuentagrupos",
                             IdComponenteasociado: "",
                             IdFormulariomodal: "",
-                            Titulo: "Cuentas de existencias"
+                            Titulo: "Cuentas apertura provisional",
+                            Params: "{\"CuentaDesde\":\"" + $("#CuentaDesde").val() + "\",\"CuentaHasta\":\"" + $("#CuentaHasta").val() + "\"}"
                         };
 
-                        eventAggregator.Publish("_buscarcuentasexistencias", data);
-
+                        eventAggregator.Publish("_buscarcuentas", data);
 
                     }
 
@@ -143,18 +143,15 @@
 }
 
 
-@using (Html.BeginForm("GenerarAsientoContable", "RegularizacionExistencias", FormMethod.Post, new { @id = "generarasiento" }))
+@using (Html.BeginForm("GenerarAsientoContable", "RegularizacionAperturaProvisional", FormMethod.Post, new { @id = "generarasiento" }))
 {
     @Html.AntiForgeryToken()
-    <input type="hidden" name="fecharegularizacion" value="" />
-    <input type="hidden" name="seriecontable" value="" />
-    <input type="hidden" name="comentarioiniciales" value="" />
-    <input type="hidden" name="comentariofinales" value="" />
-    <input type="hidden" name="cuentasexistencias" value="" />
-    <input type="hidden" name="saldoiniciales" value="" />
-    <input type="hidden" name="cuentasvariacion" value="" />
-    <input type="hidden" name="importefinales" value="" />
-
+    <input type="hidden" name="fechaapertura" value="" />
+    <input type="hidden" name="comentarioaperturaprovisional" value="" />
+    <input type="hidden" name="cuentaaperturaprovisional" value="" />
+    <input type="hidden" name="cuentas" value="" />
+    <input type="hidden" name="saldodeudor" value="" />
+    <input type="hidden" name="saldoacreedor" value="" />
 }
 
 

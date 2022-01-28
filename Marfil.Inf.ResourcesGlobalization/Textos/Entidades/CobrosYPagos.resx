@@ -417,4 +417,19 @@
   <data name="RevertirEstado" xml:space="preserve">
     <value>Revertir estado del cierre</value>
   </data>
+  <data name="AperturaProvisional" xml:space="preserve">
+    <value>Apertura Provisional</value>
+  </data>
+  <data name="AsistenteAperturaProvisional" xml:space="preserve">
+    <value>Asistente apertura provisional</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>Desde Cuenta</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>Hasta Cuenta</value>
+  </data>
+  <data name="CuentaReapertura" xml:space="preserve">
+    <value>Cuenta de reapertura provisional</value>
+  </data>
 </root>
