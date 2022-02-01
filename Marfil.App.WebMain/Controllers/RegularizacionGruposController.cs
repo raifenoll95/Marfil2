@@ -5,6 +5,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Documentos.Regularizacion;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
@@ -68,17 +69,19 @@ namespace Marfil.App.WebMain.Controllers
                     throw new ValidationException("No se puede realizar una regularización de grupos 6 y 7 en un ejercicio que no esté en estado Regularización Existencias");
                 }
 
+                var model = new AsistenteRegularizacionGruposModel(ContextService);
                 using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
                 {
-                    return View(new AsistenteRegularizacionGruposModel(ContextService)
-                    {
-                        Fecharegularizacion = service.GetFechaHastaEjercicio(),
-                        Fkseriescontables = service.GetSerieContable(),
-                        CuentaPYG = service.GetCuentaPYG(),
-                        ComentarioDebePYG = service.GetComentarioDebe(),
-                        ComentarioHaberPYG = service.GetComentarioHaber(),
-                        ComentarioCuentasDetalle = service.GetComentarioDetalle()
-                    });
+                    model.Fecharegularizacion = service.GetFechaHastaEjercicio();
+                    model.Fkseriescontables = service.GetSerieContable();
+                    model.CuentaPYG = service.GetCuentaPYG();
+                    model.ComentarioDebePYG = service.GetComentarioDebe();
+                    model.ComentarioHaberPYG = service.GetComentarioHaber();
+                    model.ComentarioCuentasDetalle = service.GetComentarioDetalle();
+                    //Ayuda
+                    var aux = model as IToolbar;
+                    aux.Toolbar.Acciones = HelpItem();
+                    return View(model);
                 }
             }
             catch (Exception ex)

@@ -35,8 +35,8 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados
         [MaxLength(3)]
         public string Valor { get; set; }
 
-        [Display(ResourceType = typeof(RTablas), Name = "Codigo")]
-        public string Codigo { get; set; }
+        /*[Display(ResourceType = typeof(RTablas), Name = "Codigo")]
+        public string Codigo { get; set; }*/
 
         [Required]
         [CustomDisplayDescription(typeof(RTablas), "Descripcion", CustomDisplayDescriptionAttribute.TipoDescripcion.Principal)]

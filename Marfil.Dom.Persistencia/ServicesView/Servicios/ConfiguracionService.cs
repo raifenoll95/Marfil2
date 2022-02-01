@@ -104,7 +104,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }       
 
             return (DateTime)_db.Ejercicios.Where(f => f.id == idejercsig).FirstOrDefault().desde;
-        }     
+        }
+
+        public DateTime GetFechaDesdeEjercicioAct()
+        {
+            var idejercact = int.Parse(_context.Ejercicio);
+
+            return (DateTime)_db.Ejercicios.Where(f => f.id == idejercact).FirstOrDefault().desde;
+        }
 
         public string GetSerieContable()
         {

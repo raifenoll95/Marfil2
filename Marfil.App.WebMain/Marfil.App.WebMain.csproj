@@ -333,7 +333,9 @@
     <Compile Include="Controllers\AsistenteRegularizacionGruposApiController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
+    <Compile Include="Controllers\ListadoCuentasNoAsignadasAnaliticaController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasController.cs" />
+    <Compile Include="Controllers\AnaliticaPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ListadoPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ListadoInformeMargenController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
@@ -3622,7 +3624,7 @@
     <Content Include="Views\GuiasBalances\_general.cshtml" />
     <Content Include="Views\GuiasBalances\_detalle.cshtml" />
     <Content Include="Views\GuiasBalances\_lineasGridView.cshtml" />
-    <Content Include="Views\ListadoCuentasNoAsignadas\CuentasNoAsignadas.cshtml" />
+    <Content Include="Views\ListadoCuentasNoAsignadasAnalitica\CuentasNoAsignadas.cshtml" />
     <Content Include="Views\Shared\UsersControls\Empresa\_configuracion.cshtml" />
     <Content Include="Views\RegularizacionExistencias\AsistenteRegularizacionExistencias.cshtml" />
     <Content Include="Views\RegularizacionExistencias\_procesoregularizacionexistenciasstep1.cshtml" />
@@ -3643,6 +3645,8 @@
     <Content Include="Views\RegularizacionAperturaProvisional\_procesoregularizacionaperturaprovisionalstep1.cshtml" />
     <Content Include="Views\RegularizacionAperturaProvisional\_procesoregularizacionaperturaprovisionalstep2.cshtml" />
     <Content Include="Views\RegularizacionAperturaProvisional\_procesoregularizacionaperturaprovisionalstep3.cshtml" />
+    <Content Include="Views\AnaliticaPerdidasYGanancias\AnaliticaPerdidasYGanancias.cshtml" />
+    <Content Include="Views\ListadoCuentasNoAsignadas\CuentasNoAsignadas.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -119,6 +119,7 @@
 			<item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
 			<item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
 			<item name="listadoperdidasyganancias" eslistado="true" text="Listado Pérdidas y Ganancias" icono="fa fa-file" url="~/ListadoPerdidasYGanancias/Listado/PerdidasYGanancias" />
+			<item name="analiticaperdidasyganancias" eslistado="true" text="Analítica Pérdidas y Ganancias" icono="fa fa-file" url="~/AnaliticaPerdidasYGanancias/Listado/AnaliticaPerdidasYGanancias" />
 		</item>
 		<item name="configuracion" text="Configuración" icono="fa fa-cog">
 			<item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />

@@ -270,6 +270,11 @@
         <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.625" PointY="25.25" />
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
         <EntityTypeShape EntityType="MarfilModel.FiltrosPYG" Width="1.5" PointX="24.375" PointY="13.75" />
+        <EntityTypeShape EntityType="MarfilModel.AnaliticaFiltrosPYG" Width="1.5" PointX="25.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MarfilModel.CuentasNoAsignadasAnalitica" Width="1.5" PointX="20.375" PointY="36.75" />
+        <EntityTypeShape EntityType="MarfilModel.ReportAnaliticaGuiasBalances" Width="1.5" PointX="42.375" PointY="40" />
+        <EntityTypeShape EntityType="MarfilModel.ReportAnaliticaGuiasBalancesLineas" Width="1.5" PointX="44.625" PointY="40.375" />
+        <AssociationConnector Association="MarfilModel.FK_ReportAnaliticaGuiasBalancesLineas_GuiasBalances" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

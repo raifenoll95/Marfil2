@@ -123,7 +123,9 @@ namespace Marfil.Dom.Persistencia.Listados
         public const string ListadoAcumuladorPeriodos = "AcumuladorPeriodos";
         public const string ConsultaTesoreria = "ConsultaTesoreria";
         public const string PerdidasYGanancias = "PerdidasYGanancias";
+        public const string AnaliticaPerdidasYGanancias = "AnaliticaPerdidasYGanancias";
         public const string CuentasNoAsignadas = "CuentasNoAsignadas";
+        public const string CuentasNoAsignadasAnalitica = "CuentasNoAsignadasAnalitica";
 
         // CRM
         public const string ListadoCrm = "ListadoCrm";
@@ -190,7 +192,9 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(ListadoAcumuladorPeriodos, typeof(ListadoAcumuladorPeriodos));
             _dictionary.Add(ConsultaTesoreria, typeof(ListadosConsultaTesoreria));
             _dictionary.Add(PerdidasYGanancias, typeof(ListadoPerdidasYGanancias));
+            _dictionary.Add(AnaliticaPerdidasYGanancias, typeof(AnaliticaPerdidasYGanancias));
             _dictionary.Add(CuentasNoAsignadas, typeof(ListadoCuentasNoAsignadas));
+            _dictionary.Add(CuentasNoAsignadasAnalitica, typeof(ListadoCuentasNoAsignadasAnalitica));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));
@@ -252,7 +256,10 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(ListadoAcumuladorPeriodos, "ListadoAcumuladorPeriodos");
             _dictionaryController.Add(ConsultaTesoreria, "ListadosConsultaTesoreria");
             _dictionaryController.Add(PerdidasYGanancias, "ListadoPerdidasYGanancias");
+            _dictionaryController.Add(AnaliticaPerdidasYGanancias, "AnaliticaPerdidasYGanancias");
             _dictionaryController.Add(CuentasNoAsignadas, "ListadoCuentasNoAsignadas");
+            _dictionaryController.Add(CuentasNoAsignadasAnalitica, "ListadoCuentasNoAsignadasAnlaitica");
+
             // CRM
             _dictionaryController.Add(ListadoCrm, "ListadoCrm");
 

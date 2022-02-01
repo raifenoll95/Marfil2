@@ -285,6 +285,19 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpGet]
+        public bool CuentasNoAsignadasAnalitica()
+        {
+            var cuentas = false;
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                cuentas = service.HayCuentasNoAsignadasAnalitica();
+            }
+
+            return cuentas;
+
+        }
+
+        [HttpGet]
         public string GuiaInforme()
         {
             var Guia = "0";
@@ -359,6 +372,75 @@ namespace Marfil.App.WebMain.Controllers
             {
                 con.Open();
                 using (var cmd = new SqlCommand("CARGAR_REPORTGUIAS", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    foreach (var item in parametros)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void CalculoAnalitica(string Ejercicio, string Guia, string SinSaldo, string Desglosar)
+        {
+            Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
+
+            ValoresParametros.Clear();
+
+            //Inicializar los parámetros a NULL porque siempre tiene que llegar un valor
+            ValoresParametros.Add("EMPRESA", Empresa);
+            ValoresParametros.Add("EJERCICIO", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("GUIA", DBNull.Value);
+            ValoresParametros.Add("SIN_SALDO", DBNull.Value);
+            ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
+
+            if (!string.IsNullOrEmpty(Ejercicio))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicio.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Guia))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+
+                //En la tabla el orden empieza en 0. se resta uno al valor.
+                var valorguia = int.Parse(Guia) - 1;
+
+                ValoresParametros["GUIA"] = valorguia.ToString();
+
+                //flag = true;
+            }
+
+            ExecuteProcedureAnalitica(ContextService.BaseDatos, ValoresParametros);
+        }
+
+        //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalances y Líneas con los filtros indicados
+        private void ExecuteProcedureAnalitica(string baseDatos, Dictionary<string, object> parametros)
+        {
+            var dbconnection = "";
+            using (var db = MarfilEntities.ConnectToSqlServer(baseDatos))
+            {
+                dbconnection = db.Database.Connection.ConnectionString;
+            }
+            using (var con = new SqlConnection(dbconnection))
+            {
+                con.Open();
+                using (var cmd = new SqlCommand("CARGAR_ANALITICAGUIAS", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     foreach (var item in parametros)

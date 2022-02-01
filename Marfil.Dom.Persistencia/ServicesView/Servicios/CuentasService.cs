@@ -989,6 +989,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<CuentasRegularizacionGruposModel> BuscarCuentasAperturaProvisional(string cuentadesde, string cuentahasta)
         {
             var ejericicio = int.Parse(_context.Ejercicio);
+            var idejercicioant = 0;
+
+            if (_db.Ejercicios.Where(f => f.id == ejericicio).FirstOrDefault().fkejercicios != null)
+            {
+                idejercicioant = (int)_db.Ejercicios.Where(f => f.id == ejericicio).FirstOrDefault().fkejercicios;
+            }
+            else
+            {
+                throw new ValidationException("No está indicado el ejercicio anterior en la configuración del ejercicio actual");
+            }
             var cuentasbalances = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().cuentasanuales;
             var cuentas = cuentasbalances.Split(';');
             List<CuentasRegularizacionGruposModel> listacuentas = new List<CuentasRegularizacionGruposModel>();
@@ -1013,9 +1023,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //obtenemos los saldos
             foreach (var item in listacuentas)
             {
-                if (_db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentagrupos).FirstOrDefault() != null)
+                if (_db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == idejercicioant && f.fkcuentas == item.Cuentagrupos).FirstOrDefault() != null)
                 {
-                    var saldo = _db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == ejericicio && f.fkcuentas == item.Cuentagrupos).FirstOrDefault().saldo;
+                    var saldo = _db.Maes.Where(f => f.empresa == Empresa && f.fkejercicio == idejercicioant && f.fkcuentas == item.Cuentagrupos).FirstOrDefault().saldo;
 
                     if (saldo > 0)
                     {

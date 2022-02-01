@@ -627,4 +627,7 @@
   <data name="aperturaprovisional" xml:space="preserve">
     <value>Apertura provisional</value>
   </data>
+  <data name="analiticaperdidasyganancias" xml:space="preserve">
+    <value>Analítica de pérdidas y ganancias</value>
+  </data>
 </root>

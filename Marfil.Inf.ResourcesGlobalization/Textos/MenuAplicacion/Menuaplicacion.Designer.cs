@@ -124,6 +124,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Analítica de pérdidas y ganancias.
+        /// </summary>
+        public static string analiticaperdidasyganancias {
+            get {
+                return ResourceManager.GetString("analiticaperdidasyganancias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Apertura provisional.
         /// </summary>
         public static string aperturaprovisional {

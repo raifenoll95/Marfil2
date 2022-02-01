@@ -5,6 +5,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Documentos.Regularizacion;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
@@ -60,22 +61,33 @@ namespace Marfil.App.WebMain.Controllers
                 //Comprobamos el estado del ejercicio
                 var serviceEjercicios = new EjerciciosService(ContextService);
                 var idejerc = int.Parse(ContextService.Ejercicio);
-                var ejercicio = serviceEjercicios.getAll().Where(f => ((EjerciciosModel)f).Id == idejerc).Select(f => f as EjerciciosModel).FirstOrDefault();
+                var idejercicioant = serviceEjercicios.getAll().Where(f => ((EjerciciosModel)f).Id == idejerc).Select(f => f as EjerciciosModel).FirstOrDefault().Fkejercicios;
+                var ejercicio = serviceEjercicios.getAll().Where(f => ((EjerciciosModel)f).Id == idejercicioant).Select(f => f as EjerciciosModel).FirstOrDefault();
 
-                if (ejercicio.Estado != EstadoEjercicio.Existencias && ejercicio.Estado != EstadoEjercicio.Abierto)
+                if (ejercicio == null)
                 {
-                    throw new ValidationException("Ejercicio anterior en proceso de cierre");
+                    throw new ValidationException("No existe ejercicio anterior");
                 }
+                else
+                {
+                    if (ejercicio.Estado != EstadoEjercicio.Existencias && ejercicio.Estado != EstadoEjercicio.Abierto)
+                    {
+                        throw new ValidationException("Ejercicio anterior en proceso de cierre");
+                    }
+                }
+
+                var model = new AsistenteAperturaProvisionalModel(ContextService);
 
                 using (var service = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService)
                 {
-                    return View(new AsistenteAperturaProvisionalModel (ContextService)
-                    {
-                        Fechaapertura = service.GetFechaDesdeEjercicioSig(),
-                        ComentarioAperturaProvisional = service.GetComentarioAperturaProvisional(),
-                        CuentaDesde = serviceEjercicios.GetCuentaDesdeProvisional(),
-                        CuentaHasta = serviceEjercicios.GetCuentaHastaProvisional()
-                    });
+                    model.Fechaapertura = service.GetFechaDesdeEjercicioAct();
+                    model.ComentarioAperturaProvisional = service.GetComentarioAperturaProvisional();
+                    model.CuentaDesde = serviceEjercicios.GetCuentaDesdeProvisional();
+                    model.CuentaHasta = serviceEjercicios.GetCuentaHastaProvisional();
+                    //Ayuda
+                    var aux = model as IToolbar;
+                    aux.Toolbar.Acciones = HelpItem();
+                    return View(model);
                 }
             }
             catch (Exception ex)
@@ -110,7 +122,7 @@ namespace Marfil.App.WebMain.Controllers
                 return RedirectToAction("AsistenteAperturaProvisional");
             }
 
-            return Redirect("~/");
+            return RedirectToAction("Index", "Movs");
         }
 
         #endregion

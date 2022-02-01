@@ -1,0 +1,46 @@
+﻿@using Resources
+@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Listados.ListadoCuentasNoAsignadasAnalitica
+
+@{
+    ViewBag.Title = "CuentasNoAsignadasAnalitica";
+
+}
+
+<p>Existen cuentas no asignadas en la operación</p> 
+
+<script type="text/javascript">
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+        // [1] Botón Limpiar
+        parentButtonListar.insertBefore(button, parentButtonListar.children[1])
+
+    }, false);
+
+    function imprimir() {
+
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Cuentas no asignadas analitica');
+
+    };
+
+    $('#limpiar').hide();
+    $('#grafica').hide();
+
+</script>

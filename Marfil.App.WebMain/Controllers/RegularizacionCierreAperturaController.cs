@@ -4,6 +4,7 @@ using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Documentos.Regularizacion;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
@@ -60,13 +61,17 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         throw new ValidationException("El ejercicio ya está cerrado");
                     }
-                    return View(new AsistenteCierreAperturaModel(ContextService)
-                    {
-                        Fechacierre = service.GetFechaHastaEjercicio(),
-                        Fechaapertura = service.GetFechaDesdeEjercicioSig(),
-                        ComentarioCierre = service.GetComentarioCierre(),
-                        ComentarioApertura = service.GetComentarioApertura()
-                    });
+
+                    var model = new AsistenteCierreAperturaModel(ContextService);
+
+                    model.Fechacierre = service.GetFechaHastaEjercicio();
+                    model.Fechaapertura = service.GetFechaDesdeEjercicioSig();
+                    model.ComentarioCierre = service.GetComentarioCierre();
+                    model.ComentarioApertura = service.GetComentarioApertura();
+                    //Ayuda
+                    var aux = model as IToolbar;
+                    aux.Toolbar.Acciones = HelpItem();
+                    return View(model);
                 }
             }
             catch (Exception ex)

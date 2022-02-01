@@ -1225,6 +1225,20 @@ namespace Marfil.Dom.Persistencia.Helpers
             return List;
         }
 
+        public IEnumerable<SelectListItem> GetListTipoGuiaCPGAN()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            /*List.Add(new SelectListItem() { Value = "1", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "6", Text = "PYME" });*/
+            List.Add(new SelectListItem() { Value = "7", Text = "ESTANDAR" });
+
+            return List;
+        }
+
         public IEnumerable<SelectListItem> GetListTipoGuiaPG()
         {
             List<SelectListItem> List = new List<SelectListItem>();
@@ -1286,12 +1300,34 @@ namespace Marfil.Dom.Persistencia.Helpers
             return cuentas;
         }
 
+        public bool ExistenCuentasNoAsignadasAnalitica()
+        {
+            var cuentas = false;
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                cuentas = service.HayCuentasNoAsignadasAnalitica();
+            }
+
+            return cuentas;
+        }
+
         public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador)
         {
             var text = "";
             using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
             {
                 text = service.TextRecalculoPYG(filtrosAcumulador);
+            }
+
+            return text;
+        }
+
+        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulador)
+        {
+            var text = "";
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.TextRecalculoPYGAnalitica(filtrosAcumulador);
             }
 
             return text;

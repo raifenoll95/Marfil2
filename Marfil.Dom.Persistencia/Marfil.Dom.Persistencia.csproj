@@ -199,6 +199,9 @@
     <Compile Include="AlmacenesZona.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AnaliticaFiltrosPYG.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="AppPermisos.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -302,6 +305,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CuentasNoAsignadas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CuentasNoAsignadasAnalitica.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Cuentastesoreria.cs">
@@ -458,11 +464,13 @@
     <Compile Include="Listados\FListadosModel.cs" />
     <Compile Include="Listados\ListadoAcumuladorPeriodos.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />
+    <Compile Include="Listados\ListadoCuentasNoAsignadasAnalitica.cs" />
     <Compile Include="Listados\ListadoCuentasNoAsignadas.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
     <Compile Include="Listados\ListadoInformeMargen.cs" />
     <Compile Include="Listados\ListadoMargen.cs" />
+    <Compile Include="Listados\AnaliticaPerdidasYGanancias.cs" />
     <Compile Include="Listados\ListadoPerdidasYGanancias.cs" />
     <Compile Include="Listados\ListadosConsultaTesoreria.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
@@ -846,6 +854,12 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Remesas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportAnaliticaGuiasBalances.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportAnaliticaGuiasBalancesLineas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportGuiasBalances.cs">

@@ -1672,9 +1672,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente;
 
             //Si ya existe un asiento de apertura lo sobreescribimos           
-            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).ToList().Single() != null)
+            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).FirstOrDefault() != null)
             {
-                var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).ToList().Single();
+                var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).FirstOrDefault();
 
                 documento.Id = result.id;
                 documento.Fkejercicio = result.fkejercicio;
@@ -1747,7 +1747,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var serviceMovs = new MovsService(_context);
 
                 //Si ya existe un asiento de apertura lo sobreescribimos
-                if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).Include(b => b.MovsLin).ToList().Single() != null)
+                if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && (f.tipoasiento == "R2" || f.tipoasiento == "R1")).FirstOrDefault() != null)
                 {
                     //Edit
                     serviceMovs.edit(documento);
@@ -1857,17 +1857,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //Cabecera del asiento apertura
             MovsModel documento = new FModel().GetModel<MovsModel>(_context);
             var idejercact = int.Parse(_context.Ejercicio);
-            var idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente;
+            //var idejercsig = _db.Ejercicios.Where(f => f.fkejercicios == idejercact).Select(f => f.id).SingleOrDefault();//Ejercicio siguiente;
 
-            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R2").FirstOrDefault() != null)
+            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercact && f.tipoasiento == "R2").FirstOrDefault() != null)
             {
                 throw new ValidationException("Ejercicio ya tiene asiento de apertura definitivo");
             }
 
             //Si ya existe un asiento de apertura provisional lo sobreescribimos           
-            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R1").FirstOrDefault() != null)
+            if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercact && f.tipoasiento == "R1").FirstOrDefault() != null)
             {
-                var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R1").Include(b => b.MovsLin).ToList().Single();
+                var result = _db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercact && f.tipoasiento == "R1").Include(b => b.MovsLin).FirstOrDefault();
 
                 documento.Id = result.id;
                 documento.Fkejercicio = result.fkejercicio;
@@ -1883,7 +1883,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
             else
             {
-                documento.Fkejercicio = idejercsig;
+                documento.Fkejercicio = idejercact;
                 documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
                 documento.Fecha = DateTime.ParseExact(fechaapertura, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
                 documento.Tipoasiento = "R1";
@@ -1973,7 +1973,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var serviceMovs = new MovsService(_context);
 
                 //Si ya existe un asiento de apertura provisional lo sobreescribimos
-                if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercsig && f.tipoasiento == "R1").FirstOrDefault() != null)
+                if (_db.Movs.Where(f => f.empresa == _context.Empresa && f.fkejercicio == idejercact && f.tipoasiento == "R1").FirstOrDefault() != null)
                 {
                     //Edit
                     serviceMovs.edit(documento);

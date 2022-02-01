@@ -4,6 +4,7 @@ using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Documentos.Regularizacion;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
@@ -60,9 +61,12 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         throw new ValidationException("Un ejercicio en estado Abierto no se puede revertir");
                     }
-                    return View(new AsistenteRervertirEstadoEjercicioModel(ContextService)
-                    {
-                    });
+
+                    var model = new AsistenteRervertirEstadoEjercicioModel(ContextService);
+                    //Ayuda
+                    var aux = model as IToolbar;
+                    aux.Toolbar.Acciones = HelpItem();
+                    return View(model);
                 }
             }
             catch (Exception ex)

@@ -231,16 +231,16 @@ namespace Marfil.App.WebMain.Controllers
         {
             try
             {
-                var newModel = Helper.fModel.GetModel<MovsModel>(ContextService);
+                /*var newModel = Helper.fModel.GetModel<MovsModel>(ContextService);
                 using (var gestionService = createService(newModel))
                 {
 
                     var model = gestionService.get(id) as MovsModel;
                     if (model.Tipoasiento == "R1" || model.Tipoasiento == "R2" || model.Tipoasiento == "R3" || model.Tipoasiento == "R4" || model.Tipoasiento == "R5")
                     {
-                        throw new ValidationException("No se puedo borrar manualmente un asiento de tipo automático");
+                        throw new ValidationException("No se puedo borrar manualmente un asiento de tipo automático que no se de apertura");
                     }
-                }
+                }*/
                 return base.DeleteConfirmed(id);
             }
             catch (Exception ex)
