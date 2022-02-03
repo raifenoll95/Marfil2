@@ -107,7 +107,13 @@
                         $("#fechaaperturaerror").show();
                         e.preventDefault();
 
-                    } else {
+                    } else if ($("[name='CuentaReapertura']").val() === "") {
+
+                        $("#cuentaaperturaerror").html("El campo cuenta de reapertura es obligatorio");
+                        $("#cuentaaperturaerror").show();
+                        e.preventDefault();
+
+                    }else {
                         var data = {
                             Url: "@Url.Action("AsistenteAperturaProvisionalApi", "Api")",
                             campoIdentificador: "Cuentagrupos",

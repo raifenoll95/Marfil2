@@ -47,7 +47,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var cuentaService=FService.Instance.GetService(typeof(CuentasModel),_context,_db) as CuentasService;
             var cuentaId = cuentaService.GetSuperCuenta(cuenta);
-            return _db.Tiposcuentas.Where(f => f.cuenta == cuentaId).ToList().Select(f => (TiposCuentas) f.tipos);
+            return _db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == cuentaId).ToList().Select(f => (TiposCuentas) f.tipos);
         }
 
         internal string GetMascara(TiposCuentas tipo)

@@ -35,7 +35,7 @@ namespace Marfil.App.WebMain.Controllers
 
             using (var service = FService.Instance.GetService(typeof(TiposCuentasModel),ContextService) as TiposcuentasService)
             {
-                var list = service.GetTiposCuentasFromCuentaCliente(id).Select(f=>new TiposcuentasApi() {Text= Funciones.GetEnumByStringValueAttribute(f), Value=(int)f});
+                var list = service.GetTiposCuentasFromCuentaCliente(id).Select(f => new TiposcuentasApi() { Text = Funciones.GetEnumByStringValueAttribute(f), Value = (int)f });
 
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,

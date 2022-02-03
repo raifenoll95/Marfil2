@@ -25,7 +25,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource = new SqlDataSource("Report", new MsSqlConnectionParameters(server, user.BaseDatos, usuario, password, MsSqlAuthorizationType.SqlServer));
             DataSource.Name = "Report";            
 
-            var mainQuery = new CustomSqlQuery("ReportGuiasBalances", "Select * from ReportGuiasBalances");            
+            var mainQuery = new CustomSqlQuery("ReportGuiasBalances", "Select * from ReportGuiasBalances");
+            var mainQuery2 = new CustomSqlQuery("ReportAnaliticaGuiasBalances", "Select * from ReportAnaliticaGuiasBalances");
 
             if (dictionary != null)
             {
@@ -76,7 +77,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 if (SinSaldo == "false")
                 {
                     mainQuery.Sql += "where saldo <> 0 or saldo is null";
-                    
+                    mainQuery2.Sql += "where saldo <> 0 or saldo is null";
+
                     ValoresParametros["SIN_SALDO"] = false;
 
                     //flag = true;
@@ -97,10 +99,21 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                        
             DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineas", "SELECT * FROM ReportGuiasBalancesLineas"));
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadas", "SELECT * FROM CuentasNoAsignadas"));
+            DataSource.Queries.Add(new CustomSqlQuery("ReportAnaliticaGuiasBalancesLineas", "SELECT * FROM ReportAnaliticaGuiasBalancesLineas"));
+            DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasAnalitica", "SELECT * FROM CuentasNoAsignadasAnalitica"));
 
             DataSource.Queries.Add(mainQuery);
 
             DataSource.Relations.Add("ReportGuiasBalances", "ReportGuiasBalancesLineas", new[] {
+                new RelationColumnInfo("Id", "GuiasBalancesId"),
+                new RelationColumnInfo("InformeId", "InformeId"),
+                new RelationColumnInfo("GuiaId", "GuiaId"),
+                new RelationColumnInfo("orden", "orden")
+            });
+
+            DataSource.Queries.Add(mainQuery2);
+
+            DataSource.Relations.Add("ReportAnaliticaGuiasBalances", "ReportAnaliticaGuiasBalancesLineas", new[] {
                 new RelationColumnInfo("Id", "GuiasBalancesId"),
                 new RelationColumnInfo("InformeId", "InformeId"),
                 new RelationColumnInfo("GuiaId", "GuiaId"),

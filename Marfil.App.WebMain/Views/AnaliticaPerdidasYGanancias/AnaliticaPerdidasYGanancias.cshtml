@@ -8,6 +8,7 @@
     var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadasAnalitica();
     var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
     var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYGAnalitica(filtrosAcumulado);
+    var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
 
     var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCPGAN().Select(f => new SelectListItem()
     {
@@ -25,7 +26,7 @@
     {
         listejercicios.Insert(1, new SelectListItem()
         {
-            Text = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion,
+            Text = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion + " | Ejecutado el " + fechaRecalculoAcumulador,
             Value = userAcumulado
         });
     }
