@@ -11,6 +11,7 @@ using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.CRM;
+using Marfil.Inf.Genericos;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
@@ -101,8 +102,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             foreach (var item in result.GetType().GetProperties())
             {
-                if (typeof(ClientesModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()))
-                    item.SetValue(result, viewmodel.get(item.Name));
+                if ((obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false) &&
+                    (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.GetGenericTypeDefinition() !=
+                    typeof(ICollection<>)))
+                {
+                    item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
+                }
+                else if (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsEnum ?? false)
+                {
+                    item.SetValue(result, (int)obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
+                }
+                else if (!obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false)
+                {
+                    item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
+                }
             }
             result.tipoportes = (int?)viewmodel.Tipodeportes;
             result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;

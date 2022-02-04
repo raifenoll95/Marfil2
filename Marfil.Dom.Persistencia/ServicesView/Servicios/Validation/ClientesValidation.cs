@@ -71,7 +71,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                     f.tipocuenta != (int)TiposCuentas.Clientes);
             if (cuenta != null)
             {
-                throw new ValidationException(string.Format(General.ErrorCuentaExistente, Funciones.GetEnumByStringValueAttribute((TiposCuentas)cuenta.tipocuenta), model.fkcuentas));
+                throw new ValidationException(string.Format(General.ErrorCuentaExistente, Funciones.GetEnumByStringValueAttribute((TiposCuentas)cuenta.tipocuenta), model.fkcuentas));             
             }
         }
 

@@ -11,13 +11,21 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RCuentas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Cuentas;
+using RMovs = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Movs;
 namespace Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
 {
     [Serializable]
     public class CuentasModel : BaseModel<CuentasModel, Persistencia.Cuentas>
     {
+        private int? _decimalesmonedas = 2;
 
         #region Properties
+        public int? Decimalesmonedas
+        {
+            get { return _decimalesmonedas; }
+            set { _decimalesmonedas = value; }
+        }
+
         [Required]
         public string Empresa { get; set; }
 
@@ -79,6 +87,31 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
 
         [Display(ResourceType = typeof(RCuentas), Name = "FechaModificacion")]
         public DateTime FechaModificacion { get; set; }
+
+        #region Debe_Haber
+
+        //Debe
+        [Display(ResourceType = typeof(RMovs), Name = "Debe")]
+        public decimal? Debe { get; set; }
+        [Display(ResourceType = typeof(RMovs), Name = "Debe")]
+        public string SDebe
+        {
+            get { return (Debe ?? 0).ToString(string.Format("N{0}", (Decimalesmonedas ?? 0))); }
+            set { Debe = (Funciones.Qdecimal(value) ?? 0); }
+        }
+
+
+        //Haber
+        [Display(ResourceType = typeof(RMovs), Name = "Haber")]
+        public decimal? Haber { get; set; }
+        [Display(ResourceType = typeof(RMovs), Name = "Haber")]
+        public string SHaber
+        {
+            get { return (Haber ?? 0).ToString(string.Format("N{0}", (Decimalesmonedas ?? 0))); }
+            set { Haber = (Funciones.Qdecimal(value) ?? 0); }
+        }
+
+        #endregion Debe_Haber
 
         #endregion
 

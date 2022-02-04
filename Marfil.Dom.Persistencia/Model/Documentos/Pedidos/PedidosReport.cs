@@ -41,6 +41,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
             //Elena. Cambio 20/04/2021
             DataSource.Queries.Add(new CustomSqlQuery("Monedas", "SELECT * FROM [Monedas]"));
 
+            DataSource.Queries.Add(new CustomSqlQuery("Direcciones", "SELECT d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero] FROM [Direcciones] as d where d.tipotercero=-1"));
+
             // Create a master-detail relation between the queries.
             DataSource.Relations.Add("pedidos", "pedidoslinprueba", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
@@ -63,6 +65,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
 
             DataSource.Relations.Add("pedidos", "Monedas", new[] {
                     new RelationColumnInfo("fkmonedas", "id")});
+
+            DataSource.Relations.Add("pedidos", "Direcciones", new[] {
+                    new RelationColumnInfo("empresa", "empresa")});
 
             DataSource.RebuildResultSchema();
         }

@@ -12,10 +12,15 @@
 <script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
 <div>
     <h3 class="green center">Seleccionar fichero y delimitador de contenido</h3>
-    <br />    
+    <br />
+
+    <div class="alert alert-danger" align="center">
+        Antes de realizar la importación de las cuentas se han de crear los tipos de cuentas de la empresa. <br/>
+        Menú > Configuración > Tipos de cuentas
+    </div>
 
     <div class="alert alert-info" align="center">
-        <p>Contenido del fichero: </p>       
+        <p>Contenido del fichero: </p>
         <table border="1" align="center">
             <thead>
                 <tr>
@@ -25,37 +30,50 @@
                     <th class="bolder center" style="min-width:120px">Nif</th>
                     <th class="bolder center" style="min-width:120px">TipoNif</th>
                     <th class="bolder center" style="min-width:120px">CodigoISO</th>
+                    <!--<th class="bolder center" style="min-width:120px">TipoCuenta</th>-->
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="center">1-4 o 8 dígitos</td>
                     <td class="center"></td>
-                    <td class="center"></td>    
-                    <td class="center"></td>                
-                    <td class="center" style="min-width:250px">                                                     
-                            1 - NIF/CIF <br />
-                            2 - NIF operador intracomunitario <br />
-                            3 - Pasaporte <br />
-                            4 - NIE <br />
-                            5 - Certificado de residencia fiscal <br />
-                            6 - Otro documento probatorio                        
-                        </td>                    
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td class="center" style="min-width:250px">
+                        1 - NIF/CIF <br />
+                        2 - NIF operador intracomunitario <br />
+                        3 - Pasaporte <br />
+                        4 - NIE <br />
+                        5 - Certificado de residencia fiscal <br />
+                        6 - Otro documento probatorio
+                    </td>
                     <td class="center">T.V 3166</td>
+                    <!--<td class="center" style="min-width:150px">
+                        0 - Clientes <br />
+                        1 - Proveedores <br />
+                        2 - Acreedores <br />
+                        3 - Cobradores <br />
+                        4 - Transportistas <br />
+                        5 - Agentes <br />
+                        6 - Aseguradoras <br />
+                        7 - Operarios <br />
+                        8 - Comerciales <br />
+                        9 - Prospectos
+                    </td>-->
                 </tr>
             </tbody>
         </table>
     </div>
-    
+
     <br />
 
     <div class="form-group">
 
         @using (Html.BeginForm("AsistenteCuentas", "Cuentas", new { AsistenteCuentasModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
+        {
             @Html.LabelFor(f => Model.Fichero, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.TextBoxFor(f => Model.Fichero, new { @type = "file" })
-            <br />            
+            <br />
             @Html.LabelFor(f => Model.Cabecera, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.CheckBoxFor(f => Model.Cabecera)
             <br />
@@ -79,8 +97,8 @@
             <p class="alert alert-success" id="successMessage" align="center">@TempData["Success"]</p>
         }
         @if (TempData["Errors"] != null)
-        {                    
+        {
             <pre class="alert alert-danger" id="divErrorMessage" align="center">@TempData["Errors"]</pre>
         }
-    </div>    
+    </div>
 </div>

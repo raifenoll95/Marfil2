@@ -364,10 +364,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return model;
         }
 
-
-
-
-
         public IEnumerable<CuentasModel> GetCuentasContablesNivel(int nivel)
         {
             return _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == nivel && (!f.categoria.HasValue || (f.categoria.HasValue && f.categoria == (int)CategoriasCuentas.Contables))).ToList().Select(f => new CuentasModel() { Id = f.id, Descripcion = f.descripcion, Nivel = f.nivel ?? 0, BloqueoModel = new BloqueoEntidadModel() { Bloqueada = f.bloqueada ?? false, Fecha = f.fechamodificacionbloqueo ?? DateTime.MinValue, FkMotivobloqueo = f.fkMotivosbloqueo } });
@@ -557,25 +553,29 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             
-            var ctor = t.GetConstructor(new[] { typeof(IContextService) });
-            var obj =ctor.Invoke(new object[] { _context });
-            var instance = obj as IModelView;
-            var extension = obj as IModelViewExtension;
-            var display = obj as ICanDisplayName;
-            return new ListIndexModel()
-            {
-                Entidad = display.DisplayName,
-                List = GetCuentasContables(),
-                PrimaryColumnns = extension.primaryKey.Select(f => f.Name).ToList(),
-                VarSessionName = "__" + t.Name,
-                Properties = instance.getProperties(),
-                Controller = controller,
-                PermiteEliminar = canEliminar,
-                PermiteModificar = canModificar,
-                ExcludedColumns = new[] { "Toolbar", "Fechaalta", "Bloqueado", "BloqueoModel", "Tiposcuentas", "Nifrequired", "Empresa", "Descripcion2", "FkPais", "Nif", "Contrapartida", "ContrapartidaDescripcion", "Bloqueada", "FkMotivoBloqueo", "MotivoBloqueo", "FechaModificacion", "Usuario", "UsuarioId", "DescripcionLarga", "FechaModificacionBloqueo", "UsuarioIdBloqueo", "UsuarioBloqueo", "DescripcionBloqueo" },
-                FiltroColumnas = new Dictionary<string, FiltroColumnas>() { { "Id", FiltroColumnas.EmpiezaPor } },
-                BloqueoColumn = "Bloqueado"
-            };
+            var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
+
+            var propiedadesVisibles = new[] { "Id", "Descripcion", "Nivel", "SDebe", "SHaber" };
+            var propiedades = Helpers.Helper.getProperties<CuentasModel>();
+
+            //model.PrimaryColumnns = new[] { "id" };
+            model.ExcludedColumns = propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList(); 
+            model.FiltroColumnas = new Dictionary<string, FiltroColumnas>() { { "Id", FiltroColumnas.EmpiezaPor } };
+            model.BloqueoColumn = "Bloqueado";
+            model.OrdenColumnas.Add("Id", 0);
+            model.OrdenColumnas.Add("Descripcion", 1);
+            model.OrdenColumnas.Add("Nivel", 2);
+            model.OrdenColumnas.Add("SDebe", 3);
+            model.OrdenColumnas.Add("SHaber", 4);
+
+            return model;
+        }
+
+        public override string GetSelectPrincipal()
+        {
+            return string.Format("SELECT c.*, m.debe, m.haber"
+                + " FROM Cuentas as c inner join maes as m on c.empresa = m.empresa and c.id = m.fkcuentas" +
+                " where c.empresa = '{0}' and m.fkejercicio = {1}", Empresa, _context.Ejercicio);
         }
 
         #endregion
