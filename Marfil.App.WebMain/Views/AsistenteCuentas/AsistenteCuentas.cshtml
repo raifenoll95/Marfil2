@@ -69,7 +69,7 @@
 
     <div class="form-group">
 
-        @using (Html.BeginForm("AsistenteCuentas", "Cuentas", new { AsistenteCuentasModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("AsistenteCuentas", "AsistenteCuentas", new { AsistenteCuentasModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.LabelFor(f => Model.Fichero, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.TextBoxFor(f => Model.Fichero, new { @type = "file" })

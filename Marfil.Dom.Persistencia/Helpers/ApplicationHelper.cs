@@ -328,7 +328,7 @@ namespace Marfil.Dom.Persistencia.Helpers
                 var contabilidadImportarPlanItem = new MenuItemJavascriptModel()
                 {
                     text = General.LblPlanContable,
-                    link = helper.Content("~/Cuentas/AsistenteCuentas"),
+                    link = helper.Content("~/AsistenteCuentas/AsistenteCuentas"),
                     icono = "fa fa-user"
                 };
 

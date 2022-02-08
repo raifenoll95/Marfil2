@@ -21,6 +21,7 @@ using Marfil.Inf.Genericos;
 using System.Web.Hosting;
 using System.Threading;
 using Marfil.Inf.Genericos.Helper;
+using Marfil.Dom.Persistencia.Helpers;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -280,6 +281,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             });
         }
 
+        private void EliminarCarpetas(string id)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = id,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+            var serviceCarpetas = FService.Instance.GetService(typeof(CarpetasModel), newContext, _db);
+            var list = serviceCarpetas.getAll().OfType<CarpetasModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == id))
+            {
+
+                serviceCarpetas.delete(item);
+            }
+        }
+
         private void CrearEjercicio(string empresa, EjerciciosModel ejercicioNuevo)
         {
             ejercicioNuevo.Empresa = empresa;
@@ -293,6 +313,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             
             var service = new EjerciciosService(newContext, _db);
             service.create(ejercicioNuevo);
+        }
+        private void EliminarEjercicio(string empresa, IEnumerable<EjerciciosModel> ejercicios)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new EjerciciosService(newContext, _db);
+            foreach (var item in ejercicios)
+            {
+                service.delete(item);
+            }
+            
         }
 
         public void CrearPlanGeneral(string empresa, string plangeneralid, string pais)
@@ -337,7 +374,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
+        private void EliminarTarifasBase(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
 
+            var service = new TarifasService(newContext, _db);
+            var list = service.getAll().OfType<TarifasModel>().ToList();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+                
+                service.delete(item);
+            }
+        }
 
 
         #endregion
@@ -363,7 +418,187 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
+                var model = obj as EmpresaModel;
+                if (model.Id == "0001")
+                {
+                    throw new ValidationException("No se permite eliminar la empresa por defecto");
+                }
+                
+                EliminarDirecciones(model);
+                EliminarTarifasBase(model.Id);
+                EliminarEjercicio(model.Id, model.Ejercicios);
+                EliminarCarpetas(model.Id);
+                EliminarContadores(model.Id);
+                EliminarContadoresLotes(model.Id);
+                EliminarSeries(model.Id);
+                EliminarGruposIva(model.Id);
+                EliminarTiposIva(model.Id);
+                EliminarRegimenIva(model.Id);
+                EliminarGuiasContables(model.Id);
+                EliminarAlmacenes(model.Id);
+                base.delete(obj);
 
+                tran.Complete();
+            }
+        }
+
+        private void EliminarContadores(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new ContadoresService(newContext, _db);
+            var list = service.getAll().OfType<ContadoresModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarContadoresLotes(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new ContadoresLotesService(newContext, _db);
+            var list = service.getAll().OfType<ContadoresLotesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarSeries(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new SeriesService(newContext, _db);
+            var list = service.getAll().OfType<SeriesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarGruposIva(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new GruposIvaService(newContext, _db);
+            var list = service.getAll().OfType<GruposIvaModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarTiposIva(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new TiposivaService(newContext, _db);
+            var list = service.getAll().OfType<TiposIvaModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarRegimenIva(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new RegimenivaService(newContext, _db);
+            var list = service.getAll().OfType<RegimenIvaModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarGuiasContables(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new GuiascontablesService(newContext, _db);
+            var list = service.getAll().OfType<GuiascontablesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarAlmacenes(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new AlmacenesService(newContext, _db);
+            var list = service.getAll().OfType<AlmacenesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
             }
         }
 
@@ -445,6 +680,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             foreach (var item in model.Direcciones.Direcciones)
             {
                 direccionesService.edit(item);
+            }
+        }
+        private void EliminarDirecciones(EmpresaModel model)
+        {
+            if (model.Direcciones == null) return;
+            var fservice = FService.Instance;
+            var auxContext = _context;
+            auxContext.Empresa = model.Id;
+            var direccionesService = fservice.GetService(typeof(DireccionesLinModel), auxContext, _db) as DireccionesService;
+            ProcessDirecciones(model);
+
+            foreach (var item in model.Direcciones.Direcciones)
+            {
+                direccionesService.delete(item);
             }
         }
 

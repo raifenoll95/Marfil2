@@ -1483,7 +1483,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Generar cuentas.
+        ///   Busca una cadena traducida similar a Importar cuentas.
         /// </summary>
         public static string LblGenerarCuentas {
             get {

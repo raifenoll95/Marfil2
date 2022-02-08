@@ -166,9 +166,5 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             return false;
         }
 
-        public override bool ValidarBorrar(Empresas model)
-        {
-            throw new ValidationException(REmpresa.ErrorBorrar);
-        }
     }
 }

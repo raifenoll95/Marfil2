@@ -26,6 +26,8 @@ using System.Text;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.ControlsUI.NifCif;
 using Marfil.Dom.Persistencia.Model.Configuracion;
+using Marfil.Dom.Persistencia;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Startup;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -87,6 +89,7 @@ namespace Marfil.App.WebMain.Controllers
                         gestionService.create(model);
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarPlanContabilidad(model, token));
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarSeriesContables(model, token));
+                        HostingEnvironment.QueueBackgroundWorkItem(async token => await generarDocumentos(model, token));
                         TempData["Success"] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
                     }
@@ -103,6 +106,25 @@ namespace Marfil.App.WebMain.Controllers
                 TempData["errors"] = ex.Message;
                 TempData["model"] = model;
                 return RedirectToAction("Create");
+            }
+        }
+
+        private async Task generarDocumentos(EmpresaModel model, CancellationToken cancellationToken)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var _db = MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos);
+                var service = new FStartup(ContextService, _db);
+                var itemService = new DocumentosStartup(ContextService, _db);
+                //var csvFile = ContextService.ServerMapPath("~/App_Data/Otros/documentos.csv");
+                await Task.Run(() => itemService.CrearDatos("~/App_Data/Otros/documentos.csv",model.Id));
+            }
+            catch (TaskCanceledException tce)
+            {
+            }
+            catch (Exception ex)
+            {
             }
         }
 
@@ -224,7 +246,7 @@ namespace Marfil.App.WebMain.Controllers
                 Descripcion = vector[2],
                 Fkmonedas = int.Parse(vector[3]),
                 Fkcontadores = vector[4],
-                Fkejercicios = vector[5]
+                Fkejercicios = ContextService.Ejercicio
             };
 
             var service = new SeriesContablesService(newContext);
@@ -372,6 +394,10 @@ namespace Marfil.App.WebMain.Controllers
         {
             try
             {
+                if(Empresa != "0001") 
+                {
+                    throw new ValidationException("Para borrar una empresa debe encontrarse en la empresa por defecto. ID 0001");
+                }
 
                 var newmodel = Helper.fModel.GetModel<EmpresaModel>(ContextService);
                 using (var gestionService = FService.Instance.GetService(typeof(EmpresaModel), ContextService) as EmpresasService)

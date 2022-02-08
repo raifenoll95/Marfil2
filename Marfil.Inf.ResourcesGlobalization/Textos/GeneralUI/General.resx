@@ -806,7 +806,7 @@
     <value>Fichero</value>
   </data>
   <data name="LblGenerarCuentas" xml:space="preserve">
-    <value>Generar cuentas</value>
+    <value>Importar cuentas</value>
   </data>
   <data name="LblGenerarDiarioContable" xml:space="preserve">
     <value>Generar diario contable</value>

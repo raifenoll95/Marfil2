@@ -60,11 +60,12 @@
     <data>~/App_Data/Otros/estadosdocumentos.csv</data>
   </item>
 
-  <item id="documentos" readonly="true">
+  <!--Se cambio por empresa los documentos Nov2021-->
+  <!--<item id="documentos" readonly="true">
     <titulo>Documentos de impresión</titulo>
     <descripcion>Documentos de impresión por defecto.</descripcion>
     <data>~/App_Data/Otros/documentos.csv</data>
-  </item>
+  </item>-->
 
   <item id="criteriosagrupacion" readonly="true">
     <titulo>Criterios agrupación de facturación</titulo>

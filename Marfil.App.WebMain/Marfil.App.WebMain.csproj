@@ -325,6 +325,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
+    <Compile Include="Controllers\AsistenteCuentasController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
     <Compile Include="Controllers\AsistenteAperturaProvisionalApiController.cs" />
@@ -3343,7 +3344,7 @@
     <Content Include="Views\ListadosDiarioContable\DiarioContable.cshtml" />
     <Content Include="Views\ListadosStockSalidas\Salidas.cshtml" />
     <Content Include="Views\Movs\AsistenteMovs.cshtml" />
-    <Content Include="Views\Cuentas\AsistenteCuentas.cshtml" />
+    <Content Include="Views\AsistenteCuentas\AsistenteCuentas.cshtml" />
     <Content Include="Views\Movs\_procesomovsstep1.cshtml" />
     <Content Include="Views\Movs\_procesomovsstep2.cshtml" />
     <Content Include="Views\Movs\_procesomovsstep3.cshtml" />

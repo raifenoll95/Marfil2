@@ -16,7 +16,7 @@ using Marfil.Inf.Genericos.Helper;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
 {
-    class DocumentosStartup : IStartup
+    public class DocumentosStartup : IStartup
     {
         #region Members
 
@@ -44,27 +44,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
 
         #endregion
 
-        public void CrearDatos(string fichero)
+        public void CrearDatos(string fichero,string empresa)
         {
             var csvFile = _context.ServerMapPath(fichero);
             using (var reader = new StreamReader(csvFile, Encoding.Default, true))
             {
                 var contenido = reader.ReadToEnd();
-                CreateModel(contenido);
+                CreateModel(contenido, empresa);
             }
         }
 
-        private void CreateModel(string contenido)
+        private void CreateModel(string contenido, string empresa)
         {
             var lineas = contenido.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var item in lineas)
             {
                 if (!string.IsNullOrEmpty(item))
-                    CrearModel(item);
+                    CrearModel(item, empresa);
             }
         }
 
-        private void CrearModel(string linea)
+        private void CrearModel(string linea, string empresa)
         {
             var vector = linea.Split(';');
 
@@ -86,7 +86,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
                         Tiporeport = (TipoReport)Enum.Parse(typeof(TipoReport), vector[3]),
                         Datos = stream.ToArray(),
                         Defecto = Funciones.Qbool(vector[5]),
-                        Empresa = _context.Empresa
+                        Empresa = empresa
 
                     };
 
@@ -100,6 +100,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
         public void Dispose()
         {
             _documentosService?.Dispose();
+        }
+
+        public void CrearDatos(string fichero)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -177,6 +177,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         private void DeleteDirecciones(AlmacenesModel model)
         {
             if (model.Direcciones == null) return;
+            if (model.Direcciones.Direcciones == null) return;
             var fservice = FService.Instance;
             var direccionesService = fservice.GetService(typeof(DireccionesLinModel), _context, _db);
             //ProcessDirecciones(model);
