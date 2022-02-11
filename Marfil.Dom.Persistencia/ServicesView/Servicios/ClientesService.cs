@@ -18,6 +18,11 @@ using Marfil.Inf.Genericos.Helper;
 using RClientes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes;
 using RDirecciones = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Direcciones;
 using RContactos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Contactos;
+using System.Data;
+using System.Data.Entity.Migrations;
+using System.Globalization;
+using System.Xml;
+using Marfil.Dom.ControlsUI.NifCif;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -478,6 +483,141 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
             return result;
+        }
+
+        #endregion
+
+        #region Importar
+
+        public void Importar(DataTable dt, int idPeticion, IContextService contextService, ImportarModel model)
+        {
+            string errores = "";
+            List<ClientesModel> ListaClientes = new List<ClientesModel>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ClientesModel cliente = new FModel().GetModel<ClientesModel>(contextService);
+
+                var fkcuentas = row["codigo"].ToString();
+
+                var existeCliente = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).SingleOrDefault();
+
+                if (existeCliente == null)
+                {
+                    //cliente
+                    cliente.Fkcuentas = fkcuentas;
+                    cliente.Periodonopagodesde = row["vacac1"].ToString();
+                    cliente.Periodonopagohasta = row["vacac2"].ToString();
+                    cliente.Diafijopago1 = int.Parse(row["diapago1"].ToString());
+                    cliente.Diafijopago2 = int.Parse(row["diapago2"].ToString());
+                    cliente.Descuentoprontopago = double.Parse(row["dtopp"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    cliente.Descuentocomercial = double.Parse(row["dtocial"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    cliente.Fkregimeniva = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkregimeniva;//Equivalencia
+                    cliente.Fkformaspago = int.Parse(row["forpago"].ToString());
+                    cliente.Fkcuentasagente = row["codagte"].ToString();
+                    cliente.Fkcuentascomercial = row["codcomer"].ToString();
+                    cliente.Fkzonacliente = row["czona"].ToString();
+                    cliente.Fkincoterm = row["codinco"].ToString();
+                    cliente.Fktransportistahabitual = row["ctransp"].ToString();
+                    cliente.Notas = row["notas"].ToString();
+                    cliente.Fkcuentasaseguradoras = row["ciaseg"].ToString();
+                    cliente.Suplemento = row["ciasupl"].ToString();
+                    cliente.Riesgoconcedidoempresa = int.Parse(row["riescemp"].ToString());
+                    cliente.Riesgosolicitado = int.Parse(row["riessol"].ToString());
+                    cliente.Riesgoaseguradora = int.Parse(row["riesccia"].ToString());
+                    cliente.Porcentajeriesgocomercial = int.Parse(row["riescom"].ToString());
+                    cliente.Porcentajeriesgopolitico = int.Parse(row["riespol"].ToString());
+                    cliente.Diascondecidos = int.Parse(row["riesdia"].ToString());
+                    DateTime fechaClasificacion;
+                    if (DateTime.TryParseExact(row["fclasif"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaClasificacion))
+                    {
+                        cliente.Fechaclasificacion = fechaClasificacion;
+                    }
+                    else
+                    {
+                        errores += fkcuentas + ";" + row["fclasif"].ToString() + " " + "La fecha fclasif no se ha podido convertir";
+                        continue;
+                    }
+                    DateTime fechaUltSolicitud;
+                    if (DateTime.TryParseExact(row["futsol"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaUltSolicitud))
+                    {
+                        cliente.Fechaultimasolicitud = fechaUltSolicitud;
+                    }
+                    else
+                    {
+                        errores += fkcuentas + ";" + row["futsol"].ToString() + " " + "La fecha futsol no se ha podido convertir";
+                        continue;
+                    }
+                    cliente.Cuentatesoreria = row["cuentatesoreria"].ToString();
+                    cliente.Fkmonedas = (int)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkMonedabase;//Equivalencia
+                    cliente.Criterioiva = (CriterioIVA)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().criterioiva; //Equivalencia
+                    cliente.Fkgruposiva = "NORM"; //Equivalencia
+                    cliente.Fktiposretencion = row["tiporet"].ToString();
+                    cliente.Fktarifas = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fktarifasventas;
+                    cliente.Perteneceagrupo = row["cligrupo"].ToString();
+                    cliente.Fkfamiliacliente = row["tipocli"].ToString();
+                    cliente.Fkidiomas = GetIdiomaPrincipal();
+                    cliente.Numerocopiasfactura = int.Parse(row["ncopiasfac"].ToString());
+
+                    //Cuentas
+                    cliente.Cuentas.Id = fkcuentas;
+                    cliente.Cuentas.Descripcion = row["nombre"].ToString();
+                    cliente.Cuentas.Descripcion2 = row["nombre2"].ToString();
+                    var nifModel = new NifCifModel();
+                    nifModel.Nif = row["nif"].ToString();
+                    nifModel.TipoNif = row["tiponif"].ToString();
+                    cliente.Cuentas.Nif = nifModel;
+                    DateTime fechaAlta;
+                    if (DateTime.TryParseExact(row["fechaalta"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaAlta))
+                    {
+                        cliente.Cuentas.Fechaalta = fechaAlta;
+                    }
+                    else
+                    {
+                        errores += fkcuentas + ";" + row["fechaalta"].ToString() + " " + "La fecha fechaalta no se ha podido convertir";
+                        continue;
+                    }
+                    cliente.Cuentas.FkPais = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkPais;
+
+                    //Direcciones
+
+                    ListaClientes.Add(cliente);
+
+                }
+                else
+                {
+                    errores += fkcuentas + " El código del cliente ya existe" + Environment.NewLine;
+                }
+            }
+        }
+
+        public int CrearPeticionImportacion(IContextService contextService)
+        {
+            var item = _db.PeticionesAsincronas.Create();
+
+            item.empresa = contextService.Empresa;
+            item.id = _db.PeticionesAsincronas.Any() ? _db.PeticionesAsincronas.Max(f => f.id) + 1 : 1;
+            item.usuario = contextService.Usuario;
+            item.fecha = DateTime.Today;
+            item.estado = (int)EstadoPeticion.EnCurso;
+            item.tipo = (int)TipoPeticion.Importacion;
+            item.configuracion = (((int)TipoImportacion.ImportarClientes).ToString() + "-").ToString();
+
+            _db.PeticionesAsincronas.AddOrUpdate(item);
+            _db.SaveChanges();
+
+            return item.id;
+        }
+        public string GetIdiomaPrincipal()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Fkidioma1");
+            var idioma = nodo[0].InnerText;
+            return idioma;
         }
 
         #endregion

@@ -17,6 +17,7 @@ using System.Threading;
 using Marfil.Dom.Persistencia;
 using System.Collections.Generic;
 using Marfil.Inf.Genericos.Helper;
+using Marfil.Dom.Persistencia.Model.Terceros;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -390,5 +391,334 @@ namespace Marfil.App.WebMain.Controllers
 
         #endregion
 
+        #region ImportarTerceros
+
+        public ActionResult ImportarTerceros()
+        {
+            ImportarModel model = new ImportarModel();
+
+            //using (var db = MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos))
+            //{
+            //    model.Serie = db.Series.Where(f => f.empresa == Empresa && f.entradasvarias == true)
+            //                .Select(f => new SelectListItem() { Value = f.id, Text = f.descripcion }).ToList();
+            //}
+
+            return View("ImportarTerceros", model);
+        }
+
+        [HttpPost]
+        public ActionResult ImportarTerceros(ImportarModel model)
+        {
+            var idPeticion = 0;
+            var idPeticion2 = 0;
+            var idPeticion3 = 0;
+            var file = model.Fichero;
+            char delimitador = model.Delimitador.ToCharArray()[0];
+
+            if (ModelState.IsValid)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    if (file.FileName.ToLower().EndsWith(".csv"))
+                    {
+                        var clienteService = FService.Instance.GetService(typeof(ClientesModel), ContextService) as ClientesService;
+                        var proveedorService = FService.Instance.GetService(typeof(ProveedoresModel), ContextService) as ProveedoresService;
+                        var acreedorService = FService.Instance.GetService(typeof(AcreedoresModel), ContextService) as AcreedoresService;
+                        StreamReader sr = new StreamReader(file.InputStream, Encoding.UTF8);
+                        StringBuilder sb = new StringBuilder();
+                        DataTable dt = new DataTable();
+                        DataTable clientes = new DataTable();
+                        DataTable proveedores = new DataTable();
+                        DataTable acreedores = new DataTable();
+                        DataRow dr;
+                        string s;
+                        int j = 0;
+
+                        dt.Columns.Add("codigo");
+                        dt.Columns.Add("provincia");
+                        dt.Columns.Add("nombre");
+                        dt.Columns.Add("nombre2");
+                        dt.Columns.Add("direccion");
+                        dt.Columns.Add("direc2");
+                        dt.Columns.Add("poblacion");
+                        dt.Columns.Add("contacto");
+                        dt.Columns.Add("codpostal");
+                        dt.Columns.Add("nprovincia");
+                        dt.Columns.Add("paisiso");
+                        dt.Columns.Add("tiponif");
+                        dt.Columns.Add("nif");
+                        dt.Columns.Add("idfiscal");
+                        dt.Columns.Add("patente");
+                        dt.Columns.Add("vacac1");
+                        dt.Columns.Add("vacac2");
+                        dt.Columns.Add("telefono");
+                        dt.Columns.Add("movil");
+                        dt.Columns.Add("telexfax");
+                        dt.Columns.Add("diapago1");
+                        dt.Columns.Add("diapago2");
+                        dt.Columns.Add("dtopp");
+                        dt.Columns.Add("dtocial");
+                        dt.Columns.Add("tipoope");
+                        dt.Columns.Add("forpago");
+                        dt.Columns.Add("codagte");
+                        dt.Columns.Add("codcomer");
+                        dt.Columns.Add("czona");
+                        dt.Columns.Add("codinco");
+                        dt.Columns.Add("nptda");
+                        dt.Columns.Add("portes");
+                        dt.Columns.Add("ctransp");
+                        dt.Columns.Add("portesm2");
+                        dt.Columns.Add("banconom");
+                        dt.Columns.Add("bancodir");
+                        dt.Columns.Add("bancodi2");
+                        dt.Columns.Add("bancopob");
+                        dt.Columns.Add("iban");
+                        dt.Columns.Add("bic");
+                        dt.Columns.Add("notas");
+                        dt.Columns.Add("acumulado");
+                        dt.Columns.Add("clistat");
+                        dt.Columns.Add("marcalis");
+                        dt.Columns.Add("ciaseg");
+                        dt.Columns.Add("codcseg");
+                        dt.Columns.Add("ciasupl");
+                        dt.Columns.Add("riescemp");
+                        dt.Columns.Add("riessol");
+                        dt.Columns.Add("riesccia");
+                        dt.Columns.Add("riescom");
+                        dt.Columns.Add("riespol");
+                        dt.Columns.Add("riesfpag");
+                        dt.Columns.Add("riesdia");
+                        dt.Columns.Add("riesact");
+                        dt.Columns.Add("fclasif");
+                        dt.Columns.Add("fefecto");
+                        dt.Columns.Add("fultsol");
+                        dt.Columns.Add("fvalidez");
+                        dt.Columns.Add("cobrador");
+                        dt.Columns.Add("moneda");
+                        dt.Columns.Add("criteriva");
+                        dt.Columns.Add("iva");
+                        dt.Columns.Add("rec");
+                        dt.Columns.Add("tiporet");
+                        dt.Columns.Add("retencion");
+                        dt.Columns.Add("rsocial");
+                        dt.Columns.Add("email");
+                        dt.Columns.Add("web");
+                        dt.Columns.Add("relac");
+                        dt.Columns.Add("diascomimp");
+                        dt.Columns.Add("diasaplpag");
+                        dt.Columns.Add("tarifa");
+                        dt.Columns.Add("codtarifa");
+                        dt.Columns.Add("codtarifac");
+                        dt.Columns.Add("precioc");
+                        dt.Columns.Add("preciov");
+                        dt.Columns.Add("codex");
+                        dt.Columns.Add("codecrm");
+                        dt.Columns.Add("crm_pen");
+                        dt.Columns.Add("noteidcrm1");
+                        dt.Columns.Add("tipoter");
+                        dt.Columns.Add("cligrupo");
+                        dt.Columns.Add("riesgrupo");
+                        dt.Columns.Add("penvto");
+                        dt.Columns.Add("penvto2");
+                        dt.Columns.Add("norecupe");
+                        dt.Columns.Add("norecupe2");
+                        dt.Columns.Add("penfac");
+                        dt.Columns.Add("impagado");
+                        dt.Columns.Add("totalrisk");
+                        dt.Columns.Add("pmc");
+                        dt.Columns.Add("bloqueado");
+                        dt.Columns.Add("motbloqueo");
+                        dt.Columns.Add("litigio");
+                        dt.Columns.Add("tipocli");
+                        dt.Columns.Add("lang");
+                        dt.Columns.Add("ncopiasfac");
+                        dt.Columns.Add("efactura");
+                        dt.Columns.Add("fechaalta");
+
+
+                        while (!sr.EndOfStream)
+                        {
+                            while ((s = sr.ReadLine()) != null)
+                            {
+                                //Ignorar cabecera                    
+                                if (j > 0 || !model.Cabecera)
+                                {
+                                    string[] str = s.Split(delimitador);
+                                    dr = dt.NewRow();
+
+                                    for (int i = 0; i < dt.Columns.Count; i++)
+                                    {
+                                        try
+                                        {
+                                            dr[dt.Columns[i]] = str[i].Replace("\"", string.Empty).ToString() ?? string.Empty;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            ModelState.AddModelError("File", General.ErrorDelimitadorFormato);
+                                            return View("ImportarTerceros", model);
+                                        }
+                                    }
+                                    dt.Rows.Add(dr);
+                                }
+                                j++;
+                            }
+                        }
+                        try
+                        {
+                            var _db = new MarfilEntities();
+                            var tipo = 0;
+                            
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                var digitoscuenta = row["codigo"].ToString().Substring(0, 4);                          
+                                var existeTipoCuenta = _db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == digitoscuenta).FirstOrDefault();
+                                if (existeTipoCuenta != null)
+                                {
+                                    tipo = _db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == digitoscuenta).Select(f => f.tipos).FirstOrDefault();
+                                }
+
+                                switch (tipo)
+                                {
+                                    case 0:
+                                        clientes.ImportRow(row);
+                                        break;
+                                    case 1:
+                                        proveedores.ImportRow(row);
+                                        break;
+                                    case 2:
+                                        acreedores.ImportRow(row);
+                                        break;
+                                }
+                            }
+
+                            idPeticion = clienteService.CrearPeticionImportacion(ContextService);
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncClientes(clientes, idPeticion, token, model));
+                            idPeticion2 = proveedorService.CrearPeticionImportacion(ContextService);
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncProveedores(proveedores, idPeticion2, token, model));
+                            idPeticion3 = acreedorService.CrearPeticionImportacion(ContextService);
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncAcreedores(acreedores, idPeticion3, token, model));
+                            //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
+                            sr.Close();
+                        }
+                        catch (ValidationException ex)
+                        {
+                            if (string.IsNullOrEmpty(ex.Message))
+                            {
+                                TempData["Errors"] = null;
+                            }
+                            else
+                            {
+                                TempData["Errors"] = ex.Message;
+                            }
+                        }
+
+                        var totalregistros = dt.Rows.Count;
+                        var totalregistrosimportados = clientes.Rows.Count + proveedores.Rows.Count + acreedores.Rows.Count;
+                        if (totalregistros != totalregistrosimportados)
+                        {
+                            TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + " | " + idPeticion2.ToString() + " | " + idPeticion3.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas. Existen registros que no se van a importar por no coincidir con el tipo de cuenta de clientes, proveedores o acreedores. Revíselo una vez finalizadas las peticiones";
+                        }
+                        else
+                        {
+                            TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + " | " + idPeticion2.ToString() + " | " + idPeticion3.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas";
+                        }
+                        //TempData["Success"] = "Importado correctamente!";
+                        
+                        return RedirectToAction("ImportarTerceros", "Importar");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", General.ErrorFormatoFichero);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("File", General.ErrorFichero);
+                }
+            }
+
+            return View("ImportarTerceros", model);
+        }
+
+        private async Task GetAsyncAcreedores(DataTable dt, int idPeticion, CancellationToken cancellationToken, ImportarModel model)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                using (var service = FService.Instance.GetService(typeof(AcreedoresModel), ContextService) as AcreedoresService)
+                {
+                    await Task.Run(() => service.Importar(dt, idPeticion, ContextService, model));
+                    return;
+                }
+
+            }
+            catch (TaskCanceledException tce)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                using (var service = FService.Instance.GetService(typeof(PeticionesAsincronasModel), ContextService) as PeticionesAsincronasService)
+                {
+                    service.CambiarEstado(EstadoPeticion.Error, idPeticion, ex.Message);
+                }
+            }
+        }
+
+        private async Task GetAsyncClientes(DataTable dt, int idPeticion, CancellationToken cancellationToken, ImportarModel model)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                using (var service = FService.Instance.GetService(typeof(ClientesModel), ContextService) as ClientesService)
+                {
+                    await Task.Run(() => service.Importar(dt, idPeticion, ContextService, model));
+                    return;
+                }
+
+            }
+            catch (TaskCanceledException tce)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                using (var service = FService.Instance.GetService(typeof(PeticionesAsincronasModel), ContextService) as PeticionesAsincronasService)
+                {
+                    service.CambiarEstado(EstadoPeticion.Error, idPeticion, ex.Message);
+                }
+            }
+        }
+
+        private async Task GetAsyncProveedores(DataTable dt, int idPeticion, CancellationToken cancellationToken, ImportarModel model)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                using (var service = FService.Instance.GetService(typeof(ProveedoresModel), ContextService) as ProveedoresService)
+                {
+                    await Task.Run(() => service.Importar(dt, idPeticion, ContextService, model));
+                    return;
+                }
+
+            }
+            catch (TaskCanceledException tce)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                using (var service = FService.Instance.GetService(typeof(PeticionesAsincronasModel), ContextService) as PeticionesAsincronasService)
+                {
+                    service.CambiarEstado(EstadoPeticion.Error, idPeticion, ex.Message);
+                }
+            }
+        }
+
+        #endregion
     }
 }

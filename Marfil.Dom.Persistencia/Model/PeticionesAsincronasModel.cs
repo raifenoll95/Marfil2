@@ -40,7 +40,13 @@ namespace Marfil.Dom.Persistencia.Model
         [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
         ImportarStock,
         [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
-        ImportarArticulos
+        ImportarArticulos,
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        ImportarClientes,
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        ImportarProveedores,
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        ImportarAcreedores
     }
     
     public class PeticionesAsincronasModel : BaseModel<PeticionesAsincronasModel, PeticionesAsincronas>

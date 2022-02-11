@@ -3648,6 +3648,7 @@
     <Content Include="Views\RegularizacionAperturaProvisional\_procesoregularizacionaperturaprovisionalstep3.cshtml" />
     <Content Include="Views\AnaliticaPerdidasYGanancias\AnaliticaPerdidasYGanancias.cshtml" />
     <Content Include="Views\ListadoCuentasNoAsignadas\CuentasNoAsignadas.cshtml" />
+    <Content Include="Views\Importar\ImportarTerceros.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

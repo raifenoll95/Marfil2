@@ -144,6 +144,38 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
 
 
         }
+        public void SetPreferenciaEmpresa(TipoDocumentoImpresion tipoDocumento, Guid usuario, TipoPrivacidadDocumento tipoprivacidad, TipoReport tiporeport, string name, string empresa, byte[] report, bool defecto = false)
+        {
+
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
+            {
+                var item = _db.DocumentosUsuario.SingleOrDefault(f => f.empresa == empresa && f.fkusuario == usuario && f.tipo == (int)tipoDocumento && f.nombre == name) ??
+                           _db.DocumentosUsuario.Create();
+
+                item.empresa = empresa;
+                item.fkusuario = usuario;
+                item.tipo = (int)tipoDocumento;
+                item.nombre = name;
+                item.datos = report;
+                item.tipoprivacidad = (int)tipoprivacidad;
+                item.tiporeport = (int)tiporeport;
+
+
+                _db.DocumentosUsuario.AddOrUpdate(item);
+                _db.SaveChanges();
+
+                if (defecto && tiporeport == TipoReport.Report)
+                {
+                    var service = new PreferenciasUsuarioService(_db);
+                    service.SetPreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto", new PreferenciaDocumentoImpresionDefecto() { Name = name, Tipodocumento = tipoDocumento, Usuario = usuario });
+                }
+
+
+                tran.Complete();
+            }
+
+
+        }
 
         public void RemovePreferencia(TipoDocumentoImpresion tipoDocumento, Guid usuario, string name)
         {

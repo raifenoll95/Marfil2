@@ -90,7 +90,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
 
                     };
 
-                    _documentosService.SetPreferencia(model.Tipo, new Guid(model.Usuario), model.Tipoprivacidad, model.Tiporeport, model.Nombre, model.Datos, model.Defecto);
+                    _documentosService.SetPreferenciaEmpresa(model.Tipo, new Guid(model.Usuario), model.Tipoprivacidad, model.Tiporeport, model.Nombre, model.Empresa, model.Datos, model.Defecto);
                 }
             }
 

@@ -17,7 +17,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
             var password = ConfigurationManager.AppSettings["Password"];
             DataSource = new SqlDataSource("Report", new MsSqlConnectionParameters(server, user.BaseDatos, usuario, password, MsSqlAuthorizationType.SqlServer));
             DataSource.Name = "Report";
-            var mainQuery = new CustomSqlQuery("pedidos", "SELECT * FROM [pedidos] ");
+            var mainQuery = new CustomSqlQuery("pedidos", "SELECT p.* FROM pedidos p ");
 
             if (!string.IsNullOrEmpty(primarykey))
             {
@@ -30,13 +30,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
 
             DataSource.Queries.Add(new CustomSqlQuery("clientes", string.Format("SELECT c.*,d.direccion as [Direccioncliente],d.poblacion as [Poblacioncliente],d.cp as [Cpcliente],d.telefono as [Telefonocliente] FROM [Clientes] as c left join direcciones as d on d.empresa=c.empresa and d.tipotercero={0} and d.fkentidad=c.fkcuentas", (int)TiposCuentas.Clientes)));
             DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero],"+
-                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais]"+
-                "FROM[Empresas] as e"+
-                "left join direcciones as d on d.empresa = e.id and d.tipotercero = -1 and d.fkentidad = e.id"+
-                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais"+
+                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais] "+
+                "FROM[Empresas] as e "+
+                "left join direcciones as d on d.empresa = e.id and d.tipotercero = -1 and d.fkentidad = e.id "+
+                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais "+
                 "left join Paises as pa on pa.valor = d.fkpais and pa.Valor = d.fkpais"));
             DataSource.Queries.Add(mainQuery);
-            DataSource.Queries.Add(new CustomSqlQuery("pedidoslinprueba", "SELECT pl.*,un.textocorto as [Unidadesdescripcion] FROM [PedidosLin] as pl" +
+            DataSource.Queries.Add(new CustomSqlQuery("pedidoslin", "SELECT pl.*,un.textocorto as [Unidadesdescripcion] FROM [PedidosLin] as pl" +
                     " inner join Familiasproductos as fp on fp.empresa=pl.empresa and fp.id=substring(pl.fkarticulos,0,3)" +
                     "  left join unidades as un on fp.fkunidadesmedida=un.id "));
             DataSource.Queries.Add(new CustomSqlQuery("pedidostotales", "SELECT * FROM [PedidosTotales]"));
@@ -49,7 +49,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
             DataSource.Queries.Add(new CustomSqlQuery("Direcciones", "SELECT d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero] FROM [Direcciones] as d where d.tipotercero=-1"));
 
             // Create a master-detail relation between the queries.
-            DataSource.Relations.Add("pedidos", "pedidoslinprueba", new[] {
+            DataSource.Relations.Add("pedidos", "pedidoslin", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("id", "fkpedidos")
                     });

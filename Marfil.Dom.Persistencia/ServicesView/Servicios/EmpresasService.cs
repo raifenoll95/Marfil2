@@ -22,6 +22,9 @@ using System.Web.Hosting;
 using System.Threading;
 using Marfil.Inf.Genericos.Helper;
 using Marfil.Dom.Persistencia.Helpers;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
+using Marfil.Dom.Persistencia.Model.Diseñador;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -431,14 +434,77 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 EliminarContadores(model.Id);
                 EliminarContadoresLotes(model.Id);
                 EliminarSeries(model.Id);
+                EliminarSeriesContables(model.Id);
                 EliminarGruposIva(model.Id);
                 EliminarTiposIva(model.Id);
                 EliminarRegimenIva(model.Id);
                 EliminarGuiasContables(model.Id);
                 EliminarAlmacenes(model.Id);
+                EliminarCuentas(model.Id);
+                EliminarDocumentos(model.Id);
                 base.delete(obj);
 
                 tran.Complete();
+            }
+        }
+        private void EliminarDocumentos(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var servicePreferencias = new PreferenciasUsuarioService(_db);
+            var documentos = _db.DocumentosUsuario.Where(f => f.empresa == empresa )
+                .ToList();
+
+            foreach (var item in documentos)
+            {
+                _db.DocumentosUsuario.Remove(item);
+                _db.SaveChanges();
+            }
+        }
+
+        private void EliminarCuentas(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new CuentasService(newContext, _db);
+            var list = service.getAll().OfType<CuentasModel>().OrderByDescending(f => f.Id.Length);
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarSeriesContables(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new SeriesContablesService(newContext, _db);
+            var list = service.getAll().OfType<SeriesContablesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
             }
         }
 

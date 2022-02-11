@@ -229,7 +229,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
 
         public override bool ValidarBorrar(Cuentas model)
         {
-            if (ExistenNivelesInferiores(model.id))
+            if (ExistenNivelesInferiores(model.id, model.empresa))
                 throw new ValidationException(RCuentas.ErrorBorrado);
 
             if (model.tipocuenta.HasValue && !FlagDeleteFromThird)
@@ -243,9 +243,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             return base.ValidarBorrar(model);
         }
 
-        private bool ExistenNivelesInferiores(string id)
+        private bool ExistenNivelesInferiores(string id, string empresa)
         {
-            return _db.Cuentas.Any(f => f.id != id && f.id.StartsWith(id));
+            return _db.Cuentas.Any(f => f.empresa == empresa && f.id != id && f.id.StartsWith(id));
         }
 
         #endregion

@@ -12,6 +12,7 @@ using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Converter;
 using Marfil.Inf.Genericos.Helper;
+using System.Data;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -473,6 +474,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
             return result;
+        }
+
+        public void Importar(DataTable dt, int idPeticion, IContextService contextService, ImportarModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CrearPeticionImportacion(IContextService contextService)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
