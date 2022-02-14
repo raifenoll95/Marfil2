@@ -40,7 +40,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
         }
         public override string GetSelectPrincipal()
         {
-            return string.Format("select * from GuiasBalances");
+            return string.Format("select * from GuiasBalances where empresa = {0}", Empresa);
         }
 
         public string GetFiltroAcumulador()

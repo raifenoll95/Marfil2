@@ -703,7 +703,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
             {
                 pieza = _db.Stockactual.Single(f =>
                 f.empresa == empresa && f.fkalmacenes == fkalmacen &&
-                f.fkarticulos == referencialote);
+                f.lote == referencialote);
             }
             else if (_db.Kit.Any(f => f.empresa == empresa && f.fkalmacen == fkalmacen && f.referencia == referencialote && (f.estado == (int)EstadoKit.EnProceso || f.estado == (int)EstadoKit.Montado)))
             {

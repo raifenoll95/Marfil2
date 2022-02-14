@@ -2101,6 +2101,7 @@
           <Property Name="regdig" Type="nvarchar" MaxLength="255" />
           <Property Name="descrip" Type="nvarchar" MaxLength="255" />
           <Property Name="listado" Type="nvarchar" MaxLength="255" />
+          <Property Name="empresa" Type="varchar" MaxLength="4" />
         </EntityType>
         <EntityType Name="GuiasBalancesLineas">
           <Key>
@@ -2114,6 +2115,7 @@
           <Property Name="cuenta" Type="nvarchar" MaxLength="255" />
           <Property Name="signo" Type="nvarchar" MaxLength="255" />
           <Property Name="signoea" Type="nvarchar" MaxLength="255" />
+          <Property Name="empresa" Type="varchar" MaxLength="4" />
         </EntityType>
         <EntityType Name="Guiascontables">
           <Key>
@@ -13558,6 +13560,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="descrip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="listado" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalances" ToRole="GuiasBalancesLineas" />
+          <Property Name="empresa" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GuiasBalancesLineas">
           <Key>
@@ -13572,6 +13575,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="signo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="signoea" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalancesLineas" ToRole="GuiasBalances" />
+          <Property Name="empresa" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
           <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="0..1" />
@@ -18508,6 +18512,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="GuiasBalances">
             <EntityTypeMapping TypeName="MarfilModel.GuiasBalances">
               <MappingFragment StoreEntitySet="GuiasBalances">
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
                 <ScalarProperty Name="listado" ColumnName="listado" />
                 <ScalarProperty Name="descrip" ColumnName="descrip" />
                 <ScalarProperty Name="regdig" ColumnName="regdig" />
@@ -18525,6 +18530,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="GuiasBalancesLineas">
             <EntityTypeMapping TypeName="MarfilModel.GuiasBalancesLineas">
               <MappingFragment StoreEntitySet="GuiasBalancesLineas">
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
                 <ScalarProperty Name="signoea" ColumnName="signoea" />
                 <ScalarProperty Name="signo" ColumnName="signo" />
                 <ScalarProperty Name="cuenta" ColumnName="cuenta" />

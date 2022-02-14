@@ -22,6 +22,7 @@ namespace Marfil.Dom.Persistencia
         public string cuenta { get; set; }
         public string signo { get; set; }
         public string signoea { get; set; }
+        public string empresa { get; set; }
     
         public virtual GuiasBalances GuiasBalances { get; set; }
     }

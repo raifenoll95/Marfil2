@@ -31,6 +31,7 @@ namespace Marfil.Dom.Persistencia
         public string regdig { get; set; }
         public string descrip { get; set; }
         public string listado { get; set; }
+        public string empresa { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }

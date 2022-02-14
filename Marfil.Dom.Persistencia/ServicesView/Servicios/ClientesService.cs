@@ -580,6 +580,33 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     cliente.Cuentas.FkPais = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkPais;
 
                     //Direcciones
+                    var direccion = new DireccionesLinModel();
+                    var direcciones = new List<DireccionesLinModel>();
+                    direccion.Fkprovincia = row["provincia"].ToString();
+                    direccion.Direccion = row["direccion"].ToString();
+                    direccion.Poblacion = row["poblacion"].ToString();
+                    direccion.Personacontacto = row["contacto"].ToString();
+                    direccion.Cp = row["codpostal"].ToString();
+                    direccion.Telefono = row["telefono"].ToString();
+                    direccion.Telefonomovil = row["movil"].ToString();
+                    direccion.Fax = row["telexfax"].ToString();
+                    direccion.Email = row["email"].ToString();
+                    direccion.Web = row["web"].ToString();
+                    direccion.Fkpais = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkPais;
+                    direcciones.Add(direccion);
+                    cliente.Direcciones.Direcciones = direcciones;
+
+                    //Contactos
+
+                    //BancosMandatos
+                    var banco = new BancosMandatosLinModel();
+                    var bancos = new List<BancosMandatosLinModel>();
+                    banco.Descripcion = row["banconom"].ToString();
+                    banco.Direccion = row["direccion"].ToString();
+                    banco.Iban = row["iban"].ToString();
+                    banco.Bic = row["bic"].ToString();
+                    bancos.Add(banco);
+                    cliente.BancosMandatos.BancosMandatos = bancos;
 
                     ListaClientes.Add(cliente);
 

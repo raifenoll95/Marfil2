@@ -35,7 +35,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                            GuiasBalancesId = (int)item.guiasBalancesId,
                            Cuenta = item.cuenta,
                            Signo = item.signo,
-                           Signoea = item.signoea
+                           Signoea = item.signoea,
+                           Empresa = item.empresa
                        }).ToList();
 
             return result;
@@ -73,6 +74,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             foreach (var item in viewmodel.Lineas)
             {
                 var newItem = _db.GuiasBalancesLineas.Create();
+                newItem.empresa = item.Empresa;
                 newItem.cuenta = item.Cuenta;
                 newItem.guiaId = (int)result.guiaId;//misma que de la cabecera
                 newItem.guiasBalancesId = (int)result.id;//misma que de la cabecera
@@ -117,6 +119,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             foreach (var item in viewmodel.Lineas)
             {
                 var newItem = _db.GuiasBalancesLineas.Create();
+                newItem.empresa = item.Empresa;
                 newItem.cuenta = item.Cuenta;
                 newItem.guiaId = (int)result.guiaId;
                 newItem.guiasBalancesId = (int)result.id;
