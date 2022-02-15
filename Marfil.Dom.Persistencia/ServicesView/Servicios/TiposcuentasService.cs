@@ -102,6 +102,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             + " WHERE t.empresa='" + Empresa + "' AND t.fkcuentas='" + id + "'"));       
         }
 
+        public bool ExisteTipoCuenta(string digitoscuenta)
+        {
+            if(_db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == digitoscuenta).FirstOrDefault() != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public int GetTipoCuenta(string digitoscuenta)
+        {
+            return _db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == digitoscuenta).Select(f => f.tipos).FirstOrDefault();
+        }
+
         #endregion
     }
 }

@@ -28,6 +28,8 @@ using Marfil.Dom.ControlsUI.NifCif;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Startup;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -89,6 +91,7 @@ namespace Marfil.App.WebMain.Controllers
                         gestionService.create(model);
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarPlanContabilidad(model, token));
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarSeriesContables(model, token));
+                        HostingEnvironment.QueueBackgroundWorkItem(async token => await generarGuiasBalances(model, token));
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarDocumentos(model, token));
                         TempData["Success"] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
@@ -107,6 +110,114 @@ namespace Marfil.App.WebMain.Controllers
                 TempData["model"] = model;
                 return RedirectToAction("Create");
             }
+        }
+
+        private async Task generarGuiasBalances(EmpresaModel model, CancellationToken cancellationToken)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var service = new SeriesContablesService(ContextService);
+                var csvFile = ContextService.ServerMapPath("~/App_data/Otros/guiasbalancescabecera.csv");
+
+                using (var reader = new StreamReader(csvFile, Encoding.Default, true))
+                {
+                    var contenido = reader.ReadToEnd();
+                    await Task.Run(() => CrearGuiasBalances(contenido, model));
+                }
+            }
+            catch (TaskCanceledException tce)
+            {
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void CrearGuiasBalances(string xml, EmpresaModel model)
+        {
+            var lineas = xml.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (var item in lineas)
+            {
+                if (!string.IsNullOrEmpty(item))
+                    CrearGuiaBalances(item, model);
+            }
+        }
+
+        private void CrearGuiaBalances(string linea, EmpresaModel empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = ContextService.BaseDatos,
+                Empresa = empresa.Id,
+                Id = ContextService.Id,
+                RoleId = ContextService.RoleId
+            };
+
+            var vector = linea.Split(';');
+            var model = new GuiasBalancesModel()
+            {
+                Empresa = empresa.Id,
+                Id = int.Parse(vector[0]),
+                InformeId = (GuiasBalancesModel.TipoInformeE)int.Parse(vector[1]),
+                GuiaId = (GuiasBalancesModel.TipoGuiaE)int.Parse(vector[2]),
+                TextoGrupo = vector[3],
+                Orden = vector[4],
+                Actpas = vector[5],
+                Detfor = vector[6],
+                Formula = vector[7],
+                RegDig = vector[8],
+                Descrip = vector[9],
+                Listado = vector[10]
+            };
+
+            //Obtenemos las líneas
+            var csvFile = ContextService.ServerMapPath("~/App_data/Otros/guiasbalanceslineas.csv");
+            var lineas = new List<GuiasBalancesLineasModel>();
+
+            using (var reader = new StreamReader(csvFile, Encoding.Default, true))
+            {
+                var contenido = reader.ReadToEnd();
+                lineas = CrearGuiasBalancesLineas(contenido, model.Id, empresa.Id);
+            }
+
+            model.Lineas = lineas;
+
+            var service = new GuiasBalancesService(newContext);
+
+            service.create(model);
+        }
+
+        private List<GuiasBalancesLineasModel> CrearGuiasBalancesLineas(string xml, int guiabalancesId, string empresa)
+        {
+            var lineas = xml.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lista = new List<GuiasBalancesLineasModel>();
+
+            foreach (var item in lineas)
+            {               
+                if (!string.IsNullOrEmpty(item))
+                {
+                    var vector = item.Split(';');
+                    if (guiabalancesId == int.Parse(vector[0]))
+                    {
+                        var model = new GuiasBalancesLineasModel()
+                        {
+                            Empresa = empresa,
+                            GuiasBalancesId = int.Parse(vector[0]),
+                            InformeId = (GuiasBalancesLineasModel.TipoInformeE)int.Parse(vector[1]),
+                            GuiaId = (GuiasBalancesLineasModel.TipoGuiaE)int.Parse(vector[2]),
+                            Orden = vector[3],
+                            Cuenta = vector[4],
+                            Signo = vector[5],
+                            Signoea = vector[6]
+                        };
+
+                        lista.Add(model);
+                    }                   
+                }
+            }
+
+            return lista;
         }
 
         private async Task generarDocumentos(EmpresaModel model, CancellationToken cancellationToken)

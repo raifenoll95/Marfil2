@@ -533,22 +533,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         cliente.Fechaclasificacion = fechaClasificacion;
                     }
-                    else
+                    /*else
                     {
                         errores += fkcuentas + ";" + row["fclasif"].ToString() + " " + "La fecha fclasif no se ha podido convertir";
                         continue;
-                    }
+                    }*/
                     DateTime fechaUltSolicitud;
-                    if (DateTime.TryParseExact(row["futsol"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaUltSolicitud))
+                    if (DateTime.TryParseExact(row["fultsol"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaUltSolicitud))
                     {
                         cliente.Fechaultimasolicitud = fechaUltSolicitud;
                     }
-                    else
+                    /*else
                     {
                         errores += fkcuentas + ";" + row["futsol"].ToString() + " " + "La fecha futsol no se ha podido convertir";
                         continue;
-                    }
-                    cliente.Cuentatesoreria = row["cuentatesoreria"].ToString();
+                    }*/
+                    cliente.Cuentatesoreria = row["cobrador"].ToString();
                     cliente.Fkmonedas = (int)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkMonedabase;//Equivalencia
                     cliente.Criterioiva = (CriterioIVA)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().criterioiva; //Equivalencia
                     cliente.Fkgruposiva = "NORM"; //Equivalencia
@@ -572,11 +572,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         cliente.Cuentas.Fechaalta = fechaAlta;
                     }
-                    else
+                    /*else
                     {
                         errores += fkcuentas + ";" + row["fechaalta"].ToString() + " " + "La fecha fechaalta no se ha podido convertir";
                         continue;
-                    }
+                    }*/
                     cliente.Cuentas.FkPais = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkPais;
 
                     //Direcciones
@@ -614,7 +614,44 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 else
                 {
                     errores += fkcuentas + " El código del cliente ya existe" + Environment.NewLine;
+                }               
+            }
+
+            //Creamos los clientes
+            foreach (var cli in ListaClientes)
+            {
+                try
+                {
+                    create(cli);
                 }
+                catch (Exception ex)
+                {
+                    errores += cli.Fkcuentas + ";" + cli.Descripcion + ";" + ex.Message + Environment.NewLine;
+                }
+            }
+
+            var item = _db.PeticionesAsincronas.Where(f => f.empresa == Empresa && f.id == idPeticion).SingleOrDefault();
+
+            if (errores == "")
+            {
+                item.estado = (int)EstadoPeticion.Finalizada;
+                item.resultado = errores;
+            }
+            else
+            {
+                item.estado = (int)EstadoPeticion.FinalizadaLogs;
+                item.resultado = errores;
+            }
+
+            _db.PeticionesAsincronas.AddOrUpdate(item);
+
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

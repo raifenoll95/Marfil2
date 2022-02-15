@@ -25,6 +25,8 @@ using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 using Marfil.Dom.Persistencia.Model.Diseñador;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -439,6 +441,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 EliminarTiposIva(model.Id);
                 EliminarRegimenIva(model.Id);
                 EliminarGuiasContables(model.Id);
+                EliminarGuiasBalances(model.Id);
                 EliminarAlmacenes(model.Id);
                 EliminarCuentas(model.Id);
                 EliminarDocumentos(model.Id);
@@ -447,6 +450,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 tran.Complete();
             }
         }
+
+        private void EliminarGuiasBalances(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new GuiasBalancesService(newContext, _db);
+            var list = service.getAll().OfType<GuiasBalancesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
         private void EliminarDocumentos(string empresa)
         {
             var newContext = new ContextLogin()

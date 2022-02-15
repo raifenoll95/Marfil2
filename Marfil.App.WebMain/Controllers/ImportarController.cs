@@ -503,7 +503,7 @@ namespace Marfil.App.WebMain.Controllers
                         dt.Columns.Add("rsocial");
                         dt.Columns.Add("email");
                         dt.Columns.Add("web");
-                        dt.Columns.Add("relac");
+                        //dt.Columns.Add("relac");
                         dt.Columns.Add("diascomimp");
                         dt.Columns.Add("diasaplpag");
                         dt.Columns.Add("tarifa");
@@ -534,7 +534,10 @@ namespace Marfil.App.WebMain.Controllers
                         dt.Columns.Add("ncopiasfac");
                         dt.Columns.Add("efactura");
                         dt.Columns.Add("fechaalta");
-
+                        //copiamos el dt general al resto
+                        clientes = dt.Copy();
+                        proveedores = dt.Copy();
+                        acreedores = dt.Copy();
 
                         while (!sr.EndOfStream)
                         {
@@ -565,17 +568,16 @@ namespace Marfil.App.WebMain.Controllers
                         }
                         try
                         {
-                            var _db = new MarfilEntities();
                             var tipo = 0;
-                            
-
+                            var service = new TiposcuentasService(ContextService);
+                            //obtenemos los diferentes clientes, proveedores y acreedores
                             foreach (DataRow row in dt.Rows)
                             {
-                                var digitoscuenta = row["codigo"].ToString().Substring(0, 4);                          
-                                var existeTipoCuenta = _db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == digitoscuenta).FirstOrDefault();
-                                if (existeTipoCuenta != null)
+                                var digitoscuenta = row["codigo"].ToString().Substring(0, 4);
+                                var existeTipoCuenta = service.ExisteTipoCuenta(digitoscuenta);
+                                if (existeTipoCuenta == true)
                                 {
-                                    tipo = _db.Tiposcuentas.Where(f => f.empresa == Empresa && f.cuenta == digitoscuenta).Select(f => f.tipos).FirstOrDefault();
+                                    tipo = service.GetTipoCuenta(digitoscuenta);
                                 }
 
                                 switch (tipo)
@@ -594,11 +596,10 @@ namespace Marfil.App.WebMain.Controllers
 
                             idPeticion = clienteService.CrearPeticionImportacion(ContextService);
                             HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncClientes(clientes, idPeticion, token, model));
-                            idPeticion2 = proveedorService.CrearPeticionImportacion(ContextService);
+                            /*idPeticion2 = proveedorService.CrearPeticionImportacion(ContextService);
                             HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncProveedores(proveedores, idPeticion2, token, model));
                             idPeticion3 = acreedorService.CrearPeticionImportacion(ContextService);
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncAcreedores(acreedores, idPeticion3, token, model));
-                            //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncAcreedores(acreedores, idPeticion3, token, model));*/
                             sr.Close();
                         }
                         catch (ValidationException ex)

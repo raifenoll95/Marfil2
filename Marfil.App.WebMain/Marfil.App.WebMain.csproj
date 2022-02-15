@@ -1949,6 +1949,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\TablasVarias\SEPACodCategoria.csv" />
+    <Content Include="App_Data\Otros\guiasbalancescabecera.csv" />
+    <Content Include="App_Data\Otros\seriescontables.csv" />
+    <Content Include="App_Data\Otros\guiasbalanceslineas.csv" />
     <None Include="Properties\PublishProfiles\192.168.223.210 - MarfilBeta.pubxml" />
     <None Include="Properties\PublishProfiles\Azure MarfilNet.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml">

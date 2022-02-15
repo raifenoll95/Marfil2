@@ -1708,6 +1708,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Importar Clientes, Proveedores y Acreedores.
+        /// </summary>
+        public static string LblImportarTerceros {
+            get {
+                return ResourceManager.GetString("LblImportarTerceros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Imprimir.
         /// </summary>
         public static string LblImprimir {

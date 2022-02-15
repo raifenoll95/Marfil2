@@ -360,6 +360,13 @@ namespace Marfil.Dom.Persistencia.Helpers
                     icono = "fa fa-industry"
                 };
 
+                var importarTerceros = new MenuItemJavascriptModel()
+                {
+                    text = General.LblImportarTerceros,
+                    link = helper.Content("~/Importar/ImportarTerceros"),
+                    icono = "fa fa-star"
+                };
+
                 var importarArticulos = new MenuItemJavascriptModel()
                 {
                     text = General.LblImportarArticulos,
@@ -375,7 +382,7 @@ namespace Marfil.Dom.Persistencia.Helpers
                 };
 
                 importarStockItem.items = new[]
-                {importarArticulos, importarStock};
+                {importarTerceros, importarArticulos, importarStock};
 
                 var exportarItem = new MenuItemJavascriptModel()
                 {
