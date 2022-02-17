@@ -971,6 +971,6 @@
     <value>Revertir asiento contable</value>
   </data>
   <data name="LblImportarTerceros" xml:space="preserve">
-    <value>Importar Clientes, Proveedores y Acreedores</value>
+    <value>Importar Terceros</value>
   </data>
 </root>

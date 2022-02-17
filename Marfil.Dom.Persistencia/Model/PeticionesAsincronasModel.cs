@@ -37,15 +37,15 @@ namespace Marfil.Dom.Persistencia.Model
         ImportarMovs,
         [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
         ImportarCuentas,
-        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarStock")]
         ImportarStock,
-        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarArticulos")]
         ImportarArticulos,
-        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarClientes")]
         ImportarClientes,
-        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarProveedores")]
         ImportarProveedores,
-        [StringValue(typeof(RPeticiones), "TipoImportacionImportarCuentas")]
+        [StringValue(typeof(RPeticiones), "TipoImportacionImportarAcreedores")]
         ImportarAcreedores
     }
     

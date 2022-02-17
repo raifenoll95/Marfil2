@@ -549,9 +549,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         continue;
                     }*/
                     cliente.Cuentatesoreria = row["cobrador"].ToString();
-                    cliente.Fkmonedas = (int)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkMonedabase;//Equivalencia
-                    cliente.Criterioiva = (CriterioIVA)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().criterioiva; //Equivalencia
-                    cliente.Fkgruposiva = "NORM"; //Equivalencia
+                    var moneda = 0;
+                    if(row["moneda"].ToString() == "181")
+                    {
+                        moneda = 978;
+                    }
+                    else if(row["moneda"].ToString() == "103")
+                    {
+                        moneda = 997;
+                    }
+                    else
+                    {
+                        var monedaparse = int.Parse(row["moneda"].ToString());
+                        if (_db.Monedas.Where(f => f.id == monedaparse).FirstOrDefault() != null)
+                        {
+                            moneda = _db.Monedas.Where(f => f.id == monedaparse).FirstOrDefault().id;
+                        }
+                        else
+                        {
+                            moneda = (int)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkMonedabase;
+                        }
+                    }
+                    cliente.Fkmonedas = moneda;
+                    cliente.Criterioiva = (CriterioIVA)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().criterioiva; //Equivalencia empresa
+                    cliente.Fkgruposiva = "NORM"; //Equivalencia todos a normal
+                    var tipoopeparse = int.Parse(row["tipoope"].ToString());
+                    if (_db.RegimenIva.Where(f => f.empresa == Empresa && f.tipooperacionclassic == tipoopeparse).FirstOrDefault() != null)
+                    {
+                        cliente.Fkregimeniva = _db.RegimenIva.Where(f => f.empresa == Empresa && f.tipooperacionclassic == tipoopeparse).FirstOrDefault().id;
+                    }
+                    else
+                    {
+                        cliente.Fkregimeniva = "NORMA";
+                    }
                     cliente.Fktiposretencion = row["tiporet"].ToString();
                     cliente.Fktarifas = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fktarifasventas;
                     cliente.Perteneceagrupo = row["cligrupo"].ToString();
@@ -563,6 +593,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     cliente.Cuentas.Id = fkcuentas;
                     cliente.Cuentas.Descripcion = row["nombre"].ToString();
                     cliente.Cuentas.Descripcion2 = row["nombre2"].ToString();
+                    cliente.Cuentas.Nivel = 0;
                     var nifModel = new NifCifModel();
                     nifModel.Nif = row["nif"].ToString();
                     nifModel.TipoNif = row["tiponif"].ToString();
@@ -577,36 +608,48 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         errores += fkcuentas + ";" + row["fechaalta"].ToString() + " " + "La fecha fechaalta no se ha podido convertir";
                         continue;
                     }*/
-                    cliente.Cuentas.FkPais = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkPais;
+                    cliente.Cuentas.FkPais = GetPaisISO(row["paisiso"].ToString());
+                    cliente.Cuentas.Usuario = contextService.Usuario;
+                    cliente.Cuentas.UsuarioId = contextService.RoleId.ToString();
 
                     //Direcciones
                     var direccion = new DireccionesLinModel();
                     var direcciones = new List<DireccionesLinModel>();
-                    direccion.Fkprovincia = row["provincia"].ToString();
+                    direccion.Fkprovincia = row["provincia"].ToString().Substring(1,2);
                     direccion.Direccion = row["direccion"].ToString();
                     direccion.Poblacion = row["poblacion"].ToString();
                     direccion.Personacontacto = row["contacto"].ToString();
                     direccion.Cp = row["codpostal"].ToString();
-                    direccion.Telefono = row["telefono"].ToString();
+                    direccion.Defecto = true;
+                    if (row["telefono"].ToString().Length <= 15)
+                    {
+                        direccion.Telefono = row["telefono"].ToString();
+                    }
+                    else
+                    {
+                        direccion.Telefono = row["telefono"].ToString().Substring(0, 15);
+                    }                   
                     direccion.Telefonomovil = row["movil"].ToString();
                     direccion.Fax = row["telexfax"].ToString();
                     direccion.Email = row["email"].ToString();
                     direccion.Web = row["web"].ToString();
-                    direccion.Fkpais = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkPais;
+                    direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
+                    direccion.Descripcion = "Dirección Principal";
                     direcciones.Add(direccion);
                     cliente.Direcciones.Direcciones = direcciones;
 
                     //Contactos
 
-                    //BancosMandatos
-                    var banco = new BancosMandatosLinModel();
+                    //BancosMandatos Sin mandato de momento esto no se importa
+                    /*var banco = new BancosMandatosLinModel();
                     var bancos = new List<BancosMandatosLinModel>();
-                    banco.Descripcion = row["banconom"].ToString();
+                    banco.Descripcion = row["banconom"].ToString() != "" ? row["banconom"].ToString() : "Banco Principal";
                     banco.Direccion = row["direccion"].ToString();
                     banco.Iban = row["iban"].ToString();
                     banco.Bic = row["bic"].ToString();
+                    banco.Fkpaises = GetPaisISO(row["paisiso"].ToString());
                     bancos.Add(banco);
-                    cliente.BancosMandatos.BancosMandatos = bancos;
+                    cliente.BancosMandatos.BancosMandatos = bancos;*/
 
                     ListaClientes.Add(cliente);
 
@@ -665,7 +708,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             item.fecha = DateTime.Today;
             item.estado = (int)EstadoPeticion.EnCurso;
             item.tipo = (int)TipoPeticion.Importacion;
-            item.configuracion = (((int)TipoImportacion.ImportarClientes).ToString() + "-").ToString();
+            item.configuracion = TipoImportacion.ImportarClientes.ToString();
 
             _db.PeticionesAsincronas.AddOrUpdate(item);
             _db.SaveChanges();
@@ -682,6 +725,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             XmlNodeList nodo = datosParse.GetElementsByTagName("Fkidioma1");
             var idioma = nodo[0].InnerText;
             return idioma;
+        }
+
+        public string GetPaisISO(string paisISO)
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.TablasvariasLin.Where(f => f.fkTablasvarias == 3166).Select(c => c.xml).ToList();
+            foreach (var item in datos)
+            {
+                doc.LoadXml(item);
+                XmlElement datosParse = doc.DocumentElement;
+
+                XmlNodeList nodoIso = datosParse.GetElementsByTagName("CodigoIsoAlfa2");
+                var ISO = nodoIso[0].InnerText;
+
+                if(ISO == paisISO)
+                {
+                    XmlNodeList nodo = datosParse.GetElementsByTagName("Valor");
+                    var pais = nodo[0].InnerText;
+                    return pais;
+                }
+                
+            }
+
+            return "";
         }
 
         #endregion

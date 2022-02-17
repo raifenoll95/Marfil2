@@ -14,13 +14,16 @@
 <script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
 <div>
     <h3 class="green center">Seleccionar fichero y delimitador de contenido</h3>
-    <br />       
     <br />
-
+    <br />
+    <div class="alert alert-danger" align="center">
+        Antes de realizar la importación de los clientes, proveedores y acreedores se han de crear los tipos de cuentas de la empresa. <br />
+        Menú > Configuración > Tipos de cuentas
+    </div>
     <div class="form-group">
 
         @using (Html.BeginForm("ImportarTerceros", "Importar", new { ImportarModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {           
+        {
             @Html.LabelFor(f => Model.Fichero, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.TextBoxFor(f => Model.Fichero, new { @type = "file" })
             <br />
@@ -46,5 +49,5 @@
         {
             <pre class="alert alert-danger" id="divErrorMessage" align="center">@TempData["Errors"]</pre>
         }
-    </div>    
+    </div>
 </div>

@@ -187,6 +187,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Importar Acreedores.
+        /// </summary>
+        public static string TipoImportacionImportarAcreedores {
+            get {
+                return ResourceManager.GetString("TipoImportacionImportarAcreedores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Importar artículos.
         /// </summary>
         public static string TipoImportacionImportarArticulos {
@@ -196,11 +205,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Importar Clientes.
+        /// </summary>
+        public static string TipoImportacionImportarClientes {
+            get {
+                return ResourceManager.GetString("TipoImportacionImportarClientes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Importar asientos.
         /// </summary>
         public static string TipoImportacionImportarMovs {
             get {
                 return ResourceManager.GetString("TipoImportacionImportarMovs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Importar Proveedores.
+        /// </summary>
+        public static string TipoImportacionImportarProveedores {
+            get {
+                return ResourceManager.GetString("TipoImportacionImportarProveedores", resourceCulture);
             }
         }
         

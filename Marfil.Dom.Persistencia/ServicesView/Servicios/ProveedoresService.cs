@@ -13,6 +13,10 @@ using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Converter;
 using Marfil.Inf.Genericos.Helper;
 using System.Data;
+using System.Data.Entity.Migrations;
+using System.Xml;
+using System.Globalization;
+using Marfil.Dom.ControlsUI.NifCif;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -476,16 +480,257 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        #endregion
+
+        #region Importar
         public void Importar(DataTable dt, int idPeticion, IContextService contextService, ImportarModel model)
         {
-            throw new NotImplementedException();
+            string errores = "";
+            List<ProveedoresModel> ListaProveedores = new List<ProveedoresModel>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ProveedoresModel proveedor = new FModel().GetModel<ProveedoresModel>(contextService);
+
+                var fkcuentas = row["codigo"].ToString();
+
+                var existeProveedor = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).SingleOrDefault();
+
+                if (existeProveedor == null)
+                {
+                    //proveedor
+                    proveedor.Fkcuentas = fkcuentas;
+                    proveedor.Periodonopagodesde = row["vacac1"].ToString();
+                    proveedor.Periodonopagohasta = row["vacac2"].ToString();
+                    proveedor.Diafijopago1 = int.Parse(row["diapago1"].ToString());
+                    proveedor.Diafijopago2 = int.Parse(row["diapago2"].ToString());
+                    proveedor.Descuentoprontopago = double.Parse(row["dtopp"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    proveedor.Descuentocomercial = double.Parse(row["dtocial"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    proveedor.Fkregimeniva = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkregimeniva;//Equivalencia
+                    proveedor.Fkformaspago = int.Parse(row["forpago"].ToString());
+                    //proveedor.Fkcuentasagente = row["codagte"].ToString();
+                    //proveedor.Fkcuentascomercial = row["codcomer"].ToString();
+                    proveedor.Fkzonaproveedor = row["czona"].ToString();
+                    proveedor.Fkincoterm = row["codinco"].ToString();
+                    proveedor.Fktransportistahabitual = row["ctransp"].ToString();
+                    proveedor.Notas = row["notas"].ToString();
+                    //proveedor.Fkcuentasaseguradoras = row["ciaseg"].ToString();
+                    //proveedor.Suplemento = row["ciasupl"].ToString();
+                    //proveedor.Riesgoconcedidoempresa = int.Parse(row["riescemp"].ToString());
+                    //proveedor.Riesgosolicitado = int.Parse(row["riessol"].ToString());
+                    //proveedor.Riesgoaseguradora = int.Parse(row["riesccia"].ToString());
+                    //proveedor.Porcentajeriesgocomercial = int.Parse(row["riescom"].ToString());
+                    //proveedor.Porcentajeriesgopolitico = int.Parse(row["riespol"].ToString());
+                    //proveedor.Diascondecidos = int.Parse(row["riesdia"].ToString());
+                    proveedor.Cuentatesoreria = row["cobrador"].ToString();
+                    var moneda = 0;
+                    if (row["moneda"].ToString() == "181")
+                    {
+                        moneda = 978;
+                    }
+                    else if (row["moneda"].ToString() == "103")
+                    {
+                        moneda = 997;
+                    }
+                    else
+                    {
+                        var monedaparse = int.Parse(row["moneda"].ToString());
+                        if (_db.Monedas.Where(f => f.id == monedaparse).FirstOrDefault() != null)
+                        {
+                            moneda = _db.Monedas.Where(f => f.id == monedaparse).FirstOrDefault().id;
+                        }
+                        else
+                        {
+                            moneda = (int)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkMonedabase;
+                        }
+                    }
+                    proveedor.Fkmonedas = moneda;
+                    proveedor.Criterioiva = (CriterioIVA)_db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().criterioiva; //Equivalencia empresa
+                    proveedor.Fkgruposiva = "NORM"; //Equivalencia todos a normal
+                    var tipoopeparse = int.Parse(row["tipoope"].ToString());
+                    if (_db.RegimenIva.Where(f => f.empresa == Empresa && f.tipooperacionclassic == tipoopeparse).FirstOrDefault() != null)
+                    {
+                        proveedor.Fkregimeniva = _db.RegimenIva.Where(f => f.empresa == Empresa && f.tipooperacionclassic == tipoopeparse).FirstOrDefault().id;
+                    }
+                    else
+                    {
+                        proveedor.Fkregimeniva = "NORMA";
+                    }
+                    proveedor.Fktiposretencion = row["tiporet"].ToString();
+                    proveedor.Tarifa = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fktarifascompras;
+                    //proveedor.Perteneceagrupo = row["cligrupo"].ToString();
+                    proveedor.Fkfamiliaproveedor = row["tipocli"].ToString();
+                    proveedor.Fkidiomas = GetIdiomaPrincipal();
+                    //proveedor.Numerocopiasfactura = int.Parse(row["ncopiasfac"].ToString());
+
+                    //Cuentas
+                    proveedor.Cuentas.Id = fkcuentas;
+                    proveedor.Cuentas.Descripcion = row["nombre"].ToString();
+                    proveedor.Cuentas.Descripcion2 = row["nombre2"].ToString();
+                    proveedor.Cuentas.Nivel = 0;
+                    var nifModel = new NifCifModel();
+                    nifModel.Nif = row["nif"].ToString();
+                    nifModel.TipoNif = row["tiponif"].ToString();
+                    proveedor.Cuentas.Nif = nifModel;
+                    DateTime fechaAlta;
+                    if (DateTime.TryParseExact(row["fechaalta"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaAlta))
+                    {
+                        proveedor.Cuentas.Fechaalta = fechaAlta;
+                    }
+                    /*else
+                    {
+                        errores += fkcuentas + ";" + row["fechaalta"].ToString() + " " + "La fecha fechaalta no se ha podido convertir";
+                        continue;
+                    }*/
+                    proveedor.Cuentas.FkPais = GetPaisISO(row["paisiso"].ToString());
+                    proveedor.Cuentas.Usuario = contextService.Usuario;
+                    proveedor.Cuentas.UsuarioId = contextService.RoleId.ToString();
+
+                    //Direcciones
+                    var direccion = new DireccionesLinModel();
+                    var direcciones = new List<DireccionesLinModel>();
+                    direccion.Fkprovincia = row["provincia"].ToString().Substring(1,2);
+                    direccion.Direccion = row["direccion"].ToString();
+                    direccion.Poblacion = row["poblacion"].ToString();
+                    direccion.Personacontacto = row["contacto"].ToString();
+                    direccion.Cp = row["codpostal"].ToString();
+                    direccion.Defecto = true;
+                    if (row["telefono"].ToString().Length <= 15)
+                    {
+                        direccion.Telefono = row["telefono"].ToString();
+                    }
+                    else
+                    {
+                        direccion.Telefono = row["telefono"].ToString().Substring(0, 15);
+                    }
+                    direccion.Telefonomovil = row["movil"].ToString();
+                    direccion.Fax = row["telexfax"].ToString();
+                    direccion.Email = row["email"].ToString();
+                    direccion.Web = row["web"].ToString();
+                    direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
+                    direccion.Descripcion = "Dirección Principal";
+                    direcciones.Add(direccion);
+                    proveedor.Direcciones.Direcciones = direcciones;
+
+                    //Contactos
+
+                    //BancosMandatos
+                    if (row["iban"].ToString() != "")
+                    {
+                        var banco = new BancosMandatosLinModel();
+                        var bancos = new List<BancosMandatosLinModel>();
+                        banco.Id = "-2";
+                        banco.Descripcion = row["banconom"].ToString() != "" ? row["banconom"].ToString() : "Banco Principal";
+                        banco.Direccion = row["direccion"].ToString();
+                        banco.Iban = row["iban"].ToString();
+                        banco.Bic = row["bic"].ToString();
+                        banco.Fkpaises = GetPaisISO(row["paisiso"].ToString());
+                        bancos.Add(banco);
+                        proveedor.BancosMandatos.BancosMandatos = bancos;
+                    }
+                   
+
+                    ListaProveedores.Add(proveedor);
+
+                }
+                else
+                {
+                    errores += fkcuentas + " El código del proveedor ya existe" + Environment.NewLine;
+                }               
+            }
+
+            //Creamos los clientes
+            foreach (var pro in ListaProveedores)
+            {
+                try
+                {
+                    create(pro);
+                }
+                catch (Exception ex)
+                {
+                    errores += pro.Fkcuentas + ";" + pro.Descripcion + ";" + ex.Message + Environment.NewLine;
+                }
+            }
+
+            var item = _db.PeticionesAsincronas.Where(f => f.empresa == Empresa && f.id == idPeticion).SingleOrDefault();
+
+            if (errores == "")
+            {
+                item.estado = (int)EstadoPeticion.Finalizada;
+                item.resultado = errores;
+            }
+            else
+            {
+                item.estado = (int)EstadoPeticion.FinalizadaLogs;
+                item.resultado = errores;
+            }
+
+            _db.PeticionesAsincronas.AddOrUpdate(item);
+
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int CrearPeticionImportacion(IContextService contextService)
         {
-            throw new NotImplementedException();
+            var item = _db.PeticionesAsincronas.Create();
+
+            item.empresa = contextService.Empresa;
+            item.id = _db.PeticionesAsincronas.Any() ? _db.PeticionesAsincronas.Max(f => f.id) + 1 : 1;
+            item.usuario = contextService.Usuario;
+            item.fecha = DateTime.Today;
+            item.estado = (int)EstadoPeticion.EnCurso;
+            item.tipo = (int)TipoPeticion.Importacion;
+            item.configuracion = TipoImportacion.ImportarProveedores.ToString();
+
+            _db.PeticionesAsincronas.AddOrUpdate(item);
+            _db.SaveChanges();
+
+            return item.id;
+        }
+        public string GetIdiomaPrincipal()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Fkidioma1");
+            var idioma = nodo[0].InnerText;
+            return idioma;
+        }
+
+        public string GetPaisISO(string paisISO)
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.TablasvariasLin.Where(f => f.fkTablasvarias == 3166).Select(c => c.xml).ToList();
+            foreach (var item in datos)
+            {
+                doc.LoadXml(item);
+                XmlElement datosParse = doc.DocumentElement;
+
+                XmlNodeList nodoIso = datosParse.GetElementsByTagName("CodigoIsoAlfa2");
+                var ISO = nodoIso[0].InnerText;
+
+                if(ISO == paisISO)
+                {
+                    XmlNodeList nodo = datosParse.GetElementsByTagName("Valor");
+                    var pais = nodo[0].InnerText;
+                    return pais;
+                }
+                
+            }
+
+            return "";
         }
 
         #endregion
+
     }
 }

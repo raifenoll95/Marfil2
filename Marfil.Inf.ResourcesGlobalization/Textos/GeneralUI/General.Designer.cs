@@ -1708,7 +1708,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Importar Clientes, Proveedores y Acreedores.
+        ///   Busca una cadena traducida similar a Importar Terceros.
         /// </summary>
         public static string LblImportarTerceros {
             get {

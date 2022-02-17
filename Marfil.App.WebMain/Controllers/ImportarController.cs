@@ -596,10 +596,10 @@ namespace Marfil.App.WebMain.Controllers
 
                             idPeticion = clienteService.CrearPeticionImportacion(ContextService);
                             HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncClientes(clientes, idPeticion, token, model));
-                            /*idPeticion2 = proveedorService.CrearPeticionImportacion(ContextService);
+                            idPeticion2 = proveedorService.CrearPeticionImportacion(ContextService);
                             HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncProveedores(proveedores, idPeticion2, token, model));
                             idPeticion3 = acreedorService.CrearPeticionImportacion(ContextService);
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncAcreedores(acreedores, idPeticion3, token, model));*/
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsyncAcreedores(acreedores, idPeticion3, token, model));
                             sr.Close();
                         }
                         catch (ValidationException ex)

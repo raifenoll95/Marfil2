@@ -22,6 +22,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
         {
             if(string.IsNullOrEmpty(model.descripcion))
                 throw new ValidationException(string.Format(General.ErrorCampoObligatorio, RDireccion.Descripcion));
+            if (!string.IsNullOrEmpty(model.telefono) && model.telefono.Length > 15)
+                throw new ValidationException(string.Format("El teléfono tiene más de 15 caracteres", RDireccion.Telefono));
 
             return base.ValidarGrabar(model);
         }

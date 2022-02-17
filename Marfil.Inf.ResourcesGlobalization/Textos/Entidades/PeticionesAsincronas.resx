@@ -159,11 +159,20 @@
   <data name="Tipo" xml:space="preserve">
     <value>Tipo</value>
   </data>
+  <data name="TipoImportacionImportarAcreedores" xml:space="preserve">
+    <value>Importar Acreedores</value>
+  </data>
   <data name="TipoImportacionImportarArticulos" xml:space="preserve">
     <value>Importar artículos</value>
   </data>
+  <data name="TipoImportacionImportarClientes" xml:space="preserve">
+    <value>Importar Clientes</value>
+  </data>
   <data name="TipoImportacionImportarMovs" xml:space="preserve">
     <value>Importar asientos</value>
+  </data>
+  <data name="TipoImportacionImportarProveedores" xml:space="preserve">
+    <value>Importar Proveedores</value>
   </data>
   <data name="TipoImportacionImportarStock" xml:space="preserve">
     <value>Importar stock</value>

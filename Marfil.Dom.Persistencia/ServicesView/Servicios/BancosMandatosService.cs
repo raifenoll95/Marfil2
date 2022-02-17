@@ -47,6 +47,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var mandatos = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).ToList().Select(f => new BancosMandatosLinModel()
             {
                 Empresa = Empresa,
+                Fkcuentas = f.fkcuentas,
                 Id = f.id,
                 Bic = f.bic,
                 Fkpaises = f.fkpaises,
