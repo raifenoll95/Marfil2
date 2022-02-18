@@ -229,6 +229,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
 
         public override bool ValidarBorrar(Cuentas model)
         {
+            if (Context.Ejercicio != null)
+            {
+                var ejercicioparse = int.Parse(Context.Ejercicio);
+                if (_db.Maes.Where(f => f.empresa == Context.Empresa && f.fkejercicio == ejercicioparse && f.fkcuentas == model.id).FirstOrDefault() != null)
+                {
+                    throw new ValidationException(General.ErrorCuentaConSaldos);
+                }
+            }
+            else//Se elimina la empresa
+            {
+                if (_db.Maes.Where(f => f.empresa == Context.Empresa && f.fkcuentas == model.id).FirstOrDefault() != null)
+                {
+                    throw new ValidationException(General.ErrorCuentaConSaldos);
+                }
+            }
+           
+
             if (ExistenNivelesInferiores(model.id, model.empresa))
                 throw new ValidationException(RCuentas.ErrorBorrado);
 

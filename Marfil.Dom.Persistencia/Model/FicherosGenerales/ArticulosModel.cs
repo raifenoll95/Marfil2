@@ -46,6 +46,15 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
     }
 
+    public enum TipoStockSeguridad
+    {
+        [StringValue(typeof(RArticulos), "Piezas")]
+        Piezas,
+        [StringValue(typeof(RArticulos), "Metros")]
+        Metros
+
+    }
+
     public class TarifasEspecificasArticulosViewModel
     {
         public string Id { get; set; }
@@ -260,7 +269,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RArticulos), Name = "Lotefraccionable")]
         public bool Lotefraccionable { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Existenciasminimasmetros")]
+        /*[Display(ResourceType = typeof(RArticulos), Name = "Existenciasminimasmetros")]
         public double? Existenciasminimasmetros { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Existenciasmaximasmetros")]
@@ -270,7 +279,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public double? Existenciasminimasunidades { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Existenciasmaximasunidades")]
-        public double? Existenciasmaximasunidades { get; set; }
+        public double? Existenciasmaximasunidades { get; set; }*/
 
         [Display(ResourceType = typeof(RArticulos), Name = "Web")]
         public bool Web { get; set; }
@@ -289,6 +298,15 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         [Display(ResourceType = typeof(RArticulos), Name = "Ean13")]
         public string Ean13 { get; set; }
+
+        [Display(ResourceType = typeof(RArticulos), Name = "Stockminimo")]
+        public double Stockminimo { get; set; }
+
+        [Display(ResourceType = typeof(RArticulos), Name = "Stockmaximo")]
+        public double Stockmaximo { get; set; }
+
+        [Display(ResourceType = typeof(RArticulos), Name = "Stockseguridad")]
+        public TipoStockSeguridad Stockseguridad { get; set; }
 
         public List<ArticulosTerceroModel> ArticulosTercero
         {

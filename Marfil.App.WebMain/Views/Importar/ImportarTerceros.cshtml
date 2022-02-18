@@ -17,8 +17,51 @@
     <br />
     <br />
     <div class="alert alert-danger" align="center">
-        Antes de realizar la importación de los clientes, proveedores y acreedores se han de crear los tipos de cuentas de la empresa. <br />
-        Menú > Configuración > Tipos de cuentas
+        Antes de realizar la importación de los clientes, proveedores y acreedores se ha de comprobar: <br />
+        - Están definidos los tipos de cuenta de terceros (Menú > Configuración > Tipos de cuentas) <br />
+        - Régimen de IVA: El campo Tipo de operación está completado <br />
+        - Criterio de IVA: En blanco se importará como “Devengo” <br />
+        - Grupo de IVA: Se importarán todos como NORMAL <br />
+        - Moneda: Marfil importará de acuerdo a la siguiente tabla
+        <br />
+        <br />
+        <table border="1" align="center">
+            <thead>
+                <tr>
+                    <th class="bolder center" style="min-width:80px">Moneda</th>
+                    <th class="bolder center" style="min-width:80px">Fichero</th>
+                    <th class="bolder center" style="min-width:80px">Marfil SAAS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="center">EURO</td>
+                    <td class="center">181</td>
+                    <td class="center">978</td>
+                </tr>
+                <tr>
+                    <td class="center">DÓLAR</td>
+                    <td class="center">103</td>
+                    <td class="center">840</td>
+                </tr>
+                <tr>
+                    <td class="center">EURO</td>
+                    <td class="center">978</td>
+                    <td class="center">978</td>
+                </tr>
+                <tr>
+                    <td class="center"></td>
+                    <td class="center">Vacío</td>
+                    <td class="center">Moneda base aplicación</td>
+                </tr>
+                <tr>
+                    <td class="center"></td>
+                    <td class="center">Desconocido</td>
+                    <td class="center">Error</td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
     <div class="form-group">
 

@@ -27,6 +27,7 @@ using Marfil.Dom.Persistencia.Model.Diseñador;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Contabilidad.Maes;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -431,6 +432,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 
                 EliminarDirecciones(model);
                 EliminarTarifasBase(model.Id);
+                EliminarMaes(model.Id);
+                EliminarClientes(model.Id);
+                EliminarProveedores(model.Id);
+                EliminarAcreedores(model.Id);
+                EliminarCuentas(model.Id);
                 EliminarEjercicio(model.Id, model.Ejercicios);
                 EliminarCarpetas(model.Id);
                 EliminarContadores(model.Id);
@@ -442,12 +448,91 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 EliminarRegimenIva(model.Id);
                 EliminarGuiasContables(model.Id);
                 EliminarGuiasBalances(model.Id);
-                EliminarAlmacenes(model.Id);
-                EliminarCuentas(model.Id);
+                EliminarAlmacenes(model.Id);               
                 EliminarDocumentos(model.Id);
                 base.delete(obj);
 
                 tran.Complete();
+            }
+        }
+
+        private void EliminarAcreedores(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new AcreedoresService(newContext, _db);
+            var list = service.getAll().OfType<AcreedoresModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarProveedores(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new ProveedoresService(newContext, _db);
+            var list = service.getAll().OfType<ProveedoresModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarClientes(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new ClientesService(newContext, _db);
+            var list = service.getAll().OfType<ClientesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
+            }
+        }
+
+        private void EliminarMaes(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new MaesService(newContext, _db);
+            var list = service.getAll().OfType<MaesModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
             }
         }
 

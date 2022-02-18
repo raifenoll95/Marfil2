@@ -412,6 +412,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se puede borrar una cuenta con la que se han hecho movimientos y tiene valores en debe/haber.
+        /// </summary>
+        public static string ErrorCuentaConSaldos {
+            get {
+                return ResourceManager.GetString("ErrorCuentaConSaldos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ya existe una cuenta de tipo {0} con el código {1}.
         /// </summary>
         public static string ErrorCuentaExistente {
@@ -1695,6 +1704,15 @@ namespace Resources {
         public static string LblImportarArticulos {
             get {
                 return ResourceManager.GetString("LblImportarArticulos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Importación.
+        /// </summary>
+        public static string LblImportarClassic {
+            get {
+                return ResourceManager.GetString("LblImportarClassic", resourceCulture);
             }
         }
         

@@ -508,7 +508,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                     else if (row["moneda"].ToString() == "103")
                     {
-                        moneda = 997;
+                        moneda = 840;
                     }
                     else
                     {

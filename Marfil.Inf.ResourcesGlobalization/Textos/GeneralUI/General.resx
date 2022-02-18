@@ -973,4 +973,10 @@
   <data name="LblImportarTerceros" xml:space="preserve">
     <value>Importar Terceros</value>
   </data>
+  <data name="ErrorCuentaConSaldos" xml:space="preserve">
+    <value>No se puede borrar una cuenta con la que se han hecho movimientos y tiene valores en debe/haber</value>
+  </data>
+  <data name="LblImportarClassic" xml:space="preserve">
+    <value>Importación</value>
+  </data>
 </root>

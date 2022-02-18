@@ -18,6 +18,7 @@ using Marfil.Dom.Persistencia;
 using System.Collections.Generic;
 using Marfil.Inf.Genericos.Helper;
 using Marfil.Dom.Persistencia.Model.Terceros;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -403,6 +404,9 @@ namespace Marfil.App.WebMain.Controllers
             //                .Select(f => new SelectListItem() { Value = f.id, Text = f.descripcion }).ToList();
             //}
 
+            //Ayuda
+            var aux = model as IToolbar;
+            aux.Toolbar.Acciones = HelpItem();
             return View("ImportarTerceros", model);
         }
 

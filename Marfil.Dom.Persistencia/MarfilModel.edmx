@@ -573,10 +573,6 @@
           <Property Name="gestionstock" Type="bit" />
           <Property Name="tipogestionlotes" Type="int" />
           <Property Name="stocknegativoautorizado" Type="bit" />
-          <Property Name="existenciasminimasmetros" Type="float" />
-          <Property Name="existenciasmaximasmetros" Type="float" />
-          <Property Name="existenciasminimasunidades" Type="float" />
-          <Property Name="existenciasmaximasunidades" Type="float" />
           <Property Name="web" Type="bit" />
           <Property Name="rendimientom2m3" Type="float" />
           <Property Name="articulonegocio" Type="bit" />
@@ -593,6 +589,9 @@
           <Property Name="consumibles" Type="bit" />
           <Property Name="clasificacion" Type="varchar" MaxLength="10" />
           <Property Name="ean13" Type="varchar" MaxLength="13" />
+          <Property Name="stockminimo" Type="float" />
+          <Property Name="stockmaximo" Type="float" />
+          <Property Name="stockseguridad" Type="int" />
         </EntityType>
         <EntityType Name="ArticulosComponentes">
           <Key>
@@ -5685,7 +5684,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
-          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="0..1" />
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GuiasBalances">
@@ -9715,6 +9716,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <NavigationProperty Name="ArticulosComponentes" Relationship="MarfilModel.FK__ArticulosCompone__2552576E" FromRole="Articulos" ToRole="ArticulosComponentes" />
           <Property Name="ean13" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PreciosEspeciales" Relationship="MarfilModel.FK_Articulo" FromRole="Articulos" ToRole="PreciosEspeciales" />
+          <Property Name="stockminimo" Type="Double" />
+          <Property Name="stockmaximo" Type="Double" />
+          <Property Name="stockseguridad" Type="Int32" />
         </EntityType>
         <EntityType Name="Familiasproductos">
           <Key>
@@ -15569,6 +15573,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Articulos">
             <EntityTypeMapping TypeName="MarfilModel.Articulos">
               <MappingFragment StoreEntitySet="Articulos">
+                <ScalarProperty Name="stockseguridad" ColumnName="stockseguridad" />
+                <ScalarProperty Name="stockmaximo" ColumnName="stockmaximo" />
+                <ScalarProperty Name="stockminimo" ColumnName="stockminimo" />
                 <ScalarProperty Name="ean13" ColumnName="ean13" />
                 <ScalarProperty Name="clasificacion" ColumnName="clasificacion" />
                 <ScalarProperty Name="consumibles" ColumnName="consumibles" />
@@ -15585,10 +15592,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="articulonegocio" ColumnName="articulonegocio" />
                 <ScalarProperty Name="rendimientom2m3" ColumnName="rendimientom2m3" />
                 <ScalarProperty Name="web" ColumnName="web" />
-                <ScalarProperty Name="existenciasmaximasunidades" ColumnName="existenciasmaximasunidades" />
-                <ScalarProperty Name="existenciasminimasunidades" ColumnName="existenciasminimasunidades" />
-                <ScalarProperty Name="existenciasmaximasmetros" ColumnName="existenciasmaximasmetros" />
-                <ScalarProperty Name="existenciasminimasmetros" ColumnName="existenciasminimasmetros" />
                 <ScalarProperty Name="stocknegativoautorizado" ColumnName="stocknegativoautorizado" />
                 <ScalarProperty Name="tipogestionlotes" ColumnName="tipogestionlotes" />
                 <ScalarProperty Name="gestionstock" ColumnName="gestionstock" />

@@ -10,13 +10,38 @@ using System.Web;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
+using Marfil.Dom.ControlsUI.Toolbar;
 
 namespace Marfil.Dom.Persistencia.Model
 {
-    
-    public class ImportarModel
+    public class ToolbarImportarModel : ToolbarModel
     {
+        public ToolbarImportarModel()
+        {
+            Operacion = TipoOperacion.Custom;
+            Titulo = General.LblImportarClassic;
+        }
+
+        public override string GetCustomTexto()
+        {
+            return General.LblImportar2;
+        }
+    }
+    public class ImportarModel : IToolbar
+    {
+        #region Members
+
+        private ToolbarModel _toolbar;
+
+        #endregion
+
         #region Properties
+
+        public ToolbarModel Toolbar
+        {
+            get { return _toolbar; }
+            set { _toolbar = value; }
+        }
 
         [Display(ResourceType = typeof(General), Name = "LblFichero")]
         public HttpPostedFileBase Fichero { get; set; }
@@ -57,7 +82,7 @@ namespace Marfil.Dom.Persistencia.Model
 
         public ImportarModel()
         {
-            
+            _toolbar = new ToolbarImportarModel();
         }
 
         //public PeticionesAsincronasModel(IContextService context) : base(context)

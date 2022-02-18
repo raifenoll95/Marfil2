@@ -7,7 +7,7 @@
 
 @{
     ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
-    var objModel = Model as OportunidadesModel;
+    var objModel = Model as PeticionesAsincronasModel;
 }
 
 <h2>@General.LblBorrar</h2>
@@ -19,21 +19,35 @@
     <dl class="dl-horizontal">
 
         <dt>
-            @Html.DisplayNameFor(f=>objModel.Referencia)
+            @Html.DisplayNameFor(f => objModel.Id)
         </dt>
 
         <dd>
-            @objModel.Referencia 
+            @objModel.Id
         </dd>
-            <dt>
-                @Html.DisplayNameFor(f => objModel.Asunto)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(f => objModel.Tipo)
+        </dt>
 
-            <dd>
-                @objModel.Asunto
-            </dd>
-        
-       
+        <dd>
+            @objModel.Tipo
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(f => objModel.Configuracion)
+        </dt>
+
+        <dd>
+            @objModel.Configuracion
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(f => objModel.Fecha)
+        </dt>
+
+        <dd>
+            @objModel.Fecha
+        </dd>
+
+
     </dl>
 
     @using (Html.BeginForm()) {

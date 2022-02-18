@@ -81,7 +81,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             var idPeticion = 0;
 
-            // Para que no de error al devolver la vista, en un futuro cambiar esto
+            // Para que no de error al devolver la vista
             model.Iso = new List<SelectListItem> {
                 new SelectListItem { Text = "Iso alfanumérico 2", Value = "CodigoIsoAlfa2" },
                 new SelectListItem { Text = "Iso alfanumérico 3", Value = "CodigoIsoAlfa3" },
