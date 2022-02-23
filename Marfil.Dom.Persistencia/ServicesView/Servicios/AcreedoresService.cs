@@ -478,14 +478,48 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     //proveedor
                     acreedor.Fkcuentas = fkcuentas;
-                    acreedor.Periodonopagodesde = row["vacac1"].ToString();
-                    acreedor.Periodonopagohasta = row["vacac2"].ToString();
+                    if (row["vacac1"].ToString() != "")
+                    {
+                        if (row["vacac1"].ToString().Length > 5)
+                        {
+                            acreedor.Periodonopagodesde = row["vacac1"].ToString().Substring(0,5);
+                        }
+                        else
+                        {
+                            acreedor.Periodonopagodesde = row["vacac1"].ToString();
+                        }                       
+                        
+                    }
+                    if (row["vacac2"].ToString() != "")
+                    {
+                        if (row["vacac2"].ToString().Length > 5)
+                        {
+                            acreedor.Periodonopagohasta = row["vacac2"].ToString().Substring(0, 5);
+                        }
+                        else
+                        {
+                            acreedor.Periodonopagohasta = row["vacac2"].ToString();
+                        }
+                    }
                     acreedor.Diafijopago1 = int.Parse(row["diapago1"].ToString());
                     acreedor.Diafijopago2 = int.Parse(row["diapago2"].ToString());
                     acreedor.Descuentoprontopago = double.Parse(row["dtopp"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     acreedor.Descuentocomercial = double.Parse(row["dtocial"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    acreedor.Fkregimeniva = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkregimeniva;//Equivalencia
-                    acreedor.Fkformaspago = int.Parse(row["forpago"].ToString());
+                    var formapago = int.Parse(row["forpago"].ToString());
+                    if (row["forpago"].ToString() == "")
+                    {
+                        errores += fkcuentas + ";" + " La forma de pago está vacía" + Environment.NewLine;
+                        continue;
+                    }
+                    else if (_db.FormasPago.Where(f => f.id == formapago).FirstOrDefault() == null)
+                    {
+                        errores += fkcuentas + ";" + " La forma de pago no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        acreedor.Fkformaspago = formapago;
+                    }
                     //acreedor.Fkcuentasagente = row["codagte"].ToString();
                     //acreedor.Fkcuentascomercial = row["codcomer"].ToString();
                     acreedor.Fkzonaacreedor = row["czona"].ToString();
@@ -543,8 +577,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     //Cuentas
                     acreedor.Cuentas.Id = fkcuentas;
-                    acreedor.Cuentas.Descripcion = row["nombre"].ToString();
-                    acreedor.Cuentas.Descripcion2 = row["nombre2"].ToString();
+                    acreedor.Cuentas.Descripcion = row["nombre"].ToString() + " " + row["nombre2"].ToString();
+                    acreedor.Cuentas.Descripcion2 = row["rsocial"].ToString();
                     acreedor.Cuentas.Nivel = 0;
                     var nifModel = new NifCifModel();
                     nifModel.Nif = row["nif"].ToString();
@@ -566,36 +600,66 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     //Direcciones
                     var direccion = new DireccionesLinModel();
+                    var direccion2 = new DireccionesLinModel();
                     var direcciones = new List<DireccionesLinModel>();
-                    if (row["provincia"].ToString().Length <= 2)
+                    //dir 1
+                    if (row["direccion"].ToString() != "")
                     {
-                        direccion.Fkprovincia = row["provincia"].ToString();
+                        direccion.Id = -1;//Valor negativo para el proceso de creación le asigne el que corresponda.
+                        if (row["provincia"].ToString() == "")
+                        {
+                            errores += fkcuentas + ";" + " La provincia no puede estar vacía" + Environment.NewLine;
+                            continue;
+                        }
+                        else if (row["provincia"].ToString().Length == 2)
+                        {
+                            direccion.Fkprovincia = row["provincia"].ToString();
+                        }
+                        else if (row["provincia"].ToString().Length == 3)
+                        {
+                            direccion.Fkprovincia = row["provincia"].ToString().Substring(1, 2);
+                        }
+                        else if (row["provincia"].ToString().Length < 2)
+                        {
+                            direccion.Fkprovincia = ("000" + row["provincia"].ToString()).Substring(2, 2);
+                        }
+                        direccion.Direccion = row["direccion"].ToString() + Environment.NewLine + row["direc2"].ToString();
+                        direccion.Poblacion = row["poblacion"].ToString();
+                        direccion.Personacontacto = row["contacto"].ToString();
+                        direccion.Cp = row["codpostal"].ToString();
+                        direccion.Defecto = true;
+
+                        if (row["telefono"].ToString().Length <= 15)
+                        {
+                            direccion.Telefono = row["telefono"].ToString();
+                        }
+                        else
+                        {
+                            direccion.Telefono = row["telefono"].ToString().Substring(0, 15);
+                        }
+                        if (row["movil"].ToString().Length <= 15)
+                        {
+                            direccion.Telefonomovil = row["movil"].ToString();
+                        }
+                        else
+                        {
+                            direccion.Telefonomovil = row["movil"].ToString().Substring(0, 15);
+                        }
+                        if (row["telexfax"].ToString().Length <= 15)
+                        {
+                            direccion.Fax = row["telexfax"].ToString();
+                        }
+                        else
+                        {
+                            direccion.Fax = row["telexfax"].ToString().Substring(0, 15);
+                        }
+                        direccion.Email = row["email"].ToString();
+                        direccion.Web = row["web"].ToString();
+                        direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
+                        direccion.Descripcion = "Dirección Principal";
+                        direcciones.Add(direccion);
+                        acreedor.Direcciones.Direcciones = direcciones;
                     }
-                    else
-                    {
-                        direccion.Fkprovincia = row["provincia"].ToString().Substring(1, 2);
-                    }
-                    direccion.Direccion = row["direccion"].ToString();
-                    direccion.Poblacion = row["poblacion"].ToString();
-                    direccion.Personacontacto = row["contacto"].ToString();
-                    direccion.Cp = row["codpostal"].ToString();
-                    direccion.Defecto = true;
-                    if (row["telefono"].ToString().Length <= 15)
-                    {
-                        direccion.Telefono = row["telefono"].ToString();
-                    }
-                    else
-                    {
-                        direccion.Telefono = row["telefono"].ToString().Substring(0, 15);
-                    }
-                    direccion.Telefonomovil = row["movil"].ToString();
-                    direccion.Fax = row["telexfax"].ToString();
-                    direccion.Email = row["email"].ToString();
-                    direccion.Web = row["web"].ToString();
-                    direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
-                    direccion.Descripcion = "Dirección Principal";
-                    direcciones.Add(direccion);
-                    acreedor.Direcciones.Direcciones = direcciones;
 
                     //Contactos
 
@@ -606,7 +670,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         var bancos = new List<BancosMandatosLinModel>();
                         banco.Id = "-2";
                         banco.Descripcion = row["banconom"].ToString() != "" ? row["banconom"].ToString() : "Banco Principal";
-                        banco.Direccion = row["direccion"].ToString();
+                        banco.Direccion = row["bancodir"].ToString() + Environment.NewLine + row["bancodir2"].ToString();
                         banco.Iban = row["iban"].ToString();
                         banco.Bic = row["bic"].ToString();
                         banco.Fkpaises = GetPaisISO(row["paisiso"].ToString());

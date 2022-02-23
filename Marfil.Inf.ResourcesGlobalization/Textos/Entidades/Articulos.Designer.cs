@@ -70,6 +70,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Almacenes.
+        /// </summary>
+        public static string Almacenes {
+            get {
+                return ResourceManager.GetString("Almacenes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Es artículo comentario.
         /// </summary>
         public static string Articulocomentario {
@@ -457,6 +466,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a En metros.
+        /// </summary>
+        public static string Metros {
+            get {
+                return ResourceManager.GetString("Metros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Movimientos.
         /// </summary>
         public static string Movimientos {
@@ -480,6 +498,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Partidaarancelaria {
             get {
                 return ResourceManager.GetString("Partidaarancelaria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a En piezas.
+        /// </summary>
+        public static string Piezas {
+            get {
+                return ResourceManager.GetString("Piezas", resourceCulture);
             }
         }
         
@@ -556,11 +583,38 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Stock máximo.
+        /// </summary>
+        public static string Stockmaximo {
+            get {
+                return ResourceManager.GetString("Stockmaximo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Stock mínimo.
+        /// </summary>
+        public static string Stockminimo {
+            get {
+                return ResourceManager.GetString("Stockminimo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Stock negativo autorizado.
         /// </summary>
         public static string Stocknegativoautorizado {
             get {
                 return ResourceManager.GetString("Stocknegativoautorizado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Stock de seguridad.
+        /// </summary>
+        public static string Stockseguridad {
+            get {
+                return ResourceManager.GetString("Stockseguridad", resourceCulture);
             }
         }
         

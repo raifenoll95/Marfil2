@@ -324,4 +324,22 @@
   <data name="Ean13" xml:space="preserve">
     <value>Ean13</value>
   </data>
+  <data name="Metros" xml:space="preserve">
+    <value>En metros</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>En piezas</value>
+  </data>
+  <data name="Stockmaximo" xml:space="preserve">
+    <value>Stock máximo</value>
+  </data>
+  <data name="Stockminimo" xml:space="preserve">
+    <value>Stock mínimo</value>
+  </data>
+  <data name="Stockseguridad" xml:space="preserve">
+    <value>Stock de seguridad</value>
+  </data>
+  <data name="Almacenes" xml:space="preserve">
+    <value>Almacenes</value>
+  </data>
 </root>

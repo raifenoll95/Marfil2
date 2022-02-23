@@ -108,6 +108,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArticulosComponentes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\ArticulosStockSeguiridad.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArticulosStockSeguiridad.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\ArticulosTercero.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -332,6 +337,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ListadoMovs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\LogStockSeguridad.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogStockSeguridad.resx</DependentUpon>
     </Compile>
     <Compile Include="Textos\Entidades\Maes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -683,6 +693,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArticulosComponentes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ArticulosStockSeguiridad.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArticulosStockSeguiridad.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\ArticulosTercero.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArticulosTercero.Designer.cs</LastGenOutput>
@@ -932,6 +946,10 @@
     <EmbeddedResource Include="Textos\Entidades\ListadoMovs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ListadoMovs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\LogStockSeguridad.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogStockSeguridad.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Maes.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Maes.resx">

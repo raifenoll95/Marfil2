@@ -1,0 +1,287 @@
+﻿@using System.Drawing
+@using System.Web.UI.WebControls
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion;
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Helpers;
+@using Resources
+@model IEnumerable<ArticulosStockSeguridadModel>
+
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+}
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewAlmacenes";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "Articulos", Action = "ArticulosStockSeguridad" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Articulos", Action = "ArticulosStockSeguridadAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Articulos", Action = "ArticulosStockSeguridadUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Articulos", Action = "ArticulosStockSeguridadDelete" };
+        //settings.CustomActionRouteValues = new { Controller = "Articulos", Action = "CustomGridViewEditingPartial" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Codalmacen";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Pixel(150);
+            var p = j.PropertiesEdit as ButtonEditProperties;
+
+            p.Style.Paddings.PaddingRight = Unit.Pixel(20);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.Init = "DescripcionDisabledAlmacenes";
+            p.ClientSideEvents.ValueChanged = "OnCodAlmacenChanged";
+            p.ClientSideEvents.KeyDown = "OnKeyPressAlmacenes";
+            p.ClientInstanceName = j.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchAlmacen(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+
+            j.ReadOnly = true;
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Descripcionalmacen";
+            j.Width = Unit.Pixel(350);
+            j.ReadOnly = true;
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Stockminimo";
+            j.Width = Unit.Pixel(150);
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Stockmaximo";
+            j.Width = Unit.Pixel(150);
+        });
+
+        settings.Columns["Codalmacen"].Visible = true;
+        settings.Columns["Descripcionalmacen"].Visible = true;
+        settings.Columns["Stockminimo"].Visible = true;
+        settings.Columns["Stockmaximo"].Visible = true;
+
+        settings.InitNewRow += (s, e) =>
+        {
+            ////Si es un registro nuevo
+            e.NewValues["Codalmacen"] = "";
+            e.NewValues["Descripcionalmacen"] = "";
+            e.NewValues["Stockminimo"] = "";
+            e.NewValues["Stockmaximo"] = "";
+
+        };
+
+        settings.CellEditorInitialize = (s, e) =>
+        {
+
+            var editor = e.Editor as ASPxEdit;
+
+            if (editor == null) return;
+            editor.ValidationSettings.Display = Display.Dynamic;
+
+            if (e.Column.FieldName == settings.KeyFieldName)
+            {
+                editor.ValidationSettings.RegularExpression.ValidationExpression = "[0-9]{1,2}";
+                editor.Focus();
+            }
+
+
+        };
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 4;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.CellEditorInitialize += (sender, args) =>
+        {
+
+            if (args.Column.FieldName == settings.KeyFieldName)
+            {
+                ASPxTextBox tb = (ASPxTextBox)args.Editor;
+                //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
+                tb.Focus();
+            }
+        };
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChangedAlmacen(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridViewAlmacenes.Focus();}";
+
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+    });
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+
+}
+
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+
+        function FunOnFocusedRowChangedAlmacen(s, e) {
+            $("#GridViewAlmacenes").unbind("keydown");
+            $('#GridViewAlmacenes').keydown(function (event) {
+
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                var index = s.GetFocusedRowIndex();
+
+                switch (keycode) {
+                    case 113://editar
+                        if (!GridViewAlmacenes.IsEditing()) {
+                            GridViewAlmacenes.StartEditRow(index);
+                        }
+                        break;
+                    case 46://Eliminar
+                        if (!GridViewAlmacenes.IsEditing()) {
+                            GridViewAlmacenes.DeleteRow(index);
+                        }
+                        break;
+                    case 27://escape
+                        if (GridViewAlmacenes.IsEditing()) {
+                            GridViewAlmacenes.CancelEdit();
+                            GridViewAlmacenes.Focus();
+                        }
+                        break;
+                    case 13://enter
+                        if (GridViewAlmacenes.IsEditing()) {
+                            GridViewAlmacenes.Focus();
+                            GridViewAlmacenes.UpdateEdit();
+                        }
+                        break;
+                    case 107://mas
+                        CreateRow();
+                        break;
+                }
+
+            });
+        }
+
+        //Se le llama cuando le das a nuevo registro
+        function CreateLineasRowAlmacenes() {
+
+            if (!GridViewAlmacenes.IsEditing()) {
+                GridViewAlmacenes.Focus();
+                var rowIndex = GridViewAlmacenes.GetFocusedRowIndex();
+                GridViewAlmacenes.AddNewRow();
+            }
+        }
+
+        //Se le llama cuando le das a la lupa para buscar el codigo de almacén
+        function OnKeyPressAlmacenes(s, e) {
+            //console.log("keydown");
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchAlmacen();
+            }
+            if (keycode == 13) {
+                console.log("ha presionado");
+            }
+        }
+
+        //SE VIENE AQUI CUANDO CAMBIAS EL ALMACÉN
+        function OnCodAlmacenChanged(s, e) {
+
+            var cod = s.GetValue();
+            s.SetValue(cod);
+            GridViewAlmacenes.GetEditor("Codalmacen").SetEnabled(false);
+
+            s.Focus();
+        }
+        //Se le llama cuando le das a la lupa de la columna
+        function SearchAlmacen() {
+
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Codalmacen",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("AlmacenesApi", "Api")',
+                Titulo: "Busqueda de almacenes"
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+        //Viene del BusquedasController.js que hace un publish con la cuenta y aqui te suscribes al evento
+        eventAggregator.RegisterEvent("Codalmacen-Buscarfocus", function (obj) {
+            GridViewAlmacenes.GetEditor("Codalmacen").SetValue(obj);
+            GridViewAlmacenes.GetEditor("Codalmacen").SetEnabled(false);
+            SearchDescripcion(obj);
+        });
+
+        //Seteamos descripcion
+        function SearchDescripcion(obj) {
+
+            console.log("@Url.Action("AlmacenesApi", "Api")" + "/" + obj);
+            $.get("@Url.Action("AlmacenesApi", "Api")" + "/" + obj).success(function (result) {
+
+                //Descripcion
+                GridViewAlmacenes.GetEditor("Descripcionalmacen").SetValue(result.Descripcion);
+
+            }).error(function (jqXHR, textStatus, errorThrown) {
+
+                GridViewAlmacenes.GetEditor("Codalmacen").SetEnabled(true);
+            });
+        }
+        //Tenemos que tener a disabled la descripcion para que el usuario no la pueda modificar
+        function DescripcionDisabledAlmacenes(s, e) {
+            s.Focus();
+            GridViewAlmacenes.GetEditor("Descripcionalmacen").SetEnabled(false);
+        }
+
+        function CreateRow() {
+            if (!GridViewAlmacenes.IsEditing()) {
+                GridViewAlmacenes.Focus();
+                GridViewAlmacenes.AddNewRow();
+            }
+        }
+
+        $(document).ready(function () {
+            GridViewAlmacenes.Focus();
+        });
+
+</script>

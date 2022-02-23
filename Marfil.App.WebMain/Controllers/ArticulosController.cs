@@ -29,6 +29,7 @@ namespace Marfil.App.WebMain.Controllers
         private const string Sessioncompras = "_tarifasespecificascompras_";
         private const string SessionArticulosTercero = "_articulostercero";
         private const string SessionArticulosComponentes = "_articuloscomponentes";
+        private const string SessionArticulosStockSeguridad = "_articulosstockseguridad";
 
         private const string Partialviewventas = "_tarifasEspecificasVentas";
         private const string Partialviewcompras = "_tarifasEspecificasCompras";
@@ -80,6 +81,7 @@ namespace Marfil.App.WebMain.Controllers
                 Session[Sessioncompras] = ((ArticulosModel)modelview).TarifasEspecificasCompras;
                 Session[SessionArticulosTercero] = ((ArticulosModel)modelview).ArticulosTercero;
                 Session[SessionArticulosComponentes] = ((ArticulosModel)modelview).ArticulosComponentes;
+                Session[SessionArticulosStockSeguridad] = ((ArticulosModel)modelview).ArticulosStockSeguridad;
 
                 ((IToolbar)modelview).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, modelview);
                 return View(modelview);
@@ -96,6 +98,7 @@ namespace Marfil.App.WebMain.Controllers
                 model.TarifasEspecificasCompras = Session[Sessioncompras] as TarifaEspecificaArticulo;
                 model.ArticulosTercero = Session[SessionArticulosTercero] as List<ArticulosTerceroModel>;
                 model.ArticulosComponentes = Session[SessionArticulosComponentes] as List<ArticulosComponentesModel>;
+                model.ArticulosStockSeguridad = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
 
                 using (var gestionService = createService(modelview))
                 {
@@ -148,6 +151,7 @@ namespace Marfil.App.WebMain.Controllers
                 Session[Sessioncompras] = ((ArticulosModel)model).TarifasEspecificasCompras;
                 Session[SessionArticulosTercero] = ((ArticulosModel)model).ArticulosTercero;
                 Session[SessionArticulosComponentes] = ((ArticulosModel)model).ArticulosComponentes;
+                Session[SessionArticulosStockSeguridad] = ((ArticulosModel)model).ArticulosStockSeguridad;
 
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
 
@@ -174,6 +178,7 @@ namespace Marfil.App.WebMain.Controllers
                         model.TarifasEspecificasCompras = Session[Sessioncompras] as TarifaEspecificaArticulo;
                         model.ArticulosTercero = Session[SessionArticulosTercero] as List<ArticulosTerceroModel>;
                         model.ArticulosComponentes = Session[SessionArticulosComponentes] as List<ArticulosComponentesModel>;
+                        model.ArticulosStockSeguridad = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
 
                         gestionService.edit(model);
                         TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
@@ -220,6 +225,7 @@ namespace Marfil.App.WebMain.Controllers
                 Session[Sessioncompras] = ((ArticulosModel)model).TarifasEspecificasCompras;
                 Session[SessionArticulosTercero] = ((ArticulosModel)model).ArticulosTercero;
                 Session[SessionArticulosComponentes] = ((ArticulosModel)model).ArticulosComponentes;
+                Session[SessionArticulosStockSeguridad] = ((ArticulosModel)model).ArticulosStockSeguridad;
 
                 ViewBag.ReadOnly = true;                
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
@@ -331,7 +337,12 @@ namespace Marfil.App.WebMain.Controllers
             return PartialView("_Movsarticuloscomponentes", model);
         }
 
-
+        [ValidateInput(false)]
+        public ActionResult ArticulosStockSeguridad()
+        {
+            var model = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
+            return PartialView("_Movsarticulosstockseguridad", model);
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult ArticulosTerceroAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ArticulosTerceroModel item)
@@ -420,6 +431,52 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult ArticulosStockSeguridadAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] ArticulosStockSeguridadModel item)
+        {
+
+            var model = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
+
+            var servicioAlamcenes = FService.Instance.GetService(typeof(AlmacenesModel), ContextService) as AlmacenesService;
+            var descripcion = servicioAlamcenes.GetDescripcionAlmacen(item.Codalmacen) ?? "";
+
+            if (descripcion == "")
+            {
+                throw new ValidationException("No existe ningún almacén con código : " + item.Codalmacen);
+            }
+
+            //No se pueden repetir codigos de terceros
+            if (model.Count >= 1)
+            {
+                foreach (var reg in model)
+                {
+                    if (reg.Codalmacen == item.Codalmacen)
+                    {
+                        throw new ValidationException("Ya existe un registro con el código de almacén : " + reg.Codalmacen);
+                    }
+                }
+            }
+
+            item.Id = model.Count() + 1; //0+1=1
+
+            //Añadimos el item al model
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    model.Add(item);
+                    Session[SessionArticulosStockSeguridad] = model;
+                }
+            }
+            catch (ValidationException)
+            {
+
+                throw;
+            }
+
+            return PartialView("_Movsarticulosstockseguridad", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult ArticulosTerceroUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ArticulosTerceroModel item)
         {
 
@@ -475,6 +532,34 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult ArticulosStockSeguridadUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ArticulosStockSeguridadModel item)
+        {
+
+            var model = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var editItem = model.Single(f => f.Id == item.Id); //Sacamos editar
+                    editItem.Codalmacen = editItem.Codalmacen;
+                    editItem.Codarticulo = item.Codarticulo;
+                    editItem.Descripcionalmacen = item.Descripcionalmacen;
+                    editItem.Stockmaximo = item.Stockmaximo;
+                    editItem.Stockminimo = item.Stockminimo;
+                    //editItem.Stockseguridad = item.Stockseguridad;
+                    Session[SessionArticulosStockSeguridad] = model;
+                }
+            }
+            catch (ValidationException)
+            {
+                throw;
+            }
+
+            return PartialView("_Movsarticulosstockseguridad", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult ArticulosTerceroDelete(string id)
         {
             var model = Session[SessionArticulosTercero] as List<ArticulosTerceroModel>;
@@ -516,6 +601,28 @@ namespace Marfil.App.WebMain.Controllers
 
             Session[SessionArticulosComponentes] = model;
             return PartialView("_Movsarticuloscomponentes", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ArticulosStockSeguridadDelete(string id)
+        {
+            var model = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
+            model.Remove(model.Single(f => f.Id.ToString() == id));
+
+            //Ir actualizando los ID en caso de que sufran cambios (eliminacion de lineas) EN CASO DE QUE QUEDEN LINEAS
+            if (model.Count() >= 1)
+            {
+                int count = 1;
+                foreach (var linea in model)
+                {
+
+                    linea.Id = count;
+                    count++;
+                }
+            }
+
+            Session[SessionArticulosStockSeguridad] = model;
+            return PartialView("_Movsarticulosstockseguridad", model);
         }
 
         public ActionResult CustomGridViewEditingPartial(string key)

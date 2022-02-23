@@ -428,7 +428,7 @@ namespace Marfil.App.WebMain.Controllers
                         var clienteService = FService.Instance.GetService(typeof(ClientesModel), ContextService) as ClientesService;
                         var proveedorService = FService.Instance.GetService(typeof(ProveedoresModel), ContextService) as ProveedoresService;
                         var acreedorService = FService.Instance.GetService(typeof(AcreedoresModel), ContextService) as AcreedoresService;
-                        StreamReader sr = new StreamReader(file.InputStream, Encoding.UTF8);
+                        StreamReader sr = new StreamReader(file.InputStream, Encoding.GetEncoding(1252));
                         StringBuilder sb = new StringBuilder();
                         DataTable dt = new DataTable();
                         DataTable clientes = new DataTable();

@@ -66,7 +66,7 @@ namespace Marfil.App.Web.Controllers
                     context.Azureblob = licenciaModel.Azureblob;
                     using (var startupService = new StartupService(context, context.BaseDatos))
                     {
-                        if (startupService.ExisteAdmin()) //esto no deberia estar aqui!
+                        if (startupService.ExisteAdmin()) 
                         {
                             HttpCookie securityCookie;
                             if (_loginService.Login(_dominio, model.Usuario, model.Contraseña,  out securityCookie))

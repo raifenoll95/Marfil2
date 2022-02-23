@@ -20,6 +20,8 @@ namespace Marfil.Dom.Persistencia
             this.ArticulosTercero = new HashSet<ArticulosTercero>();
             this.ArticulosComponentes = new HashSet<ArticulosComponentes>();
             this.PreciosEspeciales = new HashSet<PreciosEspeciales>();
+            this.ArticulosStockSeguridad = new HashSet<ArticulosStockSeguridad>();
+            this.LogStockSeguridad = new HashSet<LogStockSeguridad>();
         }
     
         public string empresa { get; set; }
@@ -58,10 +60,6 @@ namespace Marfil.Dom.Persistencia
         public Nullable<bool> gestionstock { get; set; }
         public Nullable<int> tipogestionlotes { get; set; }
         public Nullable<bool> stocknegativoautorizado { get; set; }
-        public Nullable<double> existenciasminimasmetros { get; set; }
-        public Nullable<double> existenciasmaximasmetros { get; set; }
-        public Nullable<double> existenciasminimasunidades { get; set; }
-        public Nullable<double> existenciasmaximasunidades { get; set; }
         public Nullable<bool> web { get; set; }
         public Nullable<double> rendimientom2m3 { get; set; }
         public Nullable<bool> articulonegocio { get; set; }
@@ -88,5 +86,9 @@ namespace Marfil.Dom.Persistencia
         public virtual ICollection<ArticulosComponentes> ArticulosComponentes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PreciosEspeciales> PreciosEspeciales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticulosStockSeguridad> ArticulosStockSeguridad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LogStockSeguridad> LogStockSeguridad { get; set; }
     }
 }

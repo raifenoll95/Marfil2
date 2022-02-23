@@ -1105,6 +1105,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Log rotura de stock.
+        /// </summary>
+        public static string logstockseguridad {
+            get {
+                return ResourceManager.GetString("logstockseguridad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Centro de control de lotes.
         /// </summary>
         public static string lotes {

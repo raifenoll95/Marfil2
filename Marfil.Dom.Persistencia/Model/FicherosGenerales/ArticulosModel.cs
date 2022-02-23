@@ -104,6 +104,7 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         //Lista de articulos de tercero
         private List<ArticulosTerceroModel> _articulosTercero = new List<ArticulosTerceroModel>();
         private List<ArticulosComponentesModel> _articulosComponentes = new List<ArticulosComponentesModel>();
+        private List<ArticulosStockSeguridadModel> _articulosStockSeguridad = new List<ArticulosStockSeguridadModel>();
         private List<TarifasSistemaArticulosViewModel> _tarifasSistemaVenta = new List<TarifasSistemaArticulosViewModel>();
         private List<TarifasSistemaArticulosViewModel> _tarifasSistemaCompra = new List<TarifasSistemaArticulosViewModel>();
         private List<TarifasSistemaArticulosViewModel> _tarifasSistemaEspecial = new List<TarifasSistemaArticulosViewModel>();
@@ -312,6 +313,12 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         {
             get { return _articulosTercero; }
             set { _articulosTercero = value; }
+        }
+
+        public List<ArticulosStockSeguridadModel> ArticulosStockSeguridad
+        {
+            get { return _articulosStockSeguridad; }
+            set { _articulosStockSeguridad = value; }
         }
 
         public List<TarifasSistemaArticulosViewModel> TarifasSistemaVenta

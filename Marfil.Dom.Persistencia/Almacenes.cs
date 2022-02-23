@@ -18,6 +18,7 @@ namespace Marfil.Dom.Persistencia
         public Almacenes()
         {
             this.AlmacenesZona = new HashSet<AlmacenesZona>();
+            this.ArticulosStockSeguridad = new HashSet<ArticulosStockSeguridad>();
         }
     
         public string empresa { get; set; }
@@ -29,5 +30,7 @@ namespace Marfil.Dom.Persistencia
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenesZona> AlmacenesZona { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticulosStockSeguridad> ArticulosStockSeguridad { get; set; }
     }
 }

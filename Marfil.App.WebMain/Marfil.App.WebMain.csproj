@@ -324,6 +324,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ArticulosStockSeguridadController.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteCuentasController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
@@ -341,6 +342,7 @@
     <Compile Include="Controllers\ListadoInformeMargenController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\FacturasApiController.cs" />
+    <Compile Include="Controllers\LogStockSeguridadController.cs" />
     <Compile Include="Controllers\PreciosEspecialesController.cs" />
     <Compile Include="Controllers\PresupuestosAsistenteApiController.cs" />
     <Compile Include="Controllers\CuentasTesoreriaApiController.cs" />
@@ -3652,6 +3654,9 @@
     <Content Include="Views\AnaliticaPerdidasYGanancias\AnaliticaPerdidasYGanancias.cshtml" />
     <Content Include="Views\ListadoCuentasNoAsignadas\CuentasNoAsignadas.cshtml" />
     <Content Include="Views\Importar\ImportarTerceros.cshtml" />
+    <Content Include="Views\Articulos\_articulosstockseguridad.cshtml" />
+    <Content Include="Views\Articulos\_Movsarticulosstockseguridad.cshtml" />
+    <Content Include="Views\LogStockSeguridad\Index.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

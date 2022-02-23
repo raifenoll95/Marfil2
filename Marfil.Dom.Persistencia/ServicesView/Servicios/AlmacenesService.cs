@@ -187,5 +187,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
         #endregion
+
+
+        public string GetDescripcionAlmacen(string codalmacen)
+        {
+            var descripcion = _db.Almacenes.Where(f => f.empresa == Empresa && f.id == codalmacen).Select(f => f.descripcion).SingleOrDefault();
+
+            return descripcion;
+        }
+
     }
 }

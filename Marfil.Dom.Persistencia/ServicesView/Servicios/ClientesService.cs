@@ -506,21 +506,64 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     //cliente
                     cliente.Fkcuentas = fkcuentas;
-                    cliente.Periodonopagodesde = row["vacac1"].ToString();
-                    cliente.Periodonopagohasta = row["vacac2"].ToString();
+                    if (row["vacac1"].ToString() != "")
+                    {
+                        if (row["vacac1"].ToString().Length > 5)
+                        {
+                            cliente.Periodonopagodesde = row["vacac1"].ToString().Substring(0, 5);
+                        }
+                        else
+                        {
+                            cliente.Periodonopagodesde = row["vacac1"].ToString();
+                        }
+
+                    }
+                    if (row["vacac2"].ToString() != "")
+                    {
+                        if (row["vacac2"].ToString().Length > 5)
+                        {
+                            cliente.Periodonopagohasta = row["vacac2"].ToString().Substring(0, 5);
+                        }
+                        else
+                        {
+                            cliente.Periodonopagohasta = row["vacac2"].ToString();
+                        }
+                    }
                     cliente.Diafijopago1 = int.Parse(row["diapago1"].ToString());
                     cliente.Diafijopago2 = int.Parse(row["diapago2"].ToString());
                     cliente.Descuentoprontopago = double.Parse(row["dtopp"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     cliente.Descuentocomercial = double.Parse(row["dtocial"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    cliente.Fkregimeniva = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fkregimeniva;//Equivalencia
-                    cliente.Fkformaspago = int.Parse(row["forpago"].ToString());
+                    var formapago = int.Parse(row["forpago"].ToString());
+                    if (row["forpago"].ToString() == "")
+                    {
+                        errores += fkcuentas + ";" + " La forma de pago está vacía" + Environment.NewLine;
+                        continue;
+                    }
+                    else if (_db.FormasPago.Where(f => f.id == formapago).FirstOrDefault() == null)
+                    {
+                        errores += fkcuentas + ";" + " La forma de pago no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        cliente.Fkformaspago = formapago;
+                    }                    
                     cliente.Fkcuentasagente = row["codagte"].ToString();
                     cliente.Fkcuentascomercial = row["codcomer"].ToString();
                     cliente.Fkzonacliente = row["czona"].ToString();
                     cliente.Fkincoterm = row["codinco"].ToString();
                     cliente.Fktransportistahabitual = row["ctransp"].ToString();
                     cliente.Notas = row["notas"].ToString();
-                    cliente.Fkcuentasaseguradoras = row["ciaseg"].ToString();
+                    var cuentasaseguradora = row["ciaseg"].ToString();
+                    if (row["ciaseg"].ToString() != "" && _db.Aseguradoras.Where(f => f.fkcuentas == cuentasaseguradora).FirstOrDefault() == null)
+                    {
+                        errores += fkcuentas + ";" + " La cuenta aseguradora no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        cliente.Fkcuentasaseguradoras = cuentasaseguradora;
+                    }
                     cliente.Suplemento = row["ciasupl"].ToString();
                     cliente.Riesgoconcedidoempresa = int.Parse(row["riescemp"].ToString());
                     cliente.Riesgosolicitado = int.Parse(row["riessol"].ToString());
@@ -591,8 +634,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     //Cuentas
                     cliente.Cuentas.Id = fkcuentas;
-                    cliente.Cuentas.Descripcion = row["nombre"].ToString();
-                    cliente.Cuentas.Descripcion2 = row["nombre2"].ToString();
+                    cliente.Cuentas.Descripcion = row["nombre"].ToString() + " " + row["nombre2"].ToString();
+                    cliente.Cuentas.Descripcion2 = row["rsocial"].ToString();
                     cliente.Cuentas.Nivel = 0;
                     var nifModel = new NifCifModel();
                     nifModel.Nif = row["nif"].ToString();
@@ -614,29 +657,65 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     //Direcciones
                     var direccion = new DireccionesLinModel();
+                    var direccion2 = new DireccionesLinModel();
                     var direcciones = new List<DireccionesLinModel>();
-                    direccion.Fkprovincia = row["provincia"].ToString().Substring(1,2);
-                    direccion.Direccion = row["direccion"].ToString();
-                    direccion.Poblacion = row["poblacion"].ToString();
-                    direccion.Personacontacto = row["contacto"].ToString();
-                    direccion.Cp = row["codpostal"].ToString();
-                    direccion.Defecto = true;
-                    if (row["telefono"].ToString().Length <= 15)
+                    //dir 1
+                    if (row["direccion"].ToString() != "")
                     {
-                        direccion.Telefono = row["telefono"].ToString();
+                        direccion.Id = -1;//Valor negativo para el proceso de creación le asigne el que corresponda.
+                        if (row["provincia"].ToString() == "")
+                        {
+                            errores += fkcuentas + ";" + " La provincia no puede estar vacía" + Environment.NewLine;
+                            continue;
+                        }
+                        else if (row["provincia"].ToString().Length == 2)
+                        {
+                            direccion.Fkprovincia = row["provincia"].ToString();
+                        }
+                        else if (row["provincia"].ToString().Length == 3)
+                        {
+                            direccion.Fkprovincia = row["provincia"].ToString().Substring(1, 2);
+                        }
+                        else if (row["provincia"].ToString().Length < 2)
+                        {
+                            direccion.Fkprovincia = ("000" + row["provincia"].ToString()).Substring(2, 2);
+                        }
+                        direccion.Direccion = row["direccion"].ToString() + Environment.NewLine + row["direc2"].ToString();
+                        direccion.Poblacion = row["poblacion"].ToString();
+                        direccion.Personacontacto = row["contacto"].ToString();
+                        direccion.Cp = row["codpostal"].ToString();
+                        direccion.Defecto = true;
+                        if (row["telefono"].ToString().Length <= 15)
+                        {
+                            direccion.Telefono = row["telefono"].ToString();
+                        }
+                        else
+                        {
+                            direccion.Telefono = row["telefono"].ToString().Substring(0, 15);
+                        }
+                        if (row["movil"].ToString().Length <= 15)
+                        {
+                            direccion.Telefonomovil = row["movil"].ToString();
+                        }
+                        else
+                        {
+                            direccion.Telefonomovil = row["movil"].ToString().Substring(0, 15);
+                        }
+                        if (row["telexfax"].ToString().Length <= 15)
+                        {
+                            direccion.Fax = row["telexfax"].ToString();
+                        }
+                        else
+                        {
+                            direccion.Fax = row["telexfax"].ToString().Substring(0, 15);
+                        }
+                        direccion.Email = row["email"].ToString();
+                        direccion.Web = row["web"].ToString();
+                        direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
+                        direccion.Descripcion = "Dirección Principal";
+                        direcciones.Add(direccion);
+                        cliente.Direcciones.Direcciones = direcciones;
                     }
-                    else
-                    {
-                        direccion.Telefono = row["telefono"].ToString().Substring(0, 15);
-                    }                   
-                    direccion.Telefonomovil = row["movil"].ToString();
-                    direccion.Fax = row["telexfax"].ToString();
-                    direccion.Email = row["email"].ToString();
-                    direccion.Web = row["web"].ToString();
-                    direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
-                    direccion.Descripcion = "Dirección Principal";
-                    direcciones.Add(direccion);
-                    cliente.Direcciones.Direcciones = direcciones;
 
                     //Contactos
 

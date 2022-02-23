@@ -610,6 +610,22 @@
           <Property Name="grueso" Type="float" />
           <Property Name="merma" Type="int" />
         </EntityType>
+        <EntityType Name="ArticulosStockSeguridad">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="codarticulo" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codalmacen" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="codarticulo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="codalmacen" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="descripcionalmacen" Type="nvarchar" MaxLength="200" />
+          <Property Name="stockminimo" Type="float" />
+          <Property Name="stockmaximo" Type="float" />
+          <Property Name="stockseguridad" Type="int" />
+        </EntityType>
         <EntityType Name="ArticulosTercero">
           <Key>
             <PropertyRef Name="empresa" />
@@ -2420,6 +2436,24 @@
           <Property Name="decimalesprecio" Type="int" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
           <Property Name="fkalmacenes" Type="varchar" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="LogStockSeguridad">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="codarticulo" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="codarticulo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="descripcionarticulo" Type="nvarchar" MaxLength="200" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="documento" Type="varchar" MaxLength="30" />
+          <Property Name="codigounidad" Type="nvarchar" MaxLength="2" />
+          <Property Name="stockminimo" Type="float" />
+          <Property Name="stockactual" Type="float" />
+          <Property Name="pedidooptimo" Type="float" />
+          <Property Name="stockseguridad" Type="int" />
         </EntityType>
         <EntityType Name="Maes">
           <Key>
@@ -5063,6 +5097,34 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__ArticulosStockSeguridad_Almacenes">
+          <End Role="Almacenes" Type="Self.Almacenes" Multiplicity="1" />
+          <End Role="ArticulosStockSeguridad" Type="Self.ArticulosStockSeguridad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacenes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ArticulosStockSeguridad">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codalmacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ArticulosStockSeguridad_Articulos">
+          <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+          <End Role="ArticulosStockSeguridad" Type="Self.ArticulosStockSeguridad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ArticulosStockSeguridad">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codarticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ArticulosTercero__703EA55A">
           <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
           <End Role="ArticulosTercero" Type="Self.ArticulosTercero" Multiplicity="*" />
@@ -5158,6 +5220,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <Dependent Role="ImputacionCostesLin">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="fkimputacioncostes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LogStockSeguridad_Articulos">
+          <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+          <End Role="LogStockSeguridad" Type="Self.LogStockSeguridad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LogStockSeguridad">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codarticulo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6201,6 +6277,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="AppPermisosUsuarios" EntityType="Self.AppPermisosUsuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Articulos" EntityType="Self.Articulos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ArticulosComponentes" EntityType="Self.ArticulosComponentes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticulosStockSeguridad" EntityType="Self.ArticulosStockSeguridad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ArticulosTercero" EntityType="Self.ArticulosTercero" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aseguradoras" EntityType="Self.Aseguradoras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bancos" EntityType="Self.Bancos" Schema="dbo" store:Type="Tables" />
@@ -6277,6 +6354,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="InventariosLin" EntityType="Self.InventariosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kit" EntityType="Self.Kit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KitLin" EntityType="Self.KitLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogStockSeguridad" EntityType="Self.LogStockSeguridad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Maes" EntityType="Self.Maes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MapeoRemesas" EntityType="Self.MapeoRemesas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materiales" EntityType="Self.Materiales" Schema="dbo" store:Type="Tables" />
@@ -6505,6 +6583,14 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="ArticulosComponentes" EntitySet="ArticulosComponentes" />
           </AssociationSet>
+          <AssociationSet Name="FK__ArticulosStockSeguridad_Almacenes" Association="Self.FK__ArticulosStockSeguridad_Almacenes">
+            <End Role="Almacenes" EntitySet="Almacenes" />
+            <End Role="ArticulosStockSeguridad" EntitySet="ArticulosStockSeguridad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ArticulosStockSeguridad_Articulos" Association="Self.FK__ArticulosStockSeguridad_Articulos">
+            <End Role="Articulos" EntitySet="Articulos" />
+            <End Role="ArticulosStockSeguridad" EntitySet="ArticulosStockSeguridad" />
+          </AssociationSet>
           <AssociationSet Name="FK__ArticulosTercero__703EA55A" Association="Self.FK__ArticulosTercero__703EA55A">
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="ArticulosTercero" EntitySet="ArticulosTercero" />
@@ -6532,6 +6618,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK__ImputacionCostes__0BE6BFCF" Association="Self.FK__ImputacionCostes__0BE6BFCF">
             <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
             <End Role="ImputacionCostesLin" EntitySet="ImputacionCostesLin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LogStockSeguridad_Articulos" Association="Self.FK__LogStockSeguridad_Articulos">
+            <End Role="Articulos" EntitySet="Articulos" />
+            <End Role="LogStockSeguridad" EntitySet="LogStockSeguridad" />
           </AssociationSet>
           <AssociationSet Name="FK__PedidosCostesFab__147C05D0" Association="Self.FK__PedidosCostesFab__147C05D0">
             <End Role="Pedidos" EntitySet="Pedidos" />
@@ -7355,6 +7445,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="ReportAnaliticaGuiasBalances" EntitySet="ReportAnaliticaGuiasBalances" />
             <End Role="ReportAnaliticaGuiasBalancesLineas" EntitySet="ReportAnaliticaGuiasBalancesLineas" />
           </AssociationSet>
+          <EntitySet Name="ArticulosStockSeguridad" EntityType="MarfilModel.ArticulosStockSeguridad" />
+          <AssociationSet Name="FK__ArticulosStockSeguridad_Almacenes" Association="MarfilModel.FK__ArticulosStockSeguridad_Almacenes">
+            <End Role="Almacenes" EntitySet="Almacenes" />
+            <End Role="ArticulosStockSeguridad" EntitySet="ArticulosStockSeguridad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ArticulosStockSeguridad_Articulos" Association="MarfilModel.FK__ArticulosStockSeguridad_Articulos">
+            <End Role="Articulos" EntitySet="Articulos" />
+            <End Role="ArticulosStockSeguridad" EntitySet="ArticulosStockSeguridad" />
+          </AssociationSet>
+          <EntitySet Name="LogStockSeguridad" EntityType="MarfilModel.LogStockSeguridad" />
+          <AssociationSet Name="FK__LogStockSeguridad_Articulos" Association="MarfilModel.FK__LogStockSeguridad_Articulos">
+            <End Role="Articulos" EntitySet="Articulos" />
+            <End Role="LogStockSeguridad" EntitySet="LogStockSeguridad" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -7392,6 +7496,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <NavigationProperty Name="AlmacenesZona" Relationship="MarfilModel.FK_AlmacenesZona_Almacenes" FromRole="Almacenes" ToRole="AlmacenesZona" />
           <Property Name="privado" Type="Boolean" />
           <Property Name="fkcarpetas" Type="Guid" />
+          <NavigationProperty Name="ArticulosStockSeguridad" Relationship="MarfilModel.FK__ArticulosStockSeguridad_Almacenes" FromRole="Almacenes" ToRole="ArticulosStockSeguridad" />
         </EntityType>
         <EntityType Name="AlmacenesZona">
           <Key>
@@ -9693,10 +9798,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="gestionstock" Type="Boolean" />
           <Property Name="tipogestionlotes" Type="Int32" />
           <Property Name="stocknegativoautorizado" Type="Boolean" />
-          <Property Name="existenciasminimasmetros" Type="Double" />
-          <Property Name="existenciasmaximasmetros" Type="Double" />
-          <Property Name="existenciasminimasunidades" Type="Double" />
-          <Property Name="existenciasmaximasunidades" Type="Double" />
           <Property Name="web" Type="Boolean" />
           <Property Name="rendimientom2m3" Type="Double" />
           <Property Name="articulonegocio" Type="Boolean" />
@@ -9719,6 +9820,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="stockminimo" Type="Double" />
           <Property Name="stockmaximo" Type="Double" />
           <Property Name="stockseguridad" Type="Int32" />
+          <NavigationProperty Name="ArticulosStockSeguridad" Relationship="MarfilModel.FK__ArticulosStockSeguridad_Articulos" FromRole="Articulos" ToRole="ArticulosStockSeguridad" />
+          <NavigationProperty Name="LogStockSeguridad" Relationship="MarfilModel.FK__LogStockSeguridad_Articulos" FromRole="Articulos" ToRole="LogStockSeguridad" />
         </EntityType>
         <EntityType Name="Familiasproductos">
           <Key>
@@ -13676,6 +13779,85 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Principal>
             <Dependent Role="ReportAnaliticaGuiasBalancesLineas">
               <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ArticulosStockSeguridad">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="codarticulo" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codalmacen" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="codarticulo" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="codalmacen" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionalmacen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="stockminimo" Type="Double" />
+          <Property Name="stockmaximo" Type="Double" />
+          <Property Name="stockseguridad" Type="Int32" />
+          <NavigationProperty Name="Almacenes" Relationship="MarfilModel.FK__ArticulosStockSeguridad_Almacenes" FromRole="ArticulosStockSeguridad" ToRole="Almacenes" />
+          <NavigationProperty Name="Articulos" Relationship="MarfilModel.FK__ArticulosStockSeguridad_Articulos" FromRole="ArticulosStockSeguridad" ToRole="Articulos" />
+        </EntityType>
+        <Association Name="FK__ArticulosStockSeguridad_Almacenes">
+          <End Type="MarfilModel.Almacenes" Role="Almacenes" Multiplicity="1" />
+          <End Type="MarfilModel.ArticulosStockSeguridad" Role="ArticulosStockSeguridad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacenes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ArticulosStockSeguridad">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codalmacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ArticulosStockSeguridad_Articulos">
+          <End Type="MarfilModel.Articulos" Role="Articulos" Multiplicity="1" />
+          <End Type="MarfilModel.ArticulosStockSeguridad" Role="ArticulosStockSeguridad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ArticulosStockSeguridad">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codarticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LogStockSeguridad">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="codarticulo" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="codarticulo" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionarticulo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="documento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="codigounidad" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="stockminimo" Type="Double" />
+          <Property Name="stockactual" Type="Double" />
+          <Property Name="pedidooptimo" Type="Double" />
+          <Property Name="stockseguridad" Type="Int32" />
+          <NavigationProperty Name="Articulos" Relationship="MarfilModel.FK__LogStockSeguridad_Articulos" FromRole="LogStockSeguridad" ToRole="Articulos" />
+        </EntityType>
+        <Association Name="FK__LogStockSeguridad_Articulos">
+          <End Type="MarfilModel.Articulos" Role="Articulos" Multiplicity="1" />
+          <End Type="MarfilModel.LogStockSeguridad" Role="LogStockSeguridad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LogStockSeguridad">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codarticulo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18616,6 +18798,37 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
                 <ScalarProperty Name="InformeId" ColumnName="InformeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticulosStockSeguridad">
+            <EntityTypeMapping TypeName="MarfilModel.ArticulosStockSeguridad">
+              <MappingFragment StoreEntitySet="ArticulosStockSeguridad">
+                <ScalarProperty Name="stockseguridad" ColumnName="stockseguridad" />
+                <ScalarProperty Name="stockmaximo" ColumnName="stockmaximo" />
+                <ScalarProperty Name="stockminimo" ColumnName="stockminimo" />
+                <ScalarProperty Name="descripcionalmacen" ColumnName="descripcionalmacen" />
+                <ScalarProperty Name="codalmacen" ColumnName="codalmacen" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codarticulo" ColumnName="codarticulo" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogStockSeguridad">
+            <EntityTypeMapping TypeName="MarfilModel.LogStockSeguridad">
+              <MappingFragment StoreEntitySet="LogStockSeguridad">
+                <ScalarProperty Name="stockseguridad" ColumnName="stockseguridad" />
+                <ScalarProperty Name="pedidooptimo" ColumnName="pedidooptimo" />
+                <ScalarProperty Name="stockactual" ColumnName="stockactual" />
+                <ScalarProperty Name="stockminimo" ColumnName="stockminimo" />
+                <ScalarProperty Name="codigounidad" ColumnName="codigounidad" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcionarticulo" ColumnName="descripcionarticulo" />
+                <ScalarProperty Name="codarticulo" ColumnName="codarticulo" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -109,7 +109,7 @@
         <AssociationConnector Association="MarfilModel.FK_ReservasstockTotales_Reservasstock" />
         <EntityTypeShape EntityType="MarfilModel.InventariosLin" Width="1.5" PointX="9.5" PointY="6.875" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Configuraciongraficas" Width="1.5" PointX="4.25" PointY="9" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.Articulos" Width="1.5" PointX="9.25" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Articulos" Width="1.5" PointX="9.25" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MarfilModel.Familiasproductos" Width="1.5" PointX="0.625" PointY="10.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Traspasosalmacen" Width="1.5" PointX="1" PointY="35.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.TraspasosalmacenCostesadicionales" Width="1.5" PointX="3" PointY="36.625" IsExpanded="false" />
@@ -245,7 +245,7 @@
         <EntityTypeShape EntityType="MarfilModel.PreciosEspeciales" Width="1.5" PointX="36" PointY="16.125" />
         <AssociationConnector Association="MarfilModel.FK_Articulo" />
         <AssociationConnector Association="MarfilModel.FK_Clientes" />
-        <EntityTypeShape EntityType="MarfilModel.AcumuladorPeriodos" Width="1.5" PointX="9.375" PointY="16.75" />
+        <EntityTypeShape EntityType="MarfilModel.AcumuladorPeriodos" Width="1.5" PointX="11" PointY="16.75" />
         <EntityTypeShape EntityType="MarfilModel.FiltrosAcumulador" Width="1.5" PointX="14.375" PointY="33.75" />
         <EntityTypeShape EntityType="MarfilModel.CuadernosBancariosLin" Width="1.5" PointX="42.625" PointY="15.625" />
         <EntityTypeShape EntityType="MarfilModel.MapeoRemesas" Width="1.5" PointX="22.375" PointY="11.75" />
@@ -275,6 +275,11 @@
         <EntityTypeShape EntityType="MarfilModel.ReportAnaliticaGuiasBalances" Width="1.5" PointX="42.375" PointY="40" />
         <EntityTypeShape EntityType="MarfilModel.ReportAnaliticaGuiasBalancesLineas" Width="1.5" PointX="44.625" PointY="40.375" />
         <AssociationConnector Association="MarfilModel.FK_ReportAnaliticaGuiasBalancesLineas_GuiasBalances" />
+        <EntityTypeShape EntityType="MarfilModel.ArticulosStockSeguridad" Width="1.5" PointX="37" PointY="24.625" />
+        <AssociationConnector Association="MarfilModel.FK__ArticulosStockSeguridad_Almacenes" />
+        <AssociationConnector Association="MarfilModel.FK__ArticulosStockSeguridad_Articulos" />
+        <EntityTypeShape EntityType="MarfilModel.LogStockSeguridad" Width="1.5" PointX="11.5" PointY="57.375" />
+        <AssociationConnector Association="MarfilModel.FK__LogStockSeguridad_Articulos" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1175,6 +1175,20 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(ArticulosStockSeguridadModel) == typeof(T))
+            {
+                var result = new ArticulosStockSeguridadModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
+            else if (typeof(LogStockSeguridadModel) == typeof(T))
+            {
+                var result = new LogStockSeguridadModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
             else if (typeof(ConsultaVisualFullModel) == typeof(T))
             {
                 var result = new ConsultaVisualFullModel(context);

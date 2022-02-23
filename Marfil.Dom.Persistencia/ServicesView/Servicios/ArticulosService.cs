@@ -722,9 +722,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Grueso = double.Parse(row["Grueso"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Kilosud = double.Parse(row["KilosUd"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     /*articulo.Existenciasminimasmetros = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    articulo.Existenciasminimasunidades = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    articulo.Existenciasmaximasunidades = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));*/
+                    articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));*/
+                    articulo.Stockminimo = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Costemateriaprima = double.Parse(row["CosteMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Porcentajemerma = double.Parse(row["PorcentajeMerma"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Costeelaboracionmateriaprima = double.Parse(row["CosteElaboracionMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));

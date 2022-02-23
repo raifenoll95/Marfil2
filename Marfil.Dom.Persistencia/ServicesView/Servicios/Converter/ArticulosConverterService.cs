@@ -198,7 +198,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             {
                 if ((obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false) &&
                     (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.GetGenericTypeDefinition() !=
-                    typeof(ICollection<>)) && item.Name.ToLower() != "tipogestionlotes" && item.Name.ToLower() != "articulostercero" && item.Name.ToLower() != "articuloscomponentes")
+                    typeof(ICollection<>)) && item.Name.ToLower() != "tipogestionlotes" && item.Name.ToLower() != "articulostercero" && item.Name.ToLower() != "articuloscomponentes" && item.Name.ToLower() != "articulosstockseguridad")
                 {
                     item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
                 }
@@ -244,6 +244,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 result.ArticulosComponentes.Add(newitem);
             }
 
+            result.ArticulosStockSeguridad.Clear();
+            foreach (var item in viewmodel.ArticulosStockSeguridad)
+            {
+                var newitem = _db.ArticulosStockSeguridad.Create();
+                newitem.empresa = result.empresa;
+                newitem.id = item.Id;
+                newitem.codalmacen = item.Codalmacen;
+                newitem.descripcionalmacen = item.Descripcionalmacen;
+                newitem.codarticulo = result.id;
+                newitem.stockseguridad = result.stockseguridad;
+                newitem.stockminimo = item.Stockminimo;
+                newitem.stockmaximo = item.Stockmaximo;
+                
+                result.ArticulosStockSeguridad.Add(newitem);
+            }
+
             return result;
         }
 
@@ -265,7 +281,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             {
                 if ((obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false) &&
                     (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.GetGenericTypeDefinition() !=
-                    typeof(ICollection<>)) && item.Name.ToLower() != "tipogestionlotes" && item.Name.ToLower() != "articulostercero" && item.Name.ToLower() != "articuloscomponentes")
+                    typeof(ICollection<>)) && item.Name.ToLower() != "tipogestionlotes" && item.Name.ToLower() != "articulostercero" && item.Name.ToLower() != "articuloscomponentes" && item.Name.ToLower() != "articulosstockseguridad")
                 {
                     item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
                 }
@@ -314,6 +330,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 result.ArticulosComponentes.Add(newitem);
             }
 
+            result.ArticulosStockSeguridad.Clear();
+            foreach (var item in viewmodel.ArticulosStockSeguridad)
+            {
+                var newitem = _db.Set<ArticulosStockSeguridad>().Create();
+                newitem.empresa = result.empresa;
+                newitem.id = item.Id;
+                newitem.codalmacen = item.Codalmacen;
+                newitem.descripcionalmacen = item.Descripcionalmacen;
+                newitem.codarticulo = result.id;
+                newitem.stockseguridad = result.stockseguridad;
+                newitem.stockminimo = item.Stockminimo;
+                newitem.stockmaximo = item.Stockmaximo;
+
+                result.ArticulosStockSeguridad.Add(newitem);
+            }
 
             return result;
         }
@@ -345,6 +376,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Ancho = (float)f.ancho,
                 Grueso = (float)f.grueso,
                 Merma = f.merma.Value
+            }).ToList();
+
+            result.ArticulosStockSeguridad = obj.ArticulosStockSeguridad.ToList().Select(f => new ArticulosStockSeguridadModel()
+            {
+                Id = f.id,
+                Codalmacen = f.codalmacen,
+                Descripcionalmacen = f.descripcionalmacen,
+                Codarticulo = f.codarticulo,
+                Stockseguridad = (TipoStockSeguridad)f.stockseguridad,
+                Stockminimo = (double)f.stockminimo,
+                Stockmaximo = (double)f.stockmaximo
             }).ToList();
 
             return result;

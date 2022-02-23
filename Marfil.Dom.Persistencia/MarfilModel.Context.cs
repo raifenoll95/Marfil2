@@ -214,6 +214,8 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<CuentasNoAsignadasAnalitica> CuentasNoAsignadasAnalitica { get; set; }
         public virtual DbSet<ReportAnaliticaGuiasBalances> ReportAnaliticaGuiasBalances { get; set; }
         public virtual DbSet<ReportAnaliticaGuiasBalancesLineas> ReportAnaliticaGuiasBalancesLineas { get; set; }
+        public virtual DbSet<ArticulosStockSeguridad> ArticulosStockSeguridad { get; set; }
+        public virtual DbSet<LogStockSeguridad> LogStockSeguridad { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

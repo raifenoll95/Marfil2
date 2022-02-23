@@ -211,6 +211,9 @@
     <Compile Include="ArticulosComponentes.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArticulosStockSeguridad.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ArticulosTercero.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -514,6 +517,9 @@
     <Compile Include="Listados\ListadosProductosPedidos.cs" />
     <Compile Include="Listados\ListadosProductosPresupuestos.cs" />
     <Compile Include="Listados\ResultModel.cs" />
+    <Compile Include="LogStockSeguridad.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Lotes.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -651,9 +657,11 @@
     <Compile Include="Model\Documentos\Traspasosalmacen\TraspasosalmacenModel.cs" />
     <Compile Include="Model\Documentos\Traspasosalmacen\TraspasosalmacenReport.cs" />
     <Compile Include="Model\FicherosGenerales\ArticulosComponentesModel.cs" />
+    <Compile Include="Model\FicherosGenerales\ArticulosStockSeguridadModel.cs" />
     <Compile Include="Model\FicherosGenerales\ConsultaVisualModel.cs" />
     <Compile Include="Model\FicherosGenerales\ArticulosTerceroModel.cs" />
     <Compile Include="Model\FicherosGenerales\Criteriosagrupacion.cs" />
+    <Compile Include="Model\FicherosGenerales\LogStockSeguridadModel.cs" />
     <Compile Include="Model\FicherosGenerales\PreciosEspecialesModel.cs" />
     <Compile Include="Model\FicherosGenerales\SituacionesTesoreriaModel.cs" />
     <Compile Include="Model\FicherosGenerales\ObrasModel.cs" />
@@ -912,6 +920,7 @@
     <Compile Include="ServicesView\Interfaces\IMobileTercerosService.cs" />
     <Compile Include="ServicesView\Interfaces\IMovimientosAlmacen.cs" />
     <Compile Include="ServicesView\Interfaces\IValidationService.cs" />
+    <Compile Include="ServicesView\Servicios\ArticulosStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\ArticulosTerceroService.cs" />
     <Compile Include="ServicesView\Servicios\Cartera\VencimientosService.cs" />
     <Compile Include="ServicesView\Servicios\ConsultaVisualService.cs" />
@@ -927,6 +936,7 @@
     <Compile Include="ServicesView\Servicios\Converter\CuadernosBancariosConverterServices.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\LogStockSeguridadConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
@@ -957,6 +967,7 @@
     <Compile Include="ServicesView\Servicios\CostesVariablesPeriodoService.cs" />
     <Compile Include="ServicesView\Servicios\CuadernosBancariosService.cs" />
     <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
+    <Compile Include="ServicesView\Servicios\LogStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\MapeoRemesasService.cs" />
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
     <Compile Include="ServicesView\Servicios\RemesasService.cs" />

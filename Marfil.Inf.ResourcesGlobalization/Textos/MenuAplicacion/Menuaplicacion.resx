@@ -630,4 +630,7 @@
   <data name="analiticaperdidasyganancias" xml:space="preserve">
     <value>Analítica de pérdidas y ganancias</value>
   </data>
+  <data name="logstockseguridad" xml:space="preserve">
+    <value>Log rotura de stock</value>
+  </data>
 </root>

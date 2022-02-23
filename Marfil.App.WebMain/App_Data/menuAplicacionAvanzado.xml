@@ -110,6 +110,7 @@
 		<item isseparator="true"></item>
 		<item name="inventarios" allowUpdate="false" text="inventarios" url="~/Inventarios/Index"></item>
 		<item name="almacen" text="almacenes" url="~/almacenes/Index"></item>
+		<item name="logstockseguridad" text="LogStockSeguridad" url="~/LogStockSeguridad/Index"></item>
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadolotes" eslistado="true"  text="Lotes" icono="fa fa-file" url="~/ListadosLotes/Listado/Informelotes" />
 			<item name="listadostock" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStock/Listado/General" />

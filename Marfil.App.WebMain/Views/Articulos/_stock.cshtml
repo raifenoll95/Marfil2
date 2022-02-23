@@ -78,20 +78,28 @@
             @Html.TextBoxFor(f => Model.Existenciasmaximasmetros, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
             @Html.ValidationMessageFor(f => Model.Existenciasmaximasmetros, "", new { @class = "text-danger" })
         </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Stockseguridad, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EnumDropDownList("Stockseguridad", Model.Stockseguridad, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Stockminimo, "", new { @class = "text-danger" })
+        </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(f => Model.Existenciasminimasunidades, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(f => Model.Stockminimo, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
-            @Html.TextBoxFor(f => Model.Existenciasminimasunidades, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
-            @Html.ValidationMessageFor(f => Model.Existenciasminimasunidades, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(f => Model.Stockminimo, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Stockminimo, "", new { @class = "text-danger" })
         </div>
-        @Html.LabelFor(f => Model.Existenciasmaximasunidades, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(f => Model.Stockmaximo, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
-            @Html.TextBoxFor(f => Model.Existenciasmaximasunidades, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
-            @Html.ValidationMessageFor(f => Model.Existenciasmaximasunidades, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(f => Model.Stockmaximo, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Stockmaximo, "", new { @class = "text-danger" })
         </div>
-    </div>*@
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(f => Model.Web, new { @class = "control-label col-md-2" })
