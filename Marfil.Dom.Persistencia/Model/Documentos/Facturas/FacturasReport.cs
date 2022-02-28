@@ -34,7 +34,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
             DataSource.Queries.Add(new CustomSqlQuery("clientes", string.Format("SELECT c.*, d.direccion as [Direccioncliente],d.poblacion as [Poblacioncliente],d.cp as [Cpcliente],d.telefono as [Telefonocliente] FROM [Clientes] as c left join direcciones as d on d.empresa=c.empresa and d.tipotercero={0} and d.fkentidad=c.fkcuentas", (int)TiposCuentas.Clientes)));
 
             // EMPRESAS
-            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Emailempresa], d.web as [Webempresa], d.telefonomovil as [TelefonoMovilempresa], d.email as [Email], d.web as [Web], d.notas as [Notas] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
+            //DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Emailempresa], d.web as [Webempresa], d.telefonomovil as [TelefonoMovilempresa], d.email as [Email], d.web as [Web], d.notas as [Notas] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
+            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero]," +
+                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais] " +
+                "FROM[Empresas] as e " +
+                "left join direcciones as d on d.empresa = e.id and d.tipotercero = -1 and d.fkentidad = e.id " +
+                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais " +
+                "left join Paises as pa on pa.valor = d.fkpais and pa.Valor = d.fkpais"));
             DataSource.Queries.Add(mainQuery);
 
             //DIRECCIONES
@@ -126,20 +132,23 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
                     new RelationColumnInfo("empresa", "id")});
 
             //EMPRESA -- DIRECCIONES
-            DataSource.Relations.Add("empresa", "direcciones", new[] {
-                    new RelationColumnInfo("id", "empresa")});
+            //DataSource.Relations.Add("empresa", "direcciones", new[] {
+            //       new RelationColumnInfo("id", "empresa")});
 
-            //DIRECCIONES -- PAISES
-            DataSource.Relations.Add("direcciones", "Paises", new[] {
-                    new RelationColumnInfo("fkpais", "Valor")});
+            DataSource.Relations.Add("Facturas", "direcciones", new[] {
+                    new RelationColumnInfo("empresa", "empresa")});
 
-            //DIRECCIONES -- PROVINCIAS
-            DataSource.Relations.Add("direcciones", "Provincias", new[] {
-                    new RelationColumnInfo("fkprovincia", "id")});
+            ////DIRECCIONES -- PAISES
+            //DataSource.Relations.Add("direcciones", "Paises", new[] {
+            //        new RelationColumnInfo("fkpais", "Valor")});
 
-            //PAISES -- PROVINCIAS
-            DataSource.Relations.Add("Paises", "Provincias", new[] {
-                    new RelationColumnInfo("Valor", "codigopais")});
+            ////DIRECCIONES -- PROVINCIAS
+            //DataSource.Relations.Add("direcciones", "Provincias", new[] {
+            //        new RelationColumnInfo("fkprovincia", "id")});
+
+            ////PAISES -- PROVINCIAS
+            //DataSource.Relations.Add("Paises", "Provincias", new[] {
+            //        new RelationColumnInfo("Valor", "codigopais")});
 
             DataSource.Relations.Add("Facturas", "Formaspago", new[] {
                     // Añado relación (Lluís)

@@ -27,6 +27,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using static DevExpress.CodeParser.CodeStyle.Formatting.Rules;
+using System.Data.Entity.Migrations;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -65,25 +66,132 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #region Create
 
-        //Rai me dice si la cantidad de las lineas introducidas no supera la cantidad disponible de stock
-        public void StockDisponible(AlbaranesModel model)
+        //Rai - me dice si la cantidad de las lineas introducidas no supera la cantidad disponible de stock
+        //Método modificado para el stock de seguridad
+        public bool StockDisponible(EntregasStockModel model)
         {
+            var haystockdisponible = true;
             var articulos = model.Lineas.GroupBy(f => f.Fkarticulos).ToList(); //Agrupamos por articulos
-            foreach(var grupo in articulos)
+            foreach (var grupo in articulos)
             {
-                var articuloslote = grupo.GroupBy(f => f.Lote).ToList(); //Por lote
-                foreach(var lote in articuloslote)
-                {
-                    var articulo = grupo.First().Fkarticulos;
-                    var loteid = lote.First().Lote;
-                    var cantidad = _db.Stockactual.Where(f => f.empresa == Empresa && f.fkarticulos == articulo && f.lote == loteid).Select(f => f.cantidaddisponible).FirstOrDefault();
+                var articulo = grupo.First().Fkarticulos;
 
-                    if (grupo.Sum(f => f.Cantidad) > cantidad)
+                if (_db.Stockactual.Where(f => f.empresa == Empresa && f.fkarticulos == articulo && f.fkalmacenes == model.Fkalmacen).GroupBy(f => f.fkarticulos).FirstOrDefault() != null)
+                {
+                    var stockactual = _db.Stockactual.Where(f => f.empresa == Empresa && f.fkarticulos == articulo && f.fkalmacenes == model.Fkalmacen).GroupBy(f => f.fkarticulos).FirstOrDefault();
+                    var stockdisponible = 0d;
+                    var descalmacen = "";
+
+                    //Compruebo que existe stock de seguridad por almacen, si no, estandar del artículo
+                    var stockminimo = 0d;
+                    var stockmaximo = 0d;
+                    var stockseguridad = 0;
+
+                    if (_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault() != null)
                     {
-                        throw new ValidationException("La cantidad indicada es superior a la que hay actualmente en el stock para el lote " + loteid);
+                        stockseguridad = (int)_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().stockseguridad;
+                        stockminimo = (double)_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().stockminimo;
+                        stockmaximo = (double)_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().stockmaximo;
+                        descalmacen = _db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().descripcionalmacen;
                     }
-                }     
+                    else
+                    {
+                        stockseguridad = (int)_db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockseguridad;
+                        stockminimo = (double)(_db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockminimo == null ? 0 : _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockminimo);
+                        stockmaximo = (double)(_db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockmaximo == null ? 0 : _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockmaximo);
+                        descalmacen = _db.Almacenes.Where(f => f.empresa == Empresa && f.id == model.Fkalmacen).FirstOrDefault().descripcion;
+                    }
+
+                    //Si no hay stock mínimo, no hacemos comprobaciones y pasamos al siguiente artículo, entendemos que no las quieren.
+                    if (stockminimo == 0)
+                    {
+                        continue;
+                    }
+
+                    if (stockseguridad == 1)
+                    {
+                        stockdisponible = stockactual.Sum(f => f.cantidadtotal);
+                    }
+                    else
+                    {
+                        stockdisponible = (double)stockactual.Sum(f => f.metros);
+                    }
+
+                    //El stock restante después de la entrega es menor que el stock de seguridad del artículo
+                    if (stockdisponible < stockminimo)
+                    {
+                        //Inserto la línea de log del stock de seguridad
+                        var log = _db.LogStockSeguridad.Create();
+                        log.id = _db.LogStockSeguridad.Any() ? _db.LogStockSeguridad.Max(f => f.id) + 1 : 1;
+                        log.empresa = Empresa;
+                        log.codarticulo = articulo;
+                        log.descripcionarticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().descripcion;
+                        log.fecha = (DateTime)model.Fechadocumento;
+                        log.documento = model.Referencia;
+                        log.codigounidad = "";
+                        log.stockseguridad = stockseguridad;
+                        log.stockactual = stockdisponible;
+                        log.stockminimo = stockminimo;
+                        log.pedidooptimo = (double)(stockmaximo - stockdisponible);
+                        log.almacen = model.Fkalmacen + " - " + descalmacen;
+
+                        _db.LogStockSeguridad.AddOrUpdate(log);
+                        _db.SaveChanges();
+
+                        haystockdisponible = false;
+                    }
+                }
+                else //Ya no hay stock
+                {
+                    //Compruebo que existe stock de seguridad por almacen, si no, estandar del artículo
+                    var stockminimo = 0d;
+                    var stockmaximo = 0d;
+                    var stockseguridad = 0;
+                    var descalmacen = "";
+
+                    if (_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault() != null)
+                    {
+                        stockseguridad = (int)_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().stockseguridad;
+                        stockminimo = (double)_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().stockminimo;
+                        stockmaximo = (double)_db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().stockmaximo;
+                        descalmacen = _db.ArticulosStockSeguridad.Where(f => f.empresa == Empresa && f.codalmacen == model.Fkalmacen && f.codarticulo == articulo).FirstOrDefault().descripcionalmacen;
+                    }
+                    else
+                    {
+                        stockseguridad = (int)_db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockseguridad;
+                        stockminimo = (double)(_db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockminimo == null ? 0 : _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockminimo);
+                        stockmaximo = (double)(_db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockmaximo == null ? 0 : _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().stockmaximo);
+                        descalmacen = _db.Almacenes.Where(f => f.empresa == Empresa && f.id == model.Fkalmacen).FirstOrDefault().descripcion;
+                    }
+
+                    //Si no hay stock mínimo, no hacemos comprobaciones y pasamos al siguiente artículo, entendemos que no las quieren.
+                    if (stockminimo == 0)
+                    {
+                        continue;
+                    }
+
+                    //Inserto la línea de log del stock de seguridad. Como no hay stock, el valor es 0
+                    var log = _db.LogStockSeguridad.Create();
+                    log.id = _db.LogStockSeguridad.Any() ? _db.LogStockSeguridad.Max(f => f.id) + 1 : 1;
+                    log.empresa = Empresa;
+                    log.codarticulo = articulo;
+                    log.descripcionarticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().descripcion;
+                    log.fecha = (DateTime)model.Fechadocumento;
+                    log.documento = model.Referencia;
+                    log.codigounidad = "";
+                    log.stockseguridad = stockseguridad;
+                    log.stockactual = 0;
+                    log.stockminimo = stockminimo;
+                    log.pedidooptimo = (double)(stockmaximo - 0);
+                    log.almacen = model.Fkalmacen + " - " + descalmacen;
+
+                    _db.LogStockSeguridad.AddOrUpdate(log);
+                    _db.SaveChanges();
+
+                    haystockdisponible = false;
+                }
             }
+            return haystockdisponible;
         }
 
         public override void create(IModelView obj)

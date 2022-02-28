@@ -20,7 +20,6 @@ namespace Marfil.App.WebMain.Controllers
         public override bool CanCrear { get; set; }
         public override bool CanModificar { get; set; }
         public override bool CanEliminar { get; set; }
-
         protected override void CargarParametros()
         {
             MenuName = "LogStockSeguridad";

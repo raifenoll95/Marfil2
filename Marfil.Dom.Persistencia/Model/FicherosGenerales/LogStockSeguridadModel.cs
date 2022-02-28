@@ -79,6 +79,9 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RLogStockSeguridad), Name = "Fecha")]
         public DateTime Fecha { get; set; }
 
+        [Display(ResourceType = typeof(RLogStockSeguridad), Name = "Almacen")]
+        public string Almacen { get; set; }
+
         #endregion
     }
 }

@@ -289,12 +289,23 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    using (var gestionService = createService(model))
+                    using (var gestionService = FService.Instance.GetService(typeof(EntregasStockModel), ContextService) as EntregasService)
                     {
-
+                      
                         gestionService.create(model);
-                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
-                        return RedirectToAction("Index");
+                        var haystock = gestionService.StockDisponible(model);
+
+                        if (haystock)
+                        {
+                            TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData[Constantes.VariableMensajeWarning] = General.MensajeRoturaStock;
+                            return RedirectToAction("Index", "LogStockSeguridad");
+                        }
+                      
                     }
                 }
 
@@ -358,13 +369,22 @@ namespace Marfil.App.WebMain.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    using (var gestionService = createService(model))
+                    using (var gestionService = FService.Instance.GetService(typeof(EntregasStockModel), ContextService) as EntregasService)
                     {
-
-
+                      
                         gestionService.edit(model);
-                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
-                        return RedirectToAction("Index");
+                        var haystock = gestionService.StockDisponible(model);
+
+                        if (haystock)
+                        {
+                            TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData[Constantes.VariableMensajeWarning] = General.MensajeRoturaStock;
+                            return RedirectToAction("Index", "LogStockSeguridad");
+                        }
                     }
                 }
 

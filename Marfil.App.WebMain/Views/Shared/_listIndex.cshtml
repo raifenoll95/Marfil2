@@ -229,6 +229,11 @@
                 if (!Model.PermiteEliminar)
                     e.Visible = DefaultBoolean.False;
             }
+            else if (e.ButtonID == "btnVer")
+            {
+                if (!Model.PermiteEliminar && !Model.PermiteModificar)
+                    e.Visible = DefaultBoolean.False;
+            }
         };
         settings.HtmlDataCellPrepared += (s, e) =>
         {

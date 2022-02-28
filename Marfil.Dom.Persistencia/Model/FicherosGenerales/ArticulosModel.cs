@@ -48,11 +48,10 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
     public enum TipoStockSeguridad
     {
-        [StringValue(typeof(RArticulos), "Piezas")]
-        Piezas,
         [StringValue(typeof(RArticulos), "Metros")]
-        Metros
-
+        Metros,
+        [StringValue(typeof(RArticulos), "Piezas")]
+        Piezas
     }
 
     public class TarifasEspecificasArticulosViewModel
@@ -301,10 +300,10 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         public string Ean13 { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Stockminimo")]
-        public double Stockminimo { get; set; }
+        public double? Stockminimo { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Stockmaximo")]
-        public double Stockmaximo { get; set; }
+        public double? Stockmaximo { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Stockseguridad")]
         public TipoStockSeguridad Stockseguridad { get; set; }

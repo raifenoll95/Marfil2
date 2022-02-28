@@ -2454,6 +2454,7 @@
           <Property Name="stockactual" Type="float" />
           <Property Name="pedidooptimo" Type="float" />
           <Property Name="stockseguridad" Type="int" />
+          <Property Name="almacen" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Maes">
           <Key>
@@ -13846,6 +13847,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="pedidooptimo" Type="Double" />
           <Property Name="stockseguridad" Type="Int32" />
           <NavigationProperty Name="Articulos" Relationship="MarfilModel.FK__LogStockSeguridad_Articulos" FromRole="LogStockSeguridad" ToRole="Articulos" />
+          <Property Name="almacen" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__LogStockSeguridad_Articulos">
           <End Type="MarfilModel.Articulos" Role="Articulos" Multiplicity="1" />
@@ -18818,6 +18820,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="LogStockSeguridad">
             <EntityTypeMapping TypeName="MarfilModel.LogStockSeguridad">
               <MappingFragment StoreEntitySet="LogStockSeguridad">
+                <ScalarProperty Name="almacen" ColumnName="almacen" />
                 <ScalarProperty Name="stockseguridad" ColumnName="stockseguridad" />
                 <ScalarProperty Name="pedidooptimo" ColumnName="pedidooptimo" />
                 <ScalarProperty Name="stockactual" ColumnName="stockactual" />

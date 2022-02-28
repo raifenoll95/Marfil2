@@ -2464,6 +2464,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Se han encontrado artículos por debajo del stock de seguridad.
+        /// </summary>
+        public static string MensajeRoturaStock {
+            get {
+                return ResourceManager.GetString("MensajeRoturaStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Metros Albarán.
         /// </summary>
         public static string MetrosAlbaran {

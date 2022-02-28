@@ -25,7 +25,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Fecha", "Documento", "Codarticulo", "Descripcionarticulo", "Codigounidad", "Stockseguridad", "Stockactual", "Stockminimo", "Pedidooptimo"};
+            var propiedadesVisibles = new[] { "Fecha", "Documento", "Codarticulo", "Descripcionarticulo", "Almacen", "Stockseguridad", "Stockactual", "Stockminimo", "Pedidooptimo"};
             var propiedades = Helpers.Helper.getProperties<LogStockSeguridadModel>();
 
             //model.PrimaryColumnns = new[] { "id" };
@@ -34,7 +34,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.OrdenColumnas.Add("Documento", 1);
             model.OrdenColumnas.Add("Codarticulo", 2);
             model.OrdenColumnas.Add("Descripcionarticulo", 3);
-            model.OrdenColumnas.Add("Codigounidad", 4);
+            model.OrdenColumnas.Add("Almacen", 4);
             model.OrdenColumnas.Add("Stockseguridad", 5);
             model.OrdenColumnas.Add("Stockactual", 6);
             model.OrdenColumnas.Add("Stockminimo", 7);
@@ -45,7 +45,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override string GetSelectPrincipal()
         {
-            return string.Format("select * from LogStockSeguridad where empresa='{0}'", Empresa);
+            return string.Format("select * from LogStockSeguridad where empresa='{0}' order by fecha desc, documento desc", Empresa);
         }
 
         #endregion

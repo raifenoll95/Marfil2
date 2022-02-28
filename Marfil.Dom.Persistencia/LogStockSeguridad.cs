@@ -25,6 +25,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<double> stockactual { get; set; }
         public Nullable<double> pedidooptimo { get; set; }
         public Nullable<int> stockseguridad { get; set; }
+        public string almacen { get; set; }
     
         public virtual Articulos Articulos { get; set; }
     }

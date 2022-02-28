@@ -61,6 +61,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Almacén.
+        /// </summary>
+        public static string Almacen {
+            get {
+                return ResourceManager.GetString("Almacen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a UD.
         /// </summary>
         public static string Codigounidad {

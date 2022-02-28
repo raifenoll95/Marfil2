@@ -84,7 +84,7 @@
         @Html.LabelFor(f => Model.Stockseguridad, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
             @Html.EnumDropDownList("Stockseguridad", Model.Stockseguridad, isreadonly ? (object)new { @readonly = "readonly", @class = "form-control" } : (object)new { @class = "form-control" })
-            @Html.ValidationMessageFor(f => Model.Stockminimo, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(f => Model.Stockseguridad, "", new { @class = "text-danger" })
         </div>
     </div>
 

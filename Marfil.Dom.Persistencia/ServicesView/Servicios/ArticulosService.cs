@@ -723,8 +723,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     articulo.Kilosud = double.Parse(row["KilosUd"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     /*articulo.Existenciasminimasmetros = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));*/
-                    articulo.Stockminimo = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+
+                    if (row["ExistenciasMinimasUnidades"].ToString() != "" || row["ExistenciasMaximasUnidades"].ToString() != "")
+                    {
+                        articulo.Stockseguridad = TipoStockSeguridad.Piezas;
+                        articulo.Stockminimo = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    }
+                    else if (row["ExistenciasMinimasMetros"].ToString() != "" || row["ExistenciasMaximasMetros"].ToString() != "")
+                    {
+                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
+                        articulo.Stockminimo = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    }
+                    else
+                    {
+                        articulo.Stockseguridad = TipoStockSeguridad.Piezas;
+                        articulo.Stockminimo = 0;
+                        articulo.Stockmaximo = 0;
+                    }
+                    
                     articulo.Costemateriaprima = double.Parse(row["CosteMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Porcentajemerma = double.Parse(row["PorcentajeMerma"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Costeelaboracionmateriaprima = double.Parse(row["CosteElaboracionMateriaPrima"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));

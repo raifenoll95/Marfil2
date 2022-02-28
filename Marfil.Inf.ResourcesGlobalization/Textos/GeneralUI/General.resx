@@ -979,4 +979,7 @@
   <data name="LblImportarClassic" xml:space="preserve">
     <value>Importación</value>
   </data>
+  <data name="MensajeRoturaStock" xml:space="preserve">
+    <value>Se han encontrado artículos por debajo del stock de seguridad</value>
+  </data>
 </root>

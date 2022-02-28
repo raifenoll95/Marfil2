@@ -543,9 +543,36 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                     //proveedor.Fkcuentasagente = row["codagte"].ToString();
                     //proveedor.Fkcuentascomercial = row["codcomer"].ToString();
-                    proveedor.Fkzonaproveedor = row["czona"].ToString();
-                    proveedor.Fkincoterm = row["codinco"].ToString();
-                    proveedor.Fktransportistahabitual = row["ctransp"].ToString();
+                    var zona = row["czona"].ToString();
+                    if (zona != "" && !ExisteZona(zona))
+                    {
+                        errores += fkcuentas + ";" + " La zona no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Fkzonaproveedor = row["czona"].ToString();
+                    }
+                    var inco = row["codinco"].ToString();
+                    if (inco != "" && !ExisteInco(inco))
+                    {
+                        errores += fkcuentas + ";" + " El Incoterm no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Fkincoterm = row["codinco"].ToString();
+                    }
+                    var transportista = row["ctransp"].ToString();
+                    if (transportista != "" && _db.Transportistas.Where(f => f.fkcuentas == transportista).FirstOrDefault() == null)
+                    {
+                        errores += fkcuentas + ";" + " El Transportista no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Fktransportistahabitual = row["ctransp"].ToString();
+                    }
                     proveedor.Notas = row["notas"].ToString();
                     //proveedor.Fkcuentasaseguradoras = row["ciaseg"].ToString();
                     //proveedor.Suplemento = row["ciasupl"].ToString();
@@ -555,7 +582,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     //proveedor.Porcentajeriesgocomercial = int.Parse(row["riescom"].ToString());
                     //proveedor.Porcentajeriesgopolitico = int.Parse(row["riespol"].ToString());
                     //proveedor.Diascondecidos = int.Parse(row["riesdia"].ToString());
-                    proveedor.Cuentatesoreria = row["cobrador"].ToString();
+                    var cuentatesoreria = row["cobrador"].ToString();
+                    if (row["cobrador"].ToString() != "" && _db.Cuentastesoreria.Where(f => f.fkcuentas == cuentatesoreria).FirstOrDefault() == null)
+                    {
+                        errores += fkcuentas + ";" + " La cuenta de tesorería no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Cuentatesoreria = row["cobrador"].ToString();
+                    }
                     var moneda = 0;
                     if (row["moneda"].ToString() == "181")
                     {
@@ -591,9 +627,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                     proveedor.Fktiposretencion = row["tiporet"].ToString();
                     proveedor.Tarifa = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().fktarifascompras;
-                    //proveedor.Perteneceagrupo = row["cligrupo"].ToString();
-                    proveedor.Fkfamiliaproveedor = row["tipocli"].ToString();
-                    proveedor.Fkidiomas = GetIdiomaPrincipal();
+                    //proveedor.Perteneceagrupo = row["cligrupo"].ToString();+
+                    var familia = row["tipocli"].ToString();
+                    if (familia != "" && !ExisteFamilia(familia))
+                    {
+                        errores += fkcuentas + ";" + " La familia no existe" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Fkfamiliaproveedor = row["tipocli"].ToString();
+                    }
+                    if (row["paisiso"].ToString() == "")
+                    {
+                        errores += fkcuentas + ";" + "El pais ISO no pude ser vacío" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Fkidiomas = GetPaisISO(row["paisiso"].ToString());
+                    }
                     //proveedor.Numerocopiasfactura = int.Parse(row["ncopiasfac"].ToString());
 
                     //Cuentas
@@ -615,7 +668,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         errores += fkcuentas + ";" + row["fechaalta"].ToString() + " " + "La fecha fechaalta no se ha podido convertir";
                         continue;
                     }*/
-                    proveedor.Cuentas.FkPais = GetPaisISO(row["paisiso"].ToString());
+                    if (row["paisiso"].ToString() == "")
+                    {
+                        errores += fkcuentas + ";" + "El pais ISO no pude ser vacío" + Environment.NewLine;
+                        continue;
+                    }
+                    else
+                    {
+                        proveedor.Cuentas.FkPais = GetPaisISO(row["paisiso"].ToString());
+                    }
                     proveedor.Cuentas.Usuario = contextService.Usuario;
                     proveedor.Cuentas.UsuarioId = contextService.RoleId.ToString();
 
@@ -629,8 +690,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         direccion.Id = -1;//Valor negativo para el proceso de creación le asigne el que corresponda.
                         if (row["provincia"].ToString() == "")
                         {
-                            errores += fkcuentas + ";" + " La provincia no puede estar vacía" + Environment.NewLine;
-                            continue;
+                            direccion.Fkprovincia = row["provincia"].ToString();
                         }
                         else if (row["provincia"].ToString().Length == 2)
                         {
@@ -676,7 +736,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         }
                         direccion.Email = row["email"].ToString();
                         direccion.Web = row["web"].ToString();
-                        direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
+                        if (row["paisiso"].ToString() == "")
+                        {
+                            errores += fkcuentas + ";" + "El pais ISO no pude ser vacío" + Environment.NewLine;
+                            continue;
+                        }
+                        else
+                        {
+                            direccion.Fkpais = GetPaisISO(row["paisiso"].ToString());
+                        }
                         direccion.Descripcion = "Dirección Principal";
                         direcciones.Add(direccion);
                         proveedor.Direcciones.Direcciones = direcciones;
@@ -800,6 +868,69 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return "";
         }
 
+        public bool ExisteZona(string zona)
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.TablasvariasLin.Where(f => f.fkTablasvarias == 2).Select(c => c.xml).ToList();
+            foreach (var item in datos)
+            {
+                doc.LoadXml(item);
+                XmlElement datosParse = doc.DocumentElement;
+
+                XmlNodeList nodoIso = datosParse.GetElementsByTagName("Valor");
+                var valor = nodoIso[0].InnerText;
+
+                if (valor == zona)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+        public bool ExisteInco(string inco)
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.TablasvariasLin.Where(f => f.fkTablasvarias == 5).Select(c => c.xml).ToList();
+            foreach (var item in datos)
+            {
+                doc.LoadXml(item);
+                XmlElement datosParse = doc.DocumentElement;
+
+                XmlNodeList nodoIso = datosParse.GetElementsByTagName("Valor");
+                var valor = nodoIso[0].InnerText;
+
+                if (valor == inco)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+        public bool ExisteFamilia(string familia)
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.TablasvariasLin.Where(f => f.fkTablasvarias == 1).Select(c => c.xml).ToList();
+            foreach (var item in datos)
+            {
+                doc.LoadXml(item);
+                XmlElement datosParse = doc.DocumentElement;
+
+                XmlNodeList nodoIso = datosParse.GetElementsByTagName("Valor");
+                var valor = nodoIso[0].InnerText;
+
+                if (valor == familia)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
         #endregion
 
     }
