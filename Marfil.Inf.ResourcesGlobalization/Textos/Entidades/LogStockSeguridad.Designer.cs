@@ -106,6 +106,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Stock.
+        /// </summary>
+        public static string Stockactual {
+            get {
+                return ResourceManager.GetString("Stockactual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Log rotura del stock de seguridad.
         /// </summary>
         public static string TituloEntidad {

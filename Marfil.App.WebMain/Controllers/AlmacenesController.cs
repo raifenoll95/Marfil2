@@ -21,6 +21,7 @@ namespace Marfil.App.WebMain.Controllers
     public class AlmacenesController : GenericController<AlmacenesModel>
     {
         private const string session = "_almacenes_";
+        private const string SessionArticulosStockSeguridad = "_articulosstockseguridad";
 
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
@@ -122,6 +123,7 @@ namespace Marfil.App.WebMain.Controllers
                 }
 
                 Session[session] = ((AlmacenesModel)model).Lineas;
+                Session[SessionArticulosStockSeguridad] = ((AlmacenesModel)model).ArticulosStockSeguridad;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
             }
@@ -141,6 +143,7 @@ namespace Marfil.App.WebMain.Controllers
                     {
 
                         model.Lineas = Session[session] as List<AlmacenesZonasModel>;
+                        model.ArticulosStockSeguridad = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
                         gestionService.edit(model);
                         TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
@@ -178,6 +181,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     return HttpNotFound();
                 }
+                Session[SessionArticulosStockSeguridad] = ((AlmacenesModel)model).ArticulosStockSeguridad;
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
@@ -194,6 +198,13 @@ namespace Marfil.App.WebMain.Controllers
         {
             var model = Session[session] as List<AlmacenesZonasModel>;
             return PartialView("_zonas", model);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult ArticulosStockSeguridad()
+        {
+            var model = Session[SessionArticulosStockSeguridad] as List<ArticulosStockSeguridadModel>;
+            return PartialView("_Movsarticulosstockseguridadalmacen", model);
         }
 
         [HttpPost, ValidateInput(false)]

@@ -15,12 +15,14 @@ using Resources;
 using RAlmacenes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Almacenes;
 using Marfil.Dom.Persistencia.Model.GaleriaImagenes;
 using Marfil.Dom.Persistencia.Model.Ficheros;
+using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 
 namespace Marfil.Dom.Persistencia.Model.Configuracion
 {
-   public class AlmacenesModel : BaseModel<AlmacenesModel, Almacenes>
+    public class AlmacenesModel : BaseModel<AlmacenesModel, Almacenes>
     {
-       private List<AlmacenesZonasModel> _lineas=new List<AlmacenesZonasModel>();
+        private List<AlmacenesZonasModel> _lineas = new List<AlmacenesZonasModel>();
+        private List<ArticulosStockSeguridadModel> _articulosStockSeguridad = new List<ArticulosStockSeguridadModel>();
 
         #region Properties
 
@@ -37,7 +39,7 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
 
         [Display(ResourceType = typeof(RAlmacenes), Name = "Coordenadas")]
         [XmlIgnore]
-        [MaxLength(40,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(40, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         public string Coordenadas { get; set; }
 
         [XmlIgnore]
@@ -79,13 +81,18 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
         private GaleriaModel _galeria;
 
         [XmlIgnore]
-       public List<AlmacenesZonasModel> Lineas
-       {
-           get { return _lineas; }
-           set { _lineas = value; }
-       }
+        public List<AlmacenesZonasModel> Lineas
+        {
+            get { return _lineas; }
+            set { _lineas = value; }
+        }
+        public List<ArticulosStockSeguridadModel> ArticulosStockSeguridad
+        {
+            get { return _articulosStockSeguridad; }
+            set { _articulosStockSeguridad = value; }
+        }
 
-       [XmlIgnore]
+        [XmlIgnore]
         public DireccionesModel Direcciones { get; set; }
 
         #endregion
@@ -130,7 +137,7 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
         [Required]
         [Display(ResourceType = typeof(RAlmacenes), Name = "Fktipoubicacion")]
         public string Fktipoubicacion { get; set; }
-        
+
         [Display(ResourceType = typeof(RAlmacenes), Name = "Coordenadas")]
         public string Coordenadas { get; set; }
     }

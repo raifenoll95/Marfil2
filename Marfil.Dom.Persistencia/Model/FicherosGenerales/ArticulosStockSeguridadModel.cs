@@ -62,6 +62,9 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RAlmacenes), Name = "Descripcion")]
         public string Descripcionalmacen { get; set; }
 
+        [Display(ResourceType = typeof(RArticulos), Name = "Descripcion")]
+        public string Descripcionarticulo{ get; set; }
+
         [Display(ResourceType = typeof(RArticulos), Name = "Stockminimo")]
         public double Stockminimo { get; set; }
 

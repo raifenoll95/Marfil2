@@ -1954,6 +1954,7 @@
     <Content Include="App_Data\Otros\guiasbalancescabecera.csv" />
     <Content Include="App_Data\Otros\seriescontables.csv" />
     <Content Include="App_Data\Otros\guiasbalanceslineas.csv" />
+    <Compile Include="Controllers\ListadosStockMaxMinController.cs" />
     <None Include="Properties\PublishProfiles\192.168.223.210 - MarfilBeta.pubxml" />
     <None Include="Properties\PublishProfiles\Azure MarfilNet.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml">
@@ -3657,6 +3658,8 @@
     <Content Include="Views\Articulos\_articulosstockseguridad.cshtml" />
     <Content Include="Views\Articulos\_Movsarticulosstockseguridad.cshtml" />
     <Content Include="Views\LogStockSeguridad\Index.cshtml" />
+    <Content Include="Views\Almacenes\_Movsarticulosstockseguridadalmacen.cshtml" />
+    <Content Include="Views\ListadosStockMaxMin\StockMaxMin.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

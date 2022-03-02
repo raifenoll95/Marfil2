@@ -903,4 +903,13 @@
   <data name="MetrosDisponibles" xml:space="preserve">
     <value>Metros Disp.</value>
   </data>
+  <data name="LblArticulos" xml:space="preserve">
+    <value>Sólo artículos bajo mínimo</value>
+  </data>
+  <data name="LblMostrar" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="LblTodos" xml:space="preserve">
+    <value>Todos (Artículos con stock mínimo indicado)</value>
+  </data>
 </root>

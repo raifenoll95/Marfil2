@@ -132,6 +132,9 @@
   <data name="Pedidooptimo" xml:space="preserve">
     <value>Pedido óptimo</value>
   </data>
+  <data name="Stockactual" xml:space="preserve">
+    <value>Stock</value>
+  </data>
   <data name="TituloEntidad" xml:space="preserve">
     <value>Log rotura del stock de seguridad</value>
   </data>

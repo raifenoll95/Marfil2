@@ -166,6 +166,7 @@
 			<item name="listadostockvalorado" eslistado="true"  text="Stock valorado" icono="fa fa-file" url="~/ListadosStockValorado/Listado/GeneralValorado"/>
 			<item name="listadostockdisponible" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStockDisponible/Listado/StockAgrupadoDisponibleArticulo" />
 			<item name="listadosstocksalidas" eslistado="true"  text="Salidas" icono="fa fa-file" url="~/ListadosStockSalidas/Listado/Salidas" />
+			<item name="listadostockmaxmin" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStockMaxMin/Listado/StockMaxMin" />
 			<item name="diariostock" text="Diario Stock" icono="fa fa-file" url="~/DiarioStock/Index" />
 			<item name="listadosbundles" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoBundles/Listado/ListadosBundles" />
 			<item name="listadoskits" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoKits/Listado/ListadoKits" />

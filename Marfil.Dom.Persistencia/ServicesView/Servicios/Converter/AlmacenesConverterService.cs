@@ -9,6 +9,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
@@ -62,7 +63,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                             Descripcion = f.descripcion,
                             Fktipoubicacion = f.fktipoubicacion
                         }).ToList();
-            
+
+            result.ArticulosStockSeguridad = 
+                obj.ArticulosStockSeguridad.Where(f => f.codalmacen == id && f.empresa == Empresa).ToList().Select(f => new ArticulosStockSeguridadModel()
+            {
+                Id = f.id,
+                Codalmacen = f.codalmacen,
+                Descripcionalmacen = f.descripcionalmacen,
+                Codarticulo = f.codarticulo,
+                Descripcionarticulo = f.descripcionarticulo,
+                Stockseguridad = (TipoStockSeguridad)f.stockseguridad,
+                Stockminimo = (double)f.stockminimo,
+                Stockmaximo = (double)f.stockmaximo
+            }).ToList();
+
             return result;
         }
 
@@ -73,7 +87,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             foreach (var item in result.GetType().GetProperties())
             {
-                if (typeof(AlmacenesModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()))
+                if (typeof(AlmacenesModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()) && item.Name.ToLower() != "articulosstockseguridad")
                     item.SetValue(result, viewmodel.get(item.Name));
             }
 
@@ -101,7 +115,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             foreach (var item in result.GetType().GetProperties())
             {
-                if (typeof(AlmacenesModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()))
+                if (typeof(AlmacenesModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()) && item.Name.ToLower() != "articulosstockseguridad")
                     item.SetValue(result, viewmodel.get(item.Name));
             }
 

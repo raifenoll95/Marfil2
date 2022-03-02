@@ -1087,6 +1087,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listado de máximos y mínimos.
+        /// </summary>
+        public static string listadostockmaxmin {
+            get {
+                return ResourceManager.GetString("listadostockmaxmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Listado de stock valorado.
         /// </summary>
         public static string listadostockvalorado {

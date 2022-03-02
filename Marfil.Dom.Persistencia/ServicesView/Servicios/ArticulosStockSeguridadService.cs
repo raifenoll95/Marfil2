@@ -23,7 +23,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             model.List = model.List.OfType<ArticulosStockSeguridadModel>();
-            var propiedadesVisibles = new[] { "Empresa", "Id", "Codarticulo", "Codalmacen", "Descripcionalmacen", "Stockseguridad", "Stockminimo", "Stockmaximo" };
+            var propiedadesVisibles = new[] { "Empresa", "Id", "Codarticulo", "Codalmacen", "Descripcionalmacen", "Descripcionarticulo", "Stockseguridad", "Stockminimo", "Stockmaximo" };
             var propiedades = Helpers.Helper.getProperties<ArticulosModel>();
             //model.PrimaryColumnns = new[] { "Id" };
             model.ExcludedColumns =
@@ -37,5 +37,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         #endregion
+
+
     }
 }

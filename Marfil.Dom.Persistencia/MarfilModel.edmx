@@ -625,6 +625,7 @@
           <Property Name="stockminimo" Type="float" />
           <Property Name="stockmaximo" Type="float" />
           <Property Name="stockseguridad" Type="int" />
+          <Property Name="descripcionarticulo" Type="nvarchar" MaxLength="240" />
         </EntityType>
         <EntityType Name="ArticulosTercero">
           <Key>
@@ -13800,6 +13801,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="stockseguridad" Type="Int32" />
           <NavigationProperty Name="Almacenes" Relationship="MarfilModel.FK__ArticulosStockSeguridad_Almacenes" FromRole="ArticulosStockSeguridad" ToRole="Almacenes" />
           <NavigationProperty Name="Articulos" Relationship="MarfilModel.FK__ArticulosStockSeguridad_Articulos" FromRole="ArticulosStockSeguridad" ToRole="Articulos" />
+          <Property Name="descripcionarticulo" Type="String" MaxLength="240" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__ArticulosStockSeguridad_Almacenes">
           <End Type="MarfilModel.Almacenes" Role="Almacenes" Multiplicity="1" />
@@ -18806,6 +18808,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="ArticulosStockSeguridad">
             <EntityTypeMapping TypeName="MarfilModel.ArticulosStockSeguridad">
               <MappingFragment StoreEntitySet="ArticulosStockSeguridad">
+                <ScalarProperty Name="descripcionarticulo" ColumnName="descripcionarticulo" />
                 <ScalarProperty Name="stockseguridad" ColumnName="stockseguridad" />
                 <ScalarProperty Name="stockmaximo" ColumnName="stockmaximo" />
                 <ScalarProperty Name="stockminimo" ColumnName="stockminimo" />

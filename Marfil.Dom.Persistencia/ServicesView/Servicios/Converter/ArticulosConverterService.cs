@@ -185,7 +185,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         {
             var viewmodel = obj as ArticulosModel;
             var result = _db.Articulos.Create();
-
+            var stockminimo = 0d;
             /*
             foreach (var item in result.GetType().GetProperties())
             {
@@ -245,20 +245,49 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             }
 
             result.ArticulosStockSeguridad.Clear();
-            foreach (var item in viewmodel.ArticulosStockSeguridad)
+
+            //Si no hay stock minimo general indicado
+            if (result.stockminimo == stockminimo)
             {
-                var newitem = _db.ArticulosStockSeguridad.Create();
-                newitem.empresa = result.empresa;
-                newitem.id = item.Id;
-                newitem.codalmacen = item.Codalmacen;
-                newitem.descripcionalmacen = item.Descripcionalmacen;
-                newitem.codarticulo = result.id;
-                newitem.stockseguridad = result.stockseguridad;
-                newitem.stockminimo = item.Stockminimo;
-                newitem.stockmaximo = item.Stockmaximo;
-                
-                result.ArticulosStockSeguridad.Add(newitem);
+                foreach (var item in viewmodel.ArticulosStockSeguridad)
+                {
+                    if (item.Stockminimo < stockminimo)
+                    {
+                        stockminimo = item.Stockminimo;
+                    }
+                    var newitem = _db.ArticulosStockSeguridad.Create();
+                    newitem.empresa = result.empresa;
+                    newitem.id = item.Id;
+                    newitem.codalmacen = item.Codalmacen;
+                    newitem.descripcionalmacen = item.Descripcionalmacen;
+                    newitem.codarticulo = result.id;
+                    newitem.descripcionarticulo = result.descripcion;
+                    newitem.stockseguridad = result.stockseguridad;
+                    newitem.stockminimo = item.Stockminimo;
+                    newitem.stockmaximo = item.Stockmaximo;
+
+                    result.ArticulosStockSeguridad.Add(newitem);
+                }
             }
+            else// Si ya existe stock minimo general indicado
+            {
+                foreach (var item in viewmodel.ArticulosStockSeguridad)
+                {
+                    var newitem = _db.ArticulosStockSeguridad.Create();
+                    newitem.empresa = result.empresa;
+                    newitem.id = item.Id;
+                    newitem.codalmacen = item.Codalmacen;
+                    newitem.descripcionalmacen = item.Descripcionalmacen;
+                    newitem.codarticulo = result.id;
+                    newitem.descripcionarticulo = result.descripcion;
+                    newitem.stockseguridad = result.stockseguridad;
+                    newitem.stockminimo = item.Stockminimo;
+                    newitem.stockmaximo = item.Stockmaximo;
+
+                    result.ArticulosStockSeguridad.Add(newitem);
+                }
+            }
+            
 
             return result;
         }
@@ -268,7 +297,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var viewmodel = obj as ArticulosModel;
             //var result = _db.Articulos.Single(f => f.id == viewmodel.Id && f.empresa == viewmodel.Empresa);
             var result = _db.Articulos.Where(f => f.id == viewmodel.Id && f.empresa == viewmodel.Empresa).Include(b => b.ArticulosTercero).ToList().Single();
-
+            var stockminimo = 0d;
             /*
             foreach (var item in result.GetType().GetProperties())
             {
@@ -331,19 +360,48 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             }
 
             result.ArticulosStockSeguridad.Clear();
-            foreach (var item in viewmodel.ArticulosStockSeguridad)
+            //Si no hay stock minimo general indicado
+            if (result.stockminimo == stockminimo)
             {
-                var newitem = _db.Set<ArticulosStockSeguridad>().Create();
-                newitem.empresa = result.empresa;
-                newitem.id = item.Id;
-                newitem.codalmacen = item.Codalmacen;
-                newitem.descripcionalmacen = item.Descripcionalmacen;
-                newitem.codarticulo = result.id;
-                newitem.stockseguridad = result.stockseguridad;
-                newitem.stockminimo = item.Stockminimo;
-                newitem.stockmaximo = item.Stockmaximo;
+                foreach (var item in viewmodel.ArticulosStockSeguridad)
+                {
+                    if (item.Stockminimo < stockminimo || stockminimo == 0)
+                    {
+                        stockminimo = item.Stockminimo;
+                    }
+                    var newitem = _db.ArticulosStockSeguridad.Create();
+                    newitem.empresa = result.empresa;
+                    newitem.id = item.Id;
+                    newitem.codalmacen = item.Codalmacen;
+                    newitem.descripcionalmacen = item.Descripcionalmacen;
+                    newitem.codarticulo = result.id;
+                    newitem.descripcionarticulo = result.descripcion;
+                    newitem.stockseguridad = result.stockseguridad;
+                    newitem.stockminimo = item.Stockminimo;
+                    newitem.stockmaximo = item.Stockmaximo;
 
-                result.ArticulosStockSeguridad.Add(newitem);
+                    result.ArticulosStockSeguridad.Add(newitem);
+                }
+
+                result.stockminimo = stockminimo;
+            }
+            else// Si ya existe stock minimo general indicado
+            {
+                foreach (var item in viewmodel.ArticulosStockSeguridad)
+                {
+                    var newitem = _db.ArticulosStockSeguridad.Create();
+                    newitem.empresa = result.empresa;
+                    newitem.id = item.Id;
+                    newitem.codalmacen = item.Codalmacen;
+                    newitem.descripcionalmacen = item.Descripcionalmacen;
+                    newitem.codarticulo = result.id;
+                    newitem.descripcionarticulo = result.descripcion;
+                    newitem.stockseguridad = result.stockseguridad;
+                    newitem.stockminimo = item.Stockminimo;
+                    newitem.stockmaximo = item.Stockmaximo;
+
+                    result.ArticulosStockSeguridad.Add(newitem);
+                }
             }
 
             return result;
@@ -384,6 +442,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Codalmacen = f.codalmacen,
                 Descripcionalmacen = f.descripcionalmacen,
                 Codarticulo = f.codarticulo,
+                Descripcionarticulo = f.descripcionarticulo,
                 Stockseguridad = (TipoStockSeguridad)f.stockseguridad,
                 Stockminimo = (double)f.stockminimo,
                 Stockmaximo = (double)f.stockmaximo

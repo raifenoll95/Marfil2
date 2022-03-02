@@ -17,6 +17,7 @@
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
             <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
             <li><a data-toggle="tab" href="#zonas">@RAlmacenes.Zonas</a></li>
+            <li><a data-toggle="tab" href="#articulos">@RAlmacenes.Articulos</a></li>
             <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
         </ul>
     </div>
@@ -46,7 +47,15 @@
                     @Html.Partial("_zonas", Model.Lineas)
                 </div>
             </div>
-            
+
+        </div>
+        <div id="articulos" class="tab-pane fade margin-bottom">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.Partial("_Movsarticulosstockseguridadalmacen", Model.ArticulosStockSeguridad)
+                </div>
+            </div>
+
         </div>
         <div id="direcciones" class="tab-pane fade margin-bottom">
             <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>

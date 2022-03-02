@@ -633,4 +633,7 @@
   <data name="logstockseguridad" xml:space="preserve">
     <value>Log rotura de stock</value>
   </data>
+  <data name="listadostockmaxmin" xml:space="preserve">
+    <value>Listado de máximos y mínimos</value>
+  </data>
 </root>

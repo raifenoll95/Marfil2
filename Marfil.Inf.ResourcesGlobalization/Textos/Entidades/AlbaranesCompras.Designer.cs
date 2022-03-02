@@ -1375,6 +1375,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sólo artículos bajo mínimo.
+        /// </summary>
+        public static string LblArticulos {
+            get {
+                return ResourceManager.GetString("LblArticulos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Buscar direcciones asociadas al Cliente.
         /// </summary>
         public static string LblBuscarDireccion {
@@ -1438,6 +1447,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Mostrar.
+        /// </summary>
+        public static string LblMostrar {
+            get {
+                return ResourceManager.GetString("LblMostrar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sin agrupar.
         /// </summary>
         public static string LblSinAgrupar {
@@ -1452,6 +1470,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string LblSindetallar {
             get {
                 return ResourceManager.GetString("LblSindetallar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Todos (Artículos con stock mínimo indicado).
+        /// </summary>
+        public static string LblTodos {
+            get {
+                return ResourceManager.GetString("LblTodos", resourceCulture);
             }
         }
         

@@ -492,6 +492,7 @@
     <Compile Include="Listados\ListadosProductosFacturasCompras.cs" />
     <Compile Include="Listados\ListadosProductosPedidosCompras.cs" />
     <Compile Include="Listados\ListadosProductosPresupuestosCompras.cs" />
+    <Compile Include="Listados\ListadosStockMaxMin.cs" />
     <Compile Include="Listados\ListadosStockSalidas.cs" />
     <Compile Include="Listados\ListadosStockDisponible.cs" />
     <Compile Include="Listados\ListadosStockAlbaranesCompras.cs" />
