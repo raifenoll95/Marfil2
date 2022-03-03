@@ -145,6 +145,15 @@ namespace Marfil.Dom.Persistencia.Listados
             ValoresParametros.Clear();
             Condiciones.Clear();
             sb.AppendFormat(" s.empresa='{0}' ", Empresa);
+
+            if (Mostrar == "2" || Mostrar == "3")
+            {
+                if (flag)
+                    sb.Append(" AND ");
+                sb.Append(" a.stockminimo > 0 and sseg.codarticulo IS NULL  ");
+                flag = true;
+            }
+
             if (!string.IsNullOrEmpty(Fkalmacen))
             {
                 if (flag)
@@ -348,7 +357,15 @@ namespace Marfil.Dom.Persistencia.Listados
 
         internal override string GenerarSelect()
         {
-            return CadenaAgrupadoArticulos();
+            if (Mostrar == "0" || Mostrar == "1")
+            { 
+                return CadenaAgrupadoArticulos();
+            }
+            else 
+            {
+                return CadenaAgrupadoArticulosGeneral();
+            }
+                
         }
 
         internal override string GenerarOrdenColumnas()
@@ -412,6 +429,34 @@ namespace Marfil.Dom.Persistencia.Listados
             return sb.ToString();
         }
 
+        private string CadenaAgrupadoArticulosGeneral()
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("select {0} ", GetColumnasAlmacen());
+            sb.AppendFormat(" s.fkarticulos as [Cod. Artículo],a.descripcion as [Artículo],");
+            //columnas sum
+            sb.AppendFormat("sum( s.cantidaddisponible) as [Cant. Disponible],sum(s.metros) as [Metros],");
+
+            sb.AppendFormat("u.codigounidad as [UM], ");
+            sb.AppendFormat("dbo._fn_enum_TipoStockSeguridad(a.stockseguridad) as [Tipo de stock], a.stockminimo as [Stock mínimo], a.stockmaximo as [Stock máximo], " +
+                            "CASE WHEN a.stockseguridad = 0 THEN (CASE WHEN (a.stockmaximo - sum(s.metros)) <= 0 THEN 0 ELSE (a.stockmaximo - sum(s.metros)) END)" +
+                            " ELSE (CASE WHEN (a.stockmaximo - sum( s.cantidaddisponible)) <= 0 THEN 0 ELSE (a.stockmaximo - sum( s.cantidaddisponible)) END) END as [Pedido óptimo], ");
+            sb.AppendFormat("u.decimalestotales as [_decimales] ");
+            sb.AppendFormat(" from stockactual as s ");
+
+            sb.AppendFormat(" inner join articulos as a on a.id = s.fkarticulos and a.empresa= s.empresa ");
+            sb.AppendFormat(" inner join familiasproductos as fp on fp.id = substring(s.fkarticulos, 0, 3) and fp.empresa= a.empresa ");
+            sb.AppendFormat(" inner join unidades as u on u.id = fp.fkunidadesmedida ");
+            sb.AppendFormat(" inner join almacenes as alm on alm.empresa=s.empresa and alm.id=s.fkalmacenes ");
+            sb.AppendFormat(" left join ArticulosStockSeguridad as sseg on sseg.empresa = s.empresa and sseg.codarticulo = s.fkarticulos and sseg.codalmacen = s.fkalmacenes ");
+            sb.AppendFormat(" left join almaceneszona as almz on almz.empresa=s.empresa and almz.fkalmacenes=s.fkalmacenes and almz.id=s.fkalmaceneszona ");
+            sb.AppendFormat(" left join materiales as ml on ml.id = substring(s.fkarticulos, 3, 3) and ml.empresa= a.empresa ");
+            sb.AppendFormat(" left join Familiamateriales  as fm on fm.valor=ml.fkfamiliamateriales ");
+
+            return sb.ToString();
+
+        }
+
         #endregion
 
         #region Cadena agrupacion
@@ -425,10 +470,24 @@ namespace Marfil.Dom.Persistencia.Listados
                         ", sseg.stockseguridad,sseg.stockminimo,sseg.stockmaximo " +
                         "having CASE WHEN sseg.stockseguridad = 0 THEN(sseg.stockmaximo - sum(s.metros)) ELSE(sseg.stockmaximo - sum(s.cantidaddisponible)) END > 0";
             }
-
-            return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
+            else if(Mostrar == "1") {
+                return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
                         GetColumnasAgrupacionAlmacen() +
                         ", sseg.stockseguridad,sseg.stockminimo,sseg.stockmaximo ";
+            } 
+            else if (Mostrar == "2")
+            {
+                return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
+                        GetColumnasAgrupacionAlmacen() +
+                        ", a.stockseguridad,a.stockminimo,a.stockmaximo " +
+                        "having CASE WHEN a.stockseguridad = 0 THEN(a.stockmaximo - sum(s.metros)) ELSE(a.stockmaximo - sum(s.cantidaddisponible)) END > 0";
+            }
+            else
+            {
+                return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
+                        GetColumnasAgrupacionAlmacen() +
+                        ", a.stockseguridad,a.stockminimo,a.stockmaximo ";
+            }   
         }
 
         #endregion

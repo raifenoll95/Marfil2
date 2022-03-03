@@ -1114,7 +1114,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Log rotura de stock.
+        ///   Busca una cadena traducida similar a Diario roturas de stock.
         /// </summary>
         public static string logstockseguridad {
             get {

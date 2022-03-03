@@ -577,25 +577,28 @@ namespace Marfil.App.WebMain.Controllers
                             //obtenemos los diferentes clientes, proveedores y acreedores
                             foreach (DataRow row in dt.Rows)
                             {
-                                var digitoscuenta = row["codigo"].ToString().Substring(0, 4);
-                                var existeTipoCuenta = service.ExisteTipoCuenta(digitoscuenta);
-                                if (existeTipoCuenta == true)
+                                if (row["codigo"].ToString() != "")
                                 {
-                                    tipo = service.GetTipoCuenta(digitoscuenta);
-                                }
+                                    var digitoscuenta = row["codigo"].ToString().Substring(0, 4);
+                                    var existeTipoCuenta = service.ExisteTipoCuenta(digitoscuenta);
+                                    if (existeTipoCuenta == true)
+                                    {
+                                        tipo = service.GetTipoCuenta(digitoscuenta);
+                                    }
 
-                                switch (tipo)
-                                {
-                                    case 0:
-                                        clientes.ImportRow(row);
-                                        break;
-                                    case 1:
-                                        proveedores.ImportRow(row);
-                                        break;
-                                    case 2:
-                                        acreedores.ImportRow(row);
-                                        break;
-                                }
+                                    switch (tipo)
+                                    {
+                                        case 0:
+                                            clientes.ImportRow(row);
+                                            break;
+                                        case 1:
+                                            proveedores.ImportRow(row);
+                                            break;
+                                        case 2:
+                                            acreedores.ImportRow(row);
+                                            break;
+                                    }
+                                }                              
                             }
 
                             idPeticion = clienteService.CrearPeticionImportacion(ContextService);

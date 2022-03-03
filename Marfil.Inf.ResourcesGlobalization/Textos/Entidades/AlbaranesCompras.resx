@@ -904,12 +904,18 @@
     <value>Metros Disp.</value>
   </data>
   <data name="LblArticulos" xml:space="preserve">
-    <value>Sólo artículos bajo mínimo</value>
+    <value>Sólo artículos bajo mínimo por almacén</value>
   </data>
   <data name="LblMostrar" xml:space="preserve">
     <value>Mostrar</value>
   </data>
   <data name="LblTodos" xml:space="preserve">
-    <value>Todos (Artículos con stock mínimo indicado)</value>
+    <value>Todos por almacén (Artículos con stock mínimo indicado)</value>
+  </data>
+  <data name="LblArticulosGeneral" xml:space="preserve">
+    <value>Sólo artículos bajo mínimo general</value>
+  </data>
+  <data name="LblTodosGeneral" xml:space="preserve">
+    <value>Todos General (Artículos con stock mínimo indicado)</value>
   </data>
 </root>
