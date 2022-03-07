@@ -231,7 +231,7 @@
             }
             else if (e.ButtonID == "btnVer")
             {
-                if (!Model.PermiteEliminar && !Model.PermiteModificar)
+                if (!Model.PermiteEliminar && !Model.PermiteModificar && Model.Controller == "LogStockSeguridad")
                     e.Visible = DefaultBoolean.False;
             }
         };
