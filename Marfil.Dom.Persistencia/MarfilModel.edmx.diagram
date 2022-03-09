@@ -280,6 +280,11 @@
         <AssociationConnector Association="MarfilModel.FK__ArticulosStockSeguridad_Articulos" />
         <EntityTypeShape EntityType="MarfilModel.LogStockSeguridad" Width="1.5" PointX="11.5" PointY="57.375" />
         <AssociationConnector Association="MarfilModel.FK__LogStockSeguridad_Articulos" />
+        <EntityTypeShape EntityType="MarfilModel.FiltrosPYGFuncional" Width="1.5" PointX="26.375" PointY="13.75" />
+        <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesFuncional" Width="1.5" PointX="43.375" PointY="21" />
+        <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesLineasFuncional" Width="1.5" PointX="45.625" PointY="21.375" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineasFuncional_GuiasBalances" />
+        <EntityTypeShape EntityType="MarfilModel.CuentasNoAsignadasFuncional" Width="1.5" PointX="28.375" PointY="42.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

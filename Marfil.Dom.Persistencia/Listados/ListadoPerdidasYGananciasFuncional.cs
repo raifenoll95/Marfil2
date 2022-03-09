@@ -1,29 +1,24 @@
 ﻿using Marfil.Dom.Persistencia.Listados.Base;
+using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Marfil.Dom.Persistencia.ServicesView;
-using Marfil.Dom.Persistencia.ServicesView.Servicios;
-using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
-using System.Data.SqlClient;
-using System.Data;
-using Marfil.Dom.Persistencia.Model.Configuracion;
-using Marfil.Dom.Persistencia.Helpers;
-using System.Runtime.Serialization;
-using System.Xml.Serialization;
-using System.ComponentModel.DataAnnotations;
 using RPerdidasYGanancias = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.PerdidasYGanancias;
+
 
 namespace Marfil.Dom.Persistencia.Listados
 {
-    public class ListadoPerdidasYGanancias : ListadosModel
+    public class ListadoPerdidasYGananciasFuncional : ListadosModel
     {
         #region Properties
-        public override string TituloListado => "Listado Pérdidas y Ganancias";
+        public override string TituloListado => "Cta. pérdidas y ganancias funcional";
 
-        public override string IdListado => FListadosModel.PerdidasYGanancias;
+        public override string IdListado => FListadosModel.PerdidasYGananciasFuncional;
 
         [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Ejercicio")]
         public string Ejercicio { get; set; }
@@ -38,12 +33,12 @@ namespace Marfil.Dom.Persistencia.Listados
 
         #endregion
 
-        public ListadoPerdidasYGanancias()
+        public ListadoPerdidasYGananciasFuncional()
         {
 
         }
 
-        public ListadoPerdidasYGanancias(IContextService context) : base(context)
+        public ListadoPerdidasYGananciasFuncional(IContextService context) : base(context)
         {
 
         }
@@ -115,7 +110,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 {
                     sb.Append(" saldo <> 0 or saldo is null");
                 }
-                    
+
                 ValoresParametros["SIN_SALDO"] = Lineassinsaldo;
 
                 flag = true;
@@ -133,7 +128,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 ValoresParametros["SIN_SALDO"] = Lineassinsaldo;
 
                 flag = true;
-            }          
+            }
 
             //ExecuteProcedure(Context, ValoresParametros);
             return sb.ToString();
@@ -144,12 +139,12 @@ namespace Marfil.Dom.Persistencia.Listados
             var sb = new StringBuilder();
             if (Desglosarniveltres)
             {
-                sb.Append("SELECT cab.orden as Orden, cab.descrip as [Descripción], lin.cuenta as Cuenta, lin.saldo as Saldo FROM ReportGuiasBalances cab, ReportGuiasBalancesLineas lin");
+                sb.Append("SELECT cab.orden as Orden, cab.descrip as [Descripción], lin.cuenta as Cuenta, lin.saldo as Saldo FROM ReportGuiasBalancesFuncional cab, ReportGuiasBalancesLineasFuncional lin");
             }
             else
             {
-                sb.Append("Select orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo from ReportGuiasBalances");
-            }        
+                sb.Append("Select orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo from ReportGuiasBalancesFuncional");
+            }
 
             return sb.ToString();
         }

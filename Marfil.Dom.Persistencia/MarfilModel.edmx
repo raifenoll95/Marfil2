@@ -1249,6 +1249,20 @@
           <Property Name="saldo" Type="money" />
           <Property Name="procesado" Type="bit" />
         </EntityType>
+        <EntityType Name="CuentasNoAsignadasFuncional">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="fkejercicio" Type="int" Nullable="false" />
+          <Property Name="fkcuentas" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="debe" Type="money" />
+          <Property Name="haber" Type="money" />
+          <Property Name="saldo" Type="money" />
+          <Property Name="procesado" Type="bit" />
+        </EntityType>
         <EntityType Name="Cuentastesoreria">
           <Key>
             <PropertyRef Name="empresa" />
@@ -2013,6 +2027,18 @@
           <Property Name="excluirAsientos" Type="bit" />
         </EntityType>
         <EntityType Name="FiltrosPYG">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="20" />
+          <Property Name="fkejercicio" Type="int" Nullable="false" />
+          <Property Name="guia" Type="varchar" MaxLength="25" />
+          <Property Name="fechaCalculo" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FiltrosPYGFuncional">
           <Key>
             <PropertyRef Name="empresa" />
             <PropertyRef Name="id" />
@@ -3661,7 +3687,41 @@
           <Property Name="saldoea" Type="money" />
           <Property Name="listacuentas" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="ReportGuiasBalancesFuncional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="InformeId" Type="int" />
+          <Property Name="GuiaId" Type="int" />
+          <Property Name="textogrupo" Type="nvarchar" MaxLength="255" />
+          <Property Name="orden" Type="nvarchar" MaxLength="255" />
+          <Property Name="actpas" Type="nvarchar" MaxLength="255" />
+          <Property Name="detfor" Type="nvarchar" MaxLength="255" />
+          <Property Name="formula" Type="nvarchar" MaxLength="255" />
+          <Property Name="regdig" Type="nvarchar" MaxLength="255" />
+          <Property Name="descrip" Type="nvarchar" MaxLength="255" />
+          <Property Name="listado" Type="nvarchar" MaxLength="255" />
+          <Property Name="saldo" Type="money" />
+          <Property Name="saldoea" Type="money" />
+          <Property Name="listacuentas" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="ReportGuiasBalancesLineas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="InformeId" Type="int" />
+          <Property Name="GuiaId" Type="int" />
+          <Property Name="GuiasBalancesId" Type="int" />
+          <Property Name="orden" Type="nvarchar" MaxLength="255" />
+          <Property Name="cuenta" Type="nvarchar" MaxLength="255" />
+          <Property Name="signo" Type="nvarchar" MaxLength="255" />
+          <Property Name="signoea" Type="nvarchar" MaxLength="255" />
+          <Property Name="saldo" Type="money" />
+          <Property Name="saldoea" Type="money" />
+        </EntityType>
+        <EntityType Name="ReportGuiasBalancesLineasFuncional">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -6035,6 +6095,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReportGuiasBalancesLineasFuncional_GuiasBalances">
+          <End Role="ReportGuiasBalancesFuncional" Type="Self.ReportGuiasBalancesFuncional" Multiplicity="0..1" />
+          <End Role="ReportGuiasBalancesLineasFuncional" Type="Self.ReportGuiasBalancesLineasFuncional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportGuiasBalancesFuncional">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReportGuiasBalancesLineasFuncional">
+              <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReservasstockLin_Reservasstock">
           <End Role="Reservasstock" Type="Self.Reservasstock" Multiplicity="1" />
           <End Role="ReservasstockLin" Type="Self.ReservasstockLin" Multiplicity="*" />
@@ -6313,6 +6385,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Cuentas" EntityType="Self.Cuentas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CuentasNoAsignadas" EntityType="Self.CuentasNoAsignadas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CuentasNoAsignadasAnalitica" EntityType="Self.CuentasNoAsignadasAnalitica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CuentasNoAsignadasFuncional" EntityType="Self.CuentasNoAsignadasFuncional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cuentastesoreria" EntityType="Self.Cuentastesoreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Direcciones" EntityType="Self.Direcciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DivisionLotes" EntityType="Self.DivisionLotes" Schema="dbo" store:Type="Tables" />
@@ -6335,6 +6408,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Ficheros" EntityType="Self.Ficheros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FiltrosAcumulador" EntityType="Self.FiltrosAcumulador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FiltrosPYG" EntityType="Self.FiltrosPYG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FiltrosPYGFuncional" EntityType="Self.FiltrosPYGFuncional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormasPago" EntityType="Self.FormasPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormasPagoLin" EntityType="Self.FormasPagoLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grosores" EntityType="Self.Grosores" Schema="dbo" store:Type="Tables" />
@@ -6399,7 +6473,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="ReportAnaliticaGuiasBalances" EntityType="Self.ReportAnaliticaGuiasBalances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportAnaliticaGuiasBalancesLineas" EntityType="Self.ReportAnaliticaGuiasBalancesLineas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportGuiasBalances" EntityType="Self.ReportGuiasBalances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportGuiasBalancesFuncional" EntityType="Self.ReportGuiasBalancesFuncional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportGuiasBalancesLineas" EntityType="Self.ReportGuiasBalancesLineas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportGuiasBalancesLineasFuncional" EntityType="Self.ReportGuiasBalancesLineasFuncional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reservasstock" EntityType="Self.Reservasstock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReservasstockLin" EntityType="Self.ReservasstockLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReservasstockTotales" EntityType="Self.ReservasstockTotales" Schema="dbo" store:Type="Tables" />
@@ -6856,6 +6932,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_ReportGuiasBalancesLineas_GuiasBalances" Association="Self.FK_ReportGuiasBalancesLineas_GuiasBalances">
             <End Role="ReportGuiasBalances" EntitySet="ReportGuiasBalances" />
             <End Role="ReportGuiasBalancesLineas" EntitySet="ReportGuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportGuiasBalancesLineasFuncional_GuiasBalances" Association="Self.FK_ReportGuiasBalancesLineasFuncional_GuiasBalances">
+            <End Role="ReportGuiasBalancesFuncional" EntitySet="ReportGuiasBalancesFuncional" />
+            <End Role="ReportGuiasBalancesLineasFuncional" EntitySet="ReportGuiasBalancesLineasFuncional" />
           </AssociationSet>
           <AssociationSet Name="FK_ReservasstockLin_Reservasstock" Association="Self.FK_ReservasstockLin_Reservasstock">
             <End Role="Reservasstock" EntitySet="Reservasstock" />
@@ -7461,6 +7541,14 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="LogStockSeguridad" EntitySet="LogStockSeguridad" />
           </AssociationSet>
+          <EntitySet Name="FiltrosPYGFuncional" EntityType="MarfilModel.FiltrosPYGFuncional" />
+          <EntitySet Name="ReportGuiasBalancesFuncional" EntityType="MarfilModel.ReportGuiasBalancesFuncional" />
+          <EntitySet Name="ReportGuiasBalancesLineasFuncional" EntityType="MarfilModel.ReportGuiasBalancesLineasFuncional" />
+          <AssociationSet Name="FK_ReportGuiasBalancesLineasFuncional_GuiasBalances" Association="MarfilModel.FK_ReportGuiasBalancesLineasFuncional_GuiasBalances">
+            <End Role="ReportGuiasBalancesFuncional" EntitySet="ReportGuiasBalancesFuncional" />
+            <End Role="ReportGuiasBalancesLineasFuncional" EntitySet="ReportGuiasBalancesLineasFuncional" />
+          </AssociationSet>
+          <EntitySet Name="CuentasNoAsignadasFuncional" EntityType="MarfilModel.CuentasNoAsignadasFuncional" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -13865,6 +13953,80 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FiltrosPYGFuncional">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fkejercicio" Type="Int32" Nullable="false" />
+          <Property Name="guia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="fechaCalculo" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ReportGuiasBalancesFuncional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="InformeId" Type="Int32" />
+          <Property Name="GuiaId" Type="Int32" />
+          <Property Name="textogrupo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="actpas" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="detfor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="formula" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="regdig" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="descrip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="listado" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="saldo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="saldoea" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="listacuentas" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReportGuiasBalancesLineasFuncional" Relationship="MarfilModel.FK_ReportGuiasBalancesLineasFuncional_GuiasBalances" FromRole="ReportGuiasBalancesFuncional" ToRole="ReportGuiasBalancesLineasFuncional" />
+        </EntityType>
+        <EntityType Name="ReportGuiasBalancesLineasFuncional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="InformeId" Type="Int32" />
+          <Property Name="GuiaId" Type="Int32" />
+          <Property Name="GuiasBalancesId" Type="Int32" />
+          <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cuenta" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="signo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="signoea" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="saldo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="saldoea" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="ReportGuiasBalancesFuncional" Relationship="MarfilModel.FK_ReportGuiasBalancesLineasFuncional_GuiasBalances" FromRole="ReportGuiasBalancesLineasFuncional" ToRole="ReportGuiasBalancesFuncional" />
+        </EntityType>
+        <Association Name="FK_ReportGuiasBalancesLineasFuncional_GuiasBalances">
+          <End Type="MarfilModel.ReportGuiasBalancesFuncional" Role="ReportGuiasBalancesFuncional" Multiplicity="0..1" />
+          <End Type="MarfilModel.ReportGuiasBalancesLineasFuncional" Role="ReportGuiasBalancesLineasFuncional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportGuiasBalancesFuncional">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReportGuiasBalancesLineasFuncional">
+              <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CuentasNoAsignadasFuncional">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fkejercicio" Type="Int32" Nullable="false" />
+          <Property Name="fkcuentas" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="debe" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="haber" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="saldo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="procesado" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -18834,6 +18996,68 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="descripcionarticulo" ColumnName="descripcionarticulo" />
                 <ScalarProperty Name="codarticulo" ColumnName="codarticulo" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FiltrosPYGFuncional">
+            <EntityTypeMapping TypeName="MarfilModel.FiltrosPYGFuncional">
+              <MappingFragment StoreEntitySet="FiltrosPYGFuncional">
+                <ScalarProperty Name="fechaCalculo" ColumnName="fechaCalculo" />
+                <ScalarProperty Name="guia" ColumnName="guia" />
+                <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportGuiasBalancesFuncional">
+            <EntityTypeMapping TypeName="MarfilModel.ReportGuiasBalancesFuncional">
+              <MappingFragment StoreEntitySet="ReportGuiasBalancesFuncional">
+                <ScalarProperty Name="listacuentas" ColumnName="listacuentas" />
+                <ScalarProperty Name="saldoea" ColumnName="saldoea" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="listado" ColumnName="listado" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="regdig" ColumnName="regdig" />
+                <ScalarProperty Name="formula" ColumnName="formula" />
+                <ScalarProperty Name="detfor" ColumnName="detfor" />
+                <ScalarProperty Name="actpas" ColumnName="actpas" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="textogrupo" ColumnName="textogrupo" />
+                <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
+                <ScalarProperty Name="InformeId" ColumnName="InformeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportGuiasBalancesLineasFuncional">
+            <EntityTypeMapping TypeName="MarfilModel.ReportGuiasBalancesLineasFuncional">
+              <MappingFragment StoreEntitySet="ReportGuiasBalancesLineasFuncional">
+                <ScalarProperty Name="saldoea" ColumnName="saldoea" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="signoea" ColumnName="signoea" />
+                <ScalarProperty Name="signo" ColumnName="signo" />
+                <ScalarProperty Name="cuenta" ColumnName="cuenta" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="GuiasBalancesId" ColumnName="GuiasBalancesId" />
+                <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
+                <ScalarProperty Name="InformeId" ColumnName="InformeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CuentasNoAsignadasFuncional">
+            <EntityTypeMapping TypeName="MarfilModel.CuentasNoAsignadasFuncional">
+              <MappingFragment StoreEntitySet="CuentasNoAsignadasFuncional">
+                <ScalarProperty Name="procesado" ColumnName="procesado" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="haber" ColumnName="haber" />
+                <ScalarProperty Name="debe" ColumnName="debe" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
+                <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>

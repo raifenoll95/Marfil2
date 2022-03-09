@@ -27,6 +27,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
             var mainQuery = new CustomSqlQuery("ReportGuiasBalances", "Select * from ReportGuiasBalances");
             var mainQuery2 = new CustomSqlQuery("ReportAnaliticaGuiasBalances", "Select * from ReportAnaliticaGuiasBalances");
+            var mainQuery3 = new CustomSqlQuery("ReportGuiasBalancesFuncional", "Select * from ReportGuiasBalancesFuncional");
 
             if (dictionary != null)
             {
@@ -101,6 +102,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadas", "SELECT * FROM CuentasNoAsignadas"));
             DataSource.Queries.Add(new CustomSqlQuery("ReportAnaliticaGuiasBalancesLineas", "SELECT * FROM ReportAnaliticaGuiasBalancesLineas"));
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasAnalitica", "SELECT * FROM CuentasNoAsignadasAnalitica"));
+            DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineasFuncional", "SELECT * FROM ReportGuiasBalancesLineasFuncional"));
+            DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasFuncional", "SELECT * FROM CuentasNoAsignadasFuncional"));
 
             DataSource.Queries.Add(mainQuery);
 
@@ -120,12 +123,21 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 new RelationColumnInfo("orden", "orden")
             });
 
+            DataSource.Queries.Add(mainQuery3);
+
+            DataSource.Relations.Add("ReportGuiasBalancesFuncional", "ReportGuiasBalancesLineasFuncional", new[] {
+                new RelationColumnInfo("Id", "GuiasBalancesId"),
+                new RelationColumnInfo("InformeId", "InformeId"),
+                new RelationColumnInfo("GuiaId", "GuiaId"),
+                new RelationColumnInfo("orden", "orden")
+            });
 
             DataSource.RebuildResultSchema();           
              
         }
 
         //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalances y Líneas con los filtros indicados
+        //Este proceso se hace con un botón desde la pantalla ahora, se mantiene aquí este ejemplo por si acaso
         private void ExecuteProcedure(string baseDatos, Dictionary<string, object> parametros)
         {
             var dbconnection = "";

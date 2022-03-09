@@ -644,85 +644,84 @@
 644;1;5;C); ;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;P; 
 645;1;5;; ;G19;T;;;Impuestos sobre beneficios.;P; 
 646;1;5;D); ;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;P; 
-647;2;6;; ;10;D;;;Ventas Netas.;; 
-648;2;6;; ;11;D;;;Otros ingresos de gestion;; 
-649;2;6;; ;50;F;10+11;;VENTAS NETAS e INGRESOS EXPLOTACION;; 
-650;2;6;; ;60;D;;;Compras materiales;; 
-651;2;6;; ;70;D;;;( +/- ) Variacion de existencias.;; 
-652;2;6;; ;71;D;;;Trabajos de Terceros;; 
-653;2;6;; ;72;D;;;Mano de Obra Directa;; 
-654;2;6;; ;73;D;;;Comisiones de Ventas;; 
-655;2;6;; ;74;D;;;Rappels sobre Ventas;; 
-656;2;6;; ;75;D;;;Transportes de Ventas;; 
-657;2;6;; ;90;F;50+60+70+71+72+73+74+75;;MARGEN BRUTO;; 
-658;2;6;; ;100;D;;;Amortizaciones;; 
-659;2;6;; ;120;D;;;Mano de obra indirecta;; 
-660;2;6;; ;125;D;;;Otros costes fijos;; 
-661;2;6;; ;130;F;90+100+120+125;;RESULTADO de  EXPLOTACION  (BAIT);; 
-662;2;6;; ;140;D;;;Gastos Financieros;; 
-663;2;6;; ;180;D;;;Ingresos financieros;; 
-664;2;6;; ;190;D;;;Rtdos Extraordinarios/ Extrafunc. Negativos;; 
-665;2;6;; ;192;D;;;Rtdos Extraordinarios / Extrafunc. Positivos;; 
-666;2;6;; ;210;F;130+140+180+190+192;;RESULTADO ANTES DE IMPUESTOS;; 
-667;2;6;; ;260;D;;;Impuesto sobre sociedades;; 
-668;2;6;; ;270;F;210+260;;RESULTADO DESPUES DE IMPUESTOS (BENEF.O PERD);; 
-669;3;6;; ;10;D;;;Ventas Netas;;N
-670;3;6;; ;20;F;10;;VENTAS NETAS;;P
-671;3;6;; ;30;D;;;Compras de Materiales;;N
-672;3;6;; ;40;D;;;(+/-) Variacion de Existencias;;N
-673;3;6;; ;50;D;;;Trabajos de Terceros;;N
-674;3;6;; ;60;D;;;Mano de Obra Directa ( Variable);;N
-675;3;6;; ;70;D;;;Comisiones S/ Ventas;;N
-676;3;6;; ;80;D;;;Rappels S/ Ventas;;N
-677;3;6;; ;90;D;;;Transportes de Ventas;;N
-678;3;6;; ;95;D;;;Gastos Cobro Ventas;;N
-679;3;6;; ;100;F;30+40+50+60+70+80+90+95+31;; - COSTE DE VENTAS ( VARIABLES);;S
-680;3;6;; ;105;G;20+100;; = MARGEN BRUTO;;S
-681;3;6;; ;110;D;;;Amortizaciones;;N
-682;3;6;; ;115;D;;;Mano de Obra Indirecta ( Fija);;N
-683;3;6;; ;120;D;;;Otros Costes Fijos;;N
-684;3;6;; ;130;F;110+115+120;;#¿NOMBRE?;;S
-685;3;6;; ;140;G;20+100+130;; = RESULTADOS DE EXPLOTACION  (BAIT);;S
-686;3;6;; ;150;D;;; + - RESULTADOS FINANCIEROS;;S
-687;3;6;; ;160;D;;; + - RESULTADOS EXTRA Y EXTRAFUNCIONAL;;S
-688;3;6;; ;180;D;;;Impuestos;;N
-689;3;6;; ;170;G;140+150+160;; = RESULTADOS ANTES DE IMPUESTOS;;S
-690;3;6;; ;190;G;170+180;; = BENEFICIO NETO  (BN);;S
-691;3;6;; ;31;D;;;Compras de Consumibles Almacen;;N
-692;3;6;; ;0; ;;;;; 
-693;3;7;; ;10;D;;;Ventas Mercaderías;;S
-694;3;7;; ;20;D;;;Ventas Productos Terminados;;S
-695;3;7;; ;30;D;;;Otras Ventas;;S
-696;3;7;; ;40;D;;;Rappels y Devoluciones de Ventas;;S
-697;3;7;; ;50;D;;;Trab. realizados por otras empresas;;S
-698;3;7;; ;60;D;;;Subvenciones a la Explotación;;S
-699;3;7;; ;70;D;;;Otros Ingresos de gestión;;S
-700;3;7;; ;80;F;10+20+30+40+50+60+70;;*** TOTAL VENTAS NETAS E INGRESOS EXPLOT;;P
-701;3;7;; ;90;D;;;Compras Netas Mercaderías;;S
-702;3;7;; ;100;D;;;Compras Netas Materias Primas;;S
-703;3;7;; ;110;D;;;Compras Netas Otros Aprovisionamientos;;S
-704;3;7;; ;120;D;;;Trabajos Realizados por otras empresas;;S
-705;3;7;; ;130;D;;;Variación Exis. Mercaderias;;S
-706;3;7;; ;140;D;;;Variación Exist. Materias Primas;;S
-707;3;7;; ;150;D;;;Variación Exist. Otros Aprovi.;;S
-708;3;7;; ;160;D;;;Variación Productos Term. y en curso;;S
-709;3;7;; ;170;F;90+100+110+120+130+140+150+160;;*** TOTAL CONSUMO;;S
-710;3;7;; ;180;F;80+170;;*** MARGEN BRUTO;;S
-711;3;7;; ;190;D;;;Gastos de Personal;;S
-712;3;7;; ;200;D;;;Suministros y Serv. Exteriores;;S
-713;3;7;; ;210;D;;;Tributos;;S
-714;3;7;; ;220;D;;;Otros Gastos de Gestión;;S
-715;3;7;; ;230;F;190+200+210+220;;*** TOTAL GASTOS EXPLOTACIÓN;;S
-716;3;7;; ;240;F;180+230;;*** RESULTADO BRUTO EXPLOTACIÓN;;S
-717;3;7;; ;250;D;;;Dotación amortización Inmovilizado;;S
-718;3;7;; ;260;D;;;Variación Provisiones;;S
-719;3;7;; ;270;F;240+250+260;;*** RESULTADO NETO EXPLOTACIÓN;;S
-720;3;7;; ;280;D;;;Ingresos Financieros;;S
-721;3;7;; ;290;D;;;Gastos Financieros;;S
-722;3;7;; ;300;F;270+280+290;;*** RESULTADO ACTIVIDAD ORDINARIA;;S
-723;3;7;; ;310;D;;;Ing. y Bº Extraordinarios;;S
-724;3;7;; ;320;D;;;Gastos y Pérdidas Extraordinarios;;S
-725;3;7;; ;330;F;300+310+320;;*** RESULTADO ANTES DE IMPUESTOS;;S
-726;3;7;; ;340;D;;;Impuesto s/Beneficios;;S
-727;3;7;; ;350;F;330+340;;*** RESULTADO NETO CONTABLE;;S
-728;3;7;; ;360;F;350+250+260;;*** CASH FLOW GENERADO;;S
+647;2;6;; ;10;D;;;Ventas Netas.;;
+648;2;6;; ;11;D;;;Otros ingresos de gestion;;
+649;2;6;; ;50;F;10+11;;VENTAS NETAS e INGRESOS EXPLOTACION;;
+650;2;6;; ;60;D;;;Compras materiales;;
+651;2;6;; ;70;D;;;( +/- ) Variacion de existencias.;;
+652;2;6;; ;71;D;;;Trabajos de Terceros;;
+653;2;6;; ;72;D;;;Mano de Obra Directa;;
+654;2;6;; ;73;D;;;Comisiones de Ventas;;
+655;2;6;; ;74;D;;;Rappels sobre Ventas;;
+656;2;6;; ;75;D;;;Transportes de Ventas;;
+657;2;6;; ;90;F;50+60+70+71+72+73+74+75;;MARGEN BRUTO;;
+658;2;6;; ;100;D;;;Amortizaciones;;
+659;2;6;; ;120;D;;;Mano de obra indirecta;;
+660;2;6;; ;125;D;;;Otros costes fijos;;
+661;2;6;; ;130;F;90+100+120+125;;RESULTADO de  EXPLOTACION  (BAIT);;
+662;2;6;; ;140;D;;;Gastos Financieros;;
+663;2;6;; ;180;D;;;Ingresos financieros;;
+664;2;6;; ;190;D;;;Rtdos Extraordinarios/ Extrafunc. Negativos;;
+665;2;6;; ;192;D;;;Rtdos Extraordinarios / Extrafunc. Positivos;;
+666;2;6;; ;210;F;130+140+180+190+192;;RESULTADO ANTES DE IMPUESTOS;;
+667;2;6;; ;260;D;;;Impuesto sobre sociedades;;
+668;2;6;; ;270;F;210+260;;RESULTADO DESPUES DE IMPUESTOS (BENEF.O PERD);;
+669;3;6;; ;10;D;;;Ventas Netas;N;
+670;3;6;; ;20;F;10;;VENTAS NETAS;P;
+671;3;6;; ;30;D;;;Compras de Materiales;N;
+672;3;6;; ;31;D;;;Compras de Consumibles Almacen;N;
+673;3;6;; ;40;D;;;(+/-) Variacion de Existencias;N;
+674;3;6;; ;50;D;;;Trabajos de Terceros;N;
+675;3;6;; ;60;D;;;Mano de Obra Directa ( Variable);N;
+676;3;6;; ;70;D;;;Comisiones S/ Ventas;N;
+677;3;6;; ;80;D;;;Rappels S/ Ventas;N;
+678;3;6;; ;90;D;;;Transportes de Ventas;N;
+679;3;6;; ;95;D;;;Gastos Cobro Ventas;N;
+680;3;6;; ;100;F;30+40+50+60+70+80+90+95+31;; - COSTE DE VENTAS ( VARIABLES);S;
+681;3;6;; ;105;G;20+100;; = MARGEN BRUTO;S;
+682;3;6;; ;110;D;;;Amortizaciones;N;
+683;3;6;; ;115;D;;;Mano de Obra Indirecta ( Fija);N;
+684;3;6;; ;120;D;;;Otros Costes Fijos;N;
+685;3;6;; ;130;F;110+115+120;;- COSTES FIJOS OPERATIVOS ;S;
+686;3;6;; ;140;G;20+100+130;; = RESULTADOS DE EXPLOTACION  (BAIT);S;
+687;3;6;; ;150;D;;; + - RESULTADOS FINANCIEROS;S;
+688;3;6;; ;160;D;;; + - RESULTADOS EXTRA Y EXTRAFUNCIONAL;S;
+689;3;6;; ;170;G;140+150+160;; = RESULTADOS ANTES DE IMPUESTOS;S;
+690;3;6;; ;180;D;;;Impuestos;N;
+691;3;6;; ;190;G;170+180;; = BENEFICIO NETO  (BN);S;
+693;3;7;; ;10;D;;;Ventas Mercaderías;S;
+694;3;7;; ;20;D;;;Ventas Productos Terminados;S;
+695;3;7;; ;30;D;;;Otras Ventas;S;
+696;3;7;; ;40;D;;;Rappels y Devoluciones de Ventas;S;
+697;3;7;; ;50;D;;;Trab. realizados por otras empresas;S;
+698;3;7;; ;60;D;;;Subvenciones a la Explotación;S;
+699;3;7;; ;70;D;;;Otros Ingresos de gestión;S;
+700;3;7;; ;80;F;10+20+30+40+50+60+70;;*** TOTAL VENTAS NETAS E INGRESOS EXPLOT;P;
+701;3;7;; ;90;D;;;Compras Netas Mercaderías;S;
+702;3;7;; ;100;D;;;Compras Netas Materias Primas;S;
+703;3;7;; ;110;D;;;Compras Netas Otros Aprovisionamientos;S;
+704;3;7;; ;120;D;;;Trabajos Realizados por otras empresas;S;
+705;3;7;; ;130;D;;;Variación Exis. Mercaderias;S;
+706;3;7;; ;140;D;;;Variación Exist. Materias Primas;S;
+707;3;7;; ;150;D;;;Variación Exist. Otros Aprovi.;S;
+708;3;7;; ;160;D;;;Variación Productos Term. y en curso;S;
+709;3;7;; ;170;F;90+100+110+120+130+140+150+160;;*** TOTAL CONSUMO;S;
+710;3;7;; ;180;F;80+170;;*** MARGEN BRUTO;S;
+711;3;7;; ;190;D;;;Gastos de Personal;S;
+712;3;7;; ;200;D;;;Suministros y Serv. Exteriores;S;
+713;3;7;; ;210;D;;;Tributos;S;
+714;3;7;; ;220;D;;;Otros Gastos de Gestión;S;
+715;3;7;; ;230;F;190+200+210+220;;*** TOTAL GASTOS EXPLOTACIÓN;S;
+716;3;7;; ;240;F;180+230;;*** RESULTADO BRUTO EXPLOTACIÓN;S;
+717;3;7;; ;250;D;;;Dotación amortización Inmovilizado;S;
+718;3;7;; ;260;D;;;Variación Provisiones;S;
+719;3;7;; ;270;F;240+250+260;;*** RESULTADO NETO EXPLOTACIÓN;S;
+720;3;7;; ;280;D;;;Ingresos Financieros;S;
+721;3;7;; ;290;D;;;Gastos Financieros;S;
+722;3;7;; ;300;F;270+280+290;;*** RESULTADO ACTIVIDAD ORDINARIA;S;
+723;3;7;; ;310;D;;;Ing. y Bº Extraordinarios;S;
+724;3;7;; ;320;D;;;Gastos y Pérdidas Extraordinarios;S;
+725;3;7;; ;330;F;300+310+320;;*** RESULTADO ANTES DE IMPUESTOS;S;
+726;3;7;; ;340;D;;;Impuesto s/Beneficios;S;
+727;3;7;; ;350;F;330+340;;*** RESULTADO NETO CONTABLE;S;
+728;3;7;; ;360;F;350+250+260;;*** CASH FLOW GENERADO;S;

@@ -338,8 +338,10 @@
     <Compile Include="Controllers\ListadoCuentasNoAsignadasAnaliticaController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasController.cs" />
     <Compile Include="Controllers\AnaliticaPerdidasYGananciasController.cs" />
+    <Compile Include="Controllers\ListadoCuentasNoAsignadasFuncionalController.cs" />
     <Compile Include="Controllers\ListadoPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ListadoInformeMargenController.cs" />
+    <Compile Include="Controllers\ListadoPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\FacturasApiController.cs" />
     <Compile Include="Controllers\LogStockSeguridadController.cs" />
@@ -3660,6 +3662,8 @@
     <Content Include="Views\LogStockSeguridad\Index.cshtml" />
     <Content Include="Views\Almacenes\_Movsarticulosstockseguridadalmacen.cshtml" />
     <Content Include="Views\ListadosStockMaxMin\StockMaxMin.cshtml" />
+    <Content Include="Views\ListadoPerdidasYGananciasFuncional\PerdidasYGananciasFuncional.cshtml" />
+    <Content Include="Views\ListadoCuentasNoAsignadasFuncional\CuentasNoAsignadasFuncional.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

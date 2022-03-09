@@ -952,6 +952,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cta. pérdidas y ganancias funcional.
+        /// </summary>
+        public static string listadoperdidasygananciasfuncional {
+            get {
+                return ResourceManager.GetString("listadoperdidasygananciasfuncional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Productos en Albaranes.
         /// </summary>
         public static string listadoproductosalbaranes {

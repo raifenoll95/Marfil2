@@ -636,4 +636,7 @@
   <data name="listadostockmaxmin" xml:space="preserve">
     <value>Listado de máximos y mínimos</value>
   </data>
+  <data name="listadoperdidasygananciasfuncional" xml:space="preserve">
+    <value>Cta. pérdidas y ganancias funcional</value>
+  </data>
 </root>

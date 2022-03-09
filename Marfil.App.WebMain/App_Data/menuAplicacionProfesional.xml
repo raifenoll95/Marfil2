@@ -120,6 +120,7 @@
 			<item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
 			<item name="listadoperdidasyganancias" eslistado="true" text="Listado Pérdidas y Ganancias" icono="fa fa-file" url="~/ListadoPerdidasYGanancias/Listado/PerdidasYGanancias" />
 			<item name="analiticaperdidasyganancias" eslistado="true" text="Analítica Pérdidas y Ganancias" icono="fa fa-file" url="~/AnaliticaPerdidasYGanancias/Listado/AnaliticaPerdidasYGanancias" />
+			<item name="listadoperdidasygananciasfuncional" eslistado="true" text="Listado Pérdidas y Ganancias Funcional" icono="fa fa-file" url="~/ListadoPerdidasYGananciasFuncional/Listado/PerdidasYGananciasFuncional" />
 		</item>
 		<item name="configuracion" text="Configuración" icono="fa fa-cog">
 			<item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
@@ -149,7 +150,7 @@
 		<item name="imagenlote" text="Gestión imágenes de lotes" url="~/Lotes/Imagenes"></item>
 		<item name="transformaciones" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformaciones/Index"></item>
 		<item name="transformacioneslotes" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotes/Index"></item>
-		<item name="transformacioneslotesnave" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotesnave/Index"></item>
+		<!--<item name="transformacioneslotesnave" allowUpdate="true" allowDelete="true" text="transformaciones" url="~/Transformacioneslotesnave/Index"></item>-->
 		<item name="divisionlotes" allowUpdate="true" allowDelete="true" text="divisionlotes" url="~/DivisionLotes/Index"></item>
 		<item name="imputacioncostes" allowUpdate="true" allowDelete="true" text="imputacioncostes" url="~/ImputacionCostes/Index"></item>
 		<item isseparator="true"></item>

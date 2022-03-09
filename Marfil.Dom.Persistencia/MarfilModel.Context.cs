@@ -216,6 +216,10 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<ReportAnaliticaGuiasBalancesLineas> ReportAnaliticaGuiasBalancesLineas { get; set; }
         public virtual DbSet<ArticulosStockSeguridad> ArticulosStockSeguridad { get; set; }
         public virtual DbSet<LogStockSeguridad> LogStockSeguridad { get; set; }
+        public virtual DbSet<FiltrosPYGFuncional> FiltrosPYGFuncional { get; set; }
+        public virtual DbSet<ReportGuiasBalancesFuncional> ReportGuiasBalancesFuncional { get; set; }
+        public virtual DbSet<ReportGuiasBalancesLineasFuncional> ReportGuiasBalancesLineasFuncional { get; set; }
+        public virtual DbSet<CuentasNoAsignadasFuncional> CuentasNoAsignadasFuncional { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {
