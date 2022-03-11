@@ -168,6 +168,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
                 if (fechaDesde != null)
                 {
+                    var desglose = fechaDesde.ToString().Split('/');
+                    fechaDesde = desglose[2] + "-" + desglose[1] + "-" + desglose[0];
+
                     //mainQuery
                     mainQuery.Parameters.Add(new QueryParameter("fechaDesde", typeof(DateTime), fechaDesde));
                     mainQuery.Sql += " AND p.fechadocumento>=@fechaDesde";
@@ -187,6 +190,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
                 if (fechaHasta != null)
                 {
+                    var desglose = fechaHasta.ToString().Split('/');
+                    fechaHasta = desglose[2] + "-" + desglose[1] + "-" + desglose[0];
+
                     //mainQuery
                     mainQuery.Parameters.Add(new QueryParameter("fechaHasta", typeof(DateTime), fechaHasta));
                     mainQuery.Sql += " AND p.fechadocumento<=@fechaHasta";

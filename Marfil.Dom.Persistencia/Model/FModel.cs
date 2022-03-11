@@ -1189,6 +1189,12 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(VerificarContabilidadModel) == typeof(T))
+            {
+                var result = new VerificarContabilidadModel(context);
+
+                return result as T;
+            }
             else if (typeof(ConsultaVisualFullModel) == typeof(T))
             {
                 var result = new ConsultaVisualFullModel(context);

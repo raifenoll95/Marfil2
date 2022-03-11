@@ -66,6 +66,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Caracteristicas), typeof(CaracteristicasConverterService));
             _converterServicesTypes.Add(typeof(Articulos), typeof(ArticulosConverterService));
             _converterServicesTypes.Add(typeof(LogStockSeguridad), typeof(LogStockSeguridadConverterService));
+            _converterServicesTypes.Add(typeof(VerificarContabilidad), typeof(VerificarContabilidadConverterService));
             _converterServicesTypes.Add(typeof(Contadores), typeof(ContadoresConverterService));
             _converterServicesTypes.Add(typeof(ContadoresLotes), typeof(ContadoresLotesConverterService));
             _converterServicesTypes.Add(typeof(Series), typeof(SeriesConverterService));

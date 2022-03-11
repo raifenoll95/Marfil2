@@ -615,6 +615,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\VencimientosApiController.cs" />
+    <Compile Include="Controllers\VerificarContabilidadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3664,6 +3665,7 @@
     <Content Include="Views\ListadosStockMaxMin\StockMaxMin.cshtml" />
     <Content Include="Views\ListadoPerdidasYGananciasFuncional\PerdidasYGananciasFuncional.cshtml" />
     <Content Include="Views\ListadoCuentasNoAsignadasFuncional\CuentasNoAsignadasFuncional.cshtml" />
+    <Content Include="Views\VerificarContabilidad\Index.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -309,6 +309,17 @@ namespace Marfil.Dom.Persistencia.Helpers
 
                 //end Gestión de ejercicio
 
+                //VerificarContabilidad
+
+                var verificarItem = new MenuItemJavascriptModel()
+                {
+                    text = General.LblVerificar,
+                    link = helper.Content("~/VerificarContabilidad/Index"),
+                    icono = "fa fa-star"
+                };
+
+                //end VerificarContabilidad
+
                 #region Contabilidad
 
                 var contabilidadItem = new MenuItemJavascriptModel()
@@ -399,7 +410,7 @@ namespace Marfil.Dom.Persistencia.Helpers
                 };
 
                 configuracionItem.items = new[]
-                {configuracionSeguridadItem, configuracionAplicacionItem, configuracionEmpresasItem, ejercicioItem, contabilidadItem, importarStockItem, exportarItem, peticionesAsincronas};
+                {configuracionSeguridadItem, configuracionAplicacionItem, configuracionEmpresasItem, ejercicioItem, verificarItem, contabilidadItem, importarStockItem, exportarItem, peticionesAsincronas};
 
                 menu.Insert(0, configuracionItem);
             }

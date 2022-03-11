@@ -2419,6 +2419,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a VerificarContabilidad.
+        /// </summary>
+        public static string LblVerificar {
+            get {
+                return ResourceManager.GetString("LblVerificar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Volver a la lista.
         /// </summary>
         public static string LblVolverALaLista {

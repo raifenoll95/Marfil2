@@ -982,4 +982,7 @@
   <data name="MensajeRoturaStock" xml:space="preserve">
     <value>Se han encontrado artículos por debajo del stock de seguridad</value>
   </data>
+  <data name="LblVerificar" xml:space="preserve">
+    <value>VerificarContabilidad</value>
+  </data>
 </root>

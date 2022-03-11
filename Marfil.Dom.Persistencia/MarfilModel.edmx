@@ -4990,6 +4990,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="importeasignado" Type="float" />
           <Property Name="importepagado" Type="float" />
         </EntityType>
+        <EntityType Name="VerificarContabilidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nivel" Type="varchar" MaxLength="22" Nullable="false" />
+          <Property Name="Debe" Type="money" />
+          <Property Name="Haber" Type="money" />
+          <Property Name="Saldo" Type="money" />
+        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'marfilestable.dbo.Diariostock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Diariostock">
@@ -6522,6 +6532,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuariosactivos" EntityType="Self.Usuariosactivos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vencimientos" EntityType="Self.Vencimientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VerificarContabilidad" EntityType="Self.VerificarContabilidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SaldosAcomuladosPeriodos" EntityType="Self.SaldosAcomuladosPeriodos" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [SaldosAcomuladosPeriodos].[Id] AS [Id], 
@@ -7549,6 +7560,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="ReportGuiasBalancesLineasFuncional" EntitySet="ReportGuiasBalancesLineasFuncional" />
           </AssociationSet>
           <EntitySet Name="CuentasNoAsignadasFuncional" EntityType="MarfilModel.CuentasNoAsignadasFuncional" />
+          <EntitySet Name="VerificarContabilidad" EntityType="MarfilModel.VerificarContabilidad" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -14027,6 +14039,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="saldo" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="procesado" Type="Boolean" />
         </EntityType>
+        <EntityType Name="VerificarContabilidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Nivel" Type="String" Nullable="false" MaxLength="22" FixedLength="false" Unicode="false" />
+          <Property Name="Debe" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Haber" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19059,6 +19081,17 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
                 <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VerificarContabilidad">
+            <EntityTypeMapping TypeName="MarfilModel.VerificarContabilidad">
+              <MappingFragment StoreEntitySet="VerificarContabilidad">
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="Haber" ColumnName="Haber" />
+                <ScalarProperty Name="Debe" ColumnName="Debe" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

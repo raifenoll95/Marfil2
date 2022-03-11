@@ -713,6 +713,7 @@
     <Compile Include="Model\FicherosGenerales\PuertosModel.cs" />
     <Compile Include="Model\FicherosGenerales\SeccionesanaliticasModel.cs" />
     <Compile Include="Model\FicherosGenerales\TarifasModel.cs" />
+    <Compile Include="Model\FicherosGenerales\VerificarContabilidadModel.cs" />
     <Compile Include="Model\Ficheros\CarpetasModel.cs" />
     <Compile Include="Model\Ficheros\FicherosModel.cs" />
     <Compile Include="Model\Ficheros\GaleriaFicherosModel.cs" />
@@ -979,6 +980,7 @@
     <Compile Include="ServicesView\Servicios\Converter\TareasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TrabajosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TransformacioneslotesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\VerificarContabilidadConverterService.cs" />
     <Compile Include="ServicesView\Servicios\CostesVariablesPeriodoService.cs" />
     <Compile Include="ServicesView\Servicios\CuadernosBancariosService.cs" />
     <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
@@ -1319,6 +1321,7 @@
     <Compile Include="ServicesView\Servicios\Validation\TransportistasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\UnidadesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\UsuariosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\VerificarContabilidadService.cs" />
     <Compile Include="SituacionesTesoreria.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -1428,6 +1431,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Vencimientos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarContabilidad.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
