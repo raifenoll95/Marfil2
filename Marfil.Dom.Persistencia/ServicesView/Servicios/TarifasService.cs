@@ -197,6 +197,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.Tarifas.Where(f => f.empresa == Empresa && f.tipotarifa == 0 && f.tipoflujo == 0).ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).ToList(); 
         }
 
+        public IEnumerable<TarifasModel> GetTarifasTodas()
+        {
+            return _db.Tarifas.Where(f => f.empresa == Empresa).ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).ToList();
+        }
+
         public TarifasModel GetTarifaCompleta(string id)
         {
             return _db.Tarifas.Where(f => f.empresa == Empresa && f.id == id).Include("TarifasLin").ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).FirstOrDefault();

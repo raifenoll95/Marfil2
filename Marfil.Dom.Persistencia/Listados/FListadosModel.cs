@@ -98,6 +98,7 @@ namespace Marfil.Dom.Persistencia.Listados
 
         //stock valorado
         public const string StockGeneralValorado = "GeneralValorado";
+        public const string StockGeneralValoradoTarifa = "GeneralValoradoTarifa";
         public const string StockAgrupadoArticuloValorado = "StockAgrupadoArticuloValorado";
         public const string StockAgrupadoArticuloLoteValorado = "StockAgrupadoArticuloLoteValorado";
         public const string StockAgrupadoArticuloLoteMedidasValorado = "StockAgrupadoArticuloLoteMedidasValorado";
@@ -182,6 +183,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(StockGeneral, typeof(ListadosStock));            
             _dictionary.Add(StockAgrupadoDisponibleArticulo, typeof(ListadosStockDisponible));
             _dictionary.Add(StockGeneralValorado, typeof(ListadosStockValorado));
+            _dictionary.Add(StockGeneralValoradoTarifa, typeof(ListadosStockValoradoTarifa));
             _dictionary.Add(StockSalidas, typeof(ListadosStockSalidas));
             _dictionary.Add(StockMaxMin, typeof(ListadosStockMaxMin));
 
@@ -250,6 +252,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(StockGeneral, "ListadosStock");            
             _dictionaryController.Add(StockAgrupadoDisponibleArticulo, "ListadosStockDisponible");
             _dictionaryController.Add(StockGeneralValorado, "ListadosStockValorado");
+            _dictionaryController.Add(StockGeneralValoradoTarifa, "ListadosStockValoradoTarifa");
             _dictionaryController.Add(StockSalidas, "ListadosStockSalidas");
             _dictionaryController.Add(StockMaxMin, "ListadosStockMaxMin");
 

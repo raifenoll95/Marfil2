@@ -885,6 +885,15 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return service.GetTarifas();
             }
         }
+
+        public IEnumerable<TarifasModel> GetListTarifasTodas()
+        {
+            using (var service = new TarifasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetTarifasTodas();
+            }
+        }
+
         public double GetTotalRemesa(string referencia)
         {
             using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

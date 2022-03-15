@@ -639,4 +639,7 @@
   <data name="listadoperdidasygananciasfuncional" xml:space="preserve">
     <value>Cta. pérdidas y ganancias funcional</value>
   </data>
+  <data name="listadostockvaloradotarifa" xml:space="preserve">
+    <value>Listado de stock valorado por tarifa</value>
+  </data>
 </root>

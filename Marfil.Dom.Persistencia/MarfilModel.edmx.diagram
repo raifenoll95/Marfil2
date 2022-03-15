@@ -110,20 +110,20 @@
         <EntityTypeShape EntityType="MarfilModel.InventariosLin" Width="1.5" PointX="9.5" PointY="6.875" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Configuraciongraficas" Width="1.5" PointX="4.25" PointY="9" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Articulos" Width="1.5" PointX="9.25" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MarfilModel.Familiasproductos" Width="1.5" PointX="0.625" PointY="10.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Familiasproductos" Width="1.5" PointX="0.625" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MarfilModel.Traspasosalmacen" Width="1.5" PointX="1" PointY="35.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.TraspasosalmacenCostesadicionales" Width="1.5" PointX="3" PointY="36.625" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.TraspasosalmacenLin" Width="1.5" PointX="3" PointY="34.75" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK_TraspasosalmacenCostesadicionales_Traspasosalmacen" />
         <AssociationConnector Association="MarfilModel.FK_TraspasosalmacenLin_Traspasosalmacen" />
-        <EntityTypeShape EntityType="MarfilModel.Bundle" Width="1.5" PointX="0.875" PointY="13.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.BundleLin" Width="1.5" PointX="3" PointY="13.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Bundle" Width="1.5" PointX="2.625" PointY="12.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.BundleLin" Width="1.5" PointX="2.625" PointY="13.25" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK_BundleLin_Bundle" />
         <EntityTypeShape EntityType="MarfilModel.ContadoresLotes" Width="1.5" PointX="11.25" PointY="10.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.ContadoresLotesLin" Width="1.5" PointX="13.5" PointY="10.75" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK_ContadoresLotesLin_ContadoresLotes" />
-        <EntityTypeShape EntityType="MarfilModel.Kit" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.KitLin" Width="1.5" PointX="3" PointY="14.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Kit" Width="1.5" PointX="2.625" PointY="14.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.KitLin" Width="1.5" PointX="2.625" PointY="14.875" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK_KitLin_Kit" />
         <EntityTypeShape EntityType="MarfilModel.Trabajos" Width="1.5" PointX="11.5" PointY="6.875" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Transformacioneslotescostesadicionales" Width="1.5" PointX="3.25" PointY="21.25" IsExpanded="false" />
@@ -181,7 +181,7 @@
         <AssociationConnector Association="MarfilModel.FK__PedidosCostesFab__459F2B6F" />
         <EntityTypeShape EntityType="MarfilModel.Empresas" Width="1.5" PointX="20.375" PointY="8.75" />
         <EntityTypeShape EntityType="MarfilModel.MovsLin" Width="1.5" PointX="20" PointY="16.375" />
-        <EntityTypeShape EntityType="MarfilModel.Seccionesanaliticas" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="MarfilModel.Seccionesanaliticas" Width="1.5" PointX="2.5" PointY="16.75" />
         <AssociationConnector Association="MarfilModel.FK_MovsLin_Movs" />
         <EntityTypeShape EntityType="MarfilModel.AlbaranesComprasLin" Width="1.5" PointX="25.75" PointY="41.125" />
         <AssociationConnector Association="MarfilModel.FK_AlbaranesComprasLin_AlbaranesCompras" />

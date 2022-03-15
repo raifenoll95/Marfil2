@@ -2221,6 +2221,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Tarifa.
+        /// </summary>
+        public static string LblTarifa {
+            get {
+                return ResourceManager.GetString("LblTarifa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tarifa 1.
         /// </summary>
         public static string LblTarifa1 {

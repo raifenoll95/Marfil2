@@ -344,6 +344,7 @@
     <Compile Include="Controllers\ListadoPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\FacturasApiController.cs" />
+    <Compile Include="Controllers\ListadosStockValoradoTarifaController.cs" />
     <Compile Include="Controllers\LogStockSeguridadController.cs" />
     <Compile Include="Controllers\PreciosEspecialesController.cs" />
     <Compile Include="Controllers\PresupuestosAsistenteApiController.cs" />
@@ -3666,6 +3667,7 @@
     <Content Include="Views\ListadoPerdidasYGananciasFuncional\PerdidasYGananciasFuncional.cshtml" />
     <Content Include="Views\ListadoCuentasNoAsignadasFuncional\CuentasNoAsignadasFuncional.cshtml" />
     <Content Include="Views\VerificarContabilidad\Index.cshtml" />
+    <Content Include="Views\ListadosStockValoradoTarifa\GeneralValoradoTarifa.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

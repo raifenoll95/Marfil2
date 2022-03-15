@@ -985,4 +985,7 @@
   <data name="LblVerificar" xml:space="preserve">
     <value>VerificarContabilidad</value>
   </data>
+  <data name="LblTarifa" xml:space="preserve">
+    <value>Tarifa</value>
+  </data>
 </root>

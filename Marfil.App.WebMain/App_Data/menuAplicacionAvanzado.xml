@@ -115,6 +115,7 @@
 			<item name="listadolotes" eslistado="true"  text="Lotes" icono="fa fa-file" url="~/ListadosLotes/Listado/Informelotes" />
 			<item name="listadostock" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStock/Listado/General" />
 			<item name="listadostockvalorado" eslistado="true"  text="Stock valorado" icono="fa fa-file" url="~/ListadosStockValorado/Listado/GeneralValorado"/>
+			<item name="listadostockvaloradotarifa" eslistado="true"  text="Stock valorado tarifa" icono="fa fa-file" url="~/ListadosStockValoradoTarifa/Listado/GeneralValoradoTarifa"/>
 			<item name="listadostockdisponible" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStockDisponible/Listado/StockAgrupadoDisponibleArticulo" />
 			<item name="listadosstocksalidas" eslistado="true"  text="Salidas" icono="fa fa-file" url="~/ListadosStockSalidas/Listado/Salidas" />
 			<item name="listadostockmaxmin" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadosStockMaxMin/Listado/StockMaxMin" />

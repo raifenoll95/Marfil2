@@ -521,6 +521,7 @@
     <Compile Include="Listados\ListadosPedidos.cs" />
     <Compile Include="Listados\ListadosPresupuestos.cs" />
     <Compile Include="Listados\ListadosStockValorado.cs" />
+    <Compile Include="Listados\ListadosStockValoradoTarifa.cs" />
     <Compile Include="Listados\ListadosTerceros.cs" />
     <Compile Include="Listados\ListadosProductosAlbaranes.cs" />
     <Compile Include="Listados\ListadosProductosPedidos.cs" />

@@ -1975,10 +1975,6 @@
           <Property Name="fkgruposiva" Type="varchar" MaxLength="4" />
           <Property Name="tipogestionlotes" Type="int" />
           <Property Name="stocknegativoautorizado" Type="bit" />
-          <Property Name="existenciasminimasmetros" Type="float" />
-          <Property Name="existenciasmaximasmetros" Type="float" />
-          <Property Name="existenciasminimasunidades" Type="float" />
-          <Property Name="existenciasmaximasunidades" Type="float" />
           <Property Name="web" Type="bit" />
           <Property Name="gestionarcaducidad" Type="bit" />
           <Property Name="lotefraccionable" Type="bit" Nullable="false" />
@@ -1993,6 +1989,9 @@
           <Property Name="consumibles" Type="bit" />
           <Property Name="clasificacion" Type="varchar" MaxLength="10" />
           <Property Name="fkcarpetas" Type="uniqueidentifier" />
+          <Property Name="stockminimo" Type="float" />
+          <Property Name="stockmaximo" Type="float" />
+          <Property Name="stockseguridad" Type="int" />
         </EntityType>
         <EntityType Name="Ficheros">
           <Key>
@@ -9954,10 +9953,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkgruposiva" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="tipogestionlotes" Type="Int32" />
           <Property Name="stocknegativoautorizado" Type="Boolean" />
-          <Property Name="existenciasminimasmetros" Type="Double" />
-          <Property Name="existenciasmaximasmetros" Type="Double" />
-          <Property Name="existenciasminimasunidades" Type="Double" />
-          <Property Name="existenciasmaximasunidades" Type="Double" />
           <Property Name="web" Type="Boolean" />
           <Property Name="gestionarcaducidad" Type="Boolean" />
           <Property Name="lotefraccionable" Type="Boolean" Nullable="false" />
@@ -9972,6 +9967,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="consumibles" Type="Boolean" />
           <Property Name="clasificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="fkcarpetas" Type="Guid" />
+          <Property Name="stockminimo" Type="Double" />
+          <Property Name="stockmaximo" Type="Double" />
+          <Property Name="stockseguridad" Type="Int32" />
         </EntityType>
         <EntityType Name="Traspasosalmacen">
           <Key>
@@ -16004,6 +16002,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Familiasproductos">
             <EntityTypeMapping TypeName="MarfilModel.Familiasproductos">
               <MappingFragment StoreEntitySet="Familiasproductos">
+                <ScalarProperty Name="stockseguridad" ColumnName="stockseguridad" />
+                <ScalarProperty Name="stockmaximo" ColumnName="stockmaximo" />
+                <ScalarProperty Name="stockminimo" ColumnName="stockminimo" />
                 <ScalarProperty Name="fkcarpetas" ColumnName="fkcarpetas" />
                 <ScalarProperty Name="clasificacion" ColumnName="clasificacion" />
                 <ScalarProperty Name="consumibles" ColumnName="consumibles" />
@@ -16018,10 +16019,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="lotefraccionable" ColumnName="lotefraccionable" />
                 <ScalarProperty Name="gestionarcaducidad" ColumnName="gestionarcaducidad" />
                 <ScalarProperty Name="web" ColumnName="web" />
-                <ScalarProperty Name="existenciasmaximasunidades" ColumnName="existenciasmaximasunidades" />
-                <ScalarProperty Name="existenciasminimasunidades" ColumnName="existenciasminimasunidades" />
-                <ScalarProperty Name="existenciasmaximasmetros" ColumnName="existenciasmaximasmetros" />
-                <ScalarProperty Name="existenciasminimasmetros" ColumnName="existenciasminimasmetros" />
                 <ScalarProperty Name="stocknegativoautorizado" ColumnName="stocknegativoautorizado" />
                 <ScalarProperty Name="tipogestionlotes" ColumnName="tipogestionlotes" />
                 <ScalarProperty Name="fkgruposiva" ColumnName="fkgruposiva" />

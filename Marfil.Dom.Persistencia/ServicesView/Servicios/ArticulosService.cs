@@ -102,6 +102,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     model.Clasificacion = "";
                 }
 
+                if (model.Stockmaximo == null && model.Stockminimo == null)
+                {
+                    model.Stockseguridad = (TipoStockSeguridad)_db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockseguridad).SingleOrDefault();
+                    model.Stockminimo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockminimo).SingleOrDefault();
+                    model.Stockmaximo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockmaximo).SingleOrDefault();
+                }
+
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Articulos, _context, _db);
 
                 foreach (var tercero in model.ArticulosTercero)
@@ -303,7 +310,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public ArticulosModel GetArticulo(string id)
         {
 
-            return _converterModel.GetModelView(_db.Articulos.Single(f => f.empresa == Empresa && f.id == id)) as ArticulosModel;
+            var articulo = _converterModel.GetModelView(_db.Articulos.Single(f => f.empresa == Empresa && f.id == id)) as ArticulosModel;
+
+            foreach (var item in articulo.TarifasSistemaCompra)
+            {
+                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+            }
+
+            foreach (var item in articulo.TarifasSistemaVenta)
+            {
+                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+            }
+
+            foreach (var item in articulo.TarifasSistemaEspecial)
+            {
+                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+            }
+
+            foreach (var item in articulo.TarifasEspecificasCompras.Lineas)
+            {
+                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+            }
+
+            foreach (var item in articulo.TarifasEspecificasVentas.Lineas)
+            {
+                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+            }
+
+            return articulo;
         }
 
         public ArticulosDocumentosModel GetArticulo(string id, string fkcuenta, string fkmonedas, string fkregimeniva, TipoFlujo flujo = TipoFlujo.Venta)
@@ -724,21 +763,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     /*articulo.Existenciasminimasmetros = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));*/
 
-                    if (row["ExistenciasMinimasUnidades"].ToString() != "" || row["ExistenciasMaximasUnidades"].ToString() != "")
+                    if (row["ExistenciasMinimasMetros"].ToString() != "" || row["ExistenciasMaximasMetros"].ToString() != "")
+                    {
+                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
+                        articulo.Stockminimo = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    }              
+                    else if (row["ExistenciasMinimasUnidades"].ToString() != "" || row["ExistenciasMaximasUnidades"].ToString() != "")
                     {
                         articulo.Stockseguridad = TipoStockSeguridad.Piezas;
                         articulo.Stockminimo = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                         articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     }
-                    else if (row["ExistenciasMinimasMetros"].ToString() != "" || row["ExistenciasMaximasMetros"].ToString() != "")
-                    {
-                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
-                        articulo.Stockminimo = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                        articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    }
                     else
                     {
-                        articulo.Stockseguridad = TipoStockSeguridad.Piezas;
+                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
                         articulo.Stockminimo = 0;
                         articulo.Stockmaximo = 0;
                     }

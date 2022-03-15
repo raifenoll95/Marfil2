@@ -1114,6 +1114,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listado de stock valorado por tarifa.
+        /// </summary>
+        public static string listadostockvaloradotarifa {
+            get {
+                return ResourceManager.GetString("listadostockvaloradotarifa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Listado de terceros.
         /// </summary>
         public static string listadoterceros {

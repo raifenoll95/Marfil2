@@ -38,10 +38,6 @@ namespace Marfil.Dom.Persistencia
         public string fkgruposiva { get; set; }
         public Nullable<int> tipogestionlotes { get; set; }
         public Nullable<bool> stocknegativoautorizado { get; set; }
-        public Nullable<double> existenciasminimasmetros { get; set; }
-        public Nullable<double> existenciasmaximasmetros { get; set; }
-        public Nullable<double> existenciasminimasunidades { get; set; }
-        public Nullable<double> existenciasmaximasunidades { get; set; }
         public Nullable<bool> web { get; set; }
         public Nullable<bool> gestionarcaducidad { get; set; }
         public bool lotefraccionable { get; set; }
@@ -56,5 +52,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<bool> consumibles { get; set; }
         public string clasificacion { get; set; }
         public Nullable<System.Guid> fkcarpetas { get; set; }
+        public Nullable<double> stockminimo { get; set; }
+        public Nullable<double> stockmaximo { get; set; }
+        public Nullable<int> stockseguridad { get; set; }
     }
 }
