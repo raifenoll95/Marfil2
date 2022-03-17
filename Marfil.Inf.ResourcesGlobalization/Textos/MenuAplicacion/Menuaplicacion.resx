@@ -642,4 +642,7 @@
   <data name="listadostockvaloradotarifa" xml:space="preserve">
     <value>Listado de stock valorado por tarifa</value>
   </data>
+  <data name="actualizarcostes" xml:space="preserve">
+    <value>Actualización de precios de coste</value>
+  </data>
 </root>

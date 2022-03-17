@@ -314,32 +314,48 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             foreach (var item in articulo.TarifasSistemaCompra)
             {
-                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
                     f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
+                
             }
 
             foreach (var item in articulo.TarifasSistemaVenta)
             {
-                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
                     f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
             }
 
             foreach (var item in articulo.TarifasSistemaEspecial)
             {
-                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
                     f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
             }
 
             foreach (var item in articulo.TarifasEspecificasCompras.Lineas)
             {
-                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
                     f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
             }
 
             foreach (var item in articulo.TarifasEspecificasVentas.Lineas)
             {
-                item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
                     f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
             }
 
             return articulo;

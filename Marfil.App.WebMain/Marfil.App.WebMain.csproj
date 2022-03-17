@@ -324,6 +324,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActualizarCostesController.cs" />
     <Compile Include="Controllers\ArticulosStockSeguridadController.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteCuentasController.cs" />
@@ -3668,6 +3669,7 @@
     <Content Include="Views\ListadoCuentasNoAsignadasFuncional\CuentasNoAsignadasFuncional.cshtml" />
     <Content Include="Views\VerificarContabilidad\Index.cshtml" />
     <Content Include="Views\ListadosStockValoradoTarifa\GeneralValoradoTarifa.cshtml" />
+    <Content Include="Views\ActualizarCostes\ActualizarCostes.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

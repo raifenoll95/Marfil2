@@ -24,6 +24,7 @@ using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -844,6 +845,15 @@ namespace Marfil.Dom.Persistencia.Helpers
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
             {
                 return service.GetListPaises();
+            }
+        }
+
+        public IEnumerable<SeriesModel> SeriesListadoCompras()
+        {
+            using (var service = FService.Instance.GetService(typeof(SeriesModel), _context) as SeriesService)
+            {
+
+                return service.GetSeriesTipoDocumento(TipoDocumento.AlbaranesCompras);
             }
         }
 

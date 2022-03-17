@@ -738,6 +738,7 @@
     <Compile Include="Model\PeticionesAsincronasModel.cs" />
     <Compile Include="Model\RolesModel.cs" />
     <Compile Include="Model\RootModel.cs" />
+    <Compile Include="Model\Stock\ActualizarCostesModel.cs" />
     <Compile Include="Model\Stock\AsistenteRemedirStockModel.cs" />
     <Compile Include="Model\Stock\CambioUbicacionModel.cs" />
     <Compile Include="Model\Stock\BundleModel.cs" />
@@ -937,6 +938,7 @@
     <Compile Include="ServicesView\Interfaces\IMobileTercerosService.cs" />
     <Compile Include="ServicesView\Interfaces\IMovimientosAlmacen.cs" />
     <Compile Include="ServicesView\Interfaces\IValidationService.cs" />
+    <Compile Include="ServicesView\Servicios\ActualizarCostesService.cs" />
     <Compile Include="ServicesView\Servicios\ArticulosStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\ArticulosTerceroService.cs" />
     <Compile Include="ServicesView\Servicios\Cartera\VencimientosService.cs" />

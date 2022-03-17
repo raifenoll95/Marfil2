@@ -1045,6 +1045,12 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Fkalmacen = almacen.Id;
                 return result as T;
             }
+            else if (typeof(ActualizarCostesModel) == typeof(T))
+            {
+                var result = new ActualizarCostesModel();
+
+                return result as T;
+            }
             else if (typeof(MovsModel) == typeof(T))
             {
                 var result = new MovsModel(context);

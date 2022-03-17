@@ -2068,6 +2068,7 @@
           <Property Name="fechamodificacionbloqueo" Type="datetime" />
           <Property Name="fkUsuariobloqueo" Type="uniqueidentifier" />
           <Property Name="fkgruposformaspago" Type="varchar" MaxLength="3" />
+          <Property Name="docsventaimprimircuenta" Type="int" />
         </EntityType>
         <EntityType Name="FormasPagoLin">
           <Key>
@@ -8085,6 +8086,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkUsuariobloqueo" Type="Guid" />
           <Property Name="fkgruposformaspago" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="FormasPagoLin" Relationship="MarfilModel.FK_FormasPagoLin_FormasPago" FromRole="FormasPago" ToRole="FormasPagoLin" />
+          <Property Name="docsventaimprimircuenta" Type="Int32" />
         </EntityType>
         <EntityType Name="FormasPagoLin">
           <Key>
@@ -14536,6 +14538,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="FormasPago">
             <EntityTypeMapping TypeName="MarfilModel.FormasPago">
               <MappingFragment StoreEntitySet="FormasPago">
+                <ScalarProperty Name="docsventaimprimircuenta" ColumnName="docsventaimprimircuenta" />
                 <ScalarProperty Name="fkgruposformaspago" ColumnName="fkgruposformaspago" />
                 <ScalarProperty Name="fkUsuariobloqueo" ColumnName="fkUsuariobloqueo" />
                 <ScalarProperty Name="fechamodificacionbloqueo" ColumnName="fechamodificacionbloqueo" />

@@ -78,6 +78,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Acabados.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\ActualizacionCostes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ActualizacionCostes.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Agentes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -655,6 +660,10 @@
     <EmbeddedResource Include="Textos\Entidades\Acabados.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Acabados.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ActualizacionCostes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ActualizacionCostes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Agentes.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Agentes.fr.resx" />

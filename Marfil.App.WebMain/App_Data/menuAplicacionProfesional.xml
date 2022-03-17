@@ -173,6 +173,9 @@
 			<item name="listadosbundles" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoBundles/Listado/ListadosBundles" />
 			<item name="listadoskits" eslistado="true"  text="Stock" icono="fa fa-file" url="~/ListadoKits/Listado/ListadoKits" />
 		</item>
+		<item name="configuracion" text="Configuración" icono="fa fa-cog">
+			<item name="actualizarcostes" text="actualizarcostes" url="~/ActualizarCostes/ActualizarCostes"></item>
+		</item>
 		<item name="configurardocumentoskit" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/30" />
 		<item name="configurardocumentosbundle" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/40" />
 		<item name="configurardocumentostraspasos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/60" />

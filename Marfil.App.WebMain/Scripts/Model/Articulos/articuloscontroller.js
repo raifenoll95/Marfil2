@@ -45,10 +45,13 @@
             eventAggregator.Publish("Fkcontadores-Buscar", message.Fkcontador ? message.Fkcontador : "");
 
             $("[name='Gestionarcaducidad']").prop('checked', message.Gestionarcaducidad);
-            $("[name='Existenciasminimasmetros']").val(message.Existenciasminimasmetros);
+            /*$("[name='Existenciasminimasmetros']").val(message.Existenciasminimasmetros);
             $("[name='Existenciasmaximasmetros']").val(message.Existenciasmaximasmetros);
             $("[name='Existenciasminimasunidades']").val(message.Existenciasminimasunidades);
-            $("[name='Existenciasmaximasunidades']").val(message.Existenciasmaximasunidades);
+            $("[name='Existenciasmaximasunidades']").val(message.Existenciasmaximasunidades);*/
+            $("[name='Stockseguridad']").val(message.Stockseguridad);
+            $("[name='Stockmaximo']").val(message.Stockmaximo);
+            $("[name='Stockminimo']").val(message.Stockminimo);
             $("[name='Categoria']").val(message.Categoria);
             $("[name='Gestionstock']").prop('checked', message.Gestionstock);
             $("#Tipogestionlotes").val(message.Tipogestionlotes);

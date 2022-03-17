@@ -79,6 +79,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Actualización de precios de coste.
+        /// </summary>
+        public static string actualizarcostes {
+            get {
+                return ResourceManager.GetString("actualizarcostes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Agentes.
         /// </summary>
         public static string agentes {
