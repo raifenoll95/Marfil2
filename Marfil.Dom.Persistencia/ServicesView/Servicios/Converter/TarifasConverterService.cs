@@ -31,7 +31,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var obj = _db.Set<Tarifas>().Include("TarifasLin").Single(f => f.id == id && f.empresa == Empresa);
             var result=  GetModelView(obj) as TarifasModel;
             
-            result.Lineas = obj.TarifasLin.ToList().Select(f => new TarifasLinModel() { Descuento = f.descuento??0, Fkarticulos = f.fkarticulos,Precio = f.precio??0, Unidades = _db.Unidades.FirstOrDefault(j=>j.id==f.Unidades)?.codigounidad}).ToList();
+            result.Lineas = obj.TarifasLin.ToList().Select(f => new TarifasLinModel() { Descuento = f.descuento??0, Fkarticulos = f.fkarticulos,Precio = f.precio??0, Unidades = _db.Unidades.FirstOrDefault(j=>j.id==f.unidades)?.codigounidad}).ToList();
             var motivobloquedescripcion = string.Empty;
             if (!string.IsNullOrEmpty(obj.fkMotivosbloqueo))
             {

@@ -22,7 +22,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var cabAlbaranes = new List<AlbaranesCompras>();
             var linAlbaranes = new List<AlbaranesComprasLin>();
-            var articulos = new List<string>();
             var articuloant = "";
             var articulosservice = new ArticulosService(_context);
             var series = model.Series;
@@ -55,7 +54,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -63,7 +62,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     else if (articuloant == item.fkarticulos && articuloant != "")//sumamos los costes del articulo
                     {
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -82,12 +81,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         //comenzamos el nuevo articulo
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
                     }
                 }
+
+                //El último articulo se edita
+                EditarArticulo(articuloant, articulosservice, metros, precio, elaboracion, portes, otros);
             }
             else if (model.ArticulosDesde != null && model.ArticulosHasta == null)
             {
@@ -98,7 +100,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -106,7 +108,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     else if (articuloant == item.fkarticulos && articuloant != "")//sumamos los costes del articulo
                     {
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -125,13 +127,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         //comenzamos el nuevo articulo
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
                     }
-
                 }
+
+                //El último articulo se edita
+                EditarArticulo(articuloant, articulosservice, metros, precio, elaboracion, portes, otros);
             }
             else if (model.ArticulosDesde == null && model.ArticulosHasta != null)
             {
@@ -142,7 +146,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -150,7 +154,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     else if (articuloant == item.fkarticulos && articuloant != "")//sumamos los costes del articulo
                     {
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -169,13 +173,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         //comenzamos el nuevo articulo
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
                     }
-
                 }
+
+                //El último articulo se edita
+                EditarArticulo(articuloant, articulosservice, metros, precio, elaboracion, portes, otros);
             }
             else
             {
@@ -186,7 +192,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -194,7 +200,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     else if (articuloant == item.fkarticulos && articuloant != "")//sumamos los costes del articulo
                     {
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
@@ -213,13 +219,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         //comenzamos el nuevo articulo
                         articuloant = item.fkarticulos;
                         metros += (double)item.metros;
-                        precio += (double)item.precio;
+                        precio += (double)item.importe;
                         elaboracion += (double)(item.costeadicionalmaterial != null ? item.costeadicionalmaterial : 0d);
                         portes += (double)(item.costeadicionalportes != null ? item.costeadicionalportes : 0d);
                         otros += (double)(item.costeadicionalotro != null ? item.costeadicionalotro : 0d);
                     }
-
                 }
+
+                //El último articulo se edita
+                EditarArticulo(articuloant, articulosservice, metros, precio, elaboracion, portes, otros);
             }
         }
 

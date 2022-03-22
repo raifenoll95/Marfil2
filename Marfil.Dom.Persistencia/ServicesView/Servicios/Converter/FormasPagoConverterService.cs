@@ -70,6 +70,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.mandato = viewmodel.Mandato;
             result.excluirfestivos = viewmodel.ExcluirFestivos;
             result.fkgruposformaspago = viewmodel.FkGruposformaspago;
+            result.docsventaimprimircuenta = (int)viewmodel.Docsventaimprimircuenta;
             result.bloqueada = viewmodel.BloqueoModel?.Bloqueada;
             result.fkMotivosbloqueo = viewmodel.BloqueoModel?.FkMotivobloqueo;
             if (!string.IsNullOrEmpty(viewmodel.BloqueoModel?.FkUsuario))
@@ -106,6 +107,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.mandato = viewmodel.Mandato;
             result.excluirfestivos = viewmodel.ExcluirFestivos;
             result.fkgruposformaspago = viewmodel.FkGruposformaspago;
+            result.docsventaimprimircuenta = (int)viewmodel.Docsventaimprimircuenta;
             result.bloqueada = viewmodel.BloqueoModel?.Bloqueada;
             result.fkMotivosbloqueo = viewmodel.BloqueoModel?.FkMotivobloqueo;
             if (!string.IsNullOrEmpty(viewmodel.BloqueoModel?.FkUsuario))
@@ -139,6 +141,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Remesable = obj.remesable.HasValue && obj.remesable.Value,
                 Mandato = obj.mandato.HasValue && obj.mandato.Value,
                 FkGruposformaspago = obj.fkgruposformaspago,
+                Docsventaimprimircuenta = (Tipodocsventaimprimircuenta)obj.docsventaimprimircuenta,
                 ExcluirFestivos = obj.excluirfestivos.HasValue && obj.excluirfestivos.Value,
                 Lineas = obj.FormasPagoLin.Select(f => new FormasPagoLinModel() { Id = f.id, DiasVencimiento = f.diasvencimiento.Value, PorcentajePago = f.porcentajerecargo.Value }),
                 BloqueoModel = new BloqueoEntidadModel() {  Bloqueada = obj.bloqueada ?? false}

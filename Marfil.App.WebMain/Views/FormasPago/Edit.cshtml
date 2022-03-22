@@ -17,11 +17,11 @@
 
 
 
-@using (Html.BeginForm("EditOperacion", "FormasPago", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+@using (Html.BeginForm("EditOperacion", "FormasPago", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        
+
 
         <div class="form-group">
             @Html.LabelFor(f => ((FormasPagoModel)Model).Id, new { @class = "control-label col-md-2" })
@@ -50,8 +50,8 @@
         <div class="form-group">
             @Html.LabelFor(f => ((FormasPagoModel)Model).RecargoFinanciero, new { @class = "control-label col-md-2" })
             <div class="col-md-1 ">
-                
-                @Html.TextBoxFor(f => ((FormasPagoModel) Model).RecargoFinanciero, new {@class = "form-control"})
+
+                @Html.TextBoxFor(f => ((FormasPagoModel)Model).RecargoFinanciero, new { @class = "form-control" })
             </div>
 
 
@@ -88,65 +88,73 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(f => objModel.ModoPago, new {@class = "control-label col-md-2"})
+            @Html.LabelFor(f => objModel.ModoPago, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select class="form-control" name="ModoPago" id="Modopago" aria-label="Modo de pago" onchange="onSelectChange($(this))">
-                    <option value="AAA" @Html.Raw(((FormasPagoModel) Model).ModoPago == "AAA" ? "selected='selected'" : string.Empty)>Personalizado</option>
+                    <option value="AAA" @Html.Raw(((FormasPagoModel)Model).ModoPago == "AAA" ? "selected='selected'" : string.Empty)>Personalizado</option>
                     @foreach (var item in modosPago.Lineas)
                     {
-                        <option value="@item.Valor" @Html.Raw(((FormasPagoModel) Model).ModoPago == item.Valor ? "selected='selected'" : string.Empty)>@item.Descripcion</option>
+                        <option value="@item.Valor" @Html.Raw(((FormasPagoModel)Model).ModoPago == item.Valor ? "selected='selected'" : string.Empty)>@item.Descripcion</option>
                     }
                 </select>
             </div>
+        </div>
 
-            
+        <div class="form-row">
+            <div class="form-group">
+                <div class="col-md-5 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @if (((FormasPagoModel)Model).ModoPago == "AAA")
+                            {
+                                @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Efectivo, new { @class = "optionCheck" })
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Efectivo, new { @class = "optionCheck", @disabled = "disabled" })
+                            }
 
-            <div class="col-md-10 col-md-offset-2">
-                <div class="checkbox">
-                    <label>
-                        @if (((FormasPagoModel) Model).ModoPago == "AAA")
-                        {
-                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Efectivo, new {@class = "optionCheck"})
-                        }
-                        else
-                        {
-                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Efectivo, new {@class = "optionCheck", @disabled = "disabled"})
-                        }
-
-                        <span class="lbl">@General.LblEfectivo</span>
-                    </label>
+                            <span class="lbl">@General.LblEfectivo</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                <div class="checkbox">
-                    <label>
-                        @if (((FormasPagoModel) Model).ModoPago == "AAA")
-                        {
-                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Remesable, new {@class = "optionCheck"})
-                        }
-                        else
-                        {
-                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Remesable, new {@class = "optionCheck", @disabled = "disabled"})
-                        }
-                        <span class="lbl">@General.LblRemesable</span>
-                    </label>
+                <div class="col-md-5 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @if (((FormasPagoModel)Model).ModoPago == "AAA")
+                            {
+                                @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Remesable, new { @class = "optionCheck" })
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Remesable, new { @class = "optionCheck", @disabled = "disabled" })
+                            }
+                            <span class="lbl">@General.LblRemesable</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                <div class="checkbox">
-                    <label>
-                        @if (((FormasPagoModel) Model).ModoPago == "AAA")
-                        {
-                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Mandato, new {@class = "optionCheck"})
-                        }
-                        else
-                        {
-                            @Html.CheckBoxFor(f => ((FormasPagoModel) Model).Mandato, new {@class = "optionCheck", @disabled = "disabled"})
-                        }
+                <div class="col-md-4 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @if (((FormasPagoModel)Model).ModoPago == "AAA")
+                            {
+                                @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Mandato, new { @class = "optionCheck" })
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Mandato, new { @class = "optionCheck", @disabled = "disabled" })
+                            }
 
 
-                        <span class="lbl">@General.LblMandatoRequerido</span>
-                    </label>
+                            <span class="lbl">@General.LblMandatoRequerido</span>
+                        </label>
+                    </div>
+                </div>
+
+                @Html.LabelFor(f => ((FormasPagoModel)Model).Docsventaimprimircuenta, new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EnumDropDownList("Docsventaimprimircuenta", ((FormasPagoModel)Model).Docsventaimprimircuenta, (object)new { @class = "form-control" })
+                    @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Docsventaimprimircuenta, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -170,7 +178,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button class="btn btn-info" type="Submit" @Html.Raw( ((FormasPagoModel)Model).BloqueoModel.Bloqueada ? "disabled=\"disabled\"" : "" )>
+                <button class="btn btn-info" type="Submit" @Html.Raw(((FormasPagoModel)Model).BloqueoModel.Bloqueada ? "disabled=\"disabled\"" : "")>
                     <i class="ace-icon fa fa-check bigger-110"></i>
                     @General.BtnGuardar
                 </button>

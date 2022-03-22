@@ -169,7 +169,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var service = new PreferenciasUsuarioService(db))
                     {
-                        service.SetPreferencia(TiposPreferencias.ConfiguracionListado, _context.Id, id, nombre, new PreferenciaConfiguracionListado() { SettingsDevexpress = settings.ToString() });
+                        service.SetPreferencia(TiposPreferencias.ConfiguracionListado, _context.Id, id, nombre, new PreferenciaConfiguracionListado() { SettingsDevexpress = settings.ToString() },true);
                     }
                 }
                 return new EmptyResult();

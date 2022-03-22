@@ -34,19 +34,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias
             return null;
         }
 
-        public void SetPreferencia(TiposPreferencias tipopreferencia, Guid usuario,string id, string name, object preferencia)
+        public void SetPreferencia(TiposPreferencias tipopreferencia, Guid usuario,string id, string name, object preferencia, bool defecto)
         {
-            var item = _db.PreferenciasUsuario.SingleOrDefault(f => f.fkUsuario == usuario && f.tipo == (int)tipopreferencia && f.id==id && f.nombre==name) ??
-                       _db.PreferenciasUsuario.Create();
+            var item = _db.PreferenciasUsuario.SingleOrDefault(f => f.fkUsuario == usuario && f.tipo == (int)tipopreferencia && f.id == id && f.nombre == name);
+                      
 
-            item.fkUsuario = usuario;
-            item.tipo = (int)tipopreferencia;
-            item.id = id;
-            item.nombre = name;
+            if (!defecto && item != null)
+            {
+                _db.PreferenciasUsuario.Remove(item);
+            }
+            else if(defecto && item != null)
+            {           
+                item.fkUsuario = usuario;
+                item.tipo = (int)tipopreferencia;
+                item.id = id;
+                item.nombre = name;
 
-            item.xml = FPreferenciasUsuario.GetXmlPreferencia(tipopreferencia, preferencia);
+                item.xml = FPreferenciasUsuario.GetXmlPreferencia(tipopreferencia, preferencia);
 
-            _db.PreferenciasUsuario.AddOrUpdate(item);
+                _db.PreferenciasUsuario.AddOrUpdate(item);
+            }
+            else if (defecto && item == null)
+            {
+                item = _db.PreferenciasUsuario.Create();
+
+                item.fkUsuario = usuario;
+                item.tipo = (int)tipopreferencia;
+                item.id = id;
+                item.nombre = name;
+
+                item.xml = FPreferenciasUsuario.GetXmlPreferencia(tipopreferencia, preferencia);
+
+                _db.PreferenciasUsuario.AddOrUpdate(item);
+            }
             _db.SaveChanges();
         }
 

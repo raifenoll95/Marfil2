@@ -132,12 +132,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
                 _db.DocumentosUsuario.AddOrUpdate(item);
                 _db.SaveChanges();
 
-                if (defecto && tiporeport==TipoReport.Report)
+                //if (defecto && tiporeport==TipoReport.Report)
+                //{
+                //    var service = new PreferenciasUsuarioService(_db);
+                //    service.SetPreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), name, new PreferenciaDocumentoImpresionDefecto() { Name = name, Tipodocumento = tipoDocumento, Usuario = usuario });
+                //}
+
+                var guidusuarioact = _db.Usuarios.Where(f => f.usuario == _context.Usuario).FirstOrDefault().id;
+
+                if (tiporeport == TipoReport.Report)
                 {
                     var service = new PreferenciasUsuarioService(_db);
-                    service.SetPreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto", new PreferenciaDocumentoImpresionDefecto() { Name = name, Tipodocumento = tipoDocumento, Usuario = usuario });
+                    service.SetPreferencia(TiposPreferencias.DocumentoImpresionDefecto, guidusuarioact, tipoDocumento.ToString(), "Defecto", new PreferenciaDocumentoImpresionDefecto() { Name = name, Tipodocumento = tipoDocumento, Usuario = usuario },defecto);
                 }
-                
 
                 tran.Complete();
             }
@@ -167,7 +174,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
                 if (defecto && tiporeport == TipoReport.Report)
                 {
                     var service = new PreferenciasUsuarioService(_db);
-                    service.SetPreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto", new PreferenciaDocumentoImpresionDefecto() { Name = name, Tipodocumento = tipoDocumento, Usuario = usuario });
+                    service.SetPreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto", new PreferenciaDocumentoImpresionDefecto() { Name = name, Tipodocumento = tipoDocumento, Usuario = usuario },defecto);
                 }
 
 

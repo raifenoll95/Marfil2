@@ -244,7 +244,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
                         //var u = db.Usuarios.FirstOrDefault(i => i.Usuario == usu.Email && i.PWD == usu.Password && i.IFACTIVO);
 
                         var preferencias = new PreferenciasUsuarioService(db);
-                        preferencias.SetPreferencia(TiposPreferencias.EmpresaDefecto, tid, PreferenciaEmpresaDefecto.Id, PreferenciaEmpresaDefecto.Nombre, new PreferenciaEmpresaDefecto() { Empresa = tempresa });
+                        preferencias.SetPreferencia(TiposPreferencias.EmpresaDefecto, tid, PreferenciaEmpresaDefecto.Id, PreferenciaEmpresaDefecto.Nombre, new PreferenciaEmpresaDefecto() { Empresa = tempresa },true);
 
                         if (tempresa != ApplicationHelper.EmpresaMock)
                         {
@@ -254,8 +254,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
                             var almacenPreferencia = new PreferenciaAlmacenDefecto();
                             almacenPreferencia.SetAlmacen(tempresa, talmacen);
 
-                            preferencias.SetPreferencia(TiposPreferencias.EjercicioDefecto, tid, PreferenciaEjercicioDefecto.Id, PreferenciaEjercicioDefecto.Nombre, ejercicioPreferencia);
-                            preferencias.SetPreferencia(TiposPreferencias.AlmacenDefecto, tid, PreferenciaAlmacenDefecto.Id, PreferenciaAlmacenDefecto.Nombre, almacenPreferencia);
+                            preferencias.SetPreferencia(TiposPreferencias.EjercicioDefecto, tid, PreferenciaEjercicioDefecto.Id, PreferenciaEjercicioDefecto.Nombre, ejercicioPreferencia,true);
+                            preferencias.SetPreferencia(TiposPreferencias.AlmacenDefecto, tid, PreferenciaAlmacenDefecto.Id, PreferenciaAlmacenDefecto.Nombre, almacenPreferencia,true);
 
 
                         }

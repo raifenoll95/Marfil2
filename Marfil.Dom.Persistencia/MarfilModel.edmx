@@ -4271,7 +4271,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="fkarticulos" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="precio" Type="float" />
           <Property Name="descuento" Type="float" />
-          <Property Name="Unidades" Type="nvarchar" MaxLength="2" />
+          <Property Name="unidades" Type="nvarchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="TipoGuia">
           <Key>
@@ -9087,8 +9087,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkarticulos" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="precio" Type="Double" />
           <Property Name="descuento" Type="Double" />
-          <Property Name="Unidades" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tarifas" Relationship="MarfilModel.FK_TarifasLin_TarifasLin" FromRole="TarifasLin" ToRole="Tarifas" />
+          <Property Name="unidades" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tiposcuentas">
           <Key>
@@ -15504,7 +15504,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="TarifasLin">
             <EntityTypeMapping TypeName="MarfilModel.TarifasLin">
               <MappingFragment StoreEntitySet="TarifasLin">
-                <ScalarProperty Name="Unidades" ColumnName="Unidades" />
+                <ScalarProperty Name="unidades" ColumnName="unidades" />
                 <ScalarProperty Name="descuento" ColumnName="descuento" />
                 <ScalarProperty Name="precio" ColumnName="precio" />
                 <ScalarProperty Name="fkarticulos" ColumnName="fkarticulos" />

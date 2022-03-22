@@ -80,20 +80,4 @@ namespace Marfil.Dom.Persistencia.Model.Stock
         }
       
     }
-
-    public class ObjetoCostesModel 
-    { 
-        public string Articulo { get; set; }
-        public double Metros { get; set; }
-        public double Precio { get; set; }
-        public double Elaboracion { get; set; }
-        public double Portes { get; set; }
-        public double Otros { get; set; }
-
-        public ObjetoCostesModel()
-        {
-
-        }
-
-    }
 }

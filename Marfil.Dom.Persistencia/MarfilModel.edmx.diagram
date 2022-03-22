@@ -67,7 +67,7 @@
         <EntityTypeShape EntityType="MarfilModel.TablasvariasLin" Width="1.5" PointX="28" PointY="8.125" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Tarifas" Width="1.5" PointX="25.75" PointY="1.125" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Tarifasbase" Width="1.5" PointX="39.75" PointY="0.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.TarifasLin" Width="1.5" PointX="28" PointY="2.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.TarifasLin" Width="1.5" PointX="28" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MarfilModel.Tiposcuentas" Width="1.5" PointX="10.75" PointY="24" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.TiposcuentasLin" Width="1.5" PointX="13" PointY="24.125" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.TiposIva" Width="1.5" PointX="39.75" PointY="3.75" IsExpanded="false" />

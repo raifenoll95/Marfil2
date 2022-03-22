@@ -53,7 +53,6 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Range(0,100,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "RangeClient")]
         public double? Descuento { get; set; }
 
-        
     }
 
     public class TarifasModel : BaseModel<TarifasModel, Tarifas>

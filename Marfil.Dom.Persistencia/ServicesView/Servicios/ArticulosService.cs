@@ -190,7 +190,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (tarifa == null)
                 {
                     tarifa = _db.TarifasLin.Create();
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.empresa = model.Empresa;
                     tarifa.fktarifas = item.Id;
                     tarifa.fkarticulos = model.Id;
@@ -200,7 +200,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else
                 {
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.precio = model.Articulocomentariovista ? 0 : item.Precio;
                 }
 
@@ -222,7 +222,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     tarifa = _db.TarifasLin.Create();
                     tarifa.empresa = model.Empresa;
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.fktarifas = item.Id;
                     tarifa.fkarticulos = model.Id;
                     tarifa.descuento = item.Descuento;
@@ -231,7 +231,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else
                 {
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.descuento = item.Descuento;
                     tarifa.precio = model.Articulocomentariovista ? 0 : item.Precio;
                 }
@@ -262,7 +262,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     tarifa.empresa = model.Empresa;
                     tarifa.fktarifas = item.id;
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.fkarticulos = model.Id;
                     tarifa.descuento = 0;
                     tarifa.precio = model.Articulocomentariovista ? 0 : CalcularPrecio(item, model);

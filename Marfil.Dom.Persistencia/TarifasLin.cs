@@ -19,7 +19,7 @@ namespace Marfil.Dom.Persistencia
         public string fkarticulos { get; set; }
         public Nullable<double> precio { get; set; }
         public Nullable<double> descuento { get; set; }
-        public string Unidades { get; set; }
+        public string unidades { get; set; }
     
         public virtual Tarifas Tarifas { get; set; }
     }
