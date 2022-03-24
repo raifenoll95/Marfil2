@@ -127,9 +127,11 @@ namespace Marfil.Dom.Persistencia.Listados
         public const string PerdidasYGanancias = "PerdidasYGanancias";
         public const string AnaliticaPerdidasYGanancias = "AnaliticaPerdidasYGanancias";
         public const string PerdidasYGananciasFuncional = "PerdidasYGananciasFuncional";
+        public const string PerdidasYGananciasBalanceAnual = "PerdidasYGananciasBalanceAnual";
         public const string CuentasNoAsignadas = "CuentasNoAsignadas";
         public const string CuentasNoAsignadasAnalitica = "CuentasNoAsignadasAnalitica";
         public const string CuentasNoAsignadasFuncional = "CuentasNoAsignadasFuncional";
+        public const string CuentasNoAsignadasBalanceAnual = "CuentasNoAsignadasBalanceAnual";
 
         // CRM
         public const string ListadoCrm = "ListadoCrm";
@@ -200,9 +202,11 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(PerdidasYGanancias, typeof(ListadoPerdidasYGanancias));
             _dictionary.Add(AnaliticaPerdidasYGanancias, typeof(AnaliticaPerdidasYGanancias));
             _dictionary.Add(PerdidasYGananciasFuncional, typeof(ListadoPerdidasYGananciasFuncional));
+            _dictionary.Add(PerdidasYGananciasBalanceAnual, typeof(ListadoPerdidasYGananciasBalanceAnual));
             _dictionary.Add(CuentasNoAsignadas, typeof(ListadoCuentasNoAsignadas));
             _dictionary.Add(CuentasNoAsignadasAnalitica, typeof(ListadoCuentasNoAsignadasAnalitica));
             _dictionary.Add(CuentasNoAsignadasFuncional, typeof(ListadoCuentasNoAsignadasFuncional));
+            _dictionary.Add(CuentasNoAsignadasBalanceAnual, typeof(ListadoCuentasNoAsignadasBalanceAnual));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));
@@ -268,9 +272,11 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(PerdidasYGanancias, "ListadoPerdidasYGanancias");
             _dictionaryController.Add(AnaliticaPerdidasYGanancias, "AnaliticaPerdidasYGanancias");
             _dictionaryController.Add(PerdidasYGananciasFuncional, "ListadoPerdidasYGananciasFuncional");
+            _dictionaryController.Add(PerdidasYGananciasBalanceAnual, "ListadoPerdidasYGananciasBalanceAnual");
             _dictionaryController.Add(CuentasNoAsignadas, "ListadoCuentasNoAsignadas");
             _dictionaryController.Add(CuentasNoAsignadasAnalitica, "ListadoCuentasNoAsignadasAnlaitica");
             _dictionaryController.Add(CuentasNoAsignadasFuncional, "ListadoCuentasNoAsignadasFuncional");
+            _dictionaryController.Add(CuentasNoAsignadasBalanceAnual, "ListadoCuentasNoAsignadasBalanceAnual");
 
             // CRM
             _dictionaryController.Add(ListadoCrm, "ListadoCrm");

@@ -313,6 +313,9 @@
     <Compile Include="CuentasNoAsignadasAnalitica.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CuentasNoAsignadasBalanceAnual.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CuentasNoAsignadasFuncional.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -383,6 +386,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FiltrosPYG.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FiltrosPYGBalanceAnual.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FiltrosPYGFuncional.cs">
@@ -475,6 +481,7 @@
     <Compile Include="Listados\ListadoCrm.cs" />
     <Compile Include="Listados\ListadoCuentasNoAsignadasAnalitica.cs" />
     <Compile Include="Listados\ListadoCuentasNoAsignadas.cs" />
+    <Compile Include="Listados\ListadoCuentasNoAsignadasBalanceAnual.cs" />
     <Compile Include="Listados\ListadoCuentasNoAsignadasFuncional.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
@@ -482,6 +489,7 @@
     <Compile Include="Listados\ListadoMargen.cs" />
     <Compile Include="Listados\AnaliticaPerdidasYGanancias.cs" />
     <Compile Include="Listados\ListadoPerdidasYGanancias.cs" />
+    <Compile Include="Listados\ListadoPerdidasYGananciasBalanceAnual.cs" />
     <Compile Include="Listados\ListadoPerdidasYGananciasFuncional.cs" />
     <Compile Include="Listados\ListadosConsultaTesoreria.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
@@ -885,10 +893,16 @@
     <Compile Include="ReportGuiasBalances.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReportGuiasBalancesBalanceAnual.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReportGuiasBalancesFuncional.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportGuiasBalancesLineas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportGuiasBalancesLineasBalanceAnual.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReportGuiasBalancesLineasFuncional.cs">

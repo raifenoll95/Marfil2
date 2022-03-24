@@ -286,6 +286,11 @@
         <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineasFuncional_GuiasBalances" />
         <EntityTypeShape EntityType="MarfilModel.CuentasNoAsignadasFuncional" Width="1.5" PointX="28.375" PointY="42.75" />
         <EntityTypeShape EntityType="MarfilModel.VerificarContabilidad" Width="1.5" PointX="27.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MarfilModel.CuentasNoAsignadasBalanceAnual" Width="1.5" PointX="20.375" PointY="44.75" />
+        <EntityTypeShape EntityType="MarfilModel.FiltrosPYGBalanceAnual" Width="1.5" PointX="30.375" PointY="3.75" />
+        <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesBalanceAnual" Width="1.5" PointX="44.375" PointY="1" />
+        <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesLineasBalanceAnual" Width="1.5" PointX="46.625" PointY="1.375" />
+        <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineasBalanceAnual_GuiasBalances" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

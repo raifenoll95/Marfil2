@@ -961,6 +961,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Balance de cuentas anual.
+        /// </summary>
+        public static string listadoperdidasygananciasbalanceanual {
+            get {
+                return ResourceManager.GetString("listadoperdidasygananciasbalanceanual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cta. pérdidas y ganancias funcional.
         /// </summary>
         public static string listadoperdidasygananciasfuncional {

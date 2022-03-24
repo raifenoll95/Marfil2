@@ -1253,7 +1253,7 @@ namespace Marfil.Dom.Persistencia.Helpers
         {
             List<SelectListItem> List = new List<SelectListItem>();
 
-            List.Add(new SelectListItem() { Value = "1", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "1", Text = "ABREVIADA" });
             //List.Add(new SelectListItem() { Value = "2", Text = "Abreviado" });
             List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
             List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
@@ -1294,6 +1294,19 @@ namespace Marfil.Dom.Persistencia.Helpers
             return List;
         }
 
+        public IEnumerable<SelectListItem> GetListTipoGuiaBALCA()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "2", Text = "ABREVIADO" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "6", Text = "PYME" });
+
+            return List;
+        }
+
         public IEnumerable<SelectListItem> GetListTipoGuiaPG()
         {
             List<SelectListItem> List = new List<SelectListItem>();
@@ -1306,20 +1319,6 @@ namespace Marfil.Dom.Persistencia.Helpers
 
             return List;
         }
-
-        public IEnumerable<SelectListItem> GetListTipoGuiaBALCA()
-        {
-            List<SelectListItem> List = new List<SelectListItem>();
-
-            List.Add(new SelectListItem() { Value = "1", Text = "Abreviado" });
-            List.Add(new SelectListItem() { Value = "2", Text = "COOP_ABREVIA" });
-            List.Add(new SelectListItem() { Value = "3", Text = "COOP_NORMAL" });
-            List.Add(new SelectListItem() { Value = "4", Text = "NORMAL" });
-            List.Add(new SelectListItem() { Value = "5", Text = "PYME" });
-
-            return List;
-        }
-
 
         public IEnumerable<SelectListItem> GetListActpas()
         {
@@ -1377,6 +1376,17 @@ namespace Marfil.Dom.Persistencia.Helpers
             return cuentas;
         }
 
+        public bool ExistenCuentasNoAsignadasBalanceAnual()
+        {
+            var cuentas = false;
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                cuentas = service.HayCuentasNoAsignadasBalanceAnual();
+            }
+
+            return cuentas;
+        }
+
         public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador)
         {
             var text = "";
@@ -1415,6 +1425,21 @@ namespace Marfil.Dom.Persistencia.Helpers
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
                     text = service.TextRecalculoPYGFuncional(filtrosAcumulador);
+                }
+            }
+
+
+            return text;
+        }
+
+        public string TextRecalculoPYGBalanceAnual(FiltrosAcumulador filtrosAcumulador)
+        {
+            var text = "";
+            if (filtrosAcumulador != null)
+            {
+                using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+                {
+                    text = service.TextRecalculoPYGBalanceAnual(filtrosAcumulador);
                 }
             }
 

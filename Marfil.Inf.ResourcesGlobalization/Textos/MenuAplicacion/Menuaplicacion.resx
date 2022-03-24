@@ -645,4 +645,7 @@
   <data name="actualizarcostes" xml:space="preserve">
     <value>Actualización de precios de coste</value>
   </data>
+  <data name="listadoperdidasygananciasbalanceanual" xml:space="preserve">
+    <value>Balance de cuentas anual</value>
+  </data>
 </root>
