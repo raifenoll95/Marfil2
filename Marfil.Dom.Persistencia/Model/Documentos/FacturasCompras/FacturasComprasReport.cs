@@ -63,7 +63,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras
             DataSource.Relations.Add("FacturasCompras", "proveedores", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("fkproveedores", "fkcuentas")});
-
+             
             DataSource.Relations.Add("FacturasCompras", "empresa", new[] {
                     new RelationColumnInfo("empresa", "id")});
 

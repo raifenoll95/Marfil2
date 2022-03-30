@@ -356,6 +356,8 @@ namespace Marfil.App.WebMain.Controllers
             ValoresParametros.Add("EMPRESA", Empresa);
             ValoresParametros.Add("EJERCICIO", DBNull.Value);
             ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
             ValoresParametros.Add("GUIA", DBNull.Value);
             ValoresParametros.Add("SIN_SALDO", DBNull.Value);
             ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
