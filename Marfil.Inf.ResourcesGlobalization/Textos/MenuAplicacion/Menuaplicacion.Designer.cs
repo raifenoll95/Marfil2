@@ -304,6 +304,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listado de pérdidas y ganancias..
+        /// </summary>
+        public static string comparativaPYG {
+            get {
+                return ResourceManager.GetString("comparativaPYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Informes comparativos.
+        /// </summary>
+        public static string comparativos {
+            get {
+                return ResourceManager.GetString("comparativos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Compras.
         /// </summary>
         public static string compras {

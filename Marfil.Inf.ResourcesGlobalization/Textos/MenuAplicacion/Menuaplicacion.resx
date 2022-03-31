@@ -648,4 +648,10 @@
   <data name="listadoperdidasygananciasbalanceanual" xml:space="preserve">
     <value>Balance de cuentas anual</value>
   </data>
+  <data name="comparativaPYG" xml:space="preserve">
+    <value>Listado de pérdidas y ganancias.</value>
+  </data>
+  <data name="comparativos" xml:space="preserve">
+    <value>Informes comparativos</value>
+  </data>
 </root>

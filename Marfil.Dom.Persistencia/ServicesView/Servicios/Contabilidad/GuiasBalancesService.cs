@@ -57,6 +57,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             }
         }
 
+        public string GetFiltroAcumuladorAnt()
+        {
+            var ejercicioParse = int.Parse(_context.Ejercicio);
+            var ejercicioant = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == ejercicioParse).FirstOrDefault().fkejercicios;
+
+            var registro = _db.FiltrosAcumulador.Where(f => f.empresa == Empresa && f.fkejercicio == ejercicioant && f.usuario == _context.Usuario).FirstOrDefault();
+            if (registro != null)
+            {
+                return _context.Ejercicio + "-" + _context.Usuario;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public bool HayCuentasNoAsignadas()
         {
             var cuentas = _db.CuentasNoAsignadas.Where(f => f.procesado == false).Count();

@@ -346,7 +346,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region Pérdidas y ganancias
 
-        public void Calculo(string Ejercicio, string Guia, string SinSaldo, string Desglosar)
+        public void Calculo(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
         {
             Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
 
@@ -372,6 +372,20 @@ namespace Marfil.App.WebMain.Controllers
                     ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                 }
                 ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioant))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioant.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
 
                 //flag = true;
             }

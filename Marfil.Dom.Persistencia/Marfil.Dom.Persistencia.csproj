@@ -476,6 +476,7 @@
     <Compile Include="Listados\Base\IListResultView.cs" />
     <Compile Include="Listados\Base\ListadoResultado.cs" />
     <Compile Include="Listados\Base\ListadosModel.cs" />
+    <Compile Include="Listados\ComparativaPerdidasYGanancias.cs" />
     <Compile Include="Listados\FListadosModel.cs" />
     <Compile Include="Listados\ListadoAcumuladorPeriodos.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />

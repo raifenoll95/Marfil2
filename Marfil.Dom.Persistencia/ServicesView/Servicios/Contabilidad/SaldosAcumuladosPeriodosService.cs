@@ -45,12 +45,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             }
         }
 
-        public DateTime? GetRecalculo(string usuario, int ejercicio)
+        public DateTime? GetRecalculoAnt(string usuario, int ejercicio)
         {
-            var p = _db.AcumuladorPeriodos.Where(f=> f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicio).Count();
+            var ejercicioant = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == ejercicio).FirstOrDefault().fkejercicios;
+            var p = _db.AcumuladorPeriodos.Where(f=> f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicioant).Count();
             if ( p > 0)
             {
-                return _db.Set<AcumuladorPeriodos>().Where(f => f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicio).OrderByDescending(t => t.FechaHora).FirstOrDefault().FechaHora;
+                return _db.Set<AcumuladorPeriodos>().Where(f => f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicioant).OrderByDescending(t => t.FechaHora).FirstOrDefault().FechaHora;
             }
             else
             {
@@ -59,9 +60,29 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             
         }
 
+        public DateTime? GetRecalculo(string usuario, int ejercicio)
+        {
+            var p = _db.AcumuladorPeriodos.Where(f => f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicio).Count();
+            if (p > 0)
+            {
+                return _db.Set<AcumuladorPeriodos>().Where(f => f.empresa == Empresa && f.usuario == usuario && f.fkejercicio == ejercicio).OrderByDescending(t => t.FechaHora).FirstOrDefault().FechaHora;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
         public FiltrosAcumulador GetFiltros(string usuario, int ejercicio)
         {
             return _db.FiltrosAcumulador.Where(f => f.empresa == Empresa && f.fkejercicio == ejercicio && f.usuario == usuario).FirstOrDefault();
+        }
+
+        public FiltrosAcumulador GetFiltrosAnt(string usuario, int ejercicio)
+        {
+            var ejercicioant = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == ejercicio).FirstOrDefault().fkejercicios;
+            return _db.FiltrosAcumulador.Where(f => f.empresa == Empresa && f.fkejercicio == ejercicioant && f.usuario == usuario).FirstOrDefault();
         }
     }
 }

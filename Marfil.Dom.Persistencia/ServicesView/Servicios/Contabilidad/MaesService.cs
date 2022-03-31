@@ -1,15 +1,13 @@
-﻿using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Collections.Generic;
-
+﻿using Marfil.Dom.ControlsUI.NifCif;
+using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using Marfil.Dom.Persistencia.Model.Contabilidad.Maes;
+using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Converter;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Validation;
-using Marfil.Dom.Persistencia.Model.Interfaces;
-using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
-using Marfil.Dom.Persistencia.Model.Contabilidad.Maes;
-using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using System;
-using Marfil.Dom.ControlsUI.NifCif;
+using System.Data.Entity.Migrations;
+using System.Linq;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -75,7 +73,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 string fkcuentas = item.Key;
 
                 //Creamos la cuenta en caso de que no exista en el proceso de asignar a cartera
-                if(!_db.Cuentas.Any(f => f.empresa == model.Empresa && f.id == fkcuentas) && model.Generar == GenerarMovimientoAPartirDe.AsignarCartera)
+                if (!_db.Cuentas.Any(f => f.empresa == model.Empresa && f.id == fkcuentas) && model.Generar == GenerarMovimientoAPartirDe.AsignarCartera)
                 {
                     var nuevacuenta = new CuentasModel(_context);
                     nuevacuenta.Empresa = model.Empresa;
@@ -98,7 +96,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var cuentaService = new CuentasService(_context);
                     cuentaService.create(nuevacuenta);
                 }
-                
+
                 var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
                               ?? _db.Maes.Create();
 
@@ -110,7 +108,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 int multiplo = (tipo == TipoOperacionMaes.Alta ? 1 : -1);
 
-                itemmaes.debe = (itemmaes.debe ?? 0) + (item.Where(l=>l.Esdebe == 1).Sum(l=> l.Importe) * (multiplo));
+                itemmaes.debe = (itemmaes.debe ?? 0) + (item.Where(l => l.Esdebe == 1).Sum(l => l.Importe) * (multiplo));
                 itemmaes.haber = (itemmaes.haber ?? 0) + (item.Where(l => l.Esdebe == -1).Sum(l => l.Importe) * (multiplo));
                 itemmaes.saldo = (itemmaes.debe ?? 0) - (itemmaes.haber ?? 0);
 
@@ -121,14 +119,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             // nivel 0 - 4
             for (int nivel = 4; nivel > 0; nivel--)
             {
-                foreach (var item in model.Lineas.GroupBy(l=> l.Fkcuentas.Substring(0, nivel)))
+                foreach (var item in model.Lineas.GroupBy(l => l.Fkcuentas.Substring(0, nivel)))
                 {
                     string fkcuentas = item.Key;//.Substring(0, nivel);
 
                     var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
                                    ?? _db.Maes.Create();
 
-                    if(string.IsNullOrWhiteSpace(itemmaes.empresa))
+                    if (string.IsNullOrWhiteSpace(itemmaes.empresa))
                     {
                         itemmaes.empresa = model.Empresa;
                         itemmaes.fkcuentas = fkcuentas;

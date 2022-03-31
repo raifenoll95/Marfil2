@@ -123,6 +123,12 @@
   <data name="Ejercicio" xml:space="preserve">
     <value>Ejercicio</value>
   </data>
+  <data name="Ejercicioactual" xml:space="preserve">
+    <value>Ejercicio actual</value>
+  </data>
+  <data name="Ejercicioanterior" xml:space="preserve">
+    <value>Ejercicio anterior</value>
+  </data>
   <data name="Guia" xml:space="preserve">
     <value>Guía</value>
   </data>

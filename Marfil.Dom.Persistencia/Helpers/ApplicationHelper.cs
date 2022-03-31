@@ -719,6 +719,16 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         }
 
+        public string GetFiltroAcumuladorAnt()
+        {
+
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), _context) as GuiasBalancesService)
+            {
+                return service.GetFiltroAcumuladorAnt();
+            }
+
+        }
+
         public  AlmacenesModel GetCurrentAlmacen()
         {
             
@@ -756,6 +766,16 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public DateTime? GetRecalculoAnt()
+        {
+            using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var usuario = _context.Usuario;
+                var ejercicio = int.Parse(_context.Ejercicio);
+                return service.GetRecalculoAnt(usuario, ejercicio);
+            }
+        }
+
         public FiltrosAcumulador GetFiltros()
         {
             using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -763,6 +783,16 @@ namespace Marfil.Dom.Persistencia.Helpers
                 var usuario = _context.Usuario;
                 var ejercicio = int.Parse(_context.Ejercicio);
                 return service.GetFiltros(usuario,ejercicio);
+            }
+        }
+
+        public FiltrosAcumulador GetFiltrosAnt()
+        {
+            using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var usuario = _context.Usuario;
+                var ejercicio = int.Parse(_context.Ejercicio);
+                return service.GetFiltrosAnt(usuario,ejercicio);
             }
         }
 
