@@ -16,7 +16,7 @@
 
     // Ejercicio Actual
     var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
-    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado);
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado, false);
     var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
 
     var listejercicios = new List<SelectListItem>();
@@ -35,6 +35,7 @@
 
     //Ejercicio Anterior
     var filtrosAcumuladoant = WebHelper.GetApplicationHelper().GetFiltrosAnt();
+    var textRecalculoant = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumuladoant,true);
     var fechaRecalculoAcumuladorant = WebHelper.GetApplicationHelper().GetRecalculoAnt();
 
     var listejerciciosant = new List<SelectListItem>();
@@ -107,6 +108,7 @@
                 @Html.LabelFor(f => Model.Recalculo, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculo })
+                    @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculoant })
                 </div>
             }
         </div>

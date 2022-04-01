@@ -2050,6 +2050,8 @@
           <Property Name="fkejercicio" Type="int" Nullable="false" />
           <Property Name="guia" Type="varchar" MaxLength="25" />
           <Property Name="fechaCalculo" Type="datetime" />
+          <Property Name="usuario_ant" Type="nvarchar" MaxLength="20" />
+          <Property Name="fkejercicio_ant" Type="int" />
         </EntityType>
         <EntityType Name="FiltrosPYGBalanceAnual">
           <Key>
@@ -13897,6 +13899,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkejercicio" Type="Int32" Nullable="false" />
           <Property Name="guia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="fechaCalculo" Type="DateTime" Precision="3" />
+          <Property Name="usuario_ant" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fkejercicio_ant" Type="Int32" />
         </EntityType>
         <EntityType Name="AnaliticaFiltrosPYG">
           <Key>
@@ -19080,6 +19084,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="FiltrosPYG">
             <EntityTypeMapping TypeName="MarfilModel.FiltrosPYG">
               <MappingFragment StoreEntitySet="FiltrosPYG">
+                <ScalarProperty Name="fkejercicio_ant" ColumnName="fkejercicio_ant" />
+                <ScalarProperty Name="usuario_ant" ColumnName="usuario_ant" />
                 <ScalarProperty Name="fechaCalculo" ColumnName="fechaCalculo" />
                 <ScalarProperty Name="guia" ColumnName="guia" />
                 <ScalarProperty Name="fkejercicio" ColumnName="fkejercicio" />

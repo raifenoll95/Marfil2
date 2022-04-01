@@ -1417,16 +1417,16 @@ namespace Marfil.Dom.Persistencia.Helpers
             return cuentas;
         }
 
-        public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador)
+        public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
         {
             var text = "";
-            if (filtrosAcumulador != null)
-            {
+            //if (filtrosAcumulador != null)
+            //{
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
-                    text = service.TextRecalculoPYG(filtrosAcumulador);
+                    text = service.TextRecalculoPYG(filtrosAcumulador, esejercicioant);
                 }
-            }
+            //}
             
 
             return text;

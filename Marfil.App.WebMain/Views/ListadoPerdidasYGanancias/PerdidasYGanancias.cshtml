@@ -7,7 +7,7 @@
 
     var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadas();
     var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
-    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado);
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado, false);
     var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
 
     var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCTPG().Select(f => new SelectListItem()
