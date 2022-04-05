@@ -654,4 +654,7 @@
   <data name="comparativos" xml:space="preserve">
     <value>Informes comparativos</value>
   </data>
+  <data name="comparativaPYGFuncional" xml:space="preserve">
+    <value>Cta. pérdidas y ganancias funcional</value>
+  </data>
 </root>

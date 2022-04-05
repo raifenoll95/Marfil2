@@ -133,6 +133,7 @@ namespace Marfil.Dom.Persistencia.Listados
         public const string CuentasNoAsignadasFuncional = "CuentasNoAsignadasFuncional";
         public const string CuentasNoAsignadasBalanceAnual = "CuentasNoAsignadasBalanceAnual";
         public const string ComparativaPYG = "ComparativaPYG";
+        public const string ComparativaPYGFuncional = "ComparativaPYGFuncional";
 
         // CRM
         public const string ListadoCrm = "ListadoCrm";
@@ -209,6 +210,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(CuentasNoAsignadasFuncional, typeof(ListadoCuentasNoAsignadasFuncional));
             _dictionary.Add(CuentasNoAsignadasBalanceAnual, typeof(ListadoCuentasNoAsignadasBalanceAnual));
             _dictionary.Add(ComparativaPYG, typeof(ComparativaPerdidasYGanancias));
+            _dictionary.Add(ComparativaPYGFuncional, typeof(ComparativaPerdidasYGananciasFuncional));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));
@@ -280,6 +282,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(CuentasNoAsignadasFuncional, "ListadoCuentasNoAsignadasFuncional");
             _dictionaryController.Add(CuentasNoAsignadasBalanceAnual, "ListadoCuentasNoAsignadasBalanceAnual");
             _dictionaryController.Add(ComparativaPYG, "ComparativaPYG");
+            _dictionaryController.Add(ComparativaPYGFuncional, "ComparativaPYGFuncional");
 
             // CRM
             _dictionaryController.Add(ListadoCrm, "ListadoCrm");

@@ -1,26 +1,34 @@
 ﻿using Marfil.Dom.Persistencia.Listados.Base;
-using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Marfil.Dom.Persistencia.ServicesView;
+using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
+using System.Data.SqlClient;
+using System.Data;
+using Marfil.Dom.Persistencia.Model.Configuracion;
+using Marfil.Dom.Persistencia.Helpers;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations;
 using RPerdidasYGanancias = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.PerdidasYGanancias;
 
 namespace Marfil.Dom.Persistencia.Listados
 {
-    public class ListadoPerdidasYGananciasBalanceAnual : ListadosModel
+    public class ComparativaPerdidasYGananciasFuncional : ListadosModel
     {
         #region Properties
-        public override string TituloListado => "Balance de cuentas anuales";
+        public override string TituloListado => "Comparativa Pérdidas y Ganancias Funcional";
 
-        public override string IdListado => FListadosModel.PerdidasYGananciasBalanceAnual;
+        public override string IdListado => FListadosModel.ComparativaPYGFuncional;
 
-        [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Ejercicio")]
+        [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Ejercicioactual")]
         public string Ejercicio { get; set; }
+        [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Ejercicioanterior")]
+        public string Ejercicioanterior { get; set; }
         [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Guia")]
         public string Guia { get; set; }
         [Display(ResourceType = typeof(RPerdidasYGanancias), Name = "Lineassinsaldo")]
@@ -32,12 +40,12 @@ namespace Marfil.Dom.Persistencia.Listados
 
         #endregion
 
-        public ListadoPerdidasYGananciasBalanceAnual()
+        public ComparativaPerdidasYGananciasFuncional()
         {
 
         }
 
-        public ListadoPerdidasYGananciasBalanceAnual(IContextService context) : base(context)
+        public ComparativaPerdidasYGananciasFuncional(IContextService context) : base(context)
         {
 
         }
@@ -54,6 +62,8 @@ namespace Marfil.Dom.Persistencia.Listados
             ValoresParametros.Add("EMPRESA", Empresa);
             ValoresParametros.Add("EJERCICIO", DBNull.Value);
             ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
             ValoresParametros.Add("GUIA", DBNull.Value);
             ValoresParametros.Add("SIN_SALDO", DBNull.Value);
             ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
@@ -69,6 +79,20 @@ namespace Marfil.Dom.Persistencia.Listados
                     ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                 }
                 ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioanterior))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioanterior.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
 
                 //flag = true;
             }
@@ -138,40 +162,14 @@ namespace Marfil.Dom.Persistencia.Listados
             var sb = new StringBuilder();
             if (Desglosarniveltres)
             {
-                sb.Append("SELECT cab.actpas as [Activo/Pasivo], cab.orden as Orden, cab.textogrupo as [Texto Grupo], cab.descrip as [Descripción], lin.cuenta as Cuenta, lin.saldo as Saldo FROM ReportGuiasBalancesBalanceAnual cab, ReportGuiasBalancesLineasBalanceAnual lin");
+                sb.Append("SELECT cab.orden as Orden, cab.descrip as [Descripción], lin.cuenta as Cuenta, lin.saldo as Saldo, lin.saldoea as SaldoEA FROM ReportGuiasBalancesFuncional cab, ReportGuiasBalancesLineasFuncional lin");
             }
             else
             {
-                sb.Append("Select actpas as [Activo/Pasivo], orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo from ReportGuiasBalancesBalanceAnual");
+                sb.Append("Select orden as Orden, textogrupo as [Texto Grupo], descrip as [Descripción], saldo as Saldo, saldoea as SaldoEA from ReportGuiasBalancesFuncional");
             }
 
             return sb.ToString();
-        }
-
-        //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalances y Líneas con los filtros indicados
-        //Este proceso se hace con un botón desde la pantalla ahora, se mantiene aquí este ejemplo por si acaso
-        private void ExecuteProcedure(IContextService context, Dictionary<string, object> parametros)
-        {
-            var dbconnection = "";
-            using (var db = MarfilEntities.ConnectToSqlServer(context.BaseDatos))
-            {
-                dbconnection = db.Database.Connection.ConnectionString;
-            }
-            using (var con = new SqlConnection(dbconnection))
-            {
-                con.Open();
-                using (var cmd = new SqlCommand("CARGAR_REPORTGUIAS", con))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    foreach (var item in parametros)
-                    {
-                        cmd.Parameters.AddWithValue(item.Key, item.Value);
-                    }
-
-                    cmd.ExecuteNonQuery();
-                }
-                con.Close();
-            }
         }
 
     }

@@ -47,7 +47,6 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         }
 
         #region Propiedades
-        [Required]
         public string Empresa { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBLineas), Name = "Id")]

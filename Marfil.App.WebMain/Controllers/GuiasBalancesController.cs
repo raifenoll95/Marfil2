@@ -209,6 +209,9 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult GuiasBalancesLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
         {
             var model = Session[session] as List<GuiasBalancesLineasModel>;
+            //Metemos la empresa, porque pese a que en la tabla no existe, el modelo que se hizo al comienzo de este proyecto, sí.
+            item.Empresa = Empresa;
+
             try
             {
                 if (ModelState.IsValid && !model.Any(f => item.Id == f.Id))
@@ -507,7 +510,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region Pérdidas y ganancias funcional
 
-        public void CalculoFuncional(string Ejercicio, string Guia, string SinSaldo, string Desglosar)
+        public void CalculoFuncional(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
         {
             Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
 
@@ -517,6 +520,8 @@ namespace Marfil.App.WebMain.Controllers
             ValoresParametros.Add("EMPRESA", Empresa);
             ValoresParametros.Add("EJERCICIO", DBNull.Value);
             ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
             ValoresParametros.Add("GUIA", DBNull.Value);
             ValoresParametros.Add("SIN_SALDO", DBNull.Value);
             ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
@@ -531,6 +536,20 @@ namespace Marfil.App.WebMain.Controllers
                     ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                 }
                 ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioant))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioant.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
 
                 //flag = true;
             }

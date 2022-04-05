@@ -126,6 +126,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         log.empresa = Empresa;
                         log.codarticulo = articulo;
                         log.descripcionarticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().descripcion;
+                        log.fecharotura = DateTime.Today;
                         log.fecha = (DateTime)model.Fechadocumento;
                         log.documento = model.Referencia;
                         log.codigounidad = "";
@@ -176,6 +177,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     log.empresa = Empresa;
                     log.codarticulo = articulo;
                     log.descripcionarticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().descripcion;
+                    log.fecharotura = DateTime.Today;
                     log.fecha = (DateTime)model.Fechadocumento;
                     log.documento = model.Referencia;
                     log.codigounidad = "";

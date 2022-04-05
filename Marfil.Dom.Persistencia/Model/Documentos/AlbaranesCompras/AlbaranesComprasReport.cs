@@ -42,14 +42,17 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
 
 
             // ALBARANESCOMPRASLIN
-            DataSource.Queries.Add(new CustomSqlQuery("AlbaranesComprasLin", "SELECT al.*, (al.ancho * 100) AS ancho_cm, (al.largo * 100) AS largo_cm, (al.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2 FROM [AlbaranesComprasLin] as al" +
-                                                                      " inner join Familiasproductos as fp on fp.empresa=al.empresa and fp.id=substring(al.fkarticulos,0,3)" +
-                                                                      " left join unidades as u on fp.fkunidadesmedida=u.id" +
-                                                                      " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id"));
+            DataSource.Queries.Add(new CustomSqlQuery("AlbaranesComprasLin", "SELECT al.*, (al.ancho * 100) AS ancho_cm, (al.largo * 100) AS largo_cm, (al.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2, " +
+                "sa.cantidadtotal as [CantidadTotal_StockActual], sa.largo as [Largo_StockActual], sa.ancho as [Ancho_StockActual], sa.grueso as [Grueso_StockActual], sa.metros as [Metros_StockActual] " +
+                " FROM [AlbaranesComprasLin] as al" +
+                " inner join Familiasproductos as fp on fp.empresa=al.empresa and fp.id=substring(al.fkarticulos,0,3)" +
+                " left join unidades as u on fp.fkunidadesmedida=u.id" +
+                " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id" +
+                " left join Stockactual sa on al.empresa = sa.empresa AND al.fkarticulos = sa.fkarticulos AND al.lote = sa.lote AND al.tabla = sa.loteid"));
 
 
             DataSource.Queries.Add(new CustomSqlQuery("Albaranestotales", "SELECT * FROM [AlbaranesComprasTotales]"));
-            DataSource.Queries.Add(new CustomSqlQuery("StockActual", "SELECT * FROM [Stockactual]"));
+            //DataSource.Queries.Add(new CustomSqlQuery("StockActual", "SELECT * FROM [Stockactual]"));
 
             // MONEDAS
             DataSource.Queries.Add(new CustomSqlQuery("Monedas", "SELECT id, descripcion, abreviatura FROM Monedas"));
@@ -75,11 +78,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
             DataSource.Relations.Add("AlbaranesCompras", "Monedas", new[] {
                         new RelationColumnInfo("fkmonedas", "id")});
 
-            DataSource.Relations.Add("AlbaranesComprasLin", "StockActual", new[] {
+            /*DataSource.Relations.Add("AlbaranesComprasLin", "StockActual", new[] {
                         new RelationColumnInfo("empresa", "empresa"),
                         new RelationColumnInfo("fkarticulos", "fkarticulos"),
                         new RelationColumnInfo("lote", "lote"),
-                        new RelationColumnInfo("tabla", "loteid")});
+                        new RelationColumnInfo("tabla", "loteid")});*/
 
             DataSource.RebuildResultSchema();
 
