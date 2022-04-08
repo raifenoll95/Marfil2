@@ -196,36 +196,44 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
                     {
                         ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
                     }
-                    else
+                    else if (filtrosPYG.fkejercicio_ant != null)
                     {
                         ejercicio = "Todo el ejercicio ";
                     }
 
-                    switch (filtrosPYG.guia)
+                    if (ejercicio != "")
                     {
-                        case "0":
-                            guia = " ABREVIADA ";
-                            break;
-                        case "1":
-                            guia = " ABREVIADO ";
-                            break;
-                        case "2":
-                            guia = " COOP_ABREVIA ";
-                            break;
-                        case "3":
-                            guia = " COOP_NORMAL ";
-                            break;
-                        case "4":
-                            guia = " NORMAL ";
-                            break;
-                        case "5":
-                            guia = " PYME ";
-                            break;
-                        default:
-                            break;
+                        switch (filtrosPYG.guia)
+                        {
+                            case "0":
+                                guia = " ABREVIADA ";
+                                break;
+                            case "1":
+                                guia = " ABREVIADO ";
+                                break;
+                            case "2":
+                                guia = " COOP_ABREVIA ";
+                                break;
+                            case "3":
+                                guia = " COOP_NORMAL ";
+                                break;
+                            case "4":
+                                guia = " NORMAL ";
+                                break;
+                            case "5":
+                                guia = " PYME ";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        text = ejercicio + " | " + guia + " | " + fecha;
+                    }
+                    else
+                    {
+                        text = "No existe ningún cálculo";
                     }
 
-                    text = ejercicio + " | " + guia + " | " + fecha;
                 }
                 
             }
@@ -354,39 +362,47 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
                     {
                         ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
                     }
-                    else
+                    else if (filtrosPYG.fkejercicio_ant != null)
                     {
                         ejercicio = "Todo el ejercicio ";
                     }
 
-                    switch (filtrosPYG.guia)
+                    if (ejercicio != "")
                     {
-                        case "1":
-                            guia = " ABREVIADO ";
-                            break;
-                        case "2":
-                            guia = " COOP_ABREVIA ";
-                            break;
-                        case "3":
-                            guia = " COOP_NORMAL ";
-                            break;
-                        case "4":
-                            guia = " NORMAL ";
-                            break;
-                        case "5":
-                            guia = " PYME ";
-                            break;
-                        case "6":
-                            guia = " ESTANDAR ";
-                            break;
-                        case "7":
-                            guia = " INF. GESTIÓN ";
-                            break;
-                        default:
-                            break;
-                    }
+                        switch (filtrosPYG.guia)
+                        {
+                            case "1":
+                                guia = " ABREVIADO ";
+                                break;
+                            case "2":
+                                guia = " COOP_ABREVIA ";
+                                break;
+                            case "3":
+                                guia = " COOP_NORMAL ";
+                                break;
+                            case "4":
+                                guia = " NORMAL ";
+                                break;
+                            case "5":
+                                guia = " PYME ";
+                                break;
+                            case "6":
+                                guia = " ESTANDAR ";
+                                break;
+                            case "7":
+                                guia = " INF. GESTIÓN ";
+                                break;
+                            default:
+                                break;
+                        }
 
-                    text = ejercicio + " | " + guia + " | " + fecha;
+                        text = ejercicio + " | " + guia + " | " + fecha;
+                    }
+                    else
+                    {
+                        text = "No existe ningún cálculo";
+                    }
+                    
                 }
 
 
@@ -407,6 +423,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             var guia = "";
             var fecha = "";
             var text = "";
+            var usuario = "";
 
             if (filtrosPYG != null)
             {
@@ -417,6 +434,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
                 if (filtrosPYG.usuario != null)
                 {
                     ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
+                    usuario = " | Usuario: " + filtrosAcumulado.usuario;
                 }
                 else
                 {
@@ -453,7 +471,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
                         break;
                 }
 
-                text = ejercicio + " | " + guia + " | " + fecha;
+                text = ejercicio + " | " + guia + " | " + fecha + usuario ;
             }
             else
             {

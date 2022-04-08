@@ -148,6 +148,14 @@ namespace Marfil.Dom.Persistencia.Listados
             return sb.ToString();
         }
 
+        internal override string GenerarOrdenColumnas()
+        {
+            var sb = new StringBuilder();
+            sb.Append(" Order by actpas, orden ");
+            return sb.ToString();
+
+        }
+
         //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalances y Líneas con los filtros indicados
         //Este proceso se hace con un botón desde la pantalla ahora, se mantiene aquí este ejemplo por si acaso
         private void ExecuteProcedure(IContextService context, Dictionary<string, object> parametros)
