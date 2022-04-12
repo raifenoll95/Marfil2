@@ -1432,14 +1432,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             return text;
         }
 
-        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulador)
+        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
         {
             var text = "";
             if (filtrosAcumulador != null)
             {
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
-                    text = service.TextRecalculoPYGAnalitica(filtrosAcumulador);
+                    text = service.TextRecalculoPYGAnalitica(filtrosAcumulador, esejercicioant);
                 }
             }
             

@@ -657,4 +657,7 @@
   <data name="comparativaPYGFuncional" xml:space="preserve">
     <value>Cta. pérdidas y ganancias funcional</value>
   </data>
+  <data name="comparativaPYGAnalitica" xml:space="preserve">
+    <value>Analítica de pérdidas y ganancias</value>
+  </data>
 </root>

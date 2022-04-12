@@ -313,6 +313,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Analítica de pérdidas y ganancias.
+        /// </summary>
+        public static string comparativaPYGAnalitica {
+            get {
+                return ResourceManager.GetString("comparativaPYGAnalitica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cta. pérdidas y ganancias funcional.
         /// </summary>
         public static string comparativaPYGFuncional {

@@ -124,6 +124,7 @@
 			<item name="listadoperdidasygananciasbalanceanual" eslistado="true" text="Listado Pérdidas y Ganancias Balance Anual" icono="fa fa-file" url="~/ListadoPerdidasYGananciasBalanceAnual/Listado/PerdidasYGananciasBalanceAnual" />
 			<item name="comparativos" text="Informes Comparativos" icono="fa fa-cogs">
 				<item name="comparativaPYG" eslistado="true" text="Comparativa Pérdidas y Ganancias" icono="fa fa-file" url="~/ComparativaPerdidasYGanancias/Listado/ComparativaPYG" />
+				<item name="comparativaPYGAnalitica" eslistado="true" text="Comparativa Pérdidas y Ganancias Analítica" icono="fa fa-file" url="~/ComparativaPerdidasYGananciasAnalitica/Listado/ComparativaPYGAnalitica" />
 				<item name="comparativaPYGFuncional" eslistado="true" text="Comparativa Pérdidas y Ganancias Funcional" icono="fa fa-file" url="~/ComparativaPerdidasYGananciasFuncional/Listado/ComparativaPYGFuncional" />			</item>
 		</item>
 		<item name="configuracion" text="Configuración" icono="fa fa-cog">

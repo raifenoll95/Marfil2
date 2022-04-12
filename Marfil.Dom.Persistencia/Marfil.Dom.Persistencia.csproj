@@ -477,6 +477,7 @@
     <Compile Include="Listados\Base\ListadoResultado.cs" />
     <Compile Include="Listados\Base\ListadosModel.cs" />
     <Compile Include="Listados\ComparativaPerdidasYGanancias.cs" />
+    <Compile Include="Listados\ComparativaPerdidasYGananciasAnalitica.cs" />
     <Compile Include="Listados\ComparativaPerdidasYGananciasFuncional.cs" />
     <Compile Include="Listados\FListadosModel.cs" />
     <Compile Include="Listados\ListadoAcumuladorPeriodos.cs" />

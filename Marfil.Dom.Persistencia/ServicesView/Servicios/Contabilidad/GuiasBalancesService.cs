@@ -245,7 +245,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             return text;
         }
 
-        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulado)
+        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulado, bool esejercicioant)
         {
             var filtrosPYG = _db.AnaliticaFiltrosPYG.Where(f => f.empresa == Empresa).FirstOrDefault();
 
@@ -258,42 +258,89 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             {
                 fecha = filtrosPYG.fechaCalculo.HasValue ? filtrosPYG.fechaCalculo.Value.ToString("dd/MM/yyyy HH:mm:ss") : "Fecha de cálculo no disponible";
 
-
-
-                if (filtrosPYG.usuario != null)
+                if (!esejercicioant)
                 {
-                    ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
-                }
+
+                    if (filtrosPYG.usuario != null)
+                    {
+                        ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
+                    }
+                    else
+                    {
+                        ejercicio = "Todo el ejercicio ";
+                    }
+
+                    switch (filtrosPYG.guia)
+                    {
+                        case "1":
+                            guia = " ABREVIADO ";
+                            break;
+                        case "2":
+                            guia = " COOP_ABREVIA ";
+                            break;
+                        case "3":
+                            guia = " COOP_NORMAL ";
+                            break;
+                        case "4":
+                            guia = " NORMAL ";
+                            break;
+                        case "5":
+                            guia = " PYME ";
+                            break;
+                        case "6":
+                            guia = " ESTANDAR ";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    text = ejercicio + " | " + guia + " | " + fecha;
+                } 
                 else
                 {
-                    ejercicio = "Todo el ejercicio ";
-                }
+                    if (filtrosPYG.usuario_ant != null)
+                    {
+                        ejercicio = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion;
+                    }
+                    else if(filtrosPYG.fkejercicio_ant != null)
+                    {
+                        ejercicio = "Todo el ejercicio ";
+                    }
 
-                switch (filtrosPYG.guia)
-                {
-                    case "1":
-                        guia = " ABREVIADO ";
-                        break;
-                    case "2":
-                        guia = " COOP_ABREVIA ";
-                        break;
-                    case "3":
-                        guia = " COOP_NORMAL ";
-                        break;
-                    case "4":
-                        guia = " NORMAL ";
-                        break;
-                    case "5":
-                        guia = " PYME ";
-                        break;
-                    case "6":
-                        guia = " ESTANDAR ";
-                        break;
-                    default:
-                        break;
-                }
+                    if (ejercicio != "")
+                    {
+                        switch (filtrosPYG.guia)
+                        {
+                            case "1":
+                                guia = " ABREVIADO ";
+                                break;
+                            case "2":
+                                guia = " COOP_ABREVIA ";
+                                break;
+                            case "3":
+                                guia = " COOP_NORMAL ";
+                                break;
+                            case "4":
+                                guia = " NORMAL ";
+                                break;
+                            case "5":
+                                guia = " PYME ";
+                                break;
+                            case "6":
+                                guia = " ESTANDAR ";
+                                break;
+                            default:
+                                break;
+                        }
 
-                text = ejercicio + " | " + guia + " | " + fecha;
+                        text = ejercicio + " | " + guia + " | " + fecha;
+                    }
+                    else
+                    {
+                        text = "No existe ningún cálculo";
+                    }
+  
+                }                 
             }
             else
             {
