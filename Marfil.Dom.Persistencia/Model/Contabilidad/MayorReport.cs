@@ -24,8 +24,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Name = "Report";
 
             var mainQuery = new CustomSqlQuery("Cuentas", "SELECT Cuenta, [Doc.], Fecha, Comentario ,Debe, Haber, Diferencia," +
-                //" SUM(saldo) OVER(PARTITION BY Cuenta ORDER BY Fecha, [Doc.], Orden) AS[Saldo]" +
-                " saldo AS [Saldo]" +
+                " SUM(saldo) OVER(PARTITION BY Cuenta ORDER BY Fecha, [Doc.], Orden) AS[Saldo]" +
+                //" saldo AS [Saldo]" +
                 " FROM(" +
                 "(SELECT (c.id + ' ' + c.descripcion) AS [Cuenta]," +
                 " m.Fecha AS[Fecha], m.referencia AS[Doc.]," +
