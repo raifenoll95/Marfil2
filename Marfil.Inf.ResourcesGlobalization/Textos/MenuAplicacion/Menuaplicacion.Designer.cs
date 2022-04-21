@@ -304,7 +304,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Listado de pérdidas y ganancias..
+        ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias..
         /// </summary>
         public static string comparativaPYG {
             get {
@@ -318,6 +318,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string comparativaPYGAnalitica {
             get {
                 return ResourceManager.GetString("comparativaPYGAnalitica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Balance de situación.
+        /// </summary>
+        public static string comparativaPYGBalanceAnual {
+            get {
+                return ResourceManager.GetString("comparativaPYGBalanceAnual", resourceCulture);
             }
         }
         
@@ -988,7 +997,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Listado Pérdidas y Ganancias.
+        ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias.
         /// </summary>
         public static string listadoperdidasyganancias {
             get {
@@ -997,7 +1006,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Balance de cuentas anual.
+        ///   Busca una cadena traducida similar a Balance de situación.
         /// </summary>
         public static string listadoperdidasygananciasbalanceanual {
             get {

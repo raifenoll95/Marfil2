@@ -335,6 +335,7 @@
     <Compile Include="Controllers\AsistenteRegularizacionCierreAperturaApiController.cs" />
     <Compile Include="Controllers\AsistenteRegularizacionGruposApiController.cs" />
     <Compile Include="Controllers\ComparativaPerdidasYGananciasAnaliticaController.cs" />
+    <Compile Include="Controllers\ComparativaPerdidasYGananciasBalanceAnualController.cs" />
     <Compile Include="Controllers\ComparativaPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ComparativaPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
@@ -3680,6 +3681,7 @@
     <Content Include="Views\ComparativaPerdidasYGanancias\ComparativaPYG.cshtml" />
     <Content Include="Views\ComparativaPerdidasYGananciasFuncional\ComparativaPYGFuncional.cshtml" />
     <Content Include="Views\ComparativaPerdidasYGananciasAnalitica\ComparativaPYGAnalitica.cshtml" />
+    <Content Include="Views\ComparativaPerdidasYGananciasBalanceAnual\ComparativaPYGBalanceAnual.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -604,7 +604,7 @@
     <value>Trans. de acabados en nave</value>
   </data>
   <data name="listadoperdidasyganancias" xml:space="preserve">
-    <value>Listado Pérdidas y Ganancias</value>
+    <value>Cuenta de pérdidas y ganancias</value>
   </data>
   <data name="configurardocumentosguiasbalances" xml:space="preserve">
     <value>Conf. de docs: Perdidas y Ganancias</value>
@@ -646,10 +646,10 @@
     <value>Actualización de precios de coste</value>
   </data>
   <data name="listadoperdidasygananciasbalanceanual" xml:space="preserve">
-    <value>Balance de cuentas anual</value>
+    <value>Balance de situación</value>
   </data>
   <data name="comparativaPYG" xml:space="preserve">
-    <value>Listado de pérdidas y ganancias.</value>
+    <value>Cuenta de pérdidas y ganancias.</value>
   </data>
   <data name="comparativos" xml:space="preserve">
     <value>Informes comparativos</value>
@@ -659,5 +659,8 @@
   </data>
   <data name="comparativaPYGAnalitica" xml:space="preserve">
     <value>Analítica de pérdidas y ganancias</value>
+  </data>
+  <data name="comparativaPYGBalanceAnual" xml:space="preserve">
+    <value>Balance de situación</value>
   </data>
 </root>

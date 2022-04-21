@@ -1,14 +1,11 @@
 ﻿@using Resources
 @using Marfil.App.WebMain.Misc
-@model Marfil.Dom.Persistencia.Listados.ListadoPerdidasYGananciasBalanceAnual
+@model Marfil.Dom.Persistencia.Listados.ComparativaPerdidasYGananciasBalanceAnual
 
 @{
-    ViewBag.Title = "PerdidasYGananciasBalanceAnual";
+    ViewBag.Title = "ComparativaPYGBalanceAnual";
 
-    var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadasBalanceAnual();
-    var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
-    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYGBalanceAnual(filtrosAcumulado, false);
-    var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
+    var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadasFuncional();
 
     var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaBALCA().Select(f => new SelectListItem()
     {
@@ -16,6 +13,11 @@
         Value = f.Value,
 
     }).ToList();
+
+    // Ejercicio Actual
+    var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYGBalanceAnual(filtrosAcumulado, false);
+    var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
 
     var listejercicios = new List<SelectListItem>();
     var userAcumulado = WebHelper.GetApplicationHelper().GetFiltroAcumulador();
@@ -31,6 +33,24 @@
         });
     }
 
+    //Ejercicio Anterior
+    var filtrosAcumuladoant = WebHelper.GetApplicationHelper().GetFiltrosAnt();
+    var textRecalculoant = WebHelper.GetApplicationHelper().TextRecalculoPYGBalanceAnual(filtrosAcumuladoant,true);
+    var fechaRecalculoAcumuladorant = WebHelper.GetApplicationHelper().GetRecalculoAnt();
+
+    var listejerciciosant = new List<SelectListItem>();
+    var userAcumuladoant = WebHelper.GetApplicationHelper().GetFiltroAcumuladorAnt();
+
+    listejerciciosant.Insert(0, new SelectListItem() { Text = "Todo el ejercicio", Value = WebHelper.GetApplicationHelper().GetCurrentEjercicio().Fkejercicios.ToString() });
+
+    if (userAcumuladoant != null && userAcumuladoant != "")
+    {
+        listejerciciosant.Insert(1, new SelectListItem()
+        {
+            Text = "P. acumulado " + filtrosAcumuladoant.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumuladoant.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumuladoant.seccion + " | Ejecutado el " + fechaRecalculoAcumuladorant,
+            Value = userAcumuladoant
+        });
+    }
 }
 
 @Html.HiddenFor(model => model.Empresa)
@@ -41,6 +61,15 @@
             @Html.LabelFor(f => Model.Ejercicio, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.DropDownListFor(f => Model.Ejercicio, listejercicios, (object)new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Ejercicioanterior, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(f => Model.Ejercicioanterior, listejerciciosant, (object)new { @class = "form-control" })
             </div>
         </div>
     </div>
@@ -79,6 +108,7 @@
                 @Html.LabelFor(f => Model.Recalculo, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculo })
+                    @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculoant })
                 </div>
             }
         </div>
@@ -111,7 +141,7 @@
 
     }, false);
 
-    document.addEventListener('DOMContentLoaded', function () {
+    /*document.addEventListener('DOMContentLoaded', function () {
 
         var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
 
@@ -130,10 +160,11 @@
 
         parentButtonListar.insertBefore(button, parentButtonListar.children[2])
 
-    }, false);
+    }, false);*/
 
     $("#botonCalculo").click(function () {
         var Ejercicio = document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value;
+        var Ejercicioant = document.getElementById('Ejercicioanterior').options[document.getElementById('Ejercicioanterior').selectedIndex].value;
         var Guia = document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value;
         var SinSaldo = document.getElementById('Lineassinsaldo').value;
         var Desglosar = document.getElementById('Desglosarniveltres').value;
@@ -142,7 +173,7 @@
             url: '@Url.Action("CalculoBalanceAnual", "GuiasBalances")',
             dataType: "text",
             type: "GET",
-            data: { Ejercicio, Guia, SinSaldo, Desglosar },
+            data: { Ejercicio, Ejercicioant, Guia, SinSaldo, Desglosar },
             success: function (data) {
                 location.reload();
             }
@@ -156,6 +187,7 @@
 
         var data = {
             Ejercicio: document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value,
+            Ejercicioanterior: document.getElementById('Ejercicioanterior').options[document.getElementById('Ejercicioanterior').selectedIndex].value,
             Guia: document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value,
             SinSaldo: document.getElementById('Lineassinsaldo').value,
             Desglosar: document.getElementById('Desglosarniveltres').value
@@ -165,11 +197,11 @@
 
         console.log(dataSerialized);
 
-        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Balance de cuentas anual');
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Comparativa Cuenta Perdidas y Ganancias Balance Anual');
 
         //Imprimir cuentas no asignadas
-        $.ajax({
-            url: '@Url.Action("CuentasNoAsignadasBalanceAnual", "GuiasBalances")',
+        @*$.ajax({
+            url: '@Url.Action("CuentasNoAsignadas", "GuiasBalances")',
             dataType: "text",
             type: "GET",
             success: function (data) {
@@ -182,20 +214,20 @@
                     $("#listCuentas").show();
                 }
             }
-        });
+        });*@
 
     };
 
-    function listar() {
+    @*function listar() {
 
-        window.open('@Url.Action("Listado", "ListadoCuentasNoAsignadasBalanceAnual")' + '/CuentasNoAsignadasBalanceAnual');
+        window.open('@Url.Action("Listado", "ListadoCuentasNoAsignadas")' + '/CuentasNoAsignadas');
 
-    };
+    };*@
 
     function init() {
         //Comprobar si hay cuentas no asignadas
-        $.ajax({
-            url: '@Url.Action("CuentasNoAsignadasBalanceAnual", "GuiasBalances")',
+       @* $.ajax({
+            url: '@Url.Action("CuentasNoAsignadas", "GuiasBalances")',
             dataType: "text",
             type: "GET",
             success: function (data) {
@@ -208,7 +240,7 @@
                     $("#listCuentas").show();
                 }
             }
-        });
+        });*@
 
         //Configuración de Guia
         @*$.ajax({

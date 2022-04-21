@@ -34,7 +34,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Name = "Report";
 
             var mainQuery = new CustomSqlQuery("Cuentas", "select m.fkcuentas as Cuenta, c.descripcion as Descripcion, m.debe as Debe, m.haber as Haber ," +
-                                                "(case when m.saldo >= 0 THEN m.saldo else null END) AS Deudor ," +
+                                                "(case when m.saldo >= 0 THEN m.saldo else null END) AS Deudor , c.nivel as Nivel ," +
                                                 "(case when m.saldo < 0 THEN(m.saldo * -1) else null END) AS Acreedor from cuentas as c left join maes as m on c.id = m.fkcuentas " +
                                                 "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) ");
 
