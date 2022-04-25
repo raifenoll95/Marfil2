@@ -105,13 +105,6 @@
 			<item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
 			<item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
 		</item>
-		<item name="cierreycuentas" text="Cierre y cuentas anuales" icono="fa fa-folder-o">
-			<item name="regularizacionexistencias" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionExistencias/AsistenteRegularizacionExistencias" />
-			<item name="regularizaciongrupos" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionGrupos/AsistenteRegularizacionGrupos" />
-			<item name="regularizacioncierreapertura" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionCierreApertura/AsistenteRegularizacionCierreApertura" />
-			<item name="regularizacionrevertirestado" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionRevertirEstado/AsistenteRegularizacionRevertirEstado" />
-			<item name="aperturaprovisional" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionAperturaProvisional/AsistenteAperturaProvisional" />
-		</item>
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />
 			<item name="listadomayor" eslistado="true" text="Mayor" icono="fa fa-file" url="~/ListadosMayor/Listado/Mayor" />
@@ -129,6 +122,13 @@
 				<item name="comparativaPYGFuncional" eslistado="true" text="Comparativa Pérdidas y Ganancias Funcional" icono="fa fa-file" url="~/ComparativaPerdidasYGananciasFuncional/Listado/ComparativaPYGFuncional" />
 			</item>
 		</item>
+		<item name="cierreycuentas" text="Cierre y cuentas anuales" icono="fa fa-folder-o">
+			<item name="regularizacionexistencias" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionExistencias/AsistenteRegularizacionExistencias" />
+			<item name="regularizaciongrupos" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionGrupos/AsistenteRegularizacionGrupos" />
+			<item name="regularizacioncierreapertura" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionCierreApertura/AsistenteRegularizacionCierreApertura" />
+			<item name="regularizacionrevertirestado" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionRevertirEstado/AsistenteRegularizacionRevertirEstado" />
+			<item name="aperturaprovisional" allowUpdate="true" allowDelete="true" text="Regularizacion" icono="fa fa-file" url="~/RegularizacionAperturaProvisional/AsistenteAperturaProvisional" />
+		</item>		
 		<item name="configuracion" text="Configuración" icono="fa fa-cog">
 			<item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
 			<item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />

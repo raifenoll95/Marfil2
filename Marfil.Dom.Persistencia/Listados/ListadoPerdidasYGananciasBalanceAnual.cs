@@ -123,6 +123,10 @@ namespace Marfil.Dom.Persistencia.Listados
                 {
                     sb.Append(" cab.Id = lin.GuiasBalancesId and cab.GuiaId = lin.GuiaId and cab.InformeId = lin.InformeId and cab.orden = lin.orden");
                 }
+                else
+                {
+                    sb.Append(" saldo <> 0 or saldo = 0 or saldo is null");
+                }
 
                 ValoresParametros["SIN_SALDO"] = Lineassinsaldo;
 

@@ -127,6 +127,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             return Guia;
         }
 
+        public string GuiaBalanceAnual()
+        {
+            var Guia = _db.Empresas.Where(f => f.id == Empresa).FirstOrDefault().guiaanuales;
+
+            return Guia;
+        }
+
         public void DeleteAllLin()
         {
             var lin = _db.GuiasBalancesLineas.Where(f => f.guiasBalancesId == null).ToList();

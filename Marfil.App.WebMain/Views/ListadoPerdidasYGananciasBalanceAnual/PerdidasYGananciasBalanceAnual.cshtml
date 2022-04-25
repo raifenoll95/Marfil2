@@ -211,14 +211,14 @@
         });
 
         //Configuración de Guia
-        @*$.ajax({
-            url: '@Url.Action("GuiaInforme", "GuiasBalances")',
+        $.ajax({
+            url: '@Url.Action("GuiaBalanceAnual", "GuiasBalances")',
             dataType: "text",
             type: "GET",
             success: function (data) {
                 $('#Guia').val(data);
             }
-        });*@
+        });
     }
 
 </script>

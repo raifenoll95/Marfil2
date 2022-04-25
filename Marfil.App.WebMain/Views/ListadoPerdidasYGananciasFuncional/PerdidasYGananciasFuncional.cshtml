@@ -156,6 +156,7 @@
 
         var data = {
             Ejercicio: document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value,
+            Ejercicioanterior: '',
             Guia: document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value,
             SinSaldo: document.getElementById('Lineassinsaldo').value,
             Desglosar: document.getElementById('Desglosarniveltres').value
@@ -165,7 +166,7 @@
 
         console.log(dataSerialized);
 
-        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Perdidas y Ganancias Funcional');
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Cuenta Perdidas y Ganancias Funcional');
 
         //Imprimir cuentas no asignadas
         $.ajax({

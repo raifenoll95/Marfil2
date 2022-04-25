@@ -347,6 +347,25 @@ namespace Marfil.App.WebMain.Controllers
 
         }
 
+        [HttpGet]
+        public string GuiaBalanceAnual()
+        {
+            var Guia = "0";
+            var intGuia = 0;
+
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                Guia = service.GuiaBalanceAnual();
+
+                //Diferencia de empezar el listado en 0
+                //intGuia = int.Parse(Guia) + 1;
+                //Guia = intGuia.ToString();
+            }
+
+            return Guia;
+
+        }
+
         #region Pérdidas y ganancias
 
         public void Calculo(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
