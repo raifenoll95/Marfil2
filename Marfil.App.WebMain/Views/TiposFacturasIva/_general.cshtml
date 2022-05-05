@@ -1,0 +1,99 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model TiposFacturasIvaModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Descripcion
+    }).ToList();
+    gruposPago.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+    var listdescripciones = WebHelper.GetApplicationHelper().GetListDescripcionAsientos().Select(f => new SelectListItem()
+    {
+        Text = f.Descripcion,
+        Value = f.Valor
+    }).ToList();
+    listdescripciones.Insert(0, new SelectListItem() { Value = "", Text = "" });
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@*Tipo Circuito*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipocircuito, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipocircuito", Model.Tipocircuito, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipocircuito, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@*Descripcion*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcion, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Booleanos*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipofacturadefecto, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Tipofacturadefecto, (object)new { @readonly = isreadonly })
+    </div>
+    @Html.LabelFor(f => Model.Ivadeducible, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Ivadeducible, (object)new { @readonly = isreadonly })
+    </div>
+    @Html.LabelFor(f => Model.Requiereirpf, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Requiereirpf, (object)new { @readonly = isreadonly })
+    </div>
+</div>
+
+@*Booleanos*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Operacionesexcluidas, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Operacionesexcluidas, (object)new { @readonly = isreadonly })
+    </div>
+    @Html.LabelFor(f => Model.Bieninversion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Bieninversion, (object)new { @readonly = isreadonly })
+    </div>
+</div>
+
+
+
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+
+
+<script type="text/javascript">
+
+</script>

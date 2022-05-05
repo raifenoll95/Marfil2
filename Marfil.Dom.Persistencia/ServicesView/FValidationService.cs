@@ -119,6 +119,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _validationServices.Add(typeof(Maes), typeof(MaesValidation));
             _validationServices.Add(typeof(Vencimientos), typeof(VencimientosValidation));
             _validationServices.Add(typeof(CircuitosTesoreriaCobros), typeof(CircuitosTesoreriaCobrosValidation));
+            _validationServices.Add(typeof(TiposFacturas), typeof(TiposFacturasIvaValidation));
             _validationServices.Add(typeof(CarteraVencimientos), typeof(CarteraVencimientosValidation));
             _validationServices.Add(typeof(Remesas), typeof(RemesasValidation));
             _validationServices.Add(typeof(GuiasBalances), typeof(GuiasBalancesValidation));

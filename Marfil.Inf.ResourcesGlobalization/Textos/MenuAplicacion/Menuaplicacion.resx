@@ -663,4 +663,7 @@
   <data name="comparativaPYGBalanceAnual" xml:space="preserve">
     <value>Balance de situación</value>
   </data>
+  <data name="tiposfacturasiva" xml:space="preserve">
+    <value>Tipos de facturas</value>
+  </data>
 </root>

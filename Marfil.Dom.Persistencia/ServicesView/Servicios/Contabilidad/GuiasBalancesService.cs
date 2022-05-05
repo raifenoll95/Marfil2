@@ -40,7 +40,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
         }
         public override string GetSelectPrincipal()
         {
-            return string.Format("select * from GuiasBalances where empresa = {0}", Empresa);
+            return string.Format("select * from GuiasBalances where empresa = {0} order by informeId, guiaId, orden", Empresa);
         }
 
         public string GetFiltroAcumulador()
@@ -94,6 +94,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
             }
 
             return false;
+        }
+
+        public string EjercicioParametro(string paramEjercicio)
+        {
+            var idparse = int.Parse(paramEjercicio);
+            return _db.Ejercicios.Where(f => f.id == idparse).FirstOrDefault().descripcioncorta;
         }
 
         public bool HayCuentasNoAsignadasFuncional()

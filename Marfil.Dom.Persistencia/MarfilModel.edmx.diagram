@@ -291,6 +291,7 @@
         <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesBalanceAnual" Width="1.5" PointX="44.375" PointY="1" />
         <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesLineasBalanceAnual" Width="1.5" PointX="46.625" PointY="1.375" />
         <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineasBalanceAnual_GuiasBalances" />
+        <EntityTypeShape EntityType="MarfilModel.TiposFacturas" Width="1.5" PointX="22.375" PointY="44.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

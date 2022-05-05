@@ -121,7 +121,6 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
 
         public override string DisplayName => "Guias Balances";
 
-        [Required]
         public string Empresa { get; set; }
 
         public int Id { get; set; }

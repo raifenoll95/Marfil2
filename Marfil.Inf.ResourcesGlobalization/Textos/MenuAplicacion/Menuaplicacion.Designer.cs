@@ -1600,6 +1600,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Tipos de facturas.
+        /// </summary>
+        public static string tiposfacturasiva {
+            get {
+                return ResourceManager.GetString("tiposfacturasiva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tipos de IVA.
         /// </summary>
         public static string tiposiva {

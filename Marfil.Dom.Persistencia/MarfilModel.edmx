@@ -4379,6 +4379,40 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="cuenta" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="descripcion" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="TiposFacturas">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipocircuito" Type="int" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="regimeniva" Type="varchar" MaxLength="5" />
+          <Property Name="tipofacturadefecto" Type="bit" />
+          <Property Name="ivadeducible" Type="bit" />
+          <Property Name="requiereirpf" Type="bit" />
+          <Property Name="operacionesexcluidas" Type="bit" />
+          <Property Name="bieninversion" Type="bit" />
+          <Property Name="cuentacargo1" Type="varchar" MaxLength="15" />
+          <Property Name="cuentacargo2" Type="varchar" MaxLength="15" />
+          <Property Name="cuentacargo3" Type="varchar" MaxLength="15" />
+          <Property Name="cuentaabono1" Type="varchar" MaxLength="15" />
+          <Property Name="cuentaabono2" Type="varchar" MaxLength="15" />
+          <Property Name="cuentaabono3" Type="varchar" MaxLength="15" />
+          <Property Name="importecuentacargo1" Type="int" />
+          <Property Name="importecuentacargo2" Type="int" />
+          <Property Name="importecuentaabono1" Type="int" />
+          <Property Name="importecuentaabono2" Type="int" />
+          <Property Name="importecuentacargo3" Type="int" />
+          <Property Name="importecuentaabono3" Type="int" />
+          <Property Name="desccuentacargo1" Type="varchar" MaxLength="50" />
+          <Property Name="desccuentacargo2" Type="varchar" MaxLength="50" />
+          <Property Name="desccuentacargo3" Type="varchar" MaxLength="50" />
+          <Property Name="desccuentaabono1" Type="varchar" MaxLength="50" />
+          <Property Name="desccuentaabono2" Type="varchar" MaxLength="50" />
+          <Property Name="desccuentaabono3" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="TiposIva">
           <Key>
             <PropertyRef Name="empresa" />
@@ -6595,6 +6629,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="TipoInforme" EntityType="Self.TipoInforme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiposcuentas" EntityType="Self.Tiposcuentas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposcuentasLin" EntityType="Self.TiposcuentasLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiposFacturas" EntityType="Self.TiposFacturas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposIva" EntityType="Self.TiposIva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiposretenciones" EntityType="Self.Tiposretenciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trabajos" EntityType="Self.Trabajos" Schema="dbo" store:Type="Tables" />
@@ -7658,6 +7693,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="ReportGuiasBalancesBalanceAnual" EntitySet="ReportGuiasBalancesBalanceAnual" />
             <End Role="ReportGuiasBalancesLineasBalanceAnual" EntitySet="ReportGuiasBalancesLineasBalanceAnual" />
           </AssociationSet>
+          <EntitySet Name="TiposFacturas" EntityType="MarfilModel.TiposFacturas" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -14229,6 +14265,40 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TiposFacturas">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipocircuito" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="regimeniva" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="tipofacturadefecto" Type="Boolean" />
+          <Property Name="ivadeducible" Type="Boolean" />
+          <Property Name="requiereirpf" Type="Boolean" />
+          <Property Name="operacionesexcluidas" Type="Boolean" />
+          <Property Name="bieninversion" Type="Boolean" />
+          <Property Name="cuentacargo1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuentacargo2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuentacargo3" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuentaabono1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuentaabono2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuentaabono3" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="importecuentacargo1" Type="Int32" />
+          <Property Name="importecuentacargo2" Type="Int32" />
+          <Property Name="importecuentaabono1" Type="Int32" />
+          <Property Name="importecuentaabono2" Type="Int32" />
+          <Property Name="importecuentacargo3" Type="Int32" />
+          <Property Name="importecuentaabono3" Type="Int32" />
+          <Property Name="desccuentacargo1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desccuentacargo2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desccuentacargo3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desccuentaabono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desccuentaabono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desccuentaabono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19343,6 +19413,40 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
                 <ScalarProperty Name="InformeId" ColumnName="InformeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposFacturas">
+            <EntityTypeMapping TypeName="MarfilModel.TiposFacturas">
+              <MappingFragment StoreEntitySet="TiposFacturas">
+                <ScalarProperty Name="desccuentaabono3" ColumnName="desccuentaabono3" />
+                <ScalarProperty Name="desccuentaabono2" ColumnName="desccuentaabono2" />
+                <ScalarProperty Name="desccuentaabono1" ColumnName="desccuentaabono1" />
+                <ScalarProperty Name="desccuentacargo3" ColumnName="desccuentacargo3" />
+                <ScalarProperty Name="desccuentacargo2" ColumnName="desccuentacargo2" />
+                <ScalarProperty Name="desccuentacargo1" ColumnName="desccuentacargo1" />
+                <ScalarProperty Name="importecuentaabono3" ColumnName="importecuentaabono3" />
+                <ScalarProperty Name="importecuentacargo3" ColumnName="importecuentacargo3" />
+                <ScalarProperty Name="importecuentaabono2" ColumnName="importecuentaabono2" />
+                <ScalarProperty Name="importecuentaabono1" ColumnName="importecuentaabono1" />
+                <ScalarProperty Name="importecuentacargo2" ColumnName="importecuentacargo2" />
+                <ScalarProperty Name="importecuentacargo1" ColumnName="importecuentacargo1" />
+                <ScalarProperty Name="cuentaabono3" ColumnName="cuentaabono3" />
+                <ScalarProperty Name="cuentaabono2" ColumnName="cuentaabono2" />
+                <ScalarProperty Name="cuentaabono1" ColumnName="cuentaabono1" />
+                <ScalarProperty Name="cuentacargo3" ColumnName="cuentacargo3" />
+                <ScalarProperty Name="cuentacargo2" ColumnName="cuentacargo2" />
+                <ScalarProperty Name="cuentacargo1" ColumnName="cuentacargo1" />
+                <ScalarProperty Name="bieninversion" ColumnName="bieninversion" />
+                <ScalarProperty Name="operacionesexcluidas" ColumnName="operacionesexcluidas" />
+                <ScalarProperty Name="requiereirpf" ColumnName="requiereirpf" />
+                <ScalarProperty Name="ivadeducible" ColumnName="ivadeducible" />
+                <ScalarProperty Name="tipofacturadefecto" ColumnName="tipofacturadefecto" />
+                <ScalarProperty Name="regimeniva" ColumnName="regimeniva" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="tipocircuito" ColumnName="tipocircuito" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

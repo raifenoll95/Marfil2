@@ -129,6 +129,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(CuadernosBancarios), typeof(CuadernosBancariosConverterServices));
             _converterServicesTypes.Add(typeof(Vencimientos), typeof(VencimientosConverterService));
             _converterServicesTypes.Add(typeof(CircuitosTesoreriaCobros), typeof(CircuitosTesoreriaConverterCobrosConverterService));
+            _converterServicesTypes.Add(typeof(TiposFacturas), typeof(TiposFacturasIvaConverterService));
             _converterServicesTypes.Add(typeof(CarteraVencimientos), typeof(CarteraVencimientosConverterService));
             _converterServicesTypes.Add(typeof(Remesas), typeof(RemesasConverterService));
             _converterServicesTypes.Add(typeof(Oportunidades), typeof(OportunidadesConverterService));

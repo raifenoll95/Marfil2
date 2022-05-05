@@ -1435,13 +1435,13 @@ namespace Marfil.Dom.Persistencia.Helpers
         public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
         {
             var text = "";
-            if (filtrosAcumulador != null)
-            {
+            //if (filtrosAcumulador != null)
+            //{
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
                     text = service.TextRecalculoPYGAnalitica(filtrosAcumulador, esejercicioant);
                 }
-            }
+            //}
             
 
             return text;
@@ -1465,13 +1465,13 @@ namespace Marfil.Dom.Persistencia.Helpers
         public string TextRecalculoPYGBalanceAnual(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
         {
             var text = "";
-            if (filtrosAcumulador != null)
-            {
+            //if (filtrosAcumulador != null)
+            //{
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
                     text = service.TextRecalculoPYGBalanceAnual(filtrosAcumulador, esejercicioant);
                 }
-            }
+            //}
 
 
             return text;

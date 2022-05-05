@@ -7,6 +7,9 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System.Collections.Generic;
 using System;
+using Marfil.Dom.Persistencia.ServicesView;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 {
@@ -62,6 +65,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                         ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                     }
                     ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                    //Pasar el parámetro para se pueda usar bien en el Report
+                    /*using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), user) as GuiasBalancesService)
+                    {
+                        Ejercicio = service.EjercicioParametro(paramEjercicio[0]);
+                    }*/
 
                     //flag = true;
                 }
@@ -126,6 +135,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasFuncional", "SELECT * FROM CuentasNoAsignadasFuncional"));
             DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineasBalanceAnual", "SELECT * FROM ReportGuiasBalancesLineasBalanceAnual"));
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasBalanceAnual", "SELECT * FROM CuentasNoAsignadasBalanceAnual"));
+
+            DataSource.Queries.Add(new CustomSqlQuery("Ejercicios", "SELECT empresa, id, descripcion, descripcioncorta FROM Ejercicios WHERE id = '" + user.Ejercicio + "'"));
 
             DataSource.Queries.Add(mainQuery);
 

@@ -737,6 +737,7 @@
     <Compile Include="Model\Interfaces\ILineasDocumentosBusquedaMovil.cs" />
     <Compile Include="Model\Iva\GruposIvaModel.cs" />
     <Compile Include="Model\Iva\RegimenIvaModel.cs" />
+    <Compile Include="Model\Iva\TiposFacturasIvaModel.cs" />
     <Compile Include="Model\Iva\TiposRetencionesModel.cs" />
     <Compile Include="Model\Iva\TiposIvaModel.cs" />
     <Compile Include="Model\FModel.cs" />
@@ -977,6 +978,7 @@
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TiposFacturasIvaConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TransformacioneslotesnaveConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
@@ -1010,6 +1012,7 @@
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
     <Compile Include="ServicesView\Servicios\RemesasService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
+    <Compile Include="ServicesView\Servicios\TiposFacturasIvaService.cs" />
     <Compile Include="ServicesView\Servicios\TransformacioneslotesnaveService.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
@@ -1018,6 +1021,7 @@
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\RemesasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TiposFacturasIvaValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\TransformacioneslotesnaveValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />
@@ -1386,6 +1390,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TiposcuentasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TiposFacturas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TiposIva.cs">

@@ -70,6 +70,9 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var guiasBalancesService = new GuiasBalancesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
                     {
+                        //Metemos la empresa, porque pese a que en la tabla no existe, el modelo que se hizo al comienzo de este proyecto, sí.
+                        model.Empresa = Empresa;
+
                         if (ModelState.IsValid)
                         {
                             model.Lineas = Session[session] as List<GuiasBalancesLineasModel>;

@@ -225,6 +225,7 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<FiltrosPYGBalanceAnual> FiltrosPYGBalanceAnual { get; set; }
         public virtual DbSet<ReportGuiasBalancesBalanceAnual> ReportGuiasBalancesBalanceAnual { get; set; }
         public virtual DbSet<ReportGuiasBalancesLineasBalanceAnual> ReportGuiasBalancesLineasBalanceAnual { get; set; }
+        public virtual DbSet<TiposFacturas> TiposFacturas { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

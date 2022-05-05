@@ -548,6 +548,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tiposcuentas.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\TiposFacturasIva.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposFacturasIva.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Tiposiva.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1178,6 +1183,10 @@
     <EmbeddedResource Include="Textos\Entidades\Tiposcuentas.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tiposcuentas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\TiposFacturasIva.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposFacturasIva.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Tiposiva.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Tiposiva.fr.resx" />

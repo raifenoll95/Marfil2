@@ -380,6 +380,7 @@
     <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
+    <Compile Include="Controllers\TiposFacturasIvaController.cs" />
     <Compile Include="Controllers\TransformacioneslotesnaveController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
@@ -3682,6 +3683,14 @@
     <Content Include="Views\ComparativaPerdidasYGananciasFuncional\ComparativaPYGFuncional.cshtml" />
     <Content Include="Views\ComparativaPerdidasYGananciasAnalitica\ComparativaPYGAnalitica.cshtml" />
     <Content Include="Views\ComparativaPerdidasYGananciasBalanceAnual\ComparativaPYGBalanceAnual.cshtml" />
+    <Content Include="Views\TiposFacturasIva\_asiento.cshtml" />
+    <Content Include="Views\TiposFacturasIva\_circuito.cshtml" />
+    <Content Include="Views\TiposFacturasIva\_general.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Create.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Delete.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Details.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Edit.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Index.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
