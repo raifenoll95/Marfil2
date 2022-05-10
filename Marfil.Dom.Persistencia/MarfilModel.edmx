@@ -4412,6 +4412,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="desccuentaabono1" Type="varchar" MaxLength="50" />
           <Property Name="desccuentaabono2" Type="varchar" MaxLength="50" />
           <Property Name="desccuentaabono3" Type="varchar" MaxLength="50" />
+          <Property Name="tipocuenta" Type="int" />
+          <Property Name="tipocuenta3" Type="int" />
+          <Property Name="tipoabono2" Type="int" />
+          <Property Name="tipoabono3" Type="int" />
+          <Property Name="formulacargo1" Type="varchar" MaxLength="50" />
+          <Property Name="formulacargo2" Type="varchar" MaxLength="50" />
+          <Property Name="formulacargo3" Type="varchar" MaxLength="50" />
+          <Property Name="formulaabono1" Type="varchar" MaxLength="50" />
+          <Property Name="formulaabono2" Type="varchar" MaxLength="50" />
+          <Property Name="formulaabono3" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TiposIva">
           <Key>
@@ -14298,6 +14308,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="desccuentaabono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="desccuentaabono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="desccuentaabono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipocuenta" Type="Int32" />
+          <Property Name="tipocuenta3" Type="Int32" />
+          <Property Name="tipoabono2" Type="Int32" />
+          <Property Name="tipoabono3" Type="Int32" />
+          <Property Name="formulacargo1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="formulacargo2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="formulacargo3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="formulaabono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="formulaabono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="formulaabono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -19419,6 +19439,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="TiposFacturas">
             <EntityTypeMapping TypeName="MarfilModel.TiposFacturas">
               <MappingFragment StoreEntitySet="TiposFacturas">
+                <ScalarProperty Name="formulaabono3" ColumnName="formulaabono3" />
+                <ScalarProperty Name="formulaabono2" ColumnName="formulaabono2" />
+                <ScalarProperty Name="formulaabono1" ColumnName="formulaabono1" />
+                <ScalarProperty Name="formulacargo3" ColumnName="formulacargo3" />
+                <ScalarProperty Name="formulacargo2" ColumnName="formulacargo2" />
+                <ScalarProperty Name="formulacargo1" ColumnName="formulacargo1" />
+                <ScalarProperty Name="tipoabono3" ColumnName="tipoabono3" />
+                <ScalarProperty Name="tipoabono2" ColumnName="tipoabono2" />
+                <ScalarProperty Name="tipocuenta3" ColumnName="tipocuenta3" />
+                <ScalarProperty Name="tipocuenta" ColumnName="tipocuenta" />
                 <ScalarProperty Name="desccuentaabono3" ColumnName="desccuentaabono3" />
                 <ScalarProperty Name="desccuentaabono2" ColumnName="desccuentaabono2" />
                 <ScalarProperty Name="desccuentaabono1" ColumnName="desccuentaabono1" />

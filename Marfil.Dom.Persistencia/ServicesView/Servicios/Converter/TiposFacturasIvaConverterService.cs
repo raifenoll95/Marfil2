@@ -33,6 +33,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var result = _db.Set<Persistencia.TiposFacturas>().Create();
             result.empresa = viewmodel.Empresa;
             result.tipocircuito = (int)viewmodel.Tipocircuito;
+            result.tipocuenta = (int)viewmodel.Tipocuenta;
+            result.tipocuenta3 = (int)viewmodel.Tipocuenta3;
+            result.tipoabono2 = (int)viewmodel.Tipoabono2;
+            result.tipoabono3 = (int)viewmodel.Tipoabono3;
             result.descripcion = viewmodel.Descripcion;
             result.regimeniva = viewmodel.Regimeniva;          
             result.tipofacturadefecto = viewmodel.Tipofacturadefecto;
@@ -52,6 +56,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.importecuentaabono1 = (int)viewmodel.Importecuentaabono1;
             result.importecuentaabono2 = (int)viewmodel.Importecuentaabono2;
             result.importecuentaabono3 = (int)viewmodel.Importecuentaabono3;
+            result.formulacargo1 = viewmodel.Formulacargo1;
+            result.formulacargo2 = viewmodel.Formulacargo2;
+            result.formulacargo3 = viewmodel.Formulacargo3;
+            result.formulaabono1 = viewmodel.Formulaabono1;
+            result.formulaabono2 = viewmodel.Formulaabono2;
+            result.formulaabono3 = viewmodel.Formulaabono3;
             result.desccuentacargo1 = viewmodel.Desccuentacargo1;
             result.desccuentacargo2 = viewmodel.Desccuentacargo2;
             result.desccuentacargo3 = viewmodel.Desccuentacargo3;
@@ -67,6 +77,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var result = _db.TiposFacturas.Where(f => f.id == viewmodel.Id && f.empresa == Empresa).Single();
             result.empresa = viewmodel.Empresa;
             result.tipocircuito = (int)viewmodel.Tipocircuito;
+            result.tipocuenta = (int)viewmodel.Tipocuenta;
+            result.tipocuenta3 = (int)viewmodel.Tipocuenta3;
+            result.tipoabono2 = (int)viewmodel.Tipoabono2;
+            result.tipoabono3 = (int)viewmodel.Tipoabono3;
             result.descripcion = viewmodel.Descripcion;
             result.regimeniva = viewmodel.Regimeniva;
             result.tipofacturadefecto = viewmodel.Tipofacturadefecto;
@@ -86,6 +100,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.importecuentaabono1 = (int)viewmodel.Importecuentaabono1;
             result.importecuentaabono2 = (int)viewmodel.Importecuentaabono2;
             result.importecuentaabono3 = (int)viewmodel.Importecuentaabono3;
+            result.formulacargo1 = viewmodel.Formulacargo1;
+            result.formulacargo2 = viewmodel.Formulacargo2;
+            result.formulacargo3 = viewmodel.Formulacargo3;
+            result.formulaabono1 = viewmodel.Formulaabono1;
+            result.formulaabono2 = viewmodel.Formulaabono2;
+            result.formulaabono3 = viewmodel.Formulaabono3;
             result.desccuentacargo1 = viewmodel.Desccuentacargo1;
             result.desccuentacargo2 = viewmodel.Desccuentacargo2;
             result.desccuentacargo3 = viewmodel.Desccuentacargo3;
@@ -103,6 +123,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Empresa = viewmodel.empresa,
                 Descripcion = viewmodel.descripcion,
                 Tipocircuito = (TipoFactura)viewmodel.tipocircuito,
+                Tipocuenta = (TipoCuenta)viewmodel.tipocuenta,
+                Tipocuenta3 = (TipoCuenta)viewmodel.tipocuenta3,
+                Tipoabono2 = (TipoCuenta)viewmodel.tipoabono2,
+                Tipoabono3 = (TipoCuenta)viewmodel.tipoabono3,
                 Regimeniva = viewmodel.regimeniva,              
                 Tipofacturadefecto = viewmodel.tipofacturadefecto.Value,
                 Ivadeducible = viewmodel.ivadeducible.Value,
@@ -121,6 +145,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Importecuentaabono1 = (TipoImporte)viewmodel.importecuentaabono1,
                 Importecuentaabono2 = (TipoImporte)viewmodel.importecuentaabono2,
                 Importecuentaabono3 = (TipoImporte)viewmodel.importecuentaabono3,
+                Formulacargo1 = viewmodel.formulacargo1,
+                Formulacargo2 = viewmodel.formulacargo2,
+                Formulacargo3 = viewmodel.formulacargo3,
+                Formulaabono1 = viewmodel.formulaabono1,
+                Formulaabono2 = viewmodel.formulaabono2,
+                Formulaabono3 = viewmodel.formulaabono3,
                 Desccuentacargo1 = viewmodel.desccuentacargo1,
                 Desccuentacargo2 = viewmodel.desccuentacargo2,
                 Desccuentacargo3 = viewmodel.desccuentacargo3,

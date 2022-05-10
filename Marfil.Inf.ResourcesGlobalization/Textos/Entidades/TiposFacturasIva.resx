@@ -126,6 +126,9 @@
   <data name="Bieninversion" xml:space="preserve">
     <value>Bien de Inversión</value>
   </data>
+  <data name="Blanco" xml:space="preserve">
+    <value />
+  </data>
   <data name="Cuentaabono1" xml:space="preserve">
     <value>Abono 1</value>
   </data>
@@ -159,11 +162,17 @@
   <data name="Formula" xml:space="preserve">
     <value>10 - Fórmula</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Cuenta General</value>
+  </data>
   <data name="Importeirpf" xml:space="preserve">
     <value>6 - Importe IRPF</value>
   </data>
   <data name="InteresesIncluidos" xml:space="preserve">
     <value>8 - Intereses incluidos en la base imponible</value>
+  </data>
+  <data name="Iva" xml:space="preserve">
+    <value>Cuenta IVA</value>
   </data>
   <data name="Ivadeducible" xml:space="preserve">
     <value>IVA deducible</value>
@@ -183,11 +192,17 @@
   <data name="Requiereirpf" xml:space="preserve">
     <value>Requiere IRPF</value>
   </data>
+  <data name="Retencion" xml:space="preserve">
+    <value>Cuenta Retención</value>
+  </data>
   <data name="Soportado" xml:space="preserve">
-    <value>Sportado</value>
+    <value>Soportado</value>
   </data>
   <data name="Tipocircuito" xml:space="preserve">
     <value>Tipo</value>
+  </data>
+  <data name="Tipocuenta" xml:space="preserve">
+    <value>Tipo de cuenta</value>
   </data>
   <data name="Tipofacturadefecto" xml:space="preserve">
     <value>Tipo de factura por defecto</value>

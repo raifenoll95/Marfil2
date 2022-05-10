@@ -13,6 +13,8 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 {
     public enum TipoImporte
     {
+        [StringValue(typeof(RTiposFacturas), "Blanco")]
+        Blanco,
         [StringValue(typeof(RTiposFacturas), "BaseImponibleInterior")]
         BaseImponibleInterior,
         [StringValue(typeof(RTiposFacturas), "BaseImponibleImportacion")]
@@ -43,6 +45,18 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         Repercutido
     }
 
+    public enum TipoCuenta
+    {
+        [StringValue(typeof(RTiposFacturas), "Blanco")]
+        Blanco,
+        [StringValue(typeof(RTiposFacturas), "Iva")]
+        Iva,
+        [StringValue(typeof(RTiposFacturas), "Retencion")]
+        Retencion,
+        [StringValue(typeof(RTiposFacturas), "General")]
+        General
+    }
+
     public class TiposFacturasIvaModel : BaseModel<TiposFacturasIvaModel, TiposFacturas>
     {
         #region CTR
@@ -64,6 +78,18 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Required]
         [Display(ResourceType = typeof(RTiposFacturas), Name = "Tipocircuito")]
         public TipoFactura Tipocircuito { get; set; }
+
+        [Display(ResourceType = typeof(RTiposFacturas), Name = "Tipocuenta")]
+        public TipoCuenta Tipocuenta { get; set; }
+
+        [Display(ResourceType = typeof(RTiposFacturas), Name = "Tipocuenta")]
+        public TipoCuenta Tipocuenta3 { get; set; }
+
+        [Display(ResourceType = typeof(RTiposFacturas), Name = "Tipocuenta")]
+        public TipoCuenta Tipoabono2 { get; set; }
+
+        [Display(ResourceType = typeof(RTiposFacturas), Name = "Tipocuenta")]
+        public TipoCuenta Tipoabono3 { get; set; }
 
         [Display(ResourceType = typeof(RTiposFacturas), Name = "Descripcion")]
         public string Descripcion { get; set; }
@@ -127,6 +153,18 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public string Desccuentaabono2 { get; set; }
 
         public string Desccuentaabono3 { get; set; }
+
+        public string Formulacargo1 { get; set; }
+
+        public string Formulacargo2 { get; set; }
+
+        public string Formulacargo3 { get; set; }
+
+        public string Formulaabono1 { get; set; }
+
+        public string Formulaabono2 { get; set; }
+
+        public string Formulaabono3 { get; set; }
 
         #endregion
 

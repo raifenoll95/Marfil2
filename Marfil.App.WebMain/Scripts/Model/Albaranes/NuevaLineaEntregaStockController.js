@@ -370,6 +370,7 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         if ($scope.Tipopieza == 0) {
             var campoobligatorio = "Este campo es obligatorio";
             $scope.Fkarticulos = $("#Fkarticulossalida").val();
+            console.log($scope.Fkarticulos);
             if ($scope.Fkarticulos == "" || $scope.Fkarticulos == undefined) {
                 resultado = false;
                 $scope.Fkarticuloserrores = campoobligatorio; NuevaLineaEntregaStockController
@@ -386,15 +387,15 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             }
 
             if ($scope.Modificarmedidas && !isNaN($scope.Metros)) {
-                if (!$scope.Largo) {
+                if ($scope.Largo < 0 || $scope.Largo == undefined) {
                     resultado = false;
                     $scope.Largoerrores = campoobligatorio;
                 }
-                if (!$scope.Ancho) {
+                if ($scope.Ancho < 0 || $scope.Ancho == undefined) {
                     resultado = false;
                     $scope.Anchoerrores = campoobligatorio;
                 }
-                if (!$scope.Grueso) {
+                if ($scope.Grueso < 0 || $scope.Grueso == undefined) {
                     resultado = false;
                     $scope.Gruesoerrores = campoobligatorio;
                 }

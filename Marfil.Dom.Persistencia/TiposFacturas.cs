@@ -42,5 +42,15 @@ namespace Marfil.Dom.Persistencia
         public string desccuentaabono1 { get; set; }
         public string desccuentaabono2 { get; set; }
         public string desccuentaabono3 { get; set; }
+        public Nullable<int> tipocuenta { get; set; }
+        public Nullable<int> tipocuenta3 { get; set; }
+        public Nullable<int> tipoabono2 { get; set; }
+        public Nullable<int> tipoabono3 { get; set; }
+        public string formulacargo1 { get; set; }
+        public string formulacargo2 { get; set; }
+        public string formulacargo3 { get; set; }
+        public string formulaabono1 { get; set; }
+        public string formulaabono2 { get; set; }
+        public string formulaabono3 { get; set; }
     }
 }

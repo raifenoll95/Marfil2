@@ -14,6 +14,7 @@
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var cvregimen = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
     var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago().Select(f => new SelectListItem()
     {
         Text = f.Descripcion,
@@ -52,6 +53,25 @@
     </div>
     <div class="col-md-10 col-md-offset-2">
         @Html.ValidationMessageFor(f => Model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Régimen IVA*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Regimeniva, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvregimen.Name = "Regimeniva";
+            cvregimen.Url = Url.Action("RegimenIvaApi", "Api");
+            cvregimen.Valor = Model.Regimeniva;
+            cvregimen.SoloLectura = isreadonly;
+            cvregimen.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvregimen)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Regimeniva, "", new { @class = "text-danger" })
     </div>
 </div>
 

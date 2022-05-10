@@ -88,6 +88,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
+        public static string Blanco {
+            get {
+                return ResourceManager.GetString("Blanco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Abono 1.
         /// </summary>
         public static string Cuentaabono1 {
@@ -187,6 +196,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta General.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a 6 - Importe IRPF.
         /// </summary>
         public static string Importeirpf {
@@ -201,6 +219,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string InteresesIncluidos {
             get {
                 return ResourceManager.GetString("InteresesIncluidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta IVA.
+        /// </summary>
+        public static string Iva {
+            get {
+                return ResourceManager.GetString("Iva", resourceCulture);
             }
         }
         
@@ -259,7 +286,16 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Sportado.
+        ///   Busca una cadena traducida similar a Cuenta Retención.
+        /// </summary>
+        public static string Retencion {
+            get {
+                return ResourceManager.GetString("Retencion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Soportado.
         /// </summary>
         public static string Soportado {
             get {
@@ -273,6 +309,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Tipocircuito {
             get {
                 return ResourceManager.GetString("Tipocircuito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tipo de cuenta.
+        /// </summary>
+        public static string Tipocuenta {
+            get {
+                return ResourceManager.GetString("Tipocuenta", resourceCulture);
             }
         }
         
