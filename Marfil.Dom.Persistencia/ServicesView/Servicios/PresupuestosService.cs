@@ -69,7 +69,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService=new EstadosService(_context,_db);
-            st.List = st.List.OfType<PresupuestosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+            var seriesrol = _db.Series.Where(f => f.fkgruposusuarios == _context.RoleId.ToString()).Select(x => x.id).ToList();
+
+            st.List = st.List.OfType<PresupuestosModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkclientes", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<PresupuestosModel>();
             st.PrimaryColumnns = new[] { "Id" };

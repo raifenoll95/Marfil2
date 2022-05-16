@@ -732,4 +732,7 @@
   <data name="Dua" xml:space="preserve">
     <value>Núm. DUA</value>
   </data>
+  <data name="Fktipofactura" xml:space="preserve">
+    <value>Tipo de factura</value>
+  </data>
 </root>

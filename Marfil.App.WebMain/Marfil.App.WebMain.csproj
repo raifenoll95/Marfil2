@@ -380,6 +380,7 @@
     <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
+    <Compile Include="Controllers\TiposFacturasIvaApiController.cs" />
     <Compile Include="Controllers\TiposFacturasIvaController.cs" />
     <Compile Include="Controllers\TransformacioneslotesnaveController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
@@ -680,6 +681,27 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\DatosDefecto\GuiasContables\1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\10.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\9.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\8.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\7.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\6.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\5.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\4.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\DatosDefecto\RegimenIVA\1.xml">

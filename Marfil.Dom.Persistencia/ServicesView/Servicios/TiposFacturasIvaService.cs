@@ -41,6 +41,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result.ToString();
         }
 
-        #endregion  
+        public string GetTipoFacturaDefectoRepercutido()
+        {
+            return _db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 1 && f.tipofacturadefecto == true).FirstOrDefault().id.ToString();
+        }
+
+        public string GetTipoFacturaDefectoSoportado()
+        {
+            return _db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 0 && f.tipofacturadefecto == true).FirstOrDefault().id.ToString();
+        }
+
+        public string GetTipoFacturaClientes(string codTercero)
+        {
+            return _db.Clientes.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault().fktipofactura;
+        }
+
+        public string GetTipoFacturaProveedores(string codTercero)
+        {
+            return _db.Proveedores.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault().fktipofactura;
+        }
+
+        #endregion
     }
 }

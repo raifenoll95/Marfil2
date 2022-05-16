@@ -130,6 +130,7 @@ namespace Marfil.Dom.Persistencia
         public string canalcontable { get; set; }
         public Nullable<int> fkasiento { get; set; }
         public string dua { get; set; }
+        public string fktipofactura { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FacturasComprasLin> FacturasComprasLin { get; set; }

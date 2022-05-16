@@ -714,4 +714,7 @@
   <data name="Importeretencion" xml:space="preserve">
     <value>Retención</value>
   </data>
+  <data name="Fktipofactura" xml:space="preserve">
+    <value>Tipo factura</value>
+  </data>
 </root>

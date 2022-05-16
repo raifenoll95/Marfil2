@@ -43,5 +43,6 @@ namespace Marfil.Dom.Persistencia
         public string tarifa { get; set; }
         public string fkcriteriosagrupacion { get; set; }
         public Nullable<int> previsionpagosperiodicos { get; set; }
+        public string fktipofactura { get; set; }
     }
 }

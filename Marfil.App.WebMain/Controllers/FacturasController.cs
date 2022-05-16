@@ -856,7 +856,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     Icono = "fa fa-gear",
                     Texto = General.LblContabilizar,
-                    Url = Url.Action("Contabilizar", "Movs", new { IdFactura = objModel.Id, NombreTipo = typeof(FacturasModel).ToString(), returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
+                    Url = Url.Action("Contabilizar", "Movs", new { IdFactura = objModel.Id, NombreTipo = typeof(FacturasModel).ToString(), TipoFactura = objModel.Fktipofactura, returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
                 });
                 result.Add(new ToolbarSeparatorModel());
             }

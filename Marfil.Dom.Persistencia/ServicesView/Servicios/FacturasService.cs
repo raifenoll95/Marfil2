@@ -502,6 +502,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Fechadocumento = DateTime.Parse(fecha);
             
             result.Fkseries = serie;
+
+            //asignamos el tipo de factura según el cliente
+            var tipofactura = _db.Clientes.Where(f => f.fkcuentas == presupuesto.Fkclientes).FirstOrDefault().fktipofactura;
+            if (tipofactura != null)
+            {
+                result.Fktipofactura = tipofactura;
+            }
+            
             var appService= new ApplicationHelper(_context);
             result.Fkestados = appService.GetConfiguracion().Estadofacturasventasinicial;
             var decimalesmonedas = _db.Monedas.Single(f => f.id == result.Fkmonedas.Value).decimales;

@@ -10,12 +10,18 @@
 @{
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+    var cvtipofactura = FCampoverificacion.Instance.GetModel<TiposFacturasIvaModel>(WebHelper.ContextService);
     var cvregimeniva = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
     var cvgruposiva = FCampoverificacion.Instance.GetModel<GruposIvaModel>(WebHelper.ContextService);
     var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvtiposretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
     var criteriosagrupacionlist = WebHelper.GetApplicationHelper().GetListCriteriosagrupacion().Select(f => new SelectListItem() { Value = f.Id, Text = f.Nombre }).ToList();
     criteriosagrupacionlist.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+    if (Model.Fktipofactura == "" || Model.Fktipofactura == null)
+    {
+        Model.Fktipofactura = WebHelper.GetApplicationHelper().GetTipoFacturaDefectoSoportado();
+    }
 }
 
 <div class="form-group">
@@ -32,6 +38,24 @@
 
         @Html.Partial("CampoverificacionUI", cvmonedas)
         @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktipofactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvtipofactura.Name = "Fktipofactura";
+            cvtipofactura.Url = Url.Action("TiposFacturasIvaApi", "Api");
+            cvtipofactura.Valor = Model.Fktipofactura?.ToString();
+            cvtipofactura.SoloLectura = isreadonly;
+            cvtipofactura.Obligatorio = true;
+
+        }
+
+        @Html.Partial("CampoverificacionUI", cvtipofactura)
+        @Html.ValidationMessageFor(f => Model.Fktipofactura, "", new { @class = "text-danger" })
     </div>
 </div>
 

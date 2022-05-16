@@ -38,7 +38,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Caracteristicas> Caracteristicas { get; set; }
         public virtual DbSet<CaracteristicasLin> CaracteristicasLin { get; set; }
         public virtual DbSet<Carpetas> Carpetas { get; set; }
-        public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<Comerciales> Comerciales { get; set; }
         public virtual DbSet<Configuracion> Configuracion { get; set; }
         public virtual DbSet<Contactos> Contactos { get; set; }
@@ -97,8 +96,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Tiposretenciones> Tiposretenciones { get; set; }
         public virtual DbSet<Transportistas> Transportistas { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
-        public virtual DbSet<Acreedores> Acreedores { get; set; }
-        public virtual DbSet<Proveedores> Proveedores { get; set; }
         public virtual DbSet<Reservasstock> Reservasstock { get; set; }
         public virtual DbSet<ReservasstockLin> ReservasstockLin { get; set; }
         public virtual DbSet<ReservasstockTotales> ReservasstockTotales { get; set; }
@@ -226,6 +223,9 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<ReportGuiasBalancesBalanceAnual> ReportGuiasBalancesBalanceAnual { get; set; }
         public virtual DbSet<ReportGuiasBalancesLineasBalanceAnual> ReportGuiasBalancesLineasBalanceAnual { get; set; }
         public virtual DbSet<TiposFacturas> TiposFacturas { get; set; }
+        public virtual DbSet<Clientes> Clientes { get; set; }
+        public virtual DbSet<Proveedores> Proveedores { get; set; }
+        public virtual DbSet<Acreedores> Acreedores { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

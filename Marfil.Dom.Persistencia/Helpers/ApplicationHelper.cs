@@ -1477,6 +1477,54 @@ namespace Marfil.Dom.Persistencia.Helpers
             return text;
         }
 
+        public string GetTipoFacturaDefectoRepercutido()
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaDefectoRepercutido();
+            }
+
+            return text;
+        }
+
+        public string GetTipoFacturaDefectoSoportado()
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaDefectoSoportado();
+            }
+
+            return text;
+        }
+
+        public string GetTipoFacturaClientes(string codTercero)
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaClientes(codTercero);
+            }
+
+            return text;
+        }
+
+        public string GetTipoFacturaProveedores(string codTercero)
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaProveedores(codTercero);
+            }
+
+            return text;
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListGrupoIncidencias()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

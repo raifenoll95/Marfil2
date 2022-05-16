@@ -1033,6 +1033,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Tipo factura.
+        /// </summary>
+        public static string Fktipofactura {
+            get {
+                return ResourceManager.GetString("Fktipofactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tipo de albarán.
         /// </summary>
         public static string Fktiposalbaranes {
