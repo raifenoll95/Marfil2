@@ -74,7 +74,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService = new EstadosService(_context,_db);
-            st.List = st.List.OfType<PedidosComprasModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<PedidosComprasModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkproveedores", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<PedidosComprasModel>();
             st.PrimaryColumnns = new[] { "Id" };

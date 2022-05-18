@@ -180,4 +180,7 @@
   <data name="Operario" xml:space="preserve">
     <value>Usuario operario</value>
   </data>
+  <data name="Bloquearseries" xml:space="preserve">
+    <value>Bloquear series</value>
+  </data>
 </root>

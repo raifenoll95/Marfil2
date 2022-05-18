@@ -82,7 +82,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //var user = _db.Usuarios.Where(f => f.usuario == _context.Usuario).SingleOrDefault();
             //st.List = user.usuario_cliente == true ? st.List.OfType<PedidosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia).Where(f => f.Fkclientes == user.codigoclienteusuario)
             //    : st.List.OfType<PedidosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
-            st.List = st.List.OfType<PedidosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<PedidosModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkclientes", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<PedidosModel>();
             st.PrimaryColumnns = new[] { "Id" };

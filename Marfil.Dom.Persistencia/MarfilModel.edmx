@@ -5060,6 +5060,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="codigoclienteusuario" Type="varchar" MaxLength="15" />
           <Property Name="operario" Type="bit" />
           <Property Name="codigooperariousuario" Type="varchar" MaxLength="15" />
+          <Property Name="bloquearseries" Type="bit" />
         </EntityType>
         <EntityType Name="Usuariosactivos">
           <Key>
@@ -9311,6 +9312,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="codigoclienteusuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="operario" Type="Boolean" />
           <Property Name="codigooperariousuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="bloquearseries" Type="Boolean" />
         </EntityType>
         <Association Name="FK_AlmacenesZona_Almacenes">
           <End Type="MarfilModel.Almacenes" Role="Almacenes" Multiplicity="1" />
@@ -15841,6 +15843,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="MarfilModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="bloquearseries" ColumnName="bloquearseries" />
                 <ScalarProperty Name="codigooperariousuario" ColumnName="codigooperariousuario" />
                 <ScalarProperty Name="operario" ColumnName="operario" />
                 <ScalarProperty Name="codigoclienteusuario" ColumnName="codigoclienteusuario" />

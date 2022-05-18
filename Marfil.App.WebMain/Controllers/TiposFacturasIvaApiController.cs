@@ -28,9 +28,23 @@ namespace Marfil.App.WebMain.Controllers
 
             using (var service = FService.Instance.GetService(typeof(TiposFacturasIvaModel), ContextService))
             {
+                var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
+                var tipotercero = nvc["tipotercero"]; // 0 - proveedores / acreedores , 1 - clientes
+
+                var registros = service.getAll().Select(f => (TiposFacturasIvaModel)f);
+
+                if (tipotercero == "0")
+                {
+                    registros = registros.Where(f => f.Tipocircuito == TipoFactura.Soportado);
+                }
+                else if (tipotercero == "1")
+                {
+                    registros = registros.Where(f => f.Tipocircuito == TipoFactura.Repercutido);
+                }
+
                 var result = new ResultBusquedas<TiposFacturasIvaModel>()
                 {
-                    values = service.getAll().Select(f => (TiposFacturasIvaModel)f),
+                    values = registros,
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Id", visible = true},
