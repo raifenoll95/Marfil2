@@ -41,7 +41,10 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
         [Display(ResourceType = typeof(RClientes), Name = "Poblacion")]
         public string Poblacion { get; set; }
 
-        
+        [Display(ResourceType = typeof(RClientes), Name = "Fkdelegacion")]
+        public string Fkdelegacion { get; set; }
+
+
         public bool? Bloqueado { get; set; }
 
         public IEnumerable<ViewProperty> getProperties()
@@ -186,6 +189,9 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
         [Required]
         [Display(ResourceType = typeof(RClientes), Name = "Fkidiomas")]
         public string Fkidiomas { get; set; }
+
+        [Display(ResourceType = typeof(RClientes), Name = "Fkdelegacion")]
+        public string Fkdelegacion { get; set; }
 
         [Display(ResourceType = typeof(RClientes), Name = "Fkfamiliacliente")]
         public string Fkfamiliacliente { get; set; }

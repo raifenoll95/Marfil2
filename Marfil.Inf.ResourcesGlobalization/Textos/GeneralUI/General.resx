@@ -988,4 +988,7 @@
   <data name="LblTarifa" xml:space="preserve">
     <value>Tarifa</value>
   </data>
+  <data name="LblFactura" xml:space="preserve">
+    <value>Factura</value>
+  </data>
 </root>

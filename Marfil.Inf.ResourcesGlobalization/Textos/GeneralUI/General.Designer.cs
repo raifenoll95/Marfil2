@@ -1402,6 +1402,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Factura.
+        /// </summary>
+        public static string LblFactura {
+            get {
+                return ResourceManager.GetString("LblFactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Facturar.
         /// </summary>
         public static string LblFacturar {

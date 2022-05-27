@@ -223,9 +223,10 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<ReportGuiasBalancesBalanceAnual> ReportGuiasBalancesBalanceAnual { get; set; }
         public virtual DbSet<ReportGuiasBalancesLineasBalanceAnual> ReportGuiasBalancesLineasBalanceAnual { get; set; }
         public virtual DbSet<TiposFacturas> TiposFacturas { get; set; }
-        public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<Proveedores> Proveedores { get; set; }
         public virtual DbSet<Acreedores> Acreedores { get; set; }
+        public virtual DbSet<RegistroIVARepercutido> RegistroIVARepercutido { get; set; }
+        public virtual DbSet<Clientes> Clientes { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

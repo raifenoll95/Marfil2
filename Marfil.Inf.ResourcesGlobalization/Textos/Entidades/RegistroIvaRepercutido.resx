@@ -117,76 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Baseretencion" xml:space="preserve">
+    <value>Base retención</value>
+  </data>
+  <data name="Bieninversion" xml:space="preserve">
+    <value>Bien de inversión</value>
+  </data>
+  <data name="Caja" xml:space="preserve">
+    <value>Caja</value>
+  </data>
+  <data name="Contabilizar" xml:space="preserve">
+    <value>Contabilizar como cobrado/pagado</value>
+  </data>
+  <data name="Criterioivafactoriginal" xml:space="preserve">
+    <value>Criterio de IVA factura original</value>
+  </data>
+  <data name="Criterioivafactura" xml:space="preserve">
+    <value>Criterio de IVA</value>
+  </data>
+  <data name="Criterioivageneral" xml:space="preserve">
+    <value>Criterio de IVA</value>
+  </data>
+  <data name="Cuentacliente" xml:space="preserve">
+    <value>Cuenta cliente/acreedor</value>
+  </data>
+  <data name="Cuentaventas" xml:space="preserve">
+    <value>Cuenta ventas/servicios</value>
+  </data>
+  <data name="Devengo" xml:space="preserve">
+    <value>Devengo</value>
+  </data>
+  <data name="Factura" xml:space="preserve">
+    <value>Factura</value>
+  </data>
+  <data name="Facturarectificativa" xml:space="preserve">
+    <value>Factura rectificativa</value>
+  </data>
+  <data name="Fechafactura" xml:space="preserve">
+    <value>Fecha de factura</value>
+  </data>
+  <data name="Fechafacturaoriginal" xml:space="preserve">
+    <value>Fecha factura original</value>
+  </data>
+  <data name="Fechaoperacion" xml:space="preserve">
+    <value>Fecha de operacion</value>
+  </data>
+  <data name="Fecharegistro" xml:space="preserve">
+    <value>Fecha de registro</value>
+  </data>
+  <data name="Fkcuentastesoreria" xml:space="preserve">
+    <value>Cta. Tesorería</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régimen de IVA</value>
+  </data>
+  <data name="Fktiporetencion" xml:space="preserve">
+    <value>Retenciones (Tipo)</value>
+  </data>
+  <data name="Importeretencion" xml:space="preserve">
+    <value>Importe retención</value>
+  </data>
+  <data name="Inmueble" xml:space="preserve">
+    <value>Inmueble</value>
+  </data>
+  <data name="IVA" xml:space="preserve">
+    <value>IVA</value>
+  </data>
+  <data name="Motivorectificacion" xml:space="preserve">
+    <value>Motivo restificación</value>
+  </data>
+  <data name="Numfacturacliente" xml:space="preserve">
+    <value>Num. factura cliente</value>
+  </data>
+  <data name="Numfacturarectificar" xml:space="preserve">
+    <value>Rectifica a la factura Nº</value>
+  </data>
+  <data name="Operacionesexluidasbi" xml:space="preserve">
+    <value>Operaciones excluidas de la B.I.</value>
+  </data>
+  <data name="Origendoc" xml:space="preserve">
+    <value>Origen documento</value>
+  </data>
+  <data name="Periodo" xml:space="preserve">
+    <value>Periodo</value>
+  </data>
+  <data name="Porcentajeretencion" xml:space="preserve">
+    <value>% Retención</value>
+  </data>
+  <data name="Referencia" xml:space="preserve">
+    <value>Referencia</value>
+  </data>
+  <data name="Tipofactura" xml:space="preserve">
+    <value>Tipo factura IVA</value>
+  </data>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Usuarios</value>
-  </data>
-  <data name="usuario" xml:space="preserve">
-    <value>Usuario</value>
-  </data>
-  <data name="password" xml:space="preserve">
-    <value>Contraseña</value>
-  </data>
-  <data name="confirmacionPassword" xml:space="preserve">
-    <value>Confirmación contraseña</value>
-  </data>
-  <data name="ErrorUsuarioDuplicado" xml:space="preserve">
-    <value>El usuario {0} ya existe</value>
-  </data>
-  <data name="Usuariomail" xml:space="preserve">
-    <value>Usuario</value>
-  </data>
-  <data name="Passwordmail" xml:space="preserve">
-    <value>Contraseña</value>
-  </data>
-  <data name="Smtp" xml:space="preserve">
-    <value>Smtp</value>
-  </data>
-  <data name="Puerto" xml:space="preserve">
-    <value>Puerto</value>
-  </data>
-  <data name="Ssl" xml:space="preserve">
-    <value>Ssl</value>
-  </data>
-  <data name="Firma" xml:space="preserve">
-    <value>Firma</value>
-  </data>
-  <data name="ConfiguracionEmail" xml:space="preserve">
-    <value>Configurar email</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="LblProbarEmail" xml:space="preserve">
-    <value>Probar email</value>
-  </data>
-  <data name="Nombre" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="Copiaremitente" xml:space="preserve">
-    <value>Enviar copia al remitente</value>
-  </data>
-  <data name="Nivel" xml:space="preserve">
-    <value>Nivel</value>
-  </data>
-  <data name="Cambiarempresa" xml:space="preserve">
-    <value>Cambiar de empresa</value>
-  </data>
-  <data name="Cambiaralmacen" xml:space="preserve">
-    <value>Cambiar de almacén</value>
-  </data>
-  <data name="Codigooperariousuario" xml:space="preserve">
-    <value>Código operario</value>
-  </data>
-  <data name="Operario" xml:space="preserve">
-    <value>Usuario operario</value>
-  </data>
-  <data name="Bloquearseries" xml:space="preserve">
-    <value>Bloquear series</value>
-  </data>
-  <data name="Fkzonacliente" xml:space="preserve">
-    <value>Solo clientes de zona</value>
-  </data>
-  <data name="Fkdelegacion" xml:space="preserve">
-    <value>Delegación</value>
+    <value>Registro de IVA repercutido</value>
   </data>
 </root>

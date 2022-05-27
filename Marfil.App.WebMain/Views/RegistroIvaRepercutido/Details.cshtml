@@ -1,0 +1,27 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Resources
+@model IModelView
+@{
+
+    ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
+}
+
+<div>
+    @{
+        ViewData["readonly"] = true;
+    }
+    <div class="form-horizontal">
+        @Html.Partial("_registro", Model as RegistroIvaRepercutidoModel)
+    </div>
+</div>
+
+@if (ViewBag.Modificar)
+{
+    <p class="margin-top">
+        <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((RegistroIvaRepercutidoModel)Model).Id})">
+            <i class="ace-icon fa fa-pencil bigger-110"></i>
+            @General.LblEditar
+        </a>
+    </p>
+}

@@ -43,12 +43,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public string GetTipoFacturaDefectoRepercutido()
         {
-            return _db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 1 && f.tipofacturadefecto == true).FirstOrDefault().id.ToString();
+            if(_db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 1 && f.tipofacturadefecto == true).FirstOrDefault() != null)
+            {
+                return _db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 1 && f.tipofacturadefecto == true).FirstOrDefault().id.ToString();
+            }
+            else
+            {
+                return "";
+            }
+            
         }
 
         public string GetTipoFacturaDefectoSoportado()
-        {
-            return _db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 0 && f.tipofacturadefecto == true).FirstOrDefault().id.ToString();
+        {          
+            if (_db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 0 && f.tipofacturadefecto == true).FirstOrDefault() != null)
+            {
+                return _db.TiposFacturas.Where(f => f.empresa == _context.Empresa && f.tipocircuito == 0 && f.tipofacturadefecto == true).FirstOrDefault().id.ToString();
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public string GetTipoFacturaClientes(string codTercero)
@@ -58,7 +73,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public string GetTipoFacturaProveedores(string codTercero)
         {
-            return _db.Proveedores.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault().fktipofactura;
+            if (_db.Proveedores.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault() != null)
+            {
+                return _db.Proveedores.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault().fktipofactura;
+            }
+            else if (_db.Acreedores.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault() != null)
+            {
+                return _db.Acreedores.Where(f => f.empresa == _context.Empresa && f.fkcuentas == codTercero).FirstOrDefault().fktipofactura;
+            }
+
+            return "";
         }
 
         #endregion

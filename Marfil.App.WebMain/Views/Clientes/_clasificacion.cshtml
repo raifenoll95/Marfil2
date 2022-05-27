@@ -6,7 +6,8 @@
 @{
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var listidiomas = WebHelper.GetApplicationHelper().GetListIdiomas();
-    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList(); ;
+    var listfamiliaproveedor = WebHelper.GetApplicationHelper().GetListFamiliaProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listdelegaciones = WebHelper.GetApplicationHelper().GetListDelegaciones().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
     var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
     var listtipoempresa = WebHelper.GetApplicationHelper().GetListTiposEmpresas().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
     var listunidadnegocio = WebHelper.GetApplicationHelper().GetListUnidadNegocio().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
@@ -16,6 +17,7 @@
     listtipoempresa.Insert(0, new SelectListItem() { Value = "", Text = "" });
     listfamiliaproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
     listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listdelegaciones.Insert(0, new SelectListItem() { Value = "", Text = "" });
 }
 @Html.HiddenFor(f=>Model.Empresa)
 @Html.HiddenFor(f => Model.Fkcuentas,new {id="Fkcuentas"})
@@ -25,6 +27,14 @@
     <div class="col-md-10">
         @Html.DropDownListFor(f => Model.Fkidiomas, listidiomas.Select(f => new SelectListItem() {Value = f.Valor, Text = f.Descripcion}), isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
         @Html.ValidationMessageFor(f => Model.Fkidiomas, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkdelegacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkdelegacion, listdelegaciones, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Fkdelegacion, "", new { @class = "text-danger" })
     </div>
 </div>
 

@@ -666,4 +666,7 @@
   <data name="tiposfacturasiva" xml:space="preserve">
     <value>Tipos de facturas</value>
   </data>
+  <data name="registroivarepercutido" xml:space="preserve">
+    <value>Registro de IVA repercutido</value>
+  </data>
 </root>

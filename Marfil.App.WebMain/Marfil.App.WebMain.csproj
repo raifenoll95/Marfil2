@@ -339,6 +339,7 @@
     <Compile Include="Controllers\ComparativaPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ComparativaPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
+    <Compile Include="Controllers\RegistroIvaFacturasApiController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasAnaliticaController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasBalanceAnualController.cs" />
@@ -372,6 +373,7 @@
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
     <Compile Include="Controllers\ReferenciasDocumentosRelacionadosFacturasApiController.cs" />
+    <Compile Include="Controllers\RegistroIvaRepercutidoController.cs" />
     <Compile Include="Controllers\RegularizacionAperturaProvisionalController.cs" />
     <Compile Include="Controllers\RegularizacionCierreAperturaController.cs" />
     <Compile Include="Controllers\RegularizacionExistenciasController.cs" />
@@ -3713,6 +3715,14 @@
     <Content Include="Views\TiposFacturasIva\Details.cshtml" />
     <Content Include="Views\TiposFacturasIva\Edit.cshtml" />
     <Content Include="Views\TiposFacturasIva\Index.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Index.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Create.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Delete.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Details.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Edit.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_registro.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_general.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_factura.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

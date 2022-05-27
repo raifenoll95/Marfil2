@@ -1420,6 +1420,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Registro de IVA repercutido.
+        /// </summary>
+        public static string registroivarepercutido {
+            get {
+                return ResourceManager.GetString("registroivarepercutido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cierre y Apertura.
         /// </summary>
         public static string regularizacioncierreapertura {

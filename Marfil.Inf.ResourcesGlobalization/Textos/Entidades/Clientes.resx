@@ -297,4 +297,7 @@
   <data name="Fktipofactura" xml:space="preserve">
     <value>Tipo Factura habitual</value>
   </data>
+  <data name="Fkdelegacion" xml:space="preserve">
+    <value>Delegación</value>
+  </data>
 </root>

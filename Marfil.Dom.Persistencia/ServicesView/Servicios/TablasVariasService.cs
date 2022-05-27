@@ -209,6 +209,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return tablavaria.Lineas.OrderBy(f => f.Descripcion).Select(f => (TablasVariasGeneralModel)f);
         }
 
+        public IEnumerable<TablasVariasGeneralModel> GetListDelegaciones()
+        {
+
+            var service = new TablasVariasService(_context, _db);
+            var tablavaria = service.GetTablasVariasByCode(400);
+            return tablavaria.Lineas.OrderBy(f => f.Descripcion).Select(f => (TablasVariasGeneralModel)f);
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListFamiliaMateriales()
         {
 

@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="MarfilModel.Agentes" Width="1.5" PointX="7.75" PointY="21.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Almacenes" Width="1.5" PointX="25.75" PointY="31.125" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.AlmacenesZona" Width="1.5" PointX="28" PointY="31" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.AppPermisos" Width="1.5" PointX="0.75" PointY="20" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.AppPermisos" Width="1.5" PointX="3.125" PointY="18.375" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Aseguradoras" Width="1.5" PointX="17.75" PointY="29.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Bancos" Width="1.5" PointX="10.75" PointY="31.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.BancosMandatos" Width="1.5" PointX="12.75" PointY="31.75" IsExpanded="false" />
@@ -61,7 +61,7 @@
         <EntityTypeShape EntityType="MarfilModel.Prospectos" Width="1.5" PointX="37.75" PointY="6.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Provincias" Width="1.5" PointX="37.75" PointY="19.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Puertos" Width="1.5" PointX="37.75" PointY="22.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.Roles" Width="1.5" PointX="3" PointY="20" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Roles" Width="1.5" PointX="3.125" PointY="17.5" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Tablasvarias" Width="1.5" PointX="25.75" PointY="7.875" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.TablasvariasLin" Width="1.5" PointX="28" PointY="8.125" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Tarifas" Width="1.5" PointX="25.75" PointY="1.125" IsExpanded="false" />
@@ -72,7 +72,7 @@
         <EntityTypeShape EntityType="MarfilModel.TiposIva" Width="1.5" PointX="39.75" PointY="3.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Tiposretenciones" Width="1.5" PointX="39.75" PointY="8.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Transportistas" Width="1.5" PointX="39.75" PointY="12.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.Usuarios" Width="1.5" PointX="5.25" PointY="19" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Usuarios" Width="1.5" PointX="5.25" PointY="16.625" IsExpanded="true" />
         <AssociationConnector Association="MarfilModel.FK_AlmacenesZona_Almacenes" />
         <AssociationConnector Association="MarfilModel.FK_CaracteristicasLin_Caracteristicas" />
         <AssociationConnector Association="MarfilModel.FK_Ficheros_Carpetas" />
@@ -288,10 +288,11 @@
         <EntityTypeShape EntityType="MarfilModel.ReportGuiasBalancesLineasBalanceAnual" Width="1.5" PointX="46.625" PointY="1.375" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK_ReportGuiasBalancesLineasBalanceAnual_GuiasBalances" />
         <EntityTypeShape EntityType="MarfilModel.TiposFacturas" Width="1.5" PointX="22.375" PointY="44.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.Clientes" Width="1.5" PointX="11.375" PointY="8" />
-        <AssociationConnector Association="MarfilModel.FK_Clientes" />
         <EntityTypeShape EntityType="MarfilModel.Proveedores" Width="1.5" PointX="0.625" PointY="4.625" />
         <EntityTypeShape EntityType="MarfilModel.Acreedores" Width="1.5" PointX="2.375" PointY="4.625" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutido" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MarfilModel.Clientes" Width="1.5" PointX="11.75" PointY="8.125" />
+        <AssociationConnector Association="MarfilModel.FK_Clientes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

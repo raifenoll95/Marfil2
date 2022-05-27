@@ -90,7 +90,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
     {
 
         public const string SelectCuentasTerceros =
-            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado] from {2} as cli " +
+            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado]" +
+            " from {2} as cli " +
+            " inner join cuentas as c on c.id=cli.fkcuentas and c.empresa=cli.empresa " +
+            " left join direcciones as d on d.empresa= c.empresa and d.tipotercero={0} and d.fkentidad=c.id and d.defecto=1 " +
+            " left join paises as p on p.valor=d.fkpais " +
+            " left join provincias as pr on pr.codigopais= d.fkpais  and pr.id =d.fkprovincia " +
+            " where cli.empresa='{1}' ";
+
+        public const string SelectCuentasTercerosDelegacion =
+            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado]" +
+            ", cli.fkdelegacion as [Fkdelegacion] " +
+            " from {2} as cli " +
             " inner join cuentas as c on c.id=cli.fkcuentas and c.empresa=cli.empresa " +
             " left join direcciones as d on d.empresa= c.empresa and d.tipotercero={0} and d.fkentidad=c.id and d.defecto=1 " +
             " left join paises as p on p.valor=d.fkpais " +
@@ -328,6 +339,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             if (tipo == TiposCuentas.Todas)
                 return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectTodasLasCuentasTerceros, _context.Empresa)).ToList();
+            else if (tipo == TiposCuentas.Clientes)
+                return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectCuentasTercerosDelegacion, (int)tipo, Empresa, tipo)).ToList();
             else
                 return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectCuentasTerceros, (int)tipo, Empresa, tipo)).ToList();
         }
@@ -1113,6 +1126,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             listacuentas.RemoveAll(y => y.SaldoAcreedor == 0 && y.SaldoDeudor == 0);
 
             return listacuentas.OrderByDescending(c => c.SaldoDeudor).ThenBy(n => n.SaldoAcreedor);
+        }
+
+        public string obtenerdelegacionusuario(Guid id)
+        {
+            return _db.Usuarios.Where(f => f.id == id).FirstOrDefault().fkdelegacion;
         }
     }
 }

@@ -1235,6 +1235,13 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(RegistroIvaRepercutidoModel) == typeof(T))
+            {
+                var result = new RegistroIvaRepercutidoModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
             else if (typeof(CarteraVencimientosModel) == typeof(T))
             {
                 var result = new CarteraVencimientosModel(context);

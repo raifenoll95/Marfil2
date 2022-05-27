@@ -885,6 +885,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return "0001";
         }
 
+        public int GetLiquidacionIva(string empresa)
+        {
+            return (int)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().liquidacioniva;
+        }
+
         #endregion
 
 

@@ -737,6 +737,7 @@
     <Compile Include="Model\Interfaces\ILineasDocumentosBusquedaMovil.cs" />
     <Compile Include="Model\Iva\GruposIvaModel.cs" />
     <Compile Include="Model\Iva\RegimenIvaModel.cs" />
+    <Compile Include="Model\Iva\RegistroIvaRepercutidoModel.cs" />
     <Compile Include="Model\Iva\TiposFacturasIvaModel.cs" />
     <Compile Include="Model\Iva\TiposRetencionesModel.cs" />
     <Compile Include="Model\Iva\TiposIvaModel.cs" />
@@ -886,6 +887,9 @@
     <Compile Include="RegimenIva.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RegistroIVARepercutido.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Remesas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -976,6 +980,7 @@
     <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\LogStockSeguridadConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\RegistroIvaRepercutidoConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TiposFacturasIvaConverterService.cs" />
@@ -1010,6 +1015,7 @@
     <Compile Include="ServicesView\Servicios\LogStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\MapeoRemesasService.cs" />
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
+    <Compile Include="ServicesView\Servicios\RegistroIvaRepercutidoService.cs" />
     <Compile Include="ServicesView\Servicios\RemesasService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
     <Compile Include="ServicesView\Servicios\TiposFacturasIvaService.cs" />
@@ -1020,6 +1026,7 @@
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\RegistroIvaRepercutidoValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\RemesasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\TiposFacturasIvaValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\TransformacioneslotesnaveValidation.cs" />

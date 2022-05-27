@@ -9,6 +9,10 @@
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var issuperuser = Model.Id == Guid.Empty;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var listzonaclienteproveedor = WebHelper.GetApplicationHelper().GetListZonaClienteProveedor().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    var listdelegaciones = WebHelper.GetApplicationHelper().GetListDelegaciones().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    listzonaclienteproveedor.Insert(0, new SelectListItem() { Value = "", Text = "" });
+    listdelegaciones.Insert(0, new SelectListItem() { Value = "", Text = "" });
 }
 
 @Html.HiddenFor(f => Model.Id)
@@ -51,6 +55,14 @@
     <div class="col-md-10">
         @Html.DropDownListFor(f => Model.Nivel, (new[] { "0", "1", "2", "3", "4", "5" }).Select(f => new SelectListItem() { Value = f, Text = f }), isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
         @Html.ValidationMessageFor(f => Model.Nivel, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkdelegacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Fkdelegacion, listdelegaciones, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Fkdelegacion, "", new { @class = "text-danger" })
     </div>
 </div>
 

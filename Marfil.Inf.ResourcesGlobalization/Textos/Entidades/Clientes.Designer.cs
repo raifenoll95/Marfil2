@@ -259,6 +259,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Delegación.
+        /// </summary>
+        public static string Fkdelegacion {
+            get {
+                return ResourceManager.GetString("Fkdelegacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Familia cliente.
         /// </summary>
         public static string Fkfamiliacliente {

@@ -1,0 +1,203 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+
+    var cvfactura = FCampoverificacion.Instance.GetModel<FacturasModel>(WebHelper.ContextService);
+    var cvcuenta = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
+    var cvinmueble = FCampoverificacion.Instance.GetModel<InmueblesModel>(WebHelper.ContextService);
+    var cvctatesoreria = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+
+    var listperiodo = WebHelper.GetApplicationHelper().GetListPeriodoRegistroIva().Select(f => new SelectListItem()
+    {
+        Text = f.Text,
+        Value = f.Value,
+
+    }).ToList();
+
+    var listmotivos = WebHelper.GetApplicationHelper().GetListMotivosRectificacion().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@*Check Factura rectificativa*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Facturarectificativa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Facturarectificativa, (object)new { @readonly = isreadonly })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Numfacturarectificar, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvfactura.Name = "Numfacturarectificar";
+            cvfactura.Url = Url.Action("RegistroIvaFacturasApi", "Api");
+            cvfactura.Valor = Model.Numfacturarectificar;
+            cvfactura.Params = "{\"cliente\":\"" + Model.Cuentacliente + "\"}";
+            cvfactura.SoloLectura = false;
+            cvfactura.Autofocus = true;
+            cvfactura.Obligatorio = false;
+            cvfactura.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvfactura)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Numfacturarectificar, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fechafacturaoriginal, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechafacturaoriginal)
+    </div>
+
+    @Html.LabelFor(f => Model.Motivorectificacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Motivorectificacion, listmotivos, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Motivorectificacion, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Criterioivafactoriginal, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Criterioivafactoriginal", Model.Criterioivafactoriginal, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Criterioivafactoriginal, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Criterio IVA*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Criterioivafactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.EnumDropDownList("Criterioivafactura", Model.Criterioivafactura, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Criterioivafactura, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Check bien inversión*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Bieninversion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Bieninversion, (object)new { @readonly = isreadonly })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fktiporetencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvretencion.Name = "Fktiporetencion";
+            cvretencion.Url = Url.Action("TiporetencionApi", "Api");
+            cvretencion.Valor = Model.Fktiporetencion;
+            cvretencion.SoloLectura = false;
+            cvretencion.Autofocus = true;
+            cvretencion.Obligatorio = false;
+            cvretencion.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvretencion)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fktiporetencion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Baseretencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Baseretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+
+    @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+
+    @Html.LabelFor(f => Model.Importeretencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Importeretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Inmueble, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvinmueble.Name = "Inmueble";
+            cvinmueble.Url = Url.Action("InmuebleApi", "Api");
+            cvinmueble.Valor = Model.Inmueble;
+            cvinmueble.SoloLectura = false;
+            cvinmueble.Autofocus = true;
+            cvinmueble.Obligatorio = false;
+            cvinmueble.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvinmueble)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Inmueble, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Operacionesexluidasbi, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Operacionesexluidasbi, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Contabilizar, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Contabilizar, (object)new { @readonly = isreadonly })
+    </div>
+
+    @Html.LabelFor(f => Model.Fkcuentastesoreria, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @{
+            cvctatesoreria.Name = "Fkcuentastesoreria";
+            cvctatesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
+            cvctatesoreria.Valor = Model.Fkcuentastesoreria;
+            cvctatesoreria.SoloLectura = false;
+            cvctatesoreria.Autofocus = true;
+            cvctatesoreria.Obligatorio = false;
+            cvctatesoreria.Configuracion.OcultarTexto = false;
+        }
+        @Html.Partial("CampoverificacionUI", cvctatesoreria)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkcuentastesoreria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+
+
+<script type="text/javascript">
+
+</script>

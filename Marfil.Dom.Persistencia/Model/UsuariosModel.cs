@@ -103,6 +103,12 @@ namespace Marfil.Dom.Persistencia.Model
         [Display(ResourceType = typeof(RUsuarios), Name = "Bloquearseries")]
         public bool Bloquearseries { get; set; }
 
+        [Display(ResourceType = typeof(RUsuarios), Name = "Fkzonacliente")]
+        public string Fkzonacliente { get; set; }
+
+        [Display(ResourceType = typeof(RUsuarios), Name = "Fkdelegacion")]
+        public string Fkdelegacion { get; set; }
+
         public bool Usuario_cliente { get; set; }
 
         public string Codigoclienteusuario { get; set; }

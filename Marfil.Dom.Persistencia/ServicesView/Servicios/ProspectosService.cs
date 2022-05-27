@@ -123,7 +123,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var result = new StExiste();
             var tiposcuentasService =
-                FService.Instance.GetService(typeof (TiposCuentasModel), _context) as TiposcuentasService;
+                FService.Instance.GetService(typeof(TiposCuentasModel), _context) as TiposcuentasService;
             var subcuenta = tiposcuentasService.GetMascaraFromTipoCuenta(tipo);
             result.Valido = id.Contains(subcuenta);
             result.Existe = false;
@@ -284,10 +284,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #endregion
 
-        public IEnumerable<CuentasBusqueda> GetProspectosAndClientes(bool primeracarga=false)
+        public IEnumerable<CuentasBusqueda> GetProspectosAndClientes(bool primeracarga = false)
         {
             var result = new List<CuentasBusqueda>();
-            var service = FService.Instance.GetService(typeof (CuentasModel), _context, _db) as CuentasService;
+            var service = FService.Instance.GetService(typeof(CuentasModel), _context, _db) as CuentasService;
 
             result.AddRange(service.GetCuentas(TiposCuentas.Clientes).Where(f => primeracarga || !(f.Bloqueado ?? false)));
             result.AddRange(service.GetCuentas(TiposCuentas.Prospectos).Where(f => primeracarga || !(f.Bloqueado ?? false)));
@@ -309,12 +309,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IProspectoCliente GetProspectoCliente(string id)
         {
             var serviceClientes = FService.Instance.GetService(typeof(ClientesModel), _context, _db);
-            if(serviceClientes.exists(id))
+            if (serviceClientes.exists(id))
                 return serviceClientes.get(id) as IProspectoCliente;
-            if(exists(id))
+            if (exists(id))
                 return get(id) as IProspectoCliente;
 
             return null;
+        }
+
+        public string obtenerdelegacionusuario(Guid id)
+        {
+            return _db.Usuarios.Where(f => f.id == id).FirstOrDefault().fkdelegacion;
         }
 
         public void ConvertirProspectoEnCliente(ConvertirProspectoClienteModel model)
@@ -323,10 +328,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var prospectoObj = get(model.ProspectoId) as ProspectosModel;
 
-                var clienteService = FService.Instance.GetService(typeof (ClientesModel), _context, _db);
-                var clienteObj = GenerarObjetoCliente(model,prospectoObj);
+                var clienteService = FService.Instance.GetService(typeof(ClientesModel), _context, _db);
+                var clienteObj = GenerarObjetoCliente(model, prospectoObj);
                 clienteService.create(clienteObj);
-                ActualizarPresupuesosConProspectoActual(prospectoObj,clienteObj);
+                ActualizarPresupuesosConProspectoActual(prospectoObj, clienteObj);
                 delete(prospectoObj);
 
 
@@ -336,22 +341,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private void ActualizarPresupuesosConProspectoActual(ProspectosModel prospectoObj, ClientesModel clienteObj)
         {
-            var result =_db.Presupuestos.Where(f => f.empresa == Empresa && f.fkclientes == prospectoObj.Fkcuentas);
+            var result = _db.Presupuestos.Where(f => f.empresa == Empresa && f.fkclientes == prospectoObj.Fkcuentas);
             foreach (var item in result)
                 item.fkclientes = clienteObj.Fkcuentas;
 
             _db.SaveChanges();
         }
 
-        private ClientesModel GenerarObjetoCliente(ConvertirProspectoClienteModel model,ProspectosModel prospectoObj)
+        private ClientesModel GenerarObjetoCliente(ConvertirProspectoClienteModel model, ProspectosModel prospectoObj)
         {
             var user = _context;
-            var result=new ClientesModel();
+            var result = new ClientesModel();
             result.Empresa = Empresa;
             result.Fkcuentas = model.ClienteId;
             result.Cuentas = new CuentasModel()
             {
-                Empresa=Empresa,
+                Empresa = Empresa,
                 Id = model.ClienteId,
                 Descripcion = prospectoObj.Descripcion,
                 Descripcion2 = prospectoObj.RazonSocial,
@@ -379,23 +384,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Direcciones = new DireccionesModel();// prospectoObj.Direcciones;
             result.Contactos.Empresa = Empresa;
             result.Contactos.Id = Guid.NewGuid();
-            result.Contactos.Tipotercero = (int) TiposCuentas.Clientes;
+            result.Contactos.Tipotercero = (int)TiposCuentas.Clientes;
             result.Direcciones.Empresa = Empresa;
             result.Direcciones.Id = Guid.NewGuid();
             result.Direcciones.Tipotercero = (int)TiposCuentas.Clientes;
             var i = 1;
-            var listcontactos=new List<ContactosLinModel>();
-            var propertiescontactos = typeof (ContactosLinModel).GetProperties();
+            var listcontactos = new List<ContactosLinModel>();
+            var propertiescontactos = typeof(ContactosLinModel).GetProperties();
             foreach (var item in prospectoObj.Contactos.Contactos.ToList())
             {
-                var newItem=new ContactosLinModel();
+                var newItem = new ContactosLinModel();
                 foreach (var p in propertiescontactos)
                 {
                     if (p.CanWrite)
-                        p.SetValue(newItem,p.GetValue(item));
+                        p.SetValue(newItem, p.GetValue(item));
                 }
-                newItem.Id = (i++)*-1;
-                newItem.Tipotercero=TiposCuentas.Clientes;
+                newItem.Id = (i++) * -1;
+                newItem.Tipotercero = TiposCuentas.Clientes;
                 newItem.Fkentidad = result.Fkcuentas;
 
                 listcontactos.Add(newItem);
@@ -408,13 +413,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var propertiesdirecciones = typeof(DireccionesLinModel).GetProperties();
             foreach (var item in prospectoObj.Direcciones.Direcciones.ToList())
             {
-                var newItem=new DireccionesLinModel();
+                var newItem = new DireccionesLinModel();
                 foreach (var p in propertiesdirecciones)
                 {
-                    if(p.CanWrite)
-                    p.SetValue(newItem, p.GetValue(item));
+                    if (p.CanWrite)
+                        p.SetValue(newItem, p.GetValue(item));
                 }
-                newItem.Id = (i++)*-1;
+                newItem.Id = (i++) * -1;
                 newItem.Tipotercero = (int)TiposCuentas.Clientes;
                 newItem.Fkentidad = result.Fkcuentas;
 

@@ -965,6 +965,7 @@
           <Property Name="fktarifas" Type="varchar" MaxLength="12" />
           <Property Name="fkcriteriosagrupacion" Type="varchar" MaxLength="4" />
           <Property Name="fktipofactura" Type="varchar" MaxLength="5" />
+          <Property Name="fkdelegacion" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Comerciales">
           <Key>
@@ -3635,6 +3636,41 @@
           <Property Name="regimenespecialrecibida" Type="nvarchar" MaxLength="3" />
           <Property Name="tipooperacionclassic" Type="int" />
         </EntityType>
+        <EntityType Name="RegistroIVARepercutido">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="origendoc" Type="varchar" MaxLength="10" />
+          <Property Name="tipofactura" Type="varchar" MaxLength="50" />
+          <Property Name="referencia" Type="nvarchar" MaxLength="30" />
+          <Property Name="fecharegistro" Type="datetime" />
+          <Property Name="fechafactura" Type="datetime" />
+          <Property Name="fechaoperacion" Type="datetime" />
+          <Property Name="periodo" Type="nvarchar" MaxLength="15" />
+          <Property Name="numfacturacliente" Type="nvarchar" MaxLength="30" />
+          <Property Name="cuentacliente" Type="varchar" MaxLength="15" />
+          <Property Name="cuentaventas" Type="varchar" MaxLength="15" />
+          <Property Name="criterioivageneral" Type="int" />
+          <Property Name="fkregimeniva" Type="varchar" MaxLength="5" />
+          <Property Name="facturarectificativa" Type="bit" />
+          <Property Name="numfacturarectificar" Type="nvarchar" MaxLength="30" />
+          <Property Name="fechafacturaoriginal" Type="datetime" />
+          <Property Name="motivorectificacion" Type="varchar" MaxLength="5" />
+          <Property Name="criterioivafactoriginal" Type="int" />
+          <Property Name="criterioivafactura" Type="int" />
+          <Property Name="bieninversion" Type="bit" />
+          <Property Name="fktiporetencion" Type="varchar" MaxLength="4" />
+          <Property Name="baseretencion" Type="float" />
+          <Property Name="porcentajeretencion" Type="float" />
+          <Property Name="importeretencion" Type="float" />
+          <Property Name="inmueble" Type="varchar" MaxLength="4" />
+          <Property Name="contabilizar" Type="bit" />
+          <Property Name="fkcuentastesoreria" Type="varchar" MaxLength="15" />
+          <Property Name="operacionesexluidasbi" Type="float" />
+        </EntityType>
         <EntityType Name="Remesas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -5061,6 +5097,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="operario" Type="bit" />
           <Property Name="codigooperariousuario" Type="varchar" MaxLength="15" />
           <Property Name="bloquearseries" Type="bit" />
+          <Property Name="fkzonacliente" Type="varchar" MaxLength="3" />
+          <Property Name="fkdelegacion" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Usuariosactivos">
           <Key>
@@ -6612,6 +6650,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Proyectos" EntityType="Self.Proyectos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Puertos" EntityType="Self.Puertos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegimenIva" EntityType="Self.RegimenIva" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegistroIVARepercutido" EntityType="Self.RegistroIVARepercutido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Remesas" EntityType="Self.Remesas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportAnaliticaGuiasBalances" EntityType="Self.ReportAnaliticaGuiasBalances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportAnaliticaGuiasBalancesLineas" EntityType="Self.ReportAnaliticaGuiasBalancesLineas" Schema="dbo" store:Type="Tables" />
@@ -7703,13 +7742,14 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="ReportGuiasBalancesLineasBalanceAnual" EntitySet="ReportGuiasBalancesLineasBalanceAnual" />
           </AssociationSet>
           <EntitySet Name="TiposFacturas" EntityType="MarfilModel.TiposFacturas" />
+          <EntitySet Name="Proveedores" EntityType="MarfilModel.Proveedores" />
+          <EntitySet Name="Acreedores" EntityType="MarfilModel.Acreedores" />
+          <EntitySet Name="RegistroIVARepercutido" EntityType="MarfilModel.RegistroIVARepercutido" />
           <EntitySet Name="Clientes" EntityType="MarfilModel.Clientes" />
           <AssociationSet Name="FK_Clientes" Association="MarfilModel.FK_Clientes">
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
           </AssociationSet>
-          <EntitySet Name="Proveedores" EntityType="MarfilModel.Proveedores" />
-          <EntitySet Name="Acreedores" EntityType="MarfilModel.Acreedores" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -9313,6 +9353,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="operario" Type="Boolean" />
           <Property Name="codigooperariousuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="bloquearseries" Type="Boolean" />
+          <Property Name="fkdelegacion" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_AlmacenesZona_Almacenes">
           <End Type="MarfilModel.Almacenes" Role="Almacenes" Multiplicity="1" />
@@ -14194,71 +14235,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="formulaabono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="formulaabono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Clientes">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="fkcuentas" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="fkcuentas" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="fkidiomas" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkfamiliacliente" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkzonacliente" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fktipoempresa" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkunidadnegocio" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkincoterm" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkpuertosfkpaises" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkpuertosid" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="fkmonedas" Type="Int32" Nullable="false" />
-          <Property Name="fkregimeniva" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="fkgruposiva" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="criterioiva" Type="Int32" Nullable="false" />
-          <Property Name="fktiposretencion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="fktransportistahabitual" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="tipoportes" Type="Int32" />
-          <Property Name="cuentatesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="fkformaspago" Type="Int32" Nullable="false" />
-          <Property Name="descuentoprontopago" Type="Double" />
-          <Property Name="descuentocomercial" Type="Double" />
-          <Property Name="diafijopago1" Type="Int32" />
-          <Property Name="diafijopago2" Type="Int32" />
-          <Property Name="periodonopagodesde" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="periodonopagohasta" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="numerocopiasfactura" Type="Int32" />
-          <Property Name="fkcuentasagente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="fkcuentascomercial" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="perteneceagrupo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="tarifa" Type="Int32" />
-          <Property Name="fkcuentasaseguradoras" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="suplemento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="porcentajeriesgocomercial" Type="Double" />
-          <Property Name="porcentajeriesgopolitico" Type="Double" />
-          <Property Name="riesgoconcedidoempresa" Type="Int32" />
-          <Property Name="riesgosolicitado" Type="Int32" />
-          <Property Name="riesgoaseguradora" Type="Int32" />
-          <Property Name="fechaclasificacion" Type="DateTime" Precision="3" />
-          <Property Name="fechaultimasolicitud" Type="DateTime" Precision="3" />
-          <Property Name="diascondecidos" Type="Int32" />
-          <Property Name="fktarifas" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="fkcriteriosagrupacion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="fktipofactura" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PreciosEspeciales" Relationship="MarfilModel.FK_Clientes" FromRole="Clientes" ToRole="PreciosEspeciales" />
-        </EntityType>
-        <Association Name="FK_Clientes">
-          <End Type="MarfilModel.Clientes" Role="Clientes" Multiplicity="1" />
-          <End Type="MarfilModel.PreciosEspeciales" Role="PreciosEspeciales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkcuentas" />
-            </Principal>
-            <Dependent Role="PreciosEspeciales">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkclientes" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Proveedores">
           <Key>
             <PropertyRef Name="empresa" />
@@ -14331,6 +14307,107 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="previsionpagosperiodicos" Type="Int32" />
           <Property Name="fktipofactura" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="RegistroIVARepercutido">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="origendoc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="tipofactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fecharegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechafactura" Type="DateTime" Precision="3" />
+          <Property Name="fechaoperacion" Type="DateTime" Precision="3" />
+          <Property Name="periodo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="numfacturacliente" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="cuentacliente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cuentaventas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="criterioivageneral" Type="Int32" />
+          <Property Name="fkregimeniva" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="facturarectificativa" Type="Boolean" />
+          <Property Name="numfacturarectificar" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fechafacturaoriginal" Type="DateTime" Precision="3" />
+          <Property Name="motivorectificacion" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="criterioivafactoriginal" Type="Int32" />
+          <Property Name="criterioivafactura" Type="Int32" />
+          <Property Name="bieninversion" Type="Boolean" />
+          <Property Name="fktiporetencion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="baseretencion" Type="Double" />
+          <Property Name="porcentajeretencion" Type="Double" />
+          <Property Name="importeretencion" Type="Double" />
+          <Property Name="inmueble" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="contabilizar" Type="Boolean" />
+          <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="operacionesexluidasbi" Type="Double" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="fkcuentas" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fkcuentas" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkidiomas" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkfamiliacliente" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkzonacliente" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fktipoempresa" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkunidadnegocio" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkincoterm" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkpuertosfkpaises" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkpuertosid" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fkmonedas" Type="Int32" Nullable="false" />
+          <Property Name="fkregimeniva" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="fkgruposiva" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="criterioiva" Type="Int32" Nullable="false" />
+          <Property Name="fktiposretencion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fktransportistahabitual" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="tipoportes" Type="Int32" />
+          <Property Name="cuentatesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="fkformaspago" Type="Int32" Nullable="false" />
+          <Property Name="descuentoprontopago" Type="Double" />
+          <Property Name="descuentocomercial" Type="Double" />
+          <Property Name="diafijopago1" Type="Int32" />
+          <Property Name="diafijopago2" Type="Int32" />
+          <Property Name="periodonopagodesde" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="periodonopagohasta" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="numerocopiasfactura" Type="Int32" />
+          <Property Name="fkcuentasagente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkcuentascomercial" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="perteneceagrupo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tarifa" Type="Int32" />
+          <Property Name="fkcuentasaseguradoras" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="suplemento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="porcentajeriesgocomercial" Type="Double" />
+          <Property Name="porcentajeriesgopolitico" Type="Double" />
+          <Property Name="riesgoconcedidoempresa" Type="Int32" />
+          <Property Name="riesgosolicitado" Type="Int32" />
+          <Property Name="riesgoaseguradora" Type="Int32" />
+          <Property Name="fechaclasificacion" Type="DateTime" Precision="3" />
+          <Property Name="fechaultimasolicitud" Type="DateTime" Precision="3" />
+          <Property Name="diascondecidos" Type="Int32" />
+          <Property Name="fktarifas" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="fkcriteriosagrupacion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fktipofactura" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PreciosEspeciales" Relationship="MarfilModel.FK_Clientes" FromRole="Clientes" ToRole="PreciosEspeciales" />
+          <Property Name="fkdelegacion" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Clientes">
+          <End Type="MarfilModel.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="MarfilModel.PreciosEspeciales" Role="PreciosEspeciales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkcuentas" />
+            </Principal>
+            <Dependent Role="PreciosEspeciales">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkclientes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15843,6 +15920,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="MarfilModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="fkdelegacion" ColumnName="fkdelegacion" />
                 <ScalarProperty Name="bloquearseries" ColumnName="bloquearseries" />
                 <ScalarProperty Name="codigooperariousuario" ColumnName="codigooperariousuario" />
                 <ScalarProperty Name="operario" ColumnName="operario" />
@@ -19376,56 +19454,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Clientes">
-            <EntityTypeMapping TypeName="MarfilModel.Clientes">
-              <MappingFragment StoreEntitySet="Clientes">
-                <ScalarProperty Name="fktipofactura" ColumnName="fktipofactura" />
-                <ScalarProperty Name="fkcriteriosagrupacion" ColumnName="fkcriteriosagrupacion" />
-                <ScalarProperty Name="fktarifas" ColumnName="fktarifas" />
-                <ScalarProperty Name="diascondecidos" ColumnName="diascondecidos" />
-                <ScalarProperty Name="fechaultimasolicitud" ColumnName="fechaultimasolicitud" />
-                <ScalarProperty Name="fechaclasificacion" ColumnName="fechaclasificacion" />
-                <ScalarProperty Name="riesgoaseguradora" ColumnName="riesgoaseguradora" />
-                <ScalarProperty Name="riesgosolicitado" ColumnName="riesgosolicitado" />
-                <ScalarProperty Name="riesgoconcedidoempresa" ColumnName="riesgoconcedidoempresa" />
-                <ScalarProperty Name="porcentajeriesgopolitico" ColumnName="porcentajeriesgopolitico" />
-                <ScalarProperty Name="porcentajeriesgocomercial" ColumnName="porcentajeriesgocomercial" />
-                <ScalarProperty Name="suplemento" ColumnName="suplemento" />
-                <ScalarProperty Name="fkcuentasaseguradoras" ColumnName="fkcuentasaseguradoras" />
-                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
-                <ScalarProperty Name="perteneceagrupo" ColumnName="perteneceagrupo" />
-                <ScalarProperty Name="fkcuentascomercial" ColumnName="fkcuentascomercial" />
-                <ScalarProperty Name="fkcuentasagente" ColumnName="fkcuentasagente" />
-                <ScalarProperty Name="numerocopiasfactura" ColumnName="numerocopiasfactura" />
-                <ScalarProperty Name="notas" ColumnName="notas" />
-                <ScalarProperty Name="periodonopagohasta" ColumnName="periodonopagohasta" />
-                <ScalarProperty Name="periodonopagodesde" ColumnName="periodonopagodesde" />
-                <ScalarProperty Name="diafijopago2" ColumnName="diafijopago2" />
-                <ScalarProperty Name="diafijopago1" ColumnName="diafijopago1" />
-                <ScalarProperty Name="descuentocomercial" ColumnName="descuentocomercial" />
-                <ScalarProperty Name="descuentoprontopago" ColumnName="descuentoprontopago" />
-                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
-                <ScalarProperty Name="cuentatesoreria" ColumnName="cuentatesoreria" />
-                <ScalarProperty Name="tipoportes" ColumnName="tipoportes" />
-                <ScalarProperty Name="fktransportistahabitual" ColumnName="fktransportistahabitual" />
-                <ScalarProperty Name="fktiposretencion" ColumnName="fktiposretencion" />
-                <ScalarProperty Name="criterioiva" ColumnName="criterioiva" />
-                <ScalarProperty Name="fkgruposiva" ColumnName="fkgruposiva" />
-                <ScalarProperty Name="fkregimeniva" ColumnName="fkregimeniva" />
-                <ScalarProperty Name="fkmonedas" ColumnName="fkmonedas" />
-                <ScalarProperty Name="fkpuertosid" ColumnName="fkpuertosid" />
-                <ScalarProperty Name="fkpuertosfkpaises" ColumnName="fkpuertosfkpaises" />
-                <ScalarProperty Name="fkincoterm" ColumnName="fkincoterm" />
-                <ScalarProperty Name="fkunidadnegocio" ColumnName="fkunidadnegocio" />
-                <ScalarProperty Name="fktipoempresa" ColumnName="fktipoempresa" />
-                <ScalarProperty Name="fkzonacliente" ColumnName="fkzonacliente" />
-                <ScalarProperty Name="fkfamiliacliente" ColumnName="fkfamiliacliente" />
-                <ScalarProperty Name="fkidiomas" ColumnName="fkidiomas" />
-                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Proveedores">
             <EntityTypeMapping TypeName="MarfilModel.Proveedores">
               <MappingFragment StoreEntitySet="Proveedores">
@@ -19492,6 +19520,92 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="fktipoempresa" ColumnName="fktipoempresa" />
                 <ScalarProperty Name="fkzonaacreedor" ColumnName="fkzonaacreedor" />
                 <ScalarProperty Name="fkfamiliaacreedor" ColumnName="fkfamiliaacreedor" />
+                <ScalarProperty Name="fkidiomas" ColumnName="fkidiomas" />
+                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistroIVARepercutido">
+            <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
+              <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="operacionesexluidasbi" ColumnName="operacionesexluidasbi" />
+                <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
+                <ScalarProperty Name="contabilizar" ColumnName="contabilizar" />
+                <ScalarProperty Name="inmueble" ColumnName="inmueble" />
+                <ScalarProperty Name="importeretencion" ColumnName="importeretencion" />
+                <ScalarProperty Name="porcentajeretencion" ColumnName="porcentajeretencion" />
+                <ScalarProperty Name="baseretencion" ColumnName="baseretencion" />
+                <ScalarProperty Name="fktiporetencion" ColumnName="fktiporetencion" />
+                <ScalarProperty Name="bieninversion" ColumnName="bieninversion" />
+                <ScalarProperty Name="criterioivafactura" ColumnName="criterioivafactura" />
+                <ScalarProperty Name="criterioivafactoriginal" ColumnName="criterioivafactoriginal" />
+                <ScalarProperty Name="motivorectificacion" ColumnName="motivorectificacion" />
+                <ScalarProperty Name="fechafacturaoriginal" ColumnName="fechafacturaoriginal" />
+                <ScalarProperty Name="numfacturarectificar" ColumnName="numfacturarectificar" />
+                <ScalarProperty Name="facturarectificativa" ColumnName="facturarectificativa" />
+                <ScalarProperty Name="fkregimeniva" ColumnName="fkregimeniva" />
+                <ScalarProperty Name="criterioivageneral" ColumnName="criterioivageneral" />
+                <ScalarProperty Name="cuentaventas" ColumnName="cuentaventas" />
+                <ScalarProperty Name="cuentacliente" ColumnName="cuentacliente" />
+                <ScalarProperty Name="numfacturacliente" ColumnName="numfacturacliente" />
+                <ScalarProperty Name="periodo" ColumnName="periodo" />
+                <ScalarProperty Name="fechaoperacion" ColumnName="fechaoperacion" />
+                <ScalarProperty Name="fechafactura" ColumnName="fechafactura" />
+                <ScalarProperty Name="fecharegistro" ColumnName="fecharegistro" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="tipofactura" ColumnName="tipofactura" />
+                <ScalarProperty Name="origendoc" ColumnName="origendoc" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="MarfilModel.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="fkdelegacion" ColumnName="fkdelegacion" />
+                <ScalarProperty Name="fktipofactura" ColumnName="fktipofactura" />
+                <ScalarProperty Name="fkcriteriosagrupacion" ColumnName="fkcriteriosagrupacion" />
+                <ScalarProperty Name="fktarifas" ColumnName="fktarifas" />
+                <ScalarProperty Name="diascondecidos" ColumnName="diascondecidos" />
+                <ScalarProperty Name="fechaultimasolicitud" ColumnName="fechaultimasolicitud" />
+                <ScalarProperty Name="fechaclasificacion" ColumnName="fechaclasificacion" />
+                <ScalarProperty Name="riesgoaseguradora" ColumnName="riesgoaseguradora" />
+                <ScalarProperty Name="riesgosolicitado" ColumnName="riesgosolicitado" />
+                <ScalarProperty Name="riesgoconcedidoempresa" ColumnName="riesgoconcedidoempresa" />
+                <ScalarProperty Name="porcentajeriesgopolitico" ColumnName="porcentajeriesgopolitico" />
+                <ScalarProperty Name="porcentajeriesgocomercial" ColumnName="porcentajeriesgocomercial" />
+                <ScalarProperty Name="suplemento" ColumnName="suplemento" />
+                <ScalarProperty Name="fkcuentasaseguradoras" ColumnName="fkcuentasaseguradoras" />
+                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+                <ScalarProperty Name="perteneceagrupo" ColumnName="perteneceagrupo" />
+                <ScalarProperty Name="fkcuentascomercial" ColumnName="fkcuentascomercial" />
+                <ScalarProperty Name="fkcuentasagente" ColumnName="fkcuentasagente" />
+                <ScalarProperty Name="numerocopiasfactura" ColumnName="numerocopiasfactura" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="periodonopagohasta" ColumnName="periodonopagohasta" />
+                <ScalarProperty Name="periodonopagodesde" ColumnName="periodonopagodesde" />
+                <ScalarProperty Name="diafijopago2" ColumnName="diafijopago2" />
+                <ScalarProperty Name="diafijopago1" ColumnName="diafijopago1" />
+                <ScalarProperty Name="descuentocomercial" ColumnName="descuentocomercial" />
+                <ScalarProperty Name="descuentoprontopago" ColumnName="descuentoprontopago" />
+                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
+                <ScalarProperty Name="cuentatesoreria" ColumnName="cuentatesoreria" />
+                <ScalarProperty Name="tipoportes" ColumnName="tipoportes" />
+                <ScalarProperty Name="fktransportistahabitual" ColumnName="fktransportistahabitual" />
+                <ScalarProperty Name="fktiposretencion" ColumnName="fktiposretencion" />
+                <ScalarProperty Name="criterioiva" ColumnName="criterioiva" />
+                <ScalarProperty Name="fkgruposiva" ColumnName="fkgruposiva" />
+                <ScalarProperty Name="fkregimeniva" ColumnName="fkregimeniva" />
+                <ScalarProperty Name="fkmonedas" ColumnName="fkmonedas" />
+                <ScalarProperty Name="fkpuertosid" ColumnName="fkpuertosid" />
+                <ScalarProperty Name="fkpuertosfkpaises" ColumnName="fkpuertosfkpaises" />
+                <ScalarProperty Name="fkincoterm" ColumnName="fkincoterm" />
+                <ScalarProperty Name="fkunidadnegocio" ColumnName="fkunidadnegocio" />
+                <ScalarProperty Name="fktipoempresa" ColumnName="fktipoempresa" />
+                <ScalarProperty Name="fkzonacliente" ColumnName="fkzonacliente" />
+                <ScalarProperty Name="fkfamiliacliente" ColumnName="fkfamiliacliente" />
                 <ScalarProperty Name="fkidiomas" ColumnName="fkidiomas" />
                 <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />

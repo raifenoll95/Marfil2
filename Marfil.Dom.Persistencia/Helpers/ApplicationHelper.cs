@@ -1202,6 +1202,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<TablasVariasGeneralModel> GetListDelegaciones()
+        {
+            using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetListDelegaciones();
+            }
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListZonaClienteProveedor()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -1277,6 +1285,42 @@ namespace Marfil.Dom.Persistencia.Helpers
             {
                 return service.GetListTipoGuia();
             }
+        }
+
+        public IEnumerable<SelectListItem> GetListPeriodoRegistroIva()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            using (var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var liquidacion = service.GetLiquidacionIva(_context.Empresa);
+
+                if (liquidacion == 1)
+                {
+                    List.Add(new SelectListItem() { Value = "Enero", Text = "Enero" });
+                    List.Add(new SelectListItem() { Value = "Febrero", Text = "Febrero" });
+                    List.Add(new SelectListItem() { Value = "Marzo", Text = "Marzo" });
+                    List.Add(new SelectListItem() { Value = "Abril", Text = "Abril" });
+                    List.Add(new SelectListItem() { Value = "Mayo", Text = "Mayo" });
+                    List.Add(new SelectListItem() { Value = "Junio", Text = "Junio" });
+                    List.Add(new SelectListItem() { Value = "Julio", Text = "Julio" });
+                    List.Add(new SelectListItem() { Value = "Agosto", Text = "Agosto" });
+                    List.Add(new SelectListItem() { Value = "Septiembre", Text = "Septiembre" });
+                    List.Add(new SelectListItem() { Value = "Octubre", Text = "Octubre" });
+                    List.Add(new SelectListItem() { Value = "Noviembre", Text = "Noviembre" });
+                    List.Add(new SelectListItem() { Value = "Diciembre", Text = "Diciembre" });
+                }
+                else
+                {
+                    List.Add(new SelectListItem() { Value = "1T", Text = "1º Trimestre" });
+                    List.Add(new SelectListItem() { Value = "2T", Text = "2º Trimestre" });
+                    List.Add(new SelectListItem() { Value = "3T", Text = "3º Trimestre" });
+                    List.Add(new SelectListItem() { Value = "4T", Text = "4º Trimestre" });
+                }
+
+                return List;
+            }
+
         }
 
         public IEnumerable<SelectListItem> GetListTipoGuiaCTPG()

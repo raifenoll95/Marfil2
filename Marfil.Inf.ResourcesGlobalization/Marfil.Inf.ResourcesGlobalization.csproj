@@ -428,6 +428,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PerdidasYGanancias.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\RegistroIvaRepercutido.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegistroIvaRepercutido.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Seguimientos.Designer.cs">
       <DependentUpon>Seguimientos.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1044,6 +1049,10 @@
     <EmbeddedResource Include="Textos\Entidades\PerdidasYGanancias.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PerdidasYGanancias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\RegistroIvaRepercutido.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistroIvaRepercutido.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Seguimientos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
