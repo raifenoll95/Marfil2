@@ -179,7 +179,7 @@
 			<item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
 			<item isseparator="true"></item>
 			<item name="tiposfacturasiva" text="Tipos de Facturas" url="~/TiposFacturasIva/Index" />
-			<item name="registroivarepercutido" text="Registro de IVA repercutido" url="~/RegistroIvaRepercutido/Index" />
+			<!--<item name="registroivarepercutido" text="Registro de IVA repercutido" url="~/RegistroIvaRepercutido/Index" />-->
 			<item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
 			<item name="listadoguiasbalances" text="Guias de Balances" url="~/GuiasBalances/Index" />
 			<item name="circuitotesoreriacobros" allowUpdate="true" allowDelete="true" text="Circuito de tesorería de cobros" url="~/CircuitosTesoreria/Index" />

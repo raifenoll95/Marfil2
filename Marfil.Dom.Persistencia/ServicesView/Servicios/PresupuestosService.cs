@@ -137,7 +137,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = Math.Round((item.Sum(f => (f.Metros * f.Precio)) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = Math.Round((item.Sum(f => (f.Importe))/* - item.Sum(f => f.Importedescuento)*/) ?? 0, decimalesmoneda);
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;

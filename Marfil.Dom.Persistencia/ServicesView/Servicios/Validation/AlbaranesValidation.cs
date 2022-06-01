@@ -313,7 +313,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                 newItem.fktiposiva = item.Key;
                 newItem.porcentajeiva = objIva.porcentajeiva;
                 
-                newItem.brutototal = Math.Round((double)(item.Sum(f => f.importe) - item.Sum(f => f.importedescuento)), decimales.Value);
+                newItem.brutototal = Math.Round((double)(item.Sum(f => f.importe) /*- item.Sum(f => f.importedescuento)*/), decimales.Value);
                 newItem.porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.porcentajedescuentoprontopago = model.porcentajedescuentoprontopago??0;
                 newItem.porcentajedescuentocomercial = model.porcentajedescuentocomercial ?? 0;

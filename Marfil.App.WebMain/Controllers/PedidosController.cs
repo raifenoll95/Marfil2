@@ -123,7 +123,7 @@ namespace Marfil.App.WebMain.Controllers
                 
                 var service = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService;
                 Session[session] = model;
-                Session[sessiontotales] = service.Recalculartotales(model, Funciones.Qdouble(descuentopp) ?? 0,Funciones.Qdouble(descuentocomercial)??0, portes, decimales);
+                Session[sessiontotales] = service.Recalculartotales(model, Funciones.Qdouble(descuentopp) ?? 0,Funciones.Qdouble(descuentocomercial)??0, portes, decimales,true);
                 //  SESSIONFABRICACION?
             }
             
@@ -454,6 +454,7 @@ namespace Marfil.App.WebMain.Controllers
 
                             item.Decimalesmonedas = monedaObj.Decimales;
                             item.Importe = Math.Round(item.Importe ?? 0, monedaObj.Decimales);
+                            item.Importedescuento = Math.Round(item.Importedescuento ?? 0, monedaObj.Decimales);
                             item.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
                             item.Decimalesmedidas = decimalesunidades ?? 0;
                             item.Revision = item.Revision?.ToUpper();
@@ -482,7 +483,7 @@ namespace Marfil.App.WebMain.Controllers
 
                             Session[session] = model;
                             var service = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService;
-                            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+                            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
                         }
 
                     }
@@ -584,7 +585,7 @@ namespace Marfil.App.WebMain.Controllers
                         var portes = 0;
 
                         var service = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService;
-                        Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+                        Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
                     }
                 }
             }
@@ -612,7 +613,7 @@ namespace Marfil.App.WebMain.Controllers
             var portes = 0;
 
             var service = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService;
-            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
 
             return PartialView("_Pedidoslin", model);
         }
@@ -634,7 +635,7 @@ namespace Marfil.App.WebMain.Controllers
             var service = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService;
             var lineas = service.RecalculaLineas(model, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, fkregimeniva, 0, decimales);
             Session[session] = lineas.ToList();
-            Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales);   
+            Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales,true);   
         }
 
         #endregion

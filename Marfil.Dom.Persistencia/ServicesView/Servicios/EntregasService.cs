@@ -457,7 +457,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 elem.Fkpedidos = reservaModel.Id;
             }
 
-            Recalculartotales(resultado.Lineas, resultado.Porcentajedescuentoprontopago ?? 0, resultado.Porcentajedescuentocomercial ?? 0, resultado.Costeportes ?? 0, resultado.Decimalesmonedas);
+            Recalculartotales(resultado.Lineas, resultado.Porcentajedescuentoprontopago ?? 0, resultado.Porcentajedescuentocomercial ?? 0, resultado.Costeportes ?? 0, resultado.Decimalesmonedas,true);
             resultado.Modo=ModoAlbaran.Constock;
             return resultado;
         }

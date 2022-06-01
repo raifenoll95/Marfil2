@@ -91,7 +91,18 @@ namespace Marfil.App.WebMain.Controllers
             }
             model.Context = ContextService;
             TempData["model"] = model;
-            return RedirectToAction("Create");
+
+            //Creamos la entrega para evitar sobreescribir os datos
+            using (var gestionService = FService.Instance.GetService(typeof(EntregasStockModel), ContextService) as EntregasService)
+            {
+
+                gestionService.create(model);
+                TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+
+                //Redireccionamos a la ventana de edición
+                return RedirectToAction("Edit",  new { id = model.Id });
+            }
+            
         }
 
         public ActionResult ImputacionMateriales(string id, string returnUrl)
@@ -180,7 +191,7 @@ namespace Marfil.App.WebMain.Controllers
 
                 var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
                 Session[session] = model;
-                Session[sessiontotales] = service.Recalculartotales(model, Funciones.Qdouble(descuentopp) ?? 0, Funciones.Qdouble(descuentocomercial) ?? 0, portes, decimales);
+                Session[sessiontotales] = service.Recalculartotales(model, Funciones.Qdouble(descuentopp) ?? 0, Funciones.Qdouble(descuentocomercial) ?? 0, portes, decimales,true);
             }
 
             return new EmptyResult();
@@ -501,7 +512,7 @@ namespace Marfil.App.WebMain.Controllers
                     var newmodel = Helper.fModel.GetModel<EntregasStockModel>(ContextService);
                     model.Tipodeportes = Tipoportes.Pagados;
                     model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
-                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas).ToList();
+                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas,true).ToList();
                     var modelDevolucion=new EntregasStockModel(model);
                     TempData["model"] = modelDevolucion;
                     return RedirectToAction("Create");
@@ -570,7 +581,7 @@ namespace Marfil.App.WebMain.Controllers
 
                     model.idOriginalReclamado = Int32.Parse(id);
                     model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
-                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas).ToList();
+                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas,true).ToList();
                     var modelReclamacion = new EntregasStockModel(model);
                     TempData["model"] = modelReclamacion;
                     return RedirectToAction("Create");
@@ -748,7 +759,7 @@ namespace Marfil.App.WebMain.Controllers
                     listado = albaranesService.CrearNuevasLineas(listado, model);
                     Session[session] = listado;
                     var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-                    Session[sessiontotales] = service.Recalculartotales(listado, Funciones.Qdouble(model.Descuentoprontopago) ?? 0, Funciones.Qdouble(model.Descuentocomercial) ?? 0, Funciones.Qdouble(model.Portes) ?? 0, model.Decimalesmonedas);
+                    Session[sessiontotales] = service.Recalculartotales(listado, Funciones.Qdouble(model.Descuentoprontopago) ?? 0, Funciones.Qdouble(model.Descuentocomercial) ?? 0, Funciones.Qdouble(model.Portes) ?? 0, model.Decimalesmonedas,false);
                 }
 
                 return Content(JsonConvert.SerializeObject(model), "application/json", Encoding.UTF8);
@@ -863,7 +874,7 @@ namespace Marfil.App.WebMain.Controllers
 
                             Session[session] = model;
                             var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-                            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+                            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
                         }
 
                     }
@@ -965,7 +976,7 @@ namespace Marfil.App.WebMain.Controllers
                         var portes = 0;
 
                         var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-                        Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+                        Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
                     }
                 }
             }
@@ -993,7 +1004,7 @@ namespace Marfil.App.WebMain.Controllers
             var portes = 0;
 
             var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
 
             return PartialView("_Albaraneslin", model);
         }
@@ -1015,7 +1026,7 @@ namespace Marfil.App.WebMain.Controllers
             var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
             var lineas = service.RecalculaLineas(model, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, fkregimeniva, 0, decimales);
             Session[session] = lineas.ToList();
-            Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales);
+            Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales,false);
         }
 
         #endregion

@@ -137,7 +137,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
-        public IEnumerable<PedidosTotalesModel> Recalculartotales(IEnumerable<PedidosLinModel> model, double descuentopp, double descuentocomercial, double portes, int decimalesmoneda)
+        public IEnumerable<PedidosTotalesModel> Recalculartotales(IEnumerable<PedidosLinModel> model, double descuentopp, double descuentocomercial, double portes, int decimalesmoneda, bool esimportado)
         {
             var result = new List<PedidosTotalesModel>();
 
@@ -150,7 +150,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = Math.Round((item.Sum(f => (f.Metros) * (f.Precio)) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = esimportado ? Math.Round((item.Sum(f => f.Importe) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda) : Math.Round((item.Sum(f => f.Importe)) ?? 0, decimalesmoneda);
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;
@@ -342,7 +342,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
                 result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
                     result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
-                    result.Decimalesmonedas).ToList();
+                    result.Decimalesmonedas, (bool)result.Importado).ToList();
 
                 return result;
             }
