@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using RRegistroIVA = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.RegistroIvaRepercutido;
 using Marfil.Inf.Genericos;
 using System.ComponentModel.DataAnnotations;
+using RFacturas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Facturas;
+using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Inf.Genericos.Helper;
 
 namespace Marfil.Dom.Persistencia.Model.Iva
 {
@@ -39,6 +42,8 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         #endregion
 
         #region properties
+
+        private List<RegistroIvaRepercutidoTotalesModel> _totales = new List<RegistroIvaRepercutidoTotalesModel>();
 
         [Required]
         public int? Id { get; set; }
@@ -129,6 +134,16 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         #endregion
 
+        #region Totales
+
+        public List<RegistroIvaRepercutidoTotalesModel> Totales
+        {
+            get { return _totales; }
+            set { _totales = value; }
+        }
+
+        #endregion
+
         #region atributos
 
         public override object generateId(string id)
@@ -150,5 +165,118 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         #endregion
 
+    }
+
+    public class RegistroIvaRepercutidoTotalesModel : ITotalesDocumentosBusquedaMovil
+    {
+        public int? Decimalesmonedas { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Fktiposiva")]
+        public string Fktiposiva { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajeiva")]
+        public double? Porcentajeiva { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
+        public double? Brutototal { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
+        public string SBrutototal
+        {
+            get { return (Brutototal ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Brutototal = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Basetotal")]
+        public double? Baseimponible { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Basetotal")]
+        public string SBaseimponible
+        {
+            get { return (Baseimponible ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Baseimponible = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Cuotaiva")]
+        public double? Cuotaiva { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Cuotaiva")]
+        public string SCuotaiva
+        {
+            get { return (Cuotaiva ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Cuotaiva = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajerecargoequivalencia")]
+        public double? Porcentajerecargoequivalencia { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Cuotarecargoequivalencia")]
+        public double? Importerecargoequivalencia { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Cuotarecargoequivalencia")]
+        public string SImporterecargoequivalencia
+        {
+            get { return (Importerecargoequivalencia ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Importerecargoequivalencia = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajedescuentoprontopago")]
+        public double? Porcentajedescuentoprontopago { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentoprontopago")]
+        public double? Importedescuentoprontopago { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentoprontopago")]
+        public string SImportedescuentoprontopago
+        {
+            get { return (Importedescuentoprontopago ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Importedescuentoprontopago = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajedescuentocomercial")]
+        public double? Porcentajedescuentocomercial { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentocomercial")]
+        public double? Importedescuentocomercial { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentocomercial")]
+        public string SImportedescuentocomercial
+        {
+            get { return (Importedescuentocomercial ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Importedescuentocomercial = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Baseretencion")]
+        public double? Baseretencion { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Baseretencion")]
+        public string SBaseretencion
+        {
+            get { return (Baseretencion ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Baseretencion = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajeretencion")]
+        public double? Porcentajeretencion { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Importeretencion")]
+        public double? Importeretencion { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Importeretencion")]
+        public string SImporteretencion
+        {
+            get { return (Importeretencion ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Importeretencion = Funciones.Qdouble(value); }
+        }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Subtotal")]
+        public double? Subtotal { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Subtotal")]
+        public string SSubtotal
+        {
+            get { return (Subtotal ?? 0.0).ToString("N" + Decimalesmonedas); }
+            set { Subtotal = Funciones.Qdouble(value); }
+        }
     }
 }

@@ -21,15 +21,19 @@
     <div id="tabs">
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
-            <li><a data-toggle="tab" href="#asiento">@General.LblFactura</a></li>
+            <li><a data-toggle="tab" href="#factura">@General.LblFactura</a></li>
+            <li><a data-toggle="tab" href="#detalle">@General.LblDetallado</a></li>
         </ul>
     </div>
     <div class="tab-content">
         <div id="general" class="tab-pane fade in active">
             @Html.Partial("_general", Model)
         </div>
-        <div id="asiento" class="tab-pane fade margin-bottom">
+        <div id="factura" class="tab-pane fade margin-bottom">
             @Html.Partial("_factura", Model)
+        </div>
+        <div id="detalle" class="tab-pane fade margin-bottom">
+            @Html.Partial("_desglose", Model)
         </div>
     </div>
 

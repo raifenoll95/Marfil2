@@ -140,12 +140,12 @@
 		<item name="cuentas" allowBlock="true" text="Cuentas" url="~/Cuentas/Index" />
 		<item isseparator="true"></item>
 		<item name="tesoreria" text="Tesorería" icono="fa fa-money">
-			<item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
-			<item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
-			<item name="carteravencimientos" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/CarteraVencimientos/Index" />
-			<item name="remesas" allowUpdate="true" allowDelete="true" text="Remesas" icono="fa fa-file" url="~/Remesas/Index" />
 			<item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
 			<item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
+			<item name="carteravencimientos" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/CarteraVencimientos/Index" />
+			<item name="remesas" allowUpdate="true" allowDelete="true" text="Remesas" icono="fa fa-file" url="~/Remesas/Index" />
+			<item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
+			<item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
 		</item>
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />

@@ -744,7 +744,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<FacturasModel> getDocumentosRelacionados (string cliente)
         {
             return _db.Database.SqlQuery<FacturasModel>(string.Format(
-            "SELECT f.referencia as Referencia, FORMAT(f.fechadocumento, 'dd/MM/yyyy') as Fecha, f.importebaseimponible as Importebaseimponible "
+            "SELECT f.id as Id, f.referencia as Referencia, FORMAT(f.fechadocumento, 'dd/MM/yyyy') as Fecha, f.fktipofactura as Fktipofactura, f.importebaseimponible as Importebaseimponible "
             + " FROM Facturas as f " 
             + " WHERE f.empresa = '" + Empresa + "' AND"
             + " f.fkclientes = '" + cliente + "'"));

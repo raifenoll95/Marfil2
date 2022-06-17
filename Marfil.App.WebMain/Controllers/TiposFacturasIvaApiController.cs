@@ -31,7 +31,7 @@ namespace Marfil.App.WebMain.Controllers
                 var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
                 var tipotercero = nvc["tipotercero"]; // 0 - proveedores / acreedores , 1 - clientes
 
-                var registros = service.getAll().Select(f => (TiposFacturasIvaModel)f);
+                var registros = service.getAll().Select(f => (TiposFacturasIvaModel)f).Where(f => f.Empresa == ContextService.Empresa);
 
                 if (tipotercero == "0")
                 {

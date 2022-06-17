@@ -339,6 +339,7 @@
     <Compile Include="Controllers\ComparativaPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ComparativaPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
+    <Compile Include="Controllers\InmueblesApiController.cs" />
     <Compile Include="Controllers\RegistroIvaFacturasApiController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasAnaliticaController.cs" />
@@ -3723,6 +3724,8 @@
     <Content Include="Views\RegistroIvaRepercutido\_registro.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_general.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_factura.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_desglose.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_totales.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

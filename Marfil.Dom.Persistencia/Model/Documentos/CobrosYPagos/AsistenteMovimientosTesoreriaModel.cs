@@ -196,6 +196,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         public string Fkformaspago { get; set; }
         public string FkcuentaTesoreria { get; set; }
         public string Fkseriescontables { get; set; }
+        public string ReferenciaRemesa { get; set; }
 
         public override string DisplayName => RCobrosYPagos.TituloCartera;
 

@@ -56,8 +56,14 @@ namespace Marfil.App.WebMain.Controllers
             
             using (var service = new CircuitosTesoreriaCobrosService(ContextService))
             {
+                var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
+                var tipoasignacion = nvc["tipoasignacion"];
+                var soloinicialescobropago = nvc["soloinicialescobropago"];
+                var idparse = int.Parse(id);
 
-                var list = service.get(id) as CircuitoTesoreriaCobrosModel;
+                //var list = service.get(id) as CircuitoTesoreriaCobrosModel;
+                var registros = soloinicialescobropago == "1" ? service.GetCircuitosTesoreria(tipoasignacion, true).ToList() : service.GetCircuitosTesoreria(tipoasignacion, false).ToList();
+                var list = registros.Single(x => x.Id == idparse);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
                     "application/json");

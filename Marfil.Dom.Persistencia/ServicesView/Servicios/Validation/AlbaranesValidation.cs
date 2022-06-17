@@ -181,9 +181,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                     throw new ValidationException(string.Format(General.ErrorCampoObligatorio, RAlbaranes.Importe));
 
                 //if(!FlagActualizarCantidadesFacturadas && model.tipoalbaran != (int)TipoAlbaran.Devolucion)
-                    //VerificarStockLinea(model, item);
+                //VerificarStockLinea(model, item);
 
                 //familiasProductosService.ValidarDimensiones(familiacodigo, item.largo, item.ancho, item.grueso);
+
+                //ang calcular importe neto
+                item.importenetolinea = Math.Round((baseimponible * (1 - ((model.porcentajedescuentocomercial ?? 0) / 100)) * (1 - ((model.porcentajedescuentoprontopago ?? 0) / 100))), (item.decimalesmonedas ?? 2));
             }
             var vector = model.AlbaranesLin.OrderBy(f => f.orden).ToList();
             for (var i = 0; i < vector.Count(); i++)

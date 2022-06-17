@@ -173,7 +173,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Importeasignado")]
         public double? Importeasignado { get; set; }
 
-        [Display(ResourceType = typeof(RCobrosYPagos), Name = "Importeasignado")]
+        [Display(ResourceType = typeof(RCobrosYPagos), Name = "Importepagado")]
         public double? Importepagado { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Estado")]

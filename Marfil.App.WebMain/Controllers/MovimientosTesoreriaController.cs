@@ -89,7 +89,7 @@ namespace Marfil.App.WebMain.Controllers
             }
             catch (Exception ex)
             {
-                TempData[Constantes.VariableMensajeWarning] = ex.InnerException;
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
             }
 
             return RedirectToAction("AsistenteMovimientosTesoreria");

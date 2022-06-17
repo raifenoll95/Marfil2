@@ -208,18 +208,18 @@ namespace Marfil.Dom.Persistencia.Listados
 
             sb.AppendFormat("select [Tercero], [Descripción], [Factura], [Fecha Factura], [Cta.Tesoreria], [Descripcion Tesoreria], [Importe], [Fecha Vencimiento], [Mes Vto], [Asignado], [Faltan], [Situación], [Descripción Situación], [Forma Pago], [Descripcion Pago], [Observaciones], [Fecha Remesa], [Fecha Pago], [Referencia] from " +
                             "(select * from(select v.empresa as [Empresa], v.tipo as [Tipo], v.fkcuentas as [Tercero], c.descripcion as [Descripción], v.traza as [Factura], " +
-                            "v.fechafactura as [Fecha Factura], v.fkcuentatesoreria as [Cta.Tesoreria], c.descripcion as [Descripcion Tesoreria], v.importegiro - v.importeasignado as [Importe], " +
+                            "v.fechafactura as [Fecha Factura], v.fkcuentatesoreria as [Cta.Tesoreria], cteso.descripcion as [Descripcion Tesoreria], v.importegiro - v.importeasignado as [Importe], " +
                             "v.fechavencimiento as [Fecha Vencimiento], Concat(Convert(varchar(2), FORMAT(v.fechavencimiento, 'MM')), Convert(varchar(2), RIGHT(YEAR(v.fechavencimiento), 2))) as [Mes Vto], " +
                             "Concat(convert(varchar(10), datediff(day, fechafactura, fechavencimiento)), ' ', 'DÍAS') as [Asignado], Concat(convert(varchar(10), datediff(day, GETDATE(), fechavencimiento)), ' ', 'DÍAS') as [Faltan], v.situacion as [Situación], s.descripcion as [Descripción Situación], convert(varchar(10), v.fkformaspago) as [Forma Pago], " +
                             "f.nombre as [Descripcion Pago], v.comentario as [Observaciones], '' as [Fecha Remesa], v.fechapago as [Fecha Pago], v.referencia as [Referencia] from vencimientos as v " +
-                            "left join cuentas as c on v.fkcuentas = c.id and v.empresa = c.empresa left join FormasPago as f on v.fkformaspago = f.id left join SituacionesTesoreria as s on v.situacion = s.cod " +
+                            "left join cuentas as c on v.fkcuentas = c.id and v.empresa = c.empresa left join cuentas as cteso on v.fkcuentatesoreria = cteso.id and v.empresa = cteso.empresa left join FormasPago as f on v.fkformaspago = f.id left join SituacionesTesoreria as s on v.situacion = s.cod " +
                             "where v.situacion != 'C') Vencimientos " +
                             "union all " +
                             "(select cart.empresa as [Empresa], cart.tipovencimiento as [Tipo], cart.fkcuentas as [Tercero], c.descripcion as [Descripción], cart.traza as [Factura], cart.fechacreacion as [Fecha Factura], cart.fkcuentastesoreria as [Cta.Tesoreria], " +
-                            "c.descripcion as [Descripcion Tesoreria], cart.importegiro as [Importe], cart.fechavencimiento as [Fecha Vencimiento], Concat(Convert(varchar(2), FORMAT(cart.fechavencimiento, 'MM')), " +
+                            "cteso.descripcion as [Descripcion Tesoreria], cart.importegiro as [Importe], cart.fechavencimiento as [Fecha Vencimiento], Concat(Convert(varchar(2), FORMAT(cart.fechavencimiento, 'MM')), " +
                             "Convert(varchar(2), RIGHT(YEAR(cart.fechavencimiento), 2))) as [Mes Vto], Concat(convert(varchar(10), datediff(day, fechacreacion, fechavencimiento)), ' ', 'DÍAS') as [Asignado], Concat(convert(varchar(10), datediff(day, GETDATE(), fechavencimiento)), ' ', 'DÍAS') as [Faltan], " +
                             "cart.situacion as [Situación], s.descripcion as [Descripción Situación], convert(varchar(10), cart.fkformaspago) as [Forma Pago], f.nombre as [Descripcion Pago], '' as [Observaciones], cart.fecharemesa as [Fecha Remesa], cart.fechapago as [Fecha Pago], cart.referencia as [Referencia] " +
-                            "from CarteraVencimientos as cart left join cuentas as c on cart.fkcuentas = c.id and cart.empresa = c.empresa left join SituacionesTesoreria as s on cart.situacion = s.cod left join FormasPago as f on cart.fkformaspago = f.id)) consulta_tesoreria");
+                            "from CarteraVencimientos as cart left join cuentas as c on cart.fkcuentas = c.id and cart.empresa = c.empresa left join cuentas as cteso on cart.fkcuentastesoreria = cteso.id and cart.empresa = cteso.empresa left join SituacionesTesoreria as s on cart.situacion = s.cod left join FormasPago as f on cart.fkformaspago = f.id)) consulta_tesoreria");
 
             return sb.ToString();
         }

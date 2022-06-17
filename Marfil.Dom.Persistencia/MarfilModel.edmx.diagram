@@ -53,7 +53,7 @@
         <EntityTypeShape EntityType="MarfilModel.Planesgenerales" Width="1.5" PointX="37.75" PointY="0.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.PreferenciasUsuario" Width="1.5" PointX="37.75" PointY="3.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Presupuestos" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.PresupuestosCompras" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.PresupuestosCompras" Width="1.5" PointX="3" PointY="2.375" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.PresupuestosComprasLin" Width="1.5" PointX="3" PointY="1.625" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.PresupuestosComprasTotales" Width="1.5" PointX="3.125" PointY="3.375" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.PresupuestosLin" Width="1.5" PointX="8" PointY="1.625" IsExpanded="false" />
@@ -132,7 +132,7 @@
         <EntityTypeShape EntityType="MarfilModel.AlbaranesComprasTotales" Width="1.5" PointX="26.625" PointY="39.375" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.AlbaranesLin" Width="1.5" PointX="34.5" PointY="37.25" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.AlbaranesTotales" Width="1.5" PointX="34.75" PointY="38.25" IsExpanded="false" />
-        <EntityTypeShape EntityType="MarfilModel.Usuariosactivos" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Usuariosactivos" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Facturas" Width="1.5" PointX="15.125" PointY="0.625" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.FacturasCompras" Width="1.5" PointX="0.5" PointY="41.75" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK_FacturasLin_Facturas" />
@@ -213,7 +213,7 @@
         <EntityTypeShape EntityType="MarfilModel.Seguimientos" Width="1.5" PointX="14.375" PointY="39.125" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.SeguimientosCorreo" Width="1.5" PointX="16.625" PointY="40.375" IsExpanded="false" />
         <AssociationConnector Association="MarfilModel.FK__SeguimientosCorr__65C1E23E" />
-        <EntityTypeShape EntityType="MarfilModel.Municipios" Width="1.5" PointX="12.375" PointY="20.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="MarfilModel.Municipios" Width="1.5" PointX="11.125" PointY="19" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.GrupoMateriales" Width="1.5" PointX="22.375" PointY="8.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Acabados" Width="1.5" PointX="7.375" PointY="12.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Grosores" Width="1.5" PointX="7.375" PointY="27.75" IsExpanded="false" />
@@ -293,6 +293,8 @@
         <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutido" Width="1.5" PointX="13.375" PointY="12.75" />
         <EntityTypeShape EntityType="MarfilModel.Clientes" Width="1.5" PointX="11.75" PointY="8.125" />
         <AssociationConnector Association="MarfilModel.FK_Clientes" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="15.25" PointY="12.75" />
+        <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

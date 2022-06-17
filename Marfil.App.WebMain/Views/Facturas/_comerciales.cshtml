@@ -103,6 +103,7 @@
             cvtipofactura.Name = "Fktipofactura";
             cvtipofactura.Url = Url.Action("TiposFacturasIvaApi", "Api");
             cvtipofactura.Valor = Model.Fktipofactura;
+            cvtipofactura.Params = "{\"tipotercero\":\"1\"}";
             cvtipofactura.SoloLectura = isreadonly;
             cvtipofactura.Obligatorio = true;
         }

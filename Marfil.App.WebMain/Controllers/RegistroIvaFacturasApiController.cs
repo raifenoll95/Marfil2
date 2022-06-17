@@ -29,21 +29,29 @@ namespace Marfil.App.WebMain.Controllers
         public HttpResponseMessage Get()
         {
 
-            using (var service = FService.Instance.GetService(typeof(FacturasModel), ContextService))
+            using (var service = FService.Instance.GetService(typeof(FacturasModel), ContextService) as FacturasService)
             {
                 var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
                 var cliente = nvc["cliente"];
+                List<FacturasModel> registros = new List<FacturasModel>();
+                /*var registros = !String.IsNullOrEmpty(cliente) ? service.getAll().Select(f => (FacturasModel)f).Where(z => z.Fkclientes == cliente && z.Empresa == ContextService.Empresa).ToList() 
+                    : service.getAll().Select(f => (FacturasModel)f).Where(z => z.Empresa == ContextService.Empresa).ToList();*/
+
+                if (cliente != "" && cliente != null)
+                {
+                    registros = service.getDocumentosRelacionados(cliente).ToList();
+                }
 
                 var result = new ResultBusquedas<FacturasModel>()
                 {
-                    values = service.getAll().Select(f => (FacturasModel)f).Where(f => f.Fkclientes == cliente),
+                    values = registros,
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Id", visible = true/*, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }*/},
                         new ColumnDefinition() { field = "Referencia", displayName = "Referencia", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
-                        new ColumnDefinition() { field = "Fechadocumento", displayName = "Fechadocumento", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
-                        new ColumnDefinition() { field = "Fktipofactura", displayName = "Fktipofactura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
-                        new ColumnDefinition() { field = "Importetotaldoc", displayName = "Importetotaldoc", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
+                        new ColumnDefinition() { field = "Fecha", displayName = "Fecha Documento", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
+                        //new ColumnDefinition() { field = "Fktipofactura", displayName = "Tipo Factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
+                        new ColumnDefinition() { field = "Importebaseimponible", displayName = "Base imponible", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
 
                     }
                 };
@@ -59,10 +67,10 @@ namespace Marfil.App.WebMain.Controllers
         public HttpResponseMessage Get(string id)
         {
 
-            using (var service = FService.Instance.GetService(typeof(MaterialesModel), ContextService))
+            using (var service = FService.Instance.GetService(typeof(FacturasModel), ContextService))
             {
 
-                var list = service.get(id) as MaterialesModel;
+                var list = service.get(id) as FacturasModel;
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
                     "application/json");

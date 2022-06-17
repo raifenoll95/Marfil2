@@ -75,7 +75,7 @@
 
   <item id="tablasvarias" readonly="true">
     <titulo>Tablas varias</titulo>
-    <descripcion>El tablas varias se encuentra información de ámbito general que va a utilizar la aplicación. Por ejemplo: paises, nombre de almacenes, etc. </descripcion>
+    <descripcion>El tablas varias se encuentra información de ámbito general que va a utilizar la aplicación. Por ejemplo: paises, nombre de almacenes, etc. </descripcion>  
     <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de contratos laborales" id="950" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposcontratos.csv</data>
     <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de estado civil" id="960" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposestadocivil.csv</data>
     <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasPaisesModel" nombre="Paises ISO 3166" id="3166" tipo="2" noeditable="true">~/App_Data/TablasVarias/paises.csv</data>

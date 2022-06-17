@@ -145,7 +145,7 @@
         @{
             cvcuenta.Name = "Cuentaventas";
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
-            cvcuenta.Valor = Model.Cuentacliente;
+            cvcuenta.Valor = Model.Cuentaventas;
             cvcuenta.Titulo = Clientes.TituloEntidadSingular;
             cvcuenta.SoloLectura = isreadonly;
             cvcuenta.Obligatorio = false;
@@ -194,5 +194,32 @@
 
 
 <script type="text/javascript">
+
+    @*$("#Cuentacliente").on('change', function () {
+        var valor = this.value;
+        $.ajax({
+             url: '@Url.Action("GuardarCuentaSession","Cuentas")',
+             dataType: "text",
+             type: "GET",
+             data: { valor },
+            success: function (data) {
+                console.log(data);
+             }
+        })
+    });
+
+    $('#Cuentacliente').on('DOMSubtreeModified', function () {
+        var valor = $("#Cuentacliente").val();
+
+        $.ajax({
+            url: '@Url.Action("GuardarCuentaSession","Cuentas")',
+            dataType: "text",
+            type: "GET",
+            data: { valor },
+            success: function (data) {
+                console.log(data);
+            }
+         })
+    });*@
 
 </script>

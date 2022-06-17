@@ -135,6 +135,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sql = string.Format(selectdelegacion, (int)TiposCuentas.Clientes, Empresa, TiposCuentas.Clientes, delegacion);
             }
 
+            sql = sql + " ORDER BY c.id ";
             return sql;
         }
 

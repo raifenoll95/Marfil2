@@ -144,6 +144,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Cuotarecargoequivalencia = f.cuotarecargoequivalencia
                 ,
                 Importe = f.importe
+                ,            
+                Importenetolinea = f.importenetolinea
                 ,
                 Notas = f.notas
                 ,

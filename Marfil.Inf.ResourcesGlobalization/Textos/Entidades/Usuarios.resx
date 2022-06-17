@@ -183,9 +183,6 @@
   <data name="Bloquearseries" xml:space="preserve">
     <value>Bloquear series</value>
   </data>
-  <data name="Fkzonacliente" xml:space="preserve">
-    <value>Solo clientes de zona</value>
-  </data>
   <data name="Fkdelegacion" xml:space="preserve">
     <value>Delegación</value>
   </data>

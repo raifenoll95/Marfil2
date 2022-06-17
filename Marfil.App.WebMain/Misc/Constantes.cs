@@ -11,8 +11,9 @@ namespace Marfil.App.WebMain.Misc
         public const string NombreBusquedaGlobal="BusquedaGlobal";
         public const string VariableMensajeExito = "_success";
         public const string VariableMensajeWarning = "_warning";
+        public const string VariableMensajeError = "errors";
 
-       
+
         //tablas varias
         public const int CodigoTiposVia = 2030;
 

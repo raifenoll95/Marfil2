@@ -17,13 +17,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
     internal class CircuitosTesoreriaStartup : IStartup
     {
         private IContextService context;
-        private MarfilEntities db;
-        private readonly CircuitosTesoreriaCobrosService _tablasVariasService;
+        //private MarfilEntities db;
+        private readonly CircuitosTesoreriaCobrosService _circuitosService;
 
         public CircuitosTesoreriaStartup(IContextService context, MarfilEntities db)
         {
             this.context = context;
-            this.db = db;
+            //this.db = db;
+            _circuitosService = new CircuitosTesoreriaCobrosService(context, db);
         }
 
         public void CrearDatos(string fichero)
@@ -64,24 +65,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
                 Liquidariva = string.Equals(vector[9], '0') ? false : true,
                 Conciliacion = string.Equals(vector[10], '0') ? false : true,
                 Datosdocumento = string.Equals(vector[11], '0') ? false : true,
-                Cuentacargo1 = vector[12],
-                Cuentacargo2 = vector[13],
-                Cuentacargorel = vector[14],
-                Cuentaabono1 = vector[15],
-                Cuentaabono2 = vector[16],
-                Cuentaabonorel = vector[17],
+                Cuentacargo1 = !string.Equals(vector[12], "NULL") ? vector[12] : null,
+                Cuentacargo2 = !string.Equals(vector[13], "NULL") ? vector[13] : null,
+                Cuentacargorel = !string.Equals(vector[14], "NULL") ? vector[14] : null,
+                Cuentaabono1 = !string.Equals(vector[15], "NULL") ? vector[15] : null,
+                Cuentaabono2 = !string.Equals(vector[16], "NULL") ? vector[16] : null,
+                Cuentaabonorel = !string.Equals(vector[17], "NULL") ? vector[17] : null,
                 Importecuentacargo1 = (TipoImporte)Int32.Parse(vector[18]),
                 Importecuentacargo2 = (TipoImporte)Int32.Parse(vector[19]),
                 Importecuentaabono1 = (TipoImporte)Int32.Parse(vector[20]),
                 Importecuentaabono2 = (TipoImporte)Int32.Parse(vector[21]),
                 Importecuentacargorel = (TipoImporte)Int32.Parse(vector[22]),
                 Importecuentaabonorel = (TipoImporte)Int32.Parse(vector[23]),
-                Desccuentacargo1 = vector[24],
-                Desccuentacargo2 = vector[25],
-                Desccuentacargorel = vector[26],
-                Desccuentaabono1 = vector[27],
-                Desccuentaabono2 = vector[28],
-                Desccuentaabonorel = vector[29],
+                Desccuentacargo1 = !string.Equals(vector[24], "NULL") ? vector[24] : null,
+                Desccuentacargo2 = !string.Equals(vector[25], "NULL") ? vector[25] : null,
+                Desccuentacargorel = !string.Equals(vector[26], "NULL") ? vector[26] : null,
+                Desccuentaabono1 = !string.Equals(vector[27], "NULL") ? vector[27] : null,
+                Desccuentaabono2 = !string.Equals(vector[28], "NULL") ? vector[28] : null,
+                Desccuentaabonorel = !string.Equals(vector[29], "NULL") ? vector[29] : null,
                 Tipocircuito = (TipoCircuito)Int32.Parse(vector[30]),
                 Codigodescripcionasiento = vector[31],
                 Documentocartera = string.Equals(vector[32], '0') ? false : true,
@@ -95,18 +96,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             {
                 model.Datos = Int32.Parse(vector[5]);
             }
-
             else
             {
                 model.Datos = null;
             }
 
-            _tablasVariasService.create(model);
+
+
+            _circuitosService.create(model);
         }
 
         public void Dispose()
         {
-            _tablasVariasService?.Dispose();
+            _circuitosService?.Dispose();
         }
     }
 }

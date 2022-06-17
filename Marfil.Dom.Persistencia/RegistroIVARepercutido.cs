@@ -14,6 +14,12 @@ namespace Marfil.Dom.Persistencia
     
     public partial class RegistroIVARepercutido
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RegistroIVARepercutido()
+        {
+            this.RegistroIVARepercutidoTotales = new HashSet<RegistroIVARepercutidoTotales>();
+        }
+    
         public string empresa { get; set; }
         public int id { get; set; }
         public string origendoc { get; set; }
@@ -43,5 +49,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<bool> contabilizar { get; set; }
         public string fkcuentastesoreria { get; set; }
         public Nullable<double> operacionesexluidasbi { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
     }
 }

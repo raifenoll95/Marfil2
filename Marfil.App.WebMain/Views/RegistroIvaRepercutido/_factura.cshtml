@@ -30,6 +30,7 @@
     }).ToList();
 
     var listmotivos = WebHelper.GetApplicationHelper().GetListMotivosRectificacion().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -44,14 +45,16 @@
         @Html.CheckBoxFor(f => Model.Facturarectificativa, (object)new { @readonly = isreadonly })
     </div>
 </div>
-<div class="form-group">
+<div class="form-group" id="Facturarectificar">
     @Html.LabelFor(f => Model.Numfacturarectificar, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
             cvfactura.Name = "Numfacturarectificar";
             cvfactura.Url = Url.Action("RegistroIvaFacturasApi", "Api");
             cvfactura.Valor = Model.Numfacturarectificar;
-            cvfactura.Params = "{\"cliente\":\"" + Model.Cuentacliente + "\"}";
+            cvfactura.CampoIdentificador = "Id";
+            //cvfactura.Params = "{\"cliente\":\"" + Model.Cuentacliente != "" && Model.Cuentacliente != null ? Model.Cuentacliente : Session["CurrentCuenta"].ToString() + "\"}";
+            cvfactura.ControlesAsociados = "[ { \"cliente\":\"Cuentacliente\" } ]";
             cvfactura.SoloLectura = false;
             cvfactura.Autofocus = true;
             cvfactura.Obligatorio = false;
@@ -64,7 +67,7 @@
         @Html.ValidationMessageFor(f => Model.Numfacturarectificar, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="form-group">
+<div class="form-group" id="Variosrectificar">
     @Html.LabelFor(f => Model.Fechafacturaoriginal, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
         @Html.EditorFor(f => Model.Fechafacturaoriginal)
@@ -120,7 +123,7 @@
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" id="Retenciones">
     @Html.LabelFor(f => Model.Baseretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
         @Html.TextBoxFor(f => Model.Baseretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
@@ -137,13 +140,14 @@
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" id="Inmuebles">
     @Html.LabelFor(f => Model.Inmueble, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
             cvinmueble.Name = "Inmueble";
-            cvinmueble.Url = Url.Action("InmuebleApi", "Api");
+            cvinmueble.Url = Url.Action("InmueblesApi", "Api");
             cvinmueble.Valor = Model.Inmueble;
+            cvinmueble.CampoIdentificador = "Id";
             cvinmueble.SoloLectura = false;
             cvinmueble.Autofocus = true;
             cvinmueble.Obligatorio = false;
@@ -199,5 +203,65 @@
 
 
 <script type="text/javascript">
+
+    window.onload = init;
+
+    function init() {
+        if ($("#Facturarectificativa").is(':checked')) {
+            document.getElementById("Facturarectificar").style.visibility = 'visible';
+            document.getElementById("Variosrectificar").style.visibility = 'visible';
+        } else {
+            document.getElementById("Facturarectificar").style.visibility = 'hidden';
+            document.getElementById("Variosrectificar").style.visibility = 'hidden';
+        }
+
+        if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
+            document.getElementById("Retenciones").style.visibility = 'visible';
+            document.getElementById("Inmuebles").style.visibility = 'visible';
+        } else {
+            document.getElementById("Retenciones").style.visibility = 'hidden';
+            document.getElementById("Inmuebles").style.visibility = 'hidden';
+        }
+
+        /*$('#Fktiporetencion').on('DOMSubtreeModified', function () {
+            if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
+                document.getElementById("Retenciones").style.visibility = 'visible';
+                document.getElementById("Inmuebles").style.visibility = 'visible';
+            } else {
+                document.getElementById("Retenciones").style.visibility = 'hidden';
+                document.getElementById("Inmuebles").style.visibility = 'hidden';
+            }
+        });*/
+    }
+
+    $("#Facturarectificativa").on('change', function () {
+        if ($("#Facturarectificativa").is(':checked')) {
+            document.getElementById("Facturarectificar").style.visibility = 'visible';
+            document.getElementById("Variosrectificar").style.visibility = 'visible';
+        } else {
+            document.getElementById("Facturarectificar").style.visibility = 'hidden';
+            document.getElementById("Variosrectificar").style.visibility = 'hidden';
+        }
+    });
+
+    $("#Fktiporetencion").on('change', function () {
+        if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
+            document.getElementById("Retenciones").style.visibility = 'visible';
+            document.getElementById("Inmuebles").style.visibility = 'visible';
+        } else {
+            document.getElementById("Retenciones").style.visibility = 'hidden';
+            document.getElementById("Inmuebles").style.visibility = 'hidden';
+        }
+    });
+
+    $('#Fktiporetencion').on('DOMSubtreeModified', function () {
+        if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
+            document.getElementById("Retenciones").style.visibility = 'visible';
+            document.getElementById("Inmuebles").style.visibility = 'visible';
+        } else {
+            document.getElementById("Retenciones").style.visibility = 'hidden';
+            document.getElementById("Inmuebles").style.visibility = 'hidden';
+        }
+    });
 
 </script>

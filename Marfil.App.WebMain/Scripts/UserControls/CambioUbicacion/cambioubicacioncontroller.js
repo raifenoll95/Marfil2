@@ -65,7 +65,7 @@
               eventAggregator.Publish("Fkzonaactual-Buscar", $scope.Fkzonaactual);
           }).error(function (data, status, headers, config) {
               $scope.Lotecargado = false;
-              messagesService.show(TipoMensaje.Error,"Ups!","Ocurrió un problema con el lote "+ $scope.Lote);
+              messagesService.show(TipoMensaje.Error,"Ups!","Ocurrió un problema con el lote "+ $scope.Lote + ". Debe estar compuesto por lote + loteid (3 digitos)");
             });
     }
 

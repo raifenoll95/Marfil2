@@ -157,7 +157,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = esimportado ? Math.Round((item.Sum(f => f.Importe) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda) : Math.Round((item.Sum(f => f.Importe)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = Math.Round((item.Sum(f => f.Importe)) ?? 0, decimalesmoneda);
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;
@@ -554,7 +554,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
                 result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
                     result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
-                    result.Decimalesmonedas, (bool)result.Importado).ToList();
+                    result.Decimalesmonedas, true).ToList();
 
                 return result;
             }

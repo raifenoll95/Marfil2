@@ -46,8 +46,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //result.AppendFormat(" where t.empresa ='{0}' ", _context.Empresa);
 
             result.Append("select t.*, aini.descripcion as Acabadoinicialdescripcion, afin.descripcion as Acabadofinaldescripcion from trabajos as t ");
-            result.Append(" left join acabados as aini on aini.id = t.fkacabadoinicial ");
-            result.Append(" left join acabados as afin on afin.id = t.fkacabadofinal ");
+            result.Append(" left join acabados as aini on aini.id = t.fkacabadoinicial and aini.empresa = t.empresa");
+            result.Append(" left join acabados as afin on afin.id = t.fkacabadofinal and afin.empresa = t.empresa");
             result.AppendFormat(" where t.empresa ='{0}' ", _context.Empresa);
             result.Append(" group by t.empresa, t.id, t.descripcion, t.tipotrabajo, t.tipoimputacion, t.fkacabadoinicial, t.fkacabadofinal, ");
             result.Append(" t.fkarticulofacturable, t.precio, aini.descripcion, afin.descripcion ");

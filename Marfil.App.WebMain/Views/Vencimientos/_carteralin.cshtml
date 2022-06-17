@@ -63,8 +63,8 @@ else
                 <th>Tercero</th>
                 <th>Fecha vto.</th>
                 <th>Fecha documento</th>
-                <th>Asignación</th>
-                <th>Cubierto</th>
+                <th>Importe Cartera</th>
+                <th>Asignado</th>
                 <th>Situación</th>
             </tr>
         </thead>
@@ -74,8 +74,8 @@ else
                 <tr>
                     <th scope="row">@item.Referencia</th>
                     <td>@item.Fkcuentas</td>               
-                    <td>@item.Fechavencimiento</td>
-                    <td>@item.Fecha</td>
+                    <td>@item.Fechavencimiento.Value.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Fecha.Value.ToString("dd/MM/yyyy")</td>
                     <td>@item.Importegiro</td>
                     <td>@item.Imputadoaux</td>
                     <td>@item.Situacion</td>

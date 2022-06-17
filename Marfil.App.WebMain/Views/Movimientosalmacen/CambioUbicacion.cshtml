@@ -87,8 +87,9 @@
             <div class="col-md-10">
                 @{
                     cvzonas.Name = "Fkzonaactual";
+                    cvzonas.CampoIdentificador = "Id";
                     cvzonas.Url = Url.Action("AlmacenesZonasApi", "Api");
-                    cvzonas.Valor = "";
+                    //cvzonas.Valor = "";
                     cvzonas.ControlesAsociados = "[ { \"fkalmacen\":\"Fkalmacen\" } ]";
                     cvzonas.SoloLectura = true;
                 }
