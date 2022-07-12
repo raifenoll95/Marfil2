@@ -181,9 +181,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     item.Cantidadpedida = 0;
                 }
                 obj.Fkestados = appService.GetConfiguracion().Estadotraspasosalmaceninicial;
-                var contador = ServiceHelper.GetNextId<Traspasosalmacen>(_db, _context.Empresa, obj.Fkseries);
+                var tipodocumento = "TRA"; //Traspaso
+                var contador = ServiceHelper.GetNextId<Traspasosalmacen>(_db, _context.Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Traspasosalmacen>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Traspasosalmacen>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
                 if (_validationService.ValidarGrabar(newItem))
@@ -255,9 +256,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Traspasosalmacen>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "TRA"; //Traspaso
+                var contador = ServiceHelper.GetNextId<Traspasosalmacen>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Traspasosalmacen>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Traspasosalmacen>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Traspasosalmacen, _context, _db);

@@ -472,36 +472,53 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat("fm.Descripcion as [Familia material],s.lote as [Lote],");
             sb.AppendFormat("dbo._fn_enum_TipoAlmacenlote(s.tipoalmacenlote) as [Tipo de Lote],"); //
             sb.AppendFormat("s.loteid as [Tabla],s.cantidaddisponible as [Cant. Disponible],s.largo as [L],");
-            sb.AppendFormat("s.ancho as [A],s.grueso as [G],s.metros as [Metros],u.codigounidad as [UM],u.decimalestotales as [_decimales] ");
+            sb.AppendFormat("s.ancho as [A],s.grueso as [G],s.metrosentrada as [Metros],u.codigounidad as [UM],u.decimalestotales as [_decimales], ");
+
             // lo nuevo
             //PrecioNetoCompra
-            sb.AppendFormat(",ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) AS [Total Neto Compra]");
+            //sb.AppendFormat(",ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) AS [Total Neto Compra],");
+            sb.AppendFormat(" ISNULL(s.netocompra, 0) AS [Total Neto Compra], ");
+
             // PrecioNetoCompraUM
-            sb.AppendFormat(",case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
-            sb.AppendFormat("  else (ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) / ");
-            sb.AppendFormat("        (ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0)) ");
-            sb.AppendFormat(" end AS [Neto Compra UM],");
+            sb.AppendFormat("  else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) ");
+            sb.AppendFormat(" end ");
+            sb.AppendFormat("/case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            sb.AppendFormat(" when 0 then 1 ");
+            sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            sb.AppendFormat(" end AS [Neto Compra UM], ");*/
+            sb.AppendFormat(" ISNULL(s.netocompra, 0) / ISNULL(s.metrosentrada, 1) AS [Neto Compra UM], ");
+
             // CosteTotal
-            sb.AppendFormat(" ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
+            /*sb.AppendFormat("ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
-            sb.AppendFormat("  ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) +" );
+            sb.AppendFormat("  ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) +");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalotro, 0) + ISNULL(TrEnLin.costeadicionalotro, 0) + ");
-            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0)  AS [Total coste adquisición], ");
+            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0)  AS [Total coste adquisición], ");*/
+            sb.AppendFormat(" ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0)  AS [Total coste adquisición],  ");
+
             // CosteTotalUM
-            sb.AppendFormat(" case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
-            sb.AppendFormat(" else (ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) + ");
+            sb.AppendFormat(" else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeacicionalvariable, 0) + ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeadicionalotro, 0) + ISNULL(TrEnLin.costeadicionalotro, 0) + ");
-            sb.AppendFormat(" ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0)) / ");
-            sb.AppendFormat("  (ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0)) ");
-            sb.AppendFormat(" end AS [Coste adquisición UM]");
+            sb.AppendFormat(" ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0) ");
+            sb.AppendFormat(" end ");
+            sb.AppendFormat("  / CASE ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            sb.AppendFormat("  when 0 then 1 ");
+            sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            sb.AppendFormat(" end AS [Coste adquisición UM] ");*/
+            sb.AppendFormat(" ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0) / ISNULL(s.metrosentrada, 1) AS [Coste adquisición UM] ");
 
-            //Idem
-            sb.AppendFormat(" from stockactual as s ");
+            //sb.AppendFormat(" from stockactual as s ");
+            sb.AppendFormat(" from stockhistorico as s ");
+
             sb.AppendFormat(" inner join articulos as a on a.id = s.fkarticulos and a.empresa= s.empresa ");
             sb.AppendFormat(" inner join familiasproductos as fp on fp.id = substring(s.fkarticulos, 0, 3) and fp.empresa= a.empresa ");
             sb.AppendFormat(" inner join unidades as u on u.id = fp.fkunidadesmedida ");
@@ -512,11 +529,12 @@ namespace Marfil.Dom.Persistencia.Listados
             }
             sb.AppendFormat(" left join materiales as ml on ml.id = substring(s.fkarticulos, 3, 3) and ml.empresa= a.empresa ");
             sb.AppendFormat(" left join Familiamateriales  as fm on fm.valor=ml.fkfamiliamateriales ");
+
             // lo nuevo
-            sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
+            /*sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
             sb.AppendFormat(" and AlCoLin.lote = s.lote and AlCoLin.fkarticulos = s.fkarticulos and AlCoLin.tabla = s.loteid ");
             sb.AppendFormat("LEFT JOIN Transformacionesentradalin TrEnLin on TrEnLin.empresa = s.empresa ");
-            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");
+            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");*/
 
             return sb.ToString();
         }
@@ -526,37 +544,41 @@ namespace Marfil.Dom.Persistencia.Listados
             var sb = new StringBuilder();
             sb.AppendFormat("select {0} ", GetColumnasAlmacen());
             sb.AppendFormat(" s.fkarticulos as [Cod. Artículo],a.descripcion as [Artículo],fp.descripcion as [Familia],ml.descripcion as [Material],fm.Descripcion as [Familia material],");
-            sb.AppendFormat("dbo._fn_enum_TipoAlmacenlote(s.tipoalmacenlote) as [Tipo de Lote],"); //
+            sb.AppendFormat("dbo._fn_enum_TipoAlmacenlote(s.tipoalmacenlote) as [Tipo de Lote],");
 
             //columnas sum
-            sb.AppendFormat("sum( s.cantidaddisponible) as [Cant. Disponible],sum(s.metros) as [Metros],");
+            sb.AppendFormat("sum( s.cantidaddisponible) as [Cant. Disponible],sum(s.metrosentrada) as [Metros],");
 
-            sb.AppendFormat("u.codigounidad as [UM],u.decimalestotales as [_decimales] ");
+            sb.AppendFormat("u.codigounidad as [UM],u.decimalestotales as [_decimales], ");
 
             // lo nuevo
             //PrecioNetoCompra
-            sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            //sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) AS [Total Neto Compra], ");
+
             // PrecioNetoCompraUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat("  else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) ");
             sb.AppendFormat(" end) ");
             sb.AppendFormat("/SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Neto Compra UM], ");
-
+            sb.AppendFormat(" end) AS [Neto Compra UM], ");*/
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) /SUM(ISNULL(s.metrosentrada, 1)) AS [Neto Compra UM], ");
 
             // CosteTotal
-            sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
+            /*sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) +");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalotro, 0) + ISNULL(TrEnLin.costeadicionalotro, 0) + ");
-            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");
+            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0))  AS [Total coste adquisición],  ");
 
             // CosteTotalUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat(" else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeacicionalvariable, 0) + ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
@@ -567,9 +589,12 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat("  /SUM( CASE ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat("  when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Coste adquisición UM] ");
+            sb.AppendFormat(" end) AS [Coste adquisición UM] ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0)) / SUM(ISNULL(s.metrosentrada, 1)) AS [Coste adquisición UM] ");
 
-            sb.AppendFormat(" from stockactual as s ");
+            //sb.AppendFormat(" from stockactual as s ");
+            sb.AppendFormat(" from stockhistorico as s ");
 
             sb.AppendFormat(" inner join articulos as a on a.id = s.fkarticulos and a.empresa= s.empresa ");
             sb.AppendFormat(" inner join familiasproductos as fp on fp.id = substring(s.fkarticulos, 0, 3) and fp.empresa= a.empresa ");
@@ -583,10 +608,10 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat(" left join Familiamateriales  as fm on fm.valor=ml.fkfamiliamateriales ");
 
             // lo nuevo
-            sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
+            /*sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
             sb.AppendFormat(" and AlCoLin.lote = s.lote and AlCoLin.fkarticulos = s.fkarticulos and AlCoLin.tabla = s.loteid ");
             sb.AppendFormat("LEFT JOIN Transformacionesentradalin TrEnLin on TrEnLin.empresa = s.empresa ");
-            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");
+            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");*/
 
 
 
@@ -600,37 +625,37 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat("select {0} ", GetColumnasAlmacen());
             sb.AppendFormat(" s.fkarticulos as [Cod. Artículo],a.descripcion as [Artículo],s.lote as [Lote],fp.descripcion as [Familia],ml.descripcion as [Material],fm.Descripcion as [Familia material],");
             //columnas sum
-            sb.AppendFormat(" sum(s.cantidaddisponible) as [Cant. Disponible],sum(s.metros) as [Metros],");
-           
-
-          
-
-            sb.AppendFormat("u.codigounidad as [UM],u.decimalestotales as [_decimales] ");
+            sb.AppendFormat(" sum(s.cantidaddisponible) as [Cant. Disponible],sum(s.metrosentrada) as [Metros],");
+            sb.AppendFormat("u.codigounidad as [UM],u.decimalestotales as [_decimales], ");
 
             // lo nuevo
             //PrecioNetoCompra
-            sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            //sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) AS [Total Neto Compra], ");
+
             // PrecioNetoCompraUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat("  else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) ");
             sb.AppendFormat(" end) ");
             sb.AppendFormat("/SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Neto Compra UM], ");
-
+            sb.AppendFormat(" end) AS [Neto Compra UM], ");*/
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) /SUM(ISNULL(s.metrosentrada, 1)) AS [Neto Compra UM], ");
 
             // CosteTotal
-            sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
+            /*sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) +");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalotro, 0) + ISNULL(TrEnLin.costeadicionalotro, 0) + ");
-            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");
+            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0))  AS [Total coste adquisición],  ");
 
             // CosteTotalUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat(" else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeacicionalvariable, 0) + ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
@@ -641,9 +666,12 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat("  /SUM( CASE ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat("  when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Coste adquisición UM] ");
+            sb.AppendFormat(" end) AS [Coste adquisición UM] ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0)) / SUM(ISNULL(s.metrosentrada, 1)) AS [Coste adquisición UM] ");
 
-            sb.AppendFormat(" from stockactual as s ");
+            //sb.AppendFormat(" from stockactual as s ");
+            sb.AppendFormat(" from stockhistorico as s ");
 
             sb.AppendFormat(" inner join articulos as a on a.id = s.fkarticulos and a.empresa= s.empresa ");
             sb.AppendFormat(" inner join familiasproductos as fp on fp.id = substring(s.fkarticulos, 0, 3) and fp.empresa= a.empresa ");
@@ -657,10 +685,10 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat(" left join Familiamateriales  as fm on fm.valor=ml.fkfamiliamateriales ");
 
             // lo nuevo
-            sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
+            /*sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
             sb.AppendFormat(" and AlCoLin.lote = s.lote and AlCoLin.fkarticulos = s.fkarticulos and AlCoLin.tabla = s.loteid ");
             sb.AppendFormat("LEFT JOIN Transformacionesentradalin TrEnLin on TrEnLin.empresa = s.empresa ");
-            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");
+            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");*/
 
             return sb.ToString();
         }
@@ -677,34 +705,38 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat(" s.largo as [L],s.ancho as [A],s.grueso as [G],");
 
             //campos sum
-            sb.AppendFormat(" sum(s.metros) as [Metros],");
+            sb.AppendFormat(" sum(s.metrosentrada) as [Metros],");
 
-            sb.AppendFormat(" u.codigounidad as [UM],u.decimalestotales as [_decimales] ");
+            sb.AppendFormat(" u.codigounidad as [UM],u.decimalestotales as [_decimales], ");
 
             // lo nuevo
             //PrecioNetoCompra
-            sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            //sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) AS [Total Neto Compra], ");
+
             // PrecioNetoCompraUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat("  else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) ");
             sb.AppendFormat(" end) ");
             sb.AppendFormat("/SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Neto Compra UM], ");
-
+            sb.AppendFormat(" end) AS [Neto Compra UM], ");*/
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) /SUM(ISNULL(s.metrosentrada, 1)) AS [Neto Compra UM], ");
 
             // CosteTotal
-            sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
+            /*sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) +");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalotro, 0) + ISNULL(TrEnLin.costeadicionalotro, 0) + ");
-            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");
+            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0))  AS [Total coste adquisición],  ");
 
             // CosteTotalUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat(" else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeacicionalvariable, 0) + ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
@@ -715,9 +747,13 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat("  /SUM( CASE ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat("  when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Coste adquisición UM] ");
+            sb.AppendFormat(" end) AS [Coste adquisición UM] ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0)) / SUM(ISNULL(s.metrosentrada, 1)) AS [Coste adquisición UM] ");
 
-            sb.AppendFormat(" from stockactual as s ");
+            //sb.AppendFormat(" from stockactual as s ");
+            sb.AppendFormat(" from stockhistorico as s ");
+
             sb.AppendFormat(" inner join articulos as a on a.id = s.fkarticulos and a.empresa= s.empresa ");
             sb.AppendFormat(" inner join familiasproductos as fp on fp.id = substring(s.fkarticulos, 0, 3) and fp.empresa= a.empresa ");
             sb.AppendFormat(" inner join unidades as u on u.id = fp.fkunidadesmedida ");
@@ -730,10 +766,10 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat(" left join Familiamateriales  as fm on fm.valor=ml.fkfamiliamateriales ");
 
             // lo nuevo
-            sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
+            /*sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
             sb.AppendFormat(" and AlCoLin.lote = s.lote and AlCoLin.fkarticulos = s.fkarticulos and AlCoLin.tabla = s.loteid ");
             sb.AppendFormat("LEFT JOIN Transformacionesentradalin TrEnLin on TrEnLin.empresa = s.empresa ");
-            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");
+            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");*/
 
 
             return sb.ToString();
@@ -748,34 +784,38 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat(" sum(s.cantidaddisponible) as [Cant. Disponible],");
             sb.AppendFormat("s.largo as [L],s.ancho as [A],s.grueso as [G],");
             //campos sum
-            sb.AppendFormat("sum(s.metros) as [Metros],");
-            sb.AppendFormat("u.codigounidad as [UM],u.decimalestotales as [_decimales] ");
+            sb.AppendFormat("sum(s.metrosentrada) as [Metros],");
+            sb.AppendFormat("u.codigounidad as [UM],u.decimalestotales as [_decimales], ");
 
 
             // lo nuevo
             //PrecioNetoCompra
-            sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            //sb.AppendFormat(",SUM(ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0)) AS [Total Neto Compra],");
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) AS [Total Neto Compra], ");
+
             // PrecioNetoCompraUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat("  else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) ");
             sb.AppendFormat(" end) ");
             sb.AppendFormat("/SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Neto Compra UM], ");
-
+            sb.AppendFormat(" end) AS [Neto Compra UM], ");*/
+            sb.AppendFormat(" SUM(ISNULL(s.netocompra, 0)) /SUM(ISNULL(s.metrosentrada, 1)) AS [Neto Compra UM], ");
 
             // CosteTotal
-            sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
+            /*sb.AppendFormat("SUM( ISNULL(alcolin.importe, 0) +ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalmaterial, 0) + ISNULL(TrEnLin.costeadicionalmaterial, 0) +");
             sb.AppendFormat("  ISNULL(alcolin.costeadicionalotro, 0) + ISNULL(TrEnLin.costeadicionalotro, 0) + ");
-            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");
+            sb.AppendFormat("  ISNULL(alcolin.costeadicionalportes, 0) + ISNULL(TrEnLin.costeadicionalportes, 0))  AS [Total coste adquisición], ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0))  AS [Total coste adquisición],  ");
 
             // CosteTotalUM
-            sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
+            /*sb.AppendFormat("SUM(case ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat(" when 0 then 0 ");
             sb.AppendFormat(" else ISNULL(alcolin.importe, 0) + ISNULL(TrEnLin.precio, 0) + ");
             sb.AppendFormat(" ISNULL(alcolin.costeacicionalvariable, 0) + ISNULL(TrEnLin.costeacicionalvariable, 0) + ");
@@ -786,9 +826,12 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat("  /SUM( CASE ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
             sb.AppendFormat("  when 0 then 1 ");
             sb.AppendFormat("  else  ISNULL(alcolin.metros, 0) + ISNULL(TrEnLin.metros, 0) ");
-            sb.AppendFormat(" end) AS [Coste adquisición UM] ");
+            sb.AppendFormat(" end) AS [Coste adquisición UM] ");*/
+            sb.AppendFormat(" SUM( ISNULL(s.netocompra, 0) + ISNULL(s.costeacicionalvariable, 0) + ISNULL(s.costeadicionalmaterial, 0) + " +
+                "ISNULL(s.costeadicionalotro, 0) + ISNULL(s.costeadicionalportes, 0)) / SUM(ISNULL(s.metrosentrada, 1)) AS [Coste adquisición UM] ");
 
-            sb.AppendFormat("from stockactual as s ");
+            //sb.AppendFormat(" from stockactual as s ");
+            sb.AppendFormat(" from stockhistorico as s ");
 
             sb.AppendFormat(" inner join articulos as a on a.id = s.fkarticulos and a.empresa= s.empresa ");
             sb.AppendFormat(" inner join familiasproductos as fp on fp.id = substring(s.fkarticulos, 0, 3) and fp.empresa= a.empresa ");
@@ -802,10 +845,10 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.AppendFormat(" left join Familiamateriales  as fm on fm.valor=ml.fkfamiliamateriales ");
 
             //lo nuevo
-            sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
+            /*sb.AppendFormat("LEFT JOIN AlbaranesComprasLin AlCoLin on AlCoLin.empresa = s.empresa ");
             sb.AppendFormat(" and AlCoLin.lote = s.lote and AlCoLin.fkarticulos = s.fkarticulos and AlCoLin.tabla = s.loteid ");
             sb.AppendFormat("LEFT JOIN Transformacionesentradalin TrEnLin on TrEnLin.empresa = s.empresa ");
-            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");
+            sb.AppendFormat(" and TrEnLin.lote = s.lote and TrEnLin.fkarticulos = s.fkarticulos and TrEnLin.tabla = s.loteid");*/
 
 
 

@@ -188,9 +188,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 var appService=new ApplicationHelper(_context);
                 obj.Fkestados = appService.GetConfiguracion().Estadopedidosventasinicial;
-                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PED"; //Pedido Venta
+                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Pedidos>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Pedidos>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
 
                 var newItem = _converterModel.CreatePersitance(obj);
@@ -263,9 +264,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var validation = _validationService as PedidosValidation;
                 validation.EjercicioId = EjercicioId;
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PED"; //Pedido Venta
+                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Pedidos>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Pedidos>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 //Obtener el pais del cliente (tercero)

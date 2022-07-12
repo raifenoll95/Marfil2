@@ -12,6 +12,7 @@ using Marfil.Inf.Genericos;
 using Marfil.Dom.ControlsUI.Toolbar;
 using RAlbaranesCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras;
 using System.Collections.Generic;
+using Marfil.Inf.Genericos.Helper;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 {
@@ -118,8 +119,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "SituacionFinal")]
         public string SituacionFinal { get; set; }
 
-        [Display(ResourceType = typeof(RCobrosYPagos), Name = "CuentaTesoreriaCobrador")]
+        [Display(ResourceType = typeof(RCobrosYPagos), Name = "CuentaTesoreria")]
         public string Fkcuentatesoreria { get; set; }
+
+        [Display(ResourceType = typeof(RCobrosYPagos), Name = "FechaContable")]
+        public DateTime? FechaContableFiltro { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "FechaContable")]
         public DateTime? FechaContable { get; set; }
@@ -191,6 +195,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         public string FechaStrfactura { get; set; }
         public string FechaStrvencimiento { get; set; }
         public double? Importegiro { get; set; }
+        public string SImportegiro
+        {
+            get { return (Importegiro ?? 0).ToString(string.Format("N{0}", (2))); }
+            set { Importegiro = (Funciones.Qdouble(value) ?? 0); }
+        }
         public double? ImporteAsignado { get; set; }
         public string Situacion { get; set; }
         public string Fkformaspago { get; set; }

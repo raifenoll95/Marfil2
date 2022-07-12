@@ -612,7 +612,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             sb.Append(" left join Caracteristicaslin as cp on cp.empresa=art.empresa and cp.fkcaracteristicas=SUBSTRING(art.id,0,3) AND cp.id=SUBSTRING(art.id,6,2) ");
             sb.Append(" left join Grosores as gp on gp.empresa = art.empresa and gp.id=SUBSTRING(art.id,8,2) ");
             sb.Append(" left join Acabados as ap on ap.empresa = art.empresa and ap.id=SUBSTRING(art.id,10,2) ");
-            sb.AppendFormat(" Where art.empresa=@empresa and (art.categoria=0 or art.categoria={0})", (int)flujo);
+            if ((int)flujo == 3)
+            {
+                sb.AppendFormat(" Where art.empresa=@empresa ");//Todas las categorías
+            }
+            else
+            {
+                sb.AppendFormat(" Where art.empresa=@empresa and (art.categoria=0 or art.categoria={0})", (int)flujo);
+            }
+            
 
             var a = sb.ToString();
 

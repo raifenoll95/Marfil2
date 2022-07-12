@@ -180,9 +180,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 var appService= new ApplicationHelper(_context);
                 obj.Fkestados = appService.GetConfiguracion().Estadopedidosventasinicial;
-                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PEC"; //Pedido compra
+                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
 
                 var newItem = _converterModel.CreatePersitance(obj);
@@ -244,9 +245,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var validation = _validationService as PedidosComprasValidation;
                 validation.EjercicioId = EjercicioId;
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PEC"; //Pedido compra
+                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.PedidosCompras, _context, _db);

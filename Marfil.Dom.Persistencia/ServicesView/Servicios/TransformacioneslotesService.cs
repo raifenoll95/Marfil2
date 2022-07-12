@@ -159,9 +159,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     validation.EjercicioId = EjercicioId;
                     RepartirCostesLineas(model.Lineas, model.Costes);
                     //Calculo ID
-                    var contador = ServiceHelper.GetNextId<Transformacioneslotes>(_db, Empresa, model.Fkseries);
+                    var tipodocumento = "TRL"; //Transformaciones lotes
+                    var contador = ServiceHelper.GetNextId<Transformacioneslotes>(_db, Empresa, model.Fkseries, tipodocumento);
                     var identificadorsegmento = "";
-                    model.Referencia = ServiceHelper.GetReference<Transformacioneslotes>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                    model.Referencia = ServiceHelper.GetReference<Transformacioneslotes>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                     model.Identificadorsegmento = identificadorsegmento;
                     //CalcularPrecioPiezas(model.Lineas, model.Lineas.Sum(f => f.Precio * f.Metros) ?? 0);
 

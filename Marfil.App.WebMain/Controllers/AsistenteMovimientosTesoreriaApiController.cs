@@ -50,7 +50,7 @@ namespace Marfil.App.WebMain.Controllers
                             new ColumnDefinition() { field = "FkcuentasDescripcion", displayName = "Nombre", visible = true,width=250},
                             new ColumnDefinition() { field = "Traza", displayName = "Doc.", visible = true,width=150},
                             new ColumnDefinition() { field = "Fechavencimiento", displayName = "Fecha Vencimiento", visible = true,width = 180},
-                            new ColumnDefinition() { field = "Importegiro", displayName = "Importe", visible = true,width = 100},
+                            new ColumnDefinition() { field = "SImportegiro", displayName = "Importe", visible = true,width = 100},
                             new ColumnDefinition() { field = "Situacion", displayName = "Situación", visible = true,width = 100},
                             new ColumnDefinition() { field = "FkcuentaTesoreria", displayName = "Cta. Tesorería", visible = true,width = 120},
                             new ColumnDefinition() { field = "Fkformaspago", displayName = "Forma de pago", visible = true,width = 200},

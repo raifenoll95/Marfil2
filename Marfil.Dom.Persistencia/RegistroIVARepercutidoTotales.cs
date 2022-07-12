@@ -16,6 +16,7 @@ namespace Marfil.Dom.Persistencia
     {
         public string empresa { get; set; }
         public int fkregistros { get; set; }
+        public int id { get; set; }
         public string fktiposiva { get; set; }
         public Nullable<double> brutototal { get; set; }
         public Nullable<double> porcentajerecargoequivalencia { get; set; }

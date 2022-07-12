@@ -1,9 +1,11 @@
-﻿using Marfil.App.WebMain.Misc;
+﻿using DevExpress.Web.Mvc;
+using Marfil.App.WebMain.Misc;
 using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Iva;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using Marfil.Inf.Genericos.Helper;
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace Marfil.App.WebMain.Controllers
 {
     public class RegistroIvaRepercutidoController : GenericController<RegistroIvaRepercutidoModel>
     {
-
+        private const string session = "_Totaleslin_";
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -172,5 +174,108 @@ namespace Marfil.App.WebMain.Controllers
                 return View(model);
             }
         }
+
+        #region Grid Devexpress
+
+        public ActionResult CustomGridViewEditingPartial(string key, string buttonid)
+        {
+            var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+
+            if (buttonid.Equals("btnSplit"))
+            {
+                var linea = model.Single(f => f.Id == Funciones.Qint(key));
+            }
+            else
+            {
+                ViewData["key"] = key;
+                ViewData["buttonid"] = buttonid;
+            }
+
+            return PartialView("_Albaraneslin", model);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult TotalesLin()
+        {
+            var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+            return PartialView("_totales", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult TotalesLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] RegistroIvaRepercutidoTotalesModel item)
+        {
+            var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (model.Any(f => f.Id == item.Id))
+                    {
+                        ModelState.AddModelError("Id", string.Format(General.ErrorRegistroExistente));
+                    }
+                    else
+                    {
+                        var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
+                        item.Id = max;
+                        model.Add(item);
+                        Session[session] = model;
+                    }
+
+                }
+            }
+            catch (ValidationException)
+            {
+                model.Remove(item);
+                throw;
+            }
+
+
+
+            return PartialView("_totales", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult TotalesLinUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] RegistroIvaRepercutidoTotalesModel item)
+        {
+            var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var editItem = model.Single(f => f.Id == item.Id);
+                    editItem.Fktiposiva = item.Fktiposiva;
+                    editItem.Porcentajeiva = item.Porcentajeiva;
+                    editItem.Brutototal = item.Brutototal;
+                    editItem.Baseimponible = item.Baseimponible;
+                    editItem.Cuotaiva = item.Cuotaiva;
+                    editItem.Porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia;
+                    editItem.Importerecargoequivalencia = item.Importerecargoequivalencia;
+                    editItem.Baseretencion = item.Baseretencion;
+                    editItem.Porcentajeretencion = item.Porcentajeretencion;
+                    editItem.Importeretencion = item.Importeretencion;
+                    editItem.Subtotal = item.Subtotal;
+                    Session[session] = model;
+                }
+            }
+            catch (ValidationException)
+            {
+                throw;
+            }
+
+            return PartialView("_totales", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult TotalesLinDelete(string id)
+        {
+            var intid = int.Parse(id);
+            var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+            model.Remove(model.Single(f => f.Id == intid));
+            Session[session] = model;
+            return PartialView("_totales", model);
+        }
+
+        #endregion
     }
 }

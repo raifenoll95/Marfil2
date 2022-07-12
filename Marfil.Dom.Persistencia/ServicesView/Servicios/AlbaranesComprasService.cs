@@ -202,9 +202,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     item.Cantidadpedida = 0;
                 }
                 obj.Fkestados = _appService.GetConfiguracion().Estadoalbaranescomprasinicial;
-                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "ALC";//Albarán de compra
+                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
                 if (_validationService.ValidarGrabar(newItem))
@@ -428,9 +429,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "ALC";//Albarán de compra
+                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.AlbaranesCompras, _context, _db);
 

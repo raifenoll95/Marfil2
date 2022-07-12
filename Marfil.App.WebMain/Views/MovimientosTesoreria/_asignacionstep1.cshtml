@@ -17,8 +17,8 @@
     var cvcircuitos = FCampoverificacion.Instance.GetModel<CircuitoTesoreriaCobrosModel>(WebHelper.ContextService);
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
     var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
-    var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago();
-
+    var gruposPago = WebHelper.GetApplicationHelper().GetListGruposFormasPago().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
+    gruposPago.Insert(0, new SelectListItem() { Text = "", Value = "" });
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -61,7 +61,7 @@
     <div class="form-group">
         @Html.LabelFor(f => Model.Fkmodospago, new { @class = "control-label col-md-2" })
         <div class="col-md-4">
-            @Html.DropDownListFor(f => Model.Fkmodospago, gruposPago.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control", @style = "width: 350px;" })
+            @Html.DropDownListFor(f => Model.Fkmodospago, gruposPago, new { @class = "form-control", @style = "width: 350px;" })
             @Html.ValidationMessageFor(f => Model.Fkmodospago, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -135,9 +135,9 @@
 
     @*Fecha*@
     <div class="form-group">
-        @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(f => Model.FechaContableFiltro, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
-            @Html.EditorFor(f => Model.FechaContable)
+            @Html.EditorFor(f => Model.FechaContableFiltro)
         </div>
     </div>
 

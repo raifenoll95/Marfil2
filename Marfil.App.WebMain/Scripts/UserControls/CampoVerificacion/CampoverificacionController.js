@@ -141,6 +141,11 @@ app.controller('CampoverificacionController', [
                     var cvelement = window.document.getElementById("cv-" + $scope.controlAsociado + "-descripcion");
                 }
                 //
+                //Formas de pago
+                if (controlAsociado == "Fkformaspago") {
+                    var cvelementformas = window.document.getElementById("cv-" + $scope.controlAsociado + "-descripcion");
+                }
+                //
 
                 if (element) {
                     element.value = message;
@@ -151,6 +156,16 @@ app.controller('CampoverificacionController', [
                         $http.get("/Cuentastesoreria/obtenerCuentaTesoreria" + "?cuenta=" + cuenta).success(function (data) {
                             var modelo = JSON.parse(data);
                             cvelement.textContent = modelo.Descripcion;
+                        });
+                    }
+                    //
+
+                    //Formas de pago
+                    if (cvelementformas) {
+                        var formapago = message;
+                        $http.get("/FormasPago/obtenerFormaPago" + "?formapago=" + formapago).success(function (data) {
+                            var modelo = JSON.parse(data);
+                            cvelementformas.textContent = modelo.Nombre;
                         });
                     }
                     //

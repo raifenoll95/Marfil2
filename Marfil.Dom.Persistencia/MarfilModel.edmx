@@ -1534,6 +1534,7 @@
           <Property Name="guiaperdidas" Type="nvarchar" MaxLength="100" />
           <Property Name="cuentasexistencias" Type="nvarchar" MaxLength="100" />
           <Property Name="cuentaPG" Type="nvarchar" MaxLength="100" />
+          <Property Name="cuentascaja" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Estados">
           <Key>
@@ -3675,10 +3676,11 @@
           <Key>
             <PropertyRef Name="empresa" />
             <PropertyRef Name="fkregistros" />
-            <PropertyRef Name="fktiposiva" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="fkregistros" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="fktiposiva" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="brutototal" Type="float" />
           <Property Name="porcentajerecargoequivalencia" Type="float" />
@@ -12032,6 +12034,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="guiaperdidas" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="cuentasexistencias" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="cuentaPG" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cuentascaja" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MovsLin">
           <Key>
@@ -14461,10 +14464,11 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Key>
             <PropertyRef Name="empresa" />
             <PropertyRef Name="fkregistros" />
-            <PropertyRef Name="fktiposiva" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="fkregistros" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="fktiposiva" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="brutototal" Type="Double" />
           <Property Name="porcentajerecargoequivalencia" Type="Double" />
@@ -17856,6 +17860,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="MarfilModel.Empresas">
               <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="cuentascaja" ColumnName="cuentascaja" />
                 <ScalarProperty Name="cuentaPG" ColumnName="cuentaPG" />
                 <ScalarProperty Name="cuentasexistencias" ColumnName="cuentasexistencias" />
                 <ScalarProperty Name="guiaperdidas" ColumnName="guiaperdidas" />
@@ -19720,6 +19725,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="porcentajerecargoequivalencia" ColumnName="porcentajerecargoequivalencia" />
                 <ScalarProperty Name="brutototal" ColumnName="brutototal" />
                 <ScalarProperty Name="fktiposiva" ColumnName="fktiposiva" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="fkregistros" ColumnName="fkregistros" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>

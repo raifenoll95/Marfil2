@@ -29,48 +29,83 @@ namespace Marfil.App.WebMain.Controllers
         [System.Web.Mvc.Authorize]
         public HttpResponseMessage Get()
         {
-           
-            using (var service = FService.Instance.GetService(typeof(CuentasModel),ContextService) as CuentasService)
+
+            var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
+            var tipocuenta = nvc["tipocuenta"];
+            IEnumerable<CuentasModel> items = null;
+
+            if (tipocuenta == "3")//Cuentas de tesorería junto con cuentas de caja
             {
-                var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
-                var tipocuenta = nvc["tipocuenta"];
-                IEnumerable<CuentasModel> items = null;
-                try
+                using (var service = new CuentastesoreriaService(ContextService))
                 {
-                    var inttipocuenta = (TiposCuentas) Funciones.Qint(tipocuenta).Value;
-                    var totalitems = service.GetCuentasClientes(inttipocuenta);
-                    items = totalitems.Where(f => (f.Tiposcuentas == (int)inttipocuenta || (f.Tiposcuentas == 0 || !f.Tiposcuentas.HasValue)) && f.Bloqueado == false);
-                }
-                catch (Exception)
-                {
-                    
-                    
-                }
 
-                
-                var result = new ResultBusquedas<CuentasModel>()
-                {
-                    values = items ?? Enumerable.Empty<CuentasModel>(),
-                    columns = new[]
+                    try
                     {
-                        new ColumnDefinition() { field = "Id", displayName = "Cuentas", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},
-                        new ColumnDefinition() { field = "Descripcion", displayName = "Descripción", visible = true },
+                        items = service.getCuentasTesoreria();
                     }
-                };
+                    catch (Exception)
+                    {
 
 
-                var response = Request.CreateResponse(HttpStatusCode.OK);
-                response.Content = new StringContent(JsonConvert.SerializeObject(result), Encoding.UTF8, "application/json");
-                return response;
+                    }
+
+                    var result = new ResultBusquedas<CuentasModel>()
+                    {
+                        values = items ?? Enumerable.Empty<CuentasModel>(),
+                        columns = new[]
+                        {
+                            new ColumnDefinition() { field = "Id", displayName = "Cuentas", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},
+                            new ColumnDefinition() { field = "Descripcion", displayName = "Descripción", visible = true },
+                        }
+                    };
+
+
+                    var response = Request.CreateResponse(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(result), Encoding.UTF8, "application/json");
+                    return response;
+                }
             }
+            else
+            {
+                using (var service = FService.Instance.GetService(typeof(CuentasModel), ContextService) as CuentasService)
+                {
+                    try
+                    {
+                        var inttipocuenta = (TiposCuentas)Funciones.Qint(tipocuenta).Value;
+                        var totalitems = service.GetCuentasClientes(inttipocuenta);
+                        items = totalitems.Where(f => (f.Tiposcuentas == (int)inttipocuenta || (f.Tiposcuentas == 0 || !f.Tiposcuentas.HasValue)) && f.Bloqueado == false);
+                    }
+                    catch (Exception)
+                    {
+
+
+                    }
+
+                    var result = new ResultBusquedas<CuentasModel>()
+                    {
+                        values = items ?? Enumerable.Empty<CuentasModel>(),
+                        columns = new[]
+                        {
+                            new ColumnDefinition() { field = "Id", displayName = "Cuentas", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},
+                            new ColumnDefinition() { field = "Descripcion", displayName = "Descripción", visible = true },
+                        }
+                    };
+
+
+                    var response = Request.CreateResponse(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(result), Encoding.UTF8, "application/json");
+                    return response;
+                }
+            }
+
         }
 
         // GET: api/CuentasClienteApi/5
         [System.Web.Mvc.Authorize]
         public HttpResponseMessage Get(string id)
         {
-            
-            using (var service = FService.Instance.GetService(typeof(CuentasModel),ContextService) as CuentasService)
+
+            using (var service = FService.Instance.GetService(typeof(CuentasModel), ContextService) as CuentasService)
             {
                 var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
                 var tipocuenta = nvc["tipocuenta"];
@@ -101,10 +136,10 @@ namespace Marfil.App.WebMain.Controllers
                     //var inttipocuenta = (TiposCuentas)Funciones.Qint(tipocuenta).Value;
                     //if (list.Id.StartsWith(obj.Cuenta) && (list.Tiposcuentas == (int)inttipocuenta || (list.Tiposcuentas == 0 || !list.Tiposcuentas.HasValue)))
                     //{
-                        var response = Request.CreateResponse(HttpStatusCode.OK);
-                        response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
-                            "application/json");
-                        return response;
+                    var response = Request.CreateResponse(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
+                        "application/json");
+                    return response;
                     //}
 
 

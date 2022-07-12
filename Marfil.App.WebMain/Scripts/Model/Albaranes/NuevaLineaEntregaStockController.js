@@ -153,6 +153,8 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             Fkalmacen: $("[name='Fkalmacen']").val(),
             FkarticulosDesde: $("[name='Fkarticulossalida']").val(),
             FkarticulosHasta: $("[name='Fkarticulossalida']").val(),
+            FkAcabadoDesde: $("[name='FkAcabadoDesde']").val(),
+            FkAcabadoHasta: $("[name='FkAcabadoHasta']").val(),
             Id: $("[name='Loteentrega']").val(),
             Flujo: '0'
         };

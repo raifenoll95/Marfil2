@@ -61,5 +61,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             _db.Entry(formapago).State = EntityState.Modified;
             _db.SaveChanges();
         }
+
+        public string GetDescripcionFormaPago(string forma)
+        {
+            var idforma = int.Parse(forma);
+            var descripcion = _db.FormasPago.Where(f => f.id == idforma).Select(f => f.nombre).SingleOrDefault();
+
+            return descripcion;
+        }
     }
 }

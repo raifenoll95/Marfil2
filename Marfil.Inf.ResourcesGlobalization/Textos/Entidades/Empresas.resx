@@ -240,4 +240,7 @@
   <data name="CuentasExistencias" xml:space="preserve">
     <value>Cuentas de existencias</value>
   </data>
+  <data name="Cuentascaja" xml:space="preserve">
+    <value>Cuentas de caja</value>
+  </data>
 </root>

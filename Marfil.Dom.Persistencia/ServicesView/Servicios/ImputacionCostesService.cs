@@ -123,9 +123,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var appService = new ApplicationHelper(_context);
                 if (model.Fechadocumento == null)
                     model.Fechadocumento = DateTime.Now;
-                var contador = ServiceHelper.GetNextId<ImputacionCostes>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "IMP"; //Impoutación costes
+                var contador = ServiceHelper.GetNextId<ImputacionCostes>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<ImputacionCostes>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<ImputacionCostes>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 //Calculo id entradas

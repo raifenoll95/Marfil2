@@ -452,9 +452,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 RepartirCostesLineas(model.LineasEntrada, model.Costes);
 
                 //Creamos la referencia
-                var contador = ServiceHelper.GetNextId<DivisionLotes>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "DIV";//Division Lotes
+                var contador = ServiceHelper.GetNextId<DivisionLotes>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";                
-                model.Referencia = ServiceHelper.GetReference<DivisionLotes>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<DivisionLotes>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 //Cuando se crea la Division de lotes, pasa de en curso a finalizado

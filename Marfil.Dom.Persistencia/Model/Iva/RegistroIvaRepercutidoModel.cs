@@ -171,6 +171,8 @@ namespace Marfil.Dom.Persistencia.Model.Iva
     {
         public int? Decimalesmonedas { get; set; }
 
+        public int Id { get; set; }
+
         [Display(ResourceType = typeof(RFacturas), Name = "Fktiposiva")]
         public string Fktiposiva { get; set; }
 

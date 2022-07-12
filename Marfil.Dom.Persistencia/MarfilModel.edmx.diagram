@@ -293,7 +293,7 @@
         <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutido" Width="1.5" PointX="13.375" PointY="12.75" />
         <EntityTypeShape EntityType="MarfilModel.Clientes" Width="1.5" PointX="11.75" PointY="8.125" />
         <AssociationConnector Association="MarfilModel.FK_Clientes" />
-        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="15.25" PointY="12.75" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="15.625" PointY="16.75" />
         <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" />
         </Diagram>
     </edmx:Diagrams>

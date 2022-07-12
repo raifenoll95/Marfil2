@@ -278,7 +278,7 @@ namespace Marfil.App.WebMain.Controllers
             }
             catch (Exception ex)
             {
-                TempData["errors"] = ex.Message;
+                TempData["errors"] = ex.InnerException.Message;
             }
             return Redirect(returnUrl);
         }

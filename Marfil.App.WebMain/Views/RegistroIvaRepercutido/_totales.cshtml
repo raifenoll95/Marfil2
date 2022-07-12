@@ -29,11 +29,7 @@
         //general
         settings.Name = "GridViewLineas";
         settings.KeyFieldName = "Id";
-        settings.CallbackRouteValues = new
-        {
-            Controller = "Albaranes",
-            Action = "AlbaranesLin"
-        };
+        settings.CallbackRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLin" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
         settings.Width = Unit.Percentage(100);
@@ -42,14 +38,16 @@
 
 
         //edition
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Albaranes", Action = "AlbaranesLinAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Albaranes", Action = "AlbaranesLinUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Albaranes", Action = "AlbaranesLinDelete" };
-        settings.CustomActionRouteValues = new { Controller = "Albaranes", Action = "CustomGridViewEditingPartial" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinDelete" };
+        settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsBehavior.ConfirmDelete = false;
         settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add("Id");
 
     });
 

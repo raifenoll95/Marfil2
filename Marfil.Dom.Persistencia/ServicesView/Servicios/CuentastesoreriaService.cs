@@ -360,6 +360,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             List<CuentasModel> cuentas = new List<CuentasModel>();
             var cuentastesoreria = _db.Cuentastesoreria.Where(f => f.empresa == Empresa);
+            var cuentascaja = _db.Empresas.Where(f => f.id == Empresa).Select(f => f.cuentascaja).FirstOrDefault();
+            var listcuentascaja = _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0 && f.id.StartsWith(cuentascaja)).ToList();
 
             var cuentasService = new CuentasService(_context);
 
@@ -371,6 +373,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     cuentas.Add(cuentaModel);
                 }             
+            }
+
+            foreach (var cuentacaja in listcuentascaja)
+            {
+                var cuentaModel = cuentasService.get(cuentacaja.id) as CuentasModel;
+
+                if (!cuentaModel.Bloqueado)
+                {
+                    cuentas.Add(cuentaModel);
+                }
             }
 
             return cuentas;

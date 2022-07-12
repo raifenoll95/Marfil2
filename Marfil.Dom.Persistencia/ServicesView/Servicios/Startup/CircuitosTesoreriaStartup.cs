@@ -27,6 +27,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             _circuitosService = new CircuitosTesoreriaCobrosService(context, db);
         }
 
+        //JUL22 - Se pasa a la creación de nueva empresa
         public void CrearDatos(string fichero)
         {
             var csvFile = context.ServerMapPath(fichero);

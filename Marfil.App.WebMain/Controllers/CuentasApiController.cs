@@ -90,7 +90,7 @@ namespace Marfil.App.WebMain.Controllers
 
             using (var service = FService.Instance.GetService(typeof(CuentasModel), ContextService) as CuentasService)
             {
-
+                id = id.TrimStart('0');//Por si hay ceros a la izq.
                 var list = service.get(id);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,

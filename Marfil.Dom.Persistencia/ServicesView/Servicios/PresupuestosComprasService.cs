@@ -166,9 +166,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     PresupuestosComprasLinModel.Cantidadpedida = 0;
                 }
-                var contador = ServiceHelper.GetNextId<PresupuestosCompras>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PRC"; //Presupuesto compras
+                var contador = ServiceHelper.GetNextId<PresupuestosCompras>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<PresupuestosCompras>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<PresupuestosCompras>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
 
@@ -233,9 +234,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo nuevo ID
-                var contador = ServiceHelper.GetNextId<PresupuestosCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PRC"; //Presupuesto compras
+                var contador = ServiceHelper.GetNextId<PresupuestosCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<PresupuestosCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<PresupuestosCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model,TipoDocumentos.PresupuestosCompras, _context, _db);

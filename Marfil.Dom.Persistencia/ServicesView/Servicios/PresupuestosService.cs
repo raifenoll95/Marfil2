@@ -170,9 +170,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     presupuestosLinModel.Cantidadpedida = 0;
                 }
-                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PRE";//Presupuesto ventas
+                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
 
@@ -237,9 +238,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo nuevo ID
-                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PRE";//Presupuesto ventas
+                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 // Obtener el pais del cliente(tercero)

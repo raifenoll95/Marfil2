@@ -321,6 +321,7 @@ app.controller('AsistenteAsignacionTesoreriaCtrl', ['$scope', '$rootScope', '$ht
         var importePantalla3 = $("#ImportePantalla3").val();
         var situacion = $("#SituacionFinal").val();
         var cuentatesoreria = $("#Fkcuentatesoreria").val();
+        var formaspago = $("#Fkformaspago").val();
         var circuitotesoreria = $("#Circuitotesoreria").val();
         var fechacontable = $("#FechaContable").val();
         var fechavencimiento = $("#FechaVencimientoPantalla3").val();
@@ -337,6 +338,7 @@ app.controller('AsistenteAsignacionTesoreriaCtrl', ['$scope', '$rootScope', '$ht
         $("#asignacioncarteraform input[name='ImportePantalla3']").val(importePantalla3);
         $("#asignacioncarteraform input[name='Situacion']").val(situacion);
         $("#asignacioncarteraform input[name='Fkcuentatesoreria']").val(cuentatesoreria);
+        $("#asignacioncarteraform input[name='Fkformaspago']").val(formaspago);
         $("#asignacioncarteraform input[name='Circuitotesoreria']").val(circuitotesoreria);
         $("#asignacioncarteraform input[name='FechaContable']").val(fechacontable);
         $("#asignacioncarteraform input[name='FechaVencimiento']").val(fechavencimiento);

@@ -68,6 +68,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.cuentasperdidas = viewmodel.CuentasPerdidas;
             result.cuentasexistencias = viewmodel.CuentasExistencias;
             result.cuentaPG = viewmodel.CuentaPG;
+            result.cuentascaja = viewmodel.Cuentascaja;
             result.guiaanuales = viewmodel.GuiaAnuales;
             result.guiaperdidas = viewmodel.GuiaPerdidas;
             result.criterioiva = (int)viewmodel.Criterioiva;
@@ -108,6 +109,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.cuentasperdidas = viewmodel.CuentasPerdidas;
             result.cuentasexistencias = viewmodel.CuentasExistencias;
             result.cuentaPG = viewmodel.CuentaPG;
+            result.cuentascaja = viewmodel.Cuentascaja;
             result.guiaanuales = viewmodel.GuiaAnuales;
             result.guiaperdidas = viewmodel.GuiaPerdidas;
             result.criterioiva = (int)viewmodel.Criterioiva;
@@ -146,6 +148,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.CuentasPerdidas = obj.cuentasperdidas;
             result.CuentasExistencias = obj.cuentasexistencias;
             result.CuentaPG = obj.cuentaPG;
+            result.Cuentascaja = obj.cuentascaja;
             result.GuiaAnuales = obj.guiaanuales;
             result.GuiaPerdidas = obj.guiaperdidas;
             result.Liquidacioniva = (LiquidacionIva)obj.liquidacioniva.Value;

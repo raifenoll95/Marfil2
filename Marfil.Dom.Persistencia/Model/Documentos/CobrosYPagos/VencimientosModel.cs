@@ -15,6 +15,7 @@ using Marfil.Dom.Persistencia.Model.Diseñador;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 using Marfil.Dom.Persistencia.Model.GaleriaImagenes;
+using Marfil.Inf.Genericos.Helper;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 {
@@ -160,6 +161,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Importegiro")]
         public double? Importegiro { get; set; }
+        public string SImportegiro
+        {
+            get { return (Importegiro ?? 0).ToString(string.Format("N{0}", (2))); }
+            set { Importegiro = (Funciones.Qdouble(value) ?? 0); }
+        }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Monedafactura")]
         public int? Monedafactura { get; set; }
@@ -346,7 +352,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Letra")]
         public string Letra { get; set; }
 
-        [Display(ResourceType = typeof(RPedidos), Name = "Fkseries")]
+        [Display(ResourceType = typeof(RPedidos), Name = "Fkseriescontablesremesa")]
         public string Fkseriescontablesremesa { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Referenciaremesa")]

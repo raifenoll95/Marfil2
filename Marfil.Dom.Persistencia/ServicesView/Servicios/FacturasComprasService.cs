@@ -199,9 +199,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var model = obj as FacturasComprasModel;
                 var validation = _validationService as FacturasComprasValidation;
                 validation.EjercicioId = EjercicioId;
-                var contador = ServiceHelper.GetNextId<FacturasCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "FRC"; //Facturas compra
+                var contador = ServiceHelper.GetNextId<FacturasCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<FacturasCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<FacturasCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.FacturasCompras, _context, _db);
                 var newItem = _converterModel.CreatePersitance(obj);

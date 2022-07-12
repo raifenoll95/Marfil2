@@ -133,6 +133,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuentas de caja.
+        /// </summary>
+        public static string Cuentascaja {
+            get {
+                return ResourceManager.GetString("Cuentascaja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cuentas de existencias.
         /// </summary>
         public static string CuentasExistencias {

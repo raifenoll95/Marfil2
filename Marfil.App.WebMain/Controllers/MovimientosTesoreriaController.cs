@@ -53,7 +53,8 @@ namespace Marfil.App.WebMain.Controllers
         {
             return View(new AsistenteMovimientosTesoreriaModel(ContextService)
             {
-                FechaContable = DateTime.Now
+                FechaContable = DateTime.Now,
+                FechaContableFiltro = DateTime.Now
             });
         }
 

@@ -129,6 +129,9 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
         [Display(ResourceType = typeof(REmpresas), Name = "CuentaPG")]
         public string CuentaPG { get; set; }
 
+        [Display(ResourceType = typeof(REmpresas), Name = "Cuentascaja")]
+        public string Cuentascaja { get; set; }
+
         [Display(ResourceType = typeof(REmpresas), Name = "GuiaAnuales")]
         public string GuiaAnuales { get; set; }
 

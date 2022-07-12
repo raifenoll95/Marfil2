@@ -100,6 +100,18 @@
         </div>
     </div>
 
+    @*fechas*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.EditorFor(f => Model.FechaContable)
+        </div>
+        @Html.LabelFor(f => Model.FechaVencimiento, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.FechaVencimiento, new { id = "FechaVencimientoPantalla3", @class = "form-control" })
+        </div>
+    </div>
+
     @*Cuenta tesoreria*@
     <div class="form-group">
         @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
@@ -128,7 +140,6 @@
                 cvfp.Url = Url.Action("FormasPagoApi", "Api");
                 cvfp.Valor = Model.Fkformaspago.ToString();
                 cvfp.Titulo = "Formas de pago";
-                cvfp.SoloLectura = false;
                 cvfp.Obligatorio = true;
             }
             @Html.Partial("CampoverificacionUI", cvfp)
@@ -136,18 +147,6 @@
         </div>
         <div class="col-md-10 col-md-offset-2">
             @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*fechas*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.EditorFor(f => Model.FechaContable)
-        </div>
-        @Html.LabelFor(f => Model.FechaVencimiento, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.TextBoxFor(f => Model.FechaVencimiento, new { id = "FechaVencimientoPantalla3", @class = "form-control" })
         </div>
     </div>
 
@@ -205,3 +204,71 @@
         <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
     </div>
 </form>
+
+
+<script type="text/javascript">
+    /*$(document).ready(function() {
+        cambio();
+    });*/
+
+        function cambio() {
+            var cuenta = $("#Fkcuentatesoreria").val();
+            console.log("onLoad - " + cuenta);
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    $("#cv-Fkcuentatesoreria-descripcion").val(data);
+                }
+            });
+        }
+
+        $("#Fkcuentatesoreria").on('change', function () {
+            var cuenta = this.value;
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "Cuentas")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    console.log("Onchange - " + data);
+                    //$("#cv-Fkcuentatesoreria-descripcion").empty();
+                    $("#cv-Fkcuentatesoreria-descripcion").text(data);
+                }
+            })
+        });
+
+        $("#Fkformaspago").on('change', function () {
+            var forma = this.value;
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "FormasPago")',
+                dataType: "text",
+                type: "GET",
+                data: { forma },
+                success: function (data) {
+                    //$("#cv-Fkcuentatesoreria-descripcion").empty();
+                    $("#cv-Fkformaspago-descripcion").text(data);
+                }
+            })
+        });
+
+    @*$('#Fkformaspago').one('DOMSubtreeModified', function () {
+        var forma = $("#Fkformaspago").val();
+        if (forma != null && forma != "") {
+            //cambio(cuenta);
+            $.ajax({
+                url: '@Url.Action("CambiarDescripcion", "FormasPago")',
+                dataType: "text",
+                type: "GET",
+                data: { forma },
+                success: function (data) {
+                    //$("#cv-Fkcuentatesoreria-descripcion").empty();
+                    $("#cv-Fkformaspago-descripcion").text(data);
+                }
+            });
+        }
+    });*@
+
+</script>

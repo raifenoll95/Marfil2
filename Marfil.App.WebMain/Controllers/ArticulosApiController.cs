@@ -38,6 +38,8 @@ namespace Marfil.App.WebMain.Controllers
                         categoria = TipoCategoria.Ventas;
                     else if (flujocadena == "1")
                         categoria = TipoCategoria.Compras;
+                    else if (flujocadena == "3")
+                        categoria = (TipoCategoria)3; //Muestra los artículos de todas las categorías.
                 }
                 var list = service.GetArticulosBusquedas(categoria);
 

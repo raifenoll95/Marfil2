@@ -81,9 +81,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var appService = new ApplicationHelper(_context);                                
                 if (model.Fechadocumento == null)
                     model.Fechadocumento = DateTime.Now;
-                var contador = ServiceHelper.GetNextId<Proyectos>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PRO"; //Proyecto
+                var contador = ServiceHelper.GetNextId<Proyectos>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Proyectos>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Proyectos>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 base.create(obj);

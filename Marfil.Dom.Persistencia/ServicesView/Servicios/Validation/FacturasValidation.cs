@@ -107,7 +107,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                 {
                     throw new ValidationException(RFacturas.ErrorFormaPagoMandatoRequerido);
                 }
-                else 
+                else
                 {
                     WarningList.Add(RFacturas.WarningFormaPagoMandatoRequerido);
                 }

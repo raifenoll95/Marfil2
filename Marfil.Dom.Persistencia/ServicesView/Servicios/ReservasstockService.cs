@@ -167,9 +167,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     item.Cantidadpedida = 0;
                 }
                 obj.Fkestados = appService.GetConfiguracion().Estadoreservasinicial;
-                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "RES"; //Reserva stock
+                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
                 if (_validationService.ValidarGrabar(newItem))
@@ -252,9 +253,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "RES"; //Reserva stock
+                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Reservas, _context, _db);
