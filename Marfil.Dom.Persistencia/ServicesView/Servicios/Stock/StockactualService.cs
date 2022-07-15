@@ -126,7 +126,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                                  " inner join familiasproductos as fp on fp.empresa= s.empresa and fp.id=substring(s.fkarticulos,0,3) {3}" +
                                  " inner join unidades as u on u.id= s.fkunidadesmedida" +
                                  " left join bundlelin as bl on bl.empresa= s.empresa and bl.lote= s.lote and bl.loteid=s.loteid and bl.fkalmacenes=s.fkalmacenes and bl.fkarticulos= s.fkarticulos " +
-                                 " where isnull(s.lote,'') <> '' and s.empresa='{0}' and s.fkalmacenes='{1}' {2} order by  s.lote asc,REPLACE(STR(s.loteid, 3), SPACE(1), '0') asc", empresa, fkalmacen, CrearFiltrosArticulos(articulodesde, articulohasta, lotedesde, lotehasta, acabadodesde, acabadohasta), CrearFiltrosFamilias(familiadesde, familiahasta, solotablas));
+                                 " where isnull(s.lote,'') <> '' and s.empresa='{0}' and s.fkalmacenes='{1}' {2} order by  s.lote asc,REPLACE(STR(s.loteid, 3), SPACE(1), '0') asc", empresa, fkalmacen, CrearFiltrosArticulos(articulodesde, articulohasta, lotedesde, lotehasta, acabadodesde, acabadohasta,false), CrearFiltrosFamilias(familiadesde, familiahasta, solotablas));
             return a;
         }
         #endregion
@@ -148,7 +148,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                                  " inner join unidades as u on u.id= s.fkunidadesmedida" +
                                  " left join bundlelin as bl on bl.empresa= s.empresa and bl.lote= s.lote and bl.loteid=s.loteid and bl.fkalmacenes=s.fkalmacenes and bl.fkarticulos= s.fkarticulos " +
                                  " left join bundle as b on b.empresa= bl.empresa and b.id= bl.fkbundle" +
-                                 " where s.empresa='{0}' and s.fkalmacenes='{1}' and s.lote='{4}' {2}", empresa, fkalmacen, CrearFiltrosArticulos(articulodesde, articulohasta, lotedesde, lotehasta,"",""), CrearFiltrosFamilias(familiadesde, familiahasta, solotablas),lote);
+                                 " where s.empresa='{0}' and s.fkalmacenes='{1}' and s.lote='{4}' {2}", empresa, fkalmacen, CrearFiltrosArticulos(articulodesde, articulohasta, lotedesde, lotehasta,"","",false), CrearFiltrosFamilias(familiadesde, familiahasta, solotablas),lote);
         }
 
         #endregion
@@ -176,21 +176,41 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
 
         public IEnumerable<StockActualVistaModel> GetArticulosLotes(string fkalmacen, string empresa,string articulodesde,string articulohasta,string familiadesde,string familiahasta,string lotedesde,string lotehasta,bool solotablas,TipoCategoria flujo,string acabadodesde="",string acabadohasta="")
         {
-            return _db.Database.SqlQuery<StockActualVistaModel>(GetCadenaBusquedaLotes(fkalmacen,empresa,articulodesde, articulohasta,familiadesde,familiahasta,  lotedesde,  lotehasta, solotablas,  flujo,acabadodesde,acabadohasta)).ToList();
+            var eskit = false;
+            //Comprobamos si es lote o kit
+            if(_db.Kit.Where(f => f.empresa == _context.Empresa && f.referencia == lotedesde && f.referencia == lotehasta).ToList().Count > 0)
+            {
+                eskit = true;
+            }
+
+            var sql = GetCadenaBusquedaLotes(fkalmacen, empresa, articulodesde, articulohasta, familiadesde, familiahasta, lotedesde, lotehasta, solotablas, flujo, acabadodesde, acabadohasta, eskit);
+
+            return _db.Database.SqlQuery<StockActualVistaModel>(sql).ToList();
         }
 
         private string GetCadenaBusquedaLotes(string fkalmacen, string empresa, string articulodesde, string articulohasta,
-            string familiadesde, string familiahasta, string lotedesde, string lotehasta, bool solotablas, TipoCategoria flujo,string acabadodesde,string acabadohasta)
+            string familiadesde, string familiahasta, string lotedesde, string lotehasta, bool solotablas, TipoCategoria flujo,string acabadodesde,string acabadohasta, bool eskit)
         {
+            if (eskit)
+            {
+                return string.Format("select kitlin.*,CAST(kitlin.cantidad as float) as [Cantidad],u.decimalestotales as [Decimalesmedidas],a.descripcionabreviada as [Descripcion],fp.id as [Fkfamilias],kit.referencia as [Bundle],REPLACE(STR(kitlin.loteid, 3), SPACE(1), '0') as Loteidentificador  " +
+                                 " from kit as kit " +
+                                 " inner join KitLin as kitlin on kit.id = kitlin.fkkit " +
+                                 " inner join articulos as a on a.empresa= kit.empresa and a.id=kitlin.fkarticulos and (a.categoria=0 or a.categoria=" + (int)flujo + ") " +
+                                 " inner join familiasproductos as fp on fp.empresa= kit.empresa and fp.id=substring(kitlin.fkarticulos,0,3) {3} " +
+                                 " inner join unidades as u on u.id= kitlin.fkunidades " +
+                                 " where isnull(kit.referencia,'') <> '' and kit.empresa='{0}' and kit.fkalmacen='{1}' {2} order by kitlin.lote asc,REPLACE(STR(kitlin.loteid, 3), SPACE(1), '0') asc", empresa, fkalmacen, CrearFiltrosArticulos(articulodesde, articulohasta, lotedesde, lotehasta, acabadodesde, acabadohasta,eskit), CrearFiltrosFamilias(familiadesde, familiahasta, solotablas));
+            }
             return string.Format("select s.*,s.cantidaddisponible as [Cantidad],u.decimalestotales as [Decimalesmedidas],a.descripcionabreviada as [Descripcion],fp.id as [Fkfamilias],concat(bl.fkbundlelote,bl.fkbundle) as [Bundle],REPLACE(STR(s.loteid, 3), SPACE(1), '0') as Loteidentificador   from stockactual as s " +
                                  " inner join articulos as a on a.empresa= s.empresa and a.id=s.fkarticulos and (a.categoria=0 or a.categoria="+ (int)flujo +")" +
                                  " inner join familiasproductos as fp on fp.empresa= s.empresa and fp.id=substring(s.fkarticulos,0,3) {3}" +
                                  " inner join unidades as u on u.id= s.fkunidadesmedida" +
                                  " left join bundlelin as bl on bl.empresa= s.empresa and bl.lote= s.lote and bl.loteid=s.loteid and bl.fkalmacenes=s.fkalmacenes and bl.fkarticulos= s.fkarticulos " +
-                                 " where isnull(s.lote,'') <> '' and s.empresa='{0}' and s.fkalmacenes='{1}' {2} order by  s.lote asc,REPLACE(STR(s.loteid, 3), SPACE(1), '0') asc", empresa,fkalmacen,CrearFiltrosArticulos(articulodesde, articulohasta,lotedesde,lotehasta,acabadodesde,acabadohasta), CrearFiltrosFamilias(familiadesde, familiahasta,solotablas));
+                                 " left join kitlin as k on k.empresa= s.empresa and k.lote= s.lote and k.loteid=s.loteid and k.fkalmacenes=s.fkalmacenes and k.fkarticulos= s.fkarticulos " +
+                                 " where isnull(s.lote,'') <> '' and s.empresa='{0}' and s.fkalmacenes='{1}' and k.id is null {2} order by  s.lote asc,REPLACE(STR(s.loteid, 3), SPACE(1), '0') asc", empresa,fkalmacen,CrearFiltrosArticulos(articulodesde, articulohasta,lotedesde,lotehasta,acabadodesde,acabadohasta,eskit), CrearFiltrosFamilias(familiadesde, familiahasta,solotablas));
         }
 
-        private string CrearFiltrosArticulos(string articulodesde, string articulohasta,string lotedesde,string lotehasta,string acabadodesde,string acabadohasta)
+        private string CrearFiltrosArticulos(string articulodesde, string articulohasta,string lotedesde,string lotehasta,string acabadodesde,string acabadohasta, bool eskit)
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(articulodesde))
@@ -215,11 +235,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
 
             if (!string.IsNullOrEmpty(lotedesde))
             {
-                sb.AppendFormat(" AND s.lote>='{0}' ", lotedesde);
+                if (eskit)
+                {
+                    sb.AppendFormat(" AND kit.referencia>='{0}' ", lotedesde);
+                }
+                else
+                {
+                    sb.AppendFormat(" AND s.lote>='{0}' ", lotedesde);
+                }
+                
             }
             if (!string.IsNullOrEmpty(lotehasta))
             {
-                sb.AppendFormat(" AND s.lote<='{0}' ", lotehasta);
+                if (eskit)
+                {
+                    sb.AppendFormat(" AND kit.referencia<='{0}' ", lotehasta);
+                }
+                else
+                {
+                    sb.AppendFormat(" AND s.lote<='{0}' ", lotehasta);
+                }
+
             }
             return sb.ToString();
         }

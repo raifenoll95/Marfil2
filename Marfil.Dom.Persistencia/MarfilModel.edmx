@@ -429,7 +429,7 @@
           <Property Name="revision" Type="nvarchar" MaxLength="1" />
           <Property Name="decimalesmonedas" Type="int" />
           <Property Name="decimalesmedidas" Type="int" />
-          <Property Name="bundle" Type="nvarchar" MaxLength="2" />
+          <Property Name="bundle" Type="nvarchar" MaxLength="15" />
           <Property Name="tblnum" Type="int" />
           <Property Name="contenedor" Type="nvarchar" MaxLength="12" />
           <Property Name="sello" Type="nvarchar" MaxLength="10" />
@@ -1910,7 +1910,7 @@
           <Property Name="revision" Type="nvarchar" MaxLength="1" />
           <Property Name="decimalesmonedas" Type="int" />
           <Property Name="decimalesmedidas" Type="int" />
-          <Property Name="bundle" Type="nvarchar" MaxLength="2" />
+          <Property Name="bundle" Type="nvarchar" MaxLength="15" />
           <Property Name="tblnum" Type="int" />
           <Property Name="contenedor" Type="nvarchar" MaxLength="12" />
           <Property Name="sello" Type="nvarchar" MaxLength="10" />
@@ -4003,7 +4003,7 @@
           <Property Name="revision" Type="nvarchar" MaxLength="1" />
           <Property Name="decimalesmonedas" Type="int" />
           <Property Name="decimalesmedidas" Type="int" />
-          <Property Name="bundle" Type="nvarchar" MaxLength="2" />
+          <Property Name="bundle" Type="nvarchar" MaxLength="15" />
           <Property Name="tblnum" Type="int" />
           <Property Name="contenedor" Type="nvarchar" MaxLength="12" />
           <Property Name="sello" Type="nvarchar" MaxLength="10" />
@@ -8180,7 +8180,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="revision" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="decimalesmonedas" Type="Int32" />
           <Property Name="decimalesmedidas" Type="Int32" />
-          <Property Name="bundle" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="bundle" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="tblnum" Type="Int32" />
           <Property Name="contenedor" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="sello" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -9863,7 +9863,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="revision" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="decimalesmonedas" Type="Int32" />
           <Property Name="decimalesmedidas" Type="Int32" />
-          <Property Name="bundle" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="bundle" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="tblnum" Type="Int32" />
           <Property Name="contenedor" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="sello" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -10687,7 +10687,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="revision" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="decimalesmonedas" Type="Int32" />
           <Property Name="decimalesmedidas" Type="Int32" />
-          <Property Name="bundle" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="bundle" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="tblnum" Type="Int32" />
           <Property Name="contenedor" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="sello" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />

@@ -732,7 +732,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Reservasstock
         [Display(ResourceType = typeof(RReservasstock), Name = "Pesobruto")]
         public double? Pesobruto { get; set; }
 
-        [MaxLength(2,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(15,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RReservasstock), Name = "Bundle")]
         public string Bundle { get; set; }
 

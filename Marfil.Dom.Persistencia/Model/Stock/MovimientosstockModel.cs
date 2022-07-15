@@ -103,6 +103,8 @@ namespace Marfil.Dom.Persistencia.Model.Stock
         public int Ubicaciondestino { get; set; }
 
         public TipoOperacionService Tipomovimiento { get; set; }
+
+        public string Bundle { get; set; }
     }
 
     public class MovimientosstockModelHistorico : IStockPieza

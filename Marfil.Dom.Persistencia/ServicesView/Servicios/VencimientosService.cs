@@ -1233,7 +1233,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else
                 {
-                    throw new ValidationException("El campo Cobrador del asistente debe tener un valor");
+                    throw new ValidationException("El campo Cuenta de tesorería debe completarse");
                 }
 
             }

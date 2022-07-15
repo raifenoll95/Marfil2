@@ -1,4 +1,5 @@
 ﻿@using System.Web.UI.WebControls
+@using System.Drawing
 @using DevExpress.Data
 @using Marfil.App.WebMain.Misc
 @using Marfil.Dom.Persistencia.Helpers
@@ -26,8 +27,8 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        //general
-        settings.Name = "GridViewLineas";
+//general
+settings.Name = "GridViewLineas";
         settings.KeyFieldName = "Id";
         settings.CallbackRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLin" };
         settings.EnableRowsCache = true;
@@ -37,8 +38,8 @@
         settings.SettingsPager.Visible = true;
 
 
-        //edition
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinAddNew" };
+//edition
+settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinDelete" };
         settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
@@ -49,7 +50,141 @@
 
         settings.Columns.Add("Id");
 
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Baseimponible";
+            j.Width = Unit.Pixel(150);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fktiposiva";
+            j.Width = Unit.Pixel(350);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Porcentajeiva";
+            j.Width = Unit.Pixel(150);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Cuotaiva";
+            j.Width = Unit.Pixel(350);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Porcentajerecargoequivalencia";
+            j.Width = Unit.Pixel(350);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Importerecargoequivalencia";
+            j.Width = Unit.Pixel(150);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Subtotal";
+            j.Width = Unit.Pixel(350);
+    //j.ReadOnly = true;
+});
+
+        settings.Columns["Baseimponible"].Visible = true;
+        settings.Columns["Fktiposiva"].Visible = true;
+        settings.Columns["Porcentajeiva"].Visible = true;
+        settings.Columns["Cuotaiva"].Visible = true;
+        settings.Columns["Porcentajerecargoequivalencia"].Visible = true;
+        settings.Columns["Importerecargoequivalencia"].Visible = true;
+        settings.Columns["Subtotal"].Visible = true;
+
+        settings.InitNewRow += (s, e) =>
+        {
+    ////Si es un registro nuevo
+    e.NewValues["Baseimponible"] = "";
+            e.NewValues["Fktiposiva"] = "";
+            e.NewValues["Porcentajeiva"] = "";
+            e.NewValues["Cuotaiva"] = "";
+            e.NewValues["Porcentajerecargoequivalencia"] = "";
+            e.NewValues["Importerecargoequivalencia"] = "";
+            e.NewValues["Subtotal"] = "";
+
+        };
+
+        settings.CellEditorInitialize = (s, e) =>
+        {
+
+            var editor = e.Editor as ASPxEdit;
+
+            if (editor == null) return;
+            editor.ValidationSettings.Display = Display.Dynamic;
+
+            if (e.Column.FieldName == settings.KeyFieldName)
+            {
+                editor.ValidationSettings.RegularExpression.ValidationExpression = "[0-9]{1,2}";
+                editor.Focus();
+            }
+
+
+        };
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(100);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 4;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+        settings.CellEditorInitialize += (sender, args) =>
+        {
+
+            if (args.Column.FieldName == settings.KeyFieldName)
+            {
+                ASPxTextBox tb = (ASPxTextBox)args.Editor;
+        //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
+        tb.Focus();
+            }
+        };
+
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChangedTercero(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridViewComponente.Focus();}";
+
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+//display
+settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
     });
+
 
     if (ViewData["EditError"] != null)
     {
@@ -57,7 +192,109 @@
 
     }
 
-
-
 }
+
 @grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+
+        function FunOnFocusedRowChangedTercero(s, e) {
+            $("#GridViewLineas").unbind("keydown");
+            $('#GridViewLineas').keydown(function (event) {
+
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                var index = s.GetFocusedRowIndex();
+
+                switch (keycode) {
+                    case 113://editar
+                        if (!GridViewLineas.IsEditing()) {
+                            GridViewLineas.StartEditRow(index);
+                        }
+                        break;
+                    case 46://Eliminar
+                        if (!GridViewLineas.IsEditing()) {
+                            GridViewLineas.DeleteRow(index);
+                        }
+                        break;
+                    case 27://escape
+                        if (GridViewLineas.IsEditing()) {
+                            GridViewLineas.CancelEdit();
+                            GridViewLineas.Focus();
+                        }
+                        break;
+                    case 13://enter
+                        if (GridViewLineas.IsEditing()) {
+                            GridViewLineas.Focus();
+                            GridViewLineas.UpdateEdit();
+                        }
+                        break;
+                    case 107://mas
+                        CreateRow();
+                        break;
+                }
+
+            });
+        }
+
+        //Se le llama cuando le das a nuevo registro
+        function CreateLineasRowTercero() {
+
+            if (!GridViewLineas.IsEditing()) {
+                GridViewLineas.Focus();
+                var rowIndex = GridViewLineas.GetFocusedRowIndex();
+                GridViewLineas.AddNewRow();
+            }
+        }
+
+        //Le pasamos al ControllerHelper.js el input que ha introducido el usuario en el campo
+        function CuentaTerceroChanged(s, e) {
+            console.log(s.GetValue());
+            eventAggregator.Publish("InputCodCuenta", s.GetValue());
+            s.Focus();
+        }
+
+        //Se le llama cuando le das a la lupa para buscar el codigo del tercero
+        function OnKeyPressCuentasTercero(s, e) {
+            //console.log("keydown");
+            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+            if (keycode == 66 && e.htmlEvent.ctrlKey) {
+                SearchTercero();
+            }
+            if (keycode == 13) {
+                console.log("ha presionado");
+            }
+        }
+
+        //Se le llama cuando le das a la lupa de la columna
+        function SearchTercero() {
+
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "CodTercero",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("TercerosApi","Api")',
+                Titulo: "Busqueda de terceros",
+                Params: "{\"nivel\":\"0\"}"
+            };
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+        }
+
+        //Tenemos que tener a disabled la descripcion para que el usuario no la pueda modificar
+        function DescripcionDisabledTerceros(s, e) {
+            s.Focus();
+            GridViewLineas.GetEditor("DescripcionTercero").SetEnabled(false);
+        }
+
+        function CreateRow() {
+            if (!GridViewLineas.IsEditing()) {
+                GridViewLineas.Focus();
+                GridViewLineas.AddNewRow();
+            }
+        }
+
+        $(document).ready(function () {
+            GridViewLineas.Focus();
+        });
+
+</script>

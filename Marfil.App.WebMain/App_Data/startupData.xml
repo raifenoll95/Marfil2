@@ -1,114 +1,115 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<xml>      
-  <item id="monedas">
-    <titulo>Divisas</titulo>
-    <descripcion>Listado de divisas: Contiene una lista básica de divisas del mundo</descripcion>
-    <data>~/App_Data/Otros/monedas.csv</data>
-  </item>
+<xml>
+	<item id="monedas">
+		<titulo>Divisas</titulo>
+		<descripcion>Listado de divisas: Contiene una lista básica de divisas del mundo</descripcion>
+		<data>~/App_Data/Otros/monedas.csv</data>
+	</item>
 
-  <item id="unidades">
-    <titulo>Unidades de medida</titulo>
-    <descripcion>Listado de unidades de medida: Contiene una lista de las principales unidades de medida</descripcion>
-    <data>~/App_Data/Otros/unidades.csv</data>
-  </item>
+	<item id="unidades">
+		<titulo>Unidades de medida</titulo>
+		<descripcion>Listado de unidades de medida: Contiene una lista de las principales unidades de medida</descripcion>
+		<data>~/App_Data/Otros/unidades.csv</data>
+	</item>
 
-  <item id="situacionestesoreria">
-    <titulo>Situaciones de tesorería</titulo>
-    <descripcion>Listado de situaciones de tesorería: Contiene una lista de las principales situaciones de tesorería</descripcion>
-    <data>~/App_Data/Otros/situacionestesoreria.csv</data>
-  </item>
-	
-  <!--<item id="circuitostesoreria">
+	<item id="situacionestesoreria">
+		<titulo>Situaciones de tesorería</titulo>
+		<descripcion>Listado de situaciones de tesorería: Contiene una lista de las principales situaciones de tesorería</descripcion>
+		<data>~/App_Data/Otros/situacionestesoreria.csv</data>
+	</item>
+
+	<!--Se cambio por empresa los circuitos Jul2022-->
+	<!--<item id="circuitostesoreria">
     <titulo>Circuitos de tesorería</titulo>
     <descripcion>Listado de circuitos de tesorería: Contiene una lista de los principales circuitos de tesorería</descripcion>
     <data>~/App_Data/Otros/circuitostesoreria.csv</data>
   </item>-->
 
-  <item id="bancos">
-    <titulo>Bancos</titulo>
-    <descripcion>Listado de bancos: Contiene una lista básica de los bancos de España</descripcion>
-    <data>~/App_Data/Otros/bancos.csv</data>
-  </item>
-  
-  <item id="provincias">
-    <titulo>Provincias</titulo>
-    <descripcion>Listado de provincias: Contiene la lista de las provincias de España</descripcion>
-    <data>~/App_Data/Otros/provincias.csv</data>
-  </item>
-  
-  <item id="municipios">
-    <titulo>Municipios</titulo>
-    <descripcion>Listado de municipios: Contiene la lista de municipios de España</descripcion>
-    <data>~/App_Data/Otros/municipios.csv</data>
-  </item>
+	<item id="bancos">
+		<titulo>Bancos</titulo>
+		<descripcion>Listado de bancos: Contiene una lista básica de los bancos de España</descripcion>
+		<data>~/App_Data/Otros/bancos.csv</data>
+	</item>
 
-  <item id="plangeneral" readonly="true">
-    <titulo>Planes generales contables</titulo>
-    <descripcion>Listado de los planes generales contables: Contiene la lista de los planes generales contable que soporta la aplicación por defecto</descripcion>
-    <data>~/App_Data/Otros/planesgenerales.csv</data>
-  </item>
+	<item id="provincias">
+		<titulo>Provincias</titulo>
+		<descripcion>Listado de provincias: Contiene la lista de las provincias de España</descripcion>
+		<data>~/App_Data/Otros/provincias.csv</data>
+	</item>
 
-  <item id="tarifas" readonly="true">
-    <titulo>Tarifas base</titulo>
-    <descripcion>Listado de las tarifas de compra y venta que se instalan en la aplicación por defecto</descripcion>
-    <data>~/App_Data/Otros/tarifasbase.csv</data>
-  </item>
+	<item id="municipios">
+		<titulo>Municipios</titulo>
+		<descripcion>Listado de municipios: Contiene la lista de municipios de España</descripcion>
+		<data>~/App_Data/Otros/municipios.csv</data>
+	</item>
 
-  <item id="estados" readonly="true">
-    <titulo>Estados de los documentos</titulo>
-    <descripcion>Listado base de los documentos de la aplicación</descripcion>
-    <data>~/App_Data/Otros/estadosdocumentos.csv</data>
-  </item>
+	<item id="plangeneral" readonly="true">
+		<titulo>Planes generales contables</titulo>
+		<descripcion>Listado de los planes generales contables: Contiene la lista de los planes generales contable que soporta la aplicación por defecto</descripcion>
+		<data>~/App_Data/Otros/planesgenerales.csv</data>
+	</item>
 
-  <!--Se cambio por empresa los documentos Nov2021-->
-  <!--<item id="documentos" readonly="true">
+	<item id="tarifas" readonly="true">
+		<titulo>Tarifas base</titulo>
+		<descripcion>Listado de las tarifas de compra y venta que se instalan en la aplicación por defecto</descripcion>
+		<data>~/App_Data/Otros/tarifasbase.csv</data>
+	</item>
+
+	<item id="estados" readonly="true">
+		<titulo>Estados de los documentos</titulo>
+		<descripcion>Listado base de los documentos de la aplicación</descripcion>
+		<data>~/App_Data/Otros/estadosdocumentos.csv</data>
+	</item>
+
+	<!--Se cambio por empresa los documentos Nov2021-->
+	<!--<item id="documentos" readonly="true">
     <titulo>Documentos de impresión</titulo>
     <descripcion>Documentos de impresión por defecto.</descripcion>
     <data>~/App_Data/Otros/documentos.csv</data>
   </item>-->
 
-  <item id="criteriosagrupacion" readonly="true">
-    <titulo>Criterios agrupación de facturación</titulo>
-    <descripcion>Genera la agrupación por defecto del proceso de facturación.</descripcion>
-    <data>~/App_Data/Otros/criteriosagrupacion.csv</data>
-  </item>
+	<item id="criteriosagrupacion" readonly="true">
+		<titulo>Criterios agrupación de facturación</titulo>
+		<descripcion>Genera la agrupación por defecto del proceso de facturación.</descripcion>
+		<data>~/App_Data/Otros/criteriosagrupacion.csv</data>
+	</item>
 
-  <item id="tablasvarias" readonly="true">
-    <titulo>Tablas varias</titulo>
-    <descripcion>El tablas varias se encuentra información de ámbito general que va a utilizar la aplicación. Por ejemplo: paises, nombre de almacenes, etc. </descripcion>  
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de contratos laborales" id="950" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposcontratos.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de estado civil" id="960" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposestadocivil.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasPaisesModel" nombre="Paises ISO 3166" id="3166" tipo="2" noeditable="true">~/App_Data/TablasVarias/paises.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposAlbaranesModel" nombre="Tipos de albaranes" id="1010" tipo="1" noeditable="true">~/App_Data/TablasVarias/tiposalbaranes.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Idiomas aplicación" id="1100" tipo="2" noeditable="true">~/App_Data/TablasVarias/idiomas.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Idiomas descripciones" id="500" tipo="2" noeditable="false">~/App_Data/TablasVarias/idiomasdescripciones.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Incoterms" id="5" tipo="1" noeditable="true">~/App_Data/TablasVarias/incoterms.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasModosPagoModel" nombre="Modos de pago" id="2000" tipo="2" noeditable="true">~/App_Data/TablasVarias/modospago.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de direcciones" id="2010" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposdirecciones.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de empresa" id="2023" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposempresa.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de via" id="2030" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposvia.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de contacto" id="2040" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposcontacto.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasCargosEmpresaModel" nombre="Cargos de empresa" id="2050" tipo="2" noeditable="false">~/App_Data/TablasVarias/cargosempresa.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Operaciones modelo 340 AEAT" id="2060" tipo="4" noeditable="true">~/App_Data/TablasVarias/claves340.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposNif" nombre="Tipos de identificación fiscal" id="2070" tipo="4" noeditable="true">~/App_Data/TablasVarias/tiposnif.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Grupos de formas de pago" id="940" tipo="2" noeditable="false">~/App_Data/TablasVarias/gruposformaspago.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasEstadosStock" nombre="Estados del Stock" id="2110" tipo="2" noeditable="true">~/App_Data/TablasVarias/estadostock.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposDocumentos" nombre="Tipos de documentos" id="2120" tipo="2" noeditable="true">~/App_Data/TablasVarias/tiposdocumentos.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="" id="cabecera" tipo="0" noeditable="true">~/App_Data/TablasVarias/tablasvariasclientes.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Modos de contacto" id="2150" tipo="5" noeditable="false">~/App_Data/TablasVarias/modoscontacto.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Comentarios asientos" id="70" tipo="4" noeditable="false">~/App_Data/TablasVarias/comentariosasientos.csv</data>    
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposAsientosModel" nombre="Tipos de asientos" id="72" tipo="4" noeditable="true">~/App_Data/TablasVarias/tiposasientos.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Descripción asientos" id="76" tipo="4" noeditable="false">~/App_Data/TablasVarias/descripcionasientos.csv</data>        
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de facturas SII" id="2088"  tipo="4" noeditable="true">~/App_Data/TablasVarias/tiposfacturasSII.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Clave Régimen especial emitidas (SII)" id="2090" tipo="4" noeditable="true">~/App_Data/TablasVarias/claveregimenespecialemitidas.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Clave Régimen especial recibidas (SII)" id="2092" tipo="4" noeditable="true">~/App_Data/TablasVarias/claveregimenespecialrecibidas.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposDocumentosContables" nombre="Tipos de documentos contables" id="2121" tipo="2" noeditable="true">~/App_Data/TablasVarias/tiposdocumentoscontables.csv</data>        
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasMotivoBloqueoCuentasModel" nombre="Motivos bloqueo cuentas/registros" id="12" tipo="0" noeditable="false">~/App_Data/TablasVarias/motivosbloqueocuentas.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Situación de las comisiones" id="50" tipo="1" noeditable="false">~/App_Data/TablasVarias/situacioncomisiones.csv</data>   
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de ubicación" id="970" tipo="1" noeditable="false">~/App_Data/TablasVarias/tiposubicacion.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Acción CRM" id="2130" tipo="5" noeditable="false">~/App_Data/TablasVarias/accioncrm.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Reacción CRM" id="2140" tipo="5" noeditable="false">~/App_Data/TablasVarias/reaccioncrm.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Margen tiempo decisión" id="2170" tipo="5" noeditable="false">~/App_Data/TablasVarias/margentiempodecision.csv</data>
-    <data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Clasificación artículos" id="2105" tipo="1" noeditable="true">~/App_Data/TablasVarias/clasificacionarticulos.csv</data>
-  </item>
+	<item id="tablasvarias" readonly="true">
+		<titulo>Tablas varias</titulo>
+		<descripcion>El tablas varias se encuentra información de ámbito general que va a utilizar la aplicación. Por ejemplo: paises, nombre de almacenes, etc. </descripcion>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de contratos laborales" id="950" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposcontratos.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de estado civil" id="960" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposestadocivil.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasPaisesModel" nombre="Paises ISO 3166" id="3166" tipo="2" noeditable="true">~/App_Data/TablasVarias/paises.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposAlbaranesModel" nombre="Tipos de albaranes" id="1010" tipo="1" noeditable="true">~/App_Data/TablasVarias/tiposalbaranes.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Idiomas aplicación" id="1100" tipo="2" noeditable="true">~/App_Data/TablasVarias/idiomas.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Idiomas descripciones" id="500" tipo="2" noeditable="false">~/App_Data/TablasVarias/idiomasdescripciones.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Incoterms" id="5" tipo="1" noeditable="true">~/App_Data/TablasVarias/incoterms.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasModosPagoModel" nombre="Modos de pago" id="2000" tipo="2" noeditable="true">~/App_Data/TablasVarias/modospago.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de direcciones" id="2010" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposdirecciones.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de empresa" id="2023" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposempresa.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de via" id="2030" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposvia.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de contacto" id="2040" tipo="2" noeditable="false">~/App_Data/TablasVarias/tiposcontacto.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasCargosEmpresaModel" nombre="Cargos de empresa" id="2050" tipo="2" noeditable="false">~/App_Data/TablasVarias/cargosempresa.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Operaciones modelo 340 AEAT" id="2060" tipo="4" noeditable="true">~/App_Data/TablasVarias/claves340.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposNif" nombre="Tipos de identificación fiscal" id="2070" tipo="4" noeditable="true">~/App_Data/TablasVarias/tiposnif.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Grupos de formas de pago" id="940" tipo="2" noeditable="false">~/App_Data/TablasVarias/gruposformaspago.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasEstadosStock" nombre="Estados del Stock" id="2110" tipo="2" noeditable="true">~/App_Data/TablasVarias/estadostock.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposDocumentos" nombre="Tipos de documentos" id="2120" tipo="2" noeditable="true">~/App_Data/TablasVarias/tiposdocumentos.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="" id="cabecera" tipo="0" noeditable="true">~/App_Data/TablasVarias/tablasvariasclientes.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Modos de contacto" id="2150" tipo="5" noeditable="false">~/App_Data/TablasVarias/modoscontacto.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Comentarios asientos" id="70" tipo="4" noeditable="false">~/App_Data/TablasVarias/comentariosasientos.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposAsientosModel" nombre="Tipos de asientos" id="72" tipo="4" noeditable="true">~/App_Data/TablasVarias/tiposasientos.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Descripción asientos" id="76" tipo="4" noeditable="false">~/App_Data/TablasVarias/descripcionasientos.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de facturas SII" id="2088"  tipo="4" noeditable="true">~/App_Data/TablasVarias/tiposfacturasSII.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Clave Régimen especial emitidas (SII)" id="2090" tipo="4" noeditable="true">~/App_Data/TablasVarias/claveregimenespecialemitidas.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Clave Régimen especial recibidas (SII)" id="2092" tipo="4" noeditable="true">~/App_Data/TablasVarias/claveregimenespecialrecibidas.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasTiposDocumentosContables" nombre="Tipos de documentos contables" id="2121" tipo="2" noeditable="true">~/App_Data/TablasVarias/tiposdocumentoscontables.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasMotivoBloqueoCuentasModel" nombre="Motivos bloqueo cuentas/registros" id="12" tipo="0" noeditable="false">~/App_Data/TablasVarias/motivosbloqueocuentas.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Situación de las comisiones" id="50" tipo="1" noeditable="false">~/App_Data/TablasVarias/situacioncomisiones.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Tipos de ubicación" id="970" tipo="1" noeditable="false">~/App_Data/TablasVarias/tiposubicacion.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Acción CRM" id="2130" tipo="5" noeditable="false">~/App_Data/TablasVarias/accioncrm.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Reacción CRM" id="2140" tipo="5" noeditable="false">~/App_Data/TablasVarias/reaccioncrm.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Margen tiempo decisión" id="2170" tipo="5" noeditable="false">~/App_Data/TablasVarias/margentiempodecision.csv</data>
+		<data clase="Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel" nombre="Clasificación artículos" id="2105" tipo="1" noeditable="true">~/App_Data/TablasVarias/clasificacionarticulos.csv</data>
+	</item>
 </xml>
