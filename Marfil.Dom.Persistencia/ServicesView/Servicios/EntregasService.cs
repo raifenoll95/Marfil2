@@ -444,6 +444,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Grueso = linea.Grueso ?? 0,
                     Fkunidadesmedida = linea.Fkunidades,
                     Metros = linea.Metros ?? 0,
+                    Bundle = linea.Bundle,
                     Decimalesmedidas = linea.Decimalesmedidas
                 });
                 resultado.Lineas= CrearNuevasLineas(resultado.Lineas, item);

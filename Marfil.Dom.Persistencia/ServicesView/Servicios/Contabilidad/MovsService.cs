@@ -1041,7 +1041,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var tipoAsientoDefecto = "F4";
 
             //guia contable defecto
-            string GuiaContDef = _db.Guiascontables.Where(g=> g.defecto ).FirstOrDefault()?.id;
+            string GuiaContDef = _db.Guiascontables.Where(g=> g.empresa == Empresa && g.defecto ).FirstOrDefault()?.id;
 
             //comentarios defecto
             var configuracionService = new ConfiguracionService(_context, _db);

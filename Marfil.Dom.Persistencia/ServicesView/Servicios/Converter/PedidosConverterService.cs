@@ -75,7 +75,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 , Fkpresupuestosreferencia = f.fkpresupuestosreferencia
                 , EnAlbaran = _db.AlbaranesLin.Any(j => j.empresa == Empresa && j.fkpedidos == obj.id && j.fkpedidosid == f.id) || _db.Albaranes.Any(j => j.empresa == obj.empresa && j.fkpedidos == result.Referencia)
                 , Fkalbaranreferencia = GetReferenciasDocumentos(obj, f)
-                , idAlbaranSalidasVarias = _db.Series.Where(g => g.salidasvarias == true).Select(g => g.id).SingleOrDefault()
+                , idAlbaranSalidasVarias = _db.Series.Where(g => g.empresa == Empresa && g.salidasvarias == true).Select(g => g.id).SingleOrDefault()
                 , Orden = f.orden ?? f.id
             }).ToList();
 
@@ -103,7 +103,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Id = f.id
                 , Fecha = f.fecha
                 , Fkoperario = f.fkoperario
-                , DescripcionOperario = _db.Cuentas.Where(j => j.id == f.fkoperario).Select(j => j.descripcion).SingleOrDefault()
+                , DescripcionOperario = _db.Cuentas.Where(j => j.empresa == Empresa && j.id == f.fkoperario).Select(j => j.descripcion).SingleOrDefault()
                 , Fktarea = f.fktarea
                 , Descripcion = f.descripcion
                 , Cantidad = (float)f.cantidad

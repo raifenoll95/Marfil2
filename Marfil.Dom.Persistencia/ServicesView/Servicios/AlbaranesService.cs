@@ -901,7 +901,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 Porcentajeiva = tiposivaObj.PorcentajeIva,
                 Porcentajerecargoequivalencia = tiposivaObj.PorcentajeRecargoEquivalencia,
                 Canal = model.Canal
-
             }
              );
 
@@ -942,9 +941,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                             Empresa) as MovimientosstockModel : null;
                     if (model.Modificarmedidas)
                     {
-                        ancho = model.Ancho;
-                        largo = model.Largo;
-                        grueso = model.Grueso;
+                        ancho = model.Ancho == 0 ? ancho : model.Ancho;
+                        largo = model.Largo == 0 ? largo : model.Largo;
+                        grueso = model.Grueso == 0 ? grueso : model.Grueso;
                     }
                     else
                     {
@@ -957,11 +956,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         throw new ValidationException(string.Format("La cantidad indicada para el lote {0} es superior a la que hay en el stock actual", string.Format("{0}{1}", linea.Lote, Funciones.RellenaCod(linea.Loteid, 3))));
                     var unidadesObj = unidadesService.get(familiaObj.Fkunidadesmedida) as UnidadesModel;
                     var tiposivaObj = tiposivaService.get(articuloObj.Fktiposiva) as TiposIvaModel;
-                    var metros = UnidadesService.CalculaResultado(unidadesObj, articuloObj.Lotefraccionable ? model.Cantidad :linea.Cantidad, largo, ancho, grueso, model.Metros);
+                    //var metros = UnidadesService.CalculaResultado(unidadesObj, articuloObj.Lotefraccionable ? model.Cantidad :linea.Cantidad, largo, ancho, grueso, model.Metros);
+                    var metros = UnidadesService.CalculaResultado(unidadesObj, linea.Cantidad, largo, ancho, grueso, model.Metros);
                     linea.Metros = metros;
+
+                    // Asignar importe según tarifa del cliente si es un KIT
+                    if (!string.IsNullOrEmpty(linea.Bundle))
+                    {
+                        /*var seriekit = _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == TipoDocumentos.Kit.ToString()).FirstOrDefault().id;
+
+                        if (linea.Bundle.Substring(0, seriekit.Length).Equals(seriekit))
+                        {*/
+                        var tarifacli = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == model.Fkcuenta).FirstOrDefault().fktarifas;
+                        model.Precio = (double)_db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifacli && f.fkarticulos == linea.Fkarticulos).FirstOrDefault().precio;
+                        //}
+                    }
+
                     var bruto = linea.Metros * model.Precio;
                     var importedescuento = Math.Round(((bruto) * model.Descuento / 100.0), model.Decimalesmonedas);
-                    var total = bruto - importedescuento;
+                    var total = bruto - importedescuento;                  
 
                     listado.Add(new AlbaranesLinModel()
                     {
@@ -972,7 +985,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Lote = linea.Lote,
                         Tabla = Funciones.Qint(linea.Loteid),
                         Tblnum = Funciones.Qint(linea.Loteid),
-                        Cantidad = articuloObj.Lotefraccionable ? model.Cantidad : linea.Cantidad,
+                        Cantidad = linea.Cantidad, //articuloObj.Lotefraccionable ? model.Cantidad : linea.Cantidad,
                         Largo = largo,
                         Ancho = ancho,
                         Grueso = grueso,
@@ -987,7 +1000,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fktiposiva = tiposivaObj.Id,
                         Porcentajeiva = tiposivaObj.PorcentajeIva,
                         Porcentajerecargoequivalencia = tiposivaObj.PorcentajeRecargoEquivalencia,
-                        Bundle = model.Tipopieza == TipoPieza.Bundle ? model.Lote.Replace(linea.Lote, string.Empty) : string.Empty,
+                        Bundle = linea.Bundle,//model.Tipopieza == TipoPieza.Bundle ? model.Lote.Replace(linea.Lote, string.Empty) : string.Empty,
                         Caja = model.Caja,
                         Canal = model.Canal,
                         Flagidentifier = Guid.NewGuid()

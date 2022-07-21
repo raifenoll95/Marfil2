@@ -463,9 +463,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var grueso = linea.Grueso;
                     if (model.Modificarmedidas)
                     {
-                        ancho = model.Ancho;
-                        largo = model.Largo;
-                        grueso = model.Grueso;
+                        ancho = model.Ancho == 0 ? ancho : model.Ancho;
+                        largo = model.Largo == 0 ? largo : model.Largo;
+                        grueso = model.Grueso == 0 ? grueso : model.Grueso;
                     }
                     else
                     {
@@ -482,21 +482,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var tiposivaObj = tiposivaService.get(articuloObj.Fktiposiva) as TiposIvaModel;
                     var metros = UnidadesService.CalculaResultado(unidadesObj, linea.Cantidad, largo, ancho, grueso, model.Metros);
                     linea.Metros = metros;
-                    var bruto = linea.Metros * model.Precio;
-                    var importedescuento = Math.Round(((bruto) * model.Descuento / 100.0), model.Decimalesmonedas);
-                    var total = bruto - importedescuento;
 
                     //Asignar importe según tarifa del cliente si es un KIT
                     if (!string.IsNullOrEmpty(linea.Bundle))
                     {
-                        var seriekit = _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == TipoDocumentos.Kit.ToString()).FirstOrDefault().id;
+                        /*var seriekit = _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == TipoDocumentos.Kit.ToString()).FirstOrDefault().id;
 
                         if (linea.Bundle.Substring(0, seriekit.Length).Equals(seriekit))
-                        {
-                            var tarifacli = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == model.Fkcuenta).FirstOrDefault().fktarifas;
-                            model.Precio = (double)_db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifacli && f.fkarticulos == linea.Fkarticulos).FirstOrDefault().precio;
-                        }
+                        {*/
+                        var tarifacli = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == model.Fkcuenta).FirstOrDefault().fktarifas;
+                        model.Precio = (double)_db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifacli && f.fkarticulos == linea.Fkarticulos).FirstOrDefault().precio;
+                        //}
                     }
+
+                    var bruto = linea.Metros * model.Precio;
+                    var importedescuento = Math.Round(((bruto) * model.Descuento / 100.0), model.Decimalesmonedas);
+                    var total = bruto - importedescuento;                  
 
                     listado.Add(new ReservasstockLinModel()
                     {

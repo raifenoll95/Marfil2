@@ -146,13 +146,13 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         $('#_entregastock').show('toggle');
     });
 
-    $scope.Buscarlote = function () {
+    $scope.Buscarlote = function (Fkarticulossalida = $("[name='Fkarticulossalida']").val()) {
         console.log("buscar lote");
         $scope.loading = true;
         var parametros = {
             Fkalmacen: $("[name='Fkalmacen']").val(),
-            FkarticulosDesde: $("[name='Fkarticulossalida']").val(),
-            FkarticulosHasta: $("[name='Fkarticulossalida']").val(),
+            FkarticulosDesde: Fkarticulossalida,
+            FkarticulosHasta: Fkarticulossalida,
             FkAcabadoDesde: $("[name='FkAcabadoDesde']").val(),
             FkAcabadoHasta: $("[name='FkAcabadoHasta']").val(),
             Id: $("[name='Loteentrega']").val(),
@@ -220,9 +220,10 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
 
     eventAggregator.RegisterEvent("Loteentrega-cv", function (ms) {
         eventAggregator.Publish("Fkarticulossalida-Buscar", ms.Fkarticulos);
-        $scope.Buscarlote();
+        $("#Fkarticulossalida").val(ms.Fkarticulos);
+        $scope.Buscarlote(ms.Fkarticulos);
         $scope.Tipopieza = ms.Tipopieza;
-        $scope.Mostrardetalle = ms.Tipopieza != 2;
+        $scope.Mostrardetalle = ms.Tipopieza != 2 && ms.Tipopieza != 1;
         $scope.Cantidad = ms.Cantidad;
 
     });
@@ -257,7 +258,11 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             $scope.Editardescuento = !ms.Articulocomentario;
             $scope.Editarloteautomatico = ms.Fkcontador && ms.Fkcontador != null;
             $scope.Loteautomatico = ms.Fkcontador && ms.Fkcontador != null;
-            $scope.Modificarmedidas = ms.Tipofamilia < 2;
+            $scope.Modificarmedidas = ms.Tipofamilia < 3;
+
+            if ($scope.Modificarmedidas) {
+                $scope.Modificarmedidas = false;
+            }
 
             if (ms.Tipofamilia == 1) {
                 $scope.Cantidad = 1;
