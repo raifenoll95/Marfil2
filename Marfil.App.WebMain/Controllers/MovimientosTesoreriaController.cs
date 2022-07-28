@@ -8,6 +8,7 @@ using Resources;
 using System.Linq;
 using Marfil.Dom.Persistencia.Model;
 using System.Globalization;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -51,11 +52,16 @@ namespace Marfil.App.WebMain.Controllers
 
         public ActionResult AsistenteMovimientosTesoreria()
         {
-            return View(new AsistenteMovimientosTesoreriaModel(ContextService)
-            {
-                FechaContable = DateTime.Now,
-                FechaContableFiltro = DateTime.Now
-            });
+            var model = new AsistenteMovimientosTesoreriaModel(ContextService);
+
+            model.FechaContable = DateTime.Now;
+            model.FechaContableFiltro = DateTime.Now;
+            //Ayuda
+            var aux = model as IToolbar;
+            aux.Toolbar.Acciones = HelpItem();
+
+            return View(model);
+                
         }
 
         //Fin del asistente

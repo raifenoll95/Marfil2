@@ -229,7 +229,7 @@
 			<item name="grupomateriales" allowUpdate="true" allowDelete="true" text="grupomateriales" url="~/GrupoMateriales/Index"></item>
 			<item isseparator="true"></item>
 			<item name="incidencias" text="incidencias" url="~/Incidencias/Index"></item>
-			<item name="contadores" text="contadores" url="~/ContadoresLotes/Index" />
+			<item name="contadoreslotes" text="contadoreslotes" url="~/ContadoresLotes/Index" />
 			<item isseparator="true"></item>
 			<item name="trabajos" text="trabajos" url="~/Trabajos/Index" />
 			<item name="tareas" text="tareas" url="~/Tareas/Index" />

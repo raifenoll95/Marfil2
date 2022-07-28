@@ -230,7 +230,31 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var comentario = nodo[0].InnerText;
             return comentario;
         }
-        
+
+        public string GetEstadoFinAlbaranesCompras()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadoalbaranescomprastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public string GetEstadoFinAlbaranesVentas()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadoalbaranesventastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
     }
 
 }

@@ -54,21 +54,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             var configuracionService = new ConfiguracionService(Context, _db);
             var configuracionModel = configuracionService.GetModel();
             var estadoactualObj = estadosService.get(model.fkestados) as EstadosModel;
-            if (!string.IsNullOrEmpty(configuracionModel.Estadototal) && estadoactualObj.Tipoestado <= TipoEstado.Curso && model.PedidosLin.Any() && model.PedidosLin.All(f => (f.cantidad ?? 0) != 0 && (f.cantidad ?? 0) - (f.cantidadpedida ?? 0) <= 0))
+            if (!(estadoactualObj.Tipomovimiento == Model.Configuracion.TipoMovimiento.Manual))
             {
+                if (!string.IsNullOrEmpty(configuracionModel.Estadototal) && estadoactualObj.Tipoestado <= TipoEstado.Curso && model.PedidosLin.Any() && model.PedidosLin.All(f => (f.cantidad ?? 0) != 0 && (f.cantidad ?? 0) - (f.cantidadpedida ?? 0) <= 0))
+                {
 
-                model.fkestados = configuracionModel.Estadopedidosventastotal;
+                    model.fkestados = configuracionModel.Estadopedidosventastotal;
+                }
+                else if (!string.IsNullOrEmpty(configuracionModel.Estadoparcial) && estadoactualObj.Tipoestado <= TipoEstado.Curso &&
+                         model.PedidosLin.Any(f => (f.cantidadpedida ?? 0) > 0))
+                {
+                    model.fkestados = configuracionModel.Estadopedidosventasparcial;
+                }
+                else if (!string.IsNullOrEmpty(configuracionModel.Estadoinicial) && estadoactualObj.Tipoestado <= TipoEstado.Curso &&
+                         model.PedidosLin.Any(f => (f.cantidadpedida ?? 0) == 0))
+                {
+                    model.fkestados = configuracionModel.Estadopedidosventasinicial;
+                }
             }
-            else if (!string.IsNullOrEmpty(configuracionModel.Estadoparcial) && estadoactualObj.Tipoestado <= TipoEstado.Curso &&
-                     model.PedidosLin.Any(f => (f.cantidadpedida ?? 0) > 0))
-            {
-                model.fkestados = configuracionModel.Estadopedidosventasparcial;
-            }
-            else if (!string.IsNullOrEmpty(configuracionModel.Estadoinicial) && estadoactualObj.Tipoestado <= TipoEstado.Curso &&
-                     model.PedidosLin.Any(f => (f.cantidadpedida ?? 0) == 0))
-            {
-                model.fkestados = configuracionModel.Estadopedidosventasinicial;
-            }
+            
         }
 
         private bool ValidaRangoEjercicio(Pedidos model)

@@ -1183,8 +1183,11 @@ namespace Marfil.App.WebMain.Controllers
                 Texto = General.LblEnviaremail,
                 Url = "javascript:eventAggregator.Publish('Enviaralbaran',\'\')"
             });
-            result.Add(new ToolbarSeparatorModel());
-            result.Add(CreateComboEstados(objModel));
+            if (objModel.Estado.Tipoestado != TipoEstado.Finalizado && objModel.Estado.Tipoestado != TipoEstado.Anulado)
+            {
+                result.Add(new ToolbarSeparatorModel());
+                result.Add(CreateComboEstados(objModel));
+            }
             return result;
         }
 
@@ -1199,7 +1202,7 @@ namespace Marfil.App.WebMain.Controllers
                 Texto = General.LblCambiarEstado,
                 Url = "#",
                 Desactivado = true,
-                Items = estados.Select(f => new ToolbarActionModel()
+                Items = estados.Where(f => f.Tipomovimiento != TipoMovimiento.Automatico).Select(f => new ToolbarActionModel()
                 {
                     Url = Url.Action("CambiarEstado", "RecepcionesStock", new { documentoReferencia = objModel.Id, estadoNuevo = f.CampoId, returnUrl = Url.Action("Edit", "RecepcionesStock", new { id = objModel.Id }) }),
                     Texto = f.Descripcion

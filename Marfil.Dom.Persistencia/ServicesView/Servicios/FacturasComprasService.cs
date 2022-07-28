@@ -355,7 +355,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     result.Importefacturaproveedor = result.Importetotaldoc;
                     GenerarVencimientos(result);
                     create(result);
-                    
+
+                    //  Cambiamos el estado del albarán
+                    var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                    albaran.Fkestados = Confservice.GetEstadoFinAlbaranesCompras();
+
+                    var newItem = albaranesService._converterModel.CreatePersitance(albaran);
+                    _db.Set<AlbaranesCompras>().AddOrUpdate(newItem);
+
+                    _db.SaveChanges();
                     tran.Complete();
 
                     return result;

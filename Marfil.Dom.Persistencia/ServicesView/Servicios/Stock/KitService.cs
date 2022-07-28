@@ -136,6 +136,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
             _flagDesmontar = true;
             var model = get(id) as KitModel;
             model.Estado=EstadoKit.Desmontado;
+
+            model.Lineas.Clear();
+
+            edit(model);
+        }
+
+        public void Vendido(string id)
+        {
+            _flagDesmontar = true;
+            var model = get(id) as KitModel;
+            model.Estado = EstadoKit.Vendido;
+
             edit(model);
         }
     }

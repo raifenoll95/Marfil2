@@ -104,9 +104,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 if (model.Stockmaximo == null && model.Stockminimo == null)
                 {
-                    model.Stockseguridad = (TipoStockSeguridad)_db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockseguridad).SingleOrDefault();
-                    model.Stockminimo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockminimo).SingleOrDefault();
-                    model.Stockmaximo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockmaximo).SingleOrDefault();
+                    if (_db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockseguridad).FirstOrDefault() != null)
+                    {
+                        model.Stockseguridad = (TipoStockSeguridad)_db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockseguridad).SingleOrDefault();
+                    }
+                    
+                    model.Stockminimo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockminimo).SingleOrDefault() ?? 0;
+                    model.Stockmaximo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockmaximo).SingleOrDefault() ?? 0;
                 }
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Articulos, _context, _db);

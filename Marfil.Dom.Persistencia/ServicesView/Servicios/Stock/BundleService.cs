@@ -91,5 +91,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
 
             return lineasActuales;
         }
+
+        public void Vendido(string id)
+        {
+            var model = get(id) as BundleModel;
+            model.Estado = EstadoKit.Vendido;
+
+            edit(model);
+        }
     }
 }

@@ -547,6 +547,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Contadores de lotes.
+        /// </summary>
+        public static string contadoreslotes {
+            get {
+                return ResourceManager.GetString("contadoreslotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Costes Variables Periodo.
         /// </summary>
         public static string costesvariablesperiodo {

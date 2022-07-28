@@ -669,4 +669,7 @@
   <data name="registroivarepercutido" xml:space="preserve">
     <value>Registro de IVA repercutido</value>
   </data>
+  <data name="contadoreslotes" xml:space="preserve">
+    <value>Contadores de lotes</value>
+  </data>
 </root>

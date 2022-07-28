@@ -227,7 +227,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                                  " inner join unidades as u on u.id= s.fkunidadesmedida" +
                                  " left join bundlelin as bl on bl.empresa= s.empresa and bl.lote= s.lote and bl.loteid=s.loteid and bl.fkalmacenes=s.fkalmacenes and bl.fkarticulos= s.fkarticulos " +
                                  " left join kitlin as k on k.empresa= s.empresa and k.lote= s.lote and k.loteid=s.loteid and k.fkalmacenes=s.fkalmacenes and k.fkarticulos= s.fkarticulos " +
-                                 " where isnull(s.lote,'') <> '' and s.empresa='{0}' and s.fkalmacenes='{1}' and k.id is null {2} order by  s.lote asc,REPLACE(STR(s.loteid, 3), SPACE(1), '0') asc", empresa,fkalmacen,CrearFiltrosArticulos(articulodesde, articulohasta,lotedesde,lotehasta,acabadodesde,acabadohasta,eskit,esbundle), CrearFiltrosFamilias(familiadesde, familiahasta,solotablas));
+                                 " where isnull(s.lote,'') <> '' and s.empresa='{0}' and s.fkalmacenes='{1}' and k.id is null and bl.id is null {2} order by  s.lote asc,REPLACE(STR(s.loteid, 3), SPACE(1), '0') asc", empresa,fkalmacen,CrearFiltrosArticulos(articulodesde, articulohasta,lotedesde,lotehasta,acabadodesde,acabadohasta,eskit,esbundle), CrearFiltrosFamilias(familiadesde, familiahasta,solotablas));
         }
 
         private string CrearFiltrosArticulos(string articulodesde, string articulohasta,string lotedesde,string lotehasta,string acabadodesde,string acabadohasta, bool eskit, bool esbundle)

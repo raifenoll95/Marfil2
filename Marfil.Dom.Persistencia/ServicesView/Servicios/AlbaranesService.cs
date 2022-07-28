@@ -345,6 +345,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 //fin actualizar precios
 
+                //Cambiar el Kit/Bundel a Vendido si procede
+                ComprobarEstadoKitBundle(model.Lineas);
+
                 base.create(obj);                
                 
                 ModificarCantidadesPedidasPedidos(obj as AlbaranesModel);
@@ -793,6 +796,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             }
             _db.SaveChanges();
+        }
+
+        private void ComprobarEstadoKitBundle(List<AlbaranesLinModel> lineas)
+        {
+            var kitbundle = new List<string>();
+            var KitService = new KitService(_context, _db);
+            var BundleService = new BundleService(_context, _db);
+
+            //Obtenemos los kits o Bundles
+            foreach (var item in lineas)
+            {
+                if (!kitbundle.Exists(f => f == item.Bundle))
+                {
+                    kitbundle.Add(item.Bundle);
+                }
+            }
+
+            //Actualizamos los estados a 'Vendido' 
+            foreach (var item in kitbundle)
+            {
+                if (_db.Kit.Where(f => f.referencia == item).FirstOrDefault() != null)
+                {
+                    KitService.Vendido(_db.Kit.Where(f => f.referencia == item).FirstOrDefault().id.ToString());
+                }
+                else if (_db.Bundle.Where(f => f.lote + f.id == item).FirstOrDefault() != null)
+                {
+                    BundleService.Vendido(_db.Bundle.Where(f => f.lote + f.id == item).FirstOrDefault().id);
+                }
+            }
         }
 
         #endregion
