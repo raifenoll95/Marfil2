@@ -31,6 +31,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Startup;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Dom.Persistencia.Model.Iva;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -95,6 +96,7 @@ namespace Marfil.App.WebMain.Controllers
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarSeriesContables(model, token));
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarGuiasBalances(model, token));
                         HostingEnvironment.QueueBackgroundWorkItem(async token => await generarDocumentos(model, token));
+                        HostingEnvironment.QueueBackgroundWorkItem(async token => await generarTiposFacturas(model, token));
                         TempData["Success"] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
                     }
@@ -113,6 +115,89 @@ namespace Marfil.App.WebMain.Controllers
                 return RedirectToAction("Create");
             }
         }
+
+        private async Task generarTiposFacturas(EmpresaModel model, CancellationToken cancellationToken)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var service = new TiposFacturasIvaService(ContextService);
+                var csvFile = ContextService.ServerMapPath("~/App_Data/Otros/tiposfacturas.csv");
+
+                using (var reader = new StreamReader(csvFile, Encoding.Default, true))
+                {
+                    var contenido = reader.ReadToEnd();
+                    await Task.Run(() => CrearTipos(contenido,model));
+                }
+            }
+            catch (TaskCanceledException tce)
+            {
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void CrearTipos(string xml, EmpresaModel model)
+        {
+            var lineas = xml.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (var item in lineas)
+            {
+                if (!string.IsNullOrEmpty(item))
+                    CrearTipo(item,model);
+            }
+
+        }
+
+        private void CrearTipo(string linea, EmpresaModel empresa)
+        {
+            var vector = linea.Split(';');
+            var model = new TiposFacturasIvaModel()
+            {
+                Empresa = empresa.Id,
+                Id = Int32.Parse(vector[0]),
+                Tipocircuito = (TipoFactura)Int32.Parse(vector[1]),
+                Descripcion = vector[2],
+                Regimeniva = vector[3],
+                Tipofacturadefecto = string.Equals(vector[4], '0') ? false : true,
+                Ivadeducible = string.Equals(vector[5], '0') ? false : true,
+                Requiereirpf = string.Equals(vector[6], '0') ? false : true,
+                Operacionesexcluidas = string.Equals(vector[7], '0') ? false : true,
+                Bieninversion = string.Equals(vector[8], '0') ? false : true,
+                Cuentacargo1 = !string.Equals(vector[9], "NULL") ? vector[9] : null,
+                Cuentacargo2 = !string.Equals(vector[10], "NULL") ? vector[10] : null,
+                Cuentacargo3 = !string.Equals(vector[11], "NULL") ? vector[11] : null,
+                Cuentaabono1 = !string.Equals(vector[12], "NULL") ? vector[12] : null,
+                Cuentaabono2 = !string.Equals(vector[13], "NULL") ? vector[13] : null,
+                Cuentaabono3 = !string.Equals(vector[14], "NULL") ? vector[14] : null,
+                Importecuentacargo1 = (Dom.Persistencia.Model.Iva.TipoImporte)Int32.Parse(vector[15]),
+                Importecuentacargo2 = (Dom.Persistencia.Model.Iva.TipoImporte)Int32.Parse(vector[16]),
+                Importecuentaabono1 = (Dom.Persistencia.Model.Iva.TipoImporte)Int32.Parse(vector[17]),
+                Importecuentaabono2 = (Dom.Persistencia.Model.Iva.TipoImporte)Int32.Parse(vector[18]),
+                Importecuentacargo3 = (Dom.Persistencia.Model.Iva.TipoImporte)Int32.Parse(vector[19]),
+                Importecuentaabono3 = (Dom.Persistencia.Model.Iva.TipoImporte)Int32.Parse(vector[20]),
+                Desccuentacargo1 = !string.Equals(vector[21], "NULL") ? vector[21] : null,
+                Desccuentacargo2 = !string.Equals(vector[22], "NULL") ? vector[22] : null,
+                Desccuentacargo3 = !string.Equals(vector[23], "NULL") ? vector[23] : null,
+                Desccuentaabono1 = !string.Equals(vector[24], "NULL") ? vector[24] : null,
+                Desccuentaabono2 = !string.Equals(vector[25], "NULL") ? vector[25] : null,
+                Desccuentaabono3 = !string.Equals(vector[26], "NULL") ? vector[26] : null,
+                Tipocuenta = (TipoCuenta)Int32.Parse(vector[27]),
+                Tipocuenta3 = (TipoCuenta)Int32.Parse(vector[28]),
+                Tipoabono2 = (TipoCuenta)Int32.Parse(vector[29]),
+                Tipoabono3 = (TipoCuenta)Int32.Parse(vector[30]),
+                Formulacargo1 = !string.Equals(vector[31], "NULL") ? vector[31] : null,
+                Formulacargo2 = !string.Equals(vector[32], "NULL") ? vector[32] : null,
+                Formulacargo3 = !string.Equals(vector[33], "NULL") ? vector[33] : null,
+                Formulaabono1 = !string.Equals(vector[34], "NULL") ? vector[34] : null,
+                Formulaabono2 = !string.Equals(vector[35], "NULL") ? vector[35] : null,
+                Formulaabono3 = !string.Equals(vector[36], "NULL") ? vector[36] : null
+            };
+
+            var service = new TiposFacturasIvaService(ContextService);
+            service.create(model);
+        }
+
         private async Task generarCircuitosTesoreria(EmpresaModel model, CancellationToken cancellationToken)
         {
             try
@@ -124,7 +209,7 @@ namespace Marfil.App.WebMain.Controllers
                 using (var reader = new StreamReader(csvFile, Encoding.Default, true))
                 {
                     var contenido = reader.ReadToEnd();
-                    await Task.Run(() => CrearCircuitos(contenido));
+                    await Task.Run(() => CrearCircuitos(contenido,model));
                 }
             }
             catch (TaskCanceledException tce)
@@ -135,23 +220,23 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
 
-        private void CrearCircuitos(string xml)
+        private void CrearCircuitos(string xml, EmpresaModel model)
         {
             var lineas = xml.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var item in lineas)
             {
                 if (!string.IsNullOrEmpty(item))
-                    CrearCircuito(item);
+                    CrearCircuito(item,model);
             }
 
         }
 
-        private void CrearCircuito(string linea)
+        private void CrearCircuito(string linea, EmpresaModel empresa)
         {
             var vector = linea.Split(';');
             var model = new CircuitoTesoreriaCobrosModel()
             {
-                Empresa = vector[0],
+                Empresa = empresa.Id,
                 Id = Int32.Parse(vector[1]),
                 Descripcion = vector[2],
                 Situacioninicial = vector[3],
@@ -169,12 +254,12 @@ namespace Marfil.App.WebMain.Controllers
                 Cuentaabono1 = !string.Equals(vector[15], "NULL") ? vector[15] : null,
                 Cuentaabono2 = !string.Equals(vector[16], "NULL") ? vector[16] : null,
                 Cuentaabonorel = !string.Equals(vector[17], "NULL") ? vector[17] : null,
-                Importecuentacargo1 = (TipoImporte)Int32.Parse(vector[18]),
-                Importecuentacargo2 = (TipoImporte)Int32.Parse(vector[19]),
-                Importecuentaabono1 = (TipoImporte)Int32.Parse(vector[20]),
-                Importecuentaabono2 = (TipoImporte)Int32.Parse(vector[21]),
-                Importecuentacargorel = (TipoImporte)Int32.Parse(vector[22]),
-                Importecuentaabonorel = (TipoImporte)Int32.Parse(vector[23]),
+                Importecuentacargo1 = (Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoImporte)Int32.Parse(vector[18]),
+                Importecuentacargo2 = (Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoImporte)Int32.Parse(vector[19]),
+                Importecuentaabono1 = (Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoImporte)Int32.Parse(vector[20]),
+                Importecuentaabono2 = (Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoImporte)Int32.Parse(vector[21]),
+                Importecuentacargorel = (Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoImporte)Int32.Parse(vector[22]),
+                Importecuentaabonorel = (Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoImporte)Int32.Parse(vector[23]),
                 Desccuentacargo1 = !string.Equals(vector[24], "NULL") ? vector[24] : null,
                 Desccuentacargo2 = !string.Equals(vector[25], "NULL") ? vector[25] : null,
                 Desccuentacargorel = !string.Equals(vector[26], "NULL") ? vector[26] : null,

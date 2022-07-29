@@ -51,7 +51,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                 throw new ValidationException("Una cuenta no vacía debe tener asignado un importe asignado, y viceversa");
             }
 
-            if (model.tipofacturadefecto.Value) {
+            if (model.tipofacturadefecto.Value && model.empresa == Context.Empresa) {
                 if (_db.TiposFacturas.Where(f=> f.empresa == Context.Empresa && f.tipocircuito == model.tipocircuito && f.tipofacturadefecto == true && f.id != model.id).FirstOrDefault() != null)
                 {
                     throw new ValidationException("Ya existe un tipo de factura marcado por defecto para el mismo que tipo que ha intentado guardar, solo puede existir uno");

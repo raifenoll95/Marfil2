@@ -443,6 +443,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 EliminarContadoresLotes(model.Id);
                 EliminarSeries(model.Id);
                 EliminarSeriesContables(model.Id);
+                EliminarTiposFacturas(model.Id);
                 EliminarGruposIva(model.Id);
                 EliminarTiposIva(model.Id);
                 EliminarRegimenIva(model.Id);
@@ -453,6 +454,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 base.delete(obj);
 
                 tran.Complete();
+            }
+        }
+
+        private void EliminarTiposFacturas(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new TiposFacturasIvaService(newContext, _db);
+            var list = service.getAll().OfType<TiposFacturasIvaModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
             }
         }
 

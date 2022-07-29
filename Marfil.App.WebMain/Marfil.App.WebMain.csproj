@@ -1992,6 +1992,7 @@
     <Content Include="App_Data\Otros\seriescontables.csv" />
     <Content Include="App_Data\Otros\guiasbalanceslineas.csv" />
     <Compile Include="Controllers\ListadosStockMaxMinController.cs" />
+    <Content Include="App_Data\Otros\tiposfacturas.csv" />
     <None Include="Properties\PublishProfiles\192.168.223.210 - MarfilBeta.pubxml" />
     <None Include="Properties\PublishProfiles\Azure MarfilNet.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml">
