@@ -347,5 +347,14 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
                 return ResourceManager.GetString("TituloEntidad", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Total factura.
+        /// </summary>
+        public static string Totalfactura {
+            get {
+                return ResourceManager.GetString("Totalfactura", resourceCulture);
+            }
+        }
     }
 }

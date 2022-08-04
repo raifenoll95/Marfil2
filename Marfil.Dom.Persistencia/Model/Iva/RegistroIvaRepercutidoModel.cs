@@ -132,6 +132,9 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Operacionesexluidasbi")]
         public double Operacionesexluidasbi { get; set; }
 
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Totalfactura")]
+        public double Totalfactura { get; set; }
+
         #endregion
 
         #region Totales

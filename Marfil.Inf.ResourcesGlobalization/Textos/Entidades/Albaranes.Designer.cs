@@ -169,7 +169,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Bundle.
+        ///   Busca una cadena traducida similar a Bundles / Kit.
         /// </summary>
         public static string Bundle {
             get {

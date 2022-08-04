@@ -3671,6 +3671,7 @@
           <Property Name="contabilizar" Type="bit" />
           <Property Name="fkcuentastesoreria" Type="varchar" MaxLength="15" />
           <Property Name="operacionesexluidasbi" Type="float" />
+          <Property Name="totalfactura" Type="float" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
@@ -14393,6 +14394,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="operacionesexluidasbi" Type="Double" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
+          <Property Name="totalfactura" Type="Double" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -19623,6 +19625,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="totalfactura" ColumnName="totalfactura" />
                 <ScalarProperty Name="operacionesexluidasbi" ColumnName="operacionesexluidasbi" />
                 <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
                 <ScalarProperty Name="contabilizar" ColumnName="contabilizar" />

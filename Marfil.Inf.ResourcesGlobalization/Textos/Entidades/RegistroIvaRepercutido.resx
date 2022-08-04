@@ -213,4 +213,7 @@
   <data name="TituloEntidad" xml:space="preserve">
     <value>Registro de IVA repercutido</value>
   </data>
+  <data name="Totalfactura" xml:space="preserve">
+    <value>Total factura</value>
+  </data>
 </root>

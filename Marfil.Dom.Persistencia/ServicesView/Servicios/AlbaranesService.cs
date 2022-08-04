@@ -818,11 +818,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 if (_db.Kit.Where(f => f.referencia == item).FirstOrDefault() != null)
                 {
-                    KitService.Vendido(_db.Kit.Where(f => f.referencia == item).FirstOrDefault().id.ToString());
+                    KitService.Vendido(_db.Kit.Where(f => f.empresa == Empresa && f.referencia == item).FirstOrDefault().id.ToString());
                 }
                 else if (_db.Bundle.Where(f => f.lote + f.id == item).FirstOrDefault() != null)
                 {
-                    BundleService.Vendido(_db.Bundle.Where(f => f.lote + f.id == item).FirstOrDefault().id);
+                    BundleService.Vendido(_db.Bundle.Where(f => f.empresa == Empresa && f.lote + f.id == item).Select(x=> x.lote + ";" + x.id).FirstOrDefault());
                 }
             }
         }

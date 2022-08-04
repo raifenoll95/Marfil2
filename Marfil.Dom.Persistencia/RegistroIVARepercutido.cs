@@ -49,6 +49,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<bool> contabilizar { get; set; }
         public string fkcuentastesoreria { get; set; }
         public Nullable<double> operacionesexluidasbi { get; set; }
+        public Nullable<double> totalfactura { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }

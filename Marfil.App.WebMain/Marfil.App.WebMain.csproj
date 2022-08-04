@@ -3727,6 +3727,7 @@
     <Content Include="Views\RegistroIvaRepercutido\_factura.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_desglose.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_totales.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_totalespie.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

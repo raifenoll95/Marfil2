@@ -160,6 +160,7 @@ namespace Marfil.Dom.Persistencia.Model.Stock
     {
         public TipoOperacionService? Tipodocumento { get; set; }
         public string Referencia { get; set; }
+        public string Clientereserva { get; set; }
         public string Url { get; set; }
     }
 
