@@ -1156,9 +1156,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private void FinalizarStock(TransformacionesModel original, TransformacionesModel editado)
         {
-            var lotesService =new LotesService(_context);
+            var lotesService = new LotesService(_context);
             CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(f.Lote, f.Tabla.ToString()).Costeneto) ?? 0);
             //CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}",f.Lote,f.Tabla)).Costeneto) ?? 0);
+
+            /*Ago22 - Si el producto de salida=1 elemento y es de tipo bloque  y la unidad de medida del/los producto de entrada es m2. Si y solo si existe en costes adicionales un coste x m3
+            En ese caso, multiplicamos ese coste por los m3 del bloque (salida) y se reparte entre todos los metros de entrada (que serán tablas o losas o cualquier otro producto que vaya en m2)*/
+            CalcularTotalBloqueM3(editado);
+            /*Ago22*/
+
             RepartirCostesLineas(editado.Lineasentrada, editado.Costes, original.Costes);
 
             ModificarLotesLineas(editado);
@@ -1176,6 +1182,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             GenerarMovimientosLineasEntrada(list, editado, TipoOperacionService.InsertarTransformacionEntradaStock);
 
+        }
+
+        public void CalcularTotalBloqueM3(TransformacionesModel editado)
+        {
+            var codBloq = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.descripcion.Equals("BLOQUES")).FirstOrDefault().id;
+            if (editado.Lineassalida.Count == 1 && editado.Lineassalida.FirstOrDefault().Fkarticulos.Substring(0, 2) == codBloq)
+            {
+                var familiasentrada = editado.Lineasentrada.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+                var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+                if (familiasentrada.Except(familiasM2).Count() == 0 && editado.Costes.Where(f => f.Tipodocumento == TipoCosteAdicional.Costexm3).Count() > 0)
+                {
+                    foreach (var item in editado.Costes.Where(f => f.Tipodocumento == TipoCosteAdicional.Costexm3))
+                    {
+                        item.Total = item.Importe * editado.Lineassalida.FirstOrDefault().Metros;
+                    }
+                }
+            }
+        }
+
+        public void CalcularTotalBloqueM3Pantalla(List<TransformacionessalidaLinModel> lineassalida, List<TransformacionesentradaLinModel> lineasentrada, TransformacionesCostesadicionalesModel coste)
+        {
+            var codBloq = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.descripcion.Equals("BLOQUES")).FirstOrDefault().id;
+            if (lineassalida.Count == 1 && lineassalida.FirstOrDefault().Fkarticulos.Substring(0, 2) == codBloq)
+            {
+                var familiasentrada = lineasentrada.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+                var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+                if (familiasentrada.Except(familiasM2).Count() == 0 && coste.Tipodocumento == TipoCosteAdicional.Costexm3)
+                {
+                    coste.Total = coste.Importe * lineassalida.FirstOrDefault().Metros;
+                }
+            }
         }
 
         private async Task FinalizarStockAsync(TransformacionesModel original, TransformacionesModel editado)

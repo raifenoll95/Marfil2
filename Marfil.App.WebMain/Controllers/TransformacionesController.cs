@@ -588,6 +588,14 @@ namespace Marfil.App.WebMain.Controllers
                         }
                         item.Total = Math.Round((double)item.Importe * totalMetros, 2);
                         //item.Total = Math.Round((double)(item.Importe * (item.Porcentaje / 100.0)), 2);
+
+                        if(totalMetros == 0)
+                        {
+                            var transfService = new ImputacionCosteservice(ContextService);
+
+                            transfService.CalcularTotalBloqueM3Pantalla(Session[sessionsalida] as List<TransformacionessalidaLinModel>,lineas,item);
+                        }
+
                         model.Add(item);
                         Session[sessioncostes] = model;
                     }
@@ -647,6 +655,7 @@ namespace Marfil.App.WebMain.Controllers
                             }
                         }
                         item.Total = Math.Round((double)item.Importe * totalMetros, 2);
+
                     }
 
                     editItem.Tipodocumento = item.Tipodocumento;

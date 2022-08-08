@@ -530,7 +530,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Fkseries = serie;
 
             //asignamos el tipo de factura según el cliente
-            var tipofactura = _db.Clientes.Where(f => f.fkcuentas == presupuesto.Fkclientes).FirstOrDefault().fktipofactura;
+            var tipofactura = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkclientes).FirstOrDefault().fktipofactura;
             if (tipofactura != null)
             {
                 result.Fktipofactura = tipofactura;

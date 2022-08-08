@@ -98,6 +98,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.Tipodealmacenlote = (DOMAlbaranesComprasModel.TipoAlmacenlote?)obj.tipoalmacenlote; 
 
             result.Decimalesmonedas = monedasObj.decimales ?? 2;
+
+            result.Fkoperariostransporte = obj.fkoperadortransporte;
             //Lineas
             result.Lineas = obj.AlbaranesLin.ToList().Select(f => new AlbaranesLinModel()
             {
@@ -273,6 +275,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipoportes = (int?)viewmodel.Tipodeportes;
             result.empresa = Empresa;
             result.remolque = viewmodel.Remolque;
+            result.fkoperadortransporte = viewmodel.Fkoperariostransporte;
 
             result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;
 
@@ -388,6 +391,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;
             result.AlbaranesLin.Clear();
             result.remolque = viewmodel.Remolque;
+            result.fkoperadortransporte = viewmodel.Fkoperariostransporte;
 
             foreach (var item in viewmodel.Lineas)
             {
@@ -477,6 +481,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             result.Fkpuertos.Fkpaises = obj.fkpuertosfkpaises;
             result.Fkpuertos.Id = obj.fkpuertosid;
+            result.Fkoperariostransporte = obj.fkoperadortransporte;
 
             return result;
         }

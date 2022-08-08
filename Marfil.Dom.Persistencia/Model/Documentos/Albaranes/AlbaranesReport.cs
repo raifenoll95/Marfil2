@@ -84,6 +84,14 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 " LEFT JOIN Paises AS pa ON pa.valor = d.fkpais " +
                 " LEFT JOIN Provincias AS p ON p.id = d.fkprovincia and p.codigopais = d.fkpais "));
 
+            // OPERADOR TRANSPORTISTAS
+            DataSource.Queries.Add(new CustomSqlQuery("OperadorTransportistas", "select t.*, c.descripcion,c.nif,d.*,p.nombre as NombreProvincia,pa.Descripcion as NombrePais " +
+                " from Transportistas as t " +
+                " LEFT JOIN Cuentas AS c ON t.empresa = c.empresa and t.fkcuentas = c.id " +
+                " LEFT JOIN Direcciones AS d ON c.empresa =  d.empresa and c.id =  d.fkentidad " +
+                " LEFT JOIN Paises AS pa ON pa.valor = d.fkpais " +
+                " LEFT JOIN Provincias AS p ON p.id = d.fkprovincia and p.codigopais = d.fkpais "));
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Create a master-detail relation between the queries.
@@ -129,6 +137,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Relations.Add("Albaranes", "Transportistas", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("fktransportista", "fkcuentas")});
+
+            // ALBARANES <-> OPERADOR TRANSPORTISTAS
+            DataSource.Relations.Add("Albaranes", "OperadorTransportistas", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fkoperadortransporte", "fkcuentas")});
 
             // FACTURAS <-> PUERTOS
             DataSource.Relations.Add("Albaranes", "Puertos", new[] {
