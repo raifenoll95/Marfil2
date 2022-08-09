@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Marfil.Inf.Genericos;
+using System.Data.Entity;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
@@ -23,8 +24,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override IModelView CreateView(string id)
         {
             var idnum = Int32.Parse(id);
-            var obj = _db.Set<Persistencia.RegistroIVARepercutido>().Single(f => f.empresa == Empresa && f.id == idnum);
+            var obj = _db.Set<Persistencia.RegistroIVARepercutido>().Where(f => f.empresa == Empresa && f.id == idnum).Include(f => f.RegistroIVARepercutidoTotales).Single();
             var result = GetModelView(obj) as RegistroIvaRepercutidoModel;
+
+            //Lineas
+            result.Totales = obj.RegistroIVARepercutidoTotales.ToList().Select(f => new RegistroIvaRepercutidoTotalesModel()
+            {
+                Id = f.id,
+                Fktiposiva = f.fktiposiva,
+                Brutototal = f.brutototal,
+                Porcentajerecargoequivalencia = f.porcentajerecargoequivalencia,
+                Importerecargoequivalencia = f.importerecargoequivalencia,
+                Porcentajedescuentoprontopago = f.porcentajedescuentoprontopago,
+                Importedescuentoprontopago = f.importedescuentoprontopago,
+                Porcentajedescuentocomercial = f.porcentajedescuentocomercial,
+                Importedescuentocomercial = f.importedescuentocomercial,
+                Porcentajeiva = f.porcentajeiva,
+                Cuotaiva = f.cuotaiva,
+                Subtotal = f.subtotal,
+                Decimalesmonedas = f.decimalesmonedas,
+                Baseretencion = f.baseretencion,
+                Porcentajeretencion = f.porcentajeretencion,
+                Importeretencion = f.importeretencion
+            }).ToList();
+
             return result;
         }
 
@@ -51,18 +74,67 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 }
             }
 
+            foreach (var item in viewmodel.Totales)
+            {
+                var newItem = _db.Set<RegistroIVARepercutidoTotales>().Create();
+                newItem.empresa = Empresa;
+                newItem.fkregistros = result.id;
+                newItem.id = item.Id;
+                newItem.fktiposiva = item.Fktiposiva;
+                newItem.porcentajeiva = item.Porcentajeiva;
+                newItem.cuotaiva = item.Cuotaiva;
+                newItem.porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia ?? 0;              
+                newItem.importerecargoequivalencia = item.Importerecargoequivalencia;
+                newItem.porcentajedescuentoprontopago = item.Porcentajedescuentoprontopago ?? 0;
+                newItem.importedescuentoprontopago = item.Importedescuentoprontopago;
+                newItem.porcentajedescuentocomercial = item.Porcentajedescuentocomercial ?? 0;
+                newItem.importedescuentocomercial = item.Importedescuentocomercial;
+                newItem.brutototal = item.Brutototal;
+                newItem.subtotal = item.Subtotal;
+                newItem.decimalesmonedas = item.Decimalesmonedas;
+                newItem.baseretencion = item.Baseretencion;
+                newItem.porcentajeretencion = item.Porcentajeretencion;
+                newItem.importeretencion = item.Importeretencion;
+                result.RegistroIVARepercutidoTotales.Add(newItem);
+            }
+
             return result;
         }
 
         public override RegistroIVARepercutido EditPersitance(IModelView obj)
         {
             var viewmodel = obj as RegistroIvaRepercutidoModel;
-            var result = _db.RegistroIVARepercutido.Single(f => f.empresa == viewmodel.Empresa && f.id == viewmodel.Id);
+            var result = _db.RegistroIVARepercutido.Where(f => f.empresa == viewmodel.Empresa && f.id == viewmodel.Id).Include(b => b.RegistroIVARepercutidoTotales).ToList().Single();
 
             foreach (var item in result.GetType().GetProperties())
             {
                 if (typeof(RegistroIvaRepercutidoModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()))
                     item.SetValue(result, viewmodel.get(item.Name));
+            }
+
+            result.RegistroIVARepercutidoTotales.Clear();
+            foreach (var item in viewmodel.Totales)
+            {
+                var newItem = _db.Set<RegistroIVARepercutidoTotales>().Create();
+                newItem.empresa = Empresa;
+                newItem.fkregistros = result.id;
+                newItem.id = item.Id;
+                newItem.fktiposiva = item.Fktiposiva;
+                newItem.porcentajeiva = item.Porcentajeiva;
+                newItem.cuotaiva = item.Cuotaiva;
+                newItem.porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia ?? 0;
+                newItem.importerecargoequivalencia = item.Importerecargoequivalencia;
+                newItem.porcentajedescuentoprontopago = item.Porcentajedescuentoprontopago ?? 0;
+                newItem.importedescuentoprontopago = item.Importedescuentoprontopago;
+                newItem.porcentajedescuentocomercial = item.Porcentajedescuentocomercial ?? 0;
+                newItem.importedescuentocomercial = item.Importedescuentocomercial;
+                newItem.brutototal = item.Brutototal;
+                newItem.subtotal = item.Subtotal;
+                newItem.decimalesmonedas = item.Decimalesmonedas;
+                newItem.baseretencion = item.Baseretencion;
+                newItem.porcentajeretencion = item.Porcentajeretencion;
+                newItem.importeretencion = item.Importeretencion;
+                result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 
             return result;

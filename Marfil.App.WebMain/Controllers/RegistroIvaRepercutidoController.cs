@@ -57,6 +57,8 @@ namespace Marfil.App.WebMain.Controllers
             model.Fechaoperacion = DateTime.Today;
             model.Fechafacturaoriginal = DateTime.Today;
 
+            Session[session] = model.Totales;
+
             using (var service = new RegistroIvaRepercutidoService(ContextService))
             {
                 ((IToolbar)model).Toolbar = GenerateToolbar(service, TipoOperacion.Alta, model);
@@ -72,6 +74,8 @@ namespace Marfil.App.WebMain.Controllers
         {
             try
             {
+                model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>; 
+
                 if (ModelState.IsValid)
                 {
                     using (var gestionService = createService(model))
@@ -116,6 +120,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     return HttpNotFound();
                 }
+                Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
             }
@@ -127,6 +132,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             var obj = model as IModelView;
             var objExt = model as IModelViewExtension;
+            model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
             try
             {
                 if (ModelState.IsValid)
@@ -169,6 +175,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     return HttpNotFound();
                 }
+                Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 return View(model);
@@ -191,7 +198,7 @@ namespace Marfil.App.WebMain.Controllers
                 ViewData["buttonid"] = buttonid;
             }
 
-            return PartialView("_Albaraneslin", model);
+            return PartialView("_totales", model);
         }
 
         [ValidateInput(false)]

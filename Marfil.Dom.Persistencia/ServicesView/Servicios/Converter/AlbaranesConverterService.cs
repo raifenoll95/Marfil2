@@ -388,11 +388,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;
             result.fkpuertosid = viewmodel.Fkpuertos.Id;
             result.tipoportes = (int?)viewmodel.Tipodeportes;
-            result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;
-            result.AlbaranesLin.Clear();
+            result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;           
             result.remolque = viewmodel.Remolque;
             result.fkoperadortransporte = viewmodel.Fkoperariostransporte;
 
+            result.AlbaranesLin.Clear();
             foreach (var item in viewmodel.Lineas)
             {
                 var newItem = _db.Set<AlbaranesLin>().Create();
