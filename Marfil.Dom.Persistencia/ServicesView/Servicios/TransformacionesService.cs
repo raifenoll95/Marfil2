@@ -1162,7 +1162,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             /*Ago22 - Si el producto de salida=1 elemento y es de tipo bloque  y la unidad de medida del/los producto de entrada es m2. Si y solo si existe en costes adicionales un coste x m3
             En ese caso, multiplicamos ese coste por los m3 del bloque (salida) y se reparte entre todos los metros de entrada (que serán tablas o losas o cualquier otro producto que vaya en m2)*/
-            CalcularTotalBloqueM3(editado);
+            //CalcularTotalBloqueM3(editado); - Lo hemosCambiado al controlador para que antualice las pantallas con el total
             /*Ago22*/
 
             RepartirCostesLineas(editado.Lineasentrada, editado.Costes, original.Costes);
