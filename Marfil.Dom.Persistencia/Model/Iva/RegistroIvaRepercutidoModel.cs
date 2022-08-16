@@ -45,7 +45,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         private List<RegistroIvaRepercutidoTotalesModel> _totales = new List<RegistroIvaRepercutidoTotalesModel>();
 
-        [Required]
+        
         public int? Id { get; set; }
 
         [Required]
@@ -170,7 +170,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
     }
 
-    public class RegistroIvaRepercutidoTotalesModel : ITotalesDocumentosBusquedaMovil
+    public class RegistroIvaRepercutidoTotalesModel
     {
         public int? Decimalesmonedas { get; set; }
 
@@ -182,15 +182,15 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RFacturas), Name = "Porcentajeiva")]
         public double? Porcentajeiva { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
-        public double? Brutototal { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
+        //public double? Brutototal { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
-        public string SBrutototal
-        {
-            get { return (Brutototal ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Brutototal = Funciones.Qdouble(value); }
-        }
+        //[Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
+        //public string SBrutototal
+        //{
+        //    get { return (Brutototal ?? 0.0).ToString("N" + Decimalesmonedas); }
+        //    set { Brutototal = Funciones.Qdouble(value); }
+        //}
 
         [Display(ResourceType = typeof(RFacturas), Name = "Basetotal")]
         public double? Baseimponible { get; set; }
@@ -225,54 +225,54 @@ namespace Marfil.Dom.Persistencia.Model.Iva
             set { Importerecargoequivalencia = Funciones.Qdouble(value); }
         }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajedescuentoprontopago")]
-        public double? Porcentajedescuentoprontopago { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Porcentajedescuentoprontopago")]
+        //public double? Porcentajedescuentoprontopago { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentoprontopago")]
-        public double? Importedescuentoprontopago { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Importedescuentoprontopago")]
+        //public double? Importedescuentoprontopago { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentoprontopago")]
-        public string SImportedescuentoprontopago
-        {
-            get { return (Importedescuentoprontopago ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Importedescuentoprontopago = Funciones.Qdouble(value); }
-        }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Importedescuentoprontopago")]
+        //public string SImportedescuentoprontopago
+        //{
+        //    get { return (Importedescuentoprontopago ?? 0.0).ToString("N" + Decimalesmonedas); }
+        //    set { Importedescuentoprontopago = Funciones.Qdouble(value); }
+        //}
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajedescuentocomercial")]
-        public double? Porcentajedescuentocomercial { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Porcentajedescuentocomercial")]
+        //public double? Porcentajedescuentocomercial { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentocomercial")]
-        public double? Importedescuentocomercial { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Importedescuentocomercial")]
+        //public double? Importedescuentocomercial { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Importedescuentocomercial")]
-        public string SImportedescuentocomercial
-        {
-            get { return (Importedescuentocomercial ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Importedescuentocomercial = Funciones.Qdouble(value); }
-        }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Importedescuentocomercial")]
+        //public string SImportedescuentocomercial
+        //{
+        //    get { return (Importedescuentocomercial ?? 0.0).ToString("N" + Decimalesmonedas); }
+        //    set { Importedescuentocomercial = Funciones.Qdouble(value); }
+        //}
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Baseretencion")]
-        public double? Baseretencion { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Baseretencion")]
+        //public double? Baseretencion { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Baseretencion")]
-        public string SBaseretencion
-        {
-            get { return (Baseretencion ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Baseretencion = Funciones.Qdouble(value); }
-        }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Baseretencion")]
+        //public string SBaseretencion
+        //{
+        //    get { return (Baseretencion ?? 0.0).ToString("N" + Decimalesmonedas); }
+        //    set { Baseretencion = Funciones.Qdouble(value); }
+        //}
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Porcentajeretencion")]
-        public double? Porcentajeretencion { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Porcentajeretencion")]
+        //public double? Porcentajeretencion { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Importeretencion")]
-        public double? Importeretencion { get; set; }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Importeretencion")]
+        //public double? Importeretencion { get; set; }
 
-        [Display(ResourceType = typeof(RFacturas), Name = "Importeretencion")]
-        public string SImporteretencion
-        {
-            get { return (Importeretencion ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Importeretencion = Funciones.Qdouble(value); }
-        }
+        //[Display(ResourceType = typeof(RFacturas), Name = "Importeretencion")]
+        //public string SImporteretencion
+        //{
+        //    get { return (Importeretencion ?? 0.0).ToString("N" + Decimalesmonedas); }
+        //    set { Importeretencion = Funciones.Qdouble(value); }
+        //}
 
         [Display(ResourceType = typeof(RFacturas), Name = "Subtotal")]
         public double? Subtotal { get; set; }

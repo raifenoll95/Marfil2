@@ -145,6 +145,7 @@
             cvtrabajos.Name = "Fktrabajos";
             cvtrabajos.Url = Url.Action("TrabajosApi", "Api");
             cvtrabajos.Valor = Model.Fktrabajos;
+            cvtrabajos.Params = "{\"tipotrabajo\":\"1\"}";
             cvtrabajos.SoloLectura = isreadonly;
             cvtrabajos.Obligatorio = true;
         }

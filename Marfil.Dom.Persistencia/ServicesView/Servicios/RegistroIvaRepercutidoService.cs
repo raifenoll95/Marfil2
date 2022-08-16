@@ -1,6 +1,7 @@
 ﻿using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Iva;
-
+using Marfil.Inf.Genericos.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,45 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         #endregion
+
+        public override void create(IModelView obj)
+        {
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
+            {
+                var model = obj as RegistroIvaRepercutidoModel;
+
+                base.create(model);
+
+                _db.SaveChanges();
+                tran.Complete();
+            }
+
+        }
+
+        public override void edit(IModelView obj)
+        {
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
+            {
+                var original = get(Funciones.Qnull(obj.get("id"))) as RegistroIvaRepercutidoModel;
+                var editado = obj as RegistroIvaRepercutidoModel;
+
+
+                base.edit(obj);
+                _db.SaveChanges();
+                tran.Complete();
+
+            }
+        }
+
+        public override void delete(IModelView obj)
+        {
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
+            {
+                base.delete(obj);
+                _db.SaveChanges();
+                tran.Complete();
+            }
+
+        }
     }
 }

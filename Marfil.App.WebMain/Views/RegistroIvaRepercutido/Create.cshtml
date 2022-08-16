@@ -3,16 +3,16 @@
 @using Resources
 @model IModelView
 @{
-   
+
 }
 
-@using (Html.BeginForm("CreateOperacion", "RegistroIvaRepercutido", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+@using (Html.BeginForm("CreateOperacion", "RegistroIvaRepercutido", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
-    <div class="form-horizontal">       
+    <div class="form-horizontal">
 
-       @Html.Partial("_registro", Model as RegistroIvaRepercutidoModel)
+        @Html.Partial("_registro", Model as RegistroIvaRepercutidoModel)
 
         <div class="form-group">
             <div class="col-md-10 margin-top">
@@ -23,4 +23,14 @@
             </div>
         </div>
     </div>
+}
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
 }

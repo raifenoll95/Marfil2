@@ -22,7 +22,7 @@ namespace Marfil.Dom.Persistencia
     
         public string empresa { get; set; }
         public int id { get; set; }
-        public string origendoc { get; set; }
+        public Nullable<int> origendoc { get; set; }
         public string tipofactura { get; set; }
         public string referencia { get; set; }
         public Nullable<System.DateTime> fecharegistro { get; set; }

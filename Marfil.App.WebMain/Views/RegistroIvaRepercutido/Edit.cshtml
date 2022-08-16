@@ -12,7 +12,7 @@
     <div class="form-horizontal">
 
         @{
-            ViewData["operacion"] = "Edit";
+            ViewData["operacion"] = true;
         }
         @Html.Partial("_registro", Model as RegistroIvaRepercutidoModel)
 
@@ -28,10 +28,10 @@
 @section GridView
 {
     @Html.DevExpress().GetStyleSheets(
-    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
 )
     @Html.DevExpress().GetScripts(
-    new Script { ExtensionSuite = ExtensionSuite.GridView }
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
 )
 
 }

@@ -90,7 +90,8 @@
                 cvmateriales.Url = Url.Action("MaterialesApi", "Api");
                 cvmateriales.Valor = Model.Materiales;
                 cvmateriales.SoloLectura = isreadonly || iseditable;
-               // cvmateriales.Obligatorio = true;
+                // cvmateriales.Obligatorio = true;
+                cvmateriales.Autofocus = true;
             }
             @Html.Partial("CampoverificacionUI", cvmateriales)
         </div>

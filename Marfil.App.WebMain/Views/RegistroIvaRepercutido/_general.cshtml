@@ -12,7 +12,7 @@
 @model RegistroIvaRepercutidoModel
 @{
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
-    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
 
     var cvregimen = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
@@ -32,6 +32,9 @@
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
 
 @*Origen documento*@
 <div class="form-group">

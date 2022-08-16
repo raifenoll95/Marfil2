@@ -175,10 +175,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     model.Identificadorsegmento = identificadorsegmento;
                     //CalcularPrecioPiezas(model.Lineas, model.Lineas.Sum(f => f.Precio * f.Metros) ?? 0);
 
-                    foreach (var item in model.Lineas)
+                    /*foreach (var item in model.Lineas)
                     {
                         item.Precio = Math.Round((double)(item.Precio * item.Metros), 2);
-                    }
+                    }*/
 
                     base.create(obj);
                     var trobj = _db.Transformacioneslotes.Single(f => f.empresa == model.Empresa && f.referencia == model.Referencia);
@@ -305,8 +305,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 materialesObj = materialesService.get(editado.Fkmateriales) as MaterialesModel;
             }
 
-            if (trabajosObj.Fkacabadoinicial==trabajosObj.Fkacabadofinal && !editado.Costes.Any())
-                throw new Exception("No se han añadido costes adicionales. El parte no se grabará al no haber transformación.");
+            /*if (trabajosObj.Fkacabadoinicial==trabajosObj.Fkacabadofinal && !editado.Costes.Any())
+                throw new Exception("No se han añadido costes adicionales. El parte no se grabará al no haber transformación.");*/
 
             //CrearStock(editado, trabajosObj);
             GenerarMovimientosLineas(editado.Lineas, editado, TipoOperacionService.InsertarTransformacionloteStock, trabajosObj, materialesObj);
@@ -517,7 +517,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }*/
 
             TipoReparto tiporeparto = trabajo.Tipoimputacion == TipoImputacion.M2Real || trabajo.Tipoimputacion == TipoImputacion.M3 ? TipoReparto.Metros : TipoReparto.Peso;
-            TipoCoste tipocoste = TipoCoste.Material;
             var costeUnidad = trabajo.Precio;
 
 
@@ -540,7 +539,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //    costeUnidad = (double)d;
             }
 
-            RepartirCosteEnLinea(lineas, tiporeparto, tipocoste, costeTotal, costeUnidad);
+            RepartirCosteTrabajoEnLinea(lineas, tiporeparto, costeTotal, costeUnidad);
 
         }
 
@@ -676,6 +675,54 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                 }
                 
+            }
+        }
+
+        private void RepartirCosteTrabajoEnLinea(List<TransformacioneslotesLinModel> lineas, TipoReparto reparto, double costeTotal, double costeUnidad)
+        {
+            foreach (var item in lineas)
+            {
+                item.Flagidentifier = Guid.NewGuid();
+                var costeLineas = 0.0;
+                if (reparto == TipoReparto.Cantidad)
+                {
+                    var d = item.Cantidad * costeUnidad;
+                    if (d != null) costeLineas = (double)d;
+                }
+                else if (reparto == TipoReparto.Importe)
+                {
+                    throw new ValidationException(RTransformacioneslotes.ErrorRepartoImporte);
+                }
+                else if (reparto == TipoReparto.Metros)
+                {
+                    var d = item.Metros * costeUnidad;
+                    if (d != null) costeLineas = (double)d;
+                }
+                else if (reparto == TipoReparto.Peso)
+                {
+                    var d = item.Largo * item.Ancho * item.Grueso * costeUnidad;
+                    if (d != null) costeLineas = (double)d;
+
+                    //var unidadesService = FService.Instance.GetService(typeof(UnidadesModel), _context, _db) as UnidadesService;
+                    //var d = ModeloNegocioFunciones.CalculaEquivalentePeso(((UnidadesModel)unidadesService.get(item.Fkunidades)).Formula == TipoStockFormulas.Superficie,item.Metros ?? 0, item.Grueso ?? 0) * costeUnidad;
+                    //if (d != null) costeLineas = (double)d;
+                }
+
+                costeLineas = Math.Round(costeLineas, item.Decimalesmonedas ?? 2);
+
+                item.Costeadicionalvariable += costeLineas;
+                costeTotal -= costeLineas;
+            }
+            //Esto lo hacemos para asegurarnos de que los costes cuadran con lo que se debe asignar ya que puede haber problemas de redondeos
+            if (costeTotal != 0)
+            {
+                var ultimaLinea = lineas.LastOrDefault();
+                if (ultimaLinea != null)
+                {
+                    costeTotal = Math.Round(costeTotal, ultimaLinea.Decimalesmonedas ?? 2);
+
+                    ultimaLinea.Costeadicionalvariable += costeTotal;
+                }
             }
         }
 
@@ -830,7 +877,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Decimalesmedidas = unidadesObj.Decimalestotales,
                         Canal = model.Canal,
                         Flagidentifier = Guid.NewGuid(),
-                        Precio= loteObj.Costenetocompra,
+                        Precio= loteObj.Netocompra,
                         Tipodealmacenlote = loteObj.Tipodealmacenlote
                     }
                      );

@@ -290,10 +290,10 @@
         <EntityTypeShape EntityType="MarfilModel.TiposFacturas" Width="1.5" PointX="22.375" PointY="44.75" IsExpanded="false" />
         <EntityTypeShape EntityType="MarfilModel.Proveedores" Width="1.5" PointX="0.625" PointY="4.625" />
         <EntityTypeShape EntityType="MarfilModel.Acreedores" Width="1.5" PointX="2.375" PointY="4.625" />
-        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutido" Width="1.5" PointX="13.375" PointY="12.75" />
         <EntityTypeShape EntityType="MarfilModel.Clientes" Width="1.5" PointX="11.75" PointY="8.125" />
         <AssociationConnector Association="MarfilModel.FK_Clientes" />
-        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="15.625" PointY="16.75" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutido" Width="1.5" PointX="34.375" PointY="41.125" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="36.625" PointY="43" />
         <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" />
         </Diagram>
     </edmx:Diagrams>

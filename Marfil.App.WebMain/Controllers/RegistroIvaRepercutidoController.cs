@@ -74,6 +74,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             try
             {
+                model.Context = ContextService;
                 model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>; 
 
                 if (ModelState.IsValid)
@@ -224,6 +225,7 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
                         item.Id = max;
+                        item.Decimalesmonedas = 3;
                         model.Add(item);
                         Session[session] = model;
                     }
@@ -253,15 +255,12 @@ namespace Marfil.App.WebMain.Controllers
                     var editItem = model.Single(f => f.Id == item.Id);
                     editItem.Fktiposiva = item.Fktiposiva;
                     editItem.Porcentajeiva = item.Porcentajeiva;
-                    editItem.Brutototal = item.Brutototal;
                     editItem.Baseimponible = item.Baseimponible;
                     editItem.Cuotaiva = item.Cuotaiva;
                     editItem.Porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia;
                     editItem.Importerecargoequivalencia = item.Importerecargoequivalencia;
-                    editItem.Baseretencion = item.Baseretencion;
-                    editItem.Porcentajeretencion = item.Porcentajeretencion;
-                    editItem.Importeretencion = item.Importeretencion;
                     editItem.Subtotal = item.Subtotal;
+                    editItem.Decimalesmonedas = 3;
                     Session[session] = model;
                 }
             }

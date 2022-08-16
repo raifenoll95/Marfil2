@@ -1445,6 +1445,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     comentario = comentario.Replace("*DA*", descuenta.ToString());
                 }
 
+                //Descripcion Cta Cargo
+                if (comentario.Contains("*DC*"))
+                {
+                    var cuentacargo = !String.IsNullOrEmpty(circuito.cuentacargo1) ? circuito.cuentacargo1 : !String.IsNullOrEmpty(circuito.cuentacargo2) ? circuito.cuentacargo2 : circuito.cuentacargorel;
+                    var descuenta = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuentacargo).Select(f => f.descripcion).SingleOrDefault() ?? "";
+                    comentario = comentario.Replace("*DC*", descuenta.ToString());
+                }
+
                 //Tipo Importe 1. Num factura
                 if (comentario.Contains("*NF*") && tipo == TipoImporte.Importelineapunteada && esprevision && !String.IsNullOrEmpty(id))
                 {

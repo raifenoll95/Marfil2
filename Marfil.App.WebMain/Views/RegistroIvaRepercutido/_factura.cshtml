@@ -13,7 +13,7 @@
 @model RegistroIvaRepercutidoModel
 @{
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
-    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
 
     var cvfactura = FCampoverificacion.Instance.GetModel<FacturasModel>(WebHelper.ContextService);

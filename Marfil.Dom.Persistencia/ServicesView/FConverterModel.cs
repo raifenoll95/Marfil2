@@ -140,6 +140,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(IncidenciasCRM), typeof(IncidenciasCRMConverterService));
             _converterServicesTypes.Add(typeof(PeticionesAsincronas), typeof(PeticionesAsincronasConverterModel));
             _converterServicesTypes.Add(typeof(CostesVariablesPeriodo), typeof(CostesVariablesPeriodoConverterService));
+            _converterServicesTypes.Add(typeof(RegistroIVARepercutido), typeof(RegistroIvaRepercutidoConverterService));
         }
 
         public IConverterModelService<TView, TPersistance> CreateConverterModelService<TView, TPersistance>(IContextService context, MarfilEntities db,string empresa) where TPersistance : class where TView: class

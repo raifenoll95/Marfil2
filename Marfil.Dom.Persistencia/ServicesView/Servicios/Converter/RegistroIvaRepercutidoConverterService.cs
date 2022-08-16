@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
-    internal class RegistroIvaRepercutidoConverterService : BaseConverterModel<RegistroIvaRepercutidoModel, Persistencia.RegistroIVARepercutido>
+    class RegistroIvaRepercutidoConverterService : BaseConverterModel<RegistroIvaRepercutidoModel, Persistencia.RegistroIVARepercutido>
     {
         public RegistroIvaRepercutidoConverterService(IContextService context, MarfilEntities db) : base(context, db)
         {
@@ -32,20 +32,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             {
                 Id = f.id,
                 Fktiposiva = f.fktiposiva,
-                Brutototal = f.brutototal,
                 Porcentajerecargoequivalencia = f.porcentajerecargoequivalencia,
                 Importerecargoequivalencia = f.importerecargoequivalencia,
-                Porcentajedescuentoprontopago = f.porcentajedescuentoprontopago,
-                Importedescuentoprontopago = f.importedescuentoprontopago,
-                Porcentajedescuentocomercial = f.porcentajedescuentocomercial,
-                Importedescuentocomercial = f.importedescuentocomercial,
                 Porcentajeiva = f.porcentajeiva,
                 Cuotaiva = f.cuotaiva,
                 Subtotal = f.subtotal,
                 Decimalesmonedas = f.decimalesmonedas,
-                Baseretencion = f.baseretencion,
-                Porcentajeretencion = f.porcentajeretencion,
-                Importeretencion = f.importeretencion
+                Baseimponible = f.basetotal
             }).ToList();
 
             return result;
@@ -74,6 +67,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 }
             }
 
+            result.RegistroIVARepercutidoTotales.Clear();
             foreach (var item in viewmodel.Totales)
             {
                 var newItem = _db.Set<RegistroIVARepercutidoTotales>().Create();
@@ -85,16 +79,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.cuotaiva = item.Cuotaiva;
                 newItem.porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia ?? 0;              
                 newItem.importerecargoequivalencia = item.Importerecargoequivalencia;
-                newItem.porcentajedescuentoprontopago = item.Porcentajedescuentoprontopago ?? 0;
-                newItem.importedescuentoprontopago = item.Importedescuentoprontopago;
-                newItem.porcentajedescuentocomercial = item.Porcentajedescuentocomercial ?? 0;
-                newItem.importedescuentocomercial = item.Importedescuentocomercial;
-                newItem.brutototal = item.Brutototal;
                 newItem.subtotal = item.Subtotal;
                 newItem.decimalesmonedas = item.Decimalesmonedas;
-                newItem.baseretencion = item.Baseretencion;
-                newItem.porcentajeretencion = item.Porcentajeretencion;
-                newItem.importeretencion = item.Importeretencion;
+                newItem.basetotal = item.Baseimponible;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 
@@ -108,8 +95,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             foreach (var item in result.GetType().GetProperties())
             {
-                if (typeof(RegistroIvaRepercutidoModel).GetProperties().Any(f => f.Name.ToLower() == item.Name.ToLower()))
-                    item.SetValue(result, viewmodel.get(item.Name));
+                if ((obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false) &&
+                    (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.GetGenericTypeDefinition() !=
+                    typeof(ICollection<>)))
+                {
+                    item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
+                }
+                else if (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsEnum ?? false)
+                {
+                    item.SetValue(result, (int)obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
+                }
+                else if (!obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false)
+                {
+                    item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
+                }
             }
 
             result.RegistroIVARepercutidoTotales.Clear();
@@ -124,16 +123,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.cuotaiva = item.Cuotaiva;
                 newItem.porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia ?? 0;
                 newItem.importerecargoequivalencia = item.Importerecargoequivalencia;
-                newItem.porcentajedescuentoprontopago = item.Porcentajedescuentoprontopago ?? 0;
-                newItem.importedescuentoprontopago = item.Importedescuentoprontopago;
-                newItem.porcentajedescuentocomercial = item.Porcentajedescuentocomercial ?? 0;
-                newItem.importedescuentocomercial = item.Importedescuentocomercial;
-                newItem.brutototal = item.Brutototal;
                 newItem.subtotal = item.Subtotal;
                 newItem.decimalesmonedas = item.Decimalesmonedas;
-                newItem.baseretencion = item.Baseretencion;
-                newItem.porcentajeretencion = item.Porcentajeretencion;
-                newItem.importeretencion = item.Importeretencion;
+                newItem.basetotal = item.Baseimponible;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 

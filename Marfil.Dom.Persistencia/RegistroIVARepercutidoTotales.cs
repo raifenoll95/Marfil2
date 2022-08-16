@@ -18,21 +18,13 @@ namespace Marfil.Dom.Persistencia
         public int fkregistros { get; set; }
         public int id { get; set; }
         public string fktiposiva { get; set; }
-        public Nullable<double> brutototal { get; set; }
-        public Nullable<double> porcentajerecargoequivalencia { get; set; }
-        public Nullable<double> importerecargoequivalencia { get; set; }
-        public Nullable<double> porcentajedescuentoprontopago { get; set; }
-        public Nullable<double> importedescuentoprontopago { get; set; }
-        public Nullable<double> porcentajedescuentocomercial { get; set; }
-        public Nullable<double> importedescuentocomercial { get; set; }
         public Nullable<double> basetotal { get; set; }
         public Nullable<double> porcentajeiva { get; set; }
         public Nullable<double> cuotaiva { get; set; }
         public Nullable<double> subtotal { get; set; }
         public Nullable<int> decimalesmonedas { get; set; }
-        public Nullable<double> baseretencion { get; set; }
-        public Nullable<double> porcentajeretencion { get; set; }
-        public Nullable<double> importeretencion { get; set; }
+        public Nullable<double> porcentajerecargoequivalencia { get; set; }
+        public Nullable<double> importerecargoequivalencia { get; set; }
     
         public virtual RegistroIVARepercutido RegistroIVARepercutido { get; set; }
     }

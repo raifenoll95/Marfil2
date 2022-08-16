@@ -17,22 +17,14 @@
 @model IEnumerable<Marfil.Dom.Persistencia.Model.Iva.RegistroIvaRepercutidoTotalesModel>
 @{
     bool needCreatCopy = ViewData["key"] != null;
-    var isreadonly = Session["readonly"] != null ? (bool)Session["readonly"] : false;
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
     var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
 
     Html.EnableClientValidation(true);
     Html.EnableUnobtrusiveJavaScript(true);
 
-    Html.DevExpress().GetStyleSheets(
-    new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }
-    );
-    Html.DevExpress().GetScripts(
-    new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-    new Script { ExtensionSuite = ExtensionSuite.GridView },
-    new Script { ExtensionSuite = ExtensionSuite.Editors }
-    );
 }
 
 
@@ -46,7 +38,7 @@
         settings.CallbackRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLin" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
-        settings.Width = Unit.Percentage(100);
+        settings.Width = Unit.Pixel(1500);
         settings.Height = Unit.Pixel(500);
         settings.SettingsPager.Visible = true;
 
@@ -55,7 +47,7 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinDelete" };
-        settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
+       // settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsBehavior.ConfirmDelete = false;
         settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
@@ -134,7 +126,7 @@
 
         settings.InitNewRow += (s, e) =>
         {
-            ////Si es un registro nuevo
+            //Si es un registro nuevo
             e.NewValues["Baseimponible"] = "";
             e.NewValues["Fktiposiva"] = "";
             e.NewValues["Porcentajeiva"] = "";
@@ -145,7 +137,7 @@
 
         };
 
-        settings.CellEditorInitialize = (s, e) =>
+        /*settings.CellEditorInitialize = (s, e) =>
         {
 
             var editor = e.Editor as ASPxEdit;
@@ -160,7 +152,7 @@
             }
 
 
-        };
+        };*/
         settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -171,7 +163,7 @@
         settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
         settings.CommandColumn.VisibleIndex = 8;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
-        settings.CellEditorInitialize += (sender, args) =>
+        /*settings.CellEditorInitialize += (sender, args) =>
         {
 
             if (args.Column.FieldName == settings.KeyFieldName)
@@ -180,7 +172,7 @@
                 //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
                 tb.Focus();
             }
-        };
+        };*/
 
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
@@ -194,19 +186,16 @@
         }
 
         //display
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
-        settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
-        settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+
         settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
         settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+
+
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
 
     });
 
@@ -223,7 +212,7 @@
 
 <script type="text/javascript">
 
-            //Start search tiposiva
+        //Start search tiposiva
         function OnKeyPressFktiposiva(s, e) {
             var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
             if (keycode == 66 && e.htmlEvent.ctrlKey) {
@@ -310,55 +299,6 @@
             });
         }
 
-        //Se le llama cuando le das a nuevo registro
-        function CreateLineasRowTercero() {
-
-            if (!GridViewLineas.IsEditing()) {
-                GridViewLineas.Focus();
-                var rowIndex = GridViewLineas.GetFocusedRowIndex();
-                GridViewLineas.AddNewRow();
-            }
-        }
-
-        //Le pasamos al ControllerHelper.js el input que ha introducido el usuario en el campo
-        function CuentaTerceroChanged(s, e) {
-            console.log(s.GetValue());
-            eventAggregator.Publish("InputCodCuenta", s.GetValue());
-            s.Focus();
-        }
-
-        //Se le llama cuando le das a la lupa para buscar el codigo del tercero
-        function OnKeyPressCuentasTercero(s, e) {
-            //console.log("keydown");
-            var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
-            if (keycode == 66 && e.htmlEvent.ctrlKey) {
-                SearchTercero();
-            }
-            if (keycode == 13) {
-                console.log("ha presionado");
-            }
-        }
-
-        //Se le llama cuando le das a la lupa de la columna
-        function SearchTercero() {
-
-            var obj = {
-                campoIdentificador: "Id",
-                IdComponenteasociado: "CodTercero",
-                IdFormulariomodal: "BusquedaGlobal",
-                Url: '@Url.Action("TercerosApi","Api")',
-                Titulo: "Busqueda de terceros",
-                Params: "{\"nivel\":\"0\"}"
-            };
-            eventAggregator.Publish("_lanzarbusqueda", obj);
-        }
-
-        //Tenemos que tener a disabled la descripcion para que el usuario no la pueda modificar
-        function DescripcionDisabledTerceros(s, e) {
-            s.Focus();
-            GridViewLineas.GetEditor("DescripcionTercero").SetEnabled(false);
-        }
-
         function CreateLineasRow() {
             if (!GridViewLineas.IsEditing()) {
                 GridViewLineas.Focus();
@@ -366,8 +306,9 @@
             }
         }
 
-        $(document).ready(function () {
-            GridViewLineas.Focus();
-        });
+    $(document).ready(function () {
+        GridView.Focus();
+    });
+
 
 </script>
