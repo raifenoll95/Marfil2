@@ -23,6 +23,7 @@
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
             <li><a data-toggle="tab" href="#factura">@General.LblFactura</a></li>
             <li><a data-toggle="tab" href="#detalle">@General.LblDetallado</a></li>
+            <li><a data-toggle="tab" href="#sii">@General.LblSII</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -34,6 +35,9 @@
         </div>
         <div id="detalle" class="tab-pane fade margin-bottom">
             @Html.Partial("_desglose", Model)
+        </div>
+        <div id="sii" class="tab-pane fade margin-bottom">
+            @Html.Partial("_sii", Model)
         </div>
     </div>
 

@@ -2221,6 +2221,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a SII.
+        /// </summary>
+        public static string LblSII {
+            get {
+                return ResourceManager.GetString("LblSII", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sin Desglosar.
         /// </summary>
         public static string LblSinDesglose {

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Aceptada" xml:space="preserve">
+    <value>Aceptada</value>
+  </data>
+  <data name="Alta" xml:space="preserve">
+    <value>Alta</value>
+  </data>
   <data name="Baseretencion" xml:space="preserve">
     <value>Base retención</value>
   </data>
@@ -125,6 +131,9 @@
   </data>
   <data name="Caja" xml:space="preserve">
     <value>Caja</value>
+  </data>
+  <data name="Codigopais" xml:space="preserve">
+    <value>Código País</value>
   </data>
   <data name="Contabilizar" xml:space="preserve">
     <value>Contabilizar como cobrado/pagado</value>
@@ -138,20 +147,38 @@
   <data name="Criterioivageneral" xml:space="preserve">
     <value>Criterio de IVA</value>
   </data>
+  <data name="Csv" xml:space="preserve">
+    <value>CSV</value>
+  </data>
   <data name="Cuentacliente" xml:space="preserve">
     <value>Cuenta cliente/acreedor</value>
+  </data>
+  <data name="Cuentaclientecontraparte" xml:space="preserve">
+    <value>Cuenta Cliente</value>
   </data>
   <data name="Cuentaventas" xml:space="preserve">
     <value>Cuenta ventas/servicios</value>
   </data>
+  <data name="Descripcionerror" xml:space="preserve">
+    <value>Descripción error</value>
+  </data>
   <data name="Devengo" xml:space="preserve">
     <value>Devengo</value>
+  </data>
+  <data name="Errores" xml:space="preserve">
+    <value>Modificación de errores registrales</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
   </data>
   <data name="Factura" xml:space="preserve">
     <value>Factura</value>
   </data>
   <data name="Facturarectificativa" xml:space="preserve">
     <value>Factura rectificativa</value>
+  </data>
+  <data name="Fechaalta" xml:space="preserve">
+    <value>Fecha de Alta</value>
   </data>
   <data name="Fechafactura" xml:space="preserve">
     <value>Fecha de factura</value>
@@ -174,6 +201,9 @@
   <data name="Fktiporetencion" xml:space="preserve">
     <value>Retenciones (Tipo)</value>
   </data>
+  <data name="Identificacion" xml:space="preserve">
+    <value>Identificación</value>
+  </data>
   <data name="Importeretencion" xml:space="preserve">
     <value>Importe retención</value>
   </data>
@@ -185,6 +215,15 @@
   </data>
   <data name="Motivorectificacion" xml:space="preserve">
     <value>Motivo restificación</value>
+  </data>
+  <data name="Nif" xml:space="preserve">
+    <value>NIF</value>
+  </data>
+  <data name="Nifcontraparte" xml:space="preserve">
+    <value>Nif Contraparte de la operación</value>
+  </data>
+  <data name="Nombrecontraparte" xml:space="preserve">
+    <value>Nombre o Razón Social Contraparte</value>
   </data>
   <data name="Numfacturacliente" xml:space="preserve">
     <value>Num. factura cliente</value>
@@ -198,22 +237,43 @@
   <data name="Origendoc" xml:space="preserve">
     <value>Origen documento</value>
   </data>
+  <data name="Otro" xml:space="preserve">
+    <value>Otro</value>
+  </data>
+  <data name="Pendiente" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
   <data name="Periodo" xml:space="preserve">
     <value>Periodo</value>
   </data>
   <data name="Porcentajeretencion" xml:space="preserve">
     <value>% Retención</value>
   </data>
+  <data name="Rechazada" xml:space="preserve">
+    <value>Rechazada</value>
+  </data>
   <data name="Referencia" xml:space="preserve">
     <value>Referencia</value>
   </data>
+  <data name="Tipoenvio" xml:space="preserve">
+    <value>Tipo de Envío / Comunicación</value>
+  </data>
   <data name="Tipofactura" xml:space="preserve">
     <value>Tipo factura IVA</value>
+  </data>
+  <data name="Tipoidentificacion" xml:space="preserve">
+    <value>Tipo de identificación</value>
+  </data>
+  <data name="Tipoidentificacionotro" xml:space="preserve">
+    <value>Tipo de identificación</value>
   </data>
   <data name="TituloEntidad" xml:space="preserve">
     <value>Registro de IVA repercutido</value>
   </data>
   <data name="Totalfactura" xml:space="preserve">
     <value>Total factura</value>
+  </data>
+  <data name="Variosdestinatarios" xml:space="preserve">
+    <value>Varios Destinatarios</value>
   </data>
 </root>

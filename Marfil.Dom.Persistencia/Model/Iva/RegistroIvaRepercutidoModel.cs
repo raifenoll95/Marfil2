@@ -21,12 +21,38 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         IVA
     }
 
+    public enum TipoEnvio
+    {
+        [StringValue(typeof(RRegistroIVA), "Alta")]
+        A0,
+        [StringValue(typeof(RRegistroIVA), "Errores")]
+        A1
+    }
+
+    public enum TipoEstadoEnvio
+    {
+        [StringValue(typeof(RRegistroIVA), "Pendiente")]
+        Pendiente,
+        [StringValue(typeof(RRegistroIVA), "Aceptada")]
+        Aceptada,
+        [StringValue(typeof(RRegistroIVA), "Rechazada")]
+        Rechazada
+    }
+
     public enum TipoCriterioIva
     {
         [StringValue(typeof(RRegistroIVA), "Devengo")]
         Devengo,
         [StringValue(typeof(RRegistroIVA), "Caja")]
         Caja
+    }
+
+    public enum TipoIdentificacion
+    {
+        [StringValue(typeof(RRegistroIVA), "Nif")]
+        Nif,
+        [StringValue(typeof(RRegistroIVA), "Otro")]
+        Otro
     }
 
     public class RegistroIvaRepercutidoModel : BaseModel<RegistroIvaRepercutidoModel, RegistroIVARepercutido>
@@ -135,6 +161,44 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Totalfactura")]
         public double Totalfactura { get; set; }
 
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipoenvio")]
+        public TipoEnvio Tipoenvio { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Fechaalta")]
+        public DateTime Fechaalta { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Estado")]
+        public TipoEstadoEnvio Estado { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Csv")]
+        public string Csv { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Descripcionerror")]
+        public string Descripcionerror { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Variosdestinatarios")]
+        public bool Variosdestinatarios { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuentaclientecontraparte")]
+        public string Cuentaclientecontraparte { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Nombrecontraparte")]
+        public string Nombrecontraparte { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipoidentificacion")]
+        public TipoIdentificacion Tipoidentificacion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Codigopais")]
+        public string Codigopais { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Nifcontraparte")]
+        public string Nifcontraparte { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipoidentificacionotro")]
+        public string Tipoidentificacionotro { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Identificacion")]
+        public string Identificacion { get; set; }
         #endregion
 
         #region Totales

@@ -991,4 +991,7 @@
   <data name="LblFactura" xml:space="preserve">
     <value>Factura</value>
   </data>
+  <data name="LblSII" xml:space="preserve">
+    <value>SII</value>
+  </data>
 </root>

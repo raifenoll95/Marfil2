@@ -50,6 +50,19 @@ namespace Marfil.Dom.Persistencia
         public string fkcuentastesoreria { get; set; }
         public Nullable<double> operacionesexluidasbi { get; set; }
         public Nullable<double> totalfactura { get; set; }
+        public Nullable<int> tipoenvio { get; set; }
+        public Nullable<System.DateTime> fechaalta { get; set; }
+        public Nullable<int> estado { get; set; }
+        public string csv { get; set; }
+        public string descripcionerror { get; set; }
+        public Nullable<bool> variosdestinatarios { get; set; }
+        public string cuentaclientecontraparte { get; set; }
+        public string nombrecontraparte { get; set; }
+        public Nullable<int> tipoidentificacion { get; set; }
+        public string nifcontraparte { get; set; }
+        public string tipoidentificacionotro { get; set; }
+        public string identificacion { get; set; }
+        public string codigopais { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }

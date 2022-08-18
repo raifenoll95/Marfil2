@@ -3672,6 +3672,19 @@
           <Property Name="fkcuentastesoreria" Type="varchar" MaxLength="15" />
           <Property Name="operacionesexluidasbi" Type="float" />
           <Property Name="totalfactura" Type="float" />
+          <Property Name="tipoenvio" Type="int" />
+          <Property Name="fechaalta" Type="datetime" />
+          <Property Name="estado" Type="int" />
+          <Property Name="csv" Type="varchar" MaxLength="30" />
+          <Property Name="descripcionerror" Type="varchar" MaxLength="250" />
+          <Property Name="variosdestinatarios" Type="bit" />
+          <Property Name="cuentaclientecontraparte" Type="varchar" MaxLength="15" />
+          <Property Name="nombrecontraparte" Type="varchar" MaxLength="200" />
+          <Property Name="tipoidentificacion" Type="int" />
+          <Property Name="nifcontraparte" Type="nvarchar" MaxLength="9" />
+          <Property Name="tipoidentificacionotro" Type="varchar" MaxLength="50" />
+          <Property Name="identificacion" Type="nvarchar" MaxLength="15" />
+          <Property Name="codigopais" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
@@ -14452,6 +14465,19 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="operacionesexluidasbi" Type="Double" />
           <Property Name="totalfactura" Type="Double" />
+          <Property Name="tipoenvio" Type="Int32" />
+          <Property Name="fechaalta" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="csv" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionerror" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="variosdestinatarios" Type="Boolean" />
+          <Property Name="cuentaclientecontraparte" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="nombrecontraparte" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tipoidentificacion" Type="Int32" />
+          <Property Name="nifcontraparte" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="tipoidentificacionotro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="identificacion" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="codigopais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
@@ -19660,6 +19686,19 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="codigopais" ColumnName="codigopais" />
+                <ScalarProperty Name="identificacion" ColumnName="identificacion" />
+                <ScalarProperty Name="tipoidentificacionotro" ColumnName="tipoidentificacionotro" />
+                <ScalarProperty Name="nifcontraparte" ColumnName="nifcontraparte" />
+                <ScalarProperty Name="tipoidentificacion" ColumnName="tipoidentificacion" />
+                <ScalarProperty Name="nombrecontraparte" ColumnName="nombrecontraparte" />
+                <ScalarProperty Name="cuentaclientecontraparte" ColumnName="cuentaclientecontraparte" />
+                <ScalarProperty Name="variosdestinatarios" ColumnName="variosdestinatarios" />
+                <ScalarProperty Name="descripcionerror" ColumnName="descripcionerror" />
+                <ScalarProperty Name="csv" ColumnName="csv" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaalta" ColumnName="fechaalta" />
+                <ScalarProperty Name="tipoenvio" ColumnName="tipoenvio" />
                 <ScalarProperty Name="totalfactura" ColumnName="totalfactura" />
                 <ScalarProperty Name="operacionesexluidasbi" ColumnName="operacionesexluidasbi" />
                 <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
