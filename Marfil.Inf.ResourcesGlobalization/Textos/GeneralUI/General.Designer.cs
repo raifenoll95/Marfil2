@@ -2221,11 +2221,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SII.
+        ///   Busca una cadena traducida similar a SII-Datos.
         /// </summary>
-        public static string LblSII {
+        public static string LblSIIDatos {
             get {
-                return ResourceManager.GetString("LblSII", resourceCulture);
+                return ResourceManager.GetString("LblSIIDatos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SII-Factura.
+        /// </summary>
+        public static string LblSIIFactura {
+            get {
+                return ResourceManager.GetString("LblSIIFactura", resourceCulture);
             }
         }
         

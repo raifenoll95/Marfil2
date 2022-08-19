@@ -54,6 +54,14 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [StringValue(typeof(RRegistroIVA), "Otro")]
         Otro
     }
+    public enum TipoFacturaRectificativa
+    {
+        [StringValue(typeof(RRegistroIVA), "Sustitucion")]
+        Sustitucion,
+        [StringValue(typeof(RRegistroIVA), "Diferencias")]
+        Diferencias
+    }
+
 
     public class RegistroIvaRepercutidoModel : BaseModel<RegistroIvaRepercutidoModel, RegistroIVARepercutido>
     {
@@ -199,6 +207,36 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Identificacion")]
         public string Identificacion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Clavetipofactura")]
+        public string Clavetipofactura { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipofacturarectificativa")]
+        public TipoFacturaRectificativa Tipofacturarectificativa { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Baserectificada")]
+        public double Baserectificada { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotaivarectificada")]
+        public double Cuotaivarectificada { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotarectificadaeq")]
+        public double Cuotarectificadaeq { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Facturaemitidaterceros")]
+        public bool Facturaemitidaterceros { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetotalemisor")]
+        public double Importetotalemisor { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetransmisoremisor")]
+        public double Importetransmisoremisor { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Claveregimenespecial")]
+        public string Claveregimenespecial { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Descripcionoperacionemisor")]
+        public string Descripcionoperacionemisor { get; set; }
         #endregion
 
         #region Totales

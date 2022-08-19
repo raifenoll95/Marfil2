@@ -63,6 +63,16 @@ namespace Marfil.Dom.Persistencia
         public string tipoidentificacionotro { get; set; }
         public string identificacion { get; set; }
         public string codigopais { get; set; }
+        public string clavetipofactura { get; set; }
+        public Nullable<int> tipofacturarectificativa { get; set; }
+        public Nullable<double> baserectificada { get; set; }
+        public Nullable<double> cuotaivarectificada { get; set; }
+        public Nullable<double> cuotarectificadaeq { get; set; }
+        public Nullable<bool> facturaemitidaterceros { get; set; }
+        public Nullable<double> importetotalemisor { get; set; }
+        public Nullable<double> importetransmisoremisor { get; set; }
+        public string claveregimenespecial { get; set; }
+        public string descripcionoperacionemisor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }

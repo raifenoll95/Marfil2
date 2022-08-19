@@ -3685,6 +3685,16 @@
           <Property Name="tipoidentificacionotro" Type="varchar" MaxLength="50" />
           <Property Name="identificacion" Type="nvarchar" MaxLength="15" />
           <Property Name="codigopais" Type="varchar" MaxLength="3" />
+          <Property Name="clavetipofactura" Type="varchar" MaxLength="3" />
+          <Property Name="tipofacturarectificativa" Type="int" />
+          <Property Name="baserectificada" Type="float" />
+          <Property Name="cuotaivarectificada" Type="float" />
+          <Property Name="cuotarectificadaeq" Type="float" />
+          <Property Name="facturaemitidaterceros" Type="bit" />
+          <Property Name="importetotalemisor" Type="float" />
+          <Property Name="importetransmisoremisor" Type="float" />
+          <Property Name="claveregimenespecial" Type="varchar" MaxLength="3" />
+          <Property Name="descripcionoperacionemisor" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
@@ -14479,6 +14489,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="identificacion" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="codigopais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
+          <Property Name="clavetipofactura" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="tipofacturarectificativa" Type="Int32" />
+          <Property Name="baserectificada" Type="Double" />
+          <Property Name="cuotaivarectificada" Type="Double" />
+          <Property Name="cuotarectificadaeq" Type="Double" />
+          <Property Name="facturaemitidaterceros" Type="Boolean" />
+          <Property Name="importetotalemisor" Type="Double" />
+          <Property Name="importetransmisoremisor" Type="Double" />
+          <Property Name="claveregimenespecial" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="descripcionoperacionemisor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
@@ -19686,6 +19706,16 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="descripcionoperacionemisor" ColumnName="descripcionoperacionemisor" />
+                <ScalarProperty Name="claveregimenespecial" ColumnName="claveregimenespecial" />
+                <ScalarProperty Name="importetransmisoremisor" ColumnName="importetransmisoremisor" />
+                <ScalarProperty Name="importetotalemisor" ColumnName="importetotalemisor" />
+                <ScalarProperty Name="facturaemitidaterceros" ColumnName="facturaemitidaterceros" />
+                <ScalarProperty Name="cuotarectificadaeq" ColumnName="cuotarectificadaeq" />
+                <ScalarProperty Name="cuotaivarectificada" ColumnName="cuotaivarectificada" />
+                <ScalarProperty Name="baserectificada" ColumnName="baserectificada" />
+                <ScalarProperty Name="tipofacturarectificativa" ColumnName="tipofacturarectificativa" />
+                <ScalarProperty Name="clavetipofactura" ColumnName="clavetipofactura" />
                 <ScalarProperty Name="codigopais" ColumnName="codigopais" />
                 <ScalarProperty Name="identificacion" ColumnName="identificacion" />
                 <ScalarProperty Name="tipoidentificacionotro" ColumnName="tipoidentificacionotro" />

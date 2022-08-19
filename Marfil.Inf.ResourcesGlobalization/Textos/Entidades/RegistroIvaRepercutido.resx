@@ -123,6 +123,9 @@
   <data name="Alta" xml:space="preserve">
     <value>Alta</value>
   </data>
+  <data name="Baserectificada" xml:space="preserve">
+    <value>Base Rectificada</value>
+  </data>
   <data name="Baseretencion" xml:space="preserve">
     <value>Base retención</value>
   </data>
@@ -131,6 +134,12 @@
   </data>
   <data name="Caja" xml:space="preserve">
     <value>Caja</value>
+  </data>
+  <data name="Claveregimenespecial" xml:space="preserve">
+    <value>Clave de régimen Especial</value>
+  </data>
+  <data name="Clavetipofactura" xml:space="preserve">
+    <value>Clave tipo de Factura</value>
   </data>
   <data name="Codigopais" xml:space="preserve">
     <value>Código País</value>
@@ -159,11 +168,23 @@
   <data name="Cuentaventas" xml:space="preserve">
     <value>Cuenta ventas/servicios</value>
   </data>
+  <data name="Cuotaivarectificada" xml:space="preserve">
+    <value>Cuota I.V.A.</value>
+  </data>
+  <data name="Cuotarectificadaeq" xml:space="preserve">
+    <value>Cuota Rec. Eq.</value>
+  </data>
   <data name="Descripcionerror" xml:space="preserve">
     <value>Descripción error</value>
   </data>
+  <data name="Descripcionoperacionemisor" xml:space="preserve">
+    <value>Descripción Operación</value>
+  </data>
   <data name="Devengo" xml:space="preserve">
     <value>Devengo</value>
+  </data>
+  <data name="Diferencias" xml:space="preserve">
+    <value>Por diferencias</value>
   </data>
   <data name="Errores" xml:space="preserve">
     <value>Modificación de errores registrales</value>
@@ -173,6 +194,9 @@
   </data>
   <data name="Factura" xml:space="preserve">
     <value>Factura</value>
+  </data>
+  <data name="Facturaemitidaterceros" xml:space="preserve">
+    <value>Factura emitida de terceros</value>
   </data>
   <data name="Facturarectificativa" xml:space="preserve">
     <value>Factura rectificativa</value>
@@ -206,6 +230,12 @@
   </data>
   <data name="Importeretencion" xml:space="preserve">
     <value>Importe retención</value>
+  </data>
+  <data name="Importetotalemisor" xml:space="preserve">
+    <value>Importe Total</value>
+  </data>
+  <data name="Importetransmisoremisor" xml:space="preserve">
+    <value>Importe Transmisión Sujeto IVA</value>
   </data>
   <data name="Inmueble" xml:space="preserve">
     <value>Inmueble</value>
@@ -255,11 +285,17 @@
   <data name="Referencia" xml:space="preserve">
     <value>Referencia</value>
   </data>
+  <data name="Sustitucion" xml:space="preserve">
+    <value>Por sustitución</value>
+  </data>
   <data name="Tipoenvio" xml:space="preserve">
     <value>Tipo de Envío / Comunicación</value>
   </data>
   <data name="Tipofactura" xml:space="preserve">
     <value>Tipo factura IVA</value>
+  </data>
+  <data name="Tipofacturarectificativa" xml:space="preserve">
+    <value>Tipo de Factura Rectificativa</value>
   </data>
   <data name="Tipoidentificacion" xml:space="preserve">
     <value>Tipo de identificación</value>
