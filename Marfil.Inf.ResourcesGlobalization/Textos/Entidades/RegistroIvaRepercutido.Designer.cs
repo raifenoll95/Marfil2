@@ -295,6 +295,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Nº Factura Emisor.
+        /// </summary>
+        public static string Facturaemisor {
+            get {
+                return ResourceManager.GetString("Facturaemisor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Factura emitida de terceros.
         /// </summary>
         public static string Facturaemitidaterceros {
@@ -318,6 +327,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Fechaalta {
             get {
                 return ResourceManager.GetString("Fechaalta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Exped. Emisor.
+        /// </summary>
+        public static string Fechaexpedemisor {
+            get {
+                return ResourceManager.GetString("Fechaexpedemisor", resourceCulture);
             }
         }
         

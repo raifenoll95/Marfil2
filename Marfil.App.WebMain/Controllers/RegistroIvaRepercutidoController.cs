@@ -19,6 +19,7 @@ namespace Marfil.App.WebMain.Controllers
     public class RegistroIvaRepercutidoController : GenericController<RegistroIvaRepercutidoModel>
     {
         private const string session = "_Totaleslin_";
+        private const string rectificadas = "_Rectificadaslin_";
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -58,6 +59,7 @@ namespace Marfil.App.WebMain.Controllers
             model.Fechafacturaoriginal = DateTime.Today;
 
             Session[session] = model.Totales;
+            Session[rectificadas] = model.Rectificadas;
 
             using (var service = new RegistroIvaRepercutidoService(ContextService))
             {
@@ -75,7 +77,8 @@ namespace Marfil.App.WebMain.Controllers
             try
             {
                 model.Context = ContextService;
-                model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>; 
+                model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+                model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
 
                 if (ModelState.IsValid)
                 {
@@ -122,6 +125,7 @@ namespace Marfil.App.WebMain.Controllers
                     return HttpNotFound();
                 }
                 Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
+                Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
             }
@@ -134,6 +138,7 @@ namespace Marfil.App.WebMain.Controllers
             var obj = model as IModelView;
             var objExt = model as IModelViewExtension;
             model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+            model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
             try
             {
                 if (ModelState.IsValid)
@@ -177,6 +182,7 @@ namespace Marfil.App.WebMain.Controllers
                     return HttpNotFound();
                 }
                 Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
+                Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 return View(model);
@@ -207,6 +213,13 @@ namespace Marfil.App.WebMain.Controllers
         {
             var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
             return PartialView("_totales", model);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult RectificadasLin()
+        {
+            var model = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+            return PartialView("_rectificadas", model);
         }
 
         [HttpPost, ValidateInput(false)]
@@ -244,6 +257,43 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult RectificadasLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] RegistroIvaRepercutidoRectificadasModel item)
+        {
+            var model = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (model.Any(f => f.Id == item.Id))
+                    {
+                        ModelState.AddModelError("Id", string.Format(General.ErrorRegistroExistente));
+                    }
+                    else
+                    {
+                        var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
+                        item.Id = max;
+                        if (item.Id > 3)
+                        {
+                            throw new ValidationException("Solo se permiten 3 rectificadas");
+                        }
+                        model.Add(item);
+                        Session[rectificadas] = model;
+                    }
+
+                }
+            }
+            catch (ValidationException)
+            {
+                model.Remove(item);
+                throw;
+            }
+
+
+
+            return PartialView("_rectificadas", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult TotalesLinUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] RegistroIvaRepercutidoTotalesModel item)
         {
             var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
@@ -273,6 +323,29 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult RectificadasLinUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] RegistroIvaRepercutidoRectificadasModel item)
+        {
+            var model = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var editItem = model.Single(f => f.Id == item.Id);
+                    editItem.Facturaemisor = item.Facturaemisor;
+                    editItem.Fechaexpedemisor = item.Fechaexpedemisor;
+                    Session[rectificadas] = model;
+                }
+            }
+            catch (ValidationException)
+            {
+                throw;
+            }
+
+            return PartialView("_rectificadas", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult TotalesLinDelete(string id)
         {
             var intid = int.Parse(id);
@@ -282,6 +355,15 @@ namespace Marfil.App.WebMain.Controllers
             return PartialView("_totales", model);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult RectificadosLinDelete(string id)
+        {
+            var intid = int.Parse(id);
+            var model = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+            model.Remove(model.Single(f => f.Id == intid));
+            Session[rectificadas] = model;
+            return PartialView("_rectificadas", model);
+        }
         #endregion
     }
 }

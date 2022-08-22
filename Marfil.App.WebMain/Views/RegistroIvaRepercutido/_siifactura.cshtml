@@ -31,6 +31,17 @@
         @Html.DropDownListFor(f => Model.Clavetipofactura, listtipofactura, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
         @Html.ValidationMessageFor(f => Model.Clavetipofactura, "", new { @class = "text-danger" })
     </div>
+    <div class="col-md-4">
+        @if (!isreadonly)
+        {
+            <span class="pull-right">
+                <a class="btn btn-success btn-sm" href="javascript:CreateRectificadasRow(); " title="@General.LblCrear - (+)">
+                    <i class="fa fa-plus"></i>
+                    @General.BtnNuevoRegistro
+                </a>
+            </span>
+        }
+    </div>
 </div>
 
 <div class="form-group" id="tipofacturarectificativa">
@@ -38,6 +49,11 @@
     <div class="col-md-2">
         @Html.EnumDropDownList("Tipofacturarectificativa", Model.Tipofacturarectificativa, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Tipofacturarectificativa, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("_rectificadas", Model.Rectificadas)
     </div>
 </div>
 

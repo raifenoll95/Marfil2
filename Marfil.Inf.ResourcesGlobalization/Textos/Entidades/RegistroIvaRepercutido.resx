@@ -195,6 +195,9 @@
   <data name="Factura" xml:space="preserve">
     <value>Factura</value>
   </data>
+  <data name="Facturaemisor" xml:space="preserve">
+    <value>Nº Factura Emisor</value>
+  </data>
   <data name="Facturaemitidaterceros" xml:space="preserve">
     <value>Factura emitida de terceros</value>
   </data>
@@ -203,6 +206,9 @@
   </data>
   <data name="Fechaalta" xml:space="preserve">
     <value>Fecha de Alta</value>
+  </data>
+  <data name="Fechaexpedemisor" xml:space="preserve">
+    <value>Fecha Exped. Emisor</value>
   </data>
   <data name="Fechafactura" xml:space="preserve">
     <value>Fecha de factura</value>

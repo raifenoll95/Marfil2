@@ -41,6 +41,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Baseimponible = f.basetotal
             }).ToList();
 
+            //Rectificadas
+            result.Rectificadas = obj.RegistroIVARepercutidoRectificadas.ToList().Select(f => new RegistroIvaRepercutidoRectificadasModel()
+            {
+                Id = f.id,
+                Facturaemisor = f.facturaemisor,
+                Fechaexpedemisor = (DateTime)f.fechaexpedemisor
+            }).ToList();
+
             return result;
         }
 
@@ -85,6 +93,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 
+            result.RegistroIVARepercutidoRectificadas.Clear();
+            foreach (var item in viewmodel.Rectificadas)
+            {
+                var newItem = _db.Set<RegistroIVARepercutidoRectificadas>().Create();
+                newItem.empresa = Empresa;
+                newItem.fkregistros = result.id;
+                newItem.id = item.Id;
+                newItem.facturaemisor = item.Facturaemisor;
+                newItem.fechaexpedemisor = item.Fechaexpedemisor;
+                result.RegistroIVARepercutidoRectificadas.Add(newItem);
+            }
+
             return result;
         }
 
@@ -127,6 +147,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.basetotal = item.Baseimponible;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
+            }
+
+            result.RegistroIVARepercutidoRectificadas.Clear();
+            foreach (var item in viewmodel.Rectificadas)
+            {
+                var newItem = _db.Set<RegistroIVARepercutidoRectificadas>().Create();
+                newItem.empresa = Empresa;
+                newItem.fkregistros = result.id;
+                newItem.id = item.Id;
+                newItem.facturaemisor = item.Facturaemisor;
+                newItem.fechaexpedemisor = item.Fechaexpedemisor;
+                result.RegistroIVARepercutidoRectificadas.Add(newItem);
             }
 
             return result;

@@ -78,8 +78,8 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         #region properties
 
         private List<RegistroIvaRepercutidoTotalesModel> _totales = new List<RegistroIvaRepercutidoTotalesModel>();
+        private List<RegistroIvaRepercutidoRectificadasModel> _rectificadas = new List<RegistroIvaRepercutidoRectificadasModel>();
 
-        
         public int? Id { get; set; }
 
         [Required]
@@ -249,6 +249,16 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         #endregion
 
+        #region Rectificadas
+
+        public List<RegistroIvaRepercutidoRectificadasModel> Rectificadas
+        {
+            get { return _rectificadas; }
+            set { _rectificadas = value; }
+        }
+
+        #endregion
+
         #region atributos
 
         public override object generateId(string id)
@@ -386,4 +396,16 @@ namespace Marfil.Dom.Persistencia.Model.Iva
             set { Subtotal = Funciones.Qdouble(value); }
         }
     }
+
+    public class RegistroIvaRepercutidoRectificadasModel
+    {
+        public int Id { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Facturaemisor")]
+        public string Facturaemisor { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Fechaexpedemisor")]
+        public DateTime Fechaexpedemisor { get; set; }
+    }
+
 }

@@ -890,6 +890,9 @@
     <Compile Include="RegistroIVARepercutido.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RegistroIVARepercutidoRectificadas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="RegistroIVARepercutidoTotales.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>

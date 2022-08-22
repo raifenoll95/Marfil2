@@ -228,6 +228,7 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<RegistroIVARepercutido> RegistroIVARepercutido { get; set; }
         public virtual DbSet<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
+        public virtual DbSet<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

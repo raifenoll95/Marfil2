@@ -1,0 +1,183 @@
+﻿@using System.Web.UI.WebControls
+@using System.Drawing
+@using DevExpress.Data
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Dom.Persistencia.Model
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Documentos.Albaranes
+@using Marfil.Dom.Persistencia.Model.Documentos.Pedidos
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.Genericos.Helper
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Inf.ResourcesGlobalization.Textos.GeneralUI
+@using Resources
+@model IEnumerable<Marfil.Dom.Persistencia.Model.Iva.RegistroIvaRepercutidoRectificadasModel>
+@{
+    bool needCreatCopy = ViewData["key"] != null;
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+    var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+
+}
+
+
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        //general
+        settings.Name = "GridViewRectificadas";
+        settings.KeyFieldName = "Id";
+        settings.CallbackRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "RectificadasLin" };
+        settings.EnableRowsCache = true;
+        settings.KeyboardSupport = true;
+        settings.Width = Unit.Pixel(500);
+        settings.Height = Unit.Pixel(500);
+        settings.SettingsPager.Visible = true;
+
+
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "RectificadasLinAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "RectificadasLinUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "RectificadasLinDelete" };
+        // settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsBehavior.ConfirmDelete = false;
+        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+
+        settings.Columns.Add("Id");
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Facturaemisor";
+            j.Width = Unit.Pixel(150);
+            //j.ReadOnly = true;
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Fechaexpedemisor";
+            j.Width = Unit.Pixel(150);
+            j.ColumnType = MVCxGridViewColumnType.DateEdit;
+        });
+
+        settings.Columns["Facturaemisor"].Visible = true;
+        settings.Columns["Fechaexpedemisor"].Visible = true;
+        settings.Columns["Id"].Visible = false;
+
+        settings.InitNewRow += (s, e) =>
+        {
+            //Si es un registro nuevo
+            e.NewValues["Facturaemisor"] = "";
+            e.NewValues["Fechaexpedemisor"] = "";
+
+        };
+
+        settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = Unit.Pixel(150);
+        settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
+        settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
+        settings.CommandColumn.VisibleIndex = 8;
+        settings.SettingsEditing.ShowModelErrorsForEditors = true;
+
+        settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
+        settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChangedTercero(s, e);} ";
+        settings.ClientSideEvents.Init = "function(s,e) { GridViewRectificadas.Focus();}";
+
+        if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
+        {
+            settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+
+        settings.ControlStyle.Border.BorderColor = ColorTranslator.FromHtml("#DDDDDD");
+        settings.Styles.Footer.BackColor = ColorTranslator.FromHtml("#F2F2F2");
+
+
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+
+    });
+
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+
+    }
+
+}
+
+@grid.Bind(Model).GetHtml()
+
+<script type="text/javascript">
+
+    function FunOnFocusedRowChangedTercero(s, e) {
+        $("#GridViewRectificadas").unbind("keydown");
+        $('#GridViewRectificadas').keydown(function (event) {
+
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var index = s.GetFocusedRowIndex();
+
+            switch (keycode) {
+                case 113://editar
+                    if (!GridViewRectificadas.IsEditing()) {
+                        GridViewRectificadas.StartEditRow(index);
+                    }
+                    break;
+                case 46://Eliminar
+                    if (!GridViewRectificadas.IsEditing()) {
+                        GridViewRectificadas.DeleteRow(index);
+                    }
+                    break;
+                case 27://escape
+                    if (GridViewRectificadas.IsEditing()) {
+                        GridViewRectificadas.CancelEdit();
+                        GridViewRectificadas.Focus();
+                    }
+                    break;
+                case 13://enter
+                    if (GridViewRectificadas.IsEditing()) {
+                        GridViewRectificadas.Focus();
+                        GridViewRectificadas.UpdateEdit();
+                    }
+                    break;
+                case 107://mas
+                    CreateRectificadasRow();
+                    break;
+            }
+
+        });
+    }
+
+    function CreateRectificadasRow() {
+        if (!GridViewRectificadas.IsEditing()) {
+            GridViewRectificadas.Focus();
+            GridViewRectificadas.AddNewRow();
+        }
+    }
+
+    $(document).ready(function () {
+        GridViewRectificadas.Focus();
+    });
+
+
+</script>

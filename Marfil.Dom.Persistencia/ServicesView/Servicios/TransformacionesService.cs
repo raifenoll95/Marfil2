@@ -137,7 +137,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 if (familiassalida.Except(familiasM2).Count() == 0) //M2 - Aserrado 
                 {
-                    var id = _db.Trabajos.Where(f => f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
+                    var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
                     if (!String.IsNullOrEmpty(id))
                     {
                         var trabajo = trabajoservice.get(id) as TrabajosModel;
@@ -150,7 +150,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else //M3 - Aserrado
                 {
-                    var id = _db.Trabajos.Where(f => f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
+                    var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
                     if (!String.IsNullOrEmpty(id))
                     {
                         var trabajo = trabajoservice.get(id) as TrabajosModel;
@@ -1327,7 +1327,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             if (familiassalida.Except(familiasM2).Count() == 0) //M2 - Aserrado 
             {
-                var id = _db.Trabajos.Where(f => f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
+                var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
                 if (!String.IsNullOrEmpty(id))
                 {
                     var trabajo = trabajoservice.get(id) as TrabajosModel;
@@ -1340,7 +1340,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
             else //M3 - Aserrado
             {
-                var id = _db.Trabajos.Where(f => f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
+                var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
                 if (!String.IsNullOrEmpty(id))
                 {
                     var trabajo = trabajoservice.get(id) as TrabajosModel;
