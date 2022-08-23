@@ -997,4 +997,7 @@
   <data name="LblSIIFactura" xml:space="preserve">
     <value>SII-Factura</value>
   </data>
+  <data name="LblSIIOperacion" xml:space="preserve">
+    <value>SII-Operación</value>
+  </data>
 </root>

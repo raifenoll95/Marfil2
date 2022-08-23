@@ -79,6 +79,69 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Exenta por Art. 20.
+        /// </summary>
+        public static string Art20 {
+            get {
+                return ResourceManager.GetString("Art20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Exenta por Art. 21.
+        /// </summary>
+        public static string Art21 {
+            get {
+                return ResourceManager.GetString("Art21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Exenta por Art. 22.
+        /// </summary>
+        public static string Art22 {
+            get {
+                return ResourceManager.GetString("Art22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Exenta por Art. 23 y 24.
+        /// </summary>
+        public static string Art2324 {
+            get {
+                return ResourceManager.GetString("Art2324", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Exenta por Art. 25.
+        /// </summary>
+        public static string Art25 {
+            get {
+                return ResourceManager.GetString("Art25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Base imponible.
+        /// </summary>
+        public static string Baseimponiblesujetaexenta {
+            get {
+                return ResourceManager.GetString("Baseimponiblesujetaexenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Base imponible.
+        /// </summary>
+        public static string Baseimponiblesujetopasivo {
+            get {
+                return ResourceManager.GetString("Baseimponiblesujetopasivo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Base Rectificada.
         /// </summary>
         public static string Baserectificada {
@@ -115,6 +178,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Causa.
+        /// </summary>
+        public static string Causa {
+            get {
+                return ResourceManager.GetString("Causa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Clave de régimen Especial.
         /// </summary>
         public static string Claveregimenespecial {
@@ -138,6 +210,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Codigopais {
             get {
                 return ResourceManager.GetString("Codigopais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a CON Inversión sujeto pasivo.
+        /// </summary>
+        public static string Con {
+            get {
+                return ResourceManager.GetString("Con", resourceCulture);
             }
         }
         
@@ -223,6 +304,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuota IVA.
+        /// </summary>
+        public static string Cuotaivasujetopasivo {
+            get {
+                return ResourceManager.GetString("Cuotaivasujetopasivo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuota Rec. Eq..
+        /// </summary>
+        public static string Cuotareceqsujetopasivo {
+            get {
+                return ResourceManager.GetString("Cuotareceqsujetopasivo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cuota Rec. Eq..
         /// </summary>
         public static string Cuotarectificadaeq {
@@ -268,6 +367,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Entrega Bienes.
+        /// </summary>
+        public static string Entregabienes {
+            get {
+                return ResourceManager.GetString("Entregabienes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Modificación de errores registrales.
         /// </summary>
         public static string Errores {
@@ -309,6 +417,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Facturaemitidaterceros {
             get {
                 return ResourceManager.GetString("Facturaemitidaterceros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Factura.
+        /// </summary>
+        public static string Facturaoperacion {
+            get {
+                return ResourceManager.GetString("Facturaoperacion", resourceCulture);
             }
         }
         
@@ -412,11 +529,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Importe artículos 7, 14, Otros.
+        /// </summary>
+        public static string Importearticulos {
+            get {
+                return ResourceManager.GetString("Importearticulos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Importe retención.
         /// </summary>
         public static string Importeretencion {
             get {
                 return ResourceManager.GetString("Importeretencion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Importe TAI reglas localización.
+        /// </summary>
+        public static string Importetai {
+            get {
+                return ResourceManager.GetString("Importetai", resourceCulture);
             }
         }
         
@@ -444,6 +579,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Inmueble {
             get {
                 return ResourceManager.GetString("Inmueble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Inversión sujeto pasivo.
+        /// </summary>
+        public static string Invsujetopasivo {
+            get {
+                return ResourceManager.GetString("Invsujetopasivo", resourceCulture);
             }
         }
         
@@ -493,6 +637,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No sujeta.
+        /// </summary>
+        public static string Nosujeta {
+            get {
+                return ResourceManager.GetString("Nosujeta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Num. factura cliente.
         /// </summary>
         public static string Numfacturacliente {
@@ -538,6 +691,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Exenta otros.
+        /// </summary>
+        public static string Otros {
+            get {
+                return ResourceManager.GetString("Otros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Pendiente.
         /// </summary>
         public static string Pendiente {
@@ -556,11 +718,38 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a % IVA.
+        /// </summary>
+        public static string Porcentajeivasujetopasivo {
+            get {
+                return ResourceManager.GetString("Porcentajeivasujetopasivo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a % Rec. Eq..
+        /// </summary>
+        public static string Porcentajereceqsujetopasivo {
+            get {
+                return ResourceManager.GetString("Porcentajereceqsujetopasivo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a % Retención.
         /// </summary>
         public static string Porcentajeretencion {
             get {
                 return ResourceManager.GetString("Porcentajeretencion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Prestación servicios.
+        /// </summary>
+        public static string Prestacionservicios {
+            get {
+                return ResourceManager.GetString("Prestacionservicios", resourceCulture);
             }
         }
         
@@ -579,6 +768,42 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Referencia {
             get {
                 return ResourceManager.GetString("Referencia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SIN Inversión sujeto pasivo.
+        /// </summary>
+        public static string Sin {
+            get {
+                return ResourceManager.GetString("Sin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SIN y CON Inversión sujeto pasivo.
+        /// </summary>
+        public static string Sincon {
+            get {
+                return ResourceManager.GetString("Sincon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sujeta / Exenta.
+        /// </summary>
+        public static string Sujetaexenta {
+            get {
+                return ResourceManager.GetString("Sujetaexenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sujeta / No exenta.
+        /// </summary>
+        public static string Sujetanoexenta {
+            get {
+                return ResourceManager.GetString("Sujetanoexenta", resourceCulture);
             }
         }
         
@@ -633,6 +858,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Tipoidentificacionotro {
             get {
                 return ResourceManager.GetString("Tipoidentificacionotro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tipo de Operación.
+        /// </summary>
+        public static string Tipooperacion {
+            get {
+                return ResourceManager.GetString("Tipooperacion", resourceCulture);
             }
         }
         

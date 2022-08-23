@@ -3731,6 +3731,7 @@
     <Content Include="Views\RegistroIvaRepercutido\_siidatos.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_siifactura.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_rectificadas.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_siioperacion.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

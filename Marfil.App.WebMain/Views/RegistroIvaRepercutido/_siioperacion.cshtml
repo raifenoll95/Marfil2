@@ -1,0 +1,59 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+
+
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    var listtiposidentificacion = WebHelper.GetApplicationHelper().GetListTiposNif().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Descripcion }).ToList();
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipooperacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipooperacion", Model.Tipooperacion, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipooperacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+    }
+}
+
+<script type="text/javascript">
+
+
+    window.onload = init;
+
+    function init() {
+      
+    }
+
+    
+
+</script>

@@ -62,6 +62,42 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         Diferencias
     }
 
+    public enum TipoOperacionSii
+    {
+        [StringValue(typeof(RRegistroIVA), "Facturaoperacion")]
+        Factura,
+        [StringValue(typeof(RRegistroIVA), "Entregabienes")]
+        Entregabienes,
+        [StringValue(typeof(RRegistroIVA), "Prestacionservicios")]
+        Prestacionservicios
+    }
+
+    public enum Tipoinvsujetopasivo
+    {
+        [StringValue(typeof(RRegistroIVA), "Sin")]
+        Sin,
+        [StringValue(typeof(RRegistroIVA), "Con")]
+        Con,
+        [StringValue(typeof(RRegistroIVA), "Sincon")]
+        Sincon
+    }
+
+    public enum TipoCausa
+    {
+        Blanco,
+        [StringValue(typeof(RRegistroIVA), "Art20")]
+        Art20,
+        [StringValue(typeof(RRegistroIVA), "Art21")]
+        Art21,
+        [StringValue(typeof(RRegistroIVA), "Art22")]
+        Art22,
+        [StringValue(typeof(RRegistroIVA), "Art2324")]
+        Art2324,
+        [StringValue(typeof(RRegistroIVA), "Art25")]
+        Art25,
+        [StringValue(typeof(RRegistroIVA), "Otros")]
+        Otros
+    }
 
     public class RegistroIvaRepercutidoModel : BaseModel<RegistroIvaRepercutidoModel, RegistroIVARepercutido>
     {
@@ -237,6 +273,48 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Descripcionoperacionemisor")]
         public string Descripcionoperacionemisor { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipooperacion")]
+        public TipoOperacionSii Tipooperacion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Sujetanoexenta")]
+        public bool Sujetanoexenta { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Invsujetopasivo")]
+        public Tipoinvsujetopasivo Invsujetopasivo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajeivasujetopasivo")]
+        public double Porcentajeivasujetopasivo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseimponiblesujetopasivo")]
+        public double Baseimponiblesujetopasivo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotaivasujetopasivo")]
+        public double Cuotaivasujetopasivo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajereceqsujetopasivo")]
+        public double Porcentajereceqsujetopasivo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotareceqsujetopasivo")]
+        public double Cuotareceqsujetopasivo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Sujetaexenta")]
+        public bool Sujetaexenta { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Causa")]
+        public TipoCausa Causa { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseimponiblesujetaexenta")]
+        public double Baseimponiblesujetaexenta { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Nosujeta")]
+        public bool Nosujeta { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importearticulos")]
+        public double Importearticulos { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetai")]
+        public double Importetai { get; set; }
         #endregion
 
         #region Totales

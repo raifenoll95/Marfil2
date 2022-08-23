@@ -123,7 +123,7 @@
     </div>
 </div>
 
-<div class="form-group" id="Retenciones">
+<div class="form-group" id="retenciones">
     @Html.LabelFor(f => Model.Baseretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
         @Html.TextBoxFor(f => Model.Baseretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
@@ -140,7 +140,7 @@
     </div>
 </div>
 
-<div class="form-group" id="Inmuebles">
+<div class="form-group" id="inmuebles">
     @Html.LabelFor(f => Model.Inmueble, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
@@ -204,23 +204,23 @@
 
 <script type="text/javascript">
 
-    window.onload = init;
+    window.onload = init();
 
     function init() {
         if ($("#Facturarectificativa").is(':checked')) {
-            document.getElementById("Facturarectificar").style.visibility = 'visible';
-            document.getElementById("Variosrectificar").style.visibility = 'visible';
+            $("#Facturarectificar").show();
+            $("#Variosrectificar").show();
         } else {
-            document.getElementById("Facturarectificar").style.visibility = 'hidden';
-            document.getElementById("Variosrectificar").style.visibility = 'hidden';
+            $("#Facturarectificar").hide();
+            $("#Variosrectificar").hide();
         }
-
-        if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
-            document.getElementById("Retenciones").style.visibility = 'visible';
-            document.getElementById("Inmuebles").style.visibility = 'visible';
+        console("init - " + $("#Fktiporetencion").val());
+        if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
+            $("#retenciones").show();
+            $("#inmuebles").show();
         } else {
-            document.getElementById("Retenciones").style.visibility = 'hidden';
-            document.getElementById("Inmuebles").style.visibility = 'hidden';
+            $("#retenciones").hide();
+            $("#inmuebles").hide();
         }
 
         /*$('#Fktiporetencion').on('DOMSubtreeModified', function () {
@@ -236,31 +236,31 @@
 
     $("#Facturarectificativa").on('change', function () {
         if ($("#Facturarectificativa").is(':checked')) {
-            document.getElementById("Facturarectificar").style.visibility = 'visible';
-            document.getElementById("Variosrectificar").style.visibility = 'visible';
+            $("#Facturarectificar").show();
+            $("#Variosrectificar").show();
         } else {
-            document.getElementById("Facturarectificar").style.visibility = 'hidden';
-            document.getElementById("Variosrectificar").style.visibility = 'hidden';
+            $("#Facturarectificar").hide();
+            $("#Variosrectificar").hide();
         }
     });
 
     $("#Fktiporetencion").on('change', function () {
-        if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
-            document.getElementById("Retenciones").style.visibility = 'visible';
-            document.getElementById("Inmuebles").style.visibility = 'visible';
+        if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
+            $("retenciones").show();
+            $("#inmuebles").show();
         } else {
-            document.getElementById("Retenciones").style.visibility = 'hidden';
-            document.getElementById("Inmuebles").style.visibility = 'hidden';
+            $("#retenciones").hide();
+            $("#inmuebles").hide();
         }
     });
 
     $('#Fktiporetencion').on('DOMSubtreeModified', function () {
-        if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
-            document.getElementById("Retenciones").style.visibility = 'visible';
-            document.getElementById("Inmuebles").style.visibility = 'visible';
+        if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
+            $("#retenciones").show();
+            $("#inmuebles").show();
         } else {
-            document.getElementById("Retenciones").style.visibility = 'hidden';
-            document.getElementById("Inmuebles").style.visibility = 'hidden';
+            $("#retenciones").hide();
+            $("#inmuebles").hide();
         }
     });
 

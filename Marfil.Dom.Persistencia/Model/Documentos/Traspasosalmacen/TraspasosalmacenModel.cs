@@ -419,7 +419,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
         public string Fkoperarios { get; set; }
 
         [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Fkoperariostransporte")]
-        public string Fkoperariostransporte { get; set; }
+        public string Fkoperadortransporte { get; set; }
 
         [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Fkzonas")]
         public string Fkzonas { get; set; }

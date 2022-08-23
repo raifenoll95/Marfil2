@@ -74,6 +74,20 @@ namespace Marfil.Dom.Persistencia
         public Nullable<double> importetransmisoremisor { get; set; }
         public string claveregimenespecial { get; set; }
         public string descripcionoperacionemisor { get; set; }
+        public Nullable<int> tipooperacion { get; set; }
+        public Nullable<bool> sujetanoexenta { get; set; }
+        public Nullable<int> invsujetopasivo { get; set; }
+        public Nullable<double> porcentajeivasujetopasivo { get; set; }
+        public Nullable<double> baseimponiblesujetopasivo { get; set; }
+        public Nullable<double> cuotaivasujetopasivo { get; set; }
+        public Nullable<double> porcentajereceqsujetopasivo { get; set; }
+        public Nullable<double> cuotareceqsujetopasivo { get; set; }
+        public Nullable<bool> sujetaexenta { get; set; }
+        public Nullable<int> causa { get; set; }
+        public Nullable<double> baseimponiblesujetaexenta { get; set; }
+        public Nullable<bool> nosujeta { get; set; }
+        public Nullable<double> importearticulos { get; set; }
+        public Nullable<double> importetai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }

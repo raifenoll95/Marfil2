@@ -123,6 +123,27 @@
   <data name="Alta" xml:space="preserve">
     <value>Alta</value>
   </data>
+  <data name="Art20" xml:space="preserve">
+    <value>Exenta por Art. 20</value>
+  </data>
+  <data name="Art21" xml:space="preserve">
+    <value>Exenta por Art. 21</value>
+  </data>
+  <data name="Art22" xml:space="preserve">
+    <value>Exenta por Art. 22</value>
+  </data>
+  <data name="Art2324" xml:space="preserve">
+    <value>Exenta por Art. 23 y 24</value>
+  </data>
+  <data name="Art25" xml:space="preserve">
+    <value>Exenta por Art. 25</value>
+  </data>
+  <data name="Baseimponiblesujetaexenta" xml:space="preserve">
+    <value>Base imponible</value>
+  </data>
+  <data name="Baseimponiblesujetopasivo" xml:space="preserve">
+    <value>Base imponible</value>
+  </data>
   <data name="Baserectificada" xml:space="preserve">
     <value>Base Rectificada</value>
   </data>
@@ -135,6 +156,9 @@
   <data name="Caja" xml:space="preserve">
     <value>Caja</value>
   </data>
+  <data name="Causa" xml:space="preserve">
+    <value>Causa</value>
+  </data>
   <data name="Claveregimenespecial" xml:space="preserve">
     <value>Clave de régimen Especial</value>
   </data>
@@ -143,6 +167,9 @@
   </data>
   <data name="Codigopais" xml:space="preserve">
     <value>Código País</value>
+  </data>
+  <data name="Con" xml:space="preserve">
+    <value>CON Inversión sujeto pasivo</value>
   </data>
   <data name="Contabilizar" xml:space="preserve">
     <value>Contabilizar como cobrado/pagado</value>
@@ -171,6 +198,12 @@
   <data name="Cuotaivarectificada" xml:space="preserve">
     <value>Cuota I.V.A.</value>
   </data>
+  <data name="Cuotaivasujetopasivo" xml:space="preserve">
+    <value>Cuota IVA</value>
+  </data>
+  <data name="Cuotareceqsujetopasivo" xml:space="preserve">
+    <value>Cuota Rec. Eq.</value>
+  </data>
   <data name="Cuotarectificadaeq" xml:space="preserve">
     <value>Cuota Rec. Eq.</value>
   </data>
@@ -186,6 +219,9 @@
   <data name="Diferencias" xml:space="preserve">
     <value>Por diferencias</value>
   </data>
+  <data name="Entregabienes" xml:space="preserve">
+    <value>Entrega Bienes</value>
+  </data>
   <data name="Errores" xml:space="preserve">
     <value>Modificación de errores registrales</value>
   </data>
@@ -200,6 +236,9 @@
   </data>
   <data name="Facturaemitidaterceros" xml:space="preserve">
     <value>Factura emitida de terceros</value>
+  </data>
+  <data name="Facturaoperacion" xml:space="preserve">
+    <value>Factura</value>
   </data>
   <data name="Facturarectificativa" xml:space="preserve">
     <value>Factura rectificativa</value>
@@ -234,8 +273,14 @@
   <data name="Identificacion" xml:space="preserve">
     <value>Identificación</value>
   </data>
+  <data name="Importearticulos" xml:space="preserve">
+    <value>Importe artículos 7, 14, Otros</value>
+  </data>
   <data name="Importeretencion" xml:space="preserve">
     <value>Importe retención</value>
+  </data>
+  <data name="Importetai" xml:space="preserve">
+    <value>Importe TAI reglas localización</value>
   </data>
   <data name="Importetotalemisor" xml:space="preserve">
     <value>Importe Total</value>
@@ -245,6 +290,9 @@
   </data>
   <data name="Inmueble" xml:space="preserve">
     <value>Inmueble</value>
+  </data>
+  <data name="Invsujetopasivo" xml:space="preserve">
+    <value>Inversión sujeto pasivo</value>
   </data>
   <data name="IVA" xml:space="preserve">
     <value>IVA</value>
@@ -261,6 +309,9 @@
   <data name="Nombrecontraparte" xml:space="preserve">
     <value>Nombre o Razón Social Contraparte</value>
   </data>
+  <data name="Nosujeta" xml:space="preserve">
+    <value>No sujeta</value>
+  </data>
   <data name="Numfacturacliente" xml:space="preserve">
     <value>Num. factura cliente</value>
   </data>
@@ -276,20 +327,44 @@
   <data name="Otro" xml:space="preserve">
     <value>Otro</value>
   </data>
+  <data name="Otros" xml:space="preserve">
+    <value>Exenta otros</value>
+  </data>
   <data name="Pendiente" xml:space="preserve">
     <value>Pendiente</value>
   </data>
   <data name="Periodo" xml:space="preserve">
     <value>Periodo</value>
   </data>
+  <data name="Porcentajeivasujetopasivo" xml:space="preserve">
+    <value>% IVA</value>
+  </data>
+  <data name="Porcentajereceqsujetopasivo" xml:space="preserve">
+    <value>% Rec. Eq.</value>
+  </data>
   <data name="Porcentajeretencion" xml:space="preserve">
     <value>% Retención</value>
+  </data>
+  <data name="Prestacionservicios" xml:space="preserve">
+    <value>Prestación servicios</value>
   </data>
   <data name="Rechazada" xml:space="preserve">
     <value>Rechazada</value>
   </data>
   <data name="Referencia" xml:space="preserve">
     <value>Referencia</value>
+  </data>
+  <data name="Sin" xml:space="preserve">
+    <value>SIN Inversión sujeto pasivo</value>
+  </data>
+  <data name="Sincon" xml:space="preserve">
+    <value>SIN y CON Inversión sujeto pasivo</value>
+  </data>
+  <data name="Sujetaexenta" xml:space="preserve">
+    <value>Sujeta / Exenta</value>
+  </data>
+  <data name="Sujetanoexenta" xml:space="preserve">
+    <value>Sujeta / No exenta</value>
   </data>
   <data name="Sustitucion" xml:space="preserve">
     <value>Por sustitución</value>
@@ -308,6 +383,9 @@
   </data>
   <data name="Tipoidentificacionotro" xml:space="preserve">
     <value>Tipo de identificación</value>
+  </data>
+  <data name="Tipooperacion" xml:space="preserve">
+    <value>Tipo de Operación</value>
   </data>
   <data name="TituloEntidad" xml:space="preserve">
     <value>Registro de IVA repercutido</value>

@@ -3695,6 +3695,20 @@
           <Property Name="importetransmisoremisor" Type="float" />
           <Property Name="claveregimenespecial" Type="varchar" MaxLength="3" />
           <Property Name="descripcionoperacionemisor" Type="nvarchar" MaxLength="50" />
+          <Property Name="tipooperacion" Type="int" />
+          <Property Name="sujetanoexenta" Type="bit" />
+          <Property Name="invsujetopasivo" Type="int" />
+          <Property Name="porcentajeivasujetopasivo" Type="float" />
+          <Property Name="baseimponiblesujetopasivo" Type="float" />
+          <Property Name="cuotaivasujetopasivo" Type="float" />
+          <Property Name="porcentajereceqsujetopasivo" Type="float" />
+          <Property Name="cuotareceqsujetopasivo" Type="float" />
+          <Property Name="sujetaexenta" Type="bit" />
+          <Property Name="causa" Type="int" />
+          <Property Name="baseimponiblesujetaexenta" Type="float" />
+          <Property Name="nosujeta" Type="bit" />
+          <Property Name="importearticulos" Type="float" />
+          <Property Name="importetai" Type="float" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -14536,6 +14550,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="claveregimenespecial" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="descripcionoperacionemisor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
+          <Property Name="tipooperacion" Type="Int32" />
+          <Property Name="sujetanoexenta" Type="Boolean" />
+          <Property Name="invsujetopasivo" Type="Int32" />
+          <Property Name="porcentajeivasujetopasivo" Type="Double" />
+          <Property Name="baseimponiblesujetopasivo" Type="Double" />
+          <Property Name="cuotaivasujetopasivo" Type="Double" />
+          <Property Name="porcentajereceqsujetopasivo" Type="Double" />
+          <Property Name="cuotareceqsujetopasivo" Type="Double" />
+          <Property Name="sujetaexenta" Type="Boolean" />
+          <Property Name="causa" Type="Int32" />
+          <Property Name="baseimponiblesujetaexenta" Type="Double" />
+          <Property Name="nosujeta" Type="Boolean" />
+          <Property Name="importearticulos" Type="Double" />
+          <Property Name="importetai" Type="Double" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
@@ -19770,6 +19798,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="importetai" ColumnName="importetai" />
+                <ScalarProperty Name="importearticulos" ColumnName="importearticulos" />
+                <ScalarProperty Name="nosujeta" ColumnName="nosujeta" />
+                <ScalarProperty Name="baseimponiblesujetaexenta" ColumnName="baseimponiblesujetaexenta" />
+                <ScalarProperty Name="causa" ColumnName="causa" />
+                <ScalarProperty Name="sujetaexenta" ColumnName="sujetaexenta" />
+                <ScalarProperty Name="cuotareceqsujetopasivo" ColumnName="cuotareceqsujetopasivo" />
+                <ScalarProperty Name="porcentajereceqsujetopasivo" ColumnName="porcentajereceqsujetopasivo" />
+                <ScalarProperty Name="cuotaivasujetopasivo" ColumnName="cuotaivasujetopasivo" />
+                <ScalarProperty Name="baseimponiblesujetopasivo" ColumnName="baseimponiblesujetopasivo" />
+                <ScalarProperty Name="porcentajeivasujetopasivo" ColumnName="porcentajeivasujetopasivo" />
+                <ScalarProperty Name="invsujetopasivo" ColumnName="invsujetopasivo" />
+                <ScalarProperty Name="sujetanoexenta" ColumnName="sujetanoexenta" />
+                <ScalarProperty Name="tipooperacion" ColumnName="tipooperacion" />
                 <ScalarProperty Name="descripcionoperacionemisor" ColumnName="descripcionoperacionemisor" />
                 <ScalarProperty Name="claveregimenespecial" ColumnName="claveregimenespecial" />
                 <ScalarProperty Name="importetransmisoremisor" ColumnName="importetransmisoremisor" />

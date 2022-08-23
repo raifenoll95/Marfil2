@@ -25,6 +25,7 @@
             <li><a data-toggle="tab" href="#detalle">@General.LblDetallado</a></li>
             <li><a data-toggle="tab" href="#siidatos">@General.LblSIIDatos</a></li>
             <li><a data-toggle="tab" href="#siifactura">@General.LblSIIFactura</a></li>
+            <li><a data-toggle="tab" href="#siioperacion">@General.LblSIIOperacion</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -42,6 +43,9 @@
         </div>
         <div id="siifactura" class="tab-pane fade margin-bottom">
             @Html.Partial("_siifactura", Model)
+        </div>
+        <div id="siioperacion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_siioperacion", Model)
         </div>
     </div>
 
