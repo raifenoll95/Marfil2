@@ -107,6 +107,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.Guid> fkcarpetas { get; set; }
         public Nullable<System.Guid> integridadreferenciaflag { get; set; }
         public string fkalmacendestino { get; set; }
+        public string remolque { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TraspasosalmacenCostesadicionales> TraspasosalmacenCostesadicionales { get; set; }

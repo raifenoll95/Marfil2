@@ -1448,9 +1448,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //Descripcion Cta Cargo
                 if (comentario.Contains("*DC*"))
                 {
-                    var cuentacargo = !String.IsNullOrEmpty(circuito.cuentacargo1) ? circuito.cuentacargo1 : !String.IsNullOrEmpty(circuito.cuentacargo2) ? circuito.cuentacargo2 : circuito.cuentacargorel;
-                    var descuenta = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuentacargo).Select(f => f.descripcion).SingleOrDefault() ?? "";
-                    comentario = comentario.Replace("*DC*", descuenta.ToString());
+                    /*var cuentacargo = !String.IsNullOrEmpty(circuito.cuentacargo1) ? circuito.cuentacargo1 : !String.IsNullOrEmpty(circuito.cuentacargo2) ? circuito.cuentacargo2 : circuito.cuentacargorel;
+                    var descuenta = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuentacargo).Select(f => f.descripcion).SingleOrDefault() ?? "";*/
+                    var cuentaregistro = "";
+                    if (esprevision)
+                    {
+                        var prevision = get(id) as VencimientosModel;
+                        cuentaregistro = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == prevision.Fkcuentas).Select(f => f.descripcion).SingleOrDefault() ?? "";
+                    }
+
+                    else
+                    {
+                        var cartera = serviceCartera.get(id) as CarteraVencimientosModel;
+                        cuentaregistro = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cartera.Fkcuentas).Select(f => f.descripcion).SingleOrDefault() ?? "";
+                    }
+                    comentario = comentario.Replace("*DC*", cuentaregistro);
                 }
 
                 //Tipo Importe 1. Num factura

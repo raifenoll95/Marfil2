@@ -47,7 +47,7 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLinDelete" };
-       // settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
+        // settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsBehavior.ConfirmDelete = false;
         settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
@@ -137,22 +137,6 @@
 
         };
 
-        /*settings.CellEditorInitialize = (s, e) =>
-        {
-
-            var editor = e.Editor as ASPxEdit;
-
-            if (editor == null) return;
-            editor.ValidationSettings.Display = Display.Dynamic;
-
-            if (e.Column.FieldName == settings.KeyFieldName)
-            {
-                editor.ValidationSettings.RegularExpression.ValidationExpression = "[0-9]{1,2}";
-                editor.Focus();
-            }
-
-
-        };*/
         settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -163,17 +147,6 @@
         settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
         settings.CommandColumn.VisibleIndex = 8;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
-        /*settings.CellEditorInitialize += (sender, args) =>
-        {
-
-            if (args.Column.FieldName == settings.KeyFieldName)
-            {
-                ASPxTextBox tb = (ASPxTextBox)args.Editor;
-                //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
-                tb.Focus();
-            }
-        };*/
-
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
         settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChangedTercero(s, e);} ";

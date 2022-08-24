@@ -5053,6 +5053,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="fkcarpetas" Type="uniqueidentifier" />
           <Property Name="integridadreferenciaflag" Type="uniqueidentifier" />
           <Property Name="fkalmacendestino" Type="varchar" MaxLength="4" />
+          <Property Name="remolque" Type="nvarchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="TraspasosalmacenCostesadicionales">
           <Key>
@@ -10253,6 +10254,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkalmacendestino" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TraspasosalmacenCostesadicionales" Relationship="MarfilModel.FK_TraspasosalmacenCostesadicionales_Traspasosalmacen" FromRole="Traspasosalmacen" ToRole="TraspasosalmacenCostesadicionales" />
           <NavigationProperty Name="TraspasosalmacenLin" Relationship="MarfilModel.FK_TraspasosalmacenLin_Traspasosalmacen" FromRole="Traspasosalmacen" ToRole="TraspasosalmacenLin" />
+          <Property Name="remolque" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TraspasosalmacenCostesadicionales">
           <Key>
@@ -16511,6 +16513,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Traspasosalmacen">
             <EntityTypeMapping TypeName="MarfilModel.Traspasosalmacen">
               <MappingFragment StoreEntitySet="Traspasosalmacen">
+                <ScalarProperty Name="remolque" ColumnName="remolque" />
                 <ScalarProperty Name="fkalmacendestino" ColumnName="fkalmacendestino" />
                 <ScalarProperty Name="integridadreferenciaflag" ColumnName="integridadreferenciaflag" />
                 <ScalarProperty Name="fkcarpetas" ColumnName="fkcarpetas" />

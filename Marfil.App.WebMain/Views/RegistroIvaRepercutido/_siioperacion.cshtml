@@ -15,9 +15,6 @@
     var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
 
-
-    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
-    var listtiposidentificacion = WebHelper.GetApplicationHelper().GetListTiposNif().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Descripcion }).ToList();
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -35,7 +32,113 @@
     </div>
 </div>
 
+<div class="form-group">
+    @Html.LabelFor(f => Model.Sujetanoexenta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Sujetanoexenta, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Sujetanoexenta)
+        }
 
+    </div>
+</div>
+
+<div class="form-group" id="divsujetopasivo">
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Invsujetopasivo", Model.Invsujetopasivo, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Invsujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Porcentajeivasujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Porcentajeivasujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Porcentajeivasujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Baseimponiblesujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Baseimponiblesujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Baseimponiblesujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Cuotaivasujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Cuotaivasujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Cuotaivasujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Porcentajereceqsujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Porcentajereceqsujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Porcentajereceqsujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Cuotareceqsujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Cuotareceqsujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Cuotareceqsujetopasivo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Sujetaexenta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Sujetaexenta, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Sujetaexenta)
+        }
+    </div>
+</div>
+
+<div class="form-group" id="divsujetaexenta">
+    @Html.LabelFor(f => Model.Baseimponiblesujetaexenta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Baseimponiblesujetaexenta, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Baseimponiblesujetaexenta, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Causa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Causa", Model.Causa, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Causa, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Nosujeta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Nosujeta, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Nosujeta)
+        }
+    </div>
+</div>
+
+<div class="form-group" id="divnosujeta">
+    @Html.LabelFor(f => Model.Importearticulos, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Importearticulos, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Importearticulos, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Importetai, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Importetai, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Importetai, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 
 @{
@@ -47,13 +150,59 @@
 
 <script type="text/javascript">
 
-
-    window.onload = init;
+    /*window.onload = init();
 
     function init() {
-      
-    }
 
-    
+        if ($("#Sujetanoexenta").is(':checked')) {
+            $("#divsujetopasivo").show();
+        } else {
+            $("#divsujetopasivo").hide();
+        }
+
+        if ($("#Sujetaexenta").is(':checked')) {
+            $("#divsujetaexenta").show();
+        } else {
+            $("#divsujetaexenta").hide();
+        }
+
+        if ($("#Nosujeta").is(':checked')) {
+            $("#divnosujeta").show();
+        } else {
+            $("#divnosujeta").hide();
+        }
+    }*/
+
+    $("#Sujetanoexenta").on('change', function () {
+        if ($("#Sujetanoexenta").is(':checked')) {
+            $("#divsujetopasivo").show();
+        } else {
+            $("#divsujetopasivo").hide();
+        }
+    });
+
+    $("#Sujetaexenta").on('change', function () {
+        if ($("#Sujetaexenta").is(':checked')) {
+            $("#divsujetaexenta").show();
+        } else {
+            $("#divsujetaexenta").hide();
+        }
+    });
+
+    $("#Nosujeta").on('change', function () {
+        if ($("#Nosujeta").is(':checked')) {
+            $("#divnosujeta").show();
+        } else {
+            $("#divnosujeta").hide();
+        }
+    });
+
+    $("#Invsujetopasivo").on('change', function () {
+        $("#Porcentajeivasujetopasivo").val(0);
+        $("#Baseimponiblesujetopasivo").val(0);
+        $("#Cuotaivasujetopasivo").val(0);
+        $("#Porcentajereceqsujetopasivo").val(0);
+        $("#Cuotareceqsujetopasivo").val(0);
+    });
 
 </script>

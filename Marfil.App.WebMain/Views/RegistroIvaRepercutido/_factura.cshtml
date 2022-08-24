@@ -42,7 +42,14 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Facturarectificativa, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.CheckBoxFor(f => Model.Facturarectificativa, (object)new { @readonly = isreadonly })
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Facturarectificativa, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Facturarectificativa)
+        }
     </div>
 </div>
 <div class="form-group" id="Facturarectificar">
@@ -55,7 +62,7 @@
             cvfactura.CampoIdentificador = "Id";
             //cvfactura.Params = "{\"cliente\":\"" + Model.Cuentacliente != "" && Model.Cuentacliente != null ? Model.Cuentacliente : Session["CurrentCuenta"].ToString() + "\"}";
             cvfactura.ControlesAsociados = "[ { \"cliente\":\"Cuentacliente\" } ]";
-            cvfactura.SoloLectura = false;
+            cvfactura.SoloLectura = isreadonly;
             cvfactura.Autofocus = true;
             cvfactura.Obligatorio = false;
             cvfactura.Configuracion.OcultarTexto = false;
@@ -99,7 +106,14 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Bieninversion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.CheckBoxFor(f => Model.Bieninversion, (object)new { @readonly = isreadonly })
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Bieninversion, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Bieninversion)
+        }
     </div>
 </div>
 
@@ -110,7 +124,7 @@
             cvretencion.Name = "Fktiporetencion";
             cvretencion.Url = Url.Action("TiporetencionApi", "Api");
             cvretencion.Valor = Model.Fktiporetencion;
-            cvretencion.SoloLectura = false;
+            cvretencion.SoloLectura = isreadonly;
             cvretencion.Autofocus = true;
             cvretencion.Obligatorio = false;
             cvretencion.Configuracion.OcultarTexto = false;
@@ -148,7 +162,7 @@
             cvinmueble.Url = Url.Action("InmueblesApi", "Api");
             cvinmueble.Valor = Model.Inmueble;
             cvinmueble.CampoIdentificador = "Id";
-            cvinmueble.SoloLectura = false;
+            cvinmueble.SoloLectura = isreadonly;
             cvinmueble.Autofocus = true;
             cvinmueble.Obligatorio = false;
             cvinmueble.Configuracion.OcultarTexto = false;
@@ -171,7 +185,14 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Contabilizar, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.CheckBoxFor(f => Model.Contabilizar, (object)new { @readonly = isreadonly })
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Contabilizar, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Contabilizar)
+        }
     </div>
 
     @Html.LabelFor(f => Model.Fkcuentastesoreria, new { @class = "control-label col-md-2" })
@@ -180,7 +201,7 @@
             cvctatesoreria.Name = "Fkcuentastesoreria";
             cvctatesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
             cvctatesoreria.Valor = Model.Fkcuentastesoreria;
-            cvctatesoreria.SoloLectura = false;
+            cvctatesoreria.SoloLectura = isreadonly;
             cvctatesoreria.Autofocus = true;
             cvctatesoreria.Obligatorio = false;
             cvctatesoreria.Configuracion.OcultarTexto = false;
@@ -214,7 +235,7 @@
             $("#Facturarectificar").hide();
             $("#Variosrectificar").hide();
         }
-        console("init - " + $("#Fktiporetencion").val());
+        console.log("init - " + $("#Fktiporetencion").val());
         if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
             $("#retenciones").show();
             $("#inmuebles").show();

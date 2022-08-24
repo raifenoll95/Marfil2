@@ -75,7 +75,7 @@
             cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
             cvseriecontableIVP.Valor = Model.Referencia;
             cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
-            cvseriecontableIVP.SoloLectura = false;
+            cvseriecontableIVP.SoloLectura = isreadonly;
             cvseriecontableIVP.Autofocus = true;
             cvseriecontableIVP.Obligatorio = false;
             cvseriecontableIVP.Configuracion.OcultarTexto = false;

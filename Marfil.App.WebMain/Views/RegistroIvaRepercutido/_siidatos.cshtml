@@ -67,7 +67,14 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Variosdestinatarios, new { @class = "control-label col-md-2" })
     <div class="col-md-1">
-        @Html.CheckBoxFor(f => Model.Variosdestinatarios, (object)new { @readonly = isreadonly })
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Variosdestinatarios, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Variosdestinatarios)
+        }
     </div>
 
     @Html.LabelFor(f => Model.Cuentaclientecontraparte, new { @class = "control-label col-md-2" })
