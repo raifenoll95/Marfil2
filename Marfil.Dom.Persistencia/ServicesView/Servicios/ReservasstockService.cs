@@ -461,7 +461,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var ancho = linea.Ancho;
                     var largo = linea.Largo;
                     var grueso = linea.Grueso;
-                    if (model.Modificarmedidas)
+                    //Se permite la modificación de medidas pero no es un Bundle / KIT, si no aplica las medidas del primer artículo a todos.
+                    if (model.Modificarmedidas && string.IsNullOrEmpty(linea.Bundle))
                     {
                         ancho = model.Ancho == 0 ? ancho : model.Ancho;
                         largo = model.Largo == 0 ? largo : model.Largo;

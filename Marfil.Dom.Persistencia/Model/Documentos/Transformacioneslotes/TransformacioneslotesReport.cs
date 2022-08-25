@@ -46,19 +46,42 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
             DataSource.Queries.Add(new CustomSqlQuery("Transformacionesloteslin", "SELECT pr.*,u.textocorto as [Unidadesdescripcion] FROM [TransformacioneslotesLin] as pr" +
                      " inner join Familiasproductos as fp on fp.empresa=pr.empresa and fp.id=substring(pr.fkarticulos,0,3) " +
                      " left join unidades as u on fp.fkunidadesmedida=u.id"));
-            // Create a master-detail relation between the queries.
 
+            DataSource.Queries.Add(new CustomSqlQuery("Trabajos","select * from trabajos"));
+
+            // OPERARIOS
+            DataSource.Queries.Add(new CustomSqlQuery("Operarios", "select t.*, c.descripcion,c.nif,d.*,p.nombre as NombreProvincia,pa.Descripcion as NombrePais " +
+                " from Operarios as t " +
+                " LEFT JOIN Cuentas AS c ON t.empresa = c.empresa and t.fkcuentas = c.id " +
+                " LEFT JOIN Direcciones AS d ON c.empresa =  d.empresa and c.id =  d.fkentidad " +
+                " LEFT JOIN Paises AS pa ON pa.valor = d.fkpais " +
+                " LEFT JOIN Provincias AS p ON p.id = d.fkprovincia and p.codigopais = d.fkpais "));
+
+
+            // Create a master-detail relation between the queries.
             DataSource.Relations.Add("Transformacioneslotes", "Transformacionesloteslin", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
-                    new RelationColumnInfo("id", "fkTransformacioneslotes")});
+                    new RelationColumnInfo("id", "fkTransformacioneslotes")
+            });
 
 
             DataSource.Relations.Add("Transformacioneslotes", "empresa", new[] {
-                    new RelationColumnInfo("empresa", "id")});
+                    new RelationColumnInfo("empresa", "id")
+            });
 
 
-            DataSource.Relations.Add("Transformacioneslotes", "Formaspago", new[] {
-                    new RelationColumnInfo("fkformaspago", "id")});
+            /*DataSource.Relations.Add("Transformacioneslotes", "Formaspago", new[] {
+                    new RelationColumnInfo("fkformaspago", "id")});*/
+
+            // TRANSFORMACIONESLOTES <-> TRABAJOS
+            DataSource.Relations.Add("Transformacioneslotes", "Trabajos", new[] {
+                new RelationColumnInfo("fktrabajos","id") 
+            });
+
+            // TRANSFORMACIONESLOTES <-> OPERARIOS
+            DataSource.Relations.Add("Transformacioneslotes", "Operarios", new[] {
+                new RelationColumnInfo("fkoperarios","fkcuentas") 
+            });
 
             DataSource.RebuildResultSchema();
                 
