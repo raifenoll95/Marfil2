@@ -672,4 +672,7 @@
   <data name="contadoreslotes" xml:space="preserve">
     <value>Contadores de lotes</value>
   </data>
+  <data name="configurardocumentosdivisionlotes" xml:space="preserve">
+    <value>Conf. de docs: División de lotes</value>
+  </data>
 </root>

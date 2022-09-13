@@ -615,6 +615,7 @@
     <Compile Include="Model\Documentos\CobrosYPagos\CircuitosTesoreriaCobrosModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosModel.cs" />
     <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesModel.cs" />
+    <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesReport.cs" />
     <Compile Include="Model\Documentos\FacturasCompras\FacturasDuaValidation.cs" />
     <Compile Include="Model\Documentos\GrupoMateriales\GrupoMaterialesModel.cs" />
     <Compile Include="Model\Documentos\InformeMargenModel.cs" />

@@ -53,8 +53,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                 throw new ValidationException(General.ErrorModificarRegistroBloqueado);
             }
 
-            var totaldebe = model.MovsLin.Where(f => f.esdebe == 1).Sum(f => f.importe);
-            var totalhaber = model.MovsLin.Where(f => f.esdebe == -1).Sum(f => f.importe);
+            var totaldebe = Math.Round(model.MovsLin.Where(f => f.esdebe == 1).Sum(f => f.importe),2);
+            var totalhaber = Math.Round(model.MovsLin.Where(f => f.esdebe == -1).Sum(f => f.importe),2);
 
             model.debe = totaldebe;
             model.haber = totalhaber;

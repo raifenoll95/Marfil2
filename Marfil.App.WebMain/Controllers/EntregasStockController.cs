@@ -632,11 +632,11 @@ namespace Marfil.App.WebMain.Controllers
                     }
                     
                     service.edit(model);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", new { id = id });
                 }
             }
 
-            TempData["errors"] = "Ocurrió un problema al generar el albarán de reclamación";
+            TempData["errors"] = "Ocurrió un problema al asignar contenedores";
             return RedirectToAction("Edit", new { id = id });
         }
 

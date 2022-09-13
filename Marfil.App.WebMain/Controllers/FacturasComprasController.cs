@@ -91,10 +91,11 @@ namespace Marfil.App.WebMain.Controllers
             catch (Exception ex)
             {
                 TempData["errors"] = ex.Message;
+                //var id = returnUrl.Substring(returnUrl.LastIndexOf('/') + 1);
                 return Redirect(returnUrl);
+                //return RedirectToAction("Edit", "RecepcionesStock", new { id = id });
             }
-
-
+            
             return RedirectToAction("Edit", "FacturasCompras", new { id = model.Id });
         }
 

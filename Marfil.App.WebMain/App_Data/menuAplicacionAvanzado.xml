@@ -132,7 +132,8 @@
 		<item name="configurardocumentosinventarios" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/70" />
 		<item name="configurardocumentostransformaciones" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/80" />
 		<item name="configurardocumentostransformacionesacabados" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2000" />
-	</item>
+    <item name="configurardocumentosdivisionlotes" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/85" />
+  </item>
 	<!--Contabilidad-->
 	<item name="contabilidad" text="Contabilidad" icono="fa fa-line-chart">
 		<item name="movs" allowBlock="true" text="Diario contable" url="~/Movs/Index" />

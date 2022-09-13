@@ -1203,6 +1203,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }             
                 }
 
+                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), 2);
+                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), 2);
+
+                if (totaldebe - totalhaber != 0)
+                    throw new ValidationException(RMovs.ErrorDescuadreDebeHaber);
+
                 //Nuevos Vencimientos y Pagos
                 var vencimientosService = new VencimientosService(_context);
 
@@ -1358,6 +1364,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         }                    
                     }
                 }
+
+                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), 2);
+                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), 2);
+
+                if (totaldebe - totalhaber != 0)
+                    throw new ValidationException(RMovs.ErrorDescuadreDebeHaber);
 
                 //Nuevos Vencimientos y Pagos
                 var vencimientosService = new VencimientosService(_context);

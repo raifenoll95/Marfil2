@@ -412,6 +412,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Conf. de docs: División de lotes.
+        /// </summary>
+        public static string configurardocumentosdivisionlotes {
+            get {
+                return ResourceManager.GetString("configurardocumentosdivisionlotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Conf. de docs: Perdidas y Ganancias.
         /// </summary>
         public static string configurardocumentosguiasbalances {

@@ -71,6 +71,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public void ValidarDimensiones(string codfamilia, double? largo, double? ancho, double? grueso, string art = "")
         {
+
             var error = string.Empty;
             var familia = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == codfamilia).SingleOrDefault();
 
@@ -91,6 +92,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (!string.IsNullOrWhiteSpace(error))
                     throw new ValidationException(error);
             }
+
         }
 
         public void ValidarDimensiones(string articulo, double? largo, double? ancho, double? grueso)

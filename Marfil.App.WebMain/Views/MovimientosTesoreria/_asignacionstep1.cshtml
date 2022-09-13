@@ -176,6 +176,10 @@
                         $("#TerceroDesde").prop('disabled', true);
                         $("#TerceroHasta").prop('disabled', true);
                     }
+
+                    if (valor == 14) {
+                        $("#ReferenciaRemesa").prop('disabled', false);
+                    }
                 }
             })
 
@@ -186,7 +190,7 @@
                 data: { valor },
                 success: function (data) {
                     if (data != "") {
-                        $("#FechaHasta").val(data);
+                        $("#FechaHasta").val(data);                 
                     }
                 }
             })
@@ -231,6 +235,10 @@
                         $("#TerceroDesde").prop('disabled', true);
                         $("#TerceroHasta").prop('disabled', true);
                     }
+
+                    if (valor == 14) {
+                        $("#ReferenciaRemesa").prop('disabled', false);
+                    }
                 }
             })
 
@@ -244,7 +252,6 @@
                     if (data != "") {
                         $("#FechaHasta").val(data);
                     }
-
                 }
             })
         });
@@ -282,6 +289,10 @@
                         $("#TerceroDesde").prop('disabled', true);
                         $("#TerceroHasta").prop('disabled', true);
                     }
+
+                    if (valor == 14) {
+                        $("#ReferenciaRemesa").prop('disabled', false);
+                    }
                 }
             });
 
@@ -295,7 +306,6 @@
                     if (data != "") {
                         $("#FechaHasta").val(data);
                     }
-
                 }
             });
         }

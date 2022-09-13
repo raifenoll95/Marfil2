@@ -191,6 +191,7 @@
 		<item name="configurardocumentosinventarios" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/70" />
 		<item name="configurardocumentostransformaciones" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/80" />
 		<item name="configurardocumentostransformacionesacabados" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2000" />
+    <item name="configurardocumentosdivisionlotes" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/85" />
 	</item>
 	<!--Terceros-->
 	<item name="terceros" text="Terceros" icono="fa fa-group">
