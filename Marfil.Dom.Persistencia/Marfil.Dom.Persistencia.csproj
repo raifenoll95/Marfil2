@@ -469,6 +469,9 @@
     <Compile Include="KitLin.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lecturas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ListadoStockValorado.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -605,6 +608,7 @@
     <Compile Include="Model\CRM\OportunidadesModel.cs" />
     <Compile Include="Model\CRM\SeguimientosModel.cs" />
     <Compile Include="Model\CuadernosBancariosModel.cs" />
+    <Compile Include="Model\Documentos\Albaranes\AsistenteLecturasModel.cs" />
     <Compile Include="Model\Documentos\CarteraVencimientos\CarteraVencimientosReport.cs" />
     <Compile Include="Model\Documentos\CarteraVencimientos\RemesaReport.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\AsistenteMovimientosTesoreriaModel.cs" />
@@ -745,6 +749,7 @@
     <Compile Include="Model\FModel.cs" />
     <Compile Include="Model\HeaderModel.cs" />
     <Compile Include="Listados\ListadosBalancePedidos.cs" />
+    <Compile Include="Model\LecturasModel.cs" />
     <Compile Include="Model\ListIndexModel.cs" />
     <Compile Include="Model\MapeoRemesasModel.cs" />
     <Compile Include="Model\Mobile\BaseParam.cs" />
@@ -985,6 +990,7 @@
     <Compile Include="ServicesView\Servicios\Converter\CuadernosBancariosConverterServices.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\LecturasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\LogStockSeguridadConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RegistroIvaRepercutidoConverterService.cs" />
@@ -1019,6 +1025,7 @@
     <Compile Include="ServicesView\Servicios\CostesVariablesPeriodoService.cs" />
     <Compile Include="ServicesView\Servicios\CuadernosBancariosService.cs" />
     <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
+    <Compile Include="ServicesView\Servicios\LecturasService.cs" />
     <Compile Include="ServicesView\Servicios\LogStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\MapeoRemesasService.cs" />
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
@@ -1032,6 +1039,7 @@
     <Compile Include="ServicesView\Servicios\Validation\CuadernosBancariosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\LecturasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\RegistroIvaRepercutidoValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\RemesasValidation.cs" />

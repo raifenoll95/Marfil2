@@ -46,14 +46,14 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Queries.Add(new CustomSqlQuery("Albaraneslin", "SELECT al.*, (al.ancho * 100) AS ancho_cm, (al.largo * 100) AS largo_cm, (al.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2 FROM [AlbaranesLin] as al" +
                                                                       " inner join Familiasproductos as fp on fp.empresa=al.empresa and fp.id=substring(al.fkarticulos,0,3)" +
                                                                       " left join unidades as u on fp.fkunidadesmedida=u.id" +
-                                                                      " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id"));
+                                                                      " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id and al.empresa = ar.empresa"));
 
             // ALBARANESLIN AGRUPADO
             DataSource.Queries.Add(new CustomSqlQuery("AlbaraneslinAgrupado", "SELECT al.empresa, al.fkalbaranes, al.descripcion, ar.descripcion2, caja, bundle, lote, SUM(cantidad) AS cantidad, al.largo, al.ancho, al.grueso, SUM(metros) AS metros, precio, SUM(importe) AS importe, u.textocorto AS [Unidadesdescripcion]" +
                                                                               " FROM AlbaranesLin AS al" +
                                                                               " INNER JOIN Familiasproductos AS fp ON fp.empresa = al.empresa AND fp.id = substring(al.fkarticulos,0,3)" +
                                                                               " LEFT JOIN unidades AS u ON fp.fkunidadesmedida = u.id" +
-                                                                              " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id" +
+                                                                              " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id and al.empresa = ar.empresa" +
                                                                               " GROUP BY al.empresa, fkalbaranes, al.descripcion, ar.descripcion2, caja, bundle, lote, al.largo, al.ancho, al.grueso, precio, u.textocorto" +
                                                                               " ORDER BY descripcion, caja, bundle"));
 

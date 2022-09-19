@@ -43,7 +43,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
 
             // ALBARANESCOMPRASLIN
             DataSource.Queries.Add(new CustomSqlQuery("AlbaranesComprasLin", "SELECT al.*, (al.ancho * 100) AS ancho_cm, (al.largo * 100) AS largo_cm, (al.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2, " +
-                "sa.cantidadtotal as [CantidadTotal_StockActual], sa.largo as [Largo_StockActual], sa.ancho as [Ancho_StockActual], sa.grueso as [Grueso_StockActual], sa.metros as [Metros_StockActual] " +
+                "sa.cantidadtotal as [CantidadTotal_StockActual], sa.largo as [Largo_StockActual], sa.ancho as [Ancho_StockActual], sa.grueso as [Grueso_StockActual], sa.metros as [Metros_StockActual], al.lote+replicate('0', 3 - Len(al.tabla)) + rtrim(al.tabla) as [codigodebarraslote] " +
                 " FROM [AlbaranesComprasLin] as al" +
                 " inner join Familiasproductos as fp on fp.empresa=al.empresa and fp.id=substring(al.fkarticulos,0,3)" +
                 " left join unidades as u on fp.fkunidadesmedida=u.id" +

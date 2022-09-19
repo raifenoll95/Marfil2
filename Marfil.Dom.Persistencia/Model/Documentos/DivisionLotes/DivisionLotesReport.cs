@@ -26,7 +26,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes
             if (!string.IsNullOrEmpty(primarykey))
             {
                 mainQuery.Parameters.Add(new QueryParameter("empresa", typeof(string), user.Empresa));
-                mainQuery.Parameters.Add(new QueryParameter("referenciaremesa", typeof(string), primarykey));
+                mainQuery.Parameters.Add(new QueryParameter("id", typeof(string), primarykey));
                 mainQuery.Sql = "SELECT * FROM [DivisionLotes] where empresa=@empresa and id=@id";
             }
 

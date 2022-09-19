@@ -243,4 +243,19 @@
   <data name="Cuentascaja" xml:space="preserve">
     <value>Cuentas de caja</value>
   </data>
+  <data name="Contable" xml:space="preserve">
+    <value>Fecha Registro Contable</value>
+  </data>
+  <data name="Factura" xml:space="preserve">
+    <value>Fecha Factura</value>
+  </data>
+  <data name="Operacion" xml:space="preserve">
+    <value>Fecha Operación</value>
+  </data>
+  <data name="Ivarepercutido" xml:space="preserve">
+    <value>IVA Repercutido</value>
+  </data>
+  <data name="Ivasoportado" xml:space="preserve">
+    <value>IVA Soportado</value>
+  </data>
 </root>

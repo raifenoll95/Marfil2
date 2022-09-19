@@ -324,10 +324,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AsistenteLecturasController.cs" />
     <Compile Include="Controllers\ActualizarCostesController.cs" />
     <Compile Include="Controllers\ArticulosStockSeguridadController.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteCuentasController.cs" />
+    <Compile Include="Controllers\AsistenteLecturasApiController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
     <Compile Include="Controllers\AsistenteAperturaProvisionalApiController.cs" />
@@ -340,6 +342,7 @@
     <Compile Include="Controllers\ComparativaPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
     <Compile Include="Controllers\InmueblesApiController.cs" />
+    <Compile Include="Controllers\LecturasController.cs" />
     <Compile Include="Controllers\RegistroIvaFacturasApiController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasAnaliticaController.cs" />
@@ -2540,6 +2543,7 @@
     <Content Include="Scripts\UserControls\Contactos\ContactosController.js" />
     <Content Include="Scripts\UserControls\Designer\SavedialogController.js" />
     <Content Include="Scripts\UserControls\Direcciones\DireccionesController.js" />
+    <Content Include="Scripts\UserControls\Lecturas\lecturascontroller.js" />
     <Content Include="Scripts\UserControls\Oportunidades\OportunidadesController.js" />
     <Content Include="Scripts\UserControls\Pedidos\pedidoscomprascontroller.js" />
     <Content Include="Scripts\UserControls\Facturas\facturarcontroller.js" />
@@ -3732,6 +3736,10 @@
     <Content Include="Views\RegistroIvaRepercutido\_siifactura.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_rectificadas.cshtml" />
     <Content Include="Views\RegistroIvaRepercutido\_siioperacion.cshtml" />
+    <Content Include="Views\Importar\ImportarLecturas.cshtml" />
+    <Content Include="Views\AsistenteLecturas\AsistenteLecturas.cshtml" />
+    <Content Include="Views\AsistenteLecturas\ImportarLecturas.cshtml" />
+    <Content Include="Views\AsistenteLecturas\_procesolecturasstep2.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

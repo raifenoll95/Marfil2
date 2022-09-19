@@ -810,4 +810,10 @@
   <data name="Remolque" xml:space="preserve">
     <value>Remolque</value>
   </data>
+  <data name="AsistenteLecturas" xml:space="preserve">
+    <value>Asistente de inserción de lecturas</value>
+  </data>
+  <data name="GenerarLecturas" xml:space="preserve">
+    <value>Insertar lecturas</value>
+  </data>
 </root>

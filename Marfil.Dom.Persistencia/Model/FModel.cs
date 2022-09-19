@@ -230,6 +230,11 @@ namespace Marfil.Dom.Persistencia.Model
 
                 return result as T;
             }
+            else if (typeof(AsistenteLecturasModel) == typeof(T))
+            {
+                var result = new AsistenteLecturasModel();
+                return result as T;
+            }
             else if (typeof(IncidenciasModel) == typeof(T))
             {
                 var result = new IncidenciasModel(context);
@@ -841,6 +846,13 @@ namespace Marfil.Dom.Persistencia.Model
                 var result = new InmueblesModel();
                 var empresa = appService.GetCurrentEmpresa();
                 result.Empresa = empresa.Id;
+                return result as T;
+            }
+            else if (typeof(LecturasModel) == typeof(T))
+            {
+
+                var result = new LecturasModel();
+
                 return result as T;
             }
             else if (typeof(CuadernosBancariosModel) == typeof(T))

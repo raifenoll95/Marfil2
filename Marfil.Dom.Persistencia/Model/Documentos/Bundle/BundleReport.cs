@@ -36,7 +36,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Bundle
             
             
                 DataSource.Queries.Add(mainQuery);
-                DataSource.Queries.Add(new CustomSqlQuery("Bundlelin", "SELECT * FROM [BundleLin]"));
+                DataSource.Queries.Add(new CustomSqlQuery("Bundlelin", "SELECT *, lote+replicate('0', 3 - Len(loteid)) + rtrim(loteid) as [codigodebarraslote]  FROM [BundleLin]"));
             
             
 

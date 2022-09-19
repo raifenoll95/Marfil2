@@ -1,0 +1,16 @@
+﻿using Marfil.Dom.Persistencia.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
+{
+    class LecturasConverterService : BaseConverterModel<LecturasModel, Lecturas>
+    {
+        public LecturasConverterService(IContextService context, MarfilEntities db) : base(context, db)
+        {
+        }
+    }
+}

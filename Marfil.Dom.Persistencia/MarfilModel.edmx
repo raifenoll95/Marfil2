@@ -1535,6 +1535,8 @@
           <Property Name="cuentasexistencias" Type="nvarchar" MaxLength="100" />
           <Property Name="cuentaPG" Type="nvarchar" MaxLength="100" />
           <Property Name="cuentascaja" Type="nvarchar" MaxLength="100" />
+          <Property Name="ivasoportado" Type="int" />
+          <Property Name="ivarepercutido" Type="int" />
         </EntityType>
         <EntityType Name="Estados">
           <Key>
@@ -2503,6 +2505,20 @@
           <Property Name="decimalesprecio" Type="int" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
           <Property Name="fkalmacenes" Type="varchar" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="Lecturas">
+          <Key>
+            <PropertyRef Name="identificador" />
+            <PropertyRef Name="lote" />
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="identificador" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="fecha" Type="date" Nullable="false" />
+          <Property Name="hora" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="lote" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="usuario" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="insertado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LogStockSeguridad">
           <Key>
@@ -6708,6 +6724,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="InventariosLin" EntityType="Self.InventariosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kit" EntityType="Self.Kit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KitLin" EntityType="Self.KitLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturas" EntityType="Self.Lecturas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogStockSeguridad" EntityType="Self.LogStockSeguridad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Maes" EntityType="Self.Maes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MapeoRemesas" EntityType="Self.MapeoRemesas" Schema="dbo" store:Type="Tables" />
@@ -7867,6 +7884,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
             <End Role="RegistroIVARepercutidoRectificadas" EntitySet="RegistroIVARepercutidoRectificadas" />
           </AssociationSet>
+          <EntitySet Name="Lecturas" EntityType="MarfilModel.Lecturas" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -12103,6 +12121,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="cuentasexistencias" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="cuentaPG" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="cuentascaja" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ivasoportado" Type="Int32" />
+          <Property Name="ivarepercutido" Type="Int32" />
         </EntityType>
         <EntityType Name="MovsLin">
           <Key>
@@ -14627,6 +14647,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Lecturas">
+          <Key>
+            <PropertyRef Name="identificador" />
+            <PropertyRef Name="lote" />
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="identificador" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="lote" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="usuario" Type="Guid" Nullable="false" />
+          <Property Name="insertado" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17987,6 +18021,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="MarfilModel.Empresas">
               <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="ivarepercutido" ColumnName="ivarepercutido" />
+                <ScalarProperty Name="ivasoportado" ColumnName="ivasoportado" />
                 <ScalarProperty Name="cuentascaja" ColumnName="cuentascaja" />
                 <ScalarProperty Name="cuentaPG" ColumnName="cuentaPG" />
                 <ScalarProperty Name="cuentasexistencias" ColumnName="cuentasexistencias" />
@@ -19896,6 +19932,19 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="fkregistros" ColumnName="fkregistros" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lecturas">
+            <EntityTypeMapping TypeName="MarfilModel.Lecturas">
+              <MappingFragment StoreEntitySet="Lecturas">
+                <ScalarProperty Name="insertado" ColumnName="insertado" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="identificador" ColumnName="identificador" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

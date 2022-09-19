@@ -37,7 +37,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
            
             DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
             DataSource.Queries.Add(mainQuery);
-            DataSource.Queries.Add(new CustomSqlQuery("Transformacionesentradalin", "SELECT pr.*,u.textocorto as [Unidadesdescripcion] FROM [Transformacionesentradalin] as pr" +
+            DataSource.Queries.Add(new CustomSqlQuery("Transformacionesentradalin", "SELECT pr.*,u.textocorto as [Unidadesdescripcion], pr.lote+replicate('0', 3 - Len(pr.tabla)) + rtrim(pr.tabla) as [codigodebarraslote] FROM [Transformacionesentradalin] as pr" +
                      " inner join Familiasproductos as fp on fp.empresa=pr.empresa and fp.id=substring(pr.fkarticulos,0,3)" +
                     " left join unidades as u on fp.fkunidadesmedida=u.id"));
 
@@ -70,11 +70,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
 
             // TRANSFORMACIONESLOTES <-> TRABAJOS
             DataSource.Relations.Add("Transformaciones", "Trabajos", new[] {
+                new RelationColumnInfo("empresa", "empresa"),
                 new RelationColumnInfo("fktrabajos","id")
             });
 
             // TRANSFORMACIONESLOTES <-> OPERARIOS
             DataSource.Relations.Add("Transformaciones", "Operarios", new[] {
+                new RelationColumnInfo("empresa", "empresa"),
                 new RelationColumnInfo("fkoperarios","fkcuentas") 
             });
 

@@ -36,7 +36,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Kit
             
             
                 DataSource.Queries.Add(mainQuery);
-                DataSource.Queries.Add(new CustomSqlQuery("Kitlin", "SELECT * FROM [KitLin]"));
+                DataSource.Queries.Add(new CustomSqlQuery("Kitlin", "SELECT *, lote+replicate('0', 3 - Len(loteid)) + rtrim(loteid) as [codigodebarraslote] FROM [KitLin]"));
             
             
 

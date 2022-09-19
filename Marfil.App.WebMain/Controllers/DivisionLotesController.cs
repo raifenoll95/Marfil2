@@ -21,6 +21,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones;
 using Marfil.Inf.Genericos.Helper;
 using System.Net;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -413,6 +414,52 @@ namespace Marfil.App.WebMain.Controllers
             result.EjercicioId = ContextService.Ejercicio;
             return result;
         }
+
+        #region imprimir
+
+        protected override ToolbarModel GenerateToolbar(IGestionService service, TipoOperacion operacion, dynamic model = null)
+        {
+            var result = base.GenerateToolbar(service, operacion, model as object);
+            result.Titulo = "DivisionLotes";
+            return result;
+        }
+
+        protected override IEnumerable<IToolbaritem> VerToolbar(IGestionService service, IModelView model)
+        {
+            DivisionLotesModel objModel = model as DivisionLotesModel;
+            var result = base.VerToolbar(service, model).ToList();
+            result.Add(new ToolbarSeparatorModel());
+            result.Add(CreateComboImprimir(objModel));
+            return result;
+        }
+
+        protected override IEnumerable<IToolbaritem> EditToolbar(IGestionService service, IModelView model)
+        {
+            DivisionLotesModel objModel = model as DivisionLotesModel;
+            var result = base.VerToolbar(service, model).ToList();
+            result.Add(new ToolbarSeparatorModel());
+            result.Add(CreateComboImprimir(objModel));
+            return result;
+        }
+
+        private ToolbarActionComboModel CreateComboImprimir(DivisionLotesModel objModel)
+        {
+            objModel.DocumentosImpresion = objModel.GetListFormatos();
+            return new ToolbarActionComboModel()
+            {
+                Icono = "fa fa-print",
+                Texto = General.LblImprimir,
+                Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Id, tipo = TipoDocumentos.DivisionLotes, reportId = objModel.DocumentosImpresion.Defecto }),
+                Target = "_blank",
+                Items = objModel.DocumentosImpresion.Lineas.Select(f => new ToolbarActionModel()
+                {
+                    Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Id, tipo = TipoDocumentos.DivisionLotes, reportId = f }),
+                    Texto = f,
+                    Target = "_blank"
+                })
+            };
+        }
+        #endregion
 
     }
 }

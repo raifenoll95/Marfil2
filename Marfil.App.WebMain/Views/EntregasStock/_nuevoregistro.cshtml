@@ -95,7 +95,7 @@
                             </div>
 
                         </div>
-                        @if (!(Model is TransformacionesModel) && !(Model is TransformacioneslotesModel) && !(Model is DivisionLotesModel) && !(Model is ImputacionCostesModel))
+                        @if (!(Model is TransformacionesModel) /*&& !(Model is TransformacioneslotesModel)*/ && !(Model is DivisionLotesModel) && !(Model is ImputacionCostesModel))
                         {
 
                             <div ng-show="Mostrardetalle ||!Gestionlotes">
@@ -157,47 +157,51 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">@Albaranes.Precio</label>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input type="text" id="Precioarticulo" ng-readonly="!Editarprecio" name="Precioarticulo" ng-model="Precio" class="form-control" decimalesnumerico />
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-secondary btn-sm" ng-disabled="!Editarprecio" ng-click="SearchPrecios()" type="button"><i class="fa fa-search"></i> @General.LblBuscar</button>
-                                            </span>
+
+                                @if (!(Model is TransformacioneslotesModel))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">@Albaranes.Precio</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" id="Precioarticulo" ng-readonly="!Editarprecio" name="Precioarticulo" ng-model="Precio" class="form-control" decimalesnumerico />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-sm" ng-disabled="!Editarprecio" ng-click="SearchPrecios()" type="button"><i class="fa fa-search"></i> @General.LblBuscar</button>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="input-group">
+                                                <input type="text" name="Descuento" ng-readonly="!Editardescuento" ng-model="Descuentoarticulo" class="form-control" decimalesnumerico />
+                                                <span class="input-group-addon">%</span>
+                                            </div>
                                         </div>
 
+                                        <div class="col-md-12"></div>
+                                        <div class="col-md-4 col-md-offset-2"><span class="text-danger">{{Precioerrores}}</span></div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="input-group">
-                                            <input type="text" name="Descuento" ng-readonly="!Editardescuento" ng-model="Descuentoarticulo" class="form-control" decimalesnumerico />
-                                            <span class="input-group-addon">%</span>
+
+                                    <div class="form-group">
+                                        <input type="hidden" ng-model="Subtotal" name="Subtotal" class="form-control" />
+                                        <label class="control-label col-md-2 ">@Albaranes.Subtotal</label>
+                                        <label class="control-label col-md-2 badge-light" style="padding: 5px !important">{{Subtotal}}</label>
+                                        <label class="control-label col-md-2 ">@Albaranes.Canal</label>
+                                        <div class="col-md-2">
+                                            <select name="Canal" ng-model="Canal" aria-label="Canal" class="form-control">
+                                                <option value="" selected="selected"></option>
+                                                @foreach (var item in listcanales)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <label class="control-label col-md-2 ">@Albaranes.Caja</label>
+                                        <div class="col-md-2">
+                                            <input type="number" name="Caja" ng-model="Caja" aria-label="Caja" class="form-control" />
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12"></div>
-                                    <div class="col-md-4 col-md-offset-2"><span class="text-danger">{{Precioerrores}}</span></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="hidden" ng-model="Subtotal" name="Subtotal" class="form-control" />
-                                    <label class="control-label col-md-2 ">@Albaranes.Subtotal</label>
-                                    <label class="control-label col-md-2 badge-light" style="padding: 5px !important">{{Subtotal}}</label>
-                                    <label class="control-label col-md-2 ">@Albaranes.Canal</label>
-                                    <div class="col-md-2">
-                                        <select name="Canal" ng-model="Canal" aria-label="Canal" class="form-control">
-                                            <option value="" selected="selected"></option>
-                                            @foreach (var item in listcanales)
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-md-2 ">@Albaranes.Caja</label>
-                                    <div class="col-md-2">
-                                        <input type="number" name="Caja" ng-model="Caja" aria-label="Caja" class="form-control" />
-                                    </div>
-                                </div>
+                                }
 
 
                             </div>

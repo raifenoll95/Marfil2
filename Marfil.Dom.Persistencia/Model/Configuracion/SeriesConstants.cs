@@ -17,6 +17,7 @@ using RImputacionCostes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Imp
 using RAlmacenes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Almacenes;
 using RFamilias = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Familiasproductos;
 using RCobrosYPagos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.CobrosYPagos;
+using RDivision = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.DivisionLotes;
 
 namespace Marfil.Dom.Persistencia.Model.Configuracion
 {
@@ -57,7 +58,9 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
         Transformacioneslotes,
         [StringValue(typeof(RMovs), "TituloEntidad")]
         Asientos,
-        
+        [StringValue(typeof(RDivision), "TituloEntidad")]
+        DivisionLotes,
+
         [StringValue(typeof(RArticulos), "TituloEntidad")]
         Articulos,
         [StringValue(typeof(RMateriales), "TituloEntidad")]

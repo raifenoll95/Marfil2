@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using Marfil.Inf.Genericos.Helper;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Dom.Persistencia.Model.Documentos.Albaranes;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -725,6 +726,107 @@ namespace Marfil.App.WebMain.Controllers
                     service.CambiarEstado(EstadoPeticion.Error, idPeticion, ex.Message);
                 }
             }
+        }
+
+        #endregion
+
+        #region ImportarLecturas
+
+        public ActionResult ImportarLecturas()
+        {
+            ImportarModel model = new ImportarModel();
+            
+            return View("ImportarLecturas", model);
+        }
+
+        [HttpPost]
+        public ActionResult ImportarLecturas(ImportarModel model)
+        {
+            var idPeticion = 0;
+            var file = model.Fichero;
+            char delimitador = model.Delimitador.ToCharArray()[0];
+
+            if (ModelState.IsValid)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    if (file.FileName.ToLower().EndsWith(".csv"))
+                    {
+                        var service = FService.Instance.GetService(typeof(LecturasModel), ContextService) as LecturasService;
+                        StreamReader sr = new StreamReader(file.InputStream, Encoding.UTF8);
+                        StringBuilder sb = new StringBuilder();
+                        DataTable dt = new DataTable();
+                        DataRow dr;
+                        string s;
+                        int j = 0;
+
+                        dt.Columns.Add("Identificador");
+                        dt.Columns.Add("Fecha");
+                        dt.Columns.Add("Hora");
+                        dt.Columns.Add("Lote");
+                        dt.Columns.Add("Cantidad");                        
+
+                        while (!sr.EndOfStream)
+                        {
+                            while ((s = sr.ReadLine()) != null)
+                            {
+                                //Ignorar cabecera                    
+                                if (j > 0 || !model.Cabecera)
+                                {
+                                    string[] str = s.Split(delimitador);
+                                    dr = dt.NewRow();
+
+                                    for (int i = 0; i < dt.Columns.Count; i++)
+                                    {
+                                        try
+                                        {
+                                            dr[dt.Columns[i]] = str[i].Replace("\"", string.Empty).ToString() ?? string.Empty;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            ModelState.AddModelError("File", General.ErrorDelimitadorFormato);
+                                            TempData["error"] = ex.Message;
+                                            return View("AsistenteLecturas", "AsistenteLecturas");
+                                        }
+                                    }
+                                    dt.Rows.Add(dr);
+                                }
+                                j++;
+                            }
+                        }
+                        try
+                        {
+                            service.Importar(dt, idPeticion, ContextService);
+                            sr.Close();
+                        }
+                        catch (ValidationException ex)
+                        {
+                            if (string.IsNullOrEmpty(ex.Message))
+                            {
+                                TempData["error"] = null;
+                            }
+                            else
+                            {
+                                TempData["error"] = ex.Message;
+                            }
+                        }
+
+                        TempData["Success"] = "Importado correctamente!";
+                        //TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas";
+                        return RedirectToAction("AsistenteLecturas", "AsistenteLecturas");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", General.ErrorFormatoFichero);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("File", General.ErrorFichero);
+                }
+            }
+
+            return View("AsistenteLecturas", "AsistenteLecturas");
         }
 
         #endregion

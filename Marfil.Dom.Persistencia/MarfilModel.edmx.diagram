@@ -297,6 +297,7 @@
         <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" />
         <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoRectificadas" Width="1.5" PointX="36.625" PointY="49" />
         <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" />
+        <EntityTypeShape EntityType="MarfilModel.Lecturas" Width="1.5" PointX="4.375" PointY="4.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

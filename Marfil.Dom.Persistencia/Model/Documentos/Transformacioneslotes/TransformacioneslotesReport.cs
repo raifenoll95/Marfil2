@@ -47,7 +47,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
                      " inner join Familiasproductos as fp on fp.empresa=pr.empresa and fp.id=substring(pr.fkarticulos,0,3) " +
                      " left join unidades as u on fp.fkunidadesmedida=u.id"));
 
-            DataSource.Queries.Add(new CustomSqlQuery("Trabajos","select * from trabajos"));
+            DataSource.Queries.Add(new CustomSqlQuery("Trabajos", "select * from trabajos "));
 
             // OPERARIOS
             DataSource.Queries.Add(new CustomSqlQuery("Operarios", "select t.*, c.descripcion,c.nif,d.*,p.nombre as NombreProvincia,pa.Descripcion as NombrePais " +
@@ -75,11 +75,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
 
             // TRANSFORMACIONESLOTES <-> TRABAJOS
             DataSource.Relations.Add("Transformacioneslotes", "Trabajos", new[] {
+                new RelationColumnInfo("empresa","empresa"),
                 new RelationColumnInfo("fktrabajos","id") 
             });
 
             // TRANSFORMACIONESLOTES <-> OPERARIOS
             DataSource.Relations.Add("Transformacioneslotes", "Operarios", new[] {
+                new RelationColumnInfo("empresa","empresa"),
                 new RelationColumnInfo("fkoperarios","fkcuentas") 
             });
 

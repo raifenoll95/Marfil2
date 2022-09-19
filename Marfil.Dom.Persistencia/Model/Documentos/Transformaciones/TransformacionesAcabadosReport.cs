@@ -60,11 +60,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
 
             // TRANSFORMACIONESLOTES <-> TRABAJOS
             DataSource.Relations.Add("Transformacioneslotes", "Trabajos", new[] {
+                new RelationColumnInfo("empresa","empresa"),
                 new RelationColumnInfo("fktrabajos","id")
             });
 
             // TRANSFORMACIONESLOTES <-> OPERARIOS
             DataSource.Relations.Add("Transformacioneslotes", "Operarios", new[] {
+                new RelationColumnInfo("empresa","empresa"),
                 new RelationColumnInfo("fkoperarios","fkcuentas")
             });
 

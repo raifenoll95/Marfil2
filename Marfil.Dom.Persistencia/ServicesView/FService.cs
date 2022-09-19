@@ -80,6 +80,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(ConfiguracionModel), typeof(ConfiguracionService));
             _servicesTypes.Add(typeof(TiposCuentasModel), typeof(TiposcuentasService));
             _servicesTypes.Add(typeof(InmueblesModel), typeof(InmueblesService));
+            _servicesTypes.Add(typeof(LecturasModel), typeof(LecturasService));
             _servicesTypes.Add(typeof(GuiascontablesModel), typeof(GuiascontablesService));
             _servicesTypes.Add(typeof(TiposRetencionesModel), typeof(TiposRetencionesService));
             _servicesTypes.Add(typeof(TiposIvaModel), typeof(TiposivaService));

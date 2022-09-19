@@ -54,6 +54,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Cuentas), typeof(CuentasConverterService));
             _converterServicesTypes.Add(typeof(Tiposcuentas), typeof(TiposcuentasConverterService));
             _converterServicesTypes.Add(typeof(Inmuebles), typeof(InmueblesConverterService));
+            _converterServicesTypes.Add(typeof(Lecturas), typeof(LecturasConverterService));
             _converterServicesTypes.Add(typeof(Unidades), typeof(UnidadesConverterService));
             _converterServicesTypes.Add(typeof(Direcciones), typeof(DireccionesConverterService));
             _converterServicesTypes.Add(typeof(Contactos), typeof(ContactosConverterService));

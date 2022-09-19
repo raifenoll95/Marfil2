@@ -1047,6 +1047,17 @@ namespace Marfil.App.WebMain.Controllers
             var result = base.EditToolbar(service, model).ToList();
 
             result.Add(new ToolbarSeparatorModel());
+            if (objModel.Lineas.Count == 0)
+            {
+                result.Add(new ToolbarActionModel()
+                {
+                    Icono = "fa fa-share",
+                    Texto = "Lecturas",
+                    Url = Url.Action("AsistenteLecturas", "AsistenteLecturas")
+                });
+            }
+
+            result.Add(new ToolbarSeparatorModel());
             if (objModel.Tipoalbaran < (int)TipoAlbaran.Devolucion)
             {
                 result.Add(new ToolbarActionModel()

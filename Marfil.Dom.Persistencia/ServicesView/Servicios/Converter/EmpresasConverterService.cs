@@ -73,6 +73,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.guiaperdidas = viewmodel.GuiaPerdidas;
             result.criterioiva = (int)viewmodel.Criterioiva;
             result.liquidacioniva = (int)viewmodel.Liquidacioniva;
+            result.ivasoportado = (int)viewmodel.Ivasoportado;
+            result.ivarepercutido = (int)viewmodel.Ivarepercutido;
             result.tipoempresa = viewmodel.TipoEmpresa;
             result.datosregistrales = viewmodel.Datosregistrales;
             result.fktarifascompras = viewmodel.Fktarifascompras;
@@ -114,6 +116,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.guiaperdidas = viewmodel.GuiaPerdidas;
             result.criterioiva = (int)viewmodel.Criterioiva;
             result.liquidacioniva = (int)viewmodel.Liquidacioniva;
+            result.ivasoportado = (int)viewmodel.Ivasoportado;
+            result.ivarepercutido = (int)viewmodel.Ivarepercutido;
             result.tipoempresa = viewmodel.TipoEmpresa;
             result.datosregistrales = viewmodel.Datosregistrales;
             result.fktarifascompras = viewmodel.Fktarifascompras;
@@ -152,6 +156,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.GuiaAnuales = obj.guiaanuales;
             result.GuiaPerdidas = obj.guiaperdidas;
             result.Liquidacioniva = (LiquidacionIva)obj.liquidacioniva.Value;
+            result.Ivarepercutido = (IvaRepercutido)obj.ivarepercutido.Value;
+            result.Ivasoportado = (IvaSoportado)obj.ivasoportado.Value;
             result.Criterioiva = (CriterioIva)obj.criterioiva.Value;
             result.TipoEmpresa =obj.tipoempresa;
             result.Datosregistrales = obj.datosregistrales;
