@@ -324,7 +324,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AsistenteLecturasController.cs" />
+    <Compile Include="Controllers\AsistenteLecturasController.cs" />
     <Compile Include="Controllers\ActualizarCostesController.cs" />
     <Compile Include="Controllers\ArticulosStockSeguridadController.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
@@ -3740,6 +3740,7 @@
     <Content Include="Views\AsistenteLecturas\AsistenteLecturas.cshtml" />
     <Content Include="Views\AsistenteLecturas\ImportarLecturas.cshtml" />
     <Content Include="Views\AsistenteLecturas\_procesolecturasstep2.cshtml" />
+    <Content Include="Views\AsistenteLecturas\_procesolecturasstep3.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

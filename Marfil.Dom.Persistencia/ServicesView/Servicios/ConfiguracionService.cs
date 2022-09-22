@@ -255,6 +255,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return estado;
         }
 
+        public string GetEstadoFinPedidosVentas()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadopedidosventastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
     }
 
 }

@@ -947,6 +947,56 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             }
         }
+
+        public List<AlbaranesLinModel> GetLecturas(string identificador)
+        {
+            using (var service = FService.Instance.GetService(typeof(LecturasModel), _context) as LecturasService)
+            {
+                var lecturas = _db.Lecturas.Where(f => f.identificador == identificador && f.usuario == Usuarioid).Select(x => new { x.lote, x.cantidad }).ToList();
+                var lineas = new List<AlbaranesLinModel>();
+
+                foreach (var item in lecturas)
+                {
+                    var lote = item.lote.Substring(0,item.lote.Length - 3);
+                    var pieza = item.lote.Substring(item.lote.Length - 2);
+                    var tablaid = pieza.Substring(0,1) != "0" ? pieza : pieza.Substring(1,1);
+                    var stock = _db.Stockactual.Where(f => f.empresa == Empresa && f.lote == lote && f.loteid == tablaid).FirstOrDefault();
+
+                    if (stock != null)
+                    {
+                        var linea = new AlbaranesLinModel();
+
+                        linea.Fkarticulos = stock.fkarticulos;
+                        linea.Descripcion = _db.Articulos.Where(f => f.empresa == Empresa && f.id == stock.fkarticulos).FirstOrDefault().descripcion;
+                        linea.Lote = stock.lote;
+                        linea.Tabla = int.Parse(stock.loteid);
+                        linea.Cantidad = item.cantidad;
+                        linea.Ancho = stock.ancho;
+                        linea.Largo = stock.largo;
+                        linea.Grueso = stock.grueso;
+                        linea.Metros = stock.metros;
+                        linea.Fktiposiva = "021";//IVA estandar
+                        linea.Porcentajeiva = 21;
+                        linea.Fkunidades = stock.fkunidadesmedida;
+
+                        lineas.Add(linea);
+                    }
+
+                }
+
+                return lineas;
+            }
+        }
+
+
+        public double GetTarifa(string articulo, string fkclientes)
+        {
+            var tipotarifa = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == fkclientes).FirstOrDefault().fktarifas;
+
+            var precio = _db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tipotarifa && f.fkarticulos == articulo).FirstOrDefault().precio;
+
+            return (double)precio;
+        }
         #endregion
 
 

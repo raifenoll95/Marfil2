@@ -282,7 +282,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             //todo asignar contador y referencia
             result.fechamodificacion = DateTime.Now;
             result.fkusuariomodificacion  = Context.Id;
-            result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;
+            result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises.Length > 3 ? "" : viewmodel.Fkpuertos.Fkpaises;
             result.fkpuertosid = viewmodel.Fkpuertos.Id;
             result.fkfacturarectificada = viewmodel.Fkfacturarectificativa;
             result.facturarectificativa = viewmodel.Facturarectificativa;

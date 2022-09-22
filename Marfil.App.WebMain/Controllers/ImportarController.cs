@@ -740,7 +740,7 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportarLecturas(ImportarModel model)
+        public ActionResult ImportarLecturas(ImportarModel model, int referencia)
         {
             var idPeticion = 0;
             var file = model.Fichero;
@@ -786,7 +786,7 @@ namespace Marfil.App.WebMain.Controllers
                                         {
                                             ModelState.AddModelError("File", General.ErrorDelimitadorFormato);
                                             TempData["error"] = ex.Message;
-                                            return View("AsistenteLecturas", "AsistenteLecturas");
+                                            return View("AsistenteLecturas", "AsistenteLecturas",new { referencia = referencia});
                                         }
                                     }
                                     dt.Rows.Add(dr);
@@ -813,7 +813,7 @@ namespace Marfil.App.WebMain.Controllers
 
                         TempData["Success"] = "Importado correctamente!";
                         //TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas";
-                        return RedirectToAction("AsistenteLecturas", "AsistenteLecturas");
+                        return RedirectToAction("AsistenteLecturas", "AsistenteLecturas", new { referencia = referencia });
                     }
                     else
                     {
@@ -826,7 +826,7 @@ namespace Marfil.App.WebMain.Controllers
                 }
             }
 
-            return View("AsistenteLecturas", "AsistenteLecturas");
+            return View("AsistenteLecturas", "AsistenteLecturas", new { referencia = referencia });
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -86,15 +87,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<LecturasAsistenteModel> BuscarLecturas()
         {
             //lecturas
-            var lecturas = _db.Lecturas.Where(f => f.usuario == Usuarioid).GroupBy(x => new { x.identificador, x.fecha })
+            var lecturas = _db.Lecturas.Where(f => f.usuario == Usuarioid && f.insertado == false).GroupBy(x => new { x.identificador, x.fecha })
                         .Select( group => new LecturasAsistenteModel()  { 
                                     Identificador = group.Key.identificador,
                                     Fecha = group.Key.fecha,
                                     Numregistros = group.Count()
                                 })
-                               .ToList();
-
-
+                        .ToList();
 
             return lecturas;
         }

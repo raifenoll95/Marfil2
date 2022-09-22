@@ -10,6 +10,8 @@
     var toolbarModel = Model as IToolbar;
     ViewBag.Title = "Importar Lecturas"; //toolbarModel.Toolbar.Titulo;
 
+    var referencia = ViewData["referencia"];
+
     //var campoverificacion = FCampoverificacion.Instance.GetModel<AlbaranesComprasModel>(WebHelper.ContextService);
 
 }
@@ -50,8 +52,8 @@
 
     <div class="form-group">
 
-        @using (Html.BeginForm("ImportarLecturas", "Importar", new { ImportarModel = Model }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+        @using (Html.BeginForm("ImportarLecturas", "Importar", new { ImportarModel = Model, referencia = referencia }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {            
             @Html.LabelFor(f => Model.Fichero, new { @class = "control-label col-md-4", @style = "text-align: right" })
             @Html.TextBoxFor(f => Model.Fichero, new { @type = "file" })
             <br />

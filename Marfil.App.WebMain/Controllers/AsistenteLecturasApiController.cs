@@ -37,7 +37,7 @@ namespace Marfil.App.WebMain.Controllers
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Identificador", displayName = "Identificador", visible = true, width=150},
-                        new ColumnDefinition() { field = "Fecha", displayName = "Fecha", visible = true, width=150},
+                        new ColumnDefinition() { field = "Fechaformat", displayName = "Fecha", visible = true, width=150},
                         new ColumnDefinition() { field = "Numregistros", displayName = "Registros", visible = true, width=150, type = "number"},
 
                     }

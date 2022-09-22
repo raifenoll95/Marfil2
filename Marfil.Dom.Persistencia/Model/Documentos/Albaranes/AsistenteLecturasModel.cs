@@ -31,6 +31,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
         #endregion
 
+        public int Referencia { get; set; }
+
         public ToolbarModel Toolbar
         {
             get { return _toolbar; }

@@ -2,7 +2,7 @@
 @using Marfil.Dom.Persistencia.Model;
 @using Resources
 @model Marfil.Dom.Persistencia.Model.Documentos.Albaranes.AsistenteLecturasModel
-@{ 
+@{
     var toolbarModel = Model as IToolbar;
     ViewBag.Title = toolbarModel.Toolbar.Titulo;
 
@@ -14,6 +14,8 @@
 <script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
 <script src="@Url.Content("~/Scripts/UserControls/Lecturas/lecturascontroller.js")"></script>
 <div ng-controller="AsistenteLecturasCrtl">
+
+    @Html.HiddenFor(f => Model.Referencia)
 
     <div id="fuelux-wizard-container">
         <div>
@@ -46,23 +48,23 @@
             <div class="step-pane" data-step="1">
                 <div>
                     <h3 class="green center">Importar Lecturas</h3>
-                    @Html.Partial("ImportarLecturas", importarmodel)
+                    @Html.Partial("ImportarLecturas", importarmodel, new ViewDataDictionary { { "referencia", Model.Referencia } })
                 </div>
             </div>
 
             <div class="step-pane" data-step="2">
-            <div>
-                <h3 class="green center">Seleccionar Lecturas</h3>
-                @Html.Partial("_procesolecturasstep2", Model)
+                <div>
+                    <h3 class="green center">Seleccionar Lecturas</h3>
+                    @Html.Partial("_procesolecturasstep2", Model)
+                </div>
             </div>
-        </div>
 
-        @*<div class="step-pane" data-step="3">
-            <div class="center">
+            <div class="step-pane" data-step="3">
+                <div class="center">
 
-                @Html.Partial("_procesoregularizacionexistenciasstep3", Model)
+                    @Html.Partial("_procesolecturasstep3", Model)
+                </div>
             </div>
-        </div>*@
 
         </div>
 
@@ -120,11 +122,6 @@
                     if (!$("#step2-form").validate().form()) {
                         e.preventDefault();
                     }
-                    /*if ($("[name='registrosseleccionados']").val() <= "0") {
-
-                        $("#registrosseleccionadoserror").html("Debe seleccionar al menos una línea para regularizar");
-                        e.preventDefault();
-                    }*/
 
                 } else if (info.step == 3 && info.direction != "previous") {
                     eventAggregator.Publish("_generarlecturas", data);
@@ -143,6 +140,7 @@
     <input type="hidden" name="identificador" value="" />
     <input type="hidden" name="fecha" value="" />
     <input type="hidden" name="registros" value="" />
+    <input type="hidden" name="referencia" value="" />
 
 }
 

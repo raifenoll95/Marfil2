@@ -48,6 +48,9 @@ namespace Marfil.Dom.Persistencia.Model
 
     public class LecturasAsistenteModel : LecturasModel
     {
+        public string Fechaformat { 
+            get { return Fecha.ToString("dd/MM/yyyy"); }
+        }
         public int Numregistros { get; set; }
 
     }

@@ -1053,7 +1053,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     Icono = "fa fa-share",
                     Texto = "Lecturas",
-                    Url = Url.Action("AsistenteLecturas", "AsistenteLecturas")
+                    Url = Url.Action("AsistenteLecturas", "AsistenteLecturas", new { referencia = objModel.Id })
                 });
             }
 

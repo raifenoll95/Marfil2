@@ -5,7 +5,7 @@
         $scope.load(data.campoIdentificador, data.IdComponenteasociado, data.IdFormulariomodal, data.Url, data.Titulo);
     });
     eventAggregator.RegisterEvent("_generarlecturas", function (data) {
-        $scope.generarasiento();
+        $scope.generarlectura();
     });
 
     //configuracion Control
@@ -155,37 +155,26 @@
     $scope.generarlectura = function () {
 
         var rows = $scope.gridApi.selection.getSelectedRows();
-        var fecharegularizacion = $("#Fecharegularizacion").val();
-        var seriecontable = $("#Fkseriescontables").val();
-        var comentarioiniciales = $("#ComentarioExistenciasIniciales").val();
-        var comentariofinales = $("[name='ComentarioExistenciasFinales']").val();
 
-        var cuentasexistencias=$.map(rows, function(v){
-            return v.Cuentaexistencias;
+        var referencia = $("[name='Referencia']").val();
+
+        var identificador=$.map(rows, function(v){
+            return v.Identificador;
         }).join(';');
-        var saldoiniciales = $.map(rows, function (v) {
-            return v.Saldoexistenciasiniciales;
+        var fecha = $.map(rows, function (v) {
+            return v.Fecha;
         }).join(';');
-        var cuentasvariacion = $.map(rows, function (v) {
-            return v.Cuentavariacion;
-        }).join(';');
-        var importefinales = $.map(rows, function (v) {
-            return v.Saldoexistenciasfinales;
+        var registros = $.map(rows, function (v) {
+            return v.Numregistros;
         }).join(';');
 
-
-        $("#generarasiento input[name='fecharegularizacion']").val(fecharegularizacion);
-        $("#generarasiento input[name='seriecontable']").val(seriecontable);
-        $("#generarasiento input[name='comentarioiniciales']").val(comentarioiniciales);
-        $("#generarasiento input[name='comentariofinales']").val(comentariofinales);
-
-        $("#generarasiento input[name='cuentasexistencias']").val(cuentasexistencias);
-        $("#generarasiento input[name='saldoiniciales']").val(saldoiniciales);
-        $("#generarasiento input[name='cuentasvariacion']").val(cuentasvariacion);
-        $("#generarasiento input[name='importefinales']").val(importefinales);
+        $("#generarlecturas input[name='identificador']").val(identificador);
+        $("#generarlecturas input[name='fecha']").val(fecha);
+        $("#generarlecturas input[name='registros']").val(registros);
+        $("#generarlecturas input[name='referencia']").val(referencia);
         
 
-        $("#generarasiento").submit();
+        $("#generarlecturas").submit();
     }
     //end api facturar
 }]);

@@ -78,9 +78,9 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var pedidosService = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService)
                     {
-                        model = service.ImportarPedido(pedidosService.get(id) as PedidosModel);
+                        var pedido = pedidosService.get(id) as PedidosModel;
+                        model = service.ImportarPedido(pedido);
                     }
-
                 }
             }
             catch (Exception ex)

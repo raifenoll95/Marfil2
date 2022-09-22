@@ -545,23 +545,37 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public virtual AlbaranesModel ImportarPedido(PedidosModel presupuesto)
         {
-            //calcular serie asociada
-            if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
-                var result = Helper.fModel.GetModel<AlbaranesModel>(_context);
-                result.Importado = true;
-                ImportarCabecera(presupuesto, result);
-                var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
-                result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
-                EstablecerSerie(presupuesto.Fkseries, result);
+                //calcular serie asociada
+                if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
+                {
+                    var result = Helper.fModel.GetModel<AlbaranesModel>(_context);
+                    result.Importado = true;
+                    ImportarCabecera(presupuesto, result);
+                    var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
+                    result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
+                    EstablecerSerie(presupuesto.Fkseries, result);
 
-                //recalculo importes lineas y totales
-                RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
-                result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
-                    result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
-                    result.Decimalesmonedas, true).ToList();
+                    //recalculo importes lineas y totales
+                    RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
+                    result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
+                        result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
+                        result.Decimalesmonedas, true).ToList();
 
-                return result;
+                    //  Cambiamos el estado del pedido
+                    var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                    var pedidosService = FService.Instance.GetService(typeof(PedidosModel), _context) as PedidosService;
+                    presupuesto.Fkestados = Confservice.GetEstadoFinPedidosVentas();
+
+                    var newItem = pedidosService._converterModel.CreatePersitance(presupuesto);
+                    _db.Set<Pedidos>().AddOrUpdate(newItem);
+
+                    _db.SaveChanges();
+                    tran.Complete();
+
+                    return result;
+                }
             }
 
             throw new ValidationException(RAlbaranes.ErrorSinCantidadPendiente);
