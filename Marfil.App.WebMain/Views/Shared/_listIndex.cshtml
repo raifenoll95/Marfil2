@@ -233,6 +233,9 @@
             {
                 if (!Model.PermiteEliminar && !Model.PermiteModificar && (Model.Controller == "LogStockSeguridad" || Model.Controller == "VerificarContabilidad"))
                     e.Visible = DefaultBoolean.False;
+
+                if(Model.Controller == "Lecturas")
+                    e.Visible = DefaultBoolean.False;
             }
         };
         settings.HtmlDataCellPrepared += (s, e) =>

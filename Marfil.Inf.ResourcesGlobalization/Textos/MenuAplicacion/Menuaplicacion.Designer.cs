@@ -853,6 +853,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Editar lecturas terminal.
+        /// </summary>
+        public static string lecturas {
+            get {
+                return ResourceManager.GetString("lecturas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Listados.
         /// </summary>
         public static string listado {

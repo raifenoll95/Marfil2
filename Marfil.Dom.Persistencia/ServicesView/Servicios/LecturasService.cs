@@ -1,8 +1,10 @@
 ﻿using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,49 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         }
         #endregion
+
+        #region ListIndexModel
+
+        public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
+        {
+            var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
+            var propiedadesVisibles = new[] { "Identificador", "Fecha", "Registros"};
+            var propiedades = Helpers.Helper.getProperties<LecturasModel>();
+
+            model.PrimaryColumnns = new[] { "Identificador", "Lote", "Usuario" };
+            model.ExcludedColumns = propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
+            model.OrdenColumnas.Add("Identificador", 0);
+            model.OrdenColumnas.Add("Fecha", 1);
+            model.OrdenColumnas.Add("Registros", 2);
+
+            return model;
+        }
+
+        public override string GetSelectPrincipal()
+        {
+            return string.Format("select identificador, fecha, count(*) as Registros from Lecturas where usuario = '{0}' and empresa = '{1}' and insertado = 0 group by identificador, fecha;", Usuarioid, Empresa);
+        }
+
+        #endregion
+
+        public override void delete(IModelView obj)
+        {
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
+            {
+                var model = obj as LecturasModel;
+                var lista = _db.Lecturas.Where(f => f.identificador == model.Identificador && f.empresa == model.Empresa && f.usuario == model.Usuario).ToList();
+
+                foreach (var item in lista)
+                {
+                    //var lectura = _converterModel.CreateView(item.identificador);
+
+                    _db.Set<Lecturas>().Remove(item);
+                }
+                _db.SaveChanges();
+                tran.Complete();
+            }
+
+        }
 
         #region Importar
 
@@ -63,6 +108,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     lectura.Cantidad = cantidad;
                     lectura.Usuario = usuario;
                     lectura.Insertado = false;
+                    lectura.Empresa = Empresa;
 
                     Lista.Add(lectura);
                 }
@@ -87,7 +133,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<LecturasAsistenteModel> BuscarLecturas()
         {
             //lecturas
-            var lecturas = _db.Lecturas.Where(f => f.usuario == Usuarioid && f.insertado == false).GroupBy(x => new { x.identificador, x.fecha })
+            var lecturas = _db.Lecturas.Where(f => f.usuario == Usuarioid && f.empresa == Empresa && f.insertado == false).GroupBy(x => new { x.identificador, x.fecha })
                         .Select( group => new LecturasAsistenteModel()  { 
                                     Identificador = group.Key.identificador,
                                     Fecha = group.Key.fecha,
@@ -96,6 +142,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         .ToList();
 
             return lecturas;
+        }
+
+        public Guid GetUsuarioid()
+        {
+            return Usuarioid;
+        }
+
+        public void ActualizarLecturas(string identificador)
+        {
+            var lecturas = _db.Lecturas.Where(f => f.identificador == identificador && f.usuario == Usuarioid).ToList();
+
+            foreach (var item in lecturas)
+            {
+                item.insertado = true;
+
+                _db.Set<Lecturas>().AddOrUpdate(item);
+            }
+
+            _db.SaveChanges();
         }
     }
 }

@@ -216,6 +216,7 @@
 		<item name="seriesdocumentos" allowBlock="true" text="series" url="~/Series/Index" />
 		<item name="seriescontables" allowBlock="true" text="series" url="~/SeriesContables/Index" />
 		<item name="contadores" text="contadores" url="~/Contadores/Index" />
+    <item name="lecturas" text="lecturas" url="~/Lecturas/Index" />
 		<item name="tiposcuentas" text="Tipos de cuentas" url="~/Tiposcuentas/Index" />
 		<item name="inmuebles" text="Inmuebles" url="~/Inmuebles/Index" />
 	</item>

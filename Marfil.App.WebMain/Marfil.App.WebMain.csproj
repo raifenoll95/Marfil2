@@ -3741,6 +3741,8 @@
     <Content Include="Views\AsistenteLecturas\ImportarLecturas.cshtml" />
     <Content Include="Views\AsistenteLecturas\_procesolecturasstep2.cshtml" />
     <Content Include="Views\AsistenteLecturas\_procesolecturasstep3.cshtml" />
+    <Content Include="Views\Lecturas\Index.cshtml" />
+    <Content Include="Views\Lecturas\Delete.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

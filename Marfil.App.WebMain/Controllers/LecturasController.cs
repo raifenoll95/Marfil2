@@ -26,8 +26,8 @@ namespace Marfil.App.WebMain.Controllers
             MenuName = "Lecturas";
             var permisos = appService.GetPermisosMenu("Lecturas");
             IsActivado = permisos.IsActivado;
-            CanCrear = permisos.CanCrear;
-            CanModificar = permisos.CanModificar;
+            CanCrear = false;
+            CanModificar = false;
             CanEliminar = permisos.CanEliminar;
         }
     }

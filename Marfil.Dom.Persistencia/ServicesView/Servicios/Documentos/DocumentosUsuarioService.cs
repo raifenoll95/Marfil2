@@ -192,18 +192,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
 
             var service = new PreferenciasUsuarioService(_db);
             var doc=service.GePreferencia(TiposPreferencias.DocumentoImpresionDefecto, usuario, tipoDocumento.ToString(), "Defecto");
-            if (doc != null)
+            if (doc == null)
             {
                 if (documento != null)
                 {
-                    var docObj = doc as PreferenciaDocumentoImpresionDefecto;
-                    if (docObj.Name == documento.nombre)
-                    {
-                        throw new ValidationException("No se puede eliminar el documento por defecto");
-                    }
-
                     _db.DocumentosUsuario.Remove(documento);
                     _db.SaveChanges();
+                }
+            }
+            else
+            {
+                var docObj = doc as PreferenciaDocumentoImpresionDefecto;
+                if (docObj.Name == documento.nombre)
+                {
+                    throw new ValidationException("No se puede eliminar el documento por defecto");
                 }
             }
             

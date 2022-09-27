@@ -21,5 +21,6 @@ namespace Marfil.Dom.Persistencia
         public int cantidad { get; set; }
         public System.Guid usuario { get; set; }
         public bool insertado { get; set; }
+        public string empresa { get; set; }
     }
 }

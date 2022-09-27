@@ -514,7 +514,7 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
                     var editItem = model.Single(f => f.Id == item.Id); //Sacamos la cuenta del tercero a editar
-                    editItem.IdComponente = editItem.IdComponente;
+                    editItem.IdComponente = item.IdComponente;
                     editItem.DescripcionComponente = item.DescripcionComponente;
                     editItem.Piezas = item.Piezas;
                     editItem.Largo = item.Largo;

@@ -61,7 +61,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public IEnumerable<TareasModel> getAllTareas()
         {
-            return _db.Database.SqlQuery<TareasModel>(string.Format("SELECT * FROM Tareas"));
+            return _db.Database.SqlQuery<TareasModel>(string.Format("SELECT * FROM Tareas where empresa = {0}", Empresa));
         }
         
 

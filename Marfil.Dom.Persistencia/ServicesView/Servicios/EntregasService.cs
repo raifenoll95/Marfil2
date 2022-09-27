@@ -13,7 +13,6 @@ using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.BusquedasMovil;
 using Marfil.Inf.Genericos.Helper;
-using RAlbaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes;
 using Marfil.Dom.ControlsUI.BusquedaTerceros;
 using Marfil.Dom.Persistencia.Model.Documentos.Pedidos;
 using Marfil.Dom.Persistencia.Model.Documentos.Reservasstock;
@@ -25,8 +24,6 @@ using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using static DevExpress.CodeParser.CodeStyle.Formatting.Rules;
 using System.Data.Entity.Migrations;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
@@ -981,8 +978,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                         lineas.Add(linea);
                     }
-
                 }
+
+                service.ActualizarLecturas(identificador);
 
                 return lineas;
             }

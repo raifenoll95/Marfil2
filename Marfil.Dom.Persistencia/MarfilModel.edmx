@@ -2519,6 +2519,7 @@
           <Property Name="cantidad" Type="int" Nullable="false" />
           <Property Name="usuario" Type="uniqueidentifier" Nullable="false" />
           <Property Name="insertado" Type="bit" Nullable="false" />
+          <Property Name="empresa" Type="varchar" MaxLength="4" />
         </EntityType>
         <EntityType Name="LogStockSeguridad">
           <Key>
@@ -14660,6 +14661,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="cantidad" Type="Int32" Nullable="false" />
           <Property Name="usuario" Type="Guid" Nullable="false" />
           <Property Name="insertado" Type="Boolean" Nullable="false" />
+          <Property Name="empresa" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -19938,6 +19940,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Lecturas">
             <EntityTypeMapping TypeName="MarfilModel.Lecturas">
               <MappingFragment StoreEntitySet="Lecturas">
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
                 <ScalarProperty Name="insertado" ColumnName="insertado" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />

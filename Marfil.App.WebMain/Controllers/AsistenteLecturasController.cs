@@ -103,9 +103,18 @@ namespace Marfil.App.WebMain.Controllers
                             vueltas++;
                         }
 
+                        if (model.Lineas.Count != registros)
+                        {
+                            TempData[Constantes.VariableMensajeWarning] = "Alguna/s pieza/s del lote no se han importado porque no están en stock";
+                        }
+
                         service.edit(model);
 
-                        TempData[Constantes.VariableMensajeExito] = string.Format("Se ha generado correctamente");
+                        if (model.Lineas.Count > 0)
+                        {
+                            TempData[Constantes.VariableMensajeExito] = string.Format("Se han importado correctamente " + model.Lineas.Count + " registros del lote seleccionado");
+                        }
+                        
                     }
                     tran.Complete();
                 }
