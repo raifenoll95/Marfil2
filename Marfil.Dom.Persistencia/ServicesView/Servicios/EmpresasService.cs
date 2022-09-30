@@ -911,6 +911,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return (int)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().liquidacioniva;
         }
 
+        public int GetFechaLiquidacionIvaRepercutido(string empresa)
+        {
+            return (int)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().ivarepercutido;
+        }
+
+        public TipoCriterioIva GetCriterioIVA(string empresa)
+        {
+            return (TipoCriterioIva)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().criterioiva;
+        }
+
         #endregion
 
 

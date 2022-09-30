@@ -15,10 +15,10 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 {
     public enum TipoOrigen
     {
-        [StringValue(typeof(RRegistroIVA), "Factura")]
-        Factura,
         [StringValue(typeof(RRegistroIVA), "IVA")]
-        IVA
+        IVA,
+        [StringValue(typeof(RRegistroIVA), "Factura")]
+        Factura       
     }
 
     public enum TipoEnvio
@@ -114,6 +114,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         #region properties
 
         private List<RegistroIvaRepercutidoTotalesModel> _totales = new List<RegistroIvaRepercutidoTotalesModel>();
+        private RegistroIvaRepercutidoSumaTotalesModel _sumatotales = new RegistroIvaRepercutidoSumaTotalesModel();
         private List<RegistroIvaRepercutidoRectificadasModel> _rectificadas = new List<RegistroIvaRepercutidoRectificadasModel>();
 
         public int? Id { get; set; }
@@ -327,6 +328,16 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         #endregion
 
+        #region SumaTotales
+
+        public RegistroIvaRepercutidoSumaTotalesModel Sumatotales
+        {
+            get { return _sumatotales; }
+            set { _sumatotales = value; }
+        }
+
+        #endregion
+
         #region Rectificadas
 
         public List<RegistroIvaRepercutidoRectificadasModel> Rectificadas
@@ -473,6 +484,29 @@ namespace Marfil.Dom.Persistencia.Model.Iva
             get { return (Subtotal ?? 0.0).ToString("N" + Decimalesmonedas); }
             set { Subtotal = Funciones.Qdouble(value); }
         }
+    }
+
+    public class RegistroIvaRepercutidoSumaTotalesModel
+    {
+        public int? Decimalesmonedas { get; set; }
+
+        public int Id { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseretencion")]
+        public double Baseretencion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajeretencion")]
+        public double Porcentajeretencion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importeretencion")]
+        public double Importeretencion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Operacionesexluidasbi")]
+        public double Operacionesexluidasbi { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Totalfactura")]
+        public double Totalfactura { get; set; }
+
     }
 
     public class RegistroIvaRepercutidoRectificadasModel

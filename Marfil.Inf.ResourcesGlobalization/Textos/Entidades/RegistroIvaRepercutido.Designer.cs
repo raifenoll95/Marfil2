@@ -601,7 +601,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Motivo restificación.
+        ///   Busca una cadena traducida similar a Motivo rectificación.
         /// </summary>
         public static string Motivorectificacion {
             get {

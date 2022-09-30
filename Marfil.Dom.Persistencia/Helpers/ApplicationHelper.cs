@@ -25,6 +25,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
+using Marfil.Dom.Persistencia.Model.Iva;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -1321,6 +1322,32 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return List;
             }
 
+        }
+
+        public string GetSerieRepercutidoEjercicio()
+        {
+            var service = new EjerciciosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+            var serie = service.GetSerieRepercutido();
+
+            return serie;
+        }
+
+        public TipoCriterioIva GetCriterioivaEmpresa()
+        {
+            var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+
+            var criterio = service.GetCriterioIVA(_context.Empresa);
+
+            return criterio;
+        }
+
+        public string GetRegimenivaTiposFacturaRepercutido()
+        {
+            var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+
+            var regimen = service.GetRegimenivaRepercutido(_context.Empresa);
+
+            return regimen;
         }
 
         public IEnumerable<SelectListItem> GetListTipoGuiaCTPG()

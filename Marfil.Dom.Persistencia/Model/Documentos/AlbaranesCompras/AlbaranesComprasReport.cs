@@ -47,7 +47,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
                 " FROM [AlbaranesComprasLin] as al" +
                 " inner join Familiasproductos as fp on fp.empresa=al.empresa and fp.id=substring(al.fkarticulos,0,3)" +
                 " left join unidades as u on fp.fkunidadesmedida=u.id" +
-                " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id" +
+                " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id and al.empresa = ar.empresa" +
                 " left join Stockactual sa on al.empresa = sa.empresa AND al.fkarticulos = sa.fkarticulos AND al.lote = sa.lote AND al.tabla = sa.loteid"));
 
 

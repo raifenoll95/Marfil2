@@ -53,7 +53,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             DataSource.Queries.Add(new CustomSqlQuery("presupuestoslin", "SELECT pl.*, (pl.ancho * 100) AS ancho_cm, (pl.largo * 100) AS largo_cm, (pl.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2 FROM [PresupuestosLin] as pl" +
                                                                             " inner join Familiasproductos as fp on fp.empresa=pl.empresa and fp.id=substring(pl.fkarticulos,0,3)" +
                                                                             " left join unidades as u on fp.fkunidadesmedida=u.id" +
-                                                                            " INNER JOIN Articulos AS ar ON pl.fkarticulos = ar.id"));
+                                                                            " INNER JOIN Articulos AS ar ON pl.fkarticulos = ar.id and pl.empresa = ar.empresa"));
 
             // PRESUPUESTOS TOTALES
             DataSource.Queries.Add(new CustomSqlQuery("presupuestostotales", "SELECT * FROM [PresupuestosTotales]"));

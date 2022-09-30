@@ -126,10 +126,19 @@
 
         settings.InitNewRow += (s, e) =>
         {
-            //Si es un registro nuevo
+            //Si es un registro nuevo           
             e.NewValues["Baseimponible"] = "";
-            e.NewValues["Fktiposiva"] = "";
-            e.NewValues["Porcentajeiva"] = "";
+            if (Session["tipoivatercero"] != null)
+            {
+                e.NewValues["Fktiposiva"] = Session["tipoivatercero"].ToString();
+                e.NewValues["Porcentajeiva"] = Session["porcentajetipoivatercero"].ToString();
+            }
+            else
+            {
+                e.NewValues["Fktiposiva"] = "";
+                e.NewValues["Porcentajeiva"] = "";
+            }
+
             e.NewValues["Cuotaiva"] = "";
             e.NewValues["Porcentajerecargoequivalencia"] = "";
             e.NewValues["Importerecargoequivalencia"] = "";

@@ -85,6 +85,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return "";
         }
 
+        public string GetRegimenivaRepercutido(string empresa)
+        {
+           return _db.TiposFacturas.Where(f => f.empresa == empresa && f.tipocircuito == 1 && f.tipofacturadefecto == true).FirstOrDefault().regimeniva;
+        }
+
+
+
         #endregion
     }
 }

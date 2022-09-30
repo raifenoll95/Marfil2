@@ -60,8 +60,45 @@ namespace Marfil.App.WebMain.Controllers
                 var nivel = HttpUtility.ParseQueryString(Request.RequestUri.Query)["nivel"];
                 int intnivel = 0;
                 if (!string.IsNullOrEmpty(nivel))
-                    intnivel = int.Parse(nivel); 
+                    intnivel = int.Parse(nivel);
+
                 var list = service.GetCuentasContablesNivel(intnivel);
+
+                var tipofacturaiva = HttpUtility.ParseQueryString(Request.RequestUri.Query)["tipofacturaiva"];
+                var inttipofacturaiva = 2;
+                if (!string.IsNullOrEmpty(tipofacturaiva)) {
+                    inttipofacturaiva = int.Parse(tipofacturaiva); 
+                }
+                    
+                var cuenta = HttpUtility.ParseQueryString(Request.RequestUri.Query)["cuenta"];
+
+                if (inttipofacturaiva == 0)//Soportado
+                {
+                    if (cuenta == "cliente")
+                    {
+                        var cargo = service.GetCuentaCargo1(inttipofacturaiva);
+                        list = list.Where(f => f.Id.StartsWith(cargo));
+
+                    }
+                    else if (cuenta == "ventas")
+                    {
+                        var abono = service.GetCuentaAbono1(inttipofacturaiva);
+                        list = list.Where(f => f.Id.StartsWith(abono));
+                    }
+                }
+                else if (inttipofacturaiva == 1)//Repercutido
+                {
+                    if (cuenta == "cliente")
+                    {
+                        var cargo = service.GetCuentaCargo1(inttipofacturaiva);
+                        list = list.Where(f => f.Id.StartsWith(cargo));
+                    }
+                    else if (cuenta == "ventas")
+                    {
+                        var abono = service.GetCuentaAbono1(inttipofacturaiva);
+                        list = list.Where(f => f.Id.StartsWith(abono));
+                    }
+                }
 
                 var result = new ResultBusquedas<CuentasModel>()
                 {

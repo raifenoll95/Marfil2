@@ -45,5 +45,34 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         #endregion
+
+        #region Helpers
+
+        public double GetPorcentaje(string tipo)
+        {
+            var porcentaje = _db.Tiposretenciones.Where(f => f.empresa == Empresa && f.id == tipo).FirstOrDefault().porcentajeretencion;
+
+            return (double)porcentaje;
+        }
+
+        public string GetIvaTercero(string cuenta)
+        {
+            var grupoiva = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault().fkgruposiva;
+
+            var tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivasinrecargo;
+
+            var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
+
+            return tipoiva;
+        }
+
+        public string GetPorcentajeIvaTercero(string tipoiva)
+        {
+            var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
+
+            return tipoivaporcentaje.ToString();
+        }
+
+        #endregion
     }
 }

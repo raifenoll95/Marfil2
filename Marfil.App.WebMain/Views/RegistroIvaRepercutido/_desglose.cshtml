@@ -13,6 +13,7 @@
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
     var isNuevo = !isreadonly && !iseditable;
     Session["readonly"] = isreadonly;
+
 }
 
 <script src="@Url.Content("~/Scripts/documentosasociados.js")"></script>

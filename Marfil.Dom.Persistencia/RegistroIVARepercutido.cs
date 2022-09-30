@@ -17,8 +17,9 @@ namespace Marfil.Dom.Persistencia
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RegistroIVARepercutido()
         {
-            this.RegistroIVARepercutidoTotales = new HashSet<RegistroIVARepercutidoTotales>();
             this.RegistroIVARepercutidoRectificadas = new HashSet<RegistroIVARepercutidoRectificadas>();
+            this.RegistroIVARepercutidoSumaTotales = new HashSet<RegistroIVARepercutidoSumaTotales>();
+            this.RegistroIVARepercutidoTotales = new HashSet<RegistroIVARepercutidoTotales>();
         }
     
         public string empresa { get; set; }
@@ -90,8 +91,10 @@ namespace Marfil.Dom.Persistencia
         public Nullable<double> importetai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegistroIVARepercutidoSumaTotales> RegistroIVARepercutidoSumaTotales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using DevExpress.Web.Mvc;
 using Marfil.App.WebMain.Misc;
 using Marfil.Dom.ControlsUI.Toolbar;
+using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Iva;
+using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos.Helper;
 using Resources;
@@ -20,6 +22,7 @@ namespace Marfil.App.WebMain.Controllers
     {
         private const string session = "_Totaleslin_";
         private const string rectificadas = "_Rectificadaslin_";
+        //private const string sumatotales = "_Sumatotales_";
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -57,8 +60,10 @@ namespace Marfil.App.WebMain.Controllers
             model.Fechafactura = DateTime.Today;
             model.Fechaoperacion = DateTime.Today;
             model.Fechafacturaoriginal = DateTime.Today;
+            model.Fechaalta = DateTime.Today;
 
             Session[session] = model.Totales;
+            //Session[sumatotales] = model.Sumatotales;
             Session[rectificadas] = model.Rectificadas;
 
             using (var service = new RegistroIvaRepercutidoService(ContextService))
@@ -78,6 +83,7 @@ namespace Marfil.App.WebMain.Controllers
             {
                 model.Context = ContextService;
                 model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+                //model.Sumatotales = Session[sumatotales] as RegistroIvaRepercutidoSumaTotalesModel;
                 model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
 
                 if (ModelState.IsValid)
@@ -125,6 +131,11 @@ namespace Marfil.App.WebMain.Controllers
                     return HttpNotFound();
                 }
                 Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
+                /*if (((RegistroIvaRepercutidoModel)model).Sumatotales == null)
+                {
+                    ((RegistroIvaRepercutidoModel)model).Sumatotales = new RegistroIvaRepercutidoSumaTotalesModel();
+                }
+                Session[sumatotales] = ((RegistroIvaRepercutidoModel)model).Sumatotales;*/
                 Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
@@ -138,6 +149,7 @@ namespace Marfil.App.WebMain.Controllers
             var obj = model as IModelView;
             var objExt = model as IModelViewExtension;
             model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+            //model.Sumatotales = Session[sumatotales] as RegistroIvaRepercutidoSumaTotalesModel;
             model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
             try
             {
@@ -182,6 +194,7 @@ namespace Marfil.App.WebMain.Controllers
                     return HttpNotFound();
                 }
                 Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
+                //Session[sumatotales] = ((RegistroIvaRepercutidoModel)model).Sumatotales;
                 Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
@@ -239,8 +252,15 @@ namespace Marfil.App.WebMain.Controllers
                         var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
                         item.Id = max;
                         item.Decimalesmonedas = 3;
+
                         model.Add(item);
+
                         Session[session] = model;
+
+                        /*Total de las bases imponibles
+                        var service = FService.Instance.GetService(typeof(RegistroIvaRepercutidoModel), ContextService) as RegistroIvaRepercutidoService;
+                        Session[sumatotales] = service.Recalculartotales(model);*/
+
                     }
 
                 }
@@ -312,6 +332,10 @@ namespace Marfil.App.WebMain.Controllers
                     editItem.Subtotal = item.Subtotal;
                     editItem.Decimalesmonedas = 3;
                     Session[session] = model;
+
+                    /*Total de las bases imponibles
+                    var service = FService.Instance.GetService(typeof(RegistroIvaRepercutidoModel), ContextService) as RegistroIvaRepercutidoService;
+                    Session[sumatotales] = service.Recalculartotales(model);*/
                 }
             }
             catch (ValidationException)
@@ -352,6 +376,11 @@ namespace Marfil.App.WebMain.Controllers
             var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
             model.Remove(model.Single(f => f.Id == intid));
             Session[session] = model;
+
+            /*Total de las bases imponibles
+            var service = FService.Instance.GetService(typeof(RegistroIvaRepercutidoModel), ContextService) as RegistroIvaRepercutidoService;
+            Session[sumatotales] = service.Recalculartotales(model);*/
+
             return PartialView("_totales", model);
         }
 
@@ -364,6 +393,81 @@ namespace Marfil.App.WebMain.Controllers
             Session[rectificadas] = model;
             return PartialView("_rectificadas", model);
         }
+        #endregion
+
+        #region Helper
+
+        public string ModificarPeriodo(DateTime Fecharegistro, DateTime Fechaoperacion)
+        {
+            var listperiodo = WebHelper.GetApplicationHelper().GetListPeriodoRegistroIva().Select(f => new SelectListItem()
+            {
+                Text = f.Text,
+                Value = f.Value,
+
+            }).ToList();
+
+            var service = new EmpresasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var tipofechaliquidacion = service.GetFechaLiquidacionIvaRepercutido(ContextService.Empresa);
+
+            if(tipofechaliquidacion == 0 && Fecharegistro == Fechaoperacion)
+            {
+                if (listperiodo.Count > 4)
+                {
+                    var mes = Fecharegistro.Month;
+                    return listperiodo[mes - 1].Value;
+
+                }
+                else
+                {
+                    var mes = Fecharegistro.Month;
+
+                    if (mes <= 3)
+                    {
+                        return listperiodo[0].Value;
+                    }
+                    else if (mes > 3 && mes <= 6)
+                    {
+                        return listperiodo[1].Value;
+                    }
+                    else if (mes > 6 && mes <= 9)
+                    {
+                        return listperiodo[2].Value;
+                    }
+                    else if (mes > 9 && mes <= 12)
+                    {
+                        return listperiodo[3].Value;
+                    }
+
+                }
+            }
+            else if(tipofechaliquidacion == 1)
+            {
+
+            }
+
+            
+
+            return listperiodo[0].Value;
+        }
+
+        public double GetPorcentajeRetencion(string tipo)
+        {
+            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            return service.GetPorcentaje(tipo);
+        }
+
+        public string GetIvaTercero(string cuenta)
+        {
+            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var tipoiva = service.GetIvaTercero(cuenta);
+            var tipoivaporcentaje = service.GetPorcentajeIvaTercero(tipoiva);
+
+            Session["tipoivatercero"] = tipoiva;
+            Session["porcentajetipoivatercero"] = tipoivaporcentaje;
+
+            return tipoiva;
+        }
+
         #endregion
     }
 }

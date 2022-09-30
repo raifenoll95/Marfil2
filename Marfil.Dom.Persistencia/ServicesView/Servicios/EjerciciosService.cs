@@ -182,5 +182,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0 && f.id.StartsWith(ultimaCuenta)).OrderByDescending(s => s.id).FirstOrDefault().id;
         }
+
+        public string GetSerieRepercutido()
+        {
+            var idparse = int.Parse(_context.Ejercicio);
+            var serie = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == idparse).FirstOrDefault().fkseriescontablesIVP;
+
+            return serie;
+        }
     }
 }

@@ -49,6 +49,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Fechaexpedemisor = (DateTime)f.fechaexpedemisor
             }).ToList();
 
+            //Suma totales
+            /*result.Sumatotales = obj.RegistroIVARepercutidoSumaTotales.ToList().Select(f => new RegistroIvaRepercutidoSumaTotalesModel()
+            {
+                Id = f.id,
+                Baseretencion = (double)f.baseretencion,
+                Porcentajeretencion = (double)f.porcentajeretencion,
+                Importeretencion = (double)f.importeretencion,
+                Totalfactura = (double)f.totalfactura,
+                Operacionesexluidasbi = (double)f.operacionesexluidasbi,
+                Decimalesmonedas = f.decimalesmonedas
+            }).SingleOrDefault();*/
+
+
             return result;
         }
 
@@ -105,6 +118,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 result.RegistroIVARepercutidoRectificadas.Add(newItem);
             }
 
+            /*result.RegistroIVARepercutidoSumaTotales.Clear();
+            var newreg = _db.Set<RegistroIVARepercutidoSumaTotales>().Create();
+            newreg.empresa = Empresa;
+            newreg.fkregistros = result.id;
+            newreg.id = viewmodel.Sumatotales.Id;
+            newreg.baseretencion = viewmodel.Sumatotales.Baseretencion;
+            newreg.porcentajeretencion = viewmodel.Sumatotales.Porcentajeretencion;
+            newreg.importeretencion = viewmodel.Sumatotales.Importeretencion;
+            newreg.operacionesexluidasbi = viewmodel.Sumatotales.Operacionesexluidasbi;
+            newreg.totalfactura = viewmodel.Sumatotales.Totalfactura;
+            newreg.decimalesmonedas = viewmodel.Sumatotales.Decimalesmonedas;
+            result.RegistroIVARepercutidoSumaTotales.Add(newreg);*/
+
             return result;
         }
 
@@ -160,6 +186,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.fechaexpedemisor = item.Fechaexpedemisor;
                 result.RegistroIVARepercutidoRectificadas.Add(newItem);
             }
+
+            /*result.RegistroIVARepercutidoSumaTotales.Clear();
+            var newreg = _db.Set<RegistroIVARepercutidoSumaTotales>().Create();
+            newreg.empresa = Empresa;
+            newreg.fkregistros = result.id;
+            newreg.id = viewmodel.Sumatotales.Id;
+            newreg.baseretencion = viewmodel.Sumatotales.Baseretencion;
+            newreg.porcentajeretencion = viewmodel.Sumatotales.Porcentajeretencion;
+            newreg.importeretencion = viewmodel.Sumatotales.Importeretencion;
+            newreg.operacionesexluidasbi = viewmodel.Sumatotales.Operacionesexluidasbi;
+            newreg.totalfactura = viewmodel.Sumatotales.Totalfactura;
+            newreg.decimalesmonedas = viewmodel.Sumatotales.Decimalesmonedas;
+            result.RegistroIVARepercutidoSumaTotales.Add(newreg);*/
 
             return result;
         }

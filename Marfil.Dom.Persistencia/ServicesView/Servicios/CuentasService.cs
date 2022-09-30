@@ -1153,5 +1153,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             return _db.Usuarios.Where(f => f.id == id).FirstOrDefault().fkdelegacion;
         }
+
+        public string GetCuentaCargo1(int inttipofacturaiva)
+        {
+            return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentacargo1;
+        }
+
+        public string GetCuentaAbono1(int inttipofacturaiva)
+        {
+            return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentaabono1;
+        }
     }
 }

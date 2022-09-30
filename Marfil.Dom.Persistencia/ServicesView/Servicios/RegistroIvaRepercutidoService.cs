@@ -51,6 +51,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var model = obj as RegistroIvaRepercutidoModel;
 
+                model = Recalculartotales(model);
+
                 base.create(model);
 
                 _db.SaveChanges();
@@ -66,6 +68,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var original = get(Funciones.Qnull(obj.get("id"))) as RegistroIvaRepercutidoModel;
                 var editado = obj as RegistroIvaRepercutidoModel;
 
+                editado = Recalculartotales(editado);
 
                 base.edit(obj);
                 _db.SaveChanges();
@@ -84,5 +87,51 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
         }
+
+        #region Helpers
+
+        /*public RegistroIvaRepercutidoSumaTotalesModel Recalculartotales(List<RegistroIvaRepercutidoTotalesModel> totales)
+        {
+            var suma = 0d;
+
+            var result = new RegistroIvaRepercutidoSumaTotalesModel();
+            result.Decimalesmonedas = 3;
+            var max = _db.RegistroIVARepercutidoSumaTotales.Where(f => f.empresa == Empresa).Any() ? _db.RegistroIVARepercutidoSumaTotales.Where(f => f.empresa == Empresa).Max(f => f.id) + 1 : 1;
+            result.Id = max;
+
+            foreach (var item in totales)
+            {
+                suma += item.Baseimponible.Value;
+            }
+
+            result.Baseretencion = Math.Round(suma, (int)result.Decimalesmonedas);
+            result.Porcentajeretencion = 21;
+            result.Importeretencion = Math.Round(result.Baseretencion * (result.Porcentajeretencion / 100), (int)result.Decimalesmonedas);
+
+            result.Totalfactura = Math.Round(result.Importeretencion + result.Operacionesexluidasbi);
+
+            return result;
+        }*/
+
+
+        public RegistroIvaRepercutidoModel Recalculartotales(RegistroIvaRepercutidoModel model)
+        {
+            var suma = 0d;
+
+
+            foreach (var item in model.Totales)
+            {
+                suma += item.Baseimponible.Value;
+            }
+
+            model.Baseretencion = Math.Round(suma, 3);
+            model.Importeretencion = Math.Round(model.Baseretencion * (model.Porcentajeretencion / 100), 3);
+
+            model.Totalfactura = Math.Round(model.Importeretencion + model.Operacionesexluidasbi);
+
+            return model;
+        }
+
+        #endregion
     }
 }

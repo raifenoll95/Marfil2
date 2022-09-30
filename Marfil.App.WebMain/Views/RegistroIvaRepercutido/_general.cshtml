@@ -20,12 +20,56 @@
     var cvtipofactura = FCampoverificacion.Instance.GetModel<TiposFacturasIvaModel>(WebHelper.ContextService);
     var cvcuenta = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
 
+
     var listperiodo = WebHelper.GetApplicationHelper().GetListPeriodoRegistroIva().Select(f => new SelectListItem()
     {
         Text = f.Text,
         Value = f.Value,
 
     }).ToList();
+
+    if (isNuevo){
+        Model.Referencia = WebHelper.GetApplicationHelper().GetSerieRepercutidoEjercicio();
+        Model.Fkregimeniva = WebHelper.GetApplicationHelper().GetRegimenivaTiposFacturaRepercutido();
+
+        //var periodo = Url.Action("ModificarPeriodo", "RegistroIvaRepercutido", new { Fecharegistro = Model.Fecharegistro , Fechaoperacion = Model.Fechaoperacion});
+
+        if (listperiodo.Count > 4)
+        {
+            var mes = Model.Fecharegistro.Month;
+            Model.Periodo = listperiodo[mes-1].Value;
+
+        }
+        else
+        {
+            var mes = Model.Fecharegistro.Month;
+
+            if (mes <= 3)
+            {
+                Model.Periodo = listperiodo[0].Value;
+            }
+            else if (mes > 3 && mes <= 6)
+            {
+                Model.Periodo = listperiodo[1].Value;
+            }
+            else if (mes > 6 && mes <= 9)
+            {
+                Model.Periodo = listperiodo[2].Value;
+            }
+            else if (mes > 9 && mes <= 12)
+            {
+                Model.Periodo = listperiodo[3].Value;
+            }
+
+        }
+
+    }
+
+    if (iseditable)
+    {
+        WebHelper.GetApplicationHelper().GetConfiguracion();
+    }
+
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -40,7 +84,7 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Origendoc, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.EnumDropDownList("Origendoc", Model.Origendoc, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.EnumDropDownList("Origendoc", Model.Origendoc, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Origendoc, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -129,6 +173,7 @@
             cvcuenta.Name = "Cuentacliente";
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
             cvcuenta.Valor = Model.Cuentacliente;
+            cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"cliente\"}";
             cvcuenta.Titulo = Clientes.TituloEntidadSingular;
             cvcuenta.SoloLectura = isreadonly;
             cvcuenta.Obligatorio = false;
@@ -149,6 +194,7 @@
             cvcuenta.Name = "Cuentaventas";
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
             cvcuenta.Valor = Model.Cuentaventas;
+            cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"ventas\"}";
             cvcuenta.Titulo = Clientes.TituloEntidadSingular;
             cvcuenta.SoloLectura = isreadonly;
             cvcuenta.Obligatorio = false;
@@ -161,13 +207,13 @@
     </div>
 </div>
 
-@*Criterio y Régimen IVA*@
+@*Régimen IVA*@
 <div class="form-group">
-    @Html.LabelFor(f => Model.Criterioivageneral, new { @class = "control-label col-md-2" })
+    @*@Html.LabelFor(f => Model.Criterioivageneral, new { @class = "control-label col-md-2" })
     <div class="col-md-4">
         @Html.EnumDropDownList("Criterioivageneral", Model.Criterioivageneral, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Criterioivageneral, "", new { @class = "text-danger" })
-    </div>
+    </div>*@
 
     @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
     <div class="col-md-4">
@@ -198,16 +244,45 @@
 
 <script type="text/javascript">
 
-    @*$("#Cuentacliente").on('change', function () {
-        var valor = this.value;
+    $("#Cuentacliente").on('change', function () {
+        //Insertamos el porcentaje de rentención
+        var cuenta = $("#Cuentacliente").val();
         $.ajax({
-             url: '@Url.Action("GuardarCuentaSession","Cuentas")',
-             dataType: "text",
-             type: "GET",
-             data: { valor },
+            url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { cuenta },
             success: function (data) {
                 console.log(data);
-             }
+            }
+        });
+    });
+
+    $('#Cuentacliente').on('DOMSubtreeModified', function () {
+        //Insertamos el porcentaje de rentención
+        var cuenta = $("#Cuentacliente").val();
+        $.ajax({
+            url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { cuenta },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+    @*$("#Fecharegistro").on('change', function () {
+        var Fecharegistro = this.value;
+        console.log(Fecharegistro);
+        $.ajax({
+            url: '@Url.Action("ModificarPeriodo", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { Fecharegistro },
+            success: function (data) {
+                $("#Periodo").val(data);
+            }
         })
     });
 
