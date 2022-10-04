@@ -215,6 +215,9 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Estado")]
         public TipoEstadoEnvio Estado { get; set; }
 
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Reenviaraeat")]
+        public bool Reenviaraeat { get; set; }
+
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Csv")]
         public string Csv { get; set; }
 

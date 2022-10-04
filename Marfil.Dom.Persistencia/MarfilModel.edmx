@@ -3726,6 +3726,7 @@
           <Property Name="nosujeta" Type="bit" />
           <Property Name="importearticulos" Type="float" />
           <Property Name="importetai" Type="float" />
+          <Property Name="reenviaraeat" Type="bit" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -14628,6 +14629,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importetai" Type="Double" />
           <NavigationProperty Name="RegistroIVARepercutidoSumaTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoSumaTotales" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
+          <Property Name="reenviaraeat" Type="Boolean" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -19911,6 +19913,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="reenviaraeat" ColumnName="reenviaraeat" />
                 <ScalarProperty Name="importetai" ColumnName="importetai" />
                 <ScalarProperty Name="importearticulos" ColumnName="importearticulos" />
                 <ScalarProperty Name="nosujeta" ColumnName="nosujeta" />

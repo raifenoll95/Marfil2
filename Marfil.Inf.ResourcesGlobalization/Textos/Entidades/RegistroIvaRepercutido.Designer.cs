@@ -763,6 +763,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Reenviar AEAT.
+        /// </summary>
+        public static string Reenviaraeat {
+            get {
+                return ResourceManager.GetString("Reenviaraeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Referencia.
         /// </summary>
         public static string Referencia {

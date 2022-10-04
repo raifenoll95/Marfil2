@@ -351,6 +351,9 @@
   <data name="Rechazada" xml:space="preserve">
     <value>Rechazada</value>
   </data>
+  <data name="Reenviaraeat" xml:space="preserve">
+    <value>Reenviar AEAT</value>
+  </data>
   <data name="Referencia" xml:space="preserve">
     <value>Referencia</value>
   </data>

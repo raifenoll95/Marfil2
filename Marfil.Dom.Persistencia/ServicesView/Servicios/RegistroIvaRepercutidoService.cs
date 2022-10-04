@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -130,6 +131,110 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.Totalfactura = Math.Round(model.Importeretencion + model.Operacionesexluidasbi);
 
             return model;
+        }
+
+        public string ModificarPeriodo(List<SelectListItem> listperiodo, DateTime Fechafactura, DateTime Fechaoperacion)
+        {
+            //var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+            //var tipofechaliquidacion = service.GetFechaLiquidacionIvaRepercutido(_context.Empresa);
+
+            if (Fechaoperacion == null || (Fechafactura.Month == Fechaoperacion.Month && Fechafactura.Year == Fechaoperacion.Year))
+            {
+                if (listperiodo.Count > 4)
+                {
+                    var mes = Fechafactura.Month;
+                    return listperiodo[mes - 1].Value;
+
+                }
+                else
+                {
+                    var mes = Fechafactura.Month;
+
+                    if (mes <= 3)
+                    {
+                        return listperiodo[0].Value;
+                    }
+                    else if (mes > 3 && mes <= 6)
+                    {
+                        return listperiodo[1].Value;
+                    }
+                    else if (mes > 6 && mes <= 9)
+                    {
+                        return listperiodo[2].Value;
+                    }
+                    else if (mes > 9 && mes <= 12)
+                    {
+                        return listperiodo[3].Value;
+                    }
+
+                }
+            } 
+            else if (Fechafactura.Month > Fechaoperacion.Month && Fechafactura.Year == Fechaoperacion.Year)
+            {
+                if (Fechafactura.Day <= 15)
+                {
+                    if (listperiodo.Count > 4)
+                    {
+                        var mes = Fechaoperacion.Month;
+                        return listperiodo[mes - 1].Value;
+
+                    }
+                    else
+                    {
+                        var mes = Fechaoperacion.Month;
+
+                        if (mes <= 3)
+                        {
+                            return listperiodo[0].Value;
+                        }
+                        else if (mes > 3 && mes <= 6)
+                        {
+                            return listperiodo[1].Value;
+                        }
+                        else if (mes > 6 && mes <= 9)
+                        {
+                            return listperiodo[2].Value;
+                        }
+                        else if (mes > 9 && mes <= 12)
+                        {
+                            return listperiodo[3].Value;
+                        }
+                    }
+                }
+                else
+                {
+                    if (listperiodo.Count > 4)
+                    {
+                        var mes = Fechafactura.Month;
+                        return listperiodo[mes - 1].Value;
+
+                    }
+                    else
+                    {
+                        var mes = Fechafactura.Month;
+
+                        if (mes <= 3)
+                        {
+                            return listperiodo[0].Value;
+                        }
+                        else if (mes > 3 && mes <= 6)
+                        {
+                            return listperiodo[1].Value;
+                        }
+                        else if (mes > 6 && mes <= 9)
+                        {
+                            return listperiodo[2].Value;
+                        }
+                        else if (mes > 9 && mes <= 12)
+                        {
+                            return listperiodo[3].Value;
+                        }
+                    }
+                }
+            }
+
+
+            return listperiodo[0].Value;
         }
 
         #endregion

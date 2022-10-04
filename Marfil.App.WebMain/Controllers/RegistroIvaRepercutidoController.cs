@@ -11,6 +11,7 @@ using Marfil.Inf.Genericos.Helper;
 using Resources;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -397,7 +398,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #region Helper
 
-        public string ModificarPeriodo(DateTime Fecharegistro, DateTime Fechaoperacion)
+        public string ModificarPeriodo(string Fechafactura, string Fechaoperacion)
         {
             var listperiodo = WebHelper.GetApplicationHelper().GetListPeriodoRegistroIva().Select(f => new SelectListItem()
             {
@@ -406,48 +407,14 @@ namespace Marfil.App.WebMain.Controllers
 
             }).ToList();
 
-            var service = new EmpresasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
-            var tipofechaliquidacion = service.GetFechaLiquidacionIvaRepercutido(ContextService.Empresa);
+            var Fechafacturaparse = DateTime.ParseExact(Fechafactura, "dd/MM/yyyy", new CultureInfo("es-ES"));
+            var Fechaoperacionparse = DateTime.ParseExact(Fechaoperacion, "dd/MM/yyyy", new CultureInfo("es-ES"));
 
-            if(tipofechaliquidacion == 0 && Fecharegistro == Fechaoperacion)
-            {
-                if (listperiodo.Count > 4)
-                {
-                    var mes = Fecharegistro.Month;
-                    return listperiodo[mes - 1].Value;
+            var service = new RegistroIvaRepercutidoService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
 
-                }
-                else
-                {
-                    var mes = Fecharegistro.Month;
+            var periodo = service.ModificarPeriodo(listperiodo, Fechafacturaparse, Fechaoperacionparse);
 
-                    if (mes <= 3)
-                    {
-                        return listperiodo[0].Value;
-                    }
-                    else if (mes > 3 && mes <= 6)
-                    {
-                        return listperiodo[1].Value;
-                    }
-                    else if (mes > 6 && mes <= 9)
-                    {
-                        return listperiodo[2].Value;
-                    }
-                    else if (mes > 9 && mes <= 12)
-                    {
-                        return listperiodo[3].Value;
-                    }
-
-                }
-            }
-            else if(tipofechaliquidacion == 1)
-            {
-
-            }
-
-            
-
-            return listperiodo[0].Value;
+            return periodo;
         }
 
         public double GetPorcentajeRetencion(string tipo)

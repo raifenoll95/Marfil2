@@ -31,33 +31,50 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Tipoenvio, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.EnumDropDownList("Tipoenvio", Model.Tipoenvio, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.EnumDropDownList("Tipoenvio", Model.Tipoenvio, (object)new { @disabled = "disabled", @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Tipoenvio, "", new { @class = "text-danger" })
     </div>
 
     @Html.LabelFor(f => Model.Fechaalta, new { @class = "control-label col-md-1" })
     <div class="col-md-2">
-        @Html.EditorFor(f => Model.Fechaalta)
+        @Html.TextBoxFor(f => Model.Fechaalta, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
     </div>
 
     @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-1" })
-    <div class="col-md-3">
-        @Html.EnumDropDownList("Estado", Model.Estado, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Estado", Model.Estado, (object)new { @disabled = "disabled", @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
     </div>
+
+    @if (Model.Estado == TipoEstadoEnvio.Aceptada)
+    {
+        @Html.LabelFor(f => Model.Reenviaraeat, new { @class = "control-label col-md-1" })
+        <div class="col-md-1">
+            @if (isreadonly)
+            {
+                @Html.CheckBoxFor(f => Model.Reenviaraeat, (object)new { @disabled = "disabled" })
+            }
+            else
+            {
+                @Html.CheckBoxFor(f => Model.Reenviaraeat)
+            }
+        </div>
+    }
+
+
 </div>
 
 @*CSV, Descripción error *@
 <div class="form-group">
     @Html.LabelFor(f => Model.Csv, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Csv, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => Model.Csv, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
         @Html.ValidationMessageFor(f => Model.Csv, "", new { @class = "text-danger" })
     </div>
 
     @Html.LabelFor(f => Model.Descripcionerror, new { @class = "control-label col-md-2" })
     <div class="col-md-6">
-        @Html.TextBoxFor(f => Model.Descripcionerror, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => Model.Descripcionerror, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
         @Html.ValidationMessageFor(f => Model.Descripcionerror, "", new { @class = "text-danger" })
     </div>
 </div>
