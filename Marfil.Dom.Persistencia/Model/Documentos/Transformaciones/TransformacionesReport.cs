@@ -34,8 +34,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
                     mainQuery.Parameters.Add(new QueryParameter("referencia",typeof(string),primarykey));
                     mainQuery.Sql = "SELECT * FROM [Transformaciones] where empresa=@empresa and referencia=@referencia";
                 }
-           
-            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
+
+            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero], " +
+                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais] " +
+                "FROM [Empresas] as e " +
+                "left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id " +
+                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais " +
+                "left join Paises as pa on pa.valor = d.fkpais and pa.Valor = d.fkpais"));
             DataSource.Queries.Add(mainQuery);
             DataSource.Queries.Add(new CustomSqlQuery("Transformacionesentradalin", "SELECT pr.*,u.textocorto as [Unidadesdescripcion], pr.lote+replicate('0', 3 - Len(pr.tabla)) + rtrim(pr.tabla) as [codigodebarraslote] FROM [Transformacionesentradalin] as pr" +
                      " inner join Familiasproductos as fp on fp.empresa=pr.empresa and fp.id=substring(pr.fkarticulos,0,3)" +

@@ -114,7 +114,6 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         #region properties
 
         private List<RegistroIvaRepercutidoTotalesModel> _totales = new List<RegistroIvaRepercutidoTotalesModel>();
-        private RegistroIvaRepercutidoSumaTotalesModel _sumatotales = new RegistroIvaRepercutidoSumaTotalesModel();
         private List<RegistroIvaRepercutidoRectificadasModel> _rectificadas = new List<RegistroIvaRepercutidoRectificadasModel>();
 
         public int? Id { get; set; }
@@ -127,6 +126,12 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipofactura")]
         public string Tipofactura { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Fkseries")]
+        public string Fkseriescontables { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Identificadorsegmento")]
+        public string Identificadorsegmento { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Referencia")]
         public string Referencia { get; set; }
@@ -327,16 +332,6 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         {
             get { return _totales; }
             set { _totales = value; }
-        }
-
-        #endregion
-
-        #region SumaTotales
-
-        public RegistroIvaRepercutidoSumaTotalesModel Sumatotales
-        {
-            get { return _sumatotales; }
-            set { _sumatotales = value; }
         }
 
         #endregion

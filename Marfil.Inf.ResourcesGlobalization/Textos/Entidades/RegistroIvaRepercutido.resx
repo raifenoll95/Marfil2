@@ -267,11 +267,17 @@
   <data name="Fkregimeniva" xml:space="preserve">
     <value>Régimen de IVA</value>
   </data>
+  <data name="Fkseries" xml:space="preserve">
+    <value>Serie</value>
+  </data>
   <data name="Fktiporetencion" xml:space="preserve">
     <value>Retenciones (Tipo)</value>
   </data>
   <data name="Identificacion" xml:space="preserve">
     <value>Identificación</value>
+  </data>
+  <data name="Identificadorsegmento" xml:space="preserve">
+    <value>Identificador segmento</value>
   </data>
   <data name="Importearticulos" xml:space="preserve">
     <value>Importe artículos 7, 14, Otros</value>

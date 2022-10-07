@@ -511,6 +511,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Serie.
+        /// </summary>
+        public static string Fkseries {
+            get {
+                return ResourceManager.GetString("Fkseries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Retenciones (Tipo).
         /// </summary>
         public static string Fktiporetencion {
@@ -525,6 +534,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Identificacion {
             get {
                 return ResourceManager.GetString("Identificacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Identificador segmento.
+        /// </summary>
+        public static string Identificadorsegmento {
+            get {
+                return ResourceManager.GetString("Identificadorsegmento", resourceCulture);
             }
         }
         

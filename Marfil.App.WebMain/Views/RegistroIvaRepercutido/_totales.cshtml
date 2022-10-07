@@ -59,7 +59,13 @@
         {
             j.FieldName = "Baseimponible";
             j.Width = Unit.Pixel(150);
+            j.ColumnType = MVCxGridViewColumnType.TextBox;
+
+            /*var p = j.PropertiesEdit as TextBoxProperties;
+            p.ClientSideEvents.TextChanged = "OnBaseimponibleChanged";
+            p.ClientInstanceName = j.FieldName;*/
             //j.ReadOnly = true;
+
         });
 
         settings.Columns.Add(j =>
@@ -241,6 +247,29 @@
 
         }
         //end search tiposiva
+
+        //calculo cuotaiva
+        function OnBaseimponibleChanged(s, e) {
+
+            GridViewLineas.SetEnabled(false);
+
+            console.log("Parámetros - " - e.Parameters);
+
+            var model =
+            {
+                Base: Baseimponible.GetValue(),
+                Porcentajeiva: GridViewLineas.GetRowValues(parseInt(e.Parameters), "Porcentajeiva").toString(),
+                CtrlCuotaiva: GridViewLineas.GetEditor("Cuotaiva"),
+                CtrlGridview: GridViewLineas
+            };
+
+            console.log("Model - " + model);
+
+            eventAggregator.Publish("Baseimponible-changed", model);
+
+
+        }
+        //end search cuotaiva
 
         function FunOnFocusedRowChangedTercero(s, e) {
             $("#GridViewLineas").unbind("keydown");

@@ -26,11 +26,11 @@ namespace Marfil.Dom.Persistencia.Helpers
 
             if (tipoinicio != TipoInicio.Sinreinicio && fecha.HasValue)
             {
-                whereReinicio = " AND YEAR(fecha) = year(@fecha) ";
+                whereReinicio = serie == "IVR" ? " AND YEAR(fechaoperacion) = year(@fecha) " : " AND YEAR(fecha) = year(@fecha) ";
 
                 if (tipoinicio == TipoInicio.Mensual)
                 {
-                    whereReinicio = " AND MONTH(fecha) = MONTH(@fecha) ";
+                    whereReinicio = serie == "IVR" ? " AND MONTH(fechaoperacion) = MONTH(@fecha) " : " AND MONTH(fecha) = MONTH(@fecha) ";
                 }
             }
 

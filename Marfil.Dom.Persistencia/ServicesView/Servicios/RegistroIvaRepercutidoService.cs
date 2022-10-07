@@ -1,4 +1,5 @@
-﻿using Marfil.Dom.Persistencia.Model;
+﻿using Marfil.Dom.Persistencia.Helpers;
+using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Iva;
 using Marfil.Inf.Genericos.Helper;
@@ -51,6 +52,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
                 var model = obj as RegistroIvaRepercutidoModel;
+
+                //Calculo ID
+                var contador = ServiceHelper.GetNextIdContable<RegistroIVARepercutido>(_db, Empresa, model.Fkseriescontables);
+                var identificadorsegmento = "";
+                model.Referencia = ServiceHelper.GetReferenceContable<RegistroIVARepercutido>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fechaoperacion, out identificadorsegmento);
+                model.Identificadorsegmento = identificadorsegmento;
 
                 model = Recalculartotales(model);
 

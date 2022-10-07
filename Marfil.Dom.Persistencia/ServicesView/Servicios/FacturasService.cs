@@ -42,7 +42,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
     }
 
-    public class FacturasService : GestionService<FacturasModel, Facturas>, IDocumentosServices,IBuscarDocumento, IDocumentosVentasPorReferencia<FacturasModel>, IFacturasService
+    public class FacturasService : GestionService<FacturasModel, Facturas>, IDocumentosServices, IBuscarDocumento, IDocumentosVentasPorReferencia<FacturasModel>, IFacturasService
     {
         #region Member
 
@@ -64,7 +64,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #endregion
 
-       
+
         #region CTR
 
         public FacturasService(IContextService context, MarfilEntities db = null) : base(context, db)
@@ -77,7 +77,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var estadosService = new EstadosService(_context,_db);
+            var estadosService = new EstadosService(_context, _db);
 
             //Comprobamos si el usuario tiene el bloqueo de series
             List<string> seriesrol;
@@ -102,7 +102,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             st.ExcludedColumns =
                 propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
             st.ColumnasCombo.Add("Fkestados", estadosService.GetStates(DocumentoEstado.FacturasVentas, TipoMovimientos.Todos).Select(f => new Tuple<string, string>(f.CampoId, f.Descripcion)));
-           
+
 
             return st;
         }
@@ -126,7 +126,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         item.Porcentajerecargoequivalencia = ivaObj.PorcentajeRecargoEquivalencia;
                         item.Fkregimeniva = fkregimeniva;
                     }
-                    
+
                 }
 
                 result.Add(item);
@@ -166,7 +166,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //                                                    .Select(f => f.porcentajeretencion).SingleOrDefault();
                 //}
                 //
-                
+
                 newItem.Importedescuentocomercial = Math.Round((double)((newItem.Brutototal * descuentocomercial ?? 0) / 100.0), decimalesmoneda);
                 newItem.Importedescuentoprontopago = Math.Round((double)((double)(newItem.Brutototal - newItem.Importedescuentocomercial) * (descuentopp / 100.0)), decimalesmoneda);
 
@@ -227,16 +227,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 model.Referencia = ServiceHelper.GetReference<Facturas>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.FacturasVentas, _context, _db);
-                var newItem = _converterModel.CreatePersitance(obj);                
+                var newItem = _converterModel.CreatePersitance(obj);
 
                 if (_validationService.ValidarGrabar(newItem))
                 {
                     _db.Set<Facturas>().Add(newItem);
                     try
                     {
-                       
+
                         _db.SaveChanges();
-                        obj.set("Id",newItem.id);
+                        obj.set("Id", newItem.id);
                     }
                     catch (DbUpdateException ex)
                     {
@@ -274,7 +274,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var validation = _validationService as FacturasValidation;
                 validation.EjercicioId = EjercicioId;
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.FacturasVentas, _context, _db);
-                         
+
                 var model = obj as FacturasModel;
                 // Esta línea añande a 'FacturasLin' el campo de fecha de los albaranes
 
@@ -300,14 +300,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                 }
 
-                model.Totales = Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 
+                model.Totales = Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0,
                                     model.Importeportes ?? 0, model.Decimalesmonedas, model.Porcentajeretencion ?? 0).ToList();
 
                 CalcularTotalesCabecera(model);
                 model.Vencimientos = RefrescarVencimientos(model, model.Fkformaspago.ToString());
 
                 base.edit(obj);
-              
+
                 ModificarCantidadesPedidasAlbaranes(obj as FacturasModel);
                 _db.SaveChanges();
                 tran.Complete();
@@ -326,11 +326,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 ModificarCantidadesPedidasAlbaranes(obj as FacturasModel, TipoOperacion.Baja);
 
                 var service = FService.Instance.GetService(typeof(AlbaranesModel), _context) as AlbaranesService;
-                var _converterModel = FConverterModel.Instance.CreateConverterModelService<AlbaranesModel, Albaranes>(_context, _db, Empresa);                
-                var serviceEstados = new EstadosService(_context);                
+                var _converterModel = FConverterModel.Instance.CreateConverterModelService<AlbaranesModel, Albaranes>(_context, _db, Empresa);
+                var serviceEstados = new EstadosService(_context);
 
-                foreach (var linea in model.Lineas)
-                {                    
+                var lista = model.Lineas.GroupBy(f => f.Fkalbaranes).Select(g => g.First()).ToList();
+                foreach (var linea in lista)
+                {
                     var modelview = _converterModel.CreateView(linea.Fkalbaranes.ToString());
 
                     var listEstadosInicial = serviceEstados.GetStates(DocumentoEstado.AlbaranesVentas, Model.Configuracion.TipoEstado.Diseño).Where(f => f.Tipoestado == Model.Configuracion.TipoEstado.Diseño);
@@ -394,7 +395,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
                         result.Decimalesmonedas, result.Porcentajeretencion ?? 0).ToList();
 
-                    result.Importetotaldoc =Math.Round(result.Totales.Sum(f => f.Subtotal)??0.0,result.Decimalesmonedas);
+                    result.Importetotaldoc = Math.Round(result.Totales.Sum(f => f.Subtotal) ?? 0.0, result.Decimalesmonedas);
                     GenerarVencimientos(result);
                     create(result);
 
@@ -437,17 +438,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             if (albaran.Lineas.Any(f => (f.Cantidad ?? 0) != 0))
             {
                 var maxId = lineas.Any() ? lineas.Max(f => f.Id) + 1 : 1;
-                lineas.AddRange(ImportarLineas(albaran.Id,maxId, albaranesService.GetLineasImportarAlbaran(referencia)));
+                lineas.AddRange(ImportarLineas(albaran.Id, maxId, albaranesService.GetLineasImportarAlbaran(referencia)));
             }
 
             if (lineas.Count == 0)
                 throw new ValidationException("Los albaranes seleccionados no han generado ninguna linea");
         }
 
-        public IEnumerable<FacturasLinModel> ImportarLineas(int albaranId,int maxId, IEnumerable<ILineaImportar> linea)
+        public IEnumerable<FacturasLinModel> ImportarLineas(int albaranId, int maxId, IEnumerable<ILineaImportar> linea)
         {
 
-            return linea.Select(f => ConvertILineaImportarToPedidoLinModel( ++maxId,  f)).OrderBy(f=>f.Orden);
+            return linea.Select(f => ConvertILineaImportarToPedidoLinModel(++maxId, f)).OrderBy(f => f.Orden);
         }
 
 
@@ -499,7 +500,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 Fkalbaranesfecha = albaran?.fechadocumento,
                 Fkalbaranesreferencia = albaran?.referencia,
                 Fkalbaranesfkcriteriosagrupacion = albaran?.fkcriteriosagrupacion,
-                Orden=linea.Orden??0,
+                Orden = linea.Orden ?? 0,
                 Contenedor = linea.Contenedor,
                 Sello = linea.Sello,
                 Caja = linea.Caja,
@@ -526,7 +527,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             result.Fechadocumento = DateTime.Parse(fecha);
-            
+
             result.Fkseries = serie;
 
             //asignamos el tipo de factura según el cliente
@@ -535,8 +536,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 result.Fktipofactura = tipofactura;
             }
-            
-            var appService= new ApplicationHelper(_context);
+
+            var appService = new ApplicationHelper(_context);
             result.Fkestados = appService.GetConfiguracion().Estadofacturasventasinicial;
             var decimalesmonedas = _db.Monedas.Single(f => f.id == result.Fkmonedas.Value).decimales;
             result.Decimalesmonedas = decimalesmonedas.Value;
@@ -546,7 +547,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public List<FacturasVencimientosModel> RefrescarVencimientos(FacturasModel cabecera, string idformapago)
         {
-            
+
             cabecera.Fkformaspago = Funciones.Qint(idformapago);
             return GenerarLineasVencimientos(cabecera);
         }
@@ -582,7 +583,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     Id = maxId++,
                     Diasvencimiento = list[i].DiasVencimiento,
-                    Fechavencimiento =GetFechavencimiento(cabecera.Fechadocumento.Value, list[i].DiasVencimiento, diafijo1, diafijo2, formapagoObj.ExcluirFestivos),
+                    Fechavencimiento = GetFechavencimiento(cabecera.Fechadocumento.Value, list[i].DiasVencimiento, diafijo1, diafijo2, formapagoObj.ExcluirFestivos),
                     Importevencimiento = cuotavencimiento,
                     Decimalesmonedas = decimales
                 });
@@ -695,10 +696,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private void ModificarCantidadesPedidasAlbaranes(FacturasModel model, TipoOperacion tipo = TipoOperacion.Editar)
         {
-            var AlbaranesService = new AlbaranesService(_context,_db);
+            var AlbaranesService = new AlbaranesService(_context, _db);
             AlbaranesService.EjercicioId = EjercicioId;
 
-            foreach (var item in model.Lineas)
+            var lista = model.Lineas.GroupBy(f => f.Fkalbaranes).Select(g => g.First()).ToList();
+
+            foreach (var item in lista)
             {
                 var albaran = _db.Albaranes.Include("AlbaranesLin").Single(
                     f =>
@@ -706,10 +709,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 foreach (var linea in albaran.AlbaranesLin)
                 {
-                    
+
                     linea.cantidadpedida = tipo == TipoOperacion.Baja ? 0 : linea.cantidad;
 
                 }
+
                 var validationService = AlbaranesService._validationService as AlbaranesValidation;
                 validationService.EjercicioId = EjercicioId;
                 validationService.FlagActualizarCantidadesFacturadas = true;
@@ -745,16 +749,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<IItemResultadoMovile> BuscarDocumento(string referencia)
         {
             var service = new BuscarDocumentosService(_db, Empresa);
-            return service.Get<FacturasModel,FacturasLinModel,FacturasTotalesModel>(this, referencia);
+            return service.Get<FacturasModel, FacturasLinModel, FacturasTotalesModel>(this, referencia);
         }
 
 
         //Rai -- Me devuelve las facturas a partir de un cliente -- Necesario para las facturas rectificativas
-        public IEnumerable<FacturasModel> getDocumentosRelacionados (string cliente)
+        public IEnumerable<FacturasModel> getDocumentosRelacionados(string cliente)
         {
             return _db.Database.SqlQuery<FacturasModel>(string.Format(
             "SELECT f.id as Id, f.referencia as Referencia, FORMAT(f.fechadocumento, 'dd/MM/yyyy') as Fecha, f.fktipofactura as Fktipofactura, f.importebaseimponible as Importebaseimponible "
-            + " FROM Facturas as f " 
+            + " FROM Facturas as f "
             + " WHERE f.empresa = '" + Empresa + "' AND"
             + " f.fkclientes = '" + cliente + "'"));
         }

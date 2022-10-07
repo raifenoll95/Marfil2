@@ -18,7 +18,6 @@ namespace Marfil.Dom.Persistencia
         public RegistroIVARepercutido()
         {
             this.RegistroIVARepercutidoRectificadas = new HashSet<RegistroIVARepercutidoRectificadas>();
-            this.RegistroIVARepercutidoSumaTotales = new HashSet<RegistroIVARepercutidoSumaTotales>();
             this.RegistroIVARepercutidoTotales = new HashSet<RegistroIVARepercutidoTotales>();
         }
     
@@ -26,6 +25,8 @@ namespace Marfil.Dom.Persistencia
         public int id { get; set; }
         public Nullable<int> origendoc { get; set; }
         public string tipofactura { get; set; }
+        public string fkseriescontables { get; set; }
+        public string identificadorsegmento { get; set; }
         public string referencia { get; set; }
         public Nullable<System.DateTime> fecharegistro { get; set; }
         public Nullable<System.DateTime> fechafactura { get; set; }
@@ -93,8 +94,6 @@ namespace Marfil.Dom.Persistencia
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RegistroIVARepercutidoSumaTotales> RegistroIVARepercutidoSumaTotales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
     }

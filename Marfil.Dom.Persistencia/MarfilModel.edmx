@@ -3663,6 +3663,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="origendoc" Type="int" />
           <Property Name="tipofactura" Type="varchar" MaxLength="50" />
+          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
+          <Property Name="identificadorsegmento" Type="varchar" MaxLength="12" />
           <Property Name="referencia" Type="nvarchar" MaxLength="30" />
           <Property Name="fecharegistro" Type="datetime" />
           <Property Name="fechafactura" Type="datetime" />
@@ -3739,22 +3741,6 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="facturaemisor" Type="nvarchar" MaxLength="15" />
           <Property Name="fechaexpedemisor" Type="datetime" />
-        </EntityType>
-        <EntityType Name="RegistroIVARepercutidoSumaTotales">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="fkregistros" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="fkregistros" Type="int" Nullable="false" />
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="baseretencion" Type="float" />
-          <Property Name="porcentajeretencion" Type="float" />
-          <Property Name="importeretencion" Type="float" />
-          <Property Name="operacionesexluidasbi" Type="float" />
-          <Property Name="totalfactura" Type="float" />
-          <Property Name="decimalesmonedas" Type="int" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
@@ -6355,20 +6341,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido">
-          <End Role="RegistroIVARepercutido" Type="Self.RegistroIVARepercutido" Multiplicity="1" />
-          <End Role="RegistroIVARepercutidoSumaTotales" Type="Self.RegistroIVARepercutidoSumaTotales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RegistroIVARepercutido">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RegistroIVARepercutidoSumaTotales">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkregistros" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido">
           <End Role="RegistroIVARepercutido" Type="Self.RegistroIVARepercutido" Multiplicity="1" />
           <End Role="RegistroIVARepercutidoTotales" Type="Self.RegistroIVARepercutidoTotales" Multiplicity="*" />
@@ -6798,7 +6770,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="RegimenIva" EntityType="Self.RegimenIva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistroIVARepercutido" EntityType="Self.RegistroIVARepercutido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistroIVARepercutidoRectificadas" EntityType="Self.RegistroIVARepercutidoRectificadas" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RegistroIVARepercutidoSumaTotales" EntityType="Self.RegistroIVARepercutidoSumaTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistroIVARepercutidoTotales" EntityType="Self.RegistroIVARepercutidoTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Remesas" EntityType="Self.Remesas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportAnaliticaGuiasBalances" EntityType="Self.ReportAnaliticaGuiasBalances" Schema="dbo" store:Type="Tables" />
@@ -7263,10 +7234,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" Association="Self.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido">
             <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
             <End Role="RegistroIVARepercutidoRectificadas" EntitySet="RegistroIVARepercutidoRectificadas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido" Association="Self.FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido">
-            <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
-            <End Role="RegistroIVARepercutidoSumaTotales" EntitySet="RegistroIVARepercutidoSumaTotales" />
           </AssociationSet>
           <AssociationSet Name="FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" Association="Self.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido">
             <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
@@ -7910,19 +7877,14 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
           </AssociationSet>
+          <EntitySet Name="Lecturas" EntityType="MarfilModel.Lecturas" />
           <EntitySet Name="RegistroIVARepercutido" EntityType="MarfilModel.RegistroIVARepercutido" />
           <EntitySet Name="RegistroIVARepercutidoRectificadas" EntityType="MarfilModel.RegistroIVARepercutidoRectificadas" />
+          <EntitySet Name="RegistroIVARepercutidoTotales" EntityType="MarfilModel.RegistroIVARepercutidoTotales" />
           <AssociationSet Name="FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" Association="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido">
             <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
             <End Role="RegistroIVARepercutidoRectificadas" EntitySet="RegistroIVARepercutidoRectificadas" />
           </AssociationSet>
-          <EntitySet Name="Lecturas" EntityType="MarfilModel.Lecturas" />
-          <EntitySet Name="RegistroIVARepercutidoSumaTotales" EntityType="MarfilModel.RegistroIVARepercutidoSumaTotales" />
-          <AssociationSet Name="FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido" Association="MarfilModel.FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido">
-            <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
-            <End Role="RegistroIVARepercutidoSumaTotales" EntitySet="RegistroIVARepercutidoSumaTotales" />
-          </AssociationSet>
-          <EntitySet Name="RegistroIVARepercutidoTotales" EntityType="MarfilModel.RegistroIVARepercutidoTotales" />
           <AssociationSet Name="FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" Association="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido">
             <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
             <End Role="RegistroIVARepercutidoTotales" EntitySet="RegistroIVARepercutidoTotales" />
@@ -14554,6 +14516,21 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Lecturas">
+          <Key>
+            <PropertyRef Name="identificador" />
+            <PropertyRef Name="lote" />
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="identificador" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="lote" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="usuario" Type="Guid" Nullable="false" />
+          <Property Name="insertado" Type="Boolean" Nullable="false" />
+          <Property Name="empresa" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="RegistroIVARepercutido">
           <Key>
             <PropertyRef Name="empresa" />
@@ -14563,6 +14540,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="origendoc" Type="Int32" />
           <Property Name="tipofactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="identificadorsegmento" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="fecharegistro" Type="DateTime" Precision="3" />
           <Property Name="fechafactura" Type="DateTime" Precision="3" />
@@ -14612,7 +14591,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importetransmisoremisor" Type="Double" />
           <Property Name="claveregimenespecial" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="descripcionoperacionemisor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
           <Property Name="tipooperacion" Type="Int32" />
           <Property Name="sujetanoexenta" Type="Boolean" />
           <Property Name="invsujetopasivo" Type="Int32" />
@@ -14627,9 +14605,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="nosujeta" Type="Boolean" />
           <Property Name="importearticulos" Type="Double" />
           <Property Name="importetai" Type="Double" />
-          <NavigationProperty Name="RegistroIVARepercutidoSumaTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoSumaTotales" />
-          <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
           <Property Name="reenviaraeat" Type="Boolean" />
+          <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
+          <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -14644,66 +14622,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fechaexpedemisor" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RegistroIVARepercutido" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutidoRectificadas" ToRole="RegistroIVARepercutido" />
         </EntityType>
-        <Association Name="FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido">
-          <End Type="MarfilModel.RegistroIVARepercutido" Role="RegistroIVARepercutido" Multiplicity="1" />
-          <End Type="MarfilModel.RegistroIVARepercutidoRectificadas" Role="RegistroIVARepercutidoRectificadas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RegistroIVARepercutido">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RegistroIVARepercutidoRectificadas">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkregistros" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Lecturas">
-          <Key>
-            <PropertyRef Name="identificador" />
-            <PropertyRef Name="lote" />
-            <PropertyRef Name="usuario" />
-          </Key>
-          <Property Name="identificador" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="lote" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="cantidad" Type="Int32" Nullable="false" />
-          <Property Name="usuario" Type="Guid" Nullable="false" />
-          <Property Name="insertado" Type="Boolean" Nullable="false" />
-          <Property Name="empresa" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="RegistroIVARepercutidoSumaTotales">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="fkregistros" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="fkregistros" Type="Int32" Nullable="false" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="baseretencion" Type="Double" />
-          <Property Name="porcentajeretencion" Type="Double" />
-          <Property Name="importeretencion" Type="Double" />
-          <Property Name="operacionesexluidasbi" Type="Double" />
-          <Property Name="totalfactura" Type="Double" />
-          <Property Name="decimalesmonedas" Type="Int32" />
-          <NavigationProperty Name="RegistroIVARepercutido" Relationship="MarfilModel.FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutidoSumaTotales" ToRole="RegistroIVARepercutido" />
-        </EntityType>
-        <Association Name="FK_RegistroIVARepercutidoSumaTotales_RegistroIVARepercutido">
-          <End Type="MarfilModel.RegistroIVARepercutido" Role="RegistroIVARepercutido" Multiplicity="1" />
-          <End Type="MarfilModel.RegistroIVARepercutidoSumaTotales" Role="RegistroIVARepercutidoSumaTotales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RegistroIVARepercutido">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RegistroIVARepercutidoSumaTotales">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkregistros" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="RegistroIVARepercutidoTotales">
           <Key>
             <PropertyRef Name="empresa" />
@@ -14723,6 +14641,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importerecargoequivalencia" Type="Double" />
           <NavigationProperty Name="RegistroIVARepercutido" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutidoTotales" ToRole="RegistroIVARepercutido" />
         </EntityType>
+        <Association Name="FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido">
+          <End Type="MarfilModel.RegistroIVARepercutido" Role="RegistroIVARepercutido" Multiplicity="1" />
+          <End Type="MarfilModel.RegistroIVARepercutidoRectificadas" Role="RegistroIVARepercutidoRectificadas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegistroIVARepercutido">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RegistroIVARepercutidoRectificadas">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkregistros" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido">
           <End Type="MarfilModel.RegistroIVARepercutido" Role="RegistroIVARepercutido" Multiplicity="1" />
           <End Type="MarfilModel.RegistroIVARepercutidoTotales" Role="RegistroIVARepercutidoTotales" Multiplicity="*" />
@@ -19910,6 +19842,20 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Lecturas">
+            <EntityTypeMapping TypeName="MarfilModel.Lecturas">
+              <MappingFragment StoreEntitySet="Lecturas">
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="insertado" ColumnName="insertado" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="identificador" ColumnName="identificador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
@@ -19977,6 +19923,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="fechafactura" ColumnName="fechafactura" />
                 <ScalarProperty Name="fecharegistro" ColumnName="fecharegistro" />
                 <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
+                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
                 <ScalarProperty Name="tipofactura" ColumnName="tipofactura" />
                 <ScalarProperty Name="origendoc" ColumnName="origendoc" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -19989,35 +19937,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               <MappingFragment StoreEntitySet="RegistroIVARepercutidoRectificadas">
                 <ScalarProperty Name="fechaexpedemisor" ColumnName="fechaexpedemisor" />
                 <ScalarProperty Name="facturaemisor" ColumnName="facturaemisor" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="fkregistros" ColumnName="fkregistros" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Lecturas">
-            <EntityTypeMapping TypeName="MarfilModel.Lecturas">
-              <MappingFragment StoreEntitySet="Lecturas">
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-                <ScalarProperty Name="insertado" ColumnName="insertado" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="lote" ColumnName="lote" />
-                <ScalarProperty Name="hora" ColumnName="hora" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="identificador" ColumnName="identificador" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RegistroIVARepercutidoSumaTotales">
-            <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutidoSumaTotales">
-              <MappingFragment StoreEntitySet="RegistroIVARepercutidoSumaTotales">
-                <ScalarProperty Name="decimalesmonedas" ColumnName="decimalesmonedas" />
-                <ScalarProperty Name="totalfactura" ColumnName="totalfactura" />
-                <ScalarProperty Name="operacionesexluidasbi" ColumnName="operacionesexluidasbi" />
-                <ScalarProperty Name="importeretencion" ColumnName="importeretencion" />
-                <ScalarProperty Name="porcentajeretencion" ColumnName="porcentajeretencion" />
-                <ScalarProperty Name="baseretencion" ColumnName="baseretencion" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="fkregistros" ColumnName="fkregistros" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />

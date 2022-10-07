@@ -28,14 +28,15 @@
 
     }).ToList();
 
-    if (isNuevo){
+    if (isNuevo)
+    {
         Model.Referencia = WebHelper.GetApplicationHelper().GetSerieRepercutidoEjercicio();
         Model.Fkregimeniva = WebHelper.GetApplicationHelper().GetRegimenivaTiposFacturaRepercutido();
 
         if (listperiodo.Count > 4)
         {
             var mes = Model.Fechaoperacion.Month;
-            Model.Periodo = listperiodo[mes-1].Value;
+            Model.Periodo = listperiodo[mes - 1].Value;
 
         }
         else
@@ -108,12 +109,13 @@
     </div>
 </div>
 
-@*Referencia*@
+@if (isNuevo)
+{
 <div class="form-group">
-    @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
-            cvseriecontableIVP.Name = "Referencia";
+            cvseriecontableIVP.Name = "Fkseriescontables";
             cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
             cvseriecontableIVP.Valor = Model.Referencia;
             cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
@@ -126,9 +128,26 @@
     </div>
     <div class="col-md-12"></div>
     <div class="col-md-2 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
     </div>
 </div>
+}
+else
+{
+    @Html.HiddenFor(f => Model.Fkseriescontables)
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        
+        <div class="col-md-12"></div>
+        <div class="col-md-6 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
 
 @*Fechas*@
 <div class="form-group">
@@ -208,10 +227,10 @@
 @*Régimen IVA*@
 <div class="form-group">
     @*@Html.LabelFor(f => Model.Criterioivageneral, new { @class = "control-label col-md-2" })
-    <div class="col-md-4">
-        @Html.EnumDropDownList("Criterioivageneral", Model.Criterioivageneral, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
-        @Html.ValidationMessageFor(f => Model.Criterioivageneral, "", new { @class = "text-danger" })
-    </div>*@
+        <div class="col-md-4">
+            @Html.EnumDropDownList("Criterioivageneral", Model.Criterioivageneral, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Criterioivageneral, "", new { @class = "text-danger" })
+        </div>*@
 
     @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
     <div class="col-md-4">

@@ -35,7 +35,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformaciones
                 mainQuery.Sql = "SELECT * FROM [Transformacioneslotes] where empresa=@empresa and referencia=@referencia";
             }
 
-            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
+            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero], " +
+                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais] " +
+                "FROM [Empresas] as e " +
+                "left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id " +
+                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais " +
+                "left join Paises as pa on pa.valor = d.fkpais and pa.Valor = d.fkpais"));
             DataSource.Queries.Add(mainQuery);
             DataSource.Queries.Add(new CustomSqlQuery("Transformacionesloteslin", "SELECT * FROM [Transformacionesloteslin] "));
 
