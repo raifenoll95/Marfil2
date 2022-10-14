@@ -154,6 +154,9 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuentacliente")]
         public string Cuentacliente { get; set; }
 
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Nombrecliente")]
+        public string Nombrecliente { get; set; }
+
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuentaventas")]
         public string Cuentaventas { get; set; }
 
@@ -188,13 +191,31 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public string Fktiporetencion { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseretencion")]
-        public double Baseretencion { get; set; }
+        public double? Baseretencion { get; set; }
+
+        public string SBaseretencion
+        {
+            get { return (Baseretencion ?? 0.0).ToString("N" + 2); }
+            set { Baseretencion = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajeretencion")]
         public double Porcentajeretencion { get; set; }
 
+        public string SPorcentajeretencion
+        {
+            get { return Porcentajeretencion.ToString("N" + 2); }
+            set { Porcentajeretencion = (double)Funciones.Qdouble(value); }
+        }
+
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Importeretencion")]
-        public double Importeretencion { get; set; }
+        public double? Importeretencion { get; set; }
+
+        public string SImporteretencion
+        {
+            get { return (Importeretencion ?? 0.0).ToString("N" + 2); }
+            set { Importeretencion = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Inmueble")]
         public string Inmueble { get; set; }
@@ -209,7 +230,13 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public double Operacionesexluidasbi { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Totalfactura")]
-        public double Totalfactura { get; set; }
+        public double? Totalfactura { get; set; }
+
+        public string STotalfactura
+        {
+            get { return (Totalfactura ?? 0.0).ToString("N" + 2); }
+            set { Totalfactura = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipoenvio")]
         public TipoEnvio Tipoenvio { get; set; }

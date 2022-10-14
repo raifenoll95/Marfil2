@@ -610,8 +610,8 @@
   <data name="LblSinDesglose" xml:space="preserve">
     <value>Sin Desglosar</value>
   </data>
-  <data name="LblDetallado" xml:space="preserve">
-    <value>Detallado</value>
+  <data name="LblDetalle" xml:space="preserve">
+    <value>Detalle</value>
   </data>
   <data name="LblAgrupadoporcliente" xml:space="preserve">
     <value>Agrupado por cliente</value>

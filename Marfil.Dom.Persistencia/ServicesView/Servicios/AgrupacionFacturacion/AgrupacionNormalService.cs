@@ -89,7 +89,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.AgrupacionFacturacion
 
             string agrupacion;
             var columnas = GenerarColumnas(referencia, out agrupacion, albaran, service, db);
-            sb.AppendFormat("select {0} from albaraneslin as al inner join albaranes as a on a.empresa=@empresa and a.referencia=@referencia and a.id=al.fkalbaranes and a.empresa=al.empresa left join articulos as art on art.id=al.fkarticulos where al.empresa=@empresa {1}", columnas, agrupacion);
+            sb.AppendFormat("select {0} from albaraneslin as al inner join albaranes as a on a.empresa=@empresa and a.referencia=@referencia and a.id=al.fkalbaranes and a.empresa=al.empresa left join articulos as art on art.id=al.fkarticulos and art.empresa = al.empresa where al.empresa=@empresa {1}", columnas, agrupacion);
 
             return sb.ToString();
         }

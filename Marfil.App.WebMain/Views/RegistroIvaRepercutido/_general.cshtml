@@ -30,9 +30,6 @@
 
     if (isNuevo)
     {
-        Model.Referencia = WebHelper.GetApplicationHelper().GetSerieRepercutidoEjercicio();
-        Model.Fkregimeniva = WebHelper.GetApplicationHelper().GetRegimenivaTiposFacturaRepercutido();
-
         if (listperiodo.Count > 4)
         {
             var mes = Model.Fechaoperacion.Month;
@@ -67,6 +64,8 @@
     if (iseditable)
     {
         WebHelper.GetApplicationHelper().GetConfiguracion();
+        ((Marfil.App.WebMain.Controllers.RegistroIvaRepercutidoController)this.ViewContext.Controller).GetIvaTercero(Model.Cuentacliente);
+
     }
 
 }
@@ -83,7 +82,7 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Origendoc, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.EnumDropDownList("Origendoc", Model.Origendoc, isreadonly || iseditable ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.EnumDropDownList("Origendoc", Model.Origendoc, (object)new { @disabled = "disabled", @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Origendoc, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -111,37 +110,39 @@
 
 @if (isNuevo)
 {
-<div class="form-group">
-    @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @{
-            cvseriecontableIVP.Name = "Fkseriescontables";
-            cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
-            cvseriecontableIVP.Valor = Model.Referencia;
-            cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
-            cvseriecontableIVP.SoloLectura = isreadonly;
-            cvseriecontableIVP.Autofocus = true;
-            cvseriecontableIVP.Obligatorio = false;
-            cvseriecontableIVP.Configuracion.OcultarTexto = false;
-        }
-        @Html.Partial("CampoverificacionUI", cvseriecontableIVP)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvseriecontableIVP.Name = "Fkseriescontables";
+                cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
+                cvseriecontableIVP.Valor = Model.Referencia;
+                cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
+                cvseriecontableIVP.SoloLectura = isreadonly;
+                cvseriecontableIVP.Autofocus = true;
+                cvseriecontableIVP.Obligatorio = false;
+                cvseriecontableIVP.Configuracion.OcultarTexto = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvseriecontableIVP)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
+        </div>
     </div>
-    <div class="col-md-12"></div>
-    <div class="col-md-2 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
-    </div>
-</div>
 }
 else
 {
     @Html.HiddenFor(f => Model.Fkseriescontables)
+    @Html.HiddenFor(f => Model.Identificadorsegmento)
+
 
     <div class="form-group">
         @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
         <div class="col-md-6">
             @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
         </div>
-        
+
         <div class="col-md-12"></div>
         <div class="col-md-6 col-md-offset-2">
             @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
@@ -289,10 +290,42 @@ else
         });
     });
 
+    $("#Tipofactura").on('change', function () {
+
+        var tipo = $("#Tipofactura").val();
+
+        $.ajax({
+            url: '@Url.Action("GetRegimenIva", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { tipo },
+            success: function (data) {
+                eventAggregator.Publish("Fkregimeniva-Buscarfocus", data);
+                //$("#Fkregimeniva").val(data);
+            }
+        });
+    });
+
+    $("#Tipofactura").on('DOMSubtreeModified', function () {
+
+        var tipo = $("#Tipofactura").val();
+
+        $.ajax({
+            url: '@Url.Action("GetRegimenIva", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { tipo },
+            success: function (data) {
+                eventAggregator.Publish("Fkregimeniva-Buscarfocus", data);
+                //$("#Fkregimeniva").val(data);
+            }
+        });
+    });
+
    $("#Fechafactura").on('change', function () {
        var Fechafactura = this.value;
        var Fechaoperacion = $("#Fechaoperacion").val();
-       console.log("Fechafactura - " + Fechafactura + " | Fechaoperacion - " + Fechaoperacion);
+
         $.ajax({
             url: '@Url.Action("ModificarPeriodo", "RegistroIvaRepercutido")',
             dataType: "text",
@@ -307,7 +340,7 @@ else
     $("#Fechaoperacion").on('change', function () {
         var Fechafactura = $("#Fechafactura").val();
         var Fechaoperacion = this.value;
-        console.log("Fechafactura - " + Fechafactura + " | Fechaoperacion - " + Fechaoperacion);
+
         $.ajax({
             url: '@Url.Action("ModificarPeriodo", "RegistroIvaRepercutido")',
             dataType: "text",
@@ -318,19 +351,5 @@ else
             }
         })
    });
-
-    @*$('#Cuentacliente').on('DOMSubtreeModified', function () {
-        var valor = $("#Cuentacliente").val();
-
-        $.ajax({
-            url: '@Url.Action("GuardarCuentaSession","Cuentas")',
-            dataType: "text",
-            type: "GET",
-            data: { valor },
-            success: function (data) {
-                console.log(data);
-            }
-         })
-    });*@
 
 </script>

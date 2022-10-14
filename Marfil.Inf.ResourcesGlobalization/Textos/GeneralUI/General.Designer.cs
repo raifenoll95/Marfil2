@@ -1240,11 +1240,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Detallado.
+        ///   Busca una cadena traducida similar a Detalle.
         /// </summary>
-        public static string LblDetallado {
+        public static string LblDetalle {
             get {
-                return ResourceManager.GetString("LblDetallado", resourceCulture);
+                return ResourceManager.GetString("LblDetalle", resourceCulture);
             }
         }
         

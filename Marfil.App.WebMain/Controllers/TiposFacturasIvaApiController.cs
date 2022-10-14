@@ -65,7 +65,7 @@ namespace Marfil.App.WebMain.Controllers
             using (var service = FService.Instance.GetService(typeof(TiposFacturasIvaModel), ContextService))
             {
 
-                var list = service.get(id) as TiposFacturasIvaModel;
+                var list = service.get(id);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
                     "application/json");

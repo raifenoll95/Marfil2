@@ -61,7 +61,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivasinrecargo;
 
-            var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
+            //var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
 
             return tipoiva;
         }
@@ -69,6 +69,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public string GetPorcentajeIvaTercero(string tipoiva)
         {
             var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
+
+            tipoivaporcentaje = Math.Round((double)tipoivaporcentaje, 2);
+
+            return tipoivaporcentaje.ToString();
+        }
+
+        public string GetPorcentajeRecargoTercero(string tipoiva)
+        {
+            var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajerecargoequivalente;
+
+            tipoivaporcentaje = Math.Round((double)tipoivaporcentaje, 2);
 
             return tipoivaporcentaje.ToString();
         }

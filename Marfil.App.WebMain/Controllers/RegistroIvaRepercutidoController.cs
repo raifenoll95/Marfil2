@@ -61,7 +61,7 @@ namespace Marfil.App.WebMain.Controllers
             model.Fechafactura = DateTime.Today;
             model.Fechaoperacion = DateTime.Today;
             model.Fechafacturaoriginal = DateTime.Today;
-            model.Fechaalta = DateTime.Today;
+            model.Fechaalta = DateTime.Now;
 
             Session[session] = model.Totales;
             //Session[sumatotales] = model.Sumatotales;
@@ -428,11 +428,21 @@ namespace Marfil.App.WebMain.Controllers
             var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var tipoiva = service.GetIvaTercero(cuenta);
             var tipoivaporcentaje = service.GetPorcentajeIvaTercero(tipoiva);
+            var tipoivaporcentajerecargo = service.GetPorcentajeRecargoTercero(tipoiva);
 
             Session["tipoivatercero"] = tipoiva;
             Session["porcentajetipoivatercero"] = tipoivaporcentaje;
+            Session["porcentajerecargotercero"] = tipoivaporcentajerecargo;
 
             return tipoiva;
+        }
+
+        public string GetRegimenIva(string tipo)
+        {
+            var service = new TiposFacturasIvaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var regimen = service.GetRegimenivaRepercutido(ContextService.Empresa, tipo);
+
+            return regimen;
         }
 
         #endregion

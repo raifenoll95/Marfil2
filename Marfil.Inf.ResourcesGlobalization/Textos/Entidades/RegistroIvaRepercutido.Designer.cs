@@ -277,7 +277,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cuenta Cliente.
+        ///   Busca una cadena traducida similar a Cuenta Cliente Contraparte.
         /// </summary>
         public static string Cuentaclientecontraparte {
             get {
@@ -642,6 +642,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Nifcontraparte {
             get {
                 return ResourceManager.GetString("Nifcontraparte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre cliente.
+        /// </summary>
+        public static string Nombrecliente {
+            get {
+                return ResourceManager.GetString("Nombrecliente", resourceCulture);
             }
         }
         

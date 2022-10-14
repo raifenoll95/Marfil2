@@ -27,11 +27,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Origendoc", "Id", "Fechafactura", "Periodo", "Referencia", "Tipofactura", "Cuentacliente", "Nombre Cliente" };
+            var propiedadesVisibles = new[] { "Origendoc", "Referencia", "Fechafactura", "Periodo", "Totalfactura", "Numfacturacliente", "Tipofactura", "Cuentacliente", "Nombrecliente", "Cuentaclientecontraparte" };
             var propiedades = Helpers.Helper.getProperties<RegistroIvaRepercutidoModel>();
             model.ExcludedColumns =
                 propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
             model.PrimaryColumnns = new[] { "Id" };
+
+            model.OrdenColumnas.Add("Origendoc", 0);
+            model.OrdenColumnas.Add("Referencia", 1);
+            model.OrdenColumnas.Add("Fechafactura", 2);
+            model.OrdenColumnas.Add("Periodo", 3);
+            model.OrdenColumnas.Add("Totalfactura", 4);
+            model.OrdenColumnas.Add("Numfacturacliente", 5);
+            model.OrdenColumnas.Add("Tipofactura", 6);
+            model.OrdenColumnas.Add("Cuentacliente", 7);
+            model.OrdenColumnas.Add("Nombrecliente", 8);
+            model.OrdenColumnas.Add("Cuentaclientecontraparte", 9);
 
             return model;
         }
@@ -39,8 +50,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override string GetSelectPrincipal()
         {
             var result = new StringBuilder();
-            result.Append(" select r.origendoc, r.id, r.fechafactura, r.periodo, r.referencia, r.tipofactura, r.cuentacliente, c.descripcion as [Nombre Cliente] from RegistroIVARepercutido r, Cuentas c ");
-            result.AppendFormat(" where r.empresa = c.empresa and r.cuentacliente = c.id and r.empresa ='{0}' ", _context.Empresa);
+            result.Append(" select r.origendoc, r.id, r.referencia, r.fechafactura, r.periodo, r.totalfactura, r.numfacturacliente, t.descripcion as [Tipofactura], r.cuentacliente, r.cuentaclientecontraparte, c.descripcion as [Nombrecliente] " +
+                " from RegistroIVARepercutido r, Cuentas c , TiposFacturas t ");
+            result.AppendFormat(" where r.empresa = c.empresa and r.empresa = t.empresa and r.cuentacliente = c.id and r.tipofactura = t.id and r.empresa ='{0}' ", _context.Empresa);
 
             return result.ToString();
         }
@@ -133,9 +145,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             model.Baseretencion = Math.Round(suma, 3);
-            model.Importeretencion = Math.Round(model.Baseretencion * (model.Porcentajeretencion / 100), 3);
+            model.Importeretencion = Math.Round((double)(model.Baseretencion * (model.Porcentajeretencion / 100)), 3);
 
-            model.Totalfactura = Math.Round(model.Importeretencion + model.Operacionesexluidasbi);
+            model.Totalfactura = Math.Round((double)(model.Importeretencion + model.Operacionesexluidasbi));
 
             return model;
         }

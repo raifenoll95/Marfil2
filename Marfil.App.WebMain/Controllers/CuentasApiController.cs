@@ -57,48 +57,7 @@ namespace Marfil.App.WebMain.Controllers
 
             using (var service = FService.Instance.GetService(typeof(CuentasModel), ContextService) as CuentasService)
             {
-                var nivel = HttpUtility.ParseQueryString(Request.RequestUri.Query)["nivel"];
-                int intnivel = 0;
-                if (!string.IsNullOrEmpty(nivel))
-                    intnivel = int.Parse(nivel);
-
-                var list = service.GetCuentasContablesNivel(intnivel);
-
-                var tipofacturaiva = HttpUtility.ParseQueryString(Request.RequestUri.Query)["tipofacturaiva"];
-                var inttipofacturaiva = 2;
-                if (!string.IsNullOrEmpty(tipofacturaiva)) {
-                    inttipofacturaiva = int.Parse(tipofacturaiva); 
-                }
-                    
-                var cuenta = HttpUtility.ParseQueryString(Request.RequestUri.Query)["cuenta"];
-
-                if (inttipofacturaiva == 0)//Soportado
-                {
-                    if (cuenta == "cliente")
-                    {
-                        var cargo = service.GetCuentaCargo1(inttipofacturaiva);
-                        list = list.Where(f => f.Id.StartsWith(cargo));
-
-                    }
-                    else if (cuenta == "ventas")
-                    {
-                        var abono = service.GetCuentaAbono1(inttipofacturaiva);
-                        list = list.Where(f => f.Id.StartsWith(abono));
-                    }
-                }
-                else if (inttipofacturaiva == 1)//Repercutido
-                {
-                    if (cuenta == "cliente")
-                    {
-                        var cargo = service.GetCuentaCargo1(inttipofacturaiva);
-                        list = list.Where(f => f.Id.StartsWith(cargo));
-                    }
-                    else if (cuenta == "ventas")
-                    {
-                        var abono = service.GetCuentaAbono1(inttipofacturaiva);
-                        list = list.Where(f => f.Id.StartsWith(abono));
-                    }
-                }
+                IEnumerable<CuentasModel> list = GetListaCuentas(service);
 
                 var result = new ResultBusquedas<CuentasModel>()
                 {
@@ -109,7 +68,7 @@ namespace Marfil.App.WebMain.Controllers
                             filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }, width=150},
                         new ColumnDefinition() { field = "Descripcion", displayName = "Descripcion", visible = true,
                             filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
-                        
+
                     }
                 };
 
@@ -128,7 +87,14 @@ namespace Marfil.App.WebMain.Controllers
             using (var service = FService.Instance.GetService(typeof(CuentasModel), ContextService) as CuentasService)
             {
                 id = id.TrimStart('0');//Por si hay ceros a la izq.
+                IEnumerable<CuentasModel> cuentas = GetListaCuentas(service);
                 var list = service.get(id);
+
+                if (!cuentas.Any(f => f.Id == id))
+                {
+                    throw new ValidationException("La cuenta " + id + " no es válida");
+                }
+      
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
                     "application/json");
@@ -137,7 +103,54 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
 
+        private IEnumerable<CuentasModel> GetListaCuentas(CuentasService service)
+        {
+            var nivel = HttpUtility.ParseQueryString(Request.RequestUri.Query)["nivel"];
+            int intnivel = 0;
+            if (!string.IsNullOrEmpty(nivel))
+                intnivel = int.Parse(nivel);
 
+            var list = service.GetCuentasContablesNivel(intnivel);
+
+            var tipofacturaiva = HttpUtility.ParseQueryString(Request.RequestUri.Query)["tipofacturaiva"];
+            var inttipofacturaiva = 2;
+            if (!string.IsNullOrEmpty(tipofacturaiva))
+            {
+                inttipofacturaiva = int.Parse(tipofacturaiva);
+            }
+
+            var cuenta = HttpUtility.ParseQueryString(Request.RequestUri.Query)["cuenta"];
+
+            if (inttipofacturaiva == 0)//Soportado
+            {
+                if (cuenta == "cliente")
+                {
+                    var cargo = service.GetCuentaCargo1(inttipofacturaiva);
+                    list = list.Where(f => f.Id.StartsWith(cargo));
+
+                }
+                else if (cuenta == "ventas")
+                {
+                    var abono = service.GetCuentaAbono1(inttipofacturaiva);
+                    list = list.Where(f => f.Id.StartsWith(abono));
+                }
+            }
+            else if (inttipofacturaiva == 1)//Repercutido
+            {
+                if (cuenta == "cliente")
+                {
+                    var cargo = service.GetCuentaCargo1(inttipofacturaiva);
+                    list = list.Where(f => f.Id.StartsWith(cargo));
+                }
+                else if (cuenta == "ventas")
+                {
+                    var abono = service.GetCuentaAbono1(inttipofacturaiva);
+                    list = list.Where(f => f.Id.StartsWith(abono));
+                }
+            }
+
+            return list;
+        }
 
 
         //public CuentasApiController(ILoginService service) : base(service)

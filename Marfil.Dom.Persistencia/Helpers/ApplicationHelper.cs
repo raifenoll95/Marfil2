@@ -1341,14 +1341,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             return criterio;
         }
 
-        public string GetRegimenivaTiposFacturaRepercutido()
+        /*public string GetRegimenivaTiposFacturaRepercutido()
         {
             var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
 
             var regimen = service.GetRegimenivaRepercutido(_context.Empresa);
 
             return regimen;
-        }
+        }*/
 
         public IEnumerable<SelectListItem> GetListTipoGuiaCTPG()
         {

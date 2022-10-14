@@ -42,7 +42,7 @@
 <div class="form-group" id="Retenciones">
     @Html.LabelFor(f => Model.Baseretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Baseretencion, new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        @Html.TextBoxFor(f => Model.SBaseretencion, new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
     </div>
 
     @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
@@ -52,7 +52,7 @@
 
     @Html.LabelFor(f => Model.Importeretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Importeretencion,(object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } )
+        @Html.TextBoxFor(f => Model.SImporteretencion,(object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } )
     </div>
 </div>
 
@@ -66,7 +66,7 @@
 <div class="form-group" id="Total">
     @Html.LabelFor(f => Model.Totalfactura, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Totalfactura, new { @class = "form-control", @autofocus = "", @readonly = "readonly" } )
+        @Html.TextBoxFor(f => Model.STotalfactura, new { @class = "form-control", @autofocus = "", @readonly = "readonly" } )
     </div>
 </div>
 

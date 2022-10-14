@@ -58,6 +58,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             // PRESUPUESTOS TOTALES
             DataSource.Queries.Add(new CustomSqlQuery("presupuestostotales", "SELECT * FROM [PresupuestosTotales]"));
 
+            // PRESUPUESTOS COMPONENTES LIN
+            DataSource.Queries.Add(new CustomSqlQuery("ComponentesLin", "SELECT * FROM [PresupuestosComponentesLin]"));
+
             // FORMAS PAGO
             DataSource.Queries.Add(new CustomSqlQuery("Formaspago", "SELECT * FROM [formaspago]"));
 
@@ -88,6 +91,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             DataSource.Relations.Add("presupuestos", "presupuestostotales", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("id", "fkpresupuestos")});
+
+            // PRESUPUESTOS LIN <-> PRESUPUESTOS COMPONENTES LIN
+            DataSource.Relations.Add("presupuestoslin", "ComponentesLin", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fkpresupuestos", "fkpresupuestos"),
+                    new RelationColumnInfo("id", "idlineaarticulo")});
 
             // PRESUPUESTOS <-> CLIENTES
             DataSource.Relations.Add("presupuestos", "clientes", new[] {

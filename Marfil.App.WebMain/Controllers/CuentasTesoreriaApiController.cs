@@ -55,6 +55,14 @@ namespace Marfil.App.WebMain.Controllers
             using (var service = new CuentasService(ContextService))
             {
                 var model = service.get(id) as CuentasModel;
+
+                var serviceTesoreria = new CuentastesoreriaService(ContextService);
+                var cuentas = serviceTesoreria.getCuentasTesoreria();
+                if (!cuentas.Any(f => f.Id == id))
+                {
+                    throw new ValidationException("La cuenta " + id + " no es válida");
+                }
+
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 if (!model.Bloqueado)
                 {            

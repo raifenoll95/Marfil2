@@ -190,7 +190,7 @@
     <value>Cuenta cliente/acreedor</value>
   </data>
   <data name="Cuentaclientecontraparte" xml:space="preserve">
-    <value>Cuenta Cliente</value>
+    <value>Cuenta Cliente Contraparte</value>
   </data>
   <data name="Cuentaventas" xml:space="preserve">
     <value>Cuenta ventas/servicios</value>
@@ -311,6 +311,9 @@
   </data>
   <data name="Nifcontraparte" xml:space="preserve">
     <value>Nif Contraparte de la operación</value>
+  </data>
+  <data name="Nombrecliente" xml:space="preserve">
+    <value>Nombre cliente</value>
   </data>
   <data name="Nombrecontraparte" xml:space="preserve">
     <value>Nombre o Razón Social Contraparte</value>

@@ -61,9 +61,12 @@
             j.Width = Unit.Pixel(150);
             j.ColumnType = MVCxGridViewColumnType.TextBox;
 
-            /*var p = j.PropertiesEdit as TextBoxProperties;
+            var p = j.PropertiesEdit as TextBoxProperties;
             p.ClientSideEvents.TextChanged = "OnBaseimponibleChanged";
-            p.ClientInstanceName = j.FieldName;*/
+            p.ClientInstanceName = j.FieldName;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
             //j.ReadOnly = true;
 
         });
@@ -90,35 +93,55 @@
         {
             j.FieldName = "Porcentajeiva";
             j.Width = Unit.Pixel(150);
-            //j.ReadOnly = true;
+            j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
         });
 
         settings.Columns.Add(j =>
         {
             j.FieldName = "Cuotaiva";
             j.Width = Unit.Pixel(150);
-            //j.ReadOnly = true;
+            j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
         });
 
         settings.Columns.Add(j =>
         {
             j.FieldName = "Porcentajerecargoequivalencia";
             j.Width = Unit.Pixel(150);
-            //j.ReadOnly = true;
+            j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
         });
 
         settings.Columns.Add(j =>
         {
             j.FieldName = "Importerecargoequivalencia";
             j.Width = Unit.Pixel(150);
-            //j.ReadOnly = true;
+            j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
         });
 
         settings.Columns.Add(j =>
         {
             j.FieldName = "Subtotal";
             j.Width = Unit.Pixel(150);
-            //j.ReadOnly = true;
+            j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
         });
 
         settings.Columns["Baseimponible"].Visible = true;
@@ -138,15 +161,16 @@
             {
                 e.NewValues["Fktiposiva"] = Session["tipoivatercero"].ToString();
                 e.NewValues["Porcentajeiva"] = Session["porcentajetipoivatercero"].ToString();
+                e.NewValues["Porcentajerecargoequivalencia"] = Session["porcentajerecargotercero"].ToString();
             }
             else
             {
                 e.NewValues["Fktiposiva"] = "";
                 e.NewValues["Porcentajeiva"] = "";
+                e.NewValues["Porcentajerecargoequivalencia"] = "";
             }
 
             e.NewValues["Cuotaiva"] = "";
-            e.NewValues["Porcentajerecargoequivalencia"] = "";
             e.NewValues["Importerecargoequivalencia"] = "";
             e.NewValues["Subtotal"] = "";
 
@@ -240,36 +264,30 @@
                 Url: '@Url.Action("TiposivaApi","api")',
                 Id: Fktiposiva.GetValue(),
                 CtrlPorcentajeiva: GridViewLineas.GetEditor("Porcentajeiva"),
+                CtrlPorcentajeequivalencia: GridViewLineas.GetEditor("Porcentajerecargoequivalencia"),
                 CtrlGridview: GridViewLineas
             };
             eventAggregator.Publish("Fktiposiva-changed", model);
-
-
         }
         //end search tiposiva
 
-        //calculo cuotaiva
-        function OnBaseimponibleChanged(s, e) {
+    //calculo cuotaiva
+    function OnBaseimponibleChanged(s, e) {
 
-            GridViewLineas.SetEnabled(false);
+        cBase = GridViewLineas.GetEditor("Baseimponible");
+        cCuotaiva = GridViewLineas.GetEditor("Cuotaiva");
+        cCuotaretencion = GridViewLineas.GetEditor("Importerecargoequivalencia");
+        cSubtotal = GridViewLineas.GetEditor("Subtotal");
 
-            console.log("Parámetros - " - e.Parameters);
+        calculoImporte(GridViewLineas);
 
-            var model =
-            {
-                Base: Baseimponible.GetValue(),
-                Porcentajeiva: GridViewLineas.GetRowValues(parseInt(e.Parameters), "Porcentajeiva").toString(),
-                CtrlCuotaiva: GridViewLineas.GetEditor("Cuotaiva"),
-                CtrlGridview: GridViewLineas
-            };
+        GridViewLineas.Baseimponible = cBase.GetValue();
+        GridViewLineas.Cuotaiva = cCuotaiva.GetValue();
+        GridViewLineas.Importerecargoequivalencia = cCuotaretencion.GetValue();
+        GridViewLineas.Subtotal = cSubtotal.GetValue();
 
-            console.log("Model - " + model);
-
-            eventAggregator.Publish("Baseimponible-changed", model);
-
-
-        }
-        //end search cuotaiva
+    }
+    //end search cuotaiva
 
         function FunOnFocusedRowChangedTercero(s, e) {
             $("#GridViewLineas").unbind("keydown");
