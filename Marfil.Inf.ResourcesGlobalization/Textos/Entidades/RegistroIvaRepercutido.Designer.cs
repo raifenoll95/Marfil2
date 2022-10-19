@@ -124,6 +124,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Base Imponible del 349.
+        /// </summary>
+        public static string Baseimponible349 {
+            get {
+                return ResourceManager.GetString("Baseimponible349", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Base imponible.
         /// </summary>
         public static string Baseimponiblesujetaexenta {
@@ -786,6 +795,33 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Rechazada {
             get {
                 return ResourceManager.GetString("Rechazada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Rectificativa del 349.
+        /// </summary>
+        public static string Rectificativa349 {
+            get {
+                return ResourceManager.GetString("Rectificativa349", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Año.
+        /// </summary>
+        public static string Rectificativaaño {
+            get {
+                return ResourceManager.GetString("Rectificativaaño", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Periodo.
+        /// </summary>
+        public static string Rectificativaperiodo {
+            get {
+                return ResourceManager.GetString("Rectificativaperiodo", resourceCulture);
             }
         }
         

@@ -294,8 +294,8 @@
         <AssociationConnector Association="MarfilModel.FK_Clientes" />
         <EntityTypeShape EntityType="MarfilModel.Lecturas" Width="1.5" PointX="4.375" PointY="4.75" />
         <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutido" Width="1.5" PointX="34.375" PointY="41.625" />
-        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoRectificadas" Width="1.5" PointX="36.625" PointY="45.875" />
-        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="36.625" PointY="48.75" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoRectificadas" Width="1.5" PointX="36.625" PointY="50.625" />
+        <EntityTypeShape EntityType="MarfilModel.RegistroIVARepercutidoTotales" Width="1.5" PointX="36.625" PointY="46.125" />
         <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" />
         <AssociationConnector Association="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" />
         </Diagram>

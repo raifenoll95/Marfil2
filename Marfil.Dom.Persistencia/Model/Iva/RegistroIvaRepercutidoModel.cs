@@ -351,6 +351,18 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetai")]
         public double Importetai { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativa349")]
+        public bool Rectificativa349 { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativaaño")]
+        public int Rectificativaaño { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativaperiodo")]
+        public string Rectificativaperiodo { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseimponible349")]
+        public double Baseimponible349 { get; set; }
         #endregion
 
         #region Totales
@@ -407,6 +419,12 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RFacturas), Name = "Porcentajeiva")]
         public double? Porcentajeiva { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuentaventas")]
+        public string Cuentaventas { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipofactura")]
+        public string Idtipofactura { get; set; }
 
         //[Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
         //public double? Brutototal { get; set; }

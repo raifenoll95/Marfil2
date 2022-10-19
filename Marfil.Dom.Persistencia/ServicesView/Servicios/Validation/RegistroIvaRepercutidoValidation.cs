@@ -21,8 +21,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
         {
 
             ValidarFechaoperacion(model);
+            ValidarTipoFacturaGrid(model);
 
             return base.ValidarGrabar(model);
+        }
+
+        private void ValidarTipoFacturaGrid(RegistroIVARepercutido model)
+        {
+            var tipofactura = model.tipofactura;
+
+            foreach (var item in model.RegistroIVARepercutidoTotales)
+            {
+                if (item.idtipofactura != tipofactura)
+                {
+                    throw new ValidationException("El tipo de factura de una de las líneas no corresponde con la indicada.");
+                }
+            }
         }
 
         public bool ValidarFechaoperacion(RegistroIVARepercutido model)

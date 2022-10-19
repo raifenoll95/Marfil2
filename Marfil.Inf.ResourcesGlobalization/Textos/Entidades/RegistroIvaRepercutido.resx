@@ -138,6 +138,9 @@
   <data name="Art25" xml:space="preserve">
     <value>Exenta por Art. 25</value>
   </data>
+  <data name="Baseimponible349" xml:space="preserve">
+    <value>Base Imponible del 349</value>
+  </data>
   <data name="Baseimponiblesujetaexenta" xml:space="preserve">
     <value>Base imponible</value>
   </data>
@@ -359,6 +362,15 @@
   </data>
   <data name="Rechazada" xml:space="preserve">
     <value>Rechazada</value>
+  </data>
+  <data name="Rectificativa349" xml:space="preserve">
+    <value>Rectificativa del 349</value>
+  </data>
+  <data name="Rectificativaaño" xml:space="preserve">
+    <value>Año</value>
+  </data>
+  <data name="Rectificativaperiodo" xml:space="preserve">
+    <value>Periodo</value>
   </data>
   <data name="Reenviaraeat" xml:space="preserve">
     <value>Reenviar AEAT</value>

@@ -63,6 +63,10 @@ namespace Marfil.App.WebMain.Controllers
             model.Fechafacturaoriginal = DateTime.Today;
             model.Fechaalta = DateTime.Now;
 
+            //Fkseriescontables por defecto
+            var serviceEjercicios = new EjerciciosService(ContextService);
+            model.Fkseriescontables = serviceEjercicios.GetSerieRepercutido();
+
             Session[session] = model.Totales;
             //Session[sumatotales] = model.Sumatotales;
             Session[rectificadas] = model.Rectificadas;
@@ -324,6 +328,8 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
                     var editItem = model.Single(f => f.Id == item.Id);
+                    editItem.Idtipofactura = item.Idtipofactura;
+                    editItem.Cuentaventas = item.Cuentaventas;
                     editItem.Fktiposiva = item.Fktiposiva;
                     editItem.Porcentajeiva = item.Porcentajeiva;
                     editItem.Baseimponible = item.Baseimponible;
@@ -442,7 +448,26 @@ namespace Marfil.App.WebMain.Controllers
             var service = new TiposFacturasIvaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var regimen = service.GetRegimenivaRepercutido(ContextService.Empresa, tipo);
 
+            Session["idtipofactura"] = tipo;
+
+            /*var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
+            model.RemoveRange(0, model.Count());
+            Session[session] = model;*/
+
             return regimen;
+        }
+
+        public bool GetOperacionUE(string regimen)
+        {           
+            if (string.IsNullOrEmpty(regimen))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var esOperacionUE = service.GetOperacionUE(ContextService.Empresa, regimen);
+
+            return esOperacionUE;
         }
 
         #endregion

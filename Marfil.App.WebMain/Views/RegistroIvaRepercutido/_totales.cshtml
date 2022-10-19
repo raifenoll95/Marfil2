@@ -54,6 +54,29 @@
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
 
         settings.Columns.Add("Id");
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Idtipofactura";
+            j.ReadOnly = true;
+
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Cuentaventas";
+            j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
+            j.Width = Unit.Pixel(150);
+            j.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            var p = j.PropertiesEdit as ButtonEditProperties;
+
+            p.Style.Paddings.PaddingRight = Unit.Pixel(10);
+            p.EncodeHtml = false;
+            p.ClientSideEvents.KeyDown = "OnKeyPressCuentaventas";
+            p.ClientInstanceName = j.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.ClientSideEvents.ButtonClick = "function(e,o) { SearchCuentaventas(); } ";
+            p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
+        });
 
         settings.Columns.Add(j =>
         {
@@ -144,6 +167,7 @@
             editor.DisplayFormatInEditMode = true;
         });
 
+        settings.Columns["Cuentaventas"].Visible = true;
         settings.Columns["Baseimponible"].Visible = true;
         settings.Columns["Fktiposiva"].Visible = true;
         settings.Columns["Porcentajeiva"].Visible = true;
@@ -152,10 +176,12 @@
         settings.Columns["Importerecargoequivalencia"].Visible = true;
         settings.Columns["Subtotal"].Visible = true;
         settings.Columns["Id"].Visible = false;
+        settings.Columns["Idtipofactura"].Visible = true;
 
         settings.InitNewRow += (s, e) =>
         {
-            //Si es un registro nuevo           
+            //Si es un registro nuevo
+            e.NewValues["Cuentaventas"] = "";
             e.NewValues["Baseimponible"] = "";
             if (Session["tipoivatercero"] != null)
             {
@@ -173,6 +199,7 @@
             e.NewValues["Cuotaiva"] = "";
             e.NewValues["Importerecargoequivalencia"] = "";
             e.NewValues["Subtotal"] = "";
+            e.NewValues["Idtipofactura"] = Session["idtipofactura"].ToString();
 
         };
 
@@ -184,7 +211,7 @@
         settings.CommandColumn.Width = Unit.Pixel(150);
         settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
         settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
-        settings.CommandColumn.VisibleIndex = 8;
+        settings.CommandColumn.VisibleIndex = 9;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
@@ -288,6 +315,36 @@
 
     }
     //end search cuotaiva
+
+    //Start search cuentas ventas
+    function OnKeyPressCuentaventas(s, e) {
+        var keycode = (e.htmlEvent.keyCode ? e.htmlEvent.keyCode : e.htmlEvent.which);
+        if (keycode == 66 && e.htmlEvent.ctrlKey) {
+            SearchCuentaventas();
+        }
+
+    }
+
+    function SearchCuentaventas() {
+        var idtipofactura = GridViewLineas.GetEditor("Idtipofactura").GetValue();
+        console.log("idtipofactura - " + idtipofactura);
+            var obj = {
+                campoIdentificador: "Id",
+                IdComponenteasociado: "Cuentaventas",
+                IdFormulariomodal: "BusquedaGlobal",
+                Url: '@Url.Action("CuentasApi", "Api")',
+                //ControlesAsociados: "[ { \"idfacturaiva\":\"Tipofactura\" } ]",
+                Titulo: "Búsqueda de cuentas",
+                Params: "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"ventas\" , \"idfacturaiva\":\"" + idtipofactura + "\"}"
+            };
+
+            eventAggregator.Publish("_lanzarbusqueda", obj);
+    }
+
+    eventAggregator.RegisterEvent("Cuentaventas-Buscarfocus", function (obj) {
+        Cuentaventas.SetValue(obj);
+    });
+    //end search cuentas ventas
 
         function FunOnFocusedRowChangedTercero(s, e) {
             $("#GridViewLineas").unbind("keydown");

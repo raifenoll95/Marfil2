@@ -399,7 +399,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var cliente = serviceClientes.get(fkcuenta) as ClientesModel;
                     idioma = cliente.Fkidiomas;
                 }
-
+                else if (fkcuenta.StartsWith("PROS"))
+                {
+                    var serviceProspectos = FService.Instance.GetService(typeof(ProspectosModel), _context, _db) as ProspectosService;
+                    var prospecto = serviceProspectos.get(fkcuenta) as ProspectosModel;
+                    idioma = prospecto.Fkidiomas;
+                }
                 else
                 {
                     if (fkcuenta.StartsWith("40"))

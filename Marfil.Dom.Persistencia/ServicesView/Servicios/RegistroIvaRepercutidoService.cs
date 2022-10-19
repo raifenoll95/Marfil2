@@ -27,7 +27,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
-            var propiedadesVisibles = new[] { "Origendoc", "Referencia", "Fechafactura", "Periodo", "Totalfactura", "Numfacturacliente", "Tipofactura", "Cuentacliente", "Nombrecliente", "Cuentaclientecontraparte" };
+            var propiedadesVisibles = new[] { "Origendoc", "Referencia", "Fechafactura", "Periodo", "Totalfactura", "Numfacturacliente", "Tipofactura", "Cuentacliente", "Nombrecliente"/*, "Cuentaventas"*/ };
             var propiedades = Helpers.Helper.getProperties<RegistroIvaRepercutidoModel>();
             model.ExcludedColumns =
                 propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
@@ -42,7 +42,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.OrdenColumnas.Add("Tipofactura", 6);
             model.OrdenColumnas.Add("Cuentacliente", 7);
             model.OrdenColumnas.Add("Nombrecliente", 8);
-            model.OrdenColumnas.Add("Cuentaclientecontraparte", 9);
+            //model.OrdenColumnas.Add("Cuentaventas", 9);
 
             return model;
         }
@@ -50,7 +50,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override string GetSelectPrincipal()
         {
             var result = new StringBuilder();
-            result.Append(" select r.origendoc, r.id, r.referencia, r.fechafactura, r.periodo, r.totalfactura, r.numfacturacliente, t.descripcion as [Tipofactura], r.cuentacliente, r.cuentaclientecontraparte, c.descripcion as [Nombrecliente] " +
+            result.Append(" select r.origendoc, r.id, r.referencia, r.fechafactura, r.periodo, r.totalfactura, r.numfacturacliente, t.descripcion as [Tipofactura], r.cuentacliente, r.cuentaventas, c.descripcion as [Nombrecliente] " +
                 " from RegistroIVARepercutido r, Cuentas c , TiposFacturas t ");
             result.AppendFormat(" where r.empresa = c.empresa and r.empresa = t.empresa and r.cuentacliente = c.id and r.tipofactura = t.id and r.empresa ='{0}' ", _context.Empresa);
 
@@ -136,18 +136,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public RegistroIvaRepercutidoModel Recalculartotales(RegistroIvaRepercutidoModel model)
         {
-            var suma = 0d;
+            var sumaBases = 0d;
+            var sumaSubtotal = 0d;
 
 
             foreach (var item in model.Totales)
             {
-                suma += item.Baseimponible.Value;
+                sumaBases += item.Baseimponible.Value;
+                sumaSubtotal += item.Subtotal.Value;
             }
 
-            model.Baseretencion = Math.Round(suma, 3);
+            model.Baseretencion = Math.Round(sumaBases, 3);
             model.Importeretencion = Math.Round((double)(model.Baseretencion * (model.Porcentajeretencion / 100)), 3);
 
-            model.Totalfactura = Math.Round((double)(model.Importeretencion + model.Operacionesexluidasbi));
+            model.Totalfactura = Math.Round((double)(sumaSubtotal - model.Importeretencion + model.Operacionesexluidasbi));
 
             return model;
         }

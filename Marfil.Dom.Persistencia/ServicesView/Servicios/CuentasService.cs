@@ -1154,14 +1154,33 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.Usuarios.Where(f => f.id == id).FirstOrDefault().fkdelegacion;
         }
 
-        public string GetCuentaCargo1(int inttipofacturaiva)
+        public string GetCuentaCargo1(int inttipofacturaiva, string idtipofactura)
         {
-            return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentacargo1;
+            if (string.IsNullOrEmpty(idtipofactura))
+            {
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentacargo1;
+            }
+            else
+            {
+                var idparse = int.Parse(idtipofactura);
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.id == idparse).FirstOrDefault().cuentacargo1;
+            }
+
+            
         }
 
-        public string GetCuentaAbono1(int inttipofacturaiva)
+        public string GetCuentaAbono1(int inttipofacturaiva, string idtipofactura)
         {
-            return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentaabono1;
+            if (string.IsNullOrEmpty(idtipofactura))
+            {
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentaabono1;
+            }
+            else
+            {
+                var idparse = int.Parse(idtipofactura);
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.id == idparse).FirstOrDefault().cuentaabono1;
+            }
+                
         }
     }
 }

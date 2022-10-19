@@ -120,18 +120,19 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             var cuenta = HttpUtility.ParseQueryString(Request.RequestUri.Query)["cuenta"];
+            var idtipofactura = HttpUtility.ParseQueryString(Request.RequestUri.Query)["idfacturaiva"];
 
             if (inttipofacturaiva == 0)//Soportado
             {
                 if (cuenta == "cliente")
                 {
-                    var cargo = service.GetCuentaCargo1(inttipofacturaiva);
+                    var cargo = service.GetCuentaCargo1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(cargo));
 
                 }
                 else if (cuenta == "ventas")
                 {
-                    var abono = service.GetCuentaAbono1(inttipofacturaiva);
+                    var abono = service.GetCuentaAbono1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(abono));
                 }
             }
@@ -139,12 +140,12 @@ namespace Marfil.App.WebMain.Controllers
             {
                 if (cuenta == "cliente")
                 {
-                    var cargo = service.GetCuentaCargo1(inttipofacturaiva);
+                    var cargo = service.GetCuentaCargo1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(cargo));
                 }
                 else if (cuenta == "ventas")
                 {
-                    var abono = service.GetCuentaAbono1(inttipofacturaiva);
+                    var abono = service.GetCuentaAbono1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(abono));
                 }
             }

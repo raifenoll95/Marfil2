@@ -25,6 +25,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<int> decimalesmonedas { get; set; }
         public Nullable<double> porcentajerecargoequivalencia { get; set; }
         public Nullable<double> importerecargoequivalencia { get; set; }
+        public string cuentaventas { get; set; }
+        public string idtipofactura { get; set; }
     
         public virtual RegistroIVARepercutido RegistroIVARepercutido { get; set; }
     }

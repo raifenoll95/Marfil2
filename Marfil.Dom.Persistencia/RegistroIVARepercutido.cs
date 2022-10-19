@@ -91,6 +91,10 @@ namespace Marfil.Dom.Persistencia
         public Nullable<double> importearticulos { get; set; }
         public Nullable<double> importetai { get; set; }
         public Nullable<bool> reenviaraeat { get; set; }
+        public Nullable<bool> rectificativa349 { get; set; }
+        public Nullable<int> rectificativaaño { get; set; }
+        public string rectificativaperiodo { get; set; }
+        public Nullable<double> baseimponible349 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }

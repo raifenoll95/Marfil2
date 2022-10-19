@@ -31,6 +31,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.Totales = obj.RegistroIVARepercutidoTotales.ToList().Select(f => new RegistroIvaRepercutidoTotalesModel()
             {
                 Id = f.id,
+                Idtipofactura = f.idtipofactura,
+                Cuentaventas = f.cuentaventas,
                 Fktiposiva = f.fktiposiva,
                 Porcentajerecargoequivalencia = f.porcentajerecargoequivalencia,
                 Importerecargoequivalencia = f.importerecargoequivalencia,
@@ -95,6 +97,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.empresa = Empresa;
                 newItem.fkregistros = result.id;
                 newItem.id = item.Id;
+                newItem.idtipofactura = item.Idtipofactura;
+                newItem.cuentaventas = item.Cuentaventas;
                 newItem.fktiposiva = item.Fktiposiva;
                 newItem.porcentajeiva = item.Porcentajeiva;
                 newItem.cuotaiva = item.Cuotaiva;
@@ -164,6 +168,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.empresa = Empresa;
                 newItem.fkregistros = result.id;
                 newItem.id = item.Id;
+                newItem.idtipofactura = item.Idtipofactura;
+                newItem.cuentaventas = item.Cuentaventas;
                 newItem.fktiposiva = item.Fktiposiva;
                 newItem.porcentajeiva = item.Porcentajeiva;
                 newItem.cuotaiva = item.Cuotaiva;

@@ -20,7 +20,6 @@
     var cvtipofactura = FCampoverificacion.Instance.GetModel<TiposFacturasIvaModel>(WebHelper.ContextService);
     var cvcuenta = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
 
-
     var listperiodo = WebHelper.GetApplicationHelper().GetListPeriodoRegistroIva().Select(f => new SelectListItem()
     {
         Text = f.Text,
@@ -29,7 +28,8 @@
     }).ToList();
 
     if (isNuevo)
-    {
+    {        
+
         if (listperiodo.Count > 4)
         {
             var mes = Model.Fechaoperacion.Month;
@@ -63,9 +63,8 @@
 
     if (iseditable)
     {
-        WebHelper.GetApplicationHelper().GetConfiguracion();
+        //WebHelper.GetApplicationHelper().GetConfiguracion();
         ((Marfil.App.WebMain.Controllers.RegistroIvaRepercutidoController)this.ViewContext.Controller).GetIvaTercero(Model.Cuentacliente);
-
     }
 
 }
@@ -99,6 +98,7 @@
             cvtipofactura.Valor = Model.Tipofactura?.ToString();
             cvtipofactura.Params = "{\"tipotercero\":\"1\"}";
             cvtipofactura.SoloLectura = isreadonly;
+            cvtipofactura.Autofocus = true;
             cvtipofactura.Obligatorio = true;
 
         }
@@ -116,10 +116,10 @@
             @{
                 cvseriecontableIVP.Name = "Fkseriescontables";
                 cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
-                cvseriecontableIVP.Valor = Model.Referencia;
+                cvseriecontableIVP.Valor = Model.Fkseriescontables;
                 cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
                 cvseriecontableIVP.SoloLectura = isreadonly;
-                cvseriecontableIVP.Autofocus = true;
+                //cvseriecontableIVP.Autofocus = true;
                 cvseriecontableIVP.Obligatorio = false;
                 cvseriecontableIVP.Configuracion.OcultarTexto = false;
             }
@@ -192,9 +192,10 @@ else
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
             cvcuenta.Valor = Model.Cuentacliente;
             cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"cliente\"}";
+            cvcuenta.ControlesAsociados = "[ { \"idfacturaiva\":\"Tipofactura\" } ]";
             cvcuenta.Titulo = Clientes.TituloEntidadSingular;
             cvcuenta.SoloLectura = isreadonly;
-            cvcuenta.Obligatorio = false;
+            cvcuenta.Obligatorio = true;
         }
         @Html.Partial("CampoverificacionUI", cvcuenta)
     </div>
@@ -204,7 +205,7 @@ else
     </div>
 </div>
 
-@*Cuenta ventas/servicios*@
+@*Cuenta ventas/servicios
 <div class="form-group">
     @Html.LabelFor(f => Model.Cuentaventas, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
@@ -213,9 +214,10 @@ else
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
             cvcuenta.Valor = Model.Cuentaventas;
             cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"ventas\"}";
+            cvcuenta.ControlesAsociados = "[ { \"idfacturaiva\":\"Tipofactura\" } ]";
             cvcuenta.Titulo = Clientes.TituloEntidadSingular;
             cvcuenta.SoloLectura = isreadonly;
-            cvcuenta.Obligatorio = false;
+            cvcuenta.Obligatorio = true;
         }
         @Html.Partial("CampoverificacionUI", cvcuenta)
     </div>
@@ -223,7 +225,7 @@ else
     <div class="col-md-2 col-md-offset-2">
         @Html.ValidationMessageFor(f => Model.Cuentaventas, "", new { @class = "text-danger" })
     </div>
-</div>
+</div>*@
 
 @*Régimen IVA*@
 <div class="form-group">
@@ -350,6 +352,6 @@ else
                 $("#Periodo").val(data);
             }
         })
-   });
+    });
 
 </script>

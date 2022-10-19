@@ -107,6 +107,36 @@
     </div>
 </div>
 
+<div class="form-group" id="Rectificar349">
+    @Html.LabelFor(f => Model.Rectificativa349, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Rectificativa349, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Rectificativa349)
+        }
+    </div>
+
+    @Html.LabelFor(f => Model.Rectificativaaño, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Rectificativaaño, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+
+    @Html.LabelFor(f => Model.Rectificativaperiodo, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Rectificativaperiodo, listperiodo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Rectificativaperiodo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Baseimponible349, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Baseimponible349, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
 @*Check bien inversión*@
 <div class="form-group">
     @Html.LabelFor(f => Model.Bieninversion, new { @class = "control-label col-md-2" })
@@ -235,14 +265,43 @@
     window.onload = init();
 
     function init() {
+
+        var regimen = '@Model.Fkregimeniva';
+        var esOperacionUE = false;
+        
+        if (regimen != '' && regimen != null) {
+            $.ajax({
+                url: '@Url.Action("GetOperacionUE", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                async: false,
+                data: { regimen },
+                success: function (data) {
+                    if (data == "True") {
+                        esOperacionUE = true;
+                    } else {
+                        esOperacionUE = false;
+                    }
+                }
+            });
+        }
+
         if ($("#Facturarectificativa").is(':checked')) {
             $("#Facturarectificar").show();
             $("#Variosrectificar").show();
+
+            if (esOperacionUE) {
+                $("#Rectificar349").show();
+            } else {
+                $("#Rectificar349").hide();
+            }
+
         } else {
             $("#Facturarectificar").hide();
             $("#Variosrectificar").hide();
+            $("#Rectificar349").hide();
         }
-        //console.log("init - " + $("#Fktiporetencion").val());
+
         if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
             $("#retenciones").show();
             $("#inmuebles").show();
@@ -263,12 +322,40 @@
     }
 
     $("#Facturarectificativa").on('change', function () {
+
+        var regimen = $("#Fkregimeniva").val();
+        var esOperacionUE = false;
+        if (regimen != '' && regimen != null) {
+            $.ajax({
+                url: '@Url.Action("GetOperacionUE", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                async: false,
+                data: { regimen },
+                success: function (data) {
+                    if (data == "True") {
+                        esOperacionUE = true;
+                    } else {
+                        esOperacionUE = false;
+                    }
+                }
+            });
+        }
+
         if ($("#Facturarectificativa").is(':checked')) {
             $("#Facturarectificar").show();
             $("#Variosrectificar").show();
+
+            if (esOperacionUE) {
+                $("#Rectificar349").show();
+            } else {
+                $("#Rectificar349").hide();
+            }
+
         } else {
             $("#Facturarectificar").hide();
             $("#Variosrectificar").hide();
+            $("#Rectificar349").hide();
         }
     });
 

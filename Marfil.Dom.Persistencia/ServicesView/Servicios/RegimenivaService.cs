@@ -38,5 +38,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return model;
         }
+
+        public bool GetOperacionUE(string empresa, string regimen)
+        {
+            return _db.RegimenIva.Where(f => f.empresa == empresa && f.id == regimen).FirstOrDefault().operacionue.Value;
+        }
     }
 }
