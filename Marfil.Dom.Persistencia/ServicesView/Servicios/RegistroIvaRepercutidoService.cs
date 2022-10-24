@@ -71,6 +71,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 model.Referencia = ServiceHelper.GetReferenceContable<RegistroIVARepercutido>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fechaoperacion, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
+                var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+                var regimen = service.GetRegimenivaRepercutido(_context.Empresa, model.Tipofactura);
+                model.Fkregimeniva = regimen;
+
                 model = Recalculartotales(model);
 
                 base.create(model);
@@ -87,6 +91,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var original = get(Funciones.Qnull(obj.get("id"))) as RegistroIvaRepercutidoModel;
                 var editado = obj as RegistroIvaRepercutidoModel;
+
+                var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+                var regimen = service.GetRegimenivaRepercutido(_context.Empresa, editado.Tipofactura);
+                editado.Fkregimeniva = regimen;
 
                 editado = Recalculartotales(editado);
 

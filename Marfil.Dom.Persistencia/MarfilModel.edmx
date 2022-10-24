@@ -3730,7 +3730,7 @@
           <Property Name="importetai" Type="float" />
           <Property Name="reenviaraeat" Type="bit" />
           <Property Name="rectificativa349" Type="bit" />
-          <Property Name="rectificativaaño" Type="int" />
+          <Property Name="rectificativaano" Type="int" />
           <Property Name="rectificativaperiodo" Type="nvarchar" MaxLength="15" />
           <Property Name="baseimponible349" Type="float" />
         </EntityType>
@@ -14613,7 +14613,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importetai" Type="Double" />
           <Property Name="reenviaraeat" Type="Boolean" />
           <Property Name="rectificativa349" Type="Boolean" />
-          <Property Name="rectificativaaño" Type="Int32" />
+          <Property Name="rectificativaano" Type="Int32" />
           <Property Name="rectificativaperiodo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="baseimponible349" Type="Double" />
           <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
@@ -19873,7 +19873,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
                 <ScalarProperty Name="baseimponible349" ColumnName="baseimponible349" />
                 <ScalarProperty Name="rectificativaperiodo" ColumnName="rectificativaperiodo" />
-                <ScalarProperty Name="rectificativaaño" ColumnName="rectificativaaño" />
+                <ScalarProperty Name="rectificativaano" ColumnName="rectificativaano" />
                 <ScalarProperty Name="rectificativa349" ColumnName="rectificativa349" />
                 <ScalarProperty Name="reenviaraeat" ColumnName="reenviaraeat" />
                 <ScalarProperty Name="importetai" ColumnName="importetai" />

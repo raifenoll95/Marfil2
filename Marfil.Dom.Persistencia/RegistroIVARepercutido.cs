@@ -92,7 +92,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<double> importetai { get; set; }
         public Nullable<bool> reenviaraeat { get; set; }
         public Nullable<bool> rectificativa349 { get; set; }
-        public Nullable<int> rectificativaaño { get; set; }
+        public Nullable<int> rectificativaano { get; set; }
         public string rectificativaperiodo { get; set; }
         public Nullable<double> baseimponible349 { get; set; }
     

@@ -68,7 +68,7 @@
 </div>
 <div class="form-group" id="Facturarectificar">
     @Html.LabelFor(f => Model.Numfacturarectificar, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
+    <div class="col-md-10" id="inputnumfactura">
         @{
             cvfactura.Name = "Numfacturarectificar";
             cvfactura.Url = Url.Action("RegistroIvaFacturasApi", "Api");
@@ -120,9 +120,9 @@
         }
     </div>
 
-    @Html.LabelFor(f => Model.Rectificativaaño, new { @class = "control-label col-md-1" })
+    @Html.LabelFor(f => Model.Rectificativaano, new { @class = "control-label col-md-1" })
     <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Rectificativaaño, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => Model.Rectificativaano, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
 
     @Html.LabelFor(f => Model.Rectificativaperiodo, new { @class = "control-label col-md-2" })
@@ -268,7 +268,7 @@
 
         var regimen = '@Model.Fkregimeniva';
         var esOperacionUE = false;
-        
+
         if (regimen != '' && regimen != null) {
             $.ajax({
                 url: '@Url.Action("GetOperacionUE", "RegistroIvaRepercutido")',
@@ -405,4 +405,180 @@
         }
     });
 
+    $("#Numfacturarectificar").on('change', function () {
+        if ($("#Numfacturarectificar").val() != '' && $("#Numfacturarectificar").val() != null) {
+
+            var idfactura = $("#Numfacturarectificar").val();
+            var periodoCount = '@listperiodo.Count()';
+
+            $.ajax({
+                url: '@Url.Action("GetDatosFacturaRectificativa", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                data: { idfactura },
+                success: function (data) {
+                    var factura = $.parseJSON(data);
+                    var date = new Date(factura.Fechadocumento);
+                    var formatDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+                    $('#Fechafacturaoriginal').val(formatDate);
+                    $('#Criterioivafactoriginal').val(factura.Criterioiva);
+                    //$('#Rectificativa349').prop('checked', true);
+                    $('#Rectificativaano').val(date.getFullYear());
+                    $('#Baseimponible349').val(factura.Importebaseimponible);
+
+                    if (periodoCount > 4) {
+                        var mes = (date.getMonth() + 1);
+                        console.log("Mes - " + mes);
+                        switch (mes) {
+                            case 1:
+                                $('#Rectificativaperiodo').val("Enero");
+                                break;
+                            case 2:
+                                $('#Rectificativaperiodo').val("Febrero");
+                                break;
+                            case 3:
+                                $('#Rectificativaperiodo').val("Marzo");
+                                break;
+                            case 4:
+                                $('#Rectificativaperiodo').val("Abril");
+                                break;
+                            case 5:
+                                $('#Rectificativaperiodo').val("Mayo");
+                                break;
+                            case 6:
+                                $('#Rectificativaperiodo').val("Junio");
+                                break;
+                            case 7:
+                                $('#Rectificativaperiodo').val("Julio");
+                                break;
+                            case 8:
+                                $('#Rectificativaperiodo').val("Agosto");
+                                break;
+                            case 9:
+                                $('#Rectificativaperiodo').val("Septiembre");
+                                break;
+                            case 10:
+                                $('#Rectificativaperiodo').val("Octubre");
+                                break;
+                            case 11:
+                                $('#Rectificativaperiodo').val("Noviembre");
+                                break;
+                            case 12:
+                                $('#Rectificativaperiodo').val("Diciembre");
+                                break;
+                        }
+
+                    }
+                    else {
+                        var mes = (date.getMonth() + 1);
+
+                        if (mes <= 3) {
+                            $('#Rectificativaperiodo').val("1T");
+                        }
+                        else if (mes > 3 && mes <= 6) {
+                            $('#Rectificativaperiodo').val("2T");
+                        }
+                        else if (mes > 6 && mes <= 9) {
+                            $('#Rectificativaperiodo').val("3T");
+                        }
+                        else if (mes > 9 && mes <= 12) {
+                            $('#Rectificativaperiodo').val("4T");
+                        }
+
+                    }
+                }
+            });
+
+        }
+    });
+
+
+    $("#inputnumfactura").on('DOMSubtreeModified', function () {
+        if ($("#Numfacturarectificar").val() != '' && $("#Numfacturarectificar").val() != null) {
+
+            var idfactura = $("#Numfacturarectificar").val();
+            var periodoCount = '@listperiodo.Count()';
+
+            $.ajax({
+                url: '@Url.Action("GetDatosFacturaRectificativa", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                data: { idfactura },
+                success: function (data) {
+                    var factura = $.parseJSON(data);
+                    var date = new Date(factura.Fechadocumento);
+                    var formatDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+                    $('#Fechafacturaoriginal').val(formatDate);
+                    $('#Criterioivafactoriginal').val(factura.Criterioiva);
+                    //$('#Rectificativa349').prop('checked', true);
+                    $('#Rectificativaano').val(date.getFullYear());
+                    $('#Baseimponible349').val(factura.Importebaseimponible);
+
+                    if (periodoCount > 4) {
+                        var mes = (date.getMonth() + 1);
+                        console.log("Mes - " + mes);
+                        switch (mes) {
+                            case 1:
+                                $('#Rectificativaperiodo').val("Enero");
+                                break;
+                            case 2:
+                                $('#Rectificativaperiodo').val("Febrero");
+                                break;
+                            case 3:
+                                $('#Rectificativaperiodo').val("Marzo");
+                                break;
+                            case 4:
+                                $('#Rectificativaperiodo').val("Abril");
+                                break;
+                            case 5:
+                                $('#Rectificativaperiodo').val("Mayo");
+                                break;
+                            case 6:
+                                $('#Rectificativaperiodo').val("Junio");
+                                break;
+                            case 7:
+                                $('#Rectificativaperiodo').val("Julio");
+                                break;
+                            case 8:
+                                $('#Rectificativaperiodo').val("Agosto");
+                                break;
+                            case 9:
+                                $('#Rectificativaperiodo').val("Septiembre");
+                                break;
+                            case 10:
+                                $('#Rectificativaperiodo').val("Octubre");
+                                break;
+                            case 11:
+                                $('#Rectificativaperiodo').val("Noviembre");
+                                break;
+                            case 12:
+                                $('#Rectificativaperiodo').val("Diciembre");
+                                break;
+                        }
+
+                    }
+                    else {
+                        var mes = (date.getMonth() + 1);
+
+                        if (mes <= 3) {
+                            $('#Rectificativaperiodo').val("1T");
+                        }
+                        else if (mes > 3 && mes <= 6) {
+                            $('#Rectificativaperiodo').val("2T");
+                        }
+                        else if (mes > 6 && mes <= 9) {
+                            $('#Rectificativaperiodo').val("3T");
+                        }
+                        else if (mes > 9 && mes <= 12) {
+                            $('#Rectificativaperiodo').val("4T");
+                        }
+
+                    }
+                }
+            });
+
+        }
+    });
 </script>

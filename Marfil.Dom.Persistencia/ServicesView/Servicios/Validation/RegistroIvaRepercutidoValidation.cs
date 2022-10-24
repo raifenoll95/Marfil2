@@ -21,6 +21,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
         {
 
             ValidarFechaoperacion(model);
+            ValidarCuentacliente(model);
             ValidarTipoFacturaGrid(model);
 
             return base.ValidarGrabar(model);
@@ -37,6 +38,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                     throw new ValidationException("El tipo de factura de una de las líneas no corresponde con la indicada.");
                 }
             }
+        }
+
+        private void ValidarCuentacliente(RegistroIVARepercutido model)
+        {
+            var tipofactura = model.tipofactura;
+            var cuentaCliente = model.cuentacliente;
+            var serviceCuentas = new CuentasService(Context, MarfilEntities.ConnectToSqlServer(Context.BaseDatos));
+
+            var list = serviceCuentas.GetCuentasContablesNivel(0);
+            var cargo = serviceCuentas.GetCuentaCargo1(1, tipofactura);
+            list = list.Where(f => f.Id.StartsWith(cargo));
+
+            if (!list.Any(f => f.Id == cuentaCliente))
+            {
+                throw new ValidationException("La cuenta cliente " + cuentaCliente + " no es válida para el tipo de factura indicado");
+            }
+
         }
 
         public bool ValidarFechaoperacion(RegistroIVARepercutido model)

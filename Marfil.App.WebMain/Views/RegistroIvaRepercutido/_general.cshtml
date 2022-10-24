@@ -90,7 +90,7 @@
 @*Descripcion*@
 <div class="form-group">
     @Html.LabelFor(f => Model.Tipofactura, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
+    <div class="col-md-10" id="Tipofacturacampo">
         @{
 
             cvtipofactura.Name = "Tipofactura";
@@ -186,7 +186,7 @@ else
 @*Cuenta cliente/acreedor*@
 <div class="form-group">
     @Html.LabelFor(f => Model.Cuentacliente, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
+    <div class="col-md-10" id="inputcuentacliente">
         @{
             cvcuenta.Name = "Cuentacliente";
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
@@ -278,7 +278,7 @@ else
         });
     });
 
-    $('#Cuentacliente').on('DOMSubtreeModified', function () {
+    $('#inputcuentacliente').on('DOMSubtreeModified', function () {
         //Insertamos el porcentaje de rentención
         var cuenta = $("#Cuentacliente").val();
         $.ajax({
@@ -292,7 +292,7 @@ else
         });
     });
 
-    $("#Tipofactura").on('change', function () {
+    $('#Tipofactura').on('change', function () {
 
         var tipo = $("#Tipofactura").val();
 
@@ -308,7 +308,7 @@ else
         });
     });
 
-    $("#Tipofactura").on('DOMSubtreeModified', function () {
+    $('#Tipofacturacampo').on('DOMSubtreeModified', function () {
 
         var tipo = $("#Tipofactura").val();
 
@@ -322,9 +322,9 @@ else
                 //$("#Fkregimeniva").val(data);
             }
         });
-    });
+     });
 
-   $("#Fechafactura").on('change', function () {
+    $("#Fechafactura").on('change', function () {
        var Fechafactura = this.value;
        var Fechaoperacion = $("#Fechaoperacion").val();
 

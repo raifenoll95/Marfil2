@@ -356,7 +356,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public bool Rectificativa349 { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativaaño")]
-        public int Rectificativaaño { get; set; }
+        public int Rectificativaano { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativaperiodo")]
         public string Rectificativaperiodo { get; set; }

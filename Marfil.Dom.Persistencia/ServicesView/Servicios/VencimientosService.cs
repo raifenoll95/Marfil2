@@ -1137,7 +1137,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             documento.Saldo = documento.Debe - documento.Haber;
-            documento.Saldo = Math.Round((decimal)documento.Saldo,2);
 
             if (documento.Saldo != 0)
             {

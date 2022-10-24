@@ -3,11 +3,13 @@ using Marfil.App.WebMain.Misc;
 using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Helpers;
+using Marfil.Dom.Persistencia.Model.Documentos.Facturas;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Iva;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos.Helper;
+using Newtonsoft.Json;
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Marfil.App.WebMain.Controllers
@@ -450,9 +453,19 @@ namespace Marfil.App.WebMain.Controllers
 
             Session["idtipofactura"] = tipo;
 
-            /*var model = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
-            model.RemoveRange(0, model.Count());
-            Session[session] = model;*/
+            var serviceCuentas = new CuentasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var list = serviceCuentas.GetCuentasContablesNivel(0);
+            var abono = serviceCuentas.GetCuentaAbono1(1, tipo);
+            list = list.Where(f => f.Id.StartsWith(abono));
+
+            if (list.Count() == 1)
+            {
+                Session["cuentaventas"] = list.FirstOrDefault().Id;
+            }
+            else
+            {
+                Session["cuentaventas"] = null;
+            }
 
             return regimen;
         }
@@ -470,6 +483,14 @@ namespace Marfil.App.WebMain.Controllers
             return esOperacionUE;
         }
 
+        public string GetDatosFacturaRectificativa(string idfactura)
+        {
+            var service = new FacturasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var facturamodel = service.get(idfactura) as FacturasModel;
+
+            return JsonConvert.SerializeObject(facturamodel);
+
+        }
         #endregion
     }
 }

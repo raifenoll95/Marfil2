@@ -181,7 +181,15 @@
         settings.InitNewRow += (s, e) =>
         {
             //Si es un registro nuevo
-            e.NewValues["Cuentaventas"] = "";
+            if (Session["Cuentaventas"] != null)
+            {
+                e.NewValues["Cuentaventas"] = Session["cuentaventas"].ToString();
+            }
+            else
+            {
+                e.NewValues["Cuentaventas"] = "";
+            }
+
             e.NewValues["Baseimponible"] = "";
             if (Session["tipoivatercero"] != null)
             {
@@ -199,7 +207,15 @@
             e.NewValues["Cuotaiva"] = "";
             e.NewValues["Importerecargoequivalencia"] = "";
             e.NewValues["Subtotal"] = "";
-            e.NewValues["Idtipofactura"] = Session["idtipofactura"].ToString();
+
+            if (Session["idtipofactura"] != null)
+            {
+                e.NewValues["Idtipofactura"] = Session["idtipofactura"].ToString();
+            }
+            else
+            {
+                e.NewValues["Idtipofactura"] = "";
+            }
 
         };
 
@@ -279,7 +295,7 @@
 
             OnFktiposivaChanged(null, null);
 
-
+            Fktiposiva.Focus();
         });
 
 

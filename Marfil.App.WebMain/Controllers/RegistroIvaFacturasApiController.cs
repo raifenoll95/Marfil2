@@ -49,9 +49,10 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Id", visible = true/*, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }*/},
                         new ColumnDefinition() { field = "Referencia", displayName = "Referencia", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
-                        new ColumnDefinition() { field = "Fecha", displayName = "Fecha Documento", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
+                        new ColumnDefinition() { field = "Fecha", displayName = "Fecha factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
+                        new ColumnDefinition() { field = "Fkclientes", displayName = "Cuenta cliente", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
                         //new ColumnDefinition() { field = "Fktipofactura", displayName = "Tipo Factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
-                        new ColumnDefinition() { field = "Importebaseimponible", displayName = "Base imponible", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
+                        new ColumnDefinition() { field = "Importetotaldoc", displayName = "Total factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
 
                     }
                 };
