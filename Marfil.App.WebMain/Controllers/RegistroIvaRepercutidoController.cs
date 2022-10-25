@@ -259,7 +259,12 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
                         item.Id = max;
-                        item.Decimalesmonedas = 3;
+                        item.Decimalesmonedas = 2;
+
+                        if (string.IsNullOrEmpty(item.Cuentaventas))
+                        {
+                            throw new ValidationException("Debe existir una cuenta de venta");
+                        }
 
                         model.Add(item);
 
@@ -341,6 +346,12 @@ namespace Marfil.App.WebMain.Controllers
                     editItem.Importerecargoequivalencia = item.Importerecargoequivalencia;
                     editItem.Subtotal = item.Subtotal;
                     editItem.Decimalesmonedas = 3;
+
+                    if (string.IsNullOrEmpty(editItem.Cuentaventas))
+                    {
+                        throw new ValidationException("Debe existir una cuenta de venta");
+                    }
+
                     Session[session] = model;
 
                     /*Total de las bases imponibles

@@ -82,14 +82,15 @@
         {
             j.FieldName = "Baseimponible";
             j.Width = Unit.Pixel(150);
-            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
 
-            var p = j.PropertiesEdit as TextBoxProperties;
-            p.ClientSideEvents.TextChanged = "OnBaseimponibleChanged";
+            var p = j.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnBaseimponibleChanged";
             p.ClientInstanceName = j.FieldName;
             var editor = (TextEditProperties)j.PropertiesEdit;
             editor.DisplayFormatString = "N2";
             editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
             //j.ReadOnly = true;
 
         });
@@ -117,10 +118,12 @@
             j.FieldName = "Porcentajeiva";
             j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
-            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
             var editor = (TextEditProperties)j.PropertiesEdit;
             editor.DisplayFormatString = "N2";
             editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns.Add(j =>
@@ -128,21 +131,27 @@
             j.FieldName = "Cuotaiva";
             j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
-            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
             var editor = (TextEditProperties)j.PropertiesEdit;
             editor.DisplayFormatString = "N2";
             editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns.Add(j =>
         {
             j.FieldName = "Porcentajerecargoequivalencia";
             j.Width = Unit.Pixel(150);
-            j.ReadOnly = true;
-            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            //j.ReadOnly = true;
+
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
+            p.ClientSideEvents.ValueChanged = "OnBaseimponibleChanged";
             var editor = (TextEditProperties)j.PropertiesEdit;
             editor.DisplayFormatString = "N2";
             editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns.Add(j =>
@@ -150,10 +159,12 @@
             j.FieldName = "Importerecargoequivalencia";
             j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
-            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
             var editor = (TextEditProperties)j.PropertiesEdit;
             editor.DisplayFormatString = "N2";
             editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns.Add(j =>
@@ -161,10 +172,12 @@
             j.FieldName = "Subtotal";
             j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
-            j.ColumnType = MVCxGridViewColumnType.TextBox;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
             var editor = (TextEditProperties)j.PropertiesEdit;
             editor.DisplayFormatString = "N2";
             editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns["Cuentaventas"].Visible = true;
@@ -295,7 +308,7 @@
 
             OnFktiposivaChanged(null, null);
 
-            Fktiposiva.Focus();
+
         });
 
 
@@ -359,6 +372,7 @@
 
     eventAggregator.RegisterEvent("Cuentaventas-Buscarfocus", function (obj) {
         Cuentaventas.SetValue(obj);
+        GridViewLineas.FocusEditor("Cuentaventas");
     });
     //end search cuentas ventas
 

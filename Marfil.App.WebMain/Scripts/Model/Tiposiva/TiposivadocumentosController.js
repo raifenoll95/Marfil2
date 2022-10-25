@@ -1,6 +1,5 @@
 ﻿eventAggregator.RegisterEvent("Fktiposiva-changed", function(msg) {
     $.get(msg.Url + "/" + msg.Id).success(function (tipoiva) {
-
         var porcentajeiva = tipoiva.PorcentajeIva;
         var porcentajerecargoequivalencia = tipoiva.PorcentajeRecargoEquivalencia;
         msg.CtrlPorcentajeiva.SetValue(porcentajeiva);
@@ -26,10 +25,10 @@ var calculoImporte = function (lineas) {
     var retencion = cBase.GetValue() * (cPorcentajeretencion.GetValue() / 100.0);
     var subtotal = base + cuota + retencion;
 
-    base = Globalize.format(Funciones.Redondear(base, 3));
-    cuota = Globalize.format(Funciones.Redondear(cuota, 3));
-    retencion = Globalize.format(Funciones.Redondear(retencion, 3));
-    subtotal = Globalize.format(Funciones.Redondear(subtotal, 3));
+    base = Funciones.Redondear(base, 2);
+    cuota = Globalize.format(Funciones.Redondear(cuota, 2));
+    retencion = Globalize.format(Funciones.Redondear(retencion, 2));
+    subtotal = Globalize.format(Funciones.Redondear(subtotal, 2));
 
     cBase.SetValue(base);
     cCuotaiva.SetValue(cuota);

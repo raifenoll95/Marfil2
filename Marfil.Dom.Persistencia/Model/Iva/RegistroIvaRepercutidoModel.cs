@@ -200,6 +200,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajeretencion")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public double Porcentajeretencion { get; set; }
 
         public string SPorcentajeretencion
@@ -227,6 +228,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public string Fkcuentastesoreria { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Operacionesexluidasbi")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public double Operacionesexluidasbi { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Totalfactura")]

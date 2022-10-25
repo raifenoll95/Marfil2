@@ -47,7 +47,7 @@
 
     @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.EditorFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
 
     @Html.LabelFor(f => Model.Importeretencion, new { @class = "control-label col-md-2" })
@@ -59,7 +59,7 @@
 <div class="form-group" id="Operaciones">  
     @Html.LabelFor(f => Model.Operacionesexluidasbi, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Operacionesexluidasbi, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.EditorFor(f => Model.Operacionesexluidasbi, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
 </div>
 

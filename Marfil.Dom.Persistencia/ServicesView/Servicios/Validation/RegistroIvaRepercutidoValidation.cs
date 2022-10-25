@@ -30,12 +30,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
         private void ValidarTipoFacturaGrid(RegistroIVARepercutido model)
         {
             var tipofactura = model.tipofactura;
+            var serviceCuentas = new CuentasService(Context, MarfilEntities.ConnectToSqlServer(Context.BaseDatos));
+            var list = serviceCuentas.GetCuentasContablesNivel(0);
+            var abono = serviceCuentas.GetCuentaAbono1(1, tipofactura);
+            list = list.Where(f => f.Id.StartsWith(abono));
 
             foreach (var item in model.RegistroIVARepercutidoTotales)
             {
                 if (item.idtipofactura != tipofactura)
                 {
                     throw new ValidationException("El tipo de factura de una de las líneas no corresponde con la indicada.");
+                }
+
+                if (!list.Any(f => f.Id == item.cuentaventas))
+                {
+                    throw new ValidationException("La cuenta de venta " + item.cuentaventas + " no es válida para el tipo de factura indicado");
                 }
             }
         }
