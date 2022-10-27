@@ -1,84 +1,44 @@
-0;CabPresVenta;0;1;CabPresVenta.repx;false
-0;PieIngPresVenta;0;1;PieIngPresVenta.repx;false
-0;PiePresVenta;0;1;PiePresVenta.repx;false
-0;Presupuesto Medidas Ingles STD - prueba;0;0;Presupuesto Medidas Ingles STD - prueba.repx;false
-0;Presupuesto Medidas Ingles STD;0;0;Presupuesto Medidas Ingles STD.repx;false
-0;Presupuesto Medidas STD;0;0;Presupuesto Medidas STD.repx;false
-0;Presupuesto Metros Ingles STD;0;0;Presupuesto Metros Ingles STD.repx;false
-0;Presupuesto Metros STD;0;0;Presupuesto Metros STD.repx;true
-0;TotalIngPresVenta;0;1;TotalIngPresVenta.repx;false
-0;TotalPresVenta;0;1;TotalPresVenta.repx;false
-1;CabPedVent;0;1;CabPedVent.repx;false
-1;Pedido Medidas Ingles STD;0;0;Pedido Medidas Ingles STD.repx;false
-1;Pedido Medidas No Valorado STD;0;0;Pedido Medidas No Valorado STD.repx;false
-1;Pedido Medidas STD;0;0;Pedido Medidas STD.repx;false
-1;Pedido Metros Ingles STD;0;0;Pedido Metros Ingles STD.repx;false
-1;Pedido Metros STD;0;0;Pedido Metros STD.repx;true
-1;PieIngPedVent;0;1;PieIngPedVent.repx;false
-1;PiePedVent;0;1;PiePedVent.repx;false
-1;TotalIngPedVent;0;1;TotalIngPedVent.repx;false
-1;TotalPedVent;0;1;TotalPedVent.repx;false
-2;Albaran Medidas Detallado STD;0;0;Albaran Medidas Detallado STD.repx;false
-2;Albaran Medidas Detallado Valorado STD;0;0;Albaran Medidas Detallado Valorado STD.repx;false
-2;Albaran Medidas STD;0;0;Albaran Medidas STD.repx;false
-2;Albaran Medidas Valorado STD;0;0;Albaran Medidas Valorado STD.repx;false
-2;Albaran Metros STD;0;0;Albaran Metros STD.repx;true
-2;Albaran Metros Valorado STD;0;0;Albaran Metros Valorado STD.repx;false
-2;Packing List Ingles STD;0;0;Packing List Ingles STD.repx;false
-2;Packing List STD;0;0;Packing List STD.repx;false
-2;CabAlbVent;0;1;CabAlbVent.repx;false
-2;PieAlbVent;0;1;PieAlbVent.repx;false
-2;PieIngAlbVent;0;1;PieIngAlbVent.repx;false
-2;TotalAlbVent;0;1;TotalAlbVent.repx;false
-2;TotalIngAlbVent;0;1;TotalIngAlbVent.repx;false
-3;Factura Medidas Contenedor STD;0;0;Factura Medidas Contenedor STD.repx;false
-3;Factura Medidas Ingles STD;0;0;Factura Medidas Ingles STD.repx;false
-3;Factura Medidas STD;0;0;Factura Medidas STD.repx;false
-3;Factura Metros Contenedor STD;0;0;Factura Metros Contenedor STD.repx;false
-3;Factura Metros Ingles STD;0;0;Factura Metros Ingles STD.repx;false
-3;Factura Metros STD;0;0;Factura Metros STD.repx;true
-3;CabFacVen;0;1;CabFacVen.repx;false
-3;PieFacVen;0;1;PieFacVen.repx;false
-3;PieIngFacVen;0;1;PieIngFacVen.repx;false
-3;TotalFacVen;0;1;TotalFacVen.repx;false
-3;TotalIngFacVen;0;1;TotalIngFacVen.repx;false
-4;Presupuesto Compras Medidas STD;0;0;Presupuesto Compras Medidas STD.repx;false
-4;CabPresCom;0;1;CabPresCom.repx;false
-4;Presupuesto Compras Metros STD;0;0;Presupuesto Compras Metros STD.repx;true
-4;PiePresCom;0;1;PiePresCom.repx;false
-4;TotalPresCom;0;1;TotalPresCom.repx;false
-5;Pedido Compras Metros STD;0;0;Pedido Compras Metros STD.repx;true
-5;CabPedCom;0;1;CabPedCom.repx;false
-5;Pedido Compras Medidas STD;0;0;Pedido Compras Medidas STD.repx;false
-5;Pedido Compras No Valorado STD;0;0;Pedido Compras No Valorado STD.repx;false
-5;PiePedCom;0;1;PiePedCom.repx;false
-5;TotalPedCom;0;1;TotalPedCom.repx;false
-6;Albaran Compra Medidas Detallado STD;0;0;Albaran Compra Medidas Detallado STD.repx;false
-6;Albaran Compra Medidas Detallado Valorado STD;0;0;Albaran Compra Medidas Detallado Valorado STD.repx;false
-6;Albaran Compra Medidas Valorado STD;0;0;Albaran Compra Medidas Valorado STD.repx;false
-6;Albaran Compra Metros Detallado STD;0;0;Albaran Compra Metros Detallado STD.repx;true
-6;Albaran Compra Metros Detallado Valorado STD;0;0;Albaran Compra Metros Detallado Valorado STD.repx;false
-6;Albaran Compra Metros Valorado STD;0;0;Albaran Compra Metros Valorado STD.repx;false
-6;Etiq 49x133 mm Logo Vertical Remedida STD;0;0;Etiq 49x133 mm Logo Vertical Remedida STD.repx;false
-6;Etiqueta 49x133 mm Logo Vertical STD;0;0;Etiqueta 49x133 mm Logo Vertical STD.repx;false
-6;Etiqueta 49x133 mm Troquelada STD;0;0;Etiqueta 49x133 mm Troquelada STD.repx;false
-6;Listado etiquetas STD;0;0;Listado etiquetas STD.repx;false
-6;Packing List Compras STD;0;0;Packing List Compras STD.repx;false
-6;CabAlbCom;0;1;CabAlbCom.repx;false
-6;PieAlbCom;0;1;PieAlbCom.repx;false
-6;TotalAlbCom;0;1;TotalAlbCom.repx;false
+0;Defecto;0;0;Presupuestos.repx;true
+0;Pie;0;1;PresupuestosPie.repx;false
+0;Presupuesto medidas;0;0;PresupuestosMedidas.repx;false
+0;Presupuesto metros;0;0;PresupuestosMetros.repx;false
+1;Defecto;0;0;Pedidos.repx;true
+1;Pie;0;1;PedidosPie.repx;false
+1;Pedido sin valorar;0;0;PedidosSinValorar.repx;false
+1;Pedido valorado;0;0;PedidosValorado.repx;false
+1;Pedido taller;0;0;PedidosTaller.repx;false
+2;Defecto;0;0;Albaranes.repx;true
+2;Pie;0;1;AlbaranesPie.repx;false
+2;Albaran lote agrupado;0;0;AlbaranesLoteAgrupado.repx;false
+2;Albaran lote detallado;0;0;AlbaranesLoteDetallado.repx;false
+2;Albaran taller valorado;0;0;AlbaranesTallerValorado.repx;false
+2;Albaran taller sin valorar;0;0;AlbaranesTallerSinValorar.repx;false
+3;Defecto;0;0;Facturas.repx;true
+3;Pie;0;1;FacturasPie.repx;false
+4;Defecto;0;0;PresupuestosCompras.repx;true
+4;Pie;0;1;PresupuestosComprasPie.repx;false
+4;Presupuesto medidas;0;0;PresupuestosComprasMedidas.repx;false
+4;Presupuesto metros;0;0;PresupuestosComprasMetros.repx;false
+5;Defecto;0;0;PedidosCompras.repx;true
+5;Pie;0;1;PedidosComprasPie.repx;false
+5;Pedido sin valorar;0;0;PedidosComprasSinValorar.repx;false
+5;Pedido valorado;0;0;PedidosComprasValorado.repx;false
+5;Pedido taller;0;0;PedidosComprasTaller.repx;false
+6;Defecto;0;0;AlbaranesCompra.repx;true
+6;Pie;0;1;AlbaranesCompraPie.repx;false
+6;Albaran lote agrupado;0;0;AlbaranesComprasLoteAgrupado.repx;false
+6;Albaran lote detallado;0;0;AlbaranesComprasLoteDetallado.repx;false
+6;Albaran taller valorado;0;0;AlbaranesComprasTallerValorado.repx;false
+6;Albaran taller sin valorar;0;0;AlbaranesComprasTallerSinValorar.repx;false
+6;Agrupado;0;0;AlbaranesComprasAgrupado.repx;false
+6;Sin agrupar;0;0;AlbaranesComprasSinAgrupar.repx;false
+6;Listado etiquetas;0;0;AlbaranesComprasListadoEtiquetas.repx;false
 7;Defecto;0;0;FacturasCompras.repx;true
 7;Pie;0;1;FacturasComprasPie.repx;false
 30;Defecto;0;0;KitEtiquetas.repx;true
 40;Defecto;0;0;BundleEtiquetas.repx;true
-50;Reserva Medidas Detallado STD;0;0;Reserva Medidas Detallado STD.repx;false
-50;Reserva Medidas Ingles STD;0;0;Reserva Medidas Ingles STD.repx;false
-50;Reserva Medidas STD;0;0;Reserva Medidas STD.repx;true
-50;CabPedRes;0;1;CabPedRes.repx;false
-50;PieIngPedRes;0;1;PieIngPedRes.repx;false
-50;PiePedRes;0;1;PiePedRes.repx;false
-50;TotalIngPedRes;0;1;TotalIngPedRes.repx;false
-50;TotalPedRes;0;1;TotalPedRes.repx;false
+50;Defecto;0;0;Reservas.repx;true
+50;Defecto;0;0;ReservasPie.repx;false
 60;Defecto;0;0;TraspasosDefecto.repx;true
 70;Defecto;0;0;InventariosDefecto.repx;true
 1000;Defecto;0;0;DiarioContable.repx;true

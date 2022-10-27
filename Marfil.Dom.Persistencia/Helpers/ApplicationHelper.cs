@@ -195,7 +195,8 @@ namespace Marfil.Dom.Persistencia.Helpers
                         RemoveItemMenu(menu, item.Nombre);
                     }
 
-                    List<MenuItemsAplicacionModel> _aux = menu.Where(item => !item.items.Any() && string.IsNullOrEmpty(item.url)).ToList();
+                    //Oct2022 - Se modifica el filtro para que no tenga en cuenta los items que son separadores
+                    List<MenuItemsAplicacionModel> _aux = menu.Where(item => (!item.items.Any() || item.items.Where(x => x.isSeparator == true).Count() == item.items.Count()) && string.IsNullOrEmpty(item.url)).ToList();
                     List<MenuItemsAplicacionModel> menuLst = menu as List<MenuItemsAplicacionModel>;
                     foreach (var item in _aux)
                         menuLst.Remove(item);

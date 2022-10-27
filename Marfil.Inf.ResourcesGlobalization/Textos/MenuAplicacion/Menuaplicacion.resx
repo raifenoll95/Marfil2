@@ -678,4 +678,16 @@
   <data name="lecturas" xml:space="preserve">
     <value>Editar lecturas terminal</value>
   </data>
+  <data name="headerpedidoscompras" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="headerpresupuestoscompras" xml:space="preserve">
+    <value>Presupuestos</value>
+  </data>
+  <data name="pedidoscompras" xml:space="preserve">
+    <value>Gestión de pedidos</value>
+  </data>
+  <data name="presupuestoscompras" xml:space="preserve">
+    <value>Gestión de presupuestos</value>
+  </data>
 </root>

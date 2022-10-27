@@ -251,7 +251,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             //Vencimientos con estado Inicial, pendiente de cobro o de pago y que aun tengan cantidad por asignar
             var posiblesvencimientos = _db.Vencimientos.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas && f.tipo == newtipoasignacion
-                && f.situacion == situacion && ((f.importegiro - f.importeasignado) > 0)).
+                && f.situacion == situacion
+                //&& ((f.importegiro - f.importeasignado) > 0)).
+                && ((f.importegiro - f.importeasignado) > 0 || (f.importegiro < 0 && f.importeasignado == 0))).//OCT 2022 - Cambio para mostrar también las cantidades negativas
                 OrderByDescending(f => f.fechavencimiento).OrderByDescending(f => f.importegiro).ToList();
 
             //Tenemos que sacar todos los vencimientos
@@ -1308,7 +1310,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var vencimientoModel = get(registro) as VencimientosModel;
                     if (String.IsNullOrEmpty(model.Importe))
                     {
-                        importe = importe + (vencimientoModel.Importegiro - vencimientoModel.Importeasignado);
+                        importe = Math.Round((double)(importe + (vencimientoModel.Importegiro - vencimientoModel.Importeasignado)), 2);
                     }
                     else
                     {
@@ -1323,7 +1325,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var registro in registros)
                 {
                     var carteraModel = serviceCartera.get(registro) as CarteraVencimientosModel;
-                    importe = importe + carteraModel.Importegiro;
+                    importe = Math.Round((double)(importe + carteraModel.Importegiro),2);
                 }
             }
 
@@ -1392,7 +1394,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 if (comentario.Contains("*CO*") && !String.IsNullOrEmpty(model.Fkcuentatesoreria))
                 {
-                    comentario = comentario.Replace("*CO*", model.Fkcuentatesoreria);
+                    var banco = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == model.Fkcuentatesoreria).FirstOrDefault().descripcion;
+                    comentario = comentario.Replace("*CO*", banco);
                 }
 
                 //Tipo Importe 1

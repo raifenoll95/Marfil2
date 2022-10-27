@@ -781,11 +781,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Pedidos.
+        /// </summary>
+        public static string headerpedidoscompras {
+            get {
+                return ResourceManager.GetString("headerpedidoscompras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Presupuestos.
         /// </summary>
         public static string headerpresupuestos {
             get {
                 return ResourceManager.GetString("headerpresupuestos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Presupuestos.
+        /// </summary>
+        public static string headerpresupuestoscompras {
+            get {
+                return ResourceManager.GetString("headerpresupuestoscompras", resourceCulture);
             }
         }
         
@@ -1339,6 +1357,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Gestión de pedidos.
+        /// </summary>
+        public static string pedidoscompras {
+            get {
+                return ResourceManager.GetString("pedidoscompras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Precios Especiales.
         /// </summary>
         public static string preciosespeciales {
@@ -1353,6 +1380,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string presupuestos {
             get {
                 return ResourceManager.GetString("presupuestos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gestión de presupuestos.
+        /// </summary>
+        public static string presupuestoscompras {
+            get {
+                return ResourceManager.GetString("presupuestoscompras", resourceCulture);
             }
         }
         

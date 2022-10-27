@@ -52,8 +52,8 @@
 	</item>
 	<!--Compras-->
 	<item name="compras" text="Compras" icono="fa fa-tags">
-		<item name="headerpresupuestos" text="albaranes" icono="fa fa-folder-o">
-			<item name="presupuestos" text="Presupuestos" icono="fa fa-file" url="~/PresupuestosCompras/Index" />
+		<item name="headerpresupuestoscompras" text="albaranes" icono="fa fa-folder-o">
+			<item name="presupuestoscompras" text="Presupuestos" icono="fa fa-file" url="~/PresupuestosCompras/Index" />
 			<item name="listado" text="Listados" icono="fa fa-list">
 				<item name="listadogeneralpresupuestos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadospresupuestoscompras/Listado/PresupuestosComprasCabecera" />
 				<item name="listadodetalladopresupuestos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopresupuestoscompras/Listado/PresupuestosComprasDetallado" />
@@ -61,8 +61,8 @@
 			</item>
 			<item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/4" />
 		</item>
-		<item name="headerpedidos" text="pedidos" icono="fa fa-folder-o">
-			<item name="pedidos" text="Gestión de pedidos" icono="fa fa-file" url="~/PedidosCompras/Index" />
+		<item name="headerpedidoscompras" text="pedidos" icono="fa fa-folder-o">
+			<item name="pedidoscompras" text="Gestión de pedidos" icono="fa fa-file" url="~/PedidosCompras/Index" />
 			<item name="listado" text="Listados" icono="fa fa-list">
 				<item name="listadogeneralpedidos" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/ListadospedidosCompras/Listado/PedidosComprasCabecera" />
 				<item name="listadodetalladopedidos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladopedidoscompras/Listado/PedidosComprasDetallado" />
@@ -94,9 +94,9 @@
 	<!--Contabilidad-->
 	<item name="contabilidad" text="Contabilidad" icono="fa fa-line-chart">
 		<item name="movs" allowBlock="true" text="Diario contable" url="~/Movs/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="cuentas" allowBlock="true" text="Cuentas" url="~/Cuentas/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="tesoreria" text="Tesorería" icono="fa fa-money">
 			<item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
 			<item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
@@ -133,9 +133,9 @@
 			<item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
 			<item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />
 			<item name="regimeniva" text="Régimen de IVA" url="~/RegimenIva/Index" />
-			<item isseparator="true"></item>
+			<!--<item isseparator="true"></item>-->
 			<item name="manttiposretenciones" text="Tipos de retenciones" url="~/TiposRetenciones/Index" />
-			<item isseparator="true"></item>
+			<!--<item isseparator="true"></item>-->
 			<item name="tiposfacturasiva" text="Tipos de Facturas" url="~/TiposFacturasIva/Index" />
 			<item name="registroivarepercutido" text="Registro de IVA repercutido" url="~/RegistroIvaRepercutido/Index" />
 			<item name="guiascontables" text="Guías contables" url="~/Guiascontables/Index" />
@@ -162,7 +162,7 @@
 		<item name="prospectos" allowBlock="true" text="Prospectos" url="~/Prospectos/Index" />
 		<item name="transportistas" allowBlock="true" text="Transportistas" url="~/Transportistas/Index" />
 		<item name="aseguradoras" allowBlock="true" text="Compañías de seguros" url="~/Aseguradoras/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadoterceros" eslistado="true" text="Clientes" icono="fa fa-file" url="~/ListadosTerceros/Listado/TercerosGeneral" />
 		</item>
@@ -173,21 +173,21 @@
 		<item name="tarifas"  allowBlock="true" text="Tarifas" url="~/Tarifas/Index" />
 		<item name="preciosespeciales" text="Precios Especiales" url="~/PreciosEspeciales/Index" />
 		<item name="obras" text="obras" url="~/Obras/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="listado" text="Listados" icono="fa fa-list">
 			<item name="listadoarticulos" eslistado="true"  text="Clientes" icono="fa fa-file" url="~/ListadoArticulos/Listado/Articulos" />
 		</item>
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="configuracion" text="Configuración" icono="fa fa-cog">
 			<item name="familiasproductos" text="Familias" url="~/Familiasproductos/Index" />
 			<item name="materiales" text="Materiales" url="~/Materiales/Index" />
 			<item name="caracteristicas" text="Características" url="~/Caracteristicas/Index" />
 			<item name="grosores" text="Grosores" url="~/Grosores/Index" />
 			<item name="acabados" text="Acabados" url="~/Acabados/Index" />
-			<item isseparator="true"></item>
+			<!--<item isseparator="true"></item>-->
 			<item name="incidencias" text="incidencias" url="~/Incidencias/Index"></item>
 			<item name="contadoreslotes" text="contadoreslotes" url="~/ContadoresLotes/Index" />
-			<item isseparator="true"></item>
+			<!--<item isseparator="true"></item>-->
 			<item name="trabajos" text="trabajos" url="~/Trabajos/Index" />
 			<item name="tareas" text="tareas" url="~/Tareas/Index" />
 		</item>
@@ -200,15 +200,15 @@
 		<item name="tablasvarias" text="Tablas varias" url="~/TablasVarias/Index" allowDelete="false" allowCreate="false" />
 		<item name="seccionesanaliticas" url="~/SeccionesAnaliticas/Index" allowBlock="true" />
 		<item name="unidades" text="Unidades de medida" url="~/Unidades/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="monedas" text="Monedas" url="~/Monedas/Index" />
 		<item name="cambiosmonedas" allowCreate="false" allowDelete="false" text="Gestión de cambios de monedas" url="~/Cambios/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="bancos" text="Bancos" url="~/Bancos/Index" />
 		<item name="municipios" text="Municipios" url="~/Municipios/Index" />
 		<item name="provincias" text="Provincias" url="~/Provincias/Index" />
 		<item name="puertos" text="Puertos" url="~/Puertos/Index" />
-		<item isseparator="true"></item>
+		<!--<item isseparator="true"></item>-->
 		<item name="criteriosagrupacion" text="Criterios de agrupación  " url="~/Criteriosagrupacion/Index" />
 	</item>
 	<!--Configuración-->
