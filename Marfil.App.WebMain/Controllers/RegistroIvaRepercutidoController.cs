@@ -443,18 +443,25 @@ namespace Marfil.App.WebMain.Controllers
             return service.GetPorcentaje(tipo);
         }
 
-        public string GetIvaTercero(string cuenta)
+        public string GetIvaTercero(string cuenta, string regimen)
         {
             var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var tipoiva = service.GetIvaTercero(cuenta);
             var tipoivaporcentaje = service.GetPorcentajeIvaTercero(tipoiva);
             var tipoivaporcentajerecargo = service.GetPorcentajeRecargoTercero(tipoiva);
 
+            var regimentercero = "";
+            if (string.IsNullOrEmpty(regimen))
+            {
+                regimentercero = service.GetRegimenivaTercero(cuenta);
+            }
+
+
             Session["tipoivatercero"] = tipoiva;
             Session["porcentajetipoivatercero"] = tipoivaporcentaje;
             Session["porcentajerecargotercero"] = tipoivaporcentajerecargo;
 
-            return tipoiva;
+            return regimentercero;
         }
 
         public string GetRegimenIva(string tipo)

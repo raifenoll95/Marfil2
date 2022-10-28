@@ -65,7 +65,7 @@
             cvregimen.Url = Url.Action("RegimenIvaApi", "Api");
             cvregimen.Valor = Model.Regimeniva;
             cvregimen.SoloLectura = isreadonly;
-            cvregimen.Obligatorio = true;
+            cvregimen.Obligatorio = false;
         }
         @Html.Partial("CampoverificacionUI", cvregimen)
 

@@ -121,7 +121,8 @@ namespace Marfil.App.WebMain.Controllers
 
             var cuenta = HttpUtility.ParseQueryString(Request.RequestUri.Query)["cuenta"];
             var idtipofactura = HttpUtility.ParseQueryString(Request.RequestUri.Query)["idfacturaiva"];
-
+            var regimeniva = HttpUtility.ParseQueryString(Request.RequestUri.Query)["regimeniva"];
+          
             if (inttipofacturaiva == 0)//Soportado
             {
                 if (cuenta == "cliente")
@@ -148,6 +149,30 @@ namespace Marfil.App.WebMain.Controllers
                     var abono = service.GetCuentaAbono1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(abono));
                 }
+            }
+
+            var listaRemove = new List<CuentasModel>();
+            var listaFinal = new List<CuentasModel>();
+            var lista = list.ToList();
+
+            if (!string.IsNullOrEmpty(regimeniva))
+            {
+                foreach (var item in list)
+                {
+                    var serviceRetenciones = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+                    var regimentercero = serviceRetenciones.GetRegimenivaTercero(item.Id);
+
+                    if (regimentercero != regimeniva)
+                    {
+                        listaRemove.Add(item);
+                    }
+                }
+            }
+
+            if (listaRemove.Count() > 0)
+            {
+                listaFinal = lista.Except(listaRemove).ToList();
+                return listaFinal;
             }
 
             return list;

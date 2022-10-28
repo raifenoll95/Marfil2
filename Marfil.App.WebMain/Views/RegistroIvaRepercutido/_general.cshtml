@@ -64,7 +64,7 @@
     if (iseditable)
     {
         //WebHelper.GetApplicationHelper().GetConfiguracion();
-        ((Marfil.App.WebMain.Controllers.RegistroIvaRepercutidoController)this.ViewContext.Controller).GetIvaTercero(Model.Cuentacliente);
+        ((Marfil.App.WebMain.Controllers.RegistroIvaRepercutidoController)this.ViewContext.Controller).GetIvaTercero(Model.Cuentacliente, Model.Fkregimeniva);
     }
 
 }
@@ -192,7 +192,7 @@ else
             cvcuenta.Url = Url.Action("CuentasApi", "Api");
             cvcuenta.Valor = Model.Cuentacliente;
             cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"cliente\"}";
-            cvcuenta.ControlesAsociados = "[ { \"idfacturaiva\":\"Tipofactura\" } ]";
+            cvcuenta.ControlesAsociados = "[ { \"idfacturaiva\":\"Tipofactura\" , \"regimeniva\":\"Fkregimeniva\" } ]";
             cvcuenta.Titulo = Clientes.TituloEntidadSingular;
             cvcuenta.SoloLectura = isreadonly;
             cvcuenta.Obligatorio = true;
@@ -267,13 +267,17 @@ else
     $("#Cuentacliente").on('change', function () {
         //Insertamos el porcentaje de rentención
         var cuenta = $("#Cuentacliente").val();
+        var regimen = $("#Fkregimeniva").val();
         $.ajax({
             url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
             dataType: "text",
             type: "GET",
-            data: { cuenta },
+            data: { cuenta,regimen },
             success: function (data) {
                 console.log(data);
+                if (regimen == "" || regimen == null) {
+                    eventAggregator.Publish("Fkregimeniva-Buscar", data);
+                }
             }
         });
     });
@@ -281,6 +285,7 @@ else
     $('#inputcuentacliente').on('DOMSubtreeModified', function () {
         //Insertamos el porcentaje de rentención
         var cuenta = $("#Cuentacliente").val();
+        var regimen = $("#Fkregimeniva").val();
         $.ajax({
             url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
             dataType: "text",
@@ -288,6 +293,9 @@ else
             data: { cuenta },
             success: function (data) {
                 console.log(data);
+                if (regimen == "" || regimen == null) {
+                    eventAggregator.Publish("Fkregimeniva-Buscar", data);
+                }
             }
         });
     });
@@ -302,7 +310,7 @@ else
             type: "GET",
             data: { tipo },
             success: function (data) {
-                eventAggregator.Publish("Fkregimeniva-Buscarfocus", data);
+                eventAggregator.Publish("Fkregimeniva-Buscar", data);
                 //$("#Fkregimeniva").val(data);
             }
         });
@@ -318,7 +326,7 @@ else
             type: "GET",
             data: { tipo },
             success: function (data) {
-                eventAggregator.Publish("Fkregimeniva-Buscarfocus", data);
+                eventAggregator.Publish("Fkregimeniva-Buscar", data);
                 //$("#Fkregimeniva").val(data);
             }
         });

@@ -52,7 +52,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var result = new StringBuilder();
             result.Append(" select r.origendoc, r.id, r.referencia, r.fechafactura, r.periodo, r.totalfactura, r.numfacturacliente, t.descripcion as [Tipofactura], r.cuentacliente, r.cuentaventas, c.descripcion as [Nombrecliente] " +
                 " from RegistroIVARepercutido r, Cuentas c , TiposFacturas t ");
-            result.AppendFormat(" where r.empresa = c.empresa and r.empresa = t.empresa and r.cuentacliente = c.id and r.tipofactura = t.id and r.empresa ='{0}' ", _context.Empresa);
+            result.AppendFormat(" where r.empresa = c.empresa and r.empresa = t.empresa and r.cuentacliente = c.id and r.tipofactura = t.id and r.empresa ='{0}' order  by r.id desc", _context.Empresa);
 
             return result.ToString();
         }
