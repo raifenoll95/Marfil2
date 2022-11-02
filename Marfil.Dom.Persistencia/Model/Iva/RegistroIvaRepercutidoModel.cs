@@ -173,13 +173,13 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public string Numfacturarectificar { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Fechafacturaoriginal")]
-        public DateTime Fechafacturaoriginal { get; set; }
+        public DateTime? Fechafacturaoriginal { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Motivorectificacion")]
         public string Motivorectificacion { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Criterioivafactoriginal")]
-        public TipoCriterioIva Criterioivafactoriginal { get; set; }
+        public TipoCriterioIva? Criterioivafactoriginal { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Criterioivafactura")]
         public TipoCriterioIva Criterioivafactura { get; set; }
@@ -358,13 +358,14 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public bool Rectificativa349 { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativaaño")]
-        public int Rectificativaano { get; set; }
+        public int? Rectificativaano { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Rectificativaperiodo")]
         public string Rectificativaperiodo { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseimponible349")]
-        public double Baseimponible349 { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Baseimponible349 { get; set; }
         #endregion
 
         #region Totales

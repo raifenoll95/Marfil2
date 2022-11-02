@@ -63,7 +63,7 @@ namespace Marfil.App.WebMain.Controllers
             model.Fecharegistro = DateTime.Today;
             model.Fechafactura = DateTime.Today;
             model.Fechaoperacion = DateTime.Today;
-            model.Fechafacturaoriginal = DateTime.Today;
+            //model.Fechafacturaoriginal = DateTime.Today;
             model.Fechaalta = DateTime.Now;
 
             //Fkseriescontables por defecto

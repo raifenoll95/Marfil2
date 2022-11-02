@@ -164,18 +164,14 @@ namespace Marfil.App.WebMain.Controllers
 
                     if (regimentercero != regimeniva)
                     {
-                        listaRemove.Add(item);
+                        lista.RemoveAll(f => f.Id == item.Id);
                     }
                 }
             }
 
-            if (listaRemove.Count() > 0)
-            {
-                listaFinal = lista.Except(listaRemove).ToList();
-                return listaFinal;
-            }
 
-            return list;
+
+            return lista;
         }
 
 

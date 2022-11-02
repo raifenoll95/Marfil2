@@ -52,7 +52,7 @@ namespace Marfil.App.WebMain.Controllers
                         new ColumnDefinition() { field = "Fecha", displayName = "Fecha factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
                         new ColumnDefinition() { field = "Fkclientes", displayName = "Cuenta cliente", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
                         //new ColumnDefinition() { field = "Fktipofactura", displayName = "Tipo Factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
-                        new ColumnDefinition() { field = "Importetotaldoc", displayName = "Total factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
+                        new ColumnDefinition() { field = "SImportetotaldoc", displayName = "Total factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } }
 
                     }
                 };

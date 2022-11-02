@@ -31,6 +31,12 @@
 
     var listmotivos = WebHelper.GetApplicationHelper().GetListMotivosRectificacion().Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }).ToList();
 
+    listmotivos.Insert(0, new SelectListItem
+    {
+        Text = "",
+        Value = "",
+    });
+
     if (isNuevo)
     {
         Model.Criterioivafactura = WebHelper.GetApplicationHelper().GetCriterioivaEmpresa();
@@ -419,17 +425,20 @@
                 success: function (data) {
                     var factura = $.parseJSON(data);
                     var date = new Date(factura.Fechadocumento);
-                    var formatDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+                    var day = date.getDate().toString().length != 2 ? '0' + date.getDate() : date.getDate();
+                    var month = (date.getMonth() + 1).toString().length != 2 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+                    var formatDate = day + '/' + month + '/' + date.getFullYear();
+                   
 
                     $('#Fechafacturaoriginal').val(formatDate);
                     $('#Criterioivafactoriginal').val(factura.Criterioiva);
                     //$('#Rectificativa349').prop('checked', true);
                     $('#Rectificativaano').val(date.getFullYear());
-                    $('#Baseimponible349').val(factura.Importebaseimponible);
+                    //$('#Baseimponible349').val(factura.Importebaseimponible);
 
                     if (periodoCount > 4) {
                         var mes = (date.getMonth() + 1);
-                        console.log("Mes - " + mes);
                         switch (mes) {
                             case 1:
                                 $('#Rectificativaperiodo').val("Enero");
@@ -508,17 +517,21 @@
                 success: function (data) {
                     var factura = $.parseJSON(data);
                     var date = new Date(factura.Fechadocumento);
-                    var formatDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+                    var day = date.getDate().toString().length != 2 ? '0' + date.getDate() : date.getDate();
+                    console.log("Dia - " + day);
+                    var month = (date.getMonth() + 1).toString().length != 2 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+                    console.log("Mes - " + month);
+                    var formatDate = day + '/' + month + '/' + date.getFullYear();
 
                     $('#Fechafacturaoriginal').val(formatDate);
                     $('#Criterioivafactoriginal').val(factura.Criterioiva);
                     //$('#Rectificativa349').prop('checked', true);
                     $('#Rectificativaano').val(date.getFullYear());
-                    $('#Baseimponible349').val(factura.Importebaseimponible);
+                    //$('#Baseimponible349').val(factura.Importebaseimponible);
 
                     if (periodoCount > 4) {
                         var mes = (date.getMonth() + 1);
-                        console.log("Mes - " + mes);
                         switch (mes) {
                             case 1:
                                 $('#Rectificativaperiodo').val("Enero");

@@ -1,0 +1,466 @@
+/// <XRTypeInfo>
+///   <AssemblyFullName>DevExpress.XtraReports.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</AssemblyFullName>
+///   <AssemblyLocation>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\marfilbeta\f4586786\9eb132ee\assembly\dl3\e64e7119\8c6bfd1d_f735d701\DevExpress.XtraReports.v16.2.dll</AssemblyLocation>
+///   <TypeName>DevExpress.XtraReports.UI.XtraReport</TypeName>
+///   <Localization>es</Localization>
+///   <Version>16.2</Version>
+///   <Resources>
+///     <Resource Name="XtraReportSerialization.xtraReport1">
+/// zsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNldAIAAAADAAAAAAAAAFBBRFBBRFCAg/WPhoJbkOSCmV1DAAAAbgAAAAAAAABlAQAAPlIAZQBwAG8AcgB0AC4AUgBlAHMAdQBsAHQAUwBjAGgAZQBtAGEAUwBlAHIAaQBhAGwAaQB6AGEAYgBsAGUAAAAAACZjAHUAcwB0AG8AbQBTAHEAbABRAHUAZQByAHkAMgAuAFMAcQBsAHREAAAmYwB1AHMAdABvAG0AUwBxAGwAUQB1AGUAcgB5ADQALgBTAHEAbADgRgAAAfCIAVBFUmhkR0ZUWlhRZ1Rt
+/// RnRaVDBpVW1Wd2IzSjBJajQ4Vm1sbGR5Qk9ZVzFsUFNKQmJHSmhjbUZ1WlhORGIyMXdjbUZ6SWo0OFJtbGxiR1FnVG1GdFpUMGlaVzF3Y21WellTSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pwWkNJZ1ZIbHdaVDBpU1c1ME16SWlJQzgrUEVacFpXeGtJRTVoYldVOUltWnJaV3BsY21OcFkybHZJaUJVZVhCbFBTSkpiblF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10elpYSnBaWE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWFXUmxiblJwWm1sallXUnZjbk5sWjIxbGJuUnZJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5KbFptVnlaVzVqYVdFaUlGUjVjR1U5SWxOMGNtbHVa
+/// eUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabVZqYUdGa2IyTjFiV1Z1ZEc4aUlGUjVjR1U5SWtSaGRHVlVhVzFsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptWldOb1lYWmhiR2xrWlhvaUlGUjVjR1U5SWtSaGRHVlVhVzFsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptWldOb1lXVnVkSEpsWjJFaUlGUjVjR1U5SWtSaGRHVlVhVzFsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptWldOb1lYSmxkbWx6YVc5dUlpQlVlWEJsUFNKRVlYUmxWR2x0WlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10aGJHMWhZMlZ1SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltWnJjSEp2ZG1WbFpHOXlaWE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0
+/// WlQwaWJtOXRZbkpsY0hKdmRtVmxaRzl5SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUluQnliM1psWldSdmNtUnBjbVZqWTJsdmJpSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p3Y205MlpXVmtiM0p3YjJKc1lXTnBiMjRpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWNISnZkbVZsWkc5eVkzQWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpY0hKdmRtVmxaRzl5Y0dGcGN5SWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p3Y205MlpXVmtiM0p3Y205MmFXNWphV0VpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQw
+/// aWNISnZkbVZsWkc5eWRHVnNaV1p2Ym04aUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGljSEp2ZG1WbFpHOXlabUY0SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUluQnliM1psWldSdmNtVnRZV2xzSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUluQnliM1psWldSdmNtNXBaaUlnVkhsd1pUMGlVM1J5YVc1bklpQXZQanhHYVdWc1pDQk9ZVzFsUFNKbWEyWnZjbTFoYzNCaFoyOGlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTJGblpXNTBaWE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdGpiMjFsY21OcFlXeGxjeUlnVkhsd1pU
+/// MGlVM1J5YVc1bklpQXZQanhHYVdWc1pDQk9ZVzFsUFNKamIyMXBjMmx2Ym1GblpXNTBaU0lnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKamIyMXBjMmx2Ym1OdmJXVnlZMmxoYkNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMjF2Ym1Wa1lYTWlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pqWVcxaWFXOWhaR2xqYVc5dVlXd2lJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYVcxd2IzSjBaV0p5ZFhSdklpQlVlWEJsUFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbWx0Y0c5eWRHVmlZWE5sYVcxd2IyNXBZbXhsSWlCVWVYQmxQU0pFYjNWaWJHVWlJ
+/// QzgrUEVacFpXeGtJRTVoYldVOUltbHRjRzl5ZEdWd2IzSjBaWE1pSUZSNWNHVTlJa1J2ZFdKc1pTSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWNHOXlZMlZ1ZEdGcVpXUmxjMk4xWlc1MGIyTnZiV1Z5WTJsaGJDSWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pwYlhCdmNuUmxaR1Z6WTNWbGJuUnZZMjl0WlhKamFXRnNJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5CdmNtTmxiblJoYW1Wa1pYTmpkV1Z1ZEc5d2NtOXVkRzl3WVdkdklpQlVlWEJsUFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbWx0Y0c5eWRHVmtaWE5qZFdWdWRHOXdjbTl1ZEc5d1lXZHZJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpw
+/// Wld4a0lFNWhiV1U5SW1sdGNHOXlkR1YwYjNSaGJHUnZZeUlnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKcGJYQnZjblJsZEc5MFlXeHRiMjVsWkdGaVlYTmxJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW01dmRHRnpJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1aclpYTjBZV1J2Y3lJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMjlpY21GeklpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbWx1WTI5MFpYSnRJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1SbGMyTnlhWEJqYVc5dWFXNWpiM1JsY20w
+/// aUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGljR1Z6YnlJZ1ZIbHdaVDBpU1c1ME16SWlJQzgrUEVacFpXeGtJRTVoYldVOUltTnZibVpwWVc1NllTSWdWSGx3WlQwaVNXNTBNeklpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbU52YzNSbGJXRjBaWEpwWVd4bGN5SWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0owYVdWdGNHOXZabWxqYVc1aGRHVmpibWxqWVNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hM0psWjJsdFpXNXBkbUVpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdDBjbUZ1YzNCdmNuUnBjM1JoSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpX
+/// eGtJRTVoYldVOUluUnBjRzlqWVcxaWFXOGlJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10d2RXVnlkRzl6Wm10d1lXbHpaWE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdHdkV1Z5ZEc5emFXUWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpZFc1cFpHRmtibVZuYjJOcGJ5SWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p5WldabGNtVnVZMmxoWkc5amRXMWxiblJ2SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltWnJZbUZ1WTI5emJXRnVaR0YwYjNNaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlZ
+/// MkZ5ZEdGamNtVmthWFJ2SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUluWmxibU5wYldsbGJuUnZZMkZ5ZEdGamNtVmthWFJ2SWlCVWVYQmxQU0pFWVhSbFZHbHRaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlZMjl1ZEdWdVpXUnZjbVZ6SWlCVWVYQmxQU0pKYm5Rek1pSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdGpkV1Z1ZEdGemRHVnpiM0psY21saElpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbTUxYldWeWIyUnZZM1Z0Wlc1MGIzQnliM1psWldSdmNpSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptWldOb1lXUnZZM1Z0Wlc1MGIzQnliM1psWldSdmNpSWdWSGx3WlQwaVJHRjBaVlJw
+/// YldVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1aclkyeHBaVzUwWlhOeVpYTmxjblpoSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUluUnBjRzloYkdKaGNtRnVJaUJVZVhCbFBTSkpiblF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10dGIzUnBkbTl6WkdWMmIyeDFZMmx2YmlJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSnViMjFpY21WMGNtRnVjM0J2Y25ScGMzUmhJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1OdmJtUjFZM1J2Y2lJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSnRZWFJ5YVdOMWJHRWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdR
+/// Z1RtRnRaVDBpWW5Wc2RHOXpJaUJVZVhCbFBTSkpiblF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpY0dWemIyNWxkRzhpSUZSNWNHVTlJa1J2ZFdKc1pTSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWNHVnpiMkp5ZFhSdklpQlVlWEJsUFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJblp2YkhWdFpXNGlJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWlc1MmFXOGlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10dmNHVnlZWEpwYjNNaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXR2Y0dWeVlXUnZjblJ5WVc1emNHOXlkR1VpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJH
+/// UWdUbUZ0WlQwaVptdDZiMjVoY3lJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMlJwY21WalkybHZibVpoWTNSMWNtRmphVzl1SWlCVWVYQmxQU0pKYm5Rek1pSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdGpjbWwwWlhKcGIzTmhaM0oxY0dGamFXOXVJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5ScGNHOXdiM0owWlhNaUlGUjVjR1U5SWtsdWRETXlJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmpiM04wWlhCdmNuUmxjeUlnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKbWEzVnpkV0Z5YVc5aGJIUmhJaUJVZVhCbFBTSkhkV2xrSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptWldOb1lXRnNk
+/// R0VpSUZSNWNHVTlJa1JoZEdWVWFXMWxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hM1Z6ZFdGeWFXOXRiMlJwWm1sallXTnBiMjRpSUZSNWNHVTlJa2QxYVdRaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1abFkyaGhiVzlrYVdacFkyRmphVzl1SWlCVWVYQmxQU0pFWVhSbFZHbHRaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXRqWVhKd1pYUmhjeUlnVkhsd1pUMGlSM1ZwWkNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYVc1MFpXZHlhV1JoWkhKbFptVnlaVzVqYVdGbWJHRm5JaUJVZVhCbFBTSkhkV2xrSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p0YjJSdklpQlVlWEJsUFNKSmJuUXpNaUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXR3WldScFpHOXpZMjl0Y0hKaGN5SWdWSGx3
+/// WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p3WldScFpHOXpZV3hrWVdSdklpQlVlWEJsUFNKQ2IyOXNaV0Z1SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0owYVhCdllXeHRZV05sYm14dmRHVWlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqd3ZWbWxsZHo0OFZtbGxkeUJPWVcxbFBTSkJiR0poY21GdVpYTkRiMjF3Y21GelRHbHVJajQ4Um1sbGJHUWdUbUZ0WlQwaVpXMXdjbVZ6WVNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMkZzWW1GeVlXNWxjeUlnVkhsd1pUMGlTVzUwTXpJaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1sa0lpQlVlWEJsUFNKSmJuUXpNaUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXRoY25ScFkzVnNiM01pSUZS
+/// NWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVpHVnpZM0pwY0dOcGIyNGlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYkc5MFpTSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0owWVdKc1lTSWdWSGx3WlQwaVNXNTBNeklpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbU5oYm5ScFpHRmtJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1OaGJuUnBaR0ZrY0dWa2FXUmhJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW14aGNtZHZJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1GdVkyaHZJaUJVZVhCbFBTSkViM1ZpYkdVaUlD
+/// OCtQRVpwWld4a0lFNWhiV1U5SW1keWRXVnpieUlnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKbWEzVnVhV1JoWkdWeklpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbTFsZEhKdmN5SWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p3Y21WamFXOGlJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpY0c5eVkyVnVkR0ZxWldSbGMyTjFaVzUwYnlJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSnBiWEJ2Y25SbFpHVnpZM1ZsYm5SdklpQlVlWEJsUFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVpyZEdsd2IzTnBkbUVpSUZSNWNHVTlJ
+/// bE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWNHOXlZMlZ1ZEdGcVpXbDJZU0lnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKamRXOTBZV2wyWVNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSndiM0pqWlc1MFlXcGxjbVZqWVhKbmIyVnhkV2wyWVd4bGJtTnBZU0lnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKamRXOTBZWEpsWTJGeVoyOWxjWFZwZG1Gc1pXNWphV0VpSUZSNWNHVTlJa1J2ZFdKc1pTSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWFXMXdiM0owWlNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSnBiWEJ2Y25SbGJtVjBiMnhwYm1WaElpQlVlWEJs
+/// UFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbTV2ZEdGeklpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVJ2WTNWdFpXNTBiMjl5YVdkbGJpSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0prYjJOMWJXVnVkRzlrWlhOMGFXNXZJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1OaGJtRnNJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5CeVpXTnBiMkZ1ZEdWeWFXOXlJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5KbGRtbHphVzl1SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltUmxZMmx0WVd4
+/// bGMyMXZibVZrWVhNaUlGUjVjR1U5SWtsdWRETXlJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmtaV05wYldGc1pYTnRaV1JwWkdGeklpQlVlWEJsUFNKSmJuUXpNaUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlZblZ1Wkd4bElpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJblJpYkc1MWJTSWdWSGx3WlQwaVNXNTBNeklpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbU52Ym5SbGJtVmtiM0lpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWMyVnNiRzhpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVkyRnFZU0lnVkhsd1pUMGlTVzUwTXpJaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5CbGMyOXVaWFJ2SWlCVWVY
+/// QmxQU0pFYjNWaWJHVWlJQzgrUEVacFpXeGtJRTVoYldVOUluQmxjMjlpY25WMGJ5SWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p6WldOamFXOXVJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1OdmMzUmxZV1JwWTJsdmJtRnNiV0YwWlhKcFlXd2lJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWTI5emRHVmhaR2xqYVc5dVlXeHdiM0owWlhNaUlGUjVjR1U5SWtSdmRXSnNaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlZMjl6ZEdWaFpHbGphVzl1WVd4dmRISnZJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1OdmMzUmxZV05wWTJsdmJtRnNkbUZ5YVdGaWJHVWlJ
+/// RlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYjNKa1pXNGlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNCbFpHbGtiM01pSUZSNWNHVTlJa2x1ZERNeUlpQXZQanhHYVdWc1pDQk9ZVzFsUFNKbWEzQmxaR2xrYjNOcFpDSWdWSGx3WlQwaVNXNTBNeklpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVpyY0dWa2FXUnZjM0psWm1WeVpXNWphV0VpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdGpiMjUwWVdSdmNtVnpiRzkwWlhNaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXhoWjJsa1pXNTBhV1pwWlhJaUlGUjVjR1U5SWtkMWFXUWlJQzgrUEVacFpXeGtJRTVo
+/// YldVOUluUnBjRzloYkcxaFkyVnViRzkwWlNJZ1ZIbHdaVDBpU1c1ME16SWlJQzgrUEVacFpXeGtJRTVoYldVOUltWnJjbVZqYkdGdFlXUnZJaUJVZVhCbFBTSkpiblF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10eVpXTnNZVzFoWkc5eVpXWmxjbVZ1WTJsaElpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbUZ1WTJodlgyTnRJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW14aGNtZHZYMk50SWlCVWVYQmxQU0pFYjNWaWJHVWlJQzgrUEVacFpXeGtJRTVoYldVOUltZHlkV1Z6YjE5amJTSWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pWYm1sa1lXUmxjMlJsYzJOeWFYQmphVzl1SWlC
+/// VWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltUmxjMk55YVhCamFXOXVNaUlnVkhsd1pUMGlVM1J5YVc1bklpQXZQand2Vm1sbGR6NDhWbWxsZHlCT1lXMWxQU0pCYkdKaGNtRnVaWE4wYjNSaGJHVnpJajQ4Um1sbGJHUWdUbUZ0WlQwaVpXMXdjbVZ6WVNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMkZzWW1GeVlXNWxjeUlnVkhsd1pUMGlTVzUwTXpJaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acmRHbHdiM05wZG1FaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlZbkoxZEc5MGIzUmhiQ0lnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKd2IzSmpaVzUwWVdwbGNt
+/// VmpZWEpuYjJWeGRXbDJZV3hsYm1OcFlTSWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pwYlhCdmNuUmxjbVZqWVhKbmIyVnhkV2wyWVd4bGJtTnBZU0lnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKd2IzSmpaVzUwWVdwbFpHVnpZM1ZsYm5SdmNISnZiblJ2Y0dGbmJ5SWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pwYlhCdmNuUmxaR1Z6WTNWbGJuUnZjSEp2Ym5SdmNHRm5ieUlnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKd2IzSmpaVzUwWVdwbFpHVnpZM1ZsYm5SdlkyOXRaWEpqYVdGc0lpQlVlWEJsUFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJ
+/// bWx0Y0c5eWRHVmtaWE5qZFdWdWRHOWpiMjFsY21OcFlXd2lJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWW1GelpYUnZkR0ZzSWlCVWVYQmxQU0pFYjNWaWJHVWlJQzgrUEVacFpXeGtJRTVoYldVOUluQnZjbU5sYm5SaGFtVnBkbUVpSUZSNWNHVTlJa1J2ZFdKc1pTSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVkzVnZkR0ZwZG1FaUlGUjVjR1U5SWtSdmRXSnNaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGljM1ZpZEc5MFlXd2lJRlI1Y0dVOUlrUnZkV0pzWlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWkdWamFXMWhiR1Z6Ylc5dVpXUmhjeUlnVkhsd1pUMGlTVzUwTXpJaUlDOCtQQzlXYVdWM1BqeFdhV1YzSUU1aGJXVTlJbU5zYVdWdWRHVnpJajQ4
+/// Um1sbGJHUWdUbUZ0WlQwaVpXMXdjbVZ6WVNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMk4xWlc1MFlYTWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10cFpHbHZiV0Z6SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltWnJabUZ0YVd4cFlYQnliM1psWldSdmNpSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNwdmJtRndjbTkyWldWa2IzSWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10MGFYQnZaVzF3Y21WellTSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNWdWFXUmhaRzVsWjI5
+/// amFXOGlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10cGJtTnZkR1Z5YlNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hM0IxWlhKMGIzTm1hM0JoYVhObGN5SWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNCMVpYSjBiM05wWkNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1hMjF2Ym1Wa1lYTWlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNKbFoybHRaVzVwZG1FaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXRuY25Wd2IzTnBkbUVpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJH
+/// UWdUbUZ0WlQwaVkzSnBkR1Z5YVc5cGRtRWlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNScGNHOXpjbVYwWlc1amFXOXVJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acmRISmhibk53YjNKMGFYTjBZV2hoWW1sMGRXRnNJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5ScGNHOXdiM0owWlhNaUlGUjVjR1U5SWtsdWRETXlJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmpkV1Z1ZEdGMFpYTnZjbVZ5YVdFaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXRtYjNKdFlYTndZV2R2SWlCVWVYQmxQU0pKYm5Rek1pSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVpHVnpZ
+/// M1ZsYm5SdmNISnZiblJ2Y0dGbmJ5SWdWSGx3WlQwaVJHOTFZbXhsSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0prWlhOamRXVnVkRzlqYjIxbGNtTnBZV3dpSUZSNWNHVTlJa1J2ZFdKc1pTSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVpHbGhabWxxYjNCaFoyOHhJaUJVZVhCbFBTSkpiblF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWkdsaFptbHFiM0JoWjI4eUlpQlVlWEJsUFNKSmJuUXpNaUlnTHo0OFJtbGxiR1FnVG1GdFpUMGljR1Z5YVc5a2IyNXZjR0ZuYjJSbGMyUmxJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5CbGNtbHZaRzl1YjNCaFoyOW9ZWE4wWVNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSnViM1Jo
+/// Y3lJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSjBZWEpwWm1FaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlabXRqY21sMFpYSnBiM05oWjNKMWNHRmphVzl1SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUluQnlaWFpwYzJsdmJuQmhaMjl6Y0dWeWFXOWthV052Y3lJZ1ZIbHdaVDBpU1c1ME16SWlJQzgrUEM5V2FXVjNQanhXYVdWM0lFNWhiV1U5SW1WdGNISmxjMkVpUGp4R2FXVnNaQ0JPWVcxbFBTSnBaQ0lnVkhsd1pUMGlVM1J5YVc1bklpQXZQanhHYVdWc1pDQk9ZVzFsUFNKdWIyMWljbVVpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaWJtbG1JaUJVZVhC
+/// bFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acmRHbHdiMmxrWlc1MGFXWnBZMkZqYVc5dVgyNXBaaUlnVkhsd1pUMGlVM1J5YVc1bklpQXZQanhHYVdWc1pDQk9ZVzFsUFNKeVlYcHZibk52WTJsaGJDSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTFCaGFYTWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpUm10d2JHRnVaMlZ1WlhKaGJHTnZiblJoWW14bElpQlVlWEJsUFNKSGRXbGtJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmhaRzFwYm1semRISmhaRzl5SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltNXBabU5wWm1Ga2JXbHVhWE4wY21Ga2IzSWlJRlI1Y0dVOUls
+/// TjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10MGFYQnZhV1JsYm5ScFptbGpZV05wYjI1ZmJtbG1ZMmxtWVdSdGFXNXBjM1J5WVdSdmNpSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0poWTNScGRtbGtZV1J3Y21sdVkybHdZV3dpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVkyNWhaU0lnVkhsd1pUMGlVM1J5YVc1bklpQXZQanhHYVdWc1pDQk9ZVzFsUFNKdWFYWmxiQ0lnVkhsd1pUMGlTVzUwTXpJaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1aclRXOXVaV1JoWW1GelpTSWdWSGx3WlQwaVNXNTBNeklpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVpyVFc5dVpXUmhZV1JwWTJsdmJtRnNJaUJVZVhCbFBTSkpi
+/// blF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWkdsbmFYUnZjMk4xWlc1MFlYTWlJRlI1Y0dVOUlrbHVkRE15SWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0p1YVhabGJHTjFaVzUwWVhNaUlGUjVjR1U5SWtsdWRETXlJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmpkV1Z1ZEdGellXNTFZV3hsY3lJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmpkV1Z1ZEdGemNHVnlaR2xrWVhNaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlZM0pwZEdWeWFXOXBkbUVpSUZSNWNHVTlJa2x1ZERNeUlpQXZQanhHYVdWc1pDQk9ZVzFsUFNKc2FYRjFhV1JoWTJsdmJtbDJZU0lnVkhsd1pUMGlTVzUwTXpJaUlDOCtQRVpwWld4a0lFNWhiV1U5
+/// SW5ScGNHOWxiWEJ5WlhOaElpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVJoZEc5emNtVm5hWE4wY21Gc1pYTWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWm10MFlYSnBabUZ6ZG1WdWRHRnpJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acmRHRnlhV1poYzJOdmJYQnlZWE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVptdHlaV2RwYldWdWFYWmhJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1aclEzVmxiblJoUlc1MGNtRmtZWE5XWVhKcFlYTkJiRzFoWTJWdUlpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1
+/// aGJXVTlJbVpyUTNWbGJuUmhVMkZzYVdSaGMxWmhjbWxoYzBGc2JXRmpaVzRpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVpXRnVNVE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVpHVmphVzFoYkdWemNISmxZMmx2Y3lJZ1ZIbHdaVDBpU1c1ME16SWlJQzgrUEVacFpXeGtJRTVoYldVOUltZDFhV0ZoYm5WaGJHVnpJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1kMWFXRndaWEprYVdSaGN5SWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pqZFdWdWRHRnpaWGhwYzNSbGJtTnBZWE1pSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVkz
+/// VmxiblJoVUVjaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlSR2x5WldOamFXOXVaVzF3Y21WellTSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pRYjJKc1lXTnBiMjVsYlhCeVpYTmhJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SWtOd1pXMXdjbVZ6WVNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSlVaV3hsWm05dWIyVnRjSEpsYzJFaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlSVzFoYVd3aUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlWMlZpSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJ
+/// RTVoYldVOUlrNXZkR0Z6SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUlrUmxabVZqZEc4aUlGUjVjR1U5SWtKdmIyeGxZVzRpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbFJwY0c5VVpYSmpaWEp2SWlCVWVYQmxQU0pKYm5Rek1pSWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVkyOWtVSEp2ZG1sdVkybGhJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW01dmJXSnlaVkJ5YjNacGJtTnBZU0lnVkhsd1pUMGlVM1J5YVc1bklpQXZQanhHYVdWc1pDQk9ZVzFsUFNKamIyUlFZV2x6SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltNXZiV0p5WlZCaGFYTWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhMMVpw
+/// WlhjK1BGWnBaWGNnVG1GdFpUMGlUVzl1WldSaGN5SStQRVpwWld4a0lFNWhiV1U5SW1sa0lpQlVlWEJsUFNKSmJuUXpNaUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlaR1Z6WTNKcGNHTnBiMjRpSUZSNWNHVTlJbE4wY21sdVp5SWdMejQ4Um1sbGJHUWdUbUZ0WlQwaVlXSnlaWFpwWVhSMWNtRWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhMMVpwWlhjK1BGWnBaWGNnVG1GdFpUMGlVM1J2WTJ0QlkzUjFZV3dpUGp4R2FXVnNaQ0JPWVcxbFBTSmxiWEJ5WlhOaElpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVpyWVd4dFlXTmxibVZ6SWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltWnJZWEowYVdOMWJHOXpJaUJVZVhC
+/// bFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW14dmRHVWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYkc5MFpXbGtJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW5KbFptVnlaVzVqYVdGd2NtOTJaV1ZrYjNJaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlkR0ZuSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltWnJkVzVwWkdGa1pYTnRaV1JwWkdFaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGliR0Z5WjI4aUlGUjVjR1U5SWtSdmRXSnNaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlZVzVqYUc4aUlGUjVjR1U5SWtSdmRX
+/// SnNaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlaM0oxWlhOdklpQlVlWEJsUFNKRWIzVmliR1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbU5oYm5ScFpHRmtkRzkwWVd3aUlGUjVjR1U5SWtSdmRXSnNaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlZMkZ1ZEdsa1lXUmthWE53YjI1cFlteGxJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acllXeHRZV05sYm1WemVtOXVZU0lnVkhsd1pUMGlTVzUwTXpJaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1aclkyRnNhV1pwWTJGamFXOXVZMjl0WlhKamFXRnNJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acmRHbHdiMmR5WVc1dklpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBa
+/// V3hrSUU1aGJXVTlJbVpyZEc5dWIyMWhkR1Z5YVdGc0lpQlVlWEJsUFNKVGRISnBibWNpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbkJsYzI5dVpYUnZiRzkwWlNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSm1aV05vWVNJZ1ZIbHdaVDBpUkdGMFpWUnBiV1VpSUM4K1BFWnBaV3hrSUU1aGJXVTlJbVpsWTJoaFkyRmtkV05wWkdGa0lpQlVlWEJsUFNKRVlYUmxWR2x0WlNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYVc1MFpXZHlhV1JoWkhKbFptVnlaVzVqYVdGc1pteGhaeUlnVkhsd1pUMGlSM1ZwWkNJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYldWMGNtOXpJaUJVZVhCbFBTSkViM1ZpYkdVaUlDOCtQRVpwWld4a0lFNWhiV1U5SW1acmFXNWphV1Js
+/// Ym1OcFlYTnRZWFJsY21saGJDSWdWSGx3WlQwaVUzUnlhVzVuSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0ptYTNaaGNtbGxaR0ZrWlhNaUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OFJtbGxiR1FnVG1GdFpUMGlZMjl6ZEdWaFpHbGphVzl1WVd4dFlYUmxjbWxoYkNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmpiM04wWldGa2FXTnBiMjVoYkhCdmNuUmxjeUlnVkhsd1pUMGlSRzkxWW14bElpQXZQanhHYVdWc1pDQk9ZVzFsUFNKamIzTjBaV0ZrYVdOcGIyNWhiRzkwY204aUlGUjVjR1U5SWtSdmRXSnNaU0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlZMjl6ZEdWaFkybGphVzl1WVd4MllYSnBZV0pzWlNJZ1ZIbHdaVDBpUkc5MVlteGxJaUF2UGp4
+/// R2FXVnNaQ0JPWVcxbFBTSjBhWEJ2WVd4dFlXTmxibXh2ZEdVaUlGUjVjR1U5SWtsdWRETXlJaUF2UGp3dlZtbGxkejQ4VW1Wc1lYUnBiMjRnVFdGemRHVnlQU0pCYkdKaGNtRnVaWE5EYjIxd2NtRnpJaUJFWlhSaGFXdzlJa0ZzWW1GeVlXNWxjME52YlhCeVlYTk1hVzRpUGp4TFpYbERiMngxYlc0Z1RXRnpkR1Z5UFNKbGJYQnlaWE5oSWlCRVpYUmhhV3c5SW1WdGNISmxjMkVpSUM4K1BFdGxlVU52YkhWdGJpQk5ZWE4wWlhJOUltbGtJaUJFWlhSaGFXdzlJbVpyWVd4aVlYSmhibVZ6SWlBdlBqd3ZVbVZzWVhScGIyNCtQRkpsYkdGMGFXOXVJRTFoYzNSbGNqMGlRV3hpWVhKaGJtVnpRMjl0Y0hKaGN5SWdSR1YwWVdsc1BTSkJiR0poY21GdVpYTjBiM1JoYkdWeklq
+/// NDhTMlY1UTI5c2RXMXVJRTFoYzNSbGNqMGlaVzF3Y21WellTSWdSR1YwWVdsc1BTSmxiWEJ5WlhOaElpQXZQanhMWlhsRGIyeDFiVzRnVFdGemRHVnlQU0pwWkNJZ1JHVjBZV2xzUFNKbWEyRnNZbUZ5WVc1bGN5SWdMejQ4TDFKbGJHRjBhVzl1UGp4U1pXeGhkR2x2YmlCTllYTjBaWEk5SWtGc1ltRnlZVzVsYzBOdmJYQnlZWE1pSUVSbGRHRnBiRDBpWTJ4cFpXNTBaWE1pUGp4TFpYbERiMngxYlc0Z1RXRnpkR1Z5UFNKbGJYQnlaWE5oSWlCRVpYUmhhV3c5SW1WdGNISmxjMkVpSUM4K1BFdGxlVU52YkhWdGJpQk5ZWE4wWlhJOUltWnJjSEp2ZG1WbFpHOXlaWE1pSUVSbGRHRnBiRDBpWm10amRXVnVkR0Z6SWlBdlBqd3ZVbVZzWVhScGIyNCtQRkpsYkdGMGFXOXVJ
+/// RTFoYzNSbGNqMGlRV3hpWVhKaGJtVnpRMjl0Y0hKaGN5SWdSR1YwWVdsc1BTSmxiWEJ5WlhOaElqNDhTMlY1UTI5c2RXMXVJRTFoYzNSbGNqMGlaVzF3Y21WellTSWdSR1YwWVdsc1BTSnBaQ0lnTHo0OEwxSmxiR0YwYVc5dVBqeFNaV3hoZEdsdmJpQk5ZWE4wWlhJOUlrRnNZbUZ5WVc1bGMwTnZiWEJ5WVhNaUlFUmxkR0ZwYkQwaVRXOXVaV1JoY3lJK1BFdGxlVU52YkhWdGJpQk5ZWE4wWlhJOUltWnJiVzl1WldSaGN5SWdSR1YwWVdsc1BTSnBaQ0lnTHo0OEwxSmxiR0YwYVc5dVBqeFNaV3hoZEdsdmJpQk5ZWE4wWlhJOUlrRnNZbUZ5WVc1bGMwTnZiWEJ5WVhOTWFXNGlJRVJsZEdGcGJEMGlVM1J2WTJ0QlkzUjFZV3dpUGp4TFpYbERiMngxYlc0Z1RXRnpkR1Z5
+/// UFNKbGJYQnlaWE5oSWlCRVpYUmhhV3c5SW1WdGNISmxjMkVpSUM4K1BFdGxlVU52YkhWdGJpQk5ZWE4wWlhJOUltWnJZWEowYVdOMWJHOXpJaUJFWlhSaGFXdzlJbVpyWVhKMGFXTjFiRzl6SWlBdlBqeExaWGxEYjJ4MWJXNGdUV0Z6ZEdWeVBTSnNiM1JsSWlCRVpYUmhhV3c5SW14dmRHVWlJQzgrUEV0bGVVTnZiSFZ0YmlCTllYTjBaWEk5SW5SaFlteGhJaUJFWlhSaGFXdzlJbXh2ZEdWcFpDSWdMejQ4TDFKbGJHRjBhVzl1UGp3dlJHRjBZVk5sZEQ0PQHpBFNFTEVDVCBlLiosZC5kaXJlY2Npb24gYXMgW0RpcmVjY2lvbmVtcHJlc2FdLGQucG9ibGFjaW9uIGFzIFtQb2JsYWNpb25lbXByZXNhXSxkLmNwIGFzIFtDcGVtcHJlc2FdLGQudGVsZWZvbm8gYXMgW1Rl
+/// bGVmb25vZW1wcmVzYV0sIGQuZW1haWwgYXMgW0VtYWlsXSwgZC53ZWIgYXMgW1dlYl0sIGQubm90YXMgYXMgW05vdGFzXSwgZC5kZWZlY3RvIGFzIFtEZWZlY3RvXSwgZC50aXBvdGVyY2VybyBhcyBbVGlwb1RlcmNlcm9dLCBkLmZrcHJvdmluY2lhIGFzIFtjb2RQcm92aW5jaWFdLCBwLm5vbWJyZSBhcyBbbm9tYnJlUHJvdmluY2lhXSwgZC5ma3BhaXMgYXMgW2NvZFBhaXNdLCBwYS5EZXNjcmlwY2lvbiBhcyBbbm9tYnJlUGFpc10gRlJPTSBbRW1wcmVzYXNdIGFzIGUgbGVmdCBqb2luIGRpcmVjY2lvbmVzIGFzIGQgb24gZC5lbXByZXNhPWUuaWQgYW5kIGQudGlwb3RlcmNlcm89LTEgYW5kIGQuZmtlbnRpZGFkPWUuaWQgbGVmdCBqb2luIFByb3ZpbmNpYXMg
+/// YXMgcCBvbiBwLmlkID0gZC5ma3Byb3ZpbmNpYSBhbmQgcC5jb2RpZ29wYWlzID0gZC5ma3BhaXMgbGVmdCBqb2luIFBhaXNlcyBhcyBwYSBvbiBwYS52YWxvciA9IGQuZmtwYWlzIGFuZCBwYS5WYWxvciA9IGQuZmtwYWlzAYwDU0VMRUNUIGFsLiosIChhbC5hbmNobyAqIDEwMCkgQVMgYW5jaG9fY20sIChhbC5sYXJnbyAqIDEwMCkgQVMgbGFyZ29fY20sIChhbC5ncnVlc28gKiAxMDApIEFTIGdydWVzb19jbSwgdS50ZXh0b2NvcnRvIGFzIFtVbmlkYWRlc2Rlc2NyaXBjaW9uXSwgYXIuZGVzY3JpcGNpb24yIEZST00gW0FsYmFyYW5lc0NvbXByYXNMaW5dIGFzIGFsIGlubmVyIGpvaW4gRmFtaWxpYXNwcm9kdWN0b3MgYXMgZnAgb24gZnAuZW1wcmVzYT1hbC5l
+/// bXByZXNhIGFuZCBmcC5pZD1zdWJzdHJpbmcoYWwuZmthcnRpY3Vsb3MsMCwzKSBsZWZ0IGpvaW4gdW5pZGFkZXMgYXMgdSBvbiBmcC5ma3VuaWRhZGVzbWVkaWRhPXUuaWQgTEVGVCBKT0lOIEFydGljdWxvcyBBUyBhciBPTiBhbC5ma2FydGljdWxvcyA9IGFyLmlk</Resource>
+///   </Resources>
+/// </XRTypeInfo>
+namespace XtraReportSerialization {
+    
+    public class xtraReport1 : DevExpress.XtraReports.UI.XtraReport {
+        private DevExpress.XtraReports.UI.TopMarginBand TopMargin1;
+        private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader1;
+        private DevExpress.XtraReports.UI.XRLabel label1;
+        private DevExpress.XtraReports.UI.XRLabel label15;
+        private DevExpress.XtraReports.UI.GroupHeaderBand GroupHeader2;
+        private DevExpress.XtraReports.UI.XRLabel label2;
+        private DevExpress.XtraReports.UI.XRLabel label5;
+        private DevExpress.XtraReports.UI.DetailBand detailBand1;
+        private DevExpress.XtraReports.UI.GroupFooterBand GroupFooter1;
+        private DevExpress.XtraReports.UI.GroupFooterBand GroupFooter2;
+        private DevExpress.XtraReports.UI.XRLabel label3;
+        private DevExpress.XtraReports.UI.XRLabel label6;
+        private DevExpress.XtraReports.UI.XRLabel label7;
+        private DevExpress.XtraReports.UI.BottomMarginBand BottomMargin1;
+        private DevExpress.DataAccess.Sql.SqlDataSource Report;
+        private DevExpress.XtraReports.UI.XRControlStyle xrControlStyle1;
+        private DevExpress.XtraReports.UI.CalculatedField F_Medidas;
+        private DevExpress.XtraReports.UI.CalculatedField calculatedField1;
+        private System.Resources.ResourceManager _resources;
+        private string _resourceString;
+        public xtraReport1() {
+            this._resourceString = DevExpress.XtraReports.Serialization.XRResourceManager.GetResourceFor("XtraReportSerialization.xtraReport1");
+            this.InitializeComponent();
+        }
+        private System.Resources.ResourceManager resources {
+            get {
+                if (_resources == null) {
+                    this._resources = new DevExpress.XtraReports.Serialization.XRResourceManager(this._resourceString);
+                }
+                return this._resources;
+            }
+        }
+        private void InitializeComponent() {
+            DevExpress.XtraReports.UI.XRSummary summary1 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.XtraReports.UI.XRSummary summary2 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.XtraReports.UI.XRSummary summary3 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters msSqlConnectionParameters1 = new DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery1 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery2 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery3 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery4 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery5 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery6 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery7 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
+            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo1 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo1 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo2 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo2 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo3 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo4 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo3 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo5 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo6 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo4 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo7 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo5 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo8 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo6 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo9 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo10 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo11 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo12 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            this.TopMargin1 = new DevExpress.XtraReports.UI.TopMarginBand();
+            this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.GroupHeader2 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.detailBand1 = new DevExpress.XtraReports.UI.DetailBand();
+            this.GroupFooter1 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.GroupFooter2 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.BottomMargin1 = new DevExpress.XtraReports.UI.BottomMarginBand();
+            this.label1 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label15 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label2 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label5 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label3 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label6 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label7 = new DevExpress.XtraReports.UI.XRLabel();
+            this.Report = new DevExpress.DataAccess.Sql.SqlDataSource();
+            this.xrControlStyle1 = new DevExpress.XtraReports.UI.XRControlStyle();
+            this.F_Medidas = new DevExpress.XtraReports.UI.CalculatedField();
+            this.calculatedField1 = new DevExpress.XtraReports.UI.CalculatedField();
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            // 
+            // TopMargin1
+            // 
+            this.TopMargin1.Dpi = 254F;
+            this.TopMargin1.HeightF = 24F;
+            this.TopMargin1.Name = "TopMargin1";
+            // 
+            // GroupHeader1
+            // 
+            this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.label1,
+                        this.label15});
+            this.GroupHeader1.Dpi = 254F;
+            this.GroupHeader1.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+                        new DevExpress.XtraReports.UI.GroupField("lote", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            this.GroupHeader1.HeightF = 105.82F;
+            this.GroupHeader1.Level = 1;
+            this.GroupHeader1.Name = "GroupHeader1";
+            this.GroupHeader1.PageBreak = DevExpress.XtraReports.UI.PageBreak.BeforeBand;
+            // 
+            // GroupHeader2
+            // 
+            this.GroupHeader2.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.label2,
+                        this.label5});
+            this.GroupHeader2.Dpi = 254F;
+            this.GroupHeader2.GroupFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+                        new DevExpress.XtraReports.UI.GroupField("lote", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+                        new DevExpress.XtraReports.UI.GroupField("descripcion", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+                        new DevExpress.XtraReports.UI.GroupField("largo", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+                        new DevExpress.XtraReports.UI.GroupField("ancho", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+                        new DevExpress.XtraReports.UI.GroupField("grueso", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            this.GroupHeader2.HeightF = 40F;
+            this.GroupHeader2.Name = "GroupHeader2";
+            // 
+            // detailBand1
+            // 
+            this.detailBand1.Dpi = 254F;
+            this.detailBand1.HeightF = 26.45F;
+            this.detailBand1.MultiColumn.ColumnCount = 2;
+            this.detailBand1.MultiColumn.Mode = DevExpress.XtraReports.UI.MultiColumnMode.UseColumnCount;
+            this.detailBand1.Name = "detailBand1";
+            // 
+            // GroupFooter1
+            // 
+            this.GroupFooter1.Dpi = 254F;
+            this.GroupFooter1.HeightF = 15.87F;
+            this.GroupFooter1.Name = "GroupFooter1";
+            // 
+            // GroupFooter2
+            // 
+            this.GroupFooter2.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.label3,
+                        this.label6,
+                        this.label7});
+            this.GroupFooter2.Dpi = 254F;
+            this.GroupFooter2.HeightF = 44.99F;
+            this.GroupFooter2.Level = 1;
+            this.GroupFooter2.Name = "GroupFooter2";
+            // 
+            // BottomMargin1
+            // 
+            this.BottomMargin1.Dpi = 254F;
+            this.BottomMargin1.HeightF = 19F;
+            this.BottomMargin1.Name = "BottomMargin1";
+            // 
+            // label1
+            // 
+            this.label1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin.descripcion")});
+            this.label1.Dpi = 254F;
+            this.label1.Font = new System.Drawing.Font("Arial", 9F);
+            this.label1.LocationFloat = new DevExpress.Utils.PointFloat(5.29F, 58.2F);
+            this.label1.Name = "label1";
+            this.label1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label1.SizeF = new System.Drawing.SizeF(632.27F, 40F);
+            this.label1.StylePriority.UseFont = false;
+            this.label1.Text = "label1";
+            // 
+            // label15
+            // 
+            this.label15.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin.lote")});
+            this.label15.Dpi = 254F;
+            this.label15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.label15.LocationFloat = new DevExpress.Utils.PointFloat(4.09F, 10.6F);
+            this.label15.Name = "label15";
+            this.label15.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label15.SizeF = new System.Drawing.SizeF(280.4F, 40F);
+            this.label15.StylePriority.UseFont = false;
+            this.label15.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin.calculatedField1")});
+            this.label2.Dpi = 254F;
+            this.label2.Font = new System.Drawing.Font("Arial", 9F);
+            this.label2.LocationFloat = new DevExpress.Utils.PointFloat(119.04F, 0F);
+            this.label2.Name = "label2";
+            this.label2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label2.SizeF = new System.Drawing.SizeF(452.38F, 40F);
+            this.label2.StylePriority.UseFont = false;
+            this.label2.Text = "label2";
+            // 
+            // label5
+            // 
+            this.label5.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin.cantidad")});
+            this.label5.Dpi = 254F;
+            this.label5.Font = new System.Drawing.Font("Arial", 9F);
+            this.label5.LocationFloat = new DevExpress.Utils.PointFloat(4.05F, 0F);
+            this.label5.Name = "label5";
+            this.label5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label5.SizeF = new System.Drawing.SizeF(84.65F, 40F);
+            this.label5.StylePriority.UseFont = false;
+            this.label5.StylePriority.UseTextAlignment = false;
+            summary1.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
+            this.label5.Summary = summary1;
+            this.label5.Text = "label5";
+            this.label5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
+            // 
+            // label3
+            // 
+            this.label3.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Top | DevExpress.XtraPrinting.BorderSide.Right) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label3.Dpi = 254F;
+            this.label3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.label3.LocationFloat = new DevExpress.Utils.PointFloat(343.91F, 4.92F);
+            this.label3.Name = "label3";
+            this.label3.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label3.SizeF = new System.Drawing.SizeF(66.13F, 40F);
+            this.label3.StylePriority.UseBorders = false;
+            this.label3.StylePriority.UseFont = false;
+            this.label3.Text = "M2";
+            // 
+            // label6
+            // 
+            this.label6.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label6.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin.cantidad")});
+            this.label6.Dpi = 254F;
+            this.label6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.label6.LocationFloat = new DevExpress.Utils.PointFloat(4.05F, 4.94F);
+            this.label6.Name = "label6";
+            this.label6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label6.SizeF = new System.Drawing.SizeF(84.65F, 40F);
+            this.label6.StylePriority.UseBorders = false;
+            this.label6.StylePriority.UseFont = false;
+            this.label6.StylePriority.UseTextAlignment = false;
+            summary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
+            this.label6.Summary = summary2;
+            this.label6.Text = "label5";
+            this.label6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
+            // 
+            // label7
+            // 
+            this.label7.Borders = ((DevExpress.XtraPrinting.BorderSide)((DevExpress.XtraPrinting.BorderSide.Top | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label7.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin.metros")});
+            this.label7.Dpi = 254F;
+            this.label7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.label7.LocationFloat = new DevExpress.Utils.PointFloat(89.86F, 4.94F);
+            this.label7.Name = "label7";
+            this.label7.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label7.SizeF = new System.Drawing.SizeF(253.99F, 40F);
+            this.label7.StylePriority.UseBorders = false;
+            this.label7.StylePriority.UseFont = false;
+            this.label7.StylePriority.UseTextAlignment = false;
+            summary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
+            this.label7.Summary = summary3;
+            this.label7.Text = "label7";
+            this.label7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
+            // 
+            // Report
+            // 
+            this.Report.ConnectionName = "Report";
+            msSqlConnectionParameters1.AuthorizationType = DevExpress.DataAccess.ConnectionParameters.MsSqlAuthorizationType.SqlServer;
+            msSqlConnectionParameters1.DatabaseName = "marfilestable";
+            msSqlConnectionParameters1.Password = "Tot.2020";
+            msSqlConnectionParameters1.ServerName = "192.168.223.210";
+            msSqlConnectionParameters1.UserName = "sa";
+            this.Report.ConnectionParameters = msSqlConnectionParameters1;
+            this.Report.Name = "Report";
+            customSqlQuery1.Name = "clientes";
+            customSqlQuery1.Sql = "SELECT * FROM [Proveedores]";
+            customSqlQuery2.Name = "empresa";
+            customSqlQuery2.Sql = resources.GetString("customSqlQuery2.Sql");
+            customSqlQuery3.Name = "AlbaranesCompras";
+            customSqlQuery3.Sql = "SELECT * FROM [AlbaranesCompras] ";
+            customSqlQuery4.Name = "AlbaranesComprasLin";
+            customSqlQuery4.Sql = resources.GetString("customSqlQuery4.Sql");
+            customSqlQuery5.Name = "Albaranestotales";
+            customSqlQuery5.Sql = "SELECT * FROM [AlbaranesComprasTotales]";
+            customSqlQuery6.Name = "StockActual";
+            customSqlQuery6.Sql = "SELECT * FROM [Stockactual]";
+            customSqlQuery7.Name = "Monedas";
+            customSqlQuery7.Sql = "SELECT id, descripcion, abreviatura FROM Monedas";
+            this.Report.Queries.AddRange(new DevExpress.DataAccess.Sql.SqlQuery[] {
+                        customSqlQuery1,
+                        customSqlQuery2,
+                        customSqlQuery3,
+                        customSqlQuery4,
+                        customSqlQuery5,
+                        customSqlQuery6,
+                        customSqlQuery7});
+            masterDetailInfo1.DetailQueryName = "AlbaranesComprasLin";
+            relationColumnInfo1.NestedKeyColumn = "empresa";
+            relationColumnInfo1.ParentKeyColumn = "empresa";
+            relationColumnInfo2.NestedKeyColumn = "fkalbaranes";
+            relationColumnInfo2.ParentKeyColumn = "id";
+            masterDetailInfo1.KeyColumns.Add(relationColumnInfo1);
+            masterDetailInfo1.KeyColumns.Add(relationColumnInfo2);
+            masterDetailInfo1.MasterQueryName = "AlbaranesCompras";
+            masterDetailInfo2.DetailQueryName = "Albaranestotales";
+            relationColumnInfo3.NestedKeyColumn = "empresa";
+            relationColumnInfo3.ParentKeyColumn = "empresa";
+            relationColumnInfo4.NestedKeyColumn = "fkalbaranes";
+            relationColumnInfo4.ParentKeyColumn = "id";
+            masterDetailInfo2.KeyColumns.Add(relationColumnInfo3);
+            masterDetailInfo2.KeyColumns.Add(relationColumnInfo4);
+            masterDetailInfo2.MasterQueryName = "AlbaranesCompras";
+            masterDetailInfo3.DetailQueryName = "clientes";
+            relationColumnInfo5.NestedKeyColumn = "empresa";
+            relationColumnInfo5.ParentKeyColumn = "empresa";
+            relationColumnInfo6.NestedKeyColumn = "fkcuentas";
+            relationColumnInfo6.ParentKeyColumn = "fkproveedores";
+            masterDetailInfo3.KeyColumns.Add(relationColumnInfo5);
+            masterDetailInfo3.KeyColumns.Add(relationColumnInfo6);
+            masterDetailInfo3.MasterQueryName = "AlbaranesCompras";
+            masterDetailInfo4.DetailQueryName = "empresa";
+            relationColumnInfo7.NestedKeyColumn = "id";
+            relationColumnInfo7.ParentKeyColumn = "empresa";
+            masterDetailInfo4.KeyColumns.Add(relationColumnInfo7);
+            masterDetailInfo4.MasterQueryName = "AlbaranesCompras";
+            masterDetailInfo5.DetailQueryName = "Monedas";
+            relationColumnInfo8.NestedKeyColumn = "id";
+            relationColumnInfo8.ParentKeyColumn = "fkmonedas";
+            masterDetailInfo5.KeyColumns.Add(relationColumnInfo8);
+            masterDetailInfo5.MasterQueryName = "AlbaranesCompras";
+            masterDetailInfo6.DetailQueryName = "StockActual";
+            relationColumnInfo9.NestedKeyColumn = "empresa";
+            relationColumnInfo9.ParentKeyColumn = "empresa";
+            relationColumnInfo10.NestedKeyColumn = "fkarticulos";
+            relationColumnInfo10.ParentKeyColumn = "fkarticulos";
+            relationColumnInfo11.NestedKeyColumn = "lote";
+            relationColumnInfo11.ParentKeyColumn = "lote";
+            relationColumnInfo12.NestedKeyColumn = "loteid";
+            relationColumnInfo12.ParentKeyColumn = "tabla";
+            masterDetailInfo6.KeyColumns.Add(relationColumnInfo9);
+            masterDetailInfo6.KeyColumns.Add(relationColumnInfo10);
+            masterDetailInfo6.KeyColumns.Add(relationColumnInfo11);
+            masterDetailInfo6.KeyColumns.Add(relationColumnInfo12);
+            masterDetailInfo6.MasterQueryName = "AlbaranesComprasLin";
+            this.Report.Relations.AddRange(new DevExpress.DataAccess.Sql.MasterDetailInfo[] {
+                        masterDetailInfo1,
+                        masterDetailInfo2,
+                        masterDetailInfo3,
+                        masterDetailInfo4,
+                        masterDetailInfo5,
+                        masterDetailInfo6});
+            this.Report.ResultSchemaSerializable = resources.GetString("Report.ResultSchemaSerializable");
+            // 
+            // xrControlStyle1
+            // 
+            this.xrControlStyle1.Name = "xrControlStyle1";
+            // 
+            // F_Medidas
+            // 
+            this.F_Medidas.DataMember = "Albaranes.AlbaranesAlbaranesComprasLin";
+            this.F_Medidas.DisplayName = "F_Medidas";
+            this.F_Medidas.Expression = " [largo]+ \' x \'+ [ancho] +\' x \'+ [grueso]+ \' cm\'";
+            this.F_Medidas.FieldType = DevExpress.XtraReports.UI.FieldType.String;
+            this.F_Medidas.Name = "F_Medidas";
+            // 
+            // calculatedField1
+            // 
+            this.calculatedField1.DataMember = "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin";
+            this.calculatedField1.DisplayName = "F_Medidas";
+            this.calculatedField1.Expression = " [largo]+ \' x \'+ [ancho] +\' x \'+ [grueso]+ \' cm\'";
+            this.calculatedField1.FieldType = DevExpress.XtraReports.UI.FieldType.String;
+            this.calculatedField1.Name = "calculatedField1";
+            // 
+            // xtraReport1
+            // 
+            this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
+                        this.TopMargin1,
+                        this.GroupHeader1,
+                        this.GroupHeader2,
+                        this.detailBand1,
+                        this.GroupFooter1,
+                        this.GroupFooter2,
+                        this.BottomMargin1});
+            this.CalculatedFields.AddRange(new DevExpress.XtraReports.UI.CalculatedField[] {
+                        this.F_Medidas,
+                        this.calculatedField1});
+            this.DataMember = "AlbaranesCompras.AlbaranesComprasAlbaranesComprasLin";
+            this.DataSource = this.Report;
+            this.DisplayName = "Etiqueta 49x133 mm Troquelada STD";
+            this.Dpi = 254F;
+            this.Extensions.Add("DataSerializationExtension", "DevExpress.XtraReports.Web.ReportDesigner.DefaultDataSerializer");
+            this.Landscape = true;
+            this.Margins = new System.Drawing.Printing.Margins(42, 30, 24, 19);
+            this.Name = "xtraReport1";
+            this.PageHeight = 510;
+            this.PageWidth = 1400;
+            this.PaperKind = System.Drawing.Printing.PaperKind.Custom;
+            this.ReportPrintOptions.DetailCountOnEmptyDataSource = 0;
+            this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
+            this.SnapGridSize = 25F;
+            this.StyleSheet.AddRange(new DevExpress.XtraReports.UI.XRControlStyle[] {
+                        this.xrControlStyle1});
+            this.Version = "16.2";
+            this.VerticalContentSplitting = DevExpress.XtraPrinting.VerticalContentSplitting.Smart;
+            this.Watermark.Font = new System.Drawing.Font("Arial", 9F);
+            this.Watermark.TextDirection = DevExpress.XtraPrinting.Drawing.DirectionMode.Horizontal;
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+        }
+    }
+}

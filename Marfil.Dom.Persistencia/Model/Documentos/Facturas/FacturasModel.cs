@@ -216,6 +216,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
         [Display(ResourceType = typeof(RFacturas), Name = "Importetotaldoc")]
         public double? Importetotaldoc { get; set; }
 
+        [Display(ResourceType = typeof(RFacturas), Name = "Importetotaldoc")]
+        public string SImportetotaldoc
+        {
+            get { return (Importetotaldoc ?? 0.0).ToString("N", CultureInfo.CreateSpecificCulture("es-ES")); }
+            set { Importetotaldoc = Funciones.Qdouble(value); }
+        }
+
         [Display(ResourceType = typeof(RFacturas), Name = "Importetotalmonedabase")]
         public double? Importetotalmonedabase { get; set; }
 
