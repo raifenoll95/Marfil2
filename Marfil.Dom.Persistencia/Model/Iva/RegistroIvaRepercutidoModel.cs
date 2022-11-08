@@ -26,7 +26,13 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [StringValue(typeof(RRegistroIVA), "Alta")]
         A0,
         [StringValue(typeof(RRegistroIVA), "Errores")]
-        A1
+        A1,
+        [StringValue(typeof(RRegistroIVA), "Modviajeros")]
+        A4,
+        [StringValue(typeof(RRegistroIVA), "Altaivaviajero")]
+        A5,
+        [StringValue(typeof(RRegistroIVA), "Modivaviajeros")]
+        A6
     }
 
     public enum TipoEstadoEnvio
@@ -34,13 +40,17 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [StringValue(typeof(RRegistroIVA), "Pendiente")]
         Pendiente,
         [StringValue(typeof(RRegistroIVA), "Aceptada")]
-        Aceptada,
+        Correcto,
+        [StringValue(typeof(RRegistroIVA), "Aceptadaerrores")]
+        AceptadoConErrores,
         [StringValue(typeof(RRegistroIVA), "Rechazada")]
-        Rechazada
+        Incorrecto
     }
 
     public enum TipoCriterioIva
     {
+        [StringValue(typeof(RRegistroIVA), "Blanco")]
+        Blanco,
         [StringValue(typeof(RRegistroIVA), "Devengo")]
         Devengo,
         [StringValue(typeof(RRegistroIVA), "Caja")]
@@ -84,6 +94,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
     public enum TipoCausa
     {
+        [StringValue(typeof(RRegistroIVA), "Blanco")]
         Blanco,
         [StringValue(typeof(RRegistroIVA), "Art20")]
         Art20,
@@ -179,7 +190,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public string Motivorectificacion { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Criterioivafactoriginal")]
-        public TipoCriterioIva? Criterioivafactoriginal { get; set; }
+        public TipoCriterioIva Criterioivafactoriginal { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Criterioivafactura")]
         public TipoCriterioIva Criterioivafactura { get; set; }
@@ -227,9 +238,24 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Fkcuentastesoreria")]
         public string Fkcuentastesoreria { get; set; }
 
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Sumacuotasiva")]
+        public double? Sumacuotasiva { get; set; }
+
+        public string SSumacuotasiva
+        {
+            get { return (Sumacuotasiva ?? 0.0).ToString("N" + 2); }
+            set { Sumacuotasiva = Funciones.Qdouble(value); }
+        }
+
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Operacionesexluidasbi")]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-        public double Operacionesexluidasbi { get; set; }
+        public double? Operacionesexluidasbi { get; set; }
+
+        public string SOperacionesexluidasbi
+        {
+            get { return (Operacionesexluidasbi ?? 0.0).ToString("N" + 2); }
+            set { Operacionesexluidasbi = (double)Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Totalfactura")]
         public double? Totalfactura { get; set; }
@@ -244,13 +270,19 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public TipoEnvio Tipoenvio { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Fechaalta")]
-        public DateTime Fechaalta { get; set; }
+        public DateTime? Fechaalta { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Estado")]
         public TipoEstadoEnvio Estado { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Reenviaraeat")]
         public bool Reenviaraeat { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Enviarmodificacion")]
+        public bool Enviarmodificacion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Enviarbaja")]
+        public bool Enviarbaja { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Csv")]
         public string Csv { get; set; }
@@ -366,6 +398,12 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseimponible349")]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public double? Baseimponible349 { get; set; }
+
+        public string SBaseimponible349
+        {
+            get { return (Baseimponible349 ?? 0.0).ToString("N" + 2); }
+            set { Baseimponible349 = Funciones.Qdouble(value); }
+        }
         #endregion
 
         #region Totales

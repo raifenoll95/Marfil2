@@ -53,7 +53,7 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Criterioivafactura, new { @class = "control-label col-md-2" })
     <div class="col-md-4">
-        @Html.EnumDropDownList("Criterioivafactura", Model.Criterioivafactura, (object)new { @disabled = "disabled", @class = "form-control" })
+        @Html.EnumDropDownList("Criterioivafactura", Model.Criterioivafactura, (object)new { @readonly = "readonly", @class = "form-control" })
         @Html.ValidationMessageFor(f => Model.Criterioivafactura, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -131,7 +131,7 @@
         @Html.TextBoxFor(f => Model.Rectificativaano, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
 
-    @Html.LabelFor(f => Model.Rectificativaperiodo, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Rectificativaperiodo, new { @class = "control-label col-md-1" })
     <div class="col-md-2">
         @Html.DropDownListFor(f => Model.Rectificativaperiodo, listperiodo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
         @Html.ValidationMessageFor(f => Model.Rectificativaperiodo, "", new { @class = "text-danger" })
@@ -139,7 +139,14 @@
 
     @Html.LabelFor(f => Model.Baseimponible349, new { @class = "control-label col-md-2" })
     <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Baseimponible349, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SBaseimponible349, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Baseimponible349, (object)new { @class = "form-control", @autofocus = "" })
+        }
     </div>
 </div>
 
@@ -429,10 +436,10 @@
                     var day = date.getDate().toString().length != 2 ? '0' + date.getDate() : date.getDate();
                     var month = (date.getMonth() + 1).toString().length != 2 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
                     var formatDate = day + '/' + month + '/' + date.getFullYear();
-                   
-
+                  
                     $('#Fechafacturaoriginal').val(formatDate);
-                    $('#Criterioivafactoriginal').val(factura.Criterioiva);
+                    var criterioiva = (factura.Criterioiva + 1);///El registro de iva tiene Blanco como opción 0, pero la factura no.
+                    $('#Criterioivafactoriginal').val(criterioiva);
                     //$('#Rectificativa349').prop('checked', true);
                     $('#Rectificativaano').val(date.getFullYear());
                     //$('#Baseimponible349').val(factura.Importebaseimponible);
@@ -441,40 +448,40 @@
                         var mes = (date.getMonth() + 1);
                         switch (mes) {
                             case 1:
-                                $('#Rectificativaperiodo').val("Enero");
+                                $('#Rectificativaperiodo').val("01");
                                 break;
                             case 2:
-                                $('#Rectificativaperiodo').val("Febrero");
+                                $('#Rectificativaperiodo').val("02");
                                 break;
                             case 3:
-                                $('#Rectificativaperiodo').val("Marzo");
+                                $('#Rectificativaperiodo').val("03");
                                 break;
                             case 4:
-                                $('#Rectificativaperiodo').val("Abril");
+                                $('#Rectificativaperiodo').val("04");
                                 break;
                             case 5:
-                                $('#Rectificativaperiodo').val("Mayo");
+                                $('#Rectificativaperiodo').val("05");
                                 break;
                             case 6:
-                                $('#Rectificativaperiodo').val("Junio");
+                                $('#Rectificativaperiodo').val("06");
                                 break;
                             case 7:
-                                $('#Rectificativaperiodo').val("Julio");
+                                $('#Rectificativaperiodo').val("07");
                                 break;
                             case 8:
-                                $('#Rectificativaperiodo').val("Agosto");
+                                $('#Rectificativaperiodo').val("08");
                                 break;
                             case 9:
-                                $('#Rectificativaperiodo').val("Septiembre");
+                                $('#Rectificativaperiodo').val("09");
                                 break;
                             case 10:
-                                $('#Rectificativaperiodo').val("Octubre");
+                                $('#Rectificativaperiodo').val("10");
                                 break;
                             case 11:
-                                $('#Rectificativaperiodo').val("Noviembre");
+                                $('#Rectificativaperiodo').val("11");
                                 break;
                             case 12:
-                                $('#Rectificativaperiodo').val("Diciembre");
+                                $('#Rectificativaperiodo').val("12");
                                 break;
                         }
 
@@ -525,7 +532,8 @@
                     var formatDate = day + '/' + month + '/' + date.getFullYear();
 
                     $('#Fechafacturaoriginal').val(formatDate);
-                    $('#Criterioivafactoriginal').val(factura.Criterioiva);
+                    var criterioiva = (factura.Criterioiva + 1);///El registro de iva tiene Blanco como opción 0, pero la factura no.
+                    $('#Criterioivafactoriginal').val(criterioiva);
                     //$('#Rectificativa349').prop('checked', true);
                     $('#Rectificativaano').val(date.getFullYear());
                     //$('#Baseimponible349').val(factura.Importebaseimponible);
@@ -534,40 +542,40 @@
                         var mes = (date.getMonth() + 1);
                         switch (mes) {
                             case 1:
-                                $('#Rectificativaperiodo').val("Enero");
+                                $('#Rectificativaperiodo').val("01");
                                 break;
                             case 2:
-                                $('#Rectificativaperiodo').val("Febrero");
+                                $('#Rectificativaperiodo').val("02");
                                 break;
                             case 3:
-                                $('#Rectificativaperiodo').val("Marzo");
+                                $('#Rectificativaperiodo').val("03");
                                 break;
                             case 4:
-                                $('#Rectificativaperiodo').val("Abril");
+                                $('#Rectificativaperiodo').val("04");
                                 break;
                             case 5:
-                                $('#Rectificativaperiodo').val("Mayo");
+                                $('#Rectificativaperiodo').val("05");
                                 break;
                             case 6:
-                                $('#Rectificativaperiodo').val("Junio");
+                                $('#Rectificativaperiodo').val("06");
                                 break;
                             case 7:
-                                $('#Rectificativaperiodo').val("Julio");
+                                $('#Rectificativaperiodo').val("07");
                                 break;
                             case 8:
-                                $('#Rectificativaperiodo').val("Agosto");
+                                $('#Rectificativaperiodo').val("08");
                                 break;
                             case 9:
-                                $('#Rectificativaperiodo').val("Septiembre");
+                                $('#Rectificativaperiodo').val("09");
                                 break;
                             case 10:
-                                $('#Rectificativaperiodo').val("Octubre");
+                                $('#Rectificativaperiodo').val("10");
                                 break;
                             case 11:
-                                $('#Rectificativaperiodo').val("Noviembre");
+                                $('#Rectificativaperiodo').val("11");
                                 break;
                             case 12:
-                                $('#Rectificativaperiodo').val("Diciembre");
+                                $('#Rectificativaperiodo').val("12");
                                 break;
                         }
 

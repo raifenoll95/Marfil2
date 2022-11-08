@@ -46,7 +46,7 @@
         @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
     </div>
 
-    @if (Model.Estado == TipoEstadoEnvio.Aceptada)
+    @if (Model.Estado == TipoEstadoEnvio.Correcto)
     {
         @Html.LabelFor(f => Model.Reenviaraeat, new { @class = "control-label col-md-1" })
         <div class="col-md-1">

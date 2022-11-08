@@ -38,9 +38,11 @@
         settings.CallbackRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLin" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
-        settings.Width = Unit.Pixel(1500);
+        //settings.Width = Unit.Pixel(1000);
+        settings.Width = Unit.Percentage(100);
         settings.Height = Unit.Pixel(500);
         settings.SettingsPager.Visible = true;
+        //settings.SettingsPager.EnableAdaptivity = true;
 
 
         //edition
@@ -51,12 +53,13 @@
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsBehavior.ConfirmDelete = false;
         settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
-        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
 
         settings.Columns.Add("Id");
         settings.Columns.Add(j =>
         {
             j.FieldName = "Idtipofactura";
+            j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
 
         });
@@ -81,7 +84,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Baseimponible";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
 
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -99,7 +102,7 @@
         {
             j.FieldName = "Fktiposiva";
             j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             j.CellStyle.HorizontalAlign = HorizontalAlign.Center;
             var p = j.PropertiesEdit as ButtonEditProperties;
 
@@ -116,7 +119,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Porcentajeiva";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -129,7 +132,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Cuotaiva";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -142,7 +145,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Porcentajerecargoequivalencia";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             //j.ReadOnly = true;
 
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
@@ -157,7 +160,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Importerecargoequivalencia";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -170,7 +173,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Subtotal";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(150);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -250,6 +253,12 @@
         if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
         {
             settings.CommandColumn.Visible = false;
+            settings.ClientSideEvents.RowDblClick = null;
+        }
+
+        if (!isreadonly)
+        {
+            settings.ClientSideEvents.Init = "function(s,e) { GridViewLineas.Focus();  }";
             settings.ClientSideEvents.RowDblClick = null;
         }
 

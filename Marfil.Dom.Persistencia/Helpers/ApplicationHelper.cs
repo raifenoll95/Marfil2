@@ -1299,18 +1299,18 @@ namespace Marfil.Dom.Persistencia.Helpers
 
                 if (liquidacion == 1)
                 {
-                    List.Add(new SelectListItem() { Value = "Enero", Text = "Enero" });
-                    List.Add(new SelectListItem() { Value = "Febrero", Text = "Febrero" });
-                    List.Add(new SelectListItem() { Value = "Marzo", Text = "Marzo" });
-                    List.Add(new SelectListItem() { Value = "Abril", Text = "Abril" });
-                    List.Add(new SelectListItem() { Value = "Mayo", Text = "Mayo" });
-                    List.Add(new SelectListItem() { Value = "Junio", Text = "Junio" });
-                    List.Add(new SelectListItem() { Value = "Julio", Text = "Julio" });
-                    List.Add(new SelectListItem() { Value = "Agosto", Text = "Agosto" });
-                    List.Add(new SelectListItem() { Value = "Septiembre", Text = "Septiembre" });
-                    List.Add(new SelectListItem() { Value = "Octubre", Text = "Octubre" });
-                    List.Add(new SelectListItem() { Value = "Noviembre", Text = "Noviembre" });
-                    List.Add(new SelectListItem() { Value = "Diciembre", Text = "Diciembre" });
+                    List.Add(new SelectListItem() { Value = "01", Text = "Enero" });
+                    List.Add(new SelectListItem() { Value = "02", Text = "Febrero" });
+                    List.Add(new SelectListItem() { Value = "03", Text = "Marzo" });
+                    List.Add(new SelectListItem() { Value = "04", Text = "Abril" });
+                    List.Add(new SelectListItem() { Value = "05", Text = "Mayo" });
+                    List.Add(new SelectListItem() { Value = "06", Text = "Junio" });
+                    List.Add(new SelectListItem() { Value = "07", Text = "Julio" });
+                    List.Add(new SelectListItem() { Value = "08", Text = "Agosto" });
+                    List.Add(new SelectListItem() { Value = "09", Text = "Septiembre" });
+                    List.Add(new SelectListItem() { Value = "10", Text = "Octubre" });
+                    List.Add(new SelectListItem() { Value = "11", Text = "Noviembre" });
+                    List.Add(new SelectListItem() { Value = "12", Text = "Diciembre" });
                 }
                 else
                 {
@@ -1338,6 +1338,8 @@ namespace Marfil.Dom.Persistencia.Helpers
             var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
 
             var criterio = service.GetCriterioIVA(_context.Empresa);
+
+            criterio++;//El registro de Iva tiene blanco como opción 0, la empresa no.
 
             return criterio;
         }

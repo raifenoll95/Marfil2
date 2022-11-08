@@ -120,8 +120,14 @@
   <data name="Aceptada" xml:space="preserve">
     <value>Aceptada</value>
   </data>
+  <data name="Aceptadaerrores" xml:space="preserve">
+    <value>Aceptada con errores</value>
+  </data>
   <data name="Alta" xml:space="preserve">
     <value>Alta</value>
+  </data>
+  <data name="Altaivaviajero" xml:space="preserve">
+    <value>Alta devoluciones IVA Viajeros</value>
   </data>
   <data name="Art20" xml:space="preserve">
     <value>Exenta por Art. 20</value>
@@ -151,10 +157,13 @@
     <value>Base Rectificada</value>
   </data>
   <data name="Baseretencion" xml:space="preserve">
-    <value>Base retención</value>
+    <value>Base Imponible / Base Retención</value>
   </data>
   <data name="Bieninversion" xml:space="preserve">
     <value>Bien de inversión</value>
+  </data>
+  <data name="Blanco" xml:space="preserve">
+    <value />
   </data>
   <data name="Caja" xml:space="preserve">
     <value>Caja</value>
@@ -190,7 +199,7 @@
     <value>CSV</value>
   </data>
   <data name="Cuentacliente" xml:space="preserve">
-    <value>Cuenta cliente/acreedor</value>
+    <value>Cuenta cliente/deudor</value>
   </data>
   <data name="Cuentaclientecontraparte" xml:space="preserve">
     <value>Cuenta Cliente Contraparte</value>
@@ -224,6 +233,12 @@
   </data>
   <data name="Entregabienes" xml:space="preserve">
     <value>Entrega Bienes</value>
+  </data>
+  <data name="Enviarbaja" xml:space="preserve">
+    <value>Enviar Baja</value>
+  </data>
+  <data name="Enviarmodificacion" xml:space="preserve">
+    <value>Enviar Modificación</value>
   </data>
   <data name="Errores" xml:space="preserve">
     <value>Modificación de errores registrales</value>
@@ -305,6 +320,12 @@
   </data>
   <data name="IVA" xml:space="preserve">
     <value>IVA</value>
+  </data>
+  <data name="Modivaviajeros" xml:space="preserve">
+    <value>Modificación devoluciones IVA Viajeros</value>
+  </data>
+  <data name="Modviajeros" xml:space="preserve">
+    <value>Modificación Régimen de Viajeros</value>
   </data>
   <data name="Motivorectificacion" xml:space="preserve">
     <value>Motivo rectificación</value>
@@ -389,6 +410,9 @@
   </data>
   <data name="Sujetanoexenta" xml:space="preserve">
     <value>Sujeta / No exenta</value>
+  </data>
+  <data name="Sumacuotasiva" xml:space="preserve">
+    <value>Suma Cuotas IVA</value>
   </data>
   <data name="Sustitucion" xml:space="preserve">
     <value>Por sustitución</value>

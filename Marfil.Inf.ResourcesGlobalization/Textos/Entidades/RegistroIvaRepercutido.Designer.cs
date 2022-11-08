@@ -70,11 +70,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Aceptada con errores.
+        /// </summary>
+        public static string Aceptadaerrores {
+            get {
+                return ResourceManager.GetString("Aceptadaerrores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Alta.
         /// </summary>
         public static string Alta {
             get {
                 return ResourceManager.GetString("Alta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Alta devoluciones IVA Viajeros.
+        /// </summary>
+        public static string Altaivaviajero {
+            get {
+                return ResourceManager.GetString("Altaivaviajero", resourceCulture);
             }
         }
         
@@ -160,7 +178,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Base retención.
+        ///   Busca una cadena traducida similar a Base Imponible / Base Retención.
         /// </summary>
         public static string Baseretencion {
             get {
@@ -174,6 +192,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Bieninversion {
             get {
                 return ResourceManager.GetString("Bieninversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a .
+        /// </summary>
+        public static string Blanco {
+            get {
+                return ResourceManager.GetString("Blanco", resourceCulture);
             }
         }
         
@@ -277,7 +304,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cuenta cliente/acreedor.
+        ///   Busca una cadena traducida similar a Cuenta cliente/deudor.
         /// </summary>
         public static string Cuentacliente {
             get {
@@ -381,6 +408,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Entregabienes {
             get {
                 return ResourceManager.GetString("Entregabienes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Enviar Baja.
+        /// </summary>
+        public static string Enviarbaja {
+            get {
+                return ResourceManager.GetString("Enviarbaja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Enviar Modificación.
+        /// </summary>
+        public static string Enviarmodificacion {
+            get {
+                return ResourceManager.GetString("Enviarmodificacion", resourceCulture);
             }
         }
         
@@ -624,6 +669,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string IVA {
             get {
                 return ResourceManager.GetString("IVA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Modificación devoluciones IVA Viajeros.
+        /// </summary>
+        public static string Modivaviajeros {
+            get {
+                return ResourceManager.GetString("Modivaviajeros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Modificación Régimen de Viajeros.
+        /// </summary>
+        public static string Modviajeros {
+            get {
+                return ResourceManager.GetString("Modviajeros", resourceCulture);
             }
         }
         
@@ -876,6 +939,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Sujetanoexenta {
             get {
                 return ResourceManager.GetString("Sujetanoexenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Suma Cuotas IVA.
+        /// </summary>
+        public static string Sumacuotasiva {
+            get {
+                return ResourceManager.GetString("Sumacuotasiva", resourceCulture);
             }
         }
         

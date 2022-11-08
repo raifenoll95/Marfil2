@@ -47,30 +47,49 @@
 
     @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.EditorFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SPorcentajeretencion, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Porcentajeretencion, (object)new { @class = "form-control", @autofocus = "" })
+        }
     </div>
 
     @Html.LabelFor(f => Model.Importeretencion, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.SImporteretencion,(object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } )
+        @Html.TextBoxFor(f => Model.SImporteretencion, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
     </div>
 </div>
 
-<div class="form-group" id="Operaciones">  
+<div class="form-group" id="Operaciones">
+    @Html.LabelFor(f => Model.Sumacuotasiva, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.SSumacuotasiva, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+    </div>
+
     @Html.LabelFor(f => Model.Operacionesexluidasbi, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.EditorFor(f => Model.Operacionesexluidasbi, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SOperacionesexluidasbi, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Operacionesexluidasbi, (object)new { @class = "form-control", @autofocus = "" })
+        }
     </div>
 </div>
 
 <div class="form-group" id="Total">
     @Html.LabelFor(f => Model.Totalfactura, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.STotalfactura, new { @class = "form-control", @autofocus = "", @readonly = "readonly" } )
+        @Html.TextBoxFor(f => Model.STotalfactura, new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
     </div>
 </div>
 
-<h6>Los cálculos de la base de retención, del importe de retención y del total de factura se actualizan al crear/guardar el registro.</h6>
+<h6>Los cálculos de la base de retención, del importe de retención, la suma de cuotas de IVA y del total de factura se actualizarán al crear/guardar el registro.</h6>
 
 @{
     if (isNuevo || iseditable)

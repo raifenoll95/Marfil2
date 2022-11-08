@@ -50,7 +50,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public override string GetSelectPrincipal()
         {
             var result = new StringBuilder();
-            result.Append(" select r.origendoc, r.id, r.referencia, r.fechafactura, r.periodo, r.totalfactura, r.numfacturacliente, t.descripcion as [Tipofactura], r.cuentacliente, r.cuentaventas, c.descripcion as [Nombrecliente] " +
+            result.Append(" select r.origendoc, r.id, r.referencia, r.fechafactura, dbo._fn_enum_PeriodoIVA(r.periodo) as Periodo, r.totalfactura, r.numfacturacliente, t.descripcion as [Tipofactura], r.cuentacliente, r.cuentaventas, c.descripcion as [Nombrecliente] " +
                 " from RegistroIVARepercutido r, Cuentas c , TiposFacturas t ");
             result.AppendFormat(" where r.empresa = c.empresa and r.empresa = t.empresa and r.cuentacliente = c.id and r.tipofactura = t.id and r.empresa ='{0}' order  by r.id desc", _context.Empresa);
 
@@ -146,18 +146,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var sumaBases = 0d;
             var sumaSubtotal = 0d;
-
+            var sumaCuotasiva = 0d;
 
             foreach (var item in model.Totales)
             {
                 sumaBases += item.Baseimponible.Value;
                 sumaSubtotal += item.Subtotal.Value;
+                sumaCuotasiva += item.Cuotaiva.Value;
             }
 
-            model.Baseretencion = Math.Round(sumaBases, 3);
-            model.Importeretencion = Math.Round((double)(model.Baseretencion * (model.Porcentajeretencion / 100)), 3);
+            model.Baseretencion = Math.Round(sumaBases, 2);
+            model.Importeretencion = Math.Round((double)(model.Baseretencion * (model.Porcentajeretencion / 100)), 2);
+            model.Sumacuotasiva = Math.Round(sumaCuotasiva, 2);
+            model.Operacionesexluidasbi = model.Operacionesexluidasbi ?? 0.0;
 
-            model.Totalfactura = Math.Round((double)(sumaSubtotal - model.Importeretencion + model.Operacionesexluidasbi));
+            model.Totalfactura = Math.Round((double)(sumaSubtotal - model.Importeretencion + model.Operacionesexluidasbi), 2);
 
             return model;
         }

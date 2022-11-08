@@ -3733,6 +3733,9 @@
           <Property Name="rectificativaano" Type="int" />
           <Property Name="rectificativaperiodo" Type="nvarchar" MaxLength="15" />
           <Property Name="baseimponible349" Type="float" />
+          <Property Name="sumacuotasiva" Type="float" />
+          <Property Name="enviarmodificacion" Type="bit" />
+          <Property Name="enviarbaja" Type="bit" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -14616,6 +14619,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="rectificativaano" Type="Int32" />
           <Property Name="rectificativaperiodo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="baseimponible349" Type="Double" />
+          <Property Name="sumacuotasiva" Type="Double" />
+          <Property Name="enviarmodificacion" Type="Boolean" />
+          <Property Name="enviarbaja" Type="Boolean" />
           <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
         </EntityType>
@@ -19871,6 +19877,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="enviarbaja" ColumnName="enviarbaja" />
+                <ScalarProperty Name="enviarmodificacion" ColumnName="enviarmodificacion" />
+                <ScalarProperty Name="sumacuotasiva" ColumnName="sumacuotasiva" />
                 <ScalarProperty Name="baseimponible349" ColumnName="baseimponible349" />
                 <ScalarProperty Name="rectificativaperiodo" ColumnName="rectificativaperiodo" />
                 <ScalarProperty Name="rectificativaano" ColumnName="rectificativaano" />

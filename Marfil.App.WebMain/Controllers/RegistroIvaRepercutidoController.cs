@@ -64,7 +64,7 @@ namespace Marfil.App.WebMain.Controllers
             model.Fechafactura = DateTime.Today;
             model.Fechaoperacion = DateTime.Today;
             //model.Fechafacturaoriginal = DateTime.Today;
-            model.Fechaalta = DateTime.Now;
+            //model.Fechaalta = DateTime.Now;
 
             //Fkseriescontables por defecto
             var serviceEjercicios = new EjerciciosService(ContextService);
@@ -266,6 +266,8 @@ namespace Marfil.App.WebMain.Controllers
                             throw new ValidationException("Debe existir una cuenta de venta");
                         }
 
+                        ValidarTipoFacturaGrid(item);
+
                         model.Add(item);
 
                         Session[session] = model;
@@ -351,6 +353,8 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         throw new ValidationException("Debe existir una cuenta de venta");
                     }
+
+                    ValidarTipoFacturaGrid(item);
 
                     Session[session] = model;
 
@@ -508,6 +512,20 @@ namespace Marfil.App.WebMain.Controllers
 
             return JsonConvert.SerializeObject(facturamodel);
 
+        }
+
+        private void ValidarTipoFacturaGrid(RegistroIvaRepercutidoTotalesModel item)
+        {
+            var tipofactura = item.Idtipofactura;
+            var serviceCuentas = new CuentasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var list = serviceCuentas.GetCuentasContablesNivel(0);
+            var abono = serviceCuentas.GetCuentaAbono1(1, tipofactura);
+            list = list.Where(f => f.Id.StartsWith(abono));
+
+            if (!list.Any(f => f.Id == item.Cuentaventas))
+            {
+                throw new ValidationException("La cuenta de venta " + item.Cuentaventas + " no es válida para el tipo de factura indicado");
+            }
         }
         #endregion
     }

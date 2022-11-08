@@ -705,10 +705,15 @@ namespace Marfil.App.WebMain.Controllers
             {
                 var modelo = servicioArticulo.get(articulo) as ArticulosModel;
 
-                foreach(var componente in modelo.ArticulosComponentes)
+                var lineaPresupuesto = presupuestoModel.Lineas.Where(f => f.Fkarticulos == articulo && f.Id == idarticulo).FirstOrDefault();
+
+                foreach (var componente in modelo.ArticulosComponentes)
                 {
                     var familia = servicioFamilia.get(componente.IdComponente.Substring(0, 2)) as FamiliasproductosModel;
                     componente.UnidadMedida = familia.Fkunidadesmedida;
+                    componente.Largo = (float)lineaPresupuesto.Largo;
+                    componente.Ancho = (float)lineaPresupuesto.Ancho;
+                    componente.Grueso = (float)lineaPresupuesto.Grueso;
                     componente.PrecioInicial = componente.Precio;
                     listadoComponentes.Add(componente);
                 }
