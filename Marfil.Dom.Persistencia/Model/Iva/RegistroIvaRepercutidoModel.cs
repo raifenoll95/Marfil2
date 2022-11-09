@@ -299,12 +299,17 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Nombrecontraparte")]
         public string Nombrecontraparte { get; set; }
 
+        [RegularExpression("^(([A-Z]\\d{8})|(\\d{8}[A-Z]))$", ErrorMessage = "NIF incorrecto")]
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Nifrepresentante")]
+        public string Nifrepresentante { get; set; }
+
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipoidentificacion")]
         public TipoIdentificacion Tipoidentificacion { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Codigopais")]
         public string Codigopais { get; set; }
 
+        [RegularExpression("^(([A-Z]\\d{8})|(\\d{8}[A-Z]))$", ErrorMessage = "NIF incorrecto")]
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Nifcontraparte")]
         public string Nifcontraparte { get; set; }
 

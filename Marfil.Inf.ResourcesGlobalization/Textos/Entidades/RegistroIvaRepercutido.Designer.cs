@@ -718,6 +718,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Nif Representante.
+        /// </summary>
+        public static string Nifrepresentante {
+            get {
+                return ResourceManager.GetString("Nifrepresentante", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nombre cliente.
         /// </summary>
         public static string Nombrecliente {
@@ -988,7 +997,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Tipo de identificación.
+        ///   Busca una cadena traducida similar a Identificación.
         /// </summary>
         public static string Tipoidentificacion {
             get {

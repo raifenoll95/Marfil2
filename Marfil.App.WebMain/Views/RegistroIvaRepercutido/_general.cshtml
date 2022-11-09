@@ -265,25 +265,32 @@ else
 <script type="text/javascript">
 
     $("#Cuentacliente").on('change', function () {
-        //Insertamos el porcentaje de rentención
+
         var cuenta = $("#Cuentacliente").val();
-        var regimen = $("#Fkregimeniva").val();
+        var regimen = $("#Fkregimeniva").val();      
         $.ajax({
             url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
             dataType: "text",
             type: "GET",
             data: { cuenta,regimen },
             success: function (data) {
-                console.log(data);
+                var datos = $.parseJSON(data);
+
                 if (regimen == "" || regimen == null) {
-                    eventAggregator.Publish("Fkregimeniva-Buscar", data);
+                    eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimentercero);
                 }
+                $("#Nombrecontraparte").val(datos.cuentaDescripcion);
+                $("#Tipoidentificacion").val(datos.identificacion);
+                $("#Codigopais").val(datos.pais);
+                $("#Nifcontraparte").val(datos.nif);
+                $("#Identificacion").val(datos.nif);
+                $("#Tipoidentificacionotro").val(datos.tiponif);
             }
         });
     });
 
     $('#inputcuentacliente').on('DOMSubtreeModified', function () {
-        //Insertamos el porcentaje de rentención
+
         var cuenta = $("#Cuentacliente").val();
         var regimen = $("#Fkregimeniva").val();
         $.ajax({
@@ -292,10 +299,17 @@ else
             type: "GET",
             data: { cuenta },
             success: function (data) {
-                console.log(data);
+                var datos = $.parseJSON(data);
+
                 if (regimen == "" || regimen == null) {
-                    eventAggregator.Publish("Fkregimeniva-Buscar", data);
+                    eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimentercero);
                 }
+                $("#Nombrecontraparte").val(datos.cuentaDescripcion);
+                $("#Tipoidentificacion").val(datos.identificacion);
+                $("#Codigopais").val(datos.pais);
+                $("#Nifcontraparte").val(datos.nif);
+                $("#Identificacion").val(datos.nif);
+                $("#Tipoidentificacionotro").val(datos.tiponif);
             }
         });
     });

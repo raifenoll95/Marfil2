@@ -3694,11 +3694,11 @@
           <Property Name="tipoenvio" Type="int" />
           <Property Name="fechaalta" Type="datetime" />
           <Property Name="estado" Type="int" />
-          <Property Name="csv" Type="varchar" MaxLength="30" />
-          <Property Name="descripcionerror" Type="varchar" MaxLength="250" />
+          <Property Name="csv" Type="nvarchar" MaxLength="16" />
+          <Property Name="descripcionerror" Type="nvarchar" MaxLength="500" />
           <Property Name="variosdestinatarios" Type="bit" />
           <Property Name="cuentaclientecontraparte" Type="varchar" MaxLength="15" />
-          <Property Name="nombrecontraparte" Type="varchar" MaxLength="200" />
+          <Property Name="nombrecontraparte" Type="nvarchar" MaxLength="120" />
           <Property Name="tipoidentificacion" Type="int" />
           <Property Name="nifcontraparte" Type="nvarchar" MaxLength="9" />
           <Property Name="tipoidentificacionotro" Type="varchar" MaxLength="50" />
@@ -3736,6 +3736,7 @@
           <Property Name="sumacuotasiva" Type="float" />
           <Property Name="enviarmodificacion" Type="bit" />
           <Property Name="enviarbaja" Type="bit" />
+          <Property Name="nifrepresentante" Type="nvarchar" MaxLength="9" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -14580,11 +14581,11 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="tipoenvio" Type="Int32" />
           <Property Name="fechaalta" Type="DateTime" Precision="3" />
           <Property Name="estado" Type="Int32" />
-          <Property Name="csv" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="descripcionerror" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="csv" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="descripcionerror" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="variosdestinatarios" Type="Boolean" />
           <Property Name="cuentaclientecontraparte" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="nombrecontraparte" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="nombrecontraparte" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
           <Property Name="tipoidentificacion" Type="Int32" />
           <Property Name="nifcontraparte" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
           <Property Name="tipoidentificacionotro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -14622,6 +14623,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="sumacuotasiva" Type="Double" />
           <Property Name="enviarmodificacion" Type="Boolean" />
           <Property Name="enviarbaja" Type="Boolean" />
+          <Property Name="nifrepresentante" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
         </EntityType>
@@ -19877,6 +19879,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="nifrepresentante" ColumnName="nifrepresentante" />
                 <ScalarProperty Name="enviarbaja" ColumnName="enviarbaja" />
                 <ScalarProperty Name="enviarmodificacion" ColumnName="enviarmodificacion" />
                 <ScalarProperty Name="sumacuotasiva" ColumnName="sumacuotasiva" />

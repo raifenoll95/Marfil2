@@ -3,6 +3,7 @@ using Marfil.App.WebMain.Misc;
 using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Helpers;
+using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.Model.Documentos.Facturas;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Iva;
@@ -449,10 +450,17 @@ namespace Marfil.App.WebMain.Controllers
 
         public string GetIvaTercero(string cuenta, string regimen)
         {
-            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));          
             var tipoiva = service.GetIvaTercero(cuenta);
             var tipoivaporcentaje = service.GetPorcentajeIvaTercero(tipoiva);
             var tipoivaporcentajerecargo = service.GetPorcentajeRecargoTercero(tipoiva);
+
+            Session["tipoivatercero"] = tipoiva;
+            Session["porcentajetipoivatercero"] = tipoivaporcentaje;
+            Session["porcentajerecargotercero"] = tipoivaporcentajerecargo;
+
+            var cuentaService = new CuentasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var cuentaModel = cuentaService.get(cuenta) as CuentasModel;//Queremos la cuenta para cargar automáticamente campos relacionados
 
             var regimentercero = "";
             if (string.IsNullOrEmpty(regimen))
@@ -460,12 +468,33 @@ namespace Marfil.App.WebMain.Controllers
                 regimentercero = service.GetRegimenivaTercero(cuenta);
             }
 
+            var identificacion = 0;//Nif
+            var nif = "";
+            if (string.IsNullOrEmpty(cuentaModel.Nif.Nif))
+            {
+                identificacion = 1;//Otro
+            }
+            else
+            {
+                nif = cuentaModel.Nif.Nif.Length > 9 ? cuentaModel.Nif.Nif.Substring(2) : cuentaModel.Nif.Nif;
+            }
 
-            Session["tipoivatercero"] = tipoiva;
-            Session["porcentajetipoivatercero"] = tipoivaporcentaje;
-            Session["porcentajerecargotercero"] = tipoivaporcentajerecargo;
+            var tiponif = "";
+            if (!string.IsNullOrEmpty(cuentaModel.Nif.TipoNif))
+            {
+                tiponif = cuentaModel.Nif.TipoNif;
+            }
 
-            return regimentercero;
+            var pais = "ES";
+            if (!string.IsNullOrEmpty(cuentaModel.FkPais) && cuentaModel.FkPais != "070")
+            {
+                var listpaises = WebHelper.GetApplicationHelper().GetListPaises().ToList();
+
+                pais = listpaises.Where(f => f.Valor == cuentaModel.FkPais).SingleOrDefault().CodigoIsoAlfa2;
+            }
+
+            var data = new { regimentercero = regimentercero, cuentaDescripcion = cuentaModel.Descripcion, identificacion = identificacion, nif = nif, tiponif = tiponif, pais = pais };
+            return JsonConvert.SerializeObject(data);
         }
 
         public string GetRegimenIva(string tipo)

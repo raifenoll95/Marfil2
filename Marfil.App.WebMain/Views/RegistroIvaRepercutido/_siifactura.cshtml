@@ -15,7 +15,7 @@
     var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
     var isNuevo = !isreadonly && !iseditable;
 
-    var listtipofactura = WebHelper.GetApplicationHelper().GetListTipoFactura().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+    var listtipofactura = WebHelper.GetApplicationHelper().GetListTipoFactura().Where(f => f.Valor != "F5" && f.Valor != "F6").Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
     var listregimenespecial = WebHelper.GetApplicationHelper().GetListRegimenEspecialEmitidas().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
 }
 

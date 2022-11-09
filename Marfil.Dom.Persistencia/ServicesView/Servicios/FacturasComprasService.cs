@@ -549,11 +549,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Fkseries = serie;
             result.Fkestados = appService.GetConfiguracion().Estadofacturascomprasinicial;
 
-            //asignamos el tipo de factura según el cliente
-            var tipofactura = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault().fktipofactura;
-            if (tipofactura != null)
+            //asignamos el tipo de factura según el proveedor o acreedor
+            if (_db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault() != null)
             {
-                result.Fktipofactura = tipofactura;
+                var tipofactura = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault().fktipofactura;
+                if (tipofactura != null)
+                {
+                    result.Fktipofactura = tipofactura;
+                }
+            } else if (_db.Acreedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault() != null)
+            {
+                var tipofactura = _db.Acreedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault().fktipofactura;
+                if (tipofactura != null)
+                {
+                    result.Fktipofactura = tipofactura;
+                }
             }
 
             var decimalesmonedas = _db.Monedas.Single(f => f.id == result.Fkmonedas.Value).decimales;

@@ -336,6 +336,9 @@
   <data name="Nifcontraparte" xml:space="preserve">
     <value>Nif Contraparte de la operación</value>
   </data>
+  <data name="Nifrepresentante" xml:space="preserve">
+    <value>Nif Representante</value>
+  </data>
   <data name="Nombrecliente" xml:space="preserve">
     <value>Nombre cliente</value>
   </data>
@@ -427,7 +430,7 @@
     <value>Tipo de Factura Rectificativa</value>
   </data>
   <data name="Tipoidentificacion" xml:space="preserve">
-    <value>Tipo de identificación</value>
+    <value>Identificación</value>
   </data>
   <data name="Tipoidentificacionotro" xml:space="preserve">
     <value>Tipo de identificación</value>

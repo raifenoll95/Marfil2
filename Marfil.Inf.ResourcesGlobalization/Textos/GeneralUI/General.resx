@@ -1000,4 +1000,7 @@
   <data name="LblSIIOperacion" xml:space="preserve">
     <value>SII-Operación</value>
   </data>
+  <data name="LblDetallado" xml:space="preserve">
+    <value>Detallado</value>
+  </data>
 </root>

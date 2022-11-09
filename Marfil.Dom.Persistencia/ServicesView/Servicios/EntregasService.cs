@@ -991,9 +991,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var tipotarifa = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == fkclientes).FirstOrDefault().fktarifas;
 
+            if (string.IsNullOrEmpty(tipotarifa))
+            {
+                throw new ValidationException("El cliente " + fkclientes + " debe tener asignada una tarifa");
+            }
+
             var precio = _db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tipotarifa && f.fkarticulos == articulo).FirstOrDefault().precio;
 
             return (double)precio;
+
         }
         #endregion
 
