@@ -588,6 +588,13 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Invertirasiento = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "PrefijosPrestacionServicios")]
+        public string PrefijosPrestacionServicios
+        {
+            get { return Model.PrefijosPrestacionServicios; }
+            set { Model.PrefijosPrestacionServicios = value; }
+        }
+
         [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioExistenciasIniciales")]
         public string ComentarioExistenciasIniciales
         {
@@ -767,6 +774,8 @@ namespace Marfil.Dom.Persistencia.Model
 
         public int Cancelacionriesgoremesa { get; set; }
         public bool Invertirasiento { get; set; }
+
+        public string PrefijosPrestacionServicios { get; set; }
 
         public string ComentarioExistenciasIniciales { get; set; }
         public string ComentarioExistenciasFinales { get; set; }

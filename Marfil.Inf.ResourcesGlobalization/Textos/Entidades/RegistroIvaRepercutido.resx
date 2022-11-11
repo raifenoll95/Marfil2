@@ -402,6 +402,9 @@
   <data name="Referencia" xml:space="preserve">
     <value>Referencia</value>
   </data>
+  <data name="Siioperacion" xml:space="preserve">
+    <value>Operación SII</value>
+  </data>
   <data name="Sin" xml:space="preserve">
     <value>SIN Inversión sujeto pasivo</value>
   </data>

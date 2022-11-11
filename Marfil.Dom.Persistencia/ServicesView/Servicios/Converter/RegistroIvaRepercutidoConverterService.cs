@@ -40,16 +40,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Cuotaiva = f.cuotaiva,
                 Subtotal = f.subtotal,
                 Decimalesmonedas = f.decimalesmonedas,
-                Baseimponible = f.basetotal
+                Baseimponible = f.basetotal,
+                Siioperacion = f.siioperacion
             }).ToList();
 
-            //Rectificadas
-            result.Rectificadas = obj.RegistroIVARepercutidoRectificadas.ToList().Select(f => new RegistroIvaRepercutidoRectificadasModel()
+            //Rectificadas        //Se arrastran los datos de la pestaña Factura, ya no es necesario
+            /*result.Rectificadas = obj.RegistroIVARepercutidoRectificadas.ToList().Select(f => new RegistroIvaRepercutidoRectificadasModel()
             {
                 Id = f.id,
                 Facturaemisor = f.facturaemisor,
                 Fechaexpedemisor = (DateTime)f.fechaexpedemisor
-            }).ToList();
+            }).ToList();*/
 
             //Suma totales
             /*result.Sumatotales = obj.RegistroIVARepercutidoSumaTotales.ToList().Select(f => new RegistroIvaRepercutidoSumaTotalesModel()
@@ -107,10 +108,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.subtotal = item.Subtotal;
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.basetotal = item.Baseimponible;
+                newItem.siioperacion = item.Siioperacion;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 
-            result.RegistroIVARepercutidoRectificadas.Clear();
+            //Se arrastran los datos de la pestaña Factura, ya no es necesario
+            /*result.RegistroIVARepercutidoRectificadas.Clear();
             foreach (var item in viewmodel.Rectificadas)
             {
                 var newItem = _db.Set<RegistroIVARepercutidoRectificadas>().Create();
@@ -120,7 +123,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.facturaemisor = item.Facturaemisor;
                 newItem.fechaexpedemisor = item.Fechaexpedemisor;
                 result.RegistroIVARepercutidoRectificadas.Add(newItem);
-            }
+            }*/
 
             /*result.RegistroIVARepercutidoSumaTotales.Clear();
             var newreg = _db.Set<RegistroIVARepercutidoSumaTotales>().Create();
@@ -178,10 +181,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.subtotal = item.Subtotal;
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.basetotal = item.Baseimponible;
+                newItem.siioperacion = item.Siioperacion;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 
-            result.RegistroIVARepercutidoRectificadas.Clear();
+            //Se arrastran los datos de la pestaña Factura, ya no es necesario
+            /*result.RegistroIVARepercutidoRectificadas.Clear();
             foreach (var item in viewmodel.Rectificadas)
             {
                 var newItem = _db.Set<RegistroIVARepercutidoRectificadas>().Create();
@@ -191,7 +196,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.facturaemisor = item.Facturaemisor;
                 newItem.fechaexpedemisor = item.Fechaexpedemisor;
                 result.RegistroIVARepercutidoRectificadas.Add(newItem);
-            }
+            }*/
 
             /*result.RegistroIVARepercutidoSumaTotales.Clear();
             var newreg = _db.Set<RegistroIVARepercutidoSumaTotales>().Create();

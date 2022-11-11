@@ -1325,6 +1325,25 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         }
 
+        public IEnumerable<SelectListItem> GetTipoOperacionSii()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "S1", Text = "No exenta - Sin inversión sujeto pasivo" });
+            List.Add(new SelectListItem() { Value = "S2", Text = "No exenta - Con inversión sujeto pasivo" });
+            List.Add(new SelectListItem() { Value = "S3", Text = "No exenta - Sin y Con inversión sujeto pasivo" });
+            List.Add(new SelectListItem() { Value = "E1", Text = "Exenta - Art. 20" });
+            List.Add(new SelectListItem() { Value = "E2", Text = "Exenta - Art. 21" });
+            List.Add(new SelectListItem() { Value = "E3", Text = "Exenta - Art. 22" });
+            List.Add(new SelectListItem() { Value = "E4", Text = "Exenta - Art. 23 y 24" });
+            List.Add(new SelectListItem() { Value = "E5", Text = "Exenta - Art. 25" });
+            List.Add(new SelectListItem() { Value = "E6", Text = "Exenta - Otros" });
+            List.Add(new SelectListItem() { Value = "NS", Text = "No Sujeta" });
+
+           return List;
+
+        }
+
         public string GetSerieRepercutidoEjercicio()
         {
             var service = new EjerciciosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));

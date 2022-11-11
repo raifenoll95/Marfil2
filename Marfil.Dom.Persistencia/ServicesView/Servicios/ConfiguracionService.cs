@@ -231,6 +231,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return comentario;
         }
 
+        public string GetPrefijosPrestacionServicios()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("PrefijosPrestacionServicios");
+            var prefijos = nodo[0].InnerText;
+            return prefijos;
+        }
+
         public string GetEstadoFinAlbaranesCompras()
         {
             XmlDocument doc = new XmlDocument();

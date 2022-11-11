@@ -125,7 +125,8 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         #region properties
 
         private List<RegistroIvaRepercutidoTotalesModel> _totales = new List<RegistroIvaRepercutidoTotalesModel>();
-        private List<RegistroIvaRepercutidoRectificadasModel> _rectificadas = new List<RegistroIvaRepercutidoRectificadasModel>();
+        //Se arrastran los datos de la pestaña Factura, ya no es necesario
+        //private List<RegistroIvaRepercutidoRectificadasModel> _rectificadas = new List<RegistroIvaRepercutidoRectificadasModel>();
 
         public int? Id { get; set; }
 
@@ -326,22 +327,55 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public TipoFacturaRectificativa Tipofacturarectificativa { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Baserectificada")]
-        public double Baserectificada { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Baserectificada { get; set; }
+
+        public string SBaserectificada
+        {
+            get { return (Baserectificada ?? 0.0).ToString("N" + 2); }
+            set { Baserectificada = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotaivarectificada")]
-        public double Cuotaivarectificada { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Cuotaivarectificada { get; set; }
+
+        public string SCuotaivarectificada
+        {
+            get { return (Cuotaivarectificada ?? 0.0).ToString("N" + 2); }
+            set { Cuotaivarectificada = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotarectificadaeq")]
-        public double Cuotarectificadaeq { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Cuotarectificadaeq { get; set; }
+
+        public string SCuotarectificadaeq
+        {
+            get { return (Cuotarectificadaeq ?? 0.0).ToString("N" + 2); }
+            set { Cuotarectificadaeq = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Facturaemitidaterceros")]
         public bool Facturaemitidaterceros { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetotalemisor")]
-        public double Importetotalemisor { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Importetotalemisor { get; set; }
+        public string SImportetotalemisor
+        {
+            get { return (Importetotalemisor ?? 0.0).ToString("N" + 2); }
+            set { Importetotalemisor = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetransmisoremisor")]
-        public double Importetransmisoremisor { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Importetransmisoremisor { get; set; }
+        public string SImportetransmisoremisor
+        {
+            get { return (Importetransmisoremisor ?? 0.0).ToString("N" + 2); }
+            set { Importetransmisoremisor = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Claveregimenespecial")]
         public string Claveregimenespecial { get; set; }
@@ -359,19 +393,49 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public Tipoinvsujetopasivo Invsujetopasivo { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajeivasujetopasivo")]
-        public double Porcentajeivasujetopasivo { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Porcentajeivasujetopasivo { get; set; }
+        public string SPorcentajeivasujetopasivo
+        {
+            get { return (Porcentajeivasujetopasivo ?? 0.0).ToString("N" + 2); }
+            set { Porcentajeivasujetopasivo = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Baseimponiblesujetopasivo")]
-        public double Baseimponiblesujetopasivo { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Baseimponiblesujetopasivo { get; set; }
+        public string SBaseimponiblesujetopasivo
+        {
+            get { return (Baseimponiblesujetopasivo ?? 0.0).ToString("N" + 2); }
+            set { Baseimponiblesujetopasivo = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotaivasujetopasivo")]
-        public double Cuotaivasujetopasivo { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? Cuotaivasujetopasivo { get; set; }
+        public string SCuotaivasujetopasivo
+        {
+            get { return (Baseimponiblesujetopasivo ?? 0.0).ToString("N" + 2); }
+            set { Cuotaivasujetopasivo = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Porcentajereceqsujetopasivo")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public double Porcentajereceqsujetopasivo { get; set; }
+        public string SPorcentajereceqsujetopasivo
+        {
+            get { return (Baseimponiblesujetopasivo ?? 0.0).ToString("N" + 2); }
+            set { Cuotaivasujetopasivo = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Cuotareceqsujetopasivo")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public double Cuotareceqsujetopasivo { get; set; }
+        public string SCuotareceqsujetopasivo
+        {
+            get { return (Baseimponiblesujetopasivo ?? 0.0).ToString("N" + 2); }
+            set { Cuotaivasujetopasivo = Funciones.Qdouble(value); }
+        }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Sujetaexenta")]
         public bool Sujetaexenta { get; set; }
@@ -422,12 +486,13 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         #endregion
 
         #region Rectificadas
+        //Se arrastran los datos de la pestaña Factura, ya no es necesario
 
-        public List<RegistroIvaRepercutidoRectificadasModel> Rectificadas
+       /* public List<RegistroIvaRepercutidoRectificadasModel> Rectificadas
         {
             get { return _rectificadas; }
             set { _rectificadas = value; }
-        }
+        }*/
 
         #endregion
 
@@ -471,6 +536,15 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Tipofactura")]
         public string Idtipofactura { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Siioperacion")]
+        public string Siioperacion { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importearticulos")]
+        public double? Importearticulos { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Importetai")]
+        public double? Importetai { get; set; }
 
         //[Display(ResourceType = typeof(RFacturas), Name = "BrutoTotal")]
         //public double? Brutototal { get; set; }

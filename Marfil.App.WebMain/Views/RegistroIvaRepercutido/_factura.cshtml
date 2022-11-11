@@ -297,6 +297,7 @@
                     }
                 }
             });
+
         }
 
         if ($("#Facturarectificativa").is(':checked')) {
@@ -322,6 +323,8 @@
             $("#retenciones").hide();
             $("#inmuebles").hide();
         }
+
+
 
         /*$('#Fktiporetencion').on('DOMSubtreeModified', function () {
             if ($("#Fktiporetencion").val() != "" && $("#Fktiporetencion").val() != null) {
@@ -436,7 +439,7 @@
                     var day = date.getDate().toString().length != 2 ? '0' + date.getDate() : date.getDate();
                     var month = (date.getMonth() + 1).toString().length != 2 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
                     var formatDate = day + '/' + month + '/' + date.getFullYear();
-                  
+
                     $('#Fechafacturaoriginal').val(formatDate);
                     var criterioiva = (factura.Criterioiva + 1);///El registro de iva tiene Blanco como opción 0, pero la factura no.
                     $('#Criterioivafactoriginal').val(criterioiva);

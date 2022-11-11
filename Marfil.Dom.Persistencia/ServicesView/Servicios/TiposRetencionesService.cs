@@ -57,10 +57,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public string GetIvaTercero(string cuenta)
         {
-            var grupoiva = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault().fkgruposiva;
+            var tipoiva = "";
 
-            var tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivasinrecargo;
+            if (_db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault() != null)
+            {
+                var grupoiva = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault().fkgruposiva;
 
+                tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivasinrecargo;
+            }
+            
             //var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
 
             return tipoiva;
@@ -79,20 +84,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public string GetPorcentajeIvaTercero(string tipoiva)
         {
-            var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
+            if (_db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault() != null)
+            {
+                var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
 
-            tipoivaporcentaje = Math.Round((double)tipoivaporcentaje, 2);
+                tipoivaporcentaje = Math.Round((double)tipoivaporcentaje, 2);
 
-            return tipoivaporcentaje.ToString();
+                return tipoivaporcentaje.ToString();
+            }           
+
+            return "";
         }
 
         public string GetPorcentajeRecargoTercero(string tipoiva)
         {
-            var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajerecargoequivalente;
+            if (_db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault() != null)
+            {
+                var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajerecargoequivalente;
 
-            tipoivaporcentaje = Math.Round((double)tipoivaporcentaje, 2);
+                tipoivaporcentaje = Math.Round((double)tipoivaporcentaje, 2);
 
-            return tipoivaporcentaje.ToString();
+                return tipoivaporcentaje.ToString();
+            }
+
+            return "";
         }
 
         #endregion

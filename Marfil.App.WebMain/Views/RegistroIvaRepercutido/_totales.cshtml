@@ -22,6 +22,13 @@
     var isNuevo = !isreadonly && !iseditable;
     var configuracionAplicacion = WebHelper.GetApplicationHelper().GetConfiguracion();
 
+    var listoperacionsii = WebHelper.GetApplicationHelper().GetTipoOperacionSii().Select(f => new SelectListItem()
+    {
+        Text = f.Text,
+        Value = f.Value,
+
+    }).ToList();
+
     Html.EnableClientValidation(true);
     Html.EnableUnobtrusiveJavaScript(true);
 
@@ -183,6 +190,21 @@
             p.SpinButtons.ShowIncrementButtons = false;
         });
 
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Siioperacion";
+            c.Name = "Siioperacion";
+            c.FixedStyle = GridViewColumnFixedStyle.Left;
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            foreach (SelectListItem i in listoperacionsii) 
+                comboBoxProperties.Items.Add(i.Text,i.Value);
+
+            comboBoxProperties.ValueType = typeof(string);
+            comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
+
+        });
+
         settings.Columns["Cuentaventas"].Visible = true;
         settings.Columns["Baseimponible"].Visible = true;
         settings.Columns["Fktiposiva"].Visible = true;
@@ -243,7 +265,8 @@
         settings.CommandColumn.Width = Unit.Pixel(150);
         settings.Styles.CommandColumnItem.CssClass = "btn btn-info";
         settings.Styles.CommandColumnItem.BorderStyle = BorderStyle.None;
-        settings.CommandColumn.VisibleIndex = 9;
+        settings.CommandColumn.VisibleIndex = 0;
+        settings.CommandColumn.FixedStyle = GridViewColumnFixedStyle.Left;
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";

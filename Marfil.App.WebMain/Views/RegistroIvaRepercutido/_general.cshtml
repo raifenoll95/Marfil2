@@ -267,7 +267,8 @@ else
     $("#Cuentacliente").on('change', function () {
 
         var cuenta = $("#Cuentacliente").val();
-        var regimen = $("#Fkregimeniva").val();      
+        var regimen = $("#Fkregimeniva").val();   
+        console.log(regimen);
         $.ajax({
             url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
             dataType: "text",
@@ -285,6 +286,21 @@ else
                 $("#Nifcontraparte").val(datos.nif);
                 $("#Identificacion").val(datos.nif);
                 $("#Tipoidentificacionotro").val(datos.tiponif);
+                $("#Clavetipofactura").val(datos.clavetipofactura);
+                $("#Claveregimenespecial").val(datos.regimenespecial);
+                $("#Tipooperacion").val(datos.tipooperacion);
+
+                if (data.essujetanoexenta == "True") {
+                    $("#Sujetanoexenta").is(':checked');
+                }
+                $("#Invsujetopasivo").val(datos.invsujetopasivo);
+
+                if (data.essujetaexenta == "True") {
+                    $("#Sujetaexenta").is(':checked');
+                }
+                if (data.esnosujeta == "True") {
+                    $("#NoSujeta").is(':checked');
+                }
             }
         });
     });
@@ -310,6 +326,21 @@ else
                 $("#Nifcontraparte").val(datos.nif);
                 $("#Identificacion").val(datos.nif);
                 $("#Tipoidentificacionotro").val(datos.tiponif);
+                $("#Clavetipofactura").val(datos.clavetipofactura);
+                $("#Claveregimenespecial").val(datos.regimenespecial);
+                $("#Tipooperacion").val(datos.tipooperacion);
+
+                if (data.essujetanoexenta == "True") {
+                    $("#Sujetanoexenta").is(':checked');
+                } 
+                $("#Invsujetopasivo").val(datos.invsujetopasivo);
+
+                if (data.essujetaexenta == "True") {
+                    $("#Sujetaexenta").is(':checked');
+                }
+                if (data.esnosujeta == "True") {
+                    $("#NoSujeta").is(':checked');
+                }
             }
         });
     });

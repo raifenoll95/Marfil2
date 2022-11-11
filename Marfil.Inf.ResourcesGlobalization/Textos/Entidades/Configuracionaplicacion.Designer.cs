@@ -448,6 +448,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Prefijo Cuentas Prestación de servicios.
+        /// </summary>
+        public static string PrefijosPrestacionServicios {
+            get {
+                return ResourceManager.GetString("PrefijosPrestacionServicios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tesorería.
         /// </summary>
         public static string Tesoreria {

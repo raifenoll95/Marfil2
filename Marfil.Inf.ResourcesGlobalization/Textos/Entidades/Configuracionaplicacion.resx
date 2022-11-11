@@ -258,4 +258,7 @@
   <data name="CuentaReapertura" xml:space="preserve">
     <value>Cuenta de reapertura provisional</value>
   </data>
+  <data name="PrefijosPrestacionServicios" xml:space="preserve">
+    <value>Prefijo Cuentas Prestación de servicios</value>
+  </data>
 </root>

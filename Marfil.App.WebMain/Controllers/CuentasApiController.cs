@@ -112,6 +112,9 @@ namespace Marfil.App.WebMain.Controllers
 
             var list = service.GetCuentasContablesNivel(intnivel);
 
+            //Quitamos cuentas que realmente no están habilitadas como tercero
+            //list = list.Where(f => f.Descripcion2 != null);
+
             var tipofacturaiva = HttpUtility.ParseQueryString(Request.RequestUri.Query)["tipofacturaiva"];
             var inttipofacturaiva = 2;
             if (!string.IsNullOrEmpty(tipofacturaiva))

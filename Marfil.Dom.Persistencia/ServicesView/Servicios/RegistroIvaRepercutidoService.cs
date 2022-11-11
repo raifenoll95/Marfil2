@@ -75,6 +75,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var regimen = service.GetRegimenivaRepercutido(_context.Empresa, model.Tipofactura);
                 model.Fkregimeniva = regimen;
 
+                model.Descripcionoperacionemisor = string.IsNullOrEmpty(model.Descripcionoperacionemisor) ? GetDescripcionOperacion(model.Totales.First().Cuentaventas) : model.Descripcionoperacionemisor;
+
                 model = Recalculartotales(model);
 
                 base.create(model);
@@ -95,6 +97,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
                 var regimen = service.GetRegimenivaRepercutido(_context.Empresa, editado.Tipofactura);
                 editado.Fkregimeniva = regimen;
+
+                editado.Descripcionoperacionemisor = string.IsNullOrEmpty(editado.Descripcionoperacionemisor) ? GetDescripcionOperacion(editado.Totales.First().Cuentaventas) : editado.Descripcionoperacionemisor;
 
                 editado = Recalculartotales(editado);
 
@@ -163,6 +167,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.Totalfactura = Math.Round((double)(sumaSubtotal - model.Importeretencion + model.Operacionesexluidasbi), 2);
 
             return model;
+        }
+
+        public string GetDescripcionOperacion(string cuentaventas)
+        {
+            if (string.IsNullOrEmpty(cuentaventas))
+            {
+                return "";
+            }
+            var descripcion = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuentaventas).FirstOrDefault().descripcion;
+            return descripcion;
         }
 
         public string ModificarPeriodo(List<SelectListItem> listperiodo, DateTime Fechafactura, DateTime Fechaoperacion)

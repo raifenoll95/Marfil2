@@ -55,29 +55,38 @@
 
     @Html.LabelFor(f => Model.Porcentajeivasujetopasivo, new { @class = "control-label col-md-1" })
     <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Porcentajeivasujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SPorcentajeivasujetopasivo, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
         @Html.ValidationMessageFor(f => Model.Porcentajeivasujetopasivo, "", new { @class = "text-danger" })
     </div>
 
     @Html.LabelFor(f => Model.Baseimponiblesujetopasivo, new { @class = "control-label col-md-1" })
     <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Baseimponiblesujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SBaseimponiblesujetopasivo, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
         @Html.ValidationMessageFor(f => Model.Baseimponiblesujetopasivo, "", new { @class = "text-danger" })
     </div>
 
     @Html.LabelFor(f => Model.Cuotaivasujetopasivo, new { @class = "control-label col-md-1" })
     <div class="col-md-1">
-        @Html.TextBoxFor(f => Model.Cuotaivasujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SCuotaivasujetopasivo, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
         @Html.ValidationMessageFor(f => Model.Cuotaivasujetopasivo, "", new { @class = "text-danger" })
     </div>
 
-    @Html.LabelFor(f => Model.Porcentajereceqsujetopasivo, new { @class = "control-label col-md-1" })
+    @Html.LabelFor(f => Model.Porcentajereceqsujetopasivo, new { @class = "control-label col-md-1", @id = "etiquetaPorcentajeRE" })
     <div class="col-md-1">
         @Html.TextBoxFor(f => Model.Porcentajereceqsujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
         @Html.ValidationMessageFor(f => Model.Porcentajereceqsujetopasivo, "", new { @class = "text-danger" })
     </div>
 
-    @Html.LabelFor(f => Model.Cuotareceqsujetopasivo, new { @class = "control-label col-md-1" })
+    @Html.LabelFor(f => Model.Cuotareceqsujetopasivo, new { @class = "control-label col-md-1", @id = "etiquetaCuotaRE" })
     <div class="col-md-1">
         @Html.TextBoxFor(f => Model.Cuotareceqsujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
         @Html.ValidationMessageFor(f => Model.Cuotareceqsujetopasivo, "", new { @class = "text-danger" })
@@ -141,12 +150,12 @@
 </div>
 
 
-@{
+@*{
     if (isNuevo || iseditable)
     {
         <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
     }
-}
+}*@
 
 <script type="text/javascript">
 
@@ -198,6 +207,20 @@
     });
 
     $("#Invsujetopasivo").on('change', function () {
+        var valor = this.value;
+
+        if (valor == "2") {
+            $("#etiquetaPorcentajeRE").hide();
+            $("#Porcentajereceqsujetopasivo").hide();
+            $("#etiquetaCuotaRE").hide();
+            $("#Cuotareceqsujetopasivo").hide();
+        } else {
+            $("#etiquetaPorcentajeRE").show();
+            $("#Porcentajereceqsujetopasivo").show();
+            $("#etiquetaCuotaRE").show();
+            $("#Cuotareceqsujetopasivo").show();
+        }
+
         $("#Porcentajeivasujetopasivo").val(0);
         $("#Baseimponiblesujetopasivo").val(0);
         $("#Cuotaivasujetopasivo").val(0);

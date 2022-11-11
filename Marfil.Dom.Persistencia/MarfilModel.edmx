@@ -3702,7 +3702,7 @@
           <Property Name="tipoidentificacion" Type="int" />
           <Property Name="nifcontraparte" Type="nvarchar" MaxLength="9" />
           <Property Name="tipoidentificacionotro" Type="varchar" MaxLength="50" />
-          <Property Name="identificacion" Type="nvarchar" MaxLength="15" />
+          <Property Name="identificacion" Type="nvarchar" MaxLength="20" />
           <Property Name="codigopais" Type="varchar" MaxLength="3" />
           <Property Name="clavetipofactura" Type="varchar" MaxLength="3" />
           <Property Name="tipofacturarectificativa" Type="int" />
@@ -3713,7 +3713,7 @@
           <Property Name="importetotalemisor" Type="float" />
           <Property Name="importetransmisoremisor" Type="float" />
           <Property Name="claveregimenespecial" Type="varchar" MaxLength="3" />
-          <Property Name="descripcionoperacionemisor" Type="nvarchar" MaxLength="50" />
+          <Property Name="descripcionoperacionemisor" Type="nvarchar" MaxLength="500" />
           <Property Name="tipooperacion" Type="int" />
           <Property Name="sujetanoexenta" Type="bit" />
           <Property Name="invsujetopasivo" Type="int" />
@@ -3769,6 +3769,9 @@
           <Property Name="importerecargoequivalencia" Type="float" />
           <Property Name="cuentaventas" Type="varchar" MaxLength="15" />
           <Property Name="idtipofactura" Type="varchar" MaxLength="50" />
+          <Property Name="siioperacion" Type="nvarchar" MaxLength="2" />
+          <Property Name="importearticulos" Type="float" />
+          <Property Name="importetai" Type="float" />
         </EntityType>
         <EntityType Name="Remesas">
           <Key>
@@ -14589,7 +14592,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="tipoidentificacion" Type="Int32" />
           <Property Name="nifcontraparte" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
           <Property Name="tipoidentificacionotro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="identificacion" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="codigopais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="clavetipofactura" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="tipofacturarectificativa" Type="Int32" />
@@ -14600,7 +14603,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importetotalemisor" Type="Double" />
           <Property Name="importetransmisoremisor" Type="Double" />
           <Property Name="claveregimenespecial" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="descripcionoperacionemisor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="descripcionoperacionemisor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="tipooperacion" Type="Int32" />
           <Property Name="sujetanoexenta" Type="Boolean" />
           <Property Name="invsujetopasivo" Type="Int32" />
@@ -14659,6 +14662,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importerecargoequivalencia" Type="Double" />
           <Property Name="cuentaventas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="idtipofactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="siioperacion" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="importearticulos" Type="Double" />
+          <Property Name="importetai" Type="Double" />
           <NavigationProperty Name="RegistroIVARepercutido" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutidoTotales" ToRole="RegistroIVARepercutido" />
         </EntityType>
         <Association Name="FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido">
@@ -19974,6 +19980,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutidoTotales">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutidoTotales">
               <MappingFragment StoreEntitySet="RegistroIVARepercutidoTotales">
+                <ScalarProperty Name="importetai" ColumnName="importetai" />
+                <ScalarProperty Name="importearticulos" ColumnName="importearticulos" />
+                <ScalarProperty Name="siioperacion" ColumnName="siioperacion" />
                 <ScalarProperty Name="idtipofactura" ColumnName="idtipofactura" />
                 <ScalarProperty Name="cuentaventas" ColumnName="cuentaventas" />
                 <ScalarProperty Name="importerecargoequivalencia" ColumnName="importerecargoequivalencia" />

@@ -916,6 +916,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Operación SII.
+        /// </summary>
+        public static string Siioperacion {
+            get {
+                return ResourceManager.GetString("Siioperacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a SIN Inversión sujeto pasivo.
         /// </summary>
         public static string Sin {

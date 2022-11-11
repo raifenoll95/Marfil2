@@ -73,7 +73,8 @@ namespace Marfil.App.WebMain.Controllers
 
             Session[session] = model.Totales;
             //Session[sumatotales] = model.Sumatotales;
-            Session[rectificadas] = model.Rectificadas;
+            //Se arrastran los datos de la pestaña Factura, ya no es necesario
+            //Session[rectificadas] = model.Rectificadas;
 
             using (var service = new RegistroIvaRepercutidoService(ContextService))
             {
@@ -93,7 +94,8 @@ namespace Marfil.App.WebMain.Controllers
                 model.Context = ContextService;
                 model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
                 //model.Sumatotales = Session[sumatotales] as RegistroIvaRepercutidoSumaTotalesModel;
-                model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+                //Se arrastran los datos de la pestaña Factura, ya no es necesario
+                //model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
 
                 if (ModelState.IsValid)
                 {
@@ -145,7 +147,8 @@ namespace Marfil.App.WebMain.Controllers
                     ((RegistroIvaRepercutidoModel)model).Sumatotales = new RegistroIvaRepercutidoSumaTotalesModel();
                 }
                 Session[sumatotales] = ((RegistroIvaRepercutidoModel)model).Sumatotales;*/
-                Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
+                //Se arrastran los datos de la pestaña Factura, ya no es necesario
+                //Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
             }
@@ -159,7 +162,8 @@ namespace Marfil.App.WebMain.Controllers
             var objExt = model as IModelViewExtension;
             model.Totales = Session[session] as List<RegistroIvaRepercutidoTotalesModel>;
             //model.Sumatotales = Session[sumatotales] as RegistroIvaRepercutidoSumaTotalesModel;
-            model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+            //Se arrastran los datos de la pestaña Factura, ya no es necesario
+            //model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
             try
             {
                 if (ModelState.IsValid)
@@ -204,7 +208,8 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 Session[session] = ((RegistroIvaRepercutidoModel)model).Totales;
                 //Session[sumatotales] = ((RegistroIvaRepercutidoModel)model).Sumatotales;
-                Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
+                //Se arrastran los datos de la pestaña Factura, ya no es necesario
+                //Session[rectificadas] = ((RegistroIvaRepercutidoModel)model).Rectificadas;
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 return View(model);
@@ -348,6 +353,7 @@ namespace Marfil.App.WebMain.Controllers
                     editItem.Porcentajerecargoequivalencia = item.Porcentajerecargoequivalencia;
                     editItem.Importerecargoequivalencia = item.Importerecargoequivalencia;
                     editItem.Subtotal = item.Subtotal;
+                    editItem.Siioperacion = item.Siioperacion;
                     editItem.Decimalesmonedas = 3;
 
                     if (string.IsNullOrEmpty(editItem.Cuentaventas))
@@ -462,10 +468,93 @@ namespace Marfil.App.WebMain.Controllers
             var cuentaService = new CuentasService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var cuentaModel = cuentaService.get(cuenta) as CuentasModel;//Queremos la cuenta para cargar automáticamente campos relacionados
 
+            var regimenService = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var configuracionService = new ConfiguracionService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var regimentercero = "";
+            var clavetipofactura = "";
+            var regimenespecial = "";
+            var tipooperacion = "0";//Factura
+            var prefijos = configuracionService.GetPrefijosPrestacionServicios().Split(',');
+            var essujetanoexenta = false;
+            var essujetaexenta = false;
+            var esnosujeta = false;
+            var invsujetopasivo = "0";
             if (string.IsNullOrEmpty(regimen))
-            {
+            {              
                 regimentercero = service.GetRegimenivaTercero(cuenta);
+                clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimentercero);
+                regimenespecial = regimenService.GetRegimenEspecialEmitida(regimentercero);
+                if (prefijos.Contains(cuenta.Substring(0,3)))
+                {
+                    tipooperacion = "3";//Prestación de servicios
+                }
+                else
+                {
+                    if (GetOperacionUE(regimentercero))
+                    {
+                        tipooperacion = "1";//Entrega de bienes
+                    }
+                    else if (GetExportacion(regimentercero))
+                    {
+                        tipooperacion = "1";//Entrega de bienes
+                    }
+                }
+
+                if (EsSujetaNoExenta(regimentercero))
+                {
+                    essujetanoexenta = true;
+                    if (EsInvSujetoPasivo(regimentercero))
+                    {
+                        invsujetopasivo = "1";
+                    }
+                }
+                if (EsSujetaExenta(regimentercero))
+                {
+                    essujetaexenta = true;
+                }
+                if (EsNoSujeta(regimentercero))
+                {
+                    esnosujeta = true;
+                }
+
+            }
+            else
+            {
+                clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimen);
+                regimenespecial = regimenService.GetRegimenEspecialEmitida(regimen);
+                if (prefijos.Contains(cuenta.Substring(0, 3)))
+                {
+                    tipooperacion = "3";//Prestación de servicios
+                }
+                else
+                {
+                    if (GetOperacionUE(regimen))
+                    {
+                        tipooperacion = "1";//Entrega de bienes
+                    }
+                    else if (GetExportacion(regimen))
+                    {
+                        tipooperacion = "1";//Entrega de bienes
+                    }
+                }
+
+                if (EsSujetaNoExenta(regimen))
+                {
+                    essujetanoexenta = true;
+                    if (EsInvSujetoPasivo(regimen))
+                    {
+                        invsujetopasivo = "1";
+                    }
+                }
+                if (EsSujetaExenta(regimen))
+                {
+                    essujetaexenta = true;
+                }
+                if (EsNoSujeta(regimen))
+                {
+                    esnosujeta = true;
+                }
+
             }
 
             var identificacion = 0;//Nif
@@ -493,7 +582,10 @@ namespace Marfil.App.WebMain.Controllers
                 pais = listpaises.Where(f => f.Valor == cuentaModel.FkPais).SingleOrDefault().CodigoIsoAlfa2;
             }
 
-            var data = new { regimentercero = regimentercero, cuentaDescripcion = cuentaModel.Descripcion, identificacion = identificacion, nif = nif, tiponif = tiponif, pais = pais };
+            var data = new { regimentercero = regimentercero, cuentaDescripcion = cuentaModel.Descripcion, identificacion = identificacion,
+                nif = nif, tiponif = tiponif, pais = pais, clavetipofactura = clavetipofactura, regimenespecial = regimenespecial, tipooperacion = tipooperacion,
+                essujetanoexenta = essujetanoexenta, essujetaexenta = essujetaexenta, esnosujeta = esnosujeta, invsujetopasivo = invsujetopasivo
+            };
             return JsonConvert.SerializeObject(data);
         }
 
@@ -532,6 +624,71 @@ namespace Marfil.App.WebMain.Controllers
             var esOperacionUE = service.GetOperacionUE(ContextService.Empresa, regimen);
 
             return esOperacionUE;
+        }
+
+        public bool GetExportacion(string regimen)
+        {
+            if (string.IsNullOrEmpty(regimen))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var esExportacion = service.GetExportacion(ContextService.Empresa, regimen);
+
+            return esExportacion;
+        }
+
+        public bool EsSujetaNoExenta(string regimen)
+        {
+            if (string.IsNullOrEmpty(regimen))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var EsSujetaNoExenta = service.EsSujetaNoExenta(ContextService.Empresa, regimen);
+
+            return EsSujetaNoExenta;
+        }
+
+        public bool EsSujetaExenta(string regimen)
+        {
+            if (string.IsNullOrEmpty(regimen))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var EsSujetaExenta = service.EsSujetaExenta(ContextService.Empresa, regimen);
+
+            return EsSujetaExenta;
+        }
+
+        public bool EsNoSujeta(string regimen)
+        {
+            if (string.IsNullOrEmpty(regimen))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var EsNoSujeta = service.EsNoSujeta(ContextService.Empresa, regimen);
+
+            return EsNoSujeta;
+        }
+
+        public bool EsInvSujetoPasivo(string regimen)
+        {
+            if (string.IsNullOrEmpty(regimen))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var invsujetopasivo = service.EsInvSujetoPasivo(ContextService.Empresa, regimen);
+
+            return invsujetopasivo;
         }
 
         public string GetDatosFacturaRectificativa(string idfactura)

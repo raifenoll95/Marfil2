@@ -12,6 +12,13 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(f => Model.PrefijosPrestacionServicios, new { @class = "control-label col-md-4" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(f => Model.PrefijosPrestacionServicios, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(f => Model.ComentarioExistenciasIniciales, new { @class = "control-label col-md-4" })
         <div class="col-md-4">
             @Html.TextBoxFor(f => Model.ComentarioExistenciasIniciales, new { @class = "form-control" })

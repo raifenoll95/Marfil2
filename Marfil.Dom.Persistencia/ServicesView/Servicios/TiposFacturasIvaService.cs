@@ -87,9 +87,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public string GetRegimenivaRepercutido(string empresa, string tipo)
         {
-           var tipoparse = int.Parse(tipo);
+            if (!string.IsNullOrEmpty(tipo))
+            {
+                var tipoparse = int.Parse(tipo);
 
-           return _db.TiposFacturas.Where(f => f.empresa == empresa && f.tipocircuito == 1 && f.id == tipoparse).FirstOrDefault().regimeniva;
+                return _db.TiposFacturas.Where(f => f.empresa == empresa && f.tipocircuito == 1 && f.id == tipoparse).FirstOrDefault().regimeniva;
+            }
+
+            return "";
         }
 
 
