@@ -473,6 +473,14 @@ namespace Marfil.Dom.Persistencia.Model.Iva
             get { return (Baseimponible349 ?? 0.0).ToString("N" + 2); }
             set { Baseimponible349 = Funciones.Qdouble(value); }
         }
+
+        public Guid? Fkusuarioalta { get; set; }
+
+        public DateTime? Fechaaltaregistro { get; set; }
+
+        public Guid? Fkusuariomodificacion { get; set; }
+
+        public DateTime? Fechamodificacionregistro { get; set; }
         #endregion
 
         #region Totales

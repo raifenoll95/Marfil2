@@ -45,7 +45,7 @@
         settings.CallbackRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "TotalesLin" };
         settings.EnableRowsCache = true;
         settings.KeyboardSupport = true;
-        //settings.Width = Unit.Pixel(1000);
+        //settings.Width = Unit.Pixel(1600);
         settings.Width = Unit.Percentage(100);
         settings.Height = Unit.Pixel(500);
         settings.SettingsPager.Visible = true;
@@ -59,14 +59,15 @@
         // settings.CustomActionRouteValues = new { Controller = "RegistroIvaRepercutido", Action = "CustomGridViewEditingPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
         settings.SettingsBehavior.ConfirmDelete = false;
-        settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
-        //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+        //settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;      
 
         settings.Columns.Add("Id");
+
         settings.Columns.Add(j =>
         {
             j.FieldName = "Idtipofactura";
-            j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             j.ReadOnly = true;
 
         });
@@ -91,7 +92,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Baseimponible";
-            //j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
 
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -109,7 +110,7 @@
         {
             j.FieldName = "Fktiposiva";
             j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
-            //j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             j.CellStyle.HorizontalAlign = HorizontalAlign.Center;
             var p = j.PropertiesEdit as ButtonEditProperties;
 
@@ -126,7 +127,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Porcentajeiva";
-            //j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -139,7 +140,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Cuotaiva";
-            //j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -152,7 +153,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Porcentajerecargoequivalencia";
-            //j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             //j.ReadOnly = true;
 
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
@@ -167,7 +168,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Importerecargoequivalencia";
-            //j.Width = Unit.Pixel(150);
+           // j.Width = Unit.Pixel(100);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -180,7 +181,7 @@
         settings.Columns.Add(j =>
         {
             j.FieldName = "Subtotal";
-            //j.Width = Unit.Pixel(150);
+            //j.Width = Unit.Pixel(100);
             j.ReadOnly = true;
             j.ColumnType = MVCxGridViewColumnType.SpinEdit;
             var p = j.PropertiesEdit as SpinEditProperties;
@@ -194,15 +195,42 @@
         {
             c.FieldName = "Siioperacion";
             c.Name = "Siioperacion";
-            c.FixedStyle = GridViewColumnFixedStyle.Left;
+            c.Width = Unit.Pixel(150);
+            //c.FixedStyle = GridViewColumnFixedStyle.Left;
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
             var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
-            foreach (SelectListItem i in listoperacionsii) 
+            foreach (SelectListItem i in listoperacionsii)
                 comboBoxProperties.Items.Add(i.Text,i.Value);
 
             comboBoxProperties.ValueType = typeof(string);
             comboBoxProperties.DropDownStyle = DropDownStyle.DropDownList;
 
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Importearticulos";
+            j.Width = Unit.Pixel(175);
+            //j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
+        });
+
+        settings.Columns.Add(j =>
+        {
+            j.FieldName = "Importetai";
+            j.Width = Unit.Pixel(175);
+            //j.ReadOnly = true;
+            j.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            var p = j.PropertiesEdit as SpinEditProperties;
+            var editor = (TextEditProperties)j.PropertiesEdit;
+            editor.DisplayFormatString = "N2";
+            editor.DisplayFormatInEditMode = true;
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns["Cuentaventas"].Visible = true;
@@ -215,6 +243,9 @@
         settings.Columns["Subtotal"].Visible = true;
         settings.Columns["Id"].Visible = false;
         settings.Columns["Idtipofactura"].Visible = true;
+        settings.Columns["Siioperacion"].Visible = true;
+        settings.Columns["Importearticulos"].Visible = true;
+        settings.Columns["Importetai"].Visible = true;
 
         settings.InitNewRow += (s, e) =>
         {
@@ -245,6 +276,9 @@
             e.NewValues["Cuotaiva"] = "";
             e.NewValues["Importerecargoequivalencia"] = "";
             e.NewValues["Subtotal"] = "";
+            e.NewValues["Siioperacion"] = "";
+            e.NewValues["Importearticulos"] = "";
+            e.NewValues["Importetai"] = "";
 
             if (Session["idtipofactura"] != null)
             {
@@ -296,7 +330,7 @@
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Left;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-
+        
     });
 
 

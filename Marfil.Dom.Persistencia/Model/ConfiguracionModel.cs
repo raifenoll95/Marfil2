@@ -651,6 +651,20 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.ComentarioAperturaProvisional = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "CuentaProveedoresVarios")]
+        public string CuentaProveedoresVarios
+        {
+            get { return Model.CuentaProveedoresVarios; }
+            set { Model.CuentaProveedoresVarios = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "CuentaClientesVarios")]
+        public string CuentaClientesVarios
+        {
+            get { return Model.CuentaClientesVarios; }
+            set { Model.CuentaClientesVarios = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -776,6 +790,9 @@ namespace Marfil.Dom.Persistencia.Model
         public bool Invertirasiento { get; set; }
 
         public string PrefijosPrestacionServicios { get; set; }
+        public string CuentaProveedoresVarios { get; set; }
+        public string CuentaClientesVarios { get; set; }
+
 
         public string ComentarioExistenciasIniciales { get; set; }
         public string ComentarioExistenciasFinales { get; set; }

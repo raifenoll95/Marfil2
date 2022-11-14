@@ -99,6 +99,10 @@ namespace Marfil.Dom.Persistencia
         public Nullable<bool> enviarmodificacion { get; set; }
         public Nullable<bool> enviarbaja { get; set; }
         public string nifrepresentante { get; set; }
+        public Nullable<System.Guid> fkusuarioalta { get; set; }
+        public Nullable<System.DateTime> fechaaltaregistro { get; set; }
+        public Nullable<System.Guid> fkusuariomodificacion { get; set; }
+        public Nullable<System.DateTime> fechamodificacionregistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }

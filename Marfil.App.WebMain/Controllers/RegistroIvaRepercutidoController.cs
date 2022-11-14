@@ -97,6 +97,10 @@ namespace Marfil.App.WebMain.Controllers
                 //Se arrastran los datos de la pestaña Factura, ya no es necesario
                 //model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
 
+                //Auditoría
+                model.Fechaaltaregistro = DateTime.Now;
+                model.Fkusuarioalta = ContextService.Id;
+
                 if (ModelState.IsValid)
                 {
                     using (var gestionService = createService(model))
@@ -164,6 +168,11 @@ namespace Marfil.App.WebMain.Controllers
             //model.Sumatotales = Session[sumatotales] as RegistroIvaRepercutidoSumaTotalesModel;
             //Se arrastran los datos de la pestaña Factura, ya no es necesario
             //model.Rectificadas = Session[rectificadas] as List<RegistroIvaRepercutidoRectificadasModel>;
+
+            //Auditoría
+            model.Fechamodificacionregistro = DateTime.Now;
+            model.Fkusuariomodificacion = ContextService.Id;
+
             try
             {
                 if (ModelState.IsValid)
@@ -354,7 +363,9 @@ namespace Marfil.App.WebMain.Controllers
                     editItem.Importerecargoequivalencia = item.Importerecargoequivalencia;
                     editItem.Subtotal = item.Subtotal;
                     editItem.Siioperacion = item.Siioperacion;
-                    editItem.Decimalesmonedas = 3;
+                    editItem.Importearticulos = item.Importearticulos;
+                    editItem.Importetai = item.Importetai;
+                    editItem.Decimalesmonedas = 2;
 
                     if (string.IsNullOrEmpty(editItem.Cuentaventas))
                     {
@@ -474,115 +485,129 @@ namespace Marfil.App.WebMain.Controllers
             var clavetipofactura = "";
             var regimenespecial = "";
             var tipooperacion = "0";//Factura
+            var cuentaDescripcion = "";
             var prefijos = configuracionService.GetPrefijosPrestacionServicios().Split(',');
+            var clienteVarios = configuracionService.GetClientesVarios();
             var essujetanoexenta = false;
             var essujetaexenta = false;
             var esnosujeta = false;
             var invsujetopasivo = "0";
-            if (string.IsNullOrEmpty(regimen))
-            {              
-                regimentercero = service.GetRegimenivaTercero(cuenta);
-                clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimentercero);
-                regimenespecial = regimenService.GetRegimenEspecialEmitida(regimentercero);
-                if (prefijos.Contains(cuenta.Substring(0,3)))
-                {
-                    tipooperacion = "3";//Prestación de servicios
-                }
-                else
-                {
-                    if (GetOperacionUE(regimentercero))
-                    {
-                        tipooperacion = "1";//Entrega de bienes
-                    }
-                    else if (GetExportacion(regimentercero))
-                    {
-                        tipooperacion = "1";//Entrega de bienes
-                    }
-                }
-
-                if (EsSujetaNoExenta(regimentercero))
-                {
-                    essujetanoexenta = true;
-                    if (EsInvSujetoPasivo(regimentercero))
-                    {
-                        invsujetopasivo = "1";
-                    }
-                }
-                if (EsSujetaExenta(regimentercero))
-                {
-                    essujetaexenta = true;
-                }
-                if (EsNoSujeta(regimentercero))
-                {
-                    esnosujeta = true;
-                }
-
-            }
-            else
-            {
-                clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimen);
-                regimenespecial = regimenService.GetRegimenEspecialEmitida(regimen);
-                if (prefijos.Contains(cuenta.Substring(0, 3)))
-                {
-                    tipooperacion = "3";//Prestación de servicios
-                }
-                else
-                {
-                    if (GetOperacionUE(regimen))
-                    {
-                        tipooperacion = "1";//Entrega de bienes
-                    }
-                    else if (GetExportacion(regimen))
-                    {
-                        tipooperacion = "1";//Entrega de bienes
-                    }
-                }
-
-                if (EsSujetaNoExenta(regimen))
-                {
-                    essujetanoexenta = true;
-                    if (EsInvSujetoPasivo(regimen))
-                    {
-                        invsujetopasivo = "1";
-                    }
-                }
-                if (EsSujetaExenta(regimen))
-                {
-                    essujetaexenta = true;
-                }
-                if (EsNoSujeta(regimen))
-                {
-                    esnosujeta = true;
-                }
-
-            }
-
             var identificacion = 0;//Nif
             var nif = "";
-            if (string.IsNullOrEmpty(cuentaModel.Nif.Nif))
+            var tiponif = "";
+            var pais = "ES";
+
+            //Si es cliente Varios, datos de la cuenta vacíos
+            if (cuenta == clienteVarios)
             {
-                identificacion = 1;//Otro
+                clavetipofactura = "F2";//FACTURA SIMPLIFICADA
             }
             else
             {
-                nif = cuentaModel.Nif.Nif.Length > 9 ? cuentaModel.Nif.Nif.Substring(2) : cuentaModel.Nif.Nif;
+                if (string.IsNullOrEmpty(regimen))
+                {
+                    regimentercero = service.GetRegimenivaTercero(cuenta);
+                    clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimentercero);
+                    regimenespecial = regimenService.GetRegimenEspecialEmitida(regimentercero);
+                    if (prefijos.Contains(cuenta.Substring(0, 3)))
+                    {
+                        tipooperacion = "2";//Prestación de servicios
+                    }
+                    else
+                    {
+                        if (GetOperacionUE(regimentercero))
+                        {
+                            tipooperacion = "1";//Entrega de bienes
+                        }
+                        else if (GetExportacion(regimentercero))
+                        {
+                            tipooperacion = "1";//Entrega de bienes
+                        }
+                    }
+
+                    /*if (EsSujetaNoExenta(regimentercero))
+                    {
+                        essujetanoexenta = true;
+                        if (EsInvSujetoPasivo(regimentercero))
+                        {
+                            invsujetopasivo = "1";
+                        }
+                    }
+                    if (EsSujetaExenta(regimentercero))
+                    {
+                        essujetaexenta = true;
+                    }
+                    if (EsNoSujeta(regimentercero))
+                    {
+                        esnosujeta = true;
+                    }*/
+
+                }
+                else
+                {
+                    clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimen);
+                    regimenespecial = regimenService.GetRegimenEspecialEmitida(regimen);
+                    if (prefijos.Contains(cuenta.Substring(0, 3)))
+                    {
+                        tipooperacion = "2";//Prestación de servicios
+                    }
+                    else
+                    {
+                        if (GetOperacionUE(regimen))
+                        {
+                            tipooperacion = "1";//Entrega de bienes
+                        }
+                        else if (GetExportacion(regimen))
+                        {
+                            tipooperacion = "1";//Entrega de bienes
+                        }
+                    }
+
+                    /*if (EsSujetaNoExenta(regimen))
+                    {
+                        essujetanoexenta = true;
+                        if (EsInvSujetoPasivo(regimen))
+                        {
+                            invsujetopasivo = "1";
+                        }
+                    }
+                    if (EsSujetaExenta(regimen))
+                    {
+                        essujetaexenta = true;
+                    }
+                    if (EsNoSujeta(regimen))
+                    {
+                        esnosujeta = true;
+                    }*/
+
+                }
+
+
+                if (string.IsNullOrEmpty(cuentaModel.Nif.Nif))
+                {
+                    identificacion = 1;//Otro
+                }
+                else
+                {
+                    nif = cuentaModel.Nif.Nif.Length > 9 ? cuentaModel.Nif.Nif.Substring(2) : cuentaModel.Nif.Nif;
+                }
+
+
+                if (!string.IsNullOrEmpty(cuentaModel.Nif.TipoNif))
+                {
+                    tiponif = cuentaModel.Nif.TipoNif;
+                }
+
+
+                if (!string.IsNullOrEmpty(cuentaModel.FkPais) && cuentaModel.FkPais != "070")
+                {
+                    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().ToList();
+
+                    pais = listpaises.Where(f => f.Valor == cuentaModel.FkPais).SingleOrDefault().CodigoIsoAlfa2;
+                }
             }
 
-            var tiponif = "";
-            if (!string.IsNullOrEmpty(cuentaModel.Nif.TipoNif))
-            {
-                tiponif = cuentaModel.Nif.TipoNif;
-            }
-
-            var pais = "ES";
-            if (!string.IsNullOrEmpty(cuentaModel.FkPais) && cuentaModel.FkPais != "070")
-            {
-                var listpaises = WebHelper.GetApplicationHelper().GetListPaises().ToList();
-
-                pais = listpaises.Where(f => f.Valor == cuentaModel.FkPais).SingleOrDefault().CodigoIsoAlfa2;
-            }
-
-            var data = new { regimentercero = regimentercero, cuentaDescripcion = cuentaModel.Descripcion, identificacion = identificacion,
+            var data = new { regimentercero = regimentercero, cuentaDescripcion = cuentaDescripcion, identificacion = identificacion,
                 nif = nif, tiponif = tiponif, pais = pais, clavetipofactura = clavetipofactura, regimenespecial = regimenespecial, tipooperacion = tipooperacion,
                 essujetanoexenta = essujetanoexenta, essujetaexenta = essujetaexenta, esnosujeta = esnosujeta, invsujetopasivo = invsujetopasivo
             };

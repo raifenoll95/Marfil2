@@ -75,7 +75,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var regimen = service.GetRegimenivaRepercutido(_context.Empresa, model.Tipofactura);
                 model.Fkregimeniva = regimen;
 
-                model.Descripcionoperacionemisor = string.IsNullOrEmpty(model.Descripcionoperacionemisor) ? GetDescripcionOperacion(model.Totales.First().Cuentaventas) : model.Descripcionoperacionemisor;
+                if (model.Totales.Count() > 0)
+                {
+                    model.Descripcionoperacionemisor = string.IsNullOrEmpty(model.Descripcionoperacionemisor) ? GetDescripcionOperacion(model.Totales.First().Cuentaventas) : model.Descripcionoperacionemisor;
+                }
 
                 model = Recalculartotales(model);
 
@@ -98,8 +101,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var regimen = service.GetRegimenivaRepercutido(_context.Empresa, editado.Tipofactura);
                 editado.Fkregimeniva = regimen;
 
-                editado.Descripcionoperacionemisor = string.IsNullOrEmpty(editado.Descripcionoperacionemisor) ? GetDescripcionOperacion(editado.Totales.First().Cuentaventas) : editado.Descripcionoperacionemisor;
-
+                if (editado.Totales.Count() > 0)
+                {
+                    editado.Descripcionoperacionemisor = string.IsNullOrEmpty(editado.Descripcionoperacionemisor) ? GetDescripcionOperacion(editado.Totales.First().Cuentaventas) : editado.Descripcionoperacionemisor;
+                }
+            
                 editado = Recalculartotales(editado);
 
                 base.edit(obj);

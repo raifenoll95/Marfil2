@@ -196,6 +196,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta clientes varios.
+        /// </summary>
+        public static string CuentaClientesVarios {
+            get {
+                return ResourceManager.GetString("CuentaClientesVarios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Desde cuenta.
         /// </summary>
         public static string CuentaDesde {
@@ -210,6 +219,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string CuentaHasta {
             get {
                 return ResourceManager.GetString("CuentaHasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta proveedores varios.
+        /// </summary>
+        public static string CuentaProveedoresVarios {
+            get {
+                return ResourceManager.GetString("CuentaProveedoresVarios", resourceCulture);
             }
         }
         

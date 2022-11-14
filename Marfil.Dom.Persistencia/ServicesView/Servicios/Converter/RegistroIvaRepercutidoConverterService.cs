@@ -41,7 +41,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Subtotal = f.subtotal,
                 Decimalesmonedas = f.decimalesmonedas,
                 Baseimponible = f.basetotal,
-                Siioperacion = f.siioperacion
+                Siioperacion = f.siioperacion,
+                Importearticulos = f.importearticulos,
+                Importetai = f.importetai
             }).ToList();
 
             //Rectificadas        //Se arrastran los datos de la pestaña Factura, ya no es necesario
@@ -109,6 +111,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.basetotal = item.Baseimponible;
                 newItem.siioperacion = item.Siioperacion;
+                newItem.importearticulos = item.Importearticulos;
+                newItem.importetai = item.Importetai;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 
@@ -182,6 +186,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.basetotal = item.Baseimponible;
                 newItem.siioperacion = item.Siioperacion;
+                newItem.importearticulos = item.Importearticulos;
+                newItem.importetai = item.Importetai;
                 result.RegistroIVARepercutidoTotales.Add(newItem);
             }
 

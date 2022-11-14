@@ -261,4 +261,10 @@
   <data name="PrefijosPrestacionServicios" xml:space="preserve">
     <value>Prefijo Cuentas Prestación de servicios</value>
   </data>
+  <data name="CuentaClientesVarios" xml:space="preserve">
+    <value>Cuenta clientes varios</value>
+  </data>
+  <data name="CuentaProveedoresVarios" xml:space="preserve">
+    <value>Cuenta proveedores varios</value>
+  </data>
 </root>

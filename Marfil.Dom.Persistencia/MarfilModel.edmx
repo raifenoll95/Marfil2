@@ -3737,6 +3737,10 @@
           <Property Name="enviarmodificacion" Type="bit" />
           <Property Name="enviarbaja" Type="bit" />
           <Property Name="nifrepresentante" Type="nvarchar" MaxLength="9" />
+          <Property Name="fkusuarioalta" Type="uniqueidentifier" />
+          <Property Name="fechaaltaregistro" Type="datetime" />
+          <Property Name="fkusuariomodificacion" Type="uniqueidentifier" />
+          <Property Name="fechamodificacionregistro" Type="datetime" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -14627,6 +14631,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="enviarmodificacion" Type="Boolean" />
           <Property Name="enviarbaja" Type="Boolean" />
           <Property Name="nifrepresentante" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="fkusuarioalta" Type="Guid" />
+          <Property Name="fechaaltaregistro" Type="DateTime" Precision="3" />
+          <Property Name="fkusuariomodificacion" Type="Guid" />
+          <Property Name="fechamodificacionregistro" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
         </EntityType>
@@ -19885,6 +19893,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="fechamodificacionregistro" ColumnName="fechamodificacionregistro" />
+                <ScalarProperty Name="fkusuariomodificacion" ColumnName="fkusuariomodificacion" />
+                <ScalarProperty Name="fechaaltaregistro" ColumnName="fechaaltaregistro" />
+                <ScalarProperty Name="fkusuarioalta" ColumnName="fkusuarioalta" />
                 <ScalarProperty Name="nifrepresentante" ColumnName="nifrepresentante" />
                 <ScalarProperty Name="enviarbaja" ColumnName="enviarbaja" />
                 <ScalarProperty Name="enviarmodificacion" ColumnName="enviarmodificacion" />

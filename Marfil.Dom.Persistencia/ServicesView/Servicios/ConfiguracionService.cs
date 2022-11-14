@@ -243,6 +243,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return prefijos;
         }
 
+        public string GetClientesVarios()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("CuenaClientesVarios");
+            var cuenta = nodo[0].InnerText;
+            return cuenta;
+        }
+
         public string GetEstadoFinAlbaranesCompras()
         {
             XmlDocument doc = new XmlDocument();
