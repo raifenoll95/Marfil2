@@ -33,6 +33,7 @@ using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RFacturas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Facturas;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -455,6 +456,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private FacturasLinModel ConvertILineaImportarToPedidoLinModel(int idlinea, ILineaImportar linea)
         {
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+
             var idalbaran = Funciones.Qint(linea.Fkdocumento);
 
             var albaran =
@@ -462,7 +466,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     f =>
                         f.empresa == Empresa && f.id == idalbaran);
             var metros = Math.Round(linea.Metros, linea.Decimalesmedidas);
-            var precio = Math.Round(linea.Precio, linea.Decimalesmonedas);
+            var precio = Math.Round(linea.Precio, empresa.Decimalesprecios ?? 2);
             var bruto = metros * precio;
             var cuotadescuento = Math.Round(bruto * linea.Porcentajedescuento / 100.0, linea.Decimalesmonedas);
             var baseimpo = bruto - cuotadescuento;

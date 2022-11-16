@@ -196,13 +196,6 @@ namespace Marfil.App.WebMain.Controllers
                             model.LstTarifasVentas = aux.LstTarifasVentas;
                             model.LstTarifasCompras = aux.LstTarifasCompras;
                             service.CreateEmpresa(model);
-                            //NOV2022 - Carga en segundo plano
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarCircuitosTesoreria(model, token));
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarPlanContabilidad(model, token));
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarSeriesContables(model, token));
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarGuiasBalances(model, token));
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarDocumentos(model, token));
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarTiposFacturas(model, token));
                             using (var loginService = new LoginService())
                             {
                                 HttpCookie securityCookie;
@@ -211,6 +204,13 @@ namespace Marfil.App.WebMain.Controllers
                                 loginService.SetEmpresaUserAdmin(_dominio,database, model.Id,string.Empty,string.Empty,Guid.NewGuid(), out securityCookie);
                                 Response.Cookies.Add(securityCookie);
                             }
+                            //NOV2022 - Carga en segundo plano
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarCircuitosTesoreria(model, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarPlanContabilidad(model, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarSeriesContables(model, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarGuiasBalances(model, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarDocumentos(model, token));
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await generarTiposFacturas(model, token));
                         }
 
                         return RedirectToAction("Index", "Home");

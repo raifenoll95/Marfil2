@@ -164,8 +164,9 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     var serviceRetenciones = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
                     var regimentercero = serviceRetenciones.GetRegimenivaTercero(item.Id);
+                    var tipofacturatercero = serviceRetenciones.GetTipoFacturaCliente(item.Id);
 
-                    if (regimentercero != regimeniva)
+                    if (regimentercero != regimeniva || tipofacturatercero != idtipofactura)
                     {
                         lista.RemoveAll(f => f.Id == item.Id);
                     }

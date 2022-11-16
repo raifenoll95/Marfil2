@@ -156,4 +156,10 @@
   <data name="PrevisionPagosPeriodicos" xml:space="preserve">
     <value>Provision for periodic payments. Conciliate with </value>
   </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Fkgruposiva" xml:space="preserve">
+    <value>Tax Group</value>
+  </data>
 </root>

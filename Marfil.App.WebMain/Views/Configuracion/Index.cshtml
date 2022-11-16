@@ -37,6 +37,7 @@
                             <li><a data-toggle="tab" href="#crm">@CRM.TituloEntidad</a></li>
                             <li><a data-toggle="tab" href="#tesoreria">@Configuracionaplicacion.Tesoreria</a></li>
                             <li><a data-toggle="tab" href="#contabilidad">@Configuracionaplicacion.Contabilidad</a></li>
+                            <li><a data-toggle="tab" href="#sii">@Configuracionaplicacion.Sii</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -94,6 +95,9 @@
                         </div>
                         <div id="contabilidad" class="tab-pane fade margin-bottom">
                             @Html.Partial("_contabilidad", Model)
+                        </div>
+                        <div id="sii" class="tab-pane fade margin-bottom">
+                            @Html.Partial("_sii", Model)
                         </div>
                     </div>
                 </div>

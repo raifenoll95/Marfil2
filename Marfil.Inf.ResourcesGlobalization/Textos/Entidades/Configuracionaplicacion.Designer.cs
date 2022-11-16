@@ -376,6 +376,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Fase de pruebas.
+        /// </summary>
+        public static string FasePruebas {
+            get {
+                return ResourceManager.GetString("FasePruebas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Idioma principal.
         /// </summary>
         public static string Fkidioma1 {
@@ -466,11 +475,65 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Plazo de presentación (días).
+        /// </summary>
+        public static string PlazoPresentacion {
+            get {
+                return ResourceManager.GetString("PlazoPresentacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Plazo presentación 2017 (días).
+        /// </summary>
+        public static string PlazoPresentacion2017 {
+            get {
+                return ResourceManager.GetString("PlazoPresentacion2017", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Prefijo Cuentas Prestación de servicios.
         /// </summary>
         public static string PrefijosPrestacionServicios {
             get {
                 return ResourceManager.GetString("PrefijosPrestacionServicios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Facturas emitidas: rellenar con ceros núm. Fra..
+        /// </summary>
+        public static string RellenarCeros {
+            get {
+                return ResourceManager.GetString("RellenarCeros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SII.
+        /// </summary>
+        public static string Sii {
+            get {
+                return ResourceManager.GetString("Sii", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SII (Suministro Inmediato de Información).
+        /// </summary>
+        public static string SiiDesc {
+            get {
+                return ResourceManager.GetString("SiiDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a URL Entorno de Producción.
+        /// </summary>
+        public static string SiiUrl {
+            get {
+                return ResourceManager.GetString("SiiUrl", resourceCulture);
             }
         }
         
@@ -493,6 +556,51 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Bienes de Inversión.
+        /// </summary>
+        public static string UrlBienesInversion {
+            get {
+                return ResourceManager.GetString("UrlBienesInversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cobros en Metálico.
+        /// </summary>
+        public static string UrlCobrosMetalico {
+            get {
+                return ResourceManager.GetString("UrlCobrosMetalico", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Facturas Emitidas.
+        /// </summary>
+        public static string UrlFacturasEmitidas {
+            get {
+                return ResourceManager.GetString("UrlFacturasEmitidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Facturas Recibidas.
+        /// </summary>
+        public static string UrlFacturasRecibidas {
+            get {
+                return ResourceManager.GetString("UrlFacturasRecibidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pagos Iva de Caja.
+        /// </summary>
+        public static string UrlPagosIvaCaja {
+            get {
+                return ResourceManager.GetString("UrlPagosIvaCaja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Canal obligatorio.
         /// </summary>
         public static string VentasCanalObligatorio {
@@ -507,6 +615,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string VentasUsarCanal {
             get {
                 return ResourceManager.GetString("VentasUsarCanal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Versión.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

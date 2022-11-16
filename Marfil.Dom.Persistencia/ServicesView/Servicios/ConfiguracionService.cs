@@ -250,7 +250,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             doc.LoadXml(datos);
             XmlElement datosParse = doc.DocumentElement;
 
-            XmlNodeList nodo = datosParse.GetElementsByTagName("CuenaClientesVarios");
+            XmlNodeList nodo = datosParse.GetElementsByTagName("CuentaClientesVarios");
             var cuenta = nodo[0].InnerText;
             return cuenta;
         }

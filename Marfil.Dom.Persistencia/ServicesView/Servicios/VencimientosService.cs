@@ -14,6 +14,7 @@ using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using System.Globalization;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -221,6 +222,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var lineas = _db.PrevisionesCartera.Where(f => f.empresa == Empresa && f.codvencimiento == model.Id.Value).ToList();
             var serviceCartera = new CarteraVencimientosService(_context);
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             foreach (var linea in lineas)
             {
@@ -230,7 +235,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Id = linea.codcartera,
                     Referencia = cartera.referencia,
                     Fkcuentas = cartera.fkcuentas,
-                    Importegiro = Math.Round(cartera.importegiro.Value, 2),
+                    Importegiro = Math.Round(cartera.importegiro.Value, monedaObj.Decimales),
                     Fechavencimiento = cartera.fechavencimiento,
                     Fecha = cartera.fecha,
                     Situacion = cartera.situacion,
@@ -248,6 +253,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             List<VencimientosModel> vencimientos = new List<VencimientosModel>();
             var newtipoasignacion = Int32.Parse(tipoasignacion);
             var situacion = newtipoasignacion == 0 ? "X" : "Y";
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             //Vencimientos con estado Inicial, pendiente de cobro o de pago y que aun tengan cantidad por asignar
             var posiblesvencimientos = _db.Vencimientos.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas && f.tipo == newtipoasignacion
@@ -267,7 +277,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Traza = vencimiento.traza,
                     FechaStrfactura = vencimiento.fechafactura.ToString().Split(' ')[0],
                     FechaStrvencimiento = vencimiento.fechavencimiento.ToString().Split(' ')[0],
-                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value, 2),
+                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value, monedaObj.Decimales),
                     Fkformaspago = vencimiento.fkformaspago,
                     FormaPago = formapago,
                     Fkcuentatesoreria = vencimiento.fkcuentatesoreria
@@ -291,6 +301,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var situacioninicialcobros = _db.SituacionesTesoreria.Where(f => f.valorinicialcobros == true).Select(f => f.cod).SingleOrDefault() ?? "";
             var situacioninicialpagos = _db.SituacionesTesoreria.Where(f => f.valorinicialpagos == true).Select(f => f.cod).SingleOrDefault() ?? "";
             var idformaspagos = fkmodospago != "" && fkmodospago != null && fkmodospago != "null" ? _db.FormasPago.Where(f => f.fkgruposformaspago == fkmodospago).Select(f => f.id).ToList() : _db.FormasPago.Select(f => f.id).ToList();
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             List<GridAsistenteMovimientosTesoreriaModel> registros = new List<GridAsistenteMovimientosTesoreriaModel>();
 
@@ -338,7 +353,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fkcuentas = venc.fkcuentas,
                         FkcuentasDescripcion = descripcioncuenta,
                         Fechavencimiento = venc.fechavencimiento.ToString().Split(' ')[0],
-                        Importegiro = Math.Round((double)(venc.importegiro - venc.importeasignado), 2),
+                        Importegiro = Math.Round((double)(venc.importegiro - venc.importeasignado), monedaObj.Decimales),
                         ImporteAsignado = venc.importeasignado,
                         Situacion = venc.situacion,
                         Fkformaspago = formapago,
@@ -410,7 +425,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fkcuentas = venc.fkcuentas,
                         FkcuentasDescripcion = descripcioncuenta,
                         Fechavencimiento = venc.fechavencimiento.ToString().Split(' ')[0],
-                        Importegiro = Math.Round((double)venc.importegiro, 2),
+                        Importegiro = Math.Round((double)venc.importegiro, monedaObj.Decimales),
                         ImporteAsignado = null,
                         Situacion = venc.situacion,
                         Fkformaspago = formapago,
@@ -441,6 +456,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var idcircuito = Int32.Parse(model.Circuitotesoreria);
             var circuito = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id == idcircuito).Single();
             var idejercicio = int.Parse(_context.Ejercicio);
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             CarteraVencimientosModel cartera = new CarteraVencimientosModel(_context);
             cartera.Empresa = Empresa;
@@ -502,22 +522,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             else
             {
-                var importeaux = Math.Round(double.Parse(model.Importe, CultureInfo.InvariantCulture),2);
+                var importeaux = Math.Round(double.Parse(model.Importe, CultureInfo.InvariantCulture),monedaObj.Decimales);
                 List<VencimientosModel> previsionesAuxiliares = new List<VencimientosModel>();
 
                 foreach (var vencimientoId in vencimientos)
                 {
                     //Quedan previsiones por cubrir
-                    if (Math.Round(importeaux, 2) > 0)
+                    if (Math.Round(importeaux, monedaObj.Decimales) > 0)
                     {
                         var vencimiento = get(vencimientoId) as VencimientosModel;
-                        var restante = Math.Round(vencimiento.Importegiro.Value - vencimiento.Importeasignado.Value,2);
+                        var restante = Math.Round(vencimiento.Importegiro.Value - vencimiento.Importeasignado.Value,monedaObj.Decimales);
 
                         //El importe cubre lo que queda de asignado
-                        if ((Math.Round(importeaux, 2) >= (restante)))
+                        if ((Math.Round(importeaux, monedaObj.Decimales) >= (restante)))
                         {
                             editarSituacionPrevisionAsignacionCartera(vencimiento, model, circuito.situacionfinal, null);
-                            importeaux = Math.Round(importeaux, 2) - Math.Round(restante,2);
+                            importeaux = Math.Round(importeaux, monedaObj.Decimales) - Math.Round(restante,monedaObj.Decimales);
 
                             cartera.LineasCartera.Add(new PrevisionesCarteraModel(_context)
                             {
@@ -530,18 +550,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         else
                         {
                             vencimiento.Situacion = model.Tipo == "0" ? "X" : "Y";
-                            vencimiento.Importeasignado = vencimiento.Importeasignado + Math.Round(importeaux, 2);
+                            vencimiento.Importeasignado = vencimiento.Importeasignado + Math.Round(importeaux, monedaObj.Decimales);
                             vencimiento.Estado = TipoEstado.CubiertoParcial;
 
                             if (circuito.situacionfinal.Equals("P"))
                             {
                                 if (vencimiento.Importepagado != null)
                                 {
-                                    vencimiento.Importepagado = vencimiento.Importepagado + Math.Round(importeaux, 2);
+                                    vencimiento.Importepagado = vencimiento.Importepagado + Math.Round(importeaux, monedaObj.Decimales);
                                 }
                                 else
                                 {
-                                    vencimiento.Importepagado = Math.Round(importeaux, 2);
+                                    vencimiento.Importepagado = Math.Round(importeaux, monedaObj.Decimales);
                                 }
                                                                
                             }
@@ -553,7 +573,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                                 Imputado = importeaux
                             });
 
-                            importeaux = Math.Round(importeaux, 2) - Math.Round(vencimiento.Importeasignado.Value,2);
+                            importeaux = Math.Round(importeaux, monedaObj.Decimales) - Math.Round(vencimiento.Importeasignado.Value,monedaObj.Decimales);
                         }
 
                         previsionesAuxiliares.Add(vencimiento);
@@ -562,7 +582,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
                 //Si el importe indicado es superior a los registros punteados
-                if (Math.Round(importeaux,2) > 0)
+                if (Math.Round(importeaux,monedaObj.Decimales) > 0)
                 {
                     throw new ValidationException("El importe indicado es mayor que los registros punteados");
                 }
@@ -926,6 +946,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var referenciaremesa = "";
                 var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
 
+                var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+                var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+                var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+                var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
                 //Asignamos referencia remesa
                 if ((bool)esRemesable && circuito.anularremesa == false && model.Fkseriescontables != null)
                 {
@@ -938,8 +963,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var prevision in registros)
                 {
                     var registro = get(prevision) as VencimientosModel;
-                    registro.Importegiro = Math.Round((double)registro.Importegiro, 2);
-                    registro.Importeasignado = Math.Round((double)registro.Importeasignado, 2);
+                    registro.Importegiro = Math.Round((double)registro.Importegiro, monedaObj.Decimales);
+                    registro.Importeasignado = Math.Round((double)registro.Importeasignado, monedaObj.Decimales);
                     serviceCarteraVencimientos.create(CrearRegistroCartera(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa));
 
                     if ((bool)esRemesable && fkseriescontablesremesa != "")
@@ -997,6 +1022,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var referenciaremesa = "";
                 var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
                 var esinicial = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().valorinicialcobros.Value || _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().valorinicialpagos.Value;
+
+                var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+                var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+                var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+                var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
                 //Asignamos referencia remesa
                 if ((bool)esRemesable && circuito.anularremesa == false && model.Fkseriescontables != null)
                 {
@@ -1009,7 +1040,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var id in registros)
                 {
                     var carteraModel = carteraService.get(id) as CarteraVencimientosModel;
-                    carteraModel.Importegiro = Math.Round((double)carteraModel.Importegiro, 2);
+                    carteraModel.Importegiro = Math.Round((double)carteraModel.Importegiro, monedaObj.Decimales);
                     var referenciaRemesa = carteraModel.Referenciaremesa;
                     editarSituacionCartera(carteraModel, model, circuito.situacionfinal, circuito.anularremesa, fkseriescontablesremesa, referenciaremesa, identificadorsegmentoremesa, esprevision);
                     if ((bool)circuito.anularremesa)
@@ -1250,6 +1281,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             double? importe = 0;
             double? totalvencimientos = 0;
 
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
             foreach (var registro in registros)
             {
                 if (esprevision)
@@ -1259,7 +1295,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     if (String.IsNullOrEmpty(model.Importe))
                     {
-                        importe = Math.Round((double)(vencimiento.Importegiro - vencimiento.Importeasignado), 2);
+                        importe = Math.Round((double)(vencimiento.Importegiro - vencimiento.Importeasignado), monedaObj.Decimales);
                     }
                     else
                     {
@@ -1269,11 +1305,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         }
                         else if(registro == registros[registros.Count() - 1]) //Si es el último
                         {
-                            importe = Math.Round((double)(double.Parse(model.Importe, CultureInfo.InvariantCulture) - totalvencimientos), 2);
+                            importe = Math.Round((double)(double.Parse(model.Importe, CultureInfo.InvariantCulture) - totalvencimientos), monedaObj.Decimales);
                         }
                         else
                         {
-                            importe = Math.Round((double)(vencimiento.Importegiro - vencimiento.Importeasignado), 2);
+                            importe = Math.Round((double)(vencimiento.Importegiro - vencimiento.Importeasignado), monedaObj.Decimales);
                             totalvencimientos = totalvencimientos + importe;
                         }
                         
@@ -1303,6 +1339,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var serviceCartera = new CarteraVencimientosService(_context);
             double? importe = 0;
 
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
             if (esprevision)
             {
                 foreach (var registro in registros)
@@ -1310,7 +1351,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var vencimientoModel = get(registro) as VencimientosModel;
                     if (String.IsNullOrEmpty(model.Importe))
                     {
-                        importe = Math.Round((double)(importe + (vencimientoModel.Importegiro - vencimientoModel.Importeasignado)), 2);
+                        importe = Math.Round((double)(importe + (vencimientoModel.Importegiro - vencimientoModel.Importeasignado)), monedaObj.Decimales);
                     }
                     else
                     {
@@ -1325,7 +1366,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var registro in registros)
                 {
                     var carteraModel = serviceCartera.get(registro) as CarteraVencimientosModel;
-                    importe = Math.Round((double)(importe + carteraModel.Importegiro),2);
+                    importe = Math.Round((double)(importe + carteraModel.Importegiro),monedaObj.Decimales);
                 }
             }
 

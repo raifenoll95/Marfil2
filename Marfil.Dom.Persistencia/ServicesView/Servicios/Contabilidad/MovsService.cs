@@ -1203,8 +1203,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }             
                 }
 
-                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), 2);
-                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), 2);
+                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), documento.Decimalesmonedas);
+                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), documento.Decimalesmonedas);
 
                 if (totaldebe - totalhaber != 0)
                     throw new ValidationException(RMovs.ErrorDescuadreDebeHaber);
@@ -1365,8 +1365,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                 }
 
-                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), 2);
-                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), 2);
+                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), documento.Decimalesmonedas);
+                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), documento.Decimalesmonedas);
 
                 if (totaldebe - totalhaber != 0)
                     throw new ValidationException(RMovs.ErrorDescuadreDebeHaber);

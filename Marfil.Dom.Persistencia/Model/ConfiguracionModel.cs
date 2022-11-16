@@ -665,6 +665,77 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.CuentaClientesVarios = value; }
         }
 
+        //SII
+        [Display(ResourceType = typeof(RConfiguracion), Name = "FasePruebas")]
+        public bool FasePruebas
+        {
+            get { return Model.FasePruebas; }
+            set { Model.FasePruebas = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "Version")]
+        public string Version
+        {
+            get { return Model.Version; }
+            set { Model.Version = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "PlazoPresentacion")]
+        public int PlazoPresentacion
+        {
+            get { return Model.PlazoPresentacion; }
+            set { Model.PlazoPresentacion = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "PlazoPresentacion2017")]
+        public int PlazoPresentacion2017
+        {
+            get { return Model.PlazoPresentacion2017; }
+            set { Model.PlazoPresentacion2017 = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "RellenarCeros")]
+        public bool RellenarCeros
+        {
+            get { return Model.RellenarCeros; }
+            set { Model.RellenarCeros = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlFacturasEmitidas")]
+        public string UrlFacturasEmitidas
+        {
+            get { return Model.UrlFacturasEmitidas; }
+            set { Model.UrlFacturasEmitidas = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlFacturasRecibidas")]
+        public string UrlFacturasRecibidas
+        {
+            get { return Model.UrlFacturasRecibidas; }
+            set { Model.UrlFacturasRecibidas = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlBienesInversion")]
+        public string UrlBienesInversion
+        {
+            get { return Model.UrlBienesInversion; }
+            set { Model.UrlBienesInversion = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlCobrosMetalico")]
+        public string UrlCobrosMetalico
+        {
+            get { return Model.UrlCobrosMetalico; }
+            set { Model.UrlCobrosMetalico = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlPagosIvaCaja")]
+        public string UrlPagosIvaCaja
+        {
+            get { return Model.UrlPagosIvaCaja; }
+            set { Model.UrlPagosIvaCaja = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -802,5 +873,18 @@ namespace Marfil.Dom.Persistencia.Model
         public string ComentarioCierreEjercicio { get; set; }
         public string ComentarioAperturaEjercicio { get; set; }
         public string ComentarioAperturaProvisional { get; set; }
+
+        //SII
+        public bool FasePruebas { get; set; }
+        public string Version { get; set; }
+        public int PlazoPresentacion { get; set; }
+        public int PlazoPresentacion2017 { get; set; }
+        public bool RellenarCeros { get; set; }
+        public string UrlFacturasEmitidas { get; set; }
+        public string UrlFacturasRecibidas { get; set; }
+        public string UrlBienesInversion { get; set; }
+        public string UrlCobrosMetalico { get; set; }
+        public string UrlPagosIvaCaja { get; set; }
+
     }
 }

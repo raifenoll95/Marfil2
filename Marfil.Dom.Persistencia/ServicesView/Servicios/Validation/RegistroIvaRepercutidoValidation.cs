@@ -20,7 +20,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
         public override bool ValidarGrabar(RegistroIVARepercutido model)
         {
 
-            ValidarFechaoperacion(model);
+            ValidarFechas(model);
             ValidarCuentacliente(model);
             ValidarTipoFacturaGrid(model);
 
@@ -66,11 +66,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
 
         }
 
-        public bool ValidarFechaoperacion(RegistroIVARepercutido model)
+        public bool ValidarFechas(RegistroIVARepercutido model)
         {
-            if (model.fechaoperacion > model.fechafactura)
+            if (model.fechaoperacion > model.fechafactura || model.fechaoperacion > model.fecharegistro)
             {
-                throw new ValidationException("La fecha de operación no puede ser mayor a la fecha de factura.");
+                throw new ValidationException("La fecha de operación no puede ser mayor que la fecha de factura o que la fecha de registro.");
+            }
+            else if (model.fechafactura > model.fecharegistro)
+            {
+                throw new ValidationException("La fecha de factura no puede ser mayor a la fecha de registro.");
             }
 
             return true;

@@ -68,7 +68,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //Calculo ID
                 var contador = ServiceHelper.GetNextIdContable<RegistroIVARepercutido>(_db, Empresa, model.Fkseriescontables);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReferenceContable<RegistroIVARepercutido>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fechaoperacion, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReferenceContable<RegistroIVARepercutido>(_db, model.Empresa, model.Fkseriescontables, contador, model.Fecharegistro, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
@@ -187,10 +187,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public string ModificarPeriodo(List<SelectListItem> listperiodo, DateTime Fechafactura, DateTime Fechaoperacion)
         {
-            //var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
-            //var tipofechaliquidacion = service.GetFechaLiquidacionIvaRepercutido(_context.Empresa);
-
-            if (Fechaoperacion == null || (Fechafactura.Month == Fechaoperacion.Month && Fechafactura.Year == Fechaoperacion.Year))
+            var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+            var tipofechaliquidacion = service.GetFechaLiquidacionIvaRepercutido(_context.Empresa);
+                
+                //Fecha Factura
+            if (tipofechaliquidacion == 0 || Fechaoperacion == null || (Fechafactura.Month == Fechaoperacion.Month && Fechafactura.Year == Fechaoperacion.Year))
             {
                 if (listperiodo.Count > 4)
                 {
@@ -220,8 +221,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
 
                 }
-            } 
-            else if (Fechafactura.Month > Fechaoperacion.Month && Fechafactura.Year == Fechaoperacion.Year)
+            }        //Fecha Operación
+            else if (tipofechaliquidacion == 1 || (Fechafactura.Month > Fechaoperacion.Month && Fechafactura.Year == Fechaoperacion.Year))
             {
                 if (Fechafactura.Day <= 15)
                 {

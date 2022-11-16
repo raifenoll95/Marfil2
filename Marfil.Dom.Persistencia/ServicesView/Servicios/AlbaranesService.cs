@@ -1032,7 +1032,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Lote = linea.Lote,
                         Tabla = Funciones.Qint(linea.Loteid),
                         Tblnum = Funciones.Qint(linea.Loteid),
-                        Cantidad = linea.Cantidad, //articuloObj.Lotefraccionable ? model.Cantidad : linea.Cantidad,
+                        Cantidad = articuloObj.Lotefraccionable ? model.Cantidad : linea.Cantidad,
                         Largo = largo,
                         Ancho = ancho,
                         Grueso = grueso,

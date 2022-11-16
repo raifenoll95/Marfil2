@@ -32,13 +32,13 @@
 
         if (listperiodo.Count > 4)
         {
-            var mes = Model.Fechaoperacion.Month;
+            var mes = Model.Fecharegistro.Month;
             Model.Periodo = listperiodo[mes - 1].Value;
 
         }
         else
         {
-            var mes = Model.Fechaoperacion.Month;
+            var mes = Model.Fecharegistro.Month;
 
             if (mes <= 3)
             {

@@ -155,7 +155,7 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public DateTime Fechafactura { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Fechaoperacion")]
-        public DateTime Fechaoperacion { get; set; }
+        public DateTime? Fechaoperacion { get; set; }
 
         [Display(ResourceType = typeof(RRegistroIVA), Name = "Periodo")]
         public string Periodo { get; set; }
