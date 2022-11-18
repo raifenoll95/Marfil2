@@ -23,6 +23,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             ValidarFechas(model);
             ValidarCuentacliente(model);
             ValidarTipoFacturaGrid(model);
+            ValidarTipoRetencion(model);
+            ValidarCtaTesoreria(model);
 
             return base.ValidarGrabar(model);
         }
@@ -78,6 +80,38 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             }
 
             return true;
+        }
+
+        private void ValidarTipoRetencion(RegistroIVARepercutido model)
+        {
+            var tipofactura = model.tipofactura;
+            var service = new TiposFacturasIvaService(Context, MarfilEntities.ConnectToSqlServer(Context.BaseDatos));
+
+            var requiereIRPF = service.RequiereIRPF(Context.Empresa, tipofactura);
+
+            if (requiereIRPF && string.IsNullOrEmpty(model.fktiporetencion))
+            {
+                throw new ValidationException("No se ha indicado el tipo de retención y la configuración del tipo de factura seleccionado lo requiere");
+            }
+
+        }
+
+        private void ValidarCtaTesoreria(RegistroIVARepercutido model)
+        {
+            if (model.contabilizar.Value && string.IsNullOrEmpty(model.fkcuentastesoreria))
+            {
+                throw new ValidationException("Se debe indicar la Cuenta de tesorería si el registro se va a contabilizar");
+            }
+
+        }
+
+        private void ValidarPorcentajeRetencion(RegistroIVARepercutido model)
+        {
+            if (!string.IsNullOrEmpty(model.fktiporetencion) && model.porcentajeretencion == null)
+            {
+                throw new ValidationException("Se debe indicar un porcentaje de retención si se ha seleccionado un tipo de retención");
+            }
+
         }
     }
 }

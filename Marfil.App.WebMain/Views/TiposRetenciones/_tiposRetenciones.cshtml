@@ -84,6 +84,20 @@
     </div>
 </div>
 
+<div class="form-group">
+    @Html.LabelFor(f => Model.Inmueble, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Inmueble, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Inmueble)
+        }
+    </div>
+</div>
+
 @{
     if (isNuevo)
     {

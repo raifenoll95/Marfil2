@@ -267,8 +267,8 @@ else
     $("#Cuentacliente").on('change', function () {
 
         var cuenta = $("#Cuentacliente").val();
-        var regimen = $("#Fkregimeniva").val();   
-        console.log(regimen);
+        var regimen = $("#Fkregimeniva").val();
+
         $.ajax({
             url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
             dataType: "text",
@@ -280,6 +280,29 @@ else
                 if (regimen == "" || regimen == null) {
                     eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimentercero);
                 }
+                if (datos.tiporetencionescliente != "" && datos.tiporetencionescliente != null) {
+                    eventAggregator.Publish("Fktiporetencion-Buscar", datos.tiporetencionescliente);
+
+                    //Insertamos el porcentaje de rentención
+                    var tipo = $("#Fktiporetencion").val();
+                    $.ajax({
+                        url: '@Url.Action("GetPorcentajeRetencion", "RegistroIvaRepercutido")',
+                        dataType: "text",
+                        type: "GET",
+                        data: { tipo },
+                        async: false,
+                        success: function (data) {
+                            var datos = $.parseJSON(data);
+                            $("#Porcentajeretencion").val(datos.porcentajeretencion);
+                            if (datos.inmueble == true) {
+                                $("#inmuebles").show();
+                            } else {
+                                $("#inmuebles").hide();
+                            }
+                        }
+                    });
+                }
+
                 $("#Nombrecontraparte").val(datos.cuentaDescripcion);
                 $("#Tipoidentificacion").val(datos.identificacion);
                 $("#Codigopais").val(datos.pais);
@@ -320,6 +343,29 @@ else
                 if (regimen == "" || regimen == null) {
                     eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimentercero);
                 }
+                if (datos.tiporetencionescliente != "" && datos.tiporetencionescliente != null) {
+                    eventAggregator.Publish("Fktiporetencion-Buscar", datos.tiporetencionescliente);
+
+                    //Insertamos el porcentaje de rentención
+                    var tipo = $("#Fktiporetencion").val();
+                    $.ajax({
+                        url: '@Url.Action("GetPorcentajeRetencion", "RegistroIvaRepercutido")',
+                        dataType: "text",
+                        type: "GET",
+                        data: { tipo },
+                        async: false,
+                        success: function (data) {
+                            var datos = $.parseJSON(data);
+                            $("#Porcentajeretencion").val(datos.porcentajeretencion);
+                            if (datos.inmueble == true) {
+                                $("#inmuebles").show();
+                            } else {
+                                $("#inmuebles").hide();
+                            }
+                        }
+                    });
+                }
+
                 $("#Nombrecontraparte").val(datos.cuentaDescripcion);
                 $("#Tipoidentificacion").val(datos.identificacion);
                 $("#Codigopais").val(datos.pais);
@@ -332,7 +378,7 @@ else
 
                 /*if (data.essujetanoexenta == "True") {
                     $("#Sujetanoexenta").is(':checked');
-                } 
+                }
                 $("#Invsujetopasivo").val(datos.invsujetopasivo);
 
                 if (data.essujetaexenta == "True") {
@@ -355,8 +401,15 @@ else
             type: "GET",
             data: { tipo },
             success: function (data) {
-                eventAggregator.Publish("Fkregimeniva-Buscar", data);
+                var datos = $.parseJSON(data);
+                if (datos.regimen != "" && datos.regimen != null) {
+                    eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimen);
+                }
                 //$("#Fkregimeniva").val(data);
+
+                if (datos.esbieninversion == true) {
+                    $("#Bieninversion").prop('checked', true);
+                }
             }
         });
     });
@@ -371,8 +424,15 @@ else
             type: "GET",
             data: { tipo },
             success: function (data) {
-                eventAggregator.Publish("Fkregimeniva-Buscar", data);
+                var datos = $.parseJSON(data);
+                if (datos.regimen != "" && datos.regimen != null) {
+                    eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimen);
+                }
                 //$("#Fkregimeniva").val(data);
+
+                if (datos.esbieninversion == true) {
+                    $("#Bieninversion").prop('checked', true);
+                }
             }
         });
      });

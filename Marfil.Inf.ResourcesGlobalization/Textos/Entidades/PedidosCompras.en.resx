@@ -459,4 +459,25 @@
   <data name="Identificadorsegmento" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="ProveedorDesde" xml:space="preserve">
+    <value>From order</value>
+  </data>
+  <data name="ProveedorHasta" xml:space="preserve">
+    <value>To order</value>
+  </data>
+  <data name="Numerodocumentoproveedor" xml:space="preserve">
+    <value>Supplier document number</value>
+  </data>
+  <data name="Fechadocumentoproveedor" xml:space="preserve">
+    <value>Supplier document date</value>
+  </data>
+  <data name="Generarpedidoscompras" xml:space="preserve">
+    <value>Generate purchase order</value>
+  </data>
+  <data name="Fkpedidoinicio" xml:space="preserve">
+    <value>Initial order</value>
+  </data>
+  <data name="Fpedidofin" xml:space="preserve">
+    <value>Final order</value>
+  </data>
 </root>

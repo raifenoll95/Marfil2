@@ -318,7 +318,12 @@
 
         if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
             $("#retenciones").show();
-            $("#inmuebles").show();
+            if ($("#Inmueble").val() != '' && $("#Inmueble").val() != null) {
+                $("#inmuebles").show();
+            } else {
+                $("#inmuebles").hide();
+            }
+
         } else {
             $("#retenciones").hide();
             $("#inmuebles").hide();
@@ -378,7 +383,7 @@
     $("#Fktiporetencion").on('change', function () {
         if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
             $("retenciones").show();
-            $("#inmuebles").show();
+            //$("#inmuebles").show();
 
             //Insertamos el porcentaje de rentención
             var tipo = $("#Fktiporetencion").val();
@@ -388,7 +393,13 @@
                 type: "GET",
                 data: { tipo },
                 success: function (data) {
-                    $("#Porcentajeretencion").val(data);
+                    var datos = $.parseJSON(data);
+                    $("#Porcentajeretencion").val(datos.porcentajeretencion);
+                    if (datos.inmueble == true) {
+                        $("#inmuebles").show();
+                    } else {
+                        $("#inmuebles").hide();
+                    }
                 }
             });
 
@@ -401,7 +412,7 @@
     $('#Fktiporetencion').on('DOMSubtreeModified', function () {
         if ($("#Fktiporetencion").val() != '' && $("#Fktiporetencion").val() != null) {
             $("#retenciones").show();
-            $("#inmuebles").show();
+            //$("#inmuebles").show();
 
             //Insertamos el porcentaje de rentención
             var tipo = $("#Fktiporetencion").val();
@@ -411,7 +422,13 @@
                 type: "GET",
                 data: { tipo },
                 success: function (data) {
-                    $("#Porcentajeretencion").val(data);
+                    var datos = $.parseJSON(data);
+                    $("#Porcentajeretencion").val(datos.porcentajeretencion);
+                    if (datos.inmueble == true) {
+                        $("#inmuebles").show();
+                    } else {
+                        $("#inmuebles").hide();
+                    }
                 }
             });
 

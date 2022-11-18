@@ -21,5 +21,6 @@ namespace Marfil.Dom.Persistencia
         public string fkcuentascargo { get; set; }
         public string fkcuentasabono { get; set; }
         public Nullable<int> tiporendimiento { get; set; }
+        public Nullable<bool> inmueble { get; set; }
     }
 }

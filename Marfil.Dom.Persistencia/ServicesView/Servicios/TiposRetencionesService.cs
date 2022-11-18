@@ -30,7 +30,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             
-            model.ExcludedColumns = new[] { "Empresa","Fkcuentarecargo", "Fkcuentaabono", "Tiporendimiento","Toolbar" };
+            model.ExcludedColumns = new[] { "Empresa","Fkcuentarecargo", "Fkcuentaabono", "Tiporendimiento", "Inmueble","Toolbar" };
 
             
             return model;
@@ -50,9 +50,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public double GetPorcentaje(string tipo)
         {
-            var porcentaje = _db.Tiposretenciones.Where(f => f.empresa == Empresa && f.id == tipo).FirstOrDefault().porcentajeretencion;
+            var porcentaje = 0.0;
 
-            return (double)porcentaje;
+            if (_db.Tiposretenciones.Where(f => f.empresa == Empresa && f.id == tipo).FirstOrDefault() != null)
+            {
+                porcentaje = _db.Tiposretenciones.Where(f => f.empresa == Empresa && f.id == tipo).FirstOrDefault().porcentajeretencion.Value;
+            }
+
+            return porcentaje;
+        }
+
+        public bool RequiereInmueble(string tipo)
+        {
+            var inmueble = false;
+
+            if (_db.Tiposretenciones.Where(f => f.empresa == Empresa && f.id == tipo).FirstOrDefault() != null)
+            {
+                inmueble = _db.Tiposretenciones.Where(f => f.empresa == Empresa && f.id == tipo).FirstOrDefault().inmueble.Value;
+            }
+
+            return inmueble;
         }
 
         public string GetIvaTercero(string cuenta)
@@ -62,8 +79,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             if (_db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault() != null)
             {
                 var grupoiva = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault().fkgruposiva;
+                var regimen = GetRegimenivaTercero(cuenta);
 
-                tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivasinrecargo;
+                var exento = _db.RegimenIva.Where(f => f.empresa == Empresa && f.id == regimen).FirstOrDefault().exentotasa.Value;
+                var recargo = _db.RegimenIva.Where(f => f.empresa == Empresa && f.id == regimen).FirstOrDefault().recargo.Value;
+
+                if (recargo)
+                {
+                    tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivaconrecargo;
+                }
+                else if (exento)
+                {
+                    tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivaexentoiva;
+                }
+                else
+                {
+                    tipoiva = _db.GruposIvaLin.Where(f => f.empresa == Empresa && f.fkgruposiva == grupoiva).OrderByDescending(x => x.desde).FirstOrDefault().fktiposivasinrecargo;
+                }
+
             }
             
             //var tipoivaporcentaje = _db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault().porcentajeiva;
@@ -119,6 +152,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             return "";
+        }
+
+        public string GetTipoRetencionCliente(string cuenta)
+        {
+            var tiporetencion = "";
+            if (_db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault() != null)
+            {
+                tiporetencion = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == cuenta).FirstOrDefault().fktiposretencion;
+            }
+
+            return tiporetencion;
         }
 
         #endregion

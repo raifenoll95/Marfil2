@@ -180,4 +180,13 @@
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Client</value>
   </data>
+  <data name="Fkfamiliacliente" xml:space="preserve">
+    <value>Customers line</value>
+  </data>
+  <data name="Fkzonacliente" xml:space="preserve">
+    <value>Customer zone</value>
+  </data>
+  <data name="Fktipoempresa" xml:space="preserve">
+    <value>Company type</value>
+  </data>
 </root>

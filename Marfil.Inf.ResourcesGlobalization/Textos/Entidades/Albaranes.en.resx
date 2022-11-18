@@ -154,10 +154,10 @@
     <value>Address</value>
   </data>
   <data name="Proveedorpoblacion" xml:space="preserve">
-    <value>Poblation</value>
+    <value>City</value>
   </data>
   <data name="Proveedorcp" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Zip code</value>
   </data>
   <data name="Proveedorpais" xml:space="preserve">
     <value>Country</value>
@@ -196,10 +196,10 @@
     <value>Additional change</value>
   </data>
   <data name="Importebruto" xml:space="preserve">
-    <value>Gross</value>
+    <value>Gross amount</value>
   </data>
   <data name="Importebaseimponible" xml:space="preserve">
-    <value>Net</value>
+    <value>Base</value>
   </data>
   <data name="Importeportes" xml:space="preserve">
     <value>Shipping amount</value>
@@ -220,13 +220,13 @@
     <value>Total (Base currency)</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Notes</value>
+    <value>Remarks</value>
   </data>
   <data name="Estado" xml:space="preserve">
     <value>State</value>
   </data>
   <data name="Fkobras" xml:space="preserve">
-    <value>Build</value>
+    <value>Project</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
     <value>Incoterm code</value>
@@ -247,16 +247,16 @@
     <value>Office time</value>
   </data>
   <data name="Fkarticulos" xml:space="preserve">
-    <value>Article code</value>
+    <value>Item code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Article</value>
+    <value>Item</value>
   </data>
   <data name="Lote" xml:space="preserve">
-    <value>Lote</value>
+    <value>Lot</value>
   </data>
   <data name="Tabla" xml:space="preserve">
-    <value>Table</value>
+    <value>Slab id.</value>
   </data>
   <data name="Cantidad" xml:space="preserve">
     <value>Amount</value>
@@ -274,10 +274,10 @@
     <value>Thickness</value>
   </data>
   <data name="Fkunidades" xml:space="preserve">
-    <value>Unit</value>
+    <value>Measure unit</value>
   </data>
   <data name="Metros" xml:space="preserve">
-    <value>Meters</value>
+    <value>Meters/total</value>
   </data>
   <data name="Precio" xml:space="preserve">
     <value>Price</value>
@@ -307,7 +307,7 @@
     <value>Revision</value>
   </data>
   <data name="Basetotal" xml:space="preserve">
-    <value>Net</value>
+    <value>Base</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
     <value>Subtotal</value>
@@ -319,7 +319,7 @@
     <value>The currency of the serie is not the same as the client one</value>
   </data>
   <data name="Lineas" xml:space="preserve">
-    <value>Estimation lines</value>
+    <value>Quotation lines</value>
   </data>
   <data name="ImporteBase" xml:space="preserve">
     <value>Subtotal</value>
@@ -506,5 +506,26 @@
   </data>
   <data name="SalidasVarias" xml:space="preserve">
     <value>Several outputs</value>
+  </data>
+  <data name="Importedescuentoprontopago" xml:space="preserve">
+    <value>Pay soon amount</value>
+  </data>
+  <data name="Cuotaiva" xml:space="preserve">
+    <value>VAT amount</value>
+  </data>
+  <data name="Porcentajerecargoequivalencia" xml:space="preserve">
+    <value>Tax2 %</value>
+  </data>
+  <data name="Cuotarecargoequivalencia" xml:space="preserve">
+    <value>Tax 2 amount</value>
+  </data>
+  <data name="AcabadosDesde" xml:space="preserve">
+    <value>From finishing</value>
+  </data>
+  <data name="AcabadosHasta" xml:space="preserve">
+    <value>To Finishing</value>
+  </data>
+  <data name="FamiliaMateriales" xml:space="preserve">
+    <value>Material </value>
   </data>
 </root>

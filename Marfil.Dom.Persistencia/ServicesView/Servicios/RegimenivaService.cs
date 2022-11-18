@@ -49,6 +49,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.RegimenIva.Where(f => f.empresa == empresa && f.id == regimen).FirstOrDefault().exportacion.Value;
         }
 
+        public bool GetBienInversion(string empresa, string tipofactura)
+        {
+            var tipoparse = int.Parse(tipofactura);
+            return _db.TiposFacturas.Where(f => f.empresa == empresa && f.id == tipoparse).FirstOrDefault().bieninversion.Value;
+        }
+
         public bool EsSujetaNoExenta(string empresa, string regimen)
         {
             var exento = _db.RegimenIva.Where(f => f.empresa == empresa && f.id == regimen).FirstOrDefault().exentotasa.Value;

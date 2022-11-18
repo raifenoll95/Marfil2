@@ -459,10 +459,18 @@ namespace Marfil.App.WebMain.Controllers
             return periodo;
         }
 
-        public double GetPorcentajeRetencion(string tipo)
+        public string GetPorcentajeRetencion(string tipo)
         {
             var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
-            return service.GetPorcentaje(tipo);
+            var porcentajeretencion = service.GetPorcentaje(tipo);
+            var inmueble = service.RequiereInmueble(tipo);
+
+            var data = new
+            {
+                porcentajeretencion = porcentajeretencion,
+                inmueble = inmueble
+            };
+            return JsonConvert.SerializeObject(data);
         }
 
         public string GetIvaTercero(string cuenta, string regimen)
@@ -488,6 +496,7 @@ namespace Marfil.App.WebMain.Controllers
             var cuentaDescripcion = "";
             var prefijos = configuracionService.GetPrefijosPrestacionServicios().Split(',');
             var clienteVarios = configuracionService.GetClientesVarios();
+            var tiporetencionescliente = service.GetTipoRetencionCliente(cuenta);
             var essujetanoexenta = false;
             var essujetaexenta = false;
             var esnosujeta = false;
@@ -607,9 +616,22 @@ namespace Marfil.App.WebMain.Controllers
                 }
             }
 
-            var data = new { regimentercero = regimentercero, cuentaDescripcion = cuentaDescripcion, identificacion = identificacion,
-                nif = nif, tiponif = tiponif, pais = pais, clavetipofactura = clavetipofactura, regimenespecial = regimenespecial, tipooperacion = tipooperacion,
-                essujetanoexenta = essujetanoexenta, essujetaexenta = essujetaexenta, esnosujeta = esnosujeta, invsujetopasivo = invsujetopasivo
+            var data = new
+            {
+                regimentercero = regimentercero,
+                cuentaDescripcion = cuentaDescripcion,
+                identificacion = identificacion,
+                tiporetencionescliente = tiporetencionescliente,
+                nif = nif,
+                tiponif = tiponif,
+                pais = pais,
+                clavetipofactura = clavetipofactura,
+                regimenespecial = regimenespecial,
+                tipooperacion = tipooperacion,
+                essujetanoexenta = essujetanoexenta,
+                essujetaexenta = essujetaexenta,
+                esnosujeta = esnosujeta,
+                invsujetopasivo = invsujetopasivo
             };
             return JsonConvert.SerializeObject(data);
         }
@@ -618,6 +640,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             var service = new TiposFacturasIvaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var regimen = service.GetRegimenivaRepercutido(ContextService.Empresa, tipo);
+            var esbieninversion = GetBienInversion(tipo);
 
             Session["idtipofactura"] = tipo;
 
@@ -635,7 +658,14 @@ namespace Marfil.App.WebMain.Controllers
                 Session["cuentaventas"] = null;
             }
 
-            return regimen;
+
+            var data = new
+            {
+                regimen = regimen,
+                esbieninversion = esbieninversion
+            };
+            return JsonConvert.SerializeObject(data);
+
         }
 
         public bool GetOperacionUE(string regimen)
@@ -662,6 +692,19 @@ namespace Marfil.App.WebMain.Controllers
             var esExportacion = service.GetExportacion(ContextService.Empresa, regimen);
 
             return esExportacion;
+        }
+
+        public bool GetBienInversion(string tipofactura)
+        {
+            if (string.IsNullOrEmpty(tipofactura))
+            {
+                return false;
+            }
+
+            var service = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var esBieninversion = service.GetBienInversion(ContextService.Empresa, tipofactura);
+
+            return esBieninversion;
         }
 
         public bool EsSujetaNoExenta(string regimen)

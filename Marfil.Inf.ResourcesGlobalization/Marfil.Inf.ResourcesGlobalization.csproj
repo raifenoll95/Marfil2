@@ -671,6 +671,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Acabados.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ActualizacionCostes.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\ActualizacionCostes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ActualizacionCostes.Designer.cs</LastGenOutput>
@@ -1026,6 +1027,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Clientes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PerdidasYGanancias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PeticionesAsincronas.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\PeticionesAsincronas.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PeticionesAsincronas.Designer.cs</LastGenOutput>

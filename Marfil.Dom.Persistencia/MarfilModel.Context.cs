@@ -93,7 +93,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Tiposcuentas> Tiposcuentas { get; set; }
         public virtual DbSet<TiposcuentasLin> TiposcuentasLin { get; set; }
         public virtual DbSet<TiposIva> TiposIva { get; set; }
-        public virtual DbSet<Tiposretenciones> Tiposretenciones { get; set; }
         public virtual DbSet<Transportistas> Transportistas { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Reservasstock> Reservasstock { get; set; }
@@ -230,6 +229,7 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<RegistroIVARepercutido> RegistroIVARepercutido { get; set; }
         public virtual DbSet<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }
         public virtual DbSet<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
+        public virtual DbSet<Tiposretenciones> Tiposretenciones { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

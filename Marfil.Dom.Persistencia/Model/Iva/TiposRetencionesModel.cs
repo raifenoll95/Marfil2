@@ -50,6 +50,10 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         [Display(ResourceType = typeof(RTiposRetenciones), Name = "Tiporendimiento")]
         public TipoRendimiento? Tiporendimiento { get; set; }
 
+        [Display(ResourceType = typeof(RTiposRetenciones), Name = "Inmueble")]
+        public bool Inmueble { get; set; }
+
+
         public string CuentaRecargoDescripcion { get; set; }
 
         public string CuentaAbonoDescripcion { get; set; }

@@ -97,6 +97,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return "";
         }
 
+        public bool RequiereIRPF(string empresa, string tipo)
+        {
+            if (!string.IsNullOrEmpty(tipo))
+            {
+                var tipoparse = int.Parse(tipo);
+
+                return _db.TiposFacturas.Where(f => f.empresa == empresa && f.id == tipoparse).FirstOrDefault().requiereirpf.Value;
+            }
+
+            return false;
+        }
 
 
         #endregion
