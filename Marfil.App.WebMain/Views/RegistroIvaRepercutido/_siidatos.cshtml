@@ -34,26 +34,12 @@
     {
         @Html.LabelFor(f => Model.Enviarmodificacion, new { @class = "control-label col-md-2" })
         <div class="col-md-1">
-            @if (isreadonly)
-            {
-                @Html.CheckBoxFor(f => Model.Enviarmodificacion, (object)new { @disabled = "disabled" })
-            }
-            else
-            {
-                @Html.CheckBoxFor(f => Model.Enviarmodificacion)
-            }
+            @Html.CheckBoxFor(f => Model.Enviarmodificacion)
         </div>
 
         @Html.LabelFor(f => Model.Enviarbaja, new { @class = "control-label col-md-1" })
         <div class="col-md-1">
-            @if (isreadonly)
-            {
-                @Html.CheckBoxFor(f => Model.Enviarbaja, (object)new { @disabled = "disabled" })
-            }
-            else
-            {
-                @Html.CheckBoxFor(f => Model.Enviarbaja)
-            }
+            @Html.CheckBoxFor(f => Model.Enviarbaja)
         </div>
     }
 

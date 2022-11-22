@@ -398,14 +398,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     result.Importetotaldoc = Math.Round(result.Totales.Sum(f => f.Subtotal) ?? 0.0, result.Decimalesmonedas);
                     GenerarVencimientos(result);
-                    create(result);
+                    //create(result);
 
-                    //  Cambiamos el estado del albarán
-                    var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
-                    albaran.Fkestados = Confservice.GetEstadoFinAlbaranesVentas();
+                    //Cambiamos el estado del/los albarán/es
+                    foreach (var item in albaranesreferencia)
+                    {
+                        var albaranEstado = albaranesService.GetByReferencia(item);
 
-                    var newItem = albaranesService._converterModel.CreatePersitance(albaran);
-                    _db.Set<Albaranes>().AddOrUpdate(newItem);
+                        var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                        albaranEstado.Fkestados = Confservice.GetEstadoFinAlbaranesVentas();
+
+                        var newItem = albaranesService._converterModel.CreatePersitance(albaranEstado);
+                        _db.Set<Albaranes>().AddOrUpdate(newItem);
+                    }                  
 
                     _db.SaveChanges();
                     tran.Complete();

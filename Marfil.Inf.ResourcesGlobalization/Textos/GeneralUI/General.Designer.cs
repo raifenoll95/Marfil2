@@ -376,6 +376,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se puede borrar el estado porque ya ha sido utilizado en algún documento..
+        /// </summary>
+        public static string ErrorBorradoEstadosUsados {
+            get {
+                return ResourceManager.GetString("ErrorBorradoEstadosUsados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se puede borrar la unidade de medida porque ya ha sido utilizada en algún artículo..
         /// </summary>
         public static string ErrorBorradoUnidadesUsadas {

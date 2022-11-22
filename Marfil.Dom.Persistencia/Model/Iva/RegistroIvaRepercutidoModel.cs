@@ -481,6 +481,9 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         public Guid? Fkusuariomodificacion { get; set; }
 
         public DateTime? Fechamodificacionregistro { get; set; }
+
+        [Display(ResourceType = typeof(RRegistroIVA), Name = "Contabilizado")]
+        public bool Contabilizado { get; set; }
         #endregion
 
         #region Totales

@@ -463,7 +463,7 @@
     <value>There are any bank for the current client</value>
   </data>
   <data name="ErrorBorradoArticulosUsados" xml:space="preserve">
-    <value>Is not possible to delete the article because it has been already used in some document</value>
+    <value>Is not possible to delete the article because it has been already used in some document.</value>
   </data>
   <data name="LblGenerarPedido" xml:space="preserve">
     <value>Create order</value>
@@ -617,5 +617,8 @@
   </data>
   <data name="AsignarCartera" xml:space="preserve">
     <value>Asignar a cartera</value>
+  </data>
+  <data name="ErrorBorradoEstadosUsados" xml:space="preserve">
+    <value>Is not possible to delete the state because it has been already used in some document.</value>
   </data>
 </root>

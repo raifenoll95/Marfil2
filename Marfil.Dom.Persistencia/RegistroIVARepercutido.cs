@@ -103,6 +103,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.DateTime> fechaaltaregistro { get; set; }
         public Nullable<System.Guid> fkusuariomodificacion { get; set; }
         public Nullable<System.DateTime> fechamodificacionregistro { get; set; }
+        public Nullable<bool> contabilizado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }

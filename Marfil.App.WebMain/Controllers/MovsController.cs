@@ -653,6 +653,7 @@ namespace Marfil.App.WebMain.Controllers
 
                     service.EjercicioId = ContextService.Ejercicio;
                     model = service.Contabilizar(Factura);
+                    TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                 }
             }
             catch (Exception ex)

@@ -147,4 +147,13 @@
   <data name="Inmueble" xml:space="preserve">
     <value>Inmueble</value>
   </data>
+  <data name="BaseImponible" xml:space="preserve">
+    <value>Base Imponible</value>
+  </data>
+  <data name="RetencionSobre" xml:space="preserve">
+    <value>Retención sobre</value>
+  </data>
+  <data name="TotalFactura" xml:space="preserve">
+    <value>Total Factura</value>
+  </data>
 </root>

@@ -290,6 +290,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var estado = nodo[0].InnerText;
             return estado;
         }
+
+        public string GetEstadoFinPresupuestoVentas()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadototal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public string GetEstadoFinPresupuestoCompras()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadopresupuestoscomprastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
     }
 
 }

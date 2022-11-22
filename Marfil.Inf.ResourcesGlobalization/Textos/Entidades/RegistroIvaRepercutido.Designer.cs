@@ -259,6 +259,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Contabilizado.
+        /// </summary>
+        public static string Contabilizado {
+            get {
+                return ResourceManager.GetString("Contabilizado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Contabilizar como cobrado/pagado.
         /// </summary>
         public static string Contabilizar {

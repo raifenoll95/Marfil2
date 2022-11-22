@@ -79,7 +79,7 @@
             cvfactura.Name = "Numfacturarectificar";
             cvfactura.Url = Url.Action("RegistroIvaFacturasApi", "Api");
             cvfactura.Valor = Model.Numfacturarectificar;
-            cvfactura.CampoIdentificador = "Id";
+            cvfactura.CampoIdentificador = "Referencia";
             //cvfactura.Params = "{\"cliente\":\"" + Model.Cuentacliente != "" && Model.Cuentacliente != null ? Model.Cuentacliente : Session["CurrentCuenta"].ToString() + "\"}";
             cvfactura.ControlesAsociados = "[ { \"cliente\":\"Cuentacliente\" } ]";
             cvfactura.SoloLectura = isreadonly;

@@ -324,29 +324,43 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public PedidosModel ImportarPresupuesto(PresupuestosModel presupuesto)
         {
-            //calcular serie asociada
-            if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
-                var prospectoService = FService.Instance.GetService(typeof(ProspectosModel), _context);
-                if (prospectoService.exists(presupuesto.Fkclientes))
+                //calcular serie asociada
+                if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
                 {
-                    throw new Exception(RProspectos.ErrorCrearPedidoProspecto);
+                    var prospectoService = FService.Instance.GetService(typeof(ProspectosModel), _context);
+                    if (prospectoService.exists(presupuesto.Fkclientes))
+                    {
+                        throw new Exception(RProspectos.ErrorCrearPedidoProspecto);
+                    }
+
+                    var result = Helper.fModel.GetModel<PedidosModel>(_context);
+                    result.Importado = true;
+                    ImportarCabecera(presupuesto, result);
+                    var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
+                    result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.Value.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
+                    EstablecerSerie(presupuesto.Fkseries, result);
+
+                    //recalculo importes lineas y totales
+                    RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
+                    result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
+                        result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
+                        result.Decimalesmonedas, (bool)result.Importado).ToList();
+
+                    //Cambiamos el estado del presupuesto
+                    var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                    var presupuestosService = FService.Instance.GetService(typeof(PresupuestosModel), _context) as PresupuestosService;
+                    presupuesto.Fkestados = Confservice.GetEstadoFinPresupuestoVentas();
+
+                    var newItem = presupuestosService._converterModel.CreatePersitance(presupuesto);
+                    _db.Set<Presupuestos>().AddOrUpdate(newItem);
+
+                    _db.SaveChanges();
+                    tran.Complete();
+
+                    return result;
                 }
-
-                var result = Helper.fModel.GetModel<PedidosModel>(_context);
-                result.Importado = true;
-                ImportarCabecera(presupuesto, result);
-                var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
-                result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.Value.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
-                EstablecerSerie(presupuesto.Fkseries, result);
-
-                //recalculo importes lineas y totales
-                RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
-                result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
-                    result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
-                    result.Decimalesmonedas, (bool)result.Importado).ToList();
-
-                return result;
             }
 
             throw new ValidationException(RPresupuestos.ErrorSinCantidadPendiente);

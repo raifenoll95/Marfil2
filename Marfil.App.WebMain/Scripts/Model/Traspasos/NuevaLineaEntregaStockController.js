@@ -312,6 +312,7 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
 
     $scope.ValidarDatos = function () {
 
+        var lineas = $scope.gridApi.selection.getSelectedRows();
         $scope.Fkarticuloserrores = "";
         $scope.Cantidaderrores = "";
         $scope.Largoerrores = "";
@@ -330,6 +331,10 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         if (!$scope.Cantidad) {
             resultado = false;
             $scope.Cantidaderrores = campoobligatorio;
+        }
+        else if ($scope.Gestionlotes && lineas[0]["Cantidad"] < $scope.Cantidad) {
+            resultado = false;
+            $scope.Generalerrores = "La cantidad indicada es superior a la que hay actualmente en el stock";
         }
         
         if ($scope.Modificarmedidas) {

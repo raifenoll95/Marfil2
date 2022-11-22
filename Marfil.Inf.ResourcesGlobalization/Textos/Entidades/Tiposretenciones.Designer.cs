@@ -61,6 +61,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Base Imponible.
+        /// </summary>
+        public static string BaseImponible {
+            get {
+                return ResourceManager.GetString("BaseImponible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descripción.
         /// </summary>
         public static string Descripcion {
@@ -115,6 +124,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Retención sobre.
+        /// </summary>
+        public static string RetencionSobre {
+            get {
+                return ResourceManager.GetString("RetencionSobre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tipo de rendimiento.
         /// </summary>
         public static string Tiporendimiento {
@@ -147,6 +165,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string TituloEntidad {
             get {
                 return ResourceManager.GetString("TituloEntidad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Total Factura.
+        /// </summary>
+        public static string TotalFactura {
+            get {
+                return ResourceManager.GetString("TotalFactura", resourceCulture);
             }
         }
     }

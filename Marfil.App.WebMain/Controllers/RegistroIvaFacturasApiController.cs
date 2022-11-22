@@ -47,7 +47,7 @@ namespace Marfil.App.WebMain.Controllers
                     values = registros,
                     columns = new[]
                     {
-                        new ColumnDefinition() { field = "Id", displayName = "Id", visible = true/*, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }*/},
+                        new ColumnDefinition() { field = "Id", displayName = "Id", visible = false/*, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }*/},
                         new ColumnDefinition() { field = "Referencia", displayName = "Referencia", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
                         new ColumnDefinition() { field = "Fecha", displayName = "Fecha factura", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },
                         new ColumnDefinition() { field = "Fkclientes", displayName = "Cuenta cliente", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH } },

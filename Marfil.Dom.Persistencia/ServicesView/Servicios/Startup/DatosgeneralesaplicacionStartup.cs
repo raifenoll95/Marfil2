@@ -104,6 +104,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             modelconfiguracion.Estadoincidenciasinicial = modelconfiguracion.Estadosincidencias.Single(f => f.Tipoestado == TipoEstado.Diseño).CampoId;
             modelconfiguracion.Estadoincidenciastotal = modelconfiguracion.Estadosincidencias.Single(f => f.Tipoestado == TipoEstado.Finalizado).CampoId;
 
+            //Contabilidad
+            modelconfiguracion.PrefijosPrestacionServicios = "705,629,623";
+            modelconfiguracion.ComentarioExistenciasIniciales = "REGUL. EXISTENCIAS INICIALES";
+            modelconfiguracion.ComentarioExistenciasFinales = "EXIST. FINALES S/INVENTARIO";
+            modelconfiguracion.ComentarioDebePYG = "REGULARIZAR SALDOS DEUDORES";
+            modelconfiguracion.ComentarioHaberPYG = "REGULARIZAR SALDOS ACREEDORES";
+            modelconfiguracion.ComentarioCuentasDetalle = "REGULARIZACION DE SALDO";
+            modelconfiguracion.ComentarioCierreEjercicio = "CIERRE DEL EJERCICIO";
+            modelconfiguracion.ComentarioAperturaEjercicio = "REAPERTURA DEL EJERCICIO";
+            modelconfiguracion.ComentarioAperturaProvisional = "APERTURA PROVISIONAL";
+
             _configuracionService.CreateOrUpdate(modelconfiguracion);
         }
 

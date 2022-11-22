@@ -183,6 +183,9 @@
   <data name="Con" xml:space="preserve">
     <value>CON Inversión sujeto pasivo</value>
   </data>
+  <data name="Contabilizado" xml:space="preserve">
+    <value>Contabilizado</value>
+  </data>
   <data name="Contabilizar" xml:space="preserve">
     <value>Contabilizar como cobrado/pagado</value>
   </data>

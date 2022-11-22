@@ -3741,6 +3741,7 @@
           <Property Name="fechaaltaregistro" Type="datetime" />
           <Property Name="fkusuariomodificacion" Type="uniqueidentifier" />
           <Property Name="fechamodificacionregistro" Type="datetime" />
+          <Property Name="contabilizado" Type="bit" />
         </EntityType>
         <EntityType Name="RegistroIVARepercutidoRectificadas">
           <Key>
@@ -4605,6 +4606,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="fkcuentasabono" Type="varchar" MaxLength="15" />
           <Property Name="tiporendimiento" Type="int" />
           <Property Name="inmueble" Type="bit" />
+          <Property Name="retencionsobre" Type="int" />
         </EntityType>
         <EntityType Name="Trabajos">
           <Key>
@@ -7895,6 +7897,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="PreciosEspeciales" EntitySet="PreciosEspeciales" />
           </AssociationSet>
           <EntitySet Name="Lecturas" EntityType="MarfilModel.Lecturas" />
+          <EntitySet Name="Tiposretenciones" EntityType="MarfilModel.Tiposretenciones" />
           <EntitySet Name="RegistroIVARepercutido" EntityType="MarfilModel.RegistroIVARepercutido" />
           <EntitySet Name="RegistroIVARepercutidoRectificadas" EntityType="MarfilModel.RegistroIVARepercutidoRectificadas" />
           <EntitySet Name="RegistroIVARepercutidoTotales" EntityType="MarfilModel.RegistroIVARepercutidoTotales" />
@@ -7906,7 +7909,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="RegistroIVARepercutido" EntitySet="RegistroIVARepercutido" />
             <End Role="RegistroIVARepercutidoTotales" EntitySet="RegistroIVARepercutidoTotales" />
           </AssociationSet>
-          <EntitySet Name="Tiposretenciones" EntityType="MarfilModel.Tiposretenciones" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -14536,6 +14538,21 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="insertado" Type="Boolean" Nullable="false" />
           <Property Name="empresa" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Tiposretenciones">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="porcentajeretencion" Type="Double" />
+          <Property Name="fkcuentascargo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fkcuentasabono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="tiporendimiento" Type="Int32" />
+          <Property Name="inmueble" Type="Boolean" />
+          <Property Name="retencionsobre" Type="Int32" />
+        </EntityType>
         <EntityType Name="RegistroIVARepercutido">
           <Key>
             <PropertyRef Name="empresa" />
@@ -14623,6 +14640,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fechaaltaregistro" Type="DateTime" Precision="3" />
           <Property Name="fkusuariomodificacion" Type="Guid" />
           <Property Name="fechamodificacionregistro" Type="DateTime" Precision="3" />
+          <Property Name="contabilizado" Type="Boolean" />
           <NavigationProperty Name="RegistroIVARepercutidoRectificadas" Relationship="MarfilModel.FK_RegistroIVARepercutidoRectificadas_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoRectificadas" />
           <NavigationProperty Name="RegistroIVARepercutidoTotales" Relationship="MarfilModel.FK_RegistroIVARepercutidoTotales_RegistroIVARepercutido" FromRole="RegistroIVARepercutido" ToRole="RegistroIVARepercutidoTotales" />
         </EntityType>
@@ -14691,20 +14709,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Tiposretenciones">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="porcentajeretencion" Type="Double" />
-          <Property Name="fkcuentascargo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="fkcuentasabono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="tiporendimiento" Type="Int32" />
-          <Property Name="inmueble" Type="Boolean" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19879,9 +19883,25 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tiposretenciones">
+            <EntityTypeMapping TypeName="MarfilModel.Tiposretenciones">
+              <MappingFragment StoreEntitySet="Tiposretenciones">
+                <ScalarProperty Name="retencionsobre" ColumnName="retencionsobre" />
+                <ScalarProperty Name="inmueble" ColumnName="inmueble" />
+                <ScalarProperty Name="tiporendimiento" ColumnName="tiporendimiento" />
+                <ScalarProperty Name="fkcuentasabono" ColumnName="fkcuentasabono" />
+                <ScalarProperty Name="fkcuentascargo" ColumnName="fkcuentascargo" />
+                <ScalarProperty Name="porcentajeretencion" ColumnName="porcentajeretencion" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RegistroIVARepercutido">
             <EntityTypeMapping TypeName="MarfilModel.RegistroIVARepercutido">
               <MappingFragment StoreEntitySet="RegistroIVARepercutido">
+                <ScalarProperty Name="contabilizado" ColumnName="contabilizado" />
                 <ScalarProperty Name="fechamodificacionregistro" ColumnName="fechamodificacionregistro" />
                 <ScalarProperty Name="fkusuariomodificacion" ColumnName="fkusuariomodificacion" />
                 <ScalarProperty Name="fechaaltaregistro" ColumnName="fechaaltaregistro" />
@@ -19996,20 +20016,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="fktiposiva" ColumnName="fktiposiva" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="fkregistros" ColumnName="fkregistros" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tiposretenciones">
-            <EntityTypeMapping TypeName="MarfilModel.Tiposretenciones">
-              <MappingFragment StoreEntitySet="Tiposretenciones">
-                <ScalarProperty Name="inmueble" ColumnName="inmueble" />
-                <ScalarProperty Name="tiporendimiento" ColumnName="tiporendimiento" />
-                <ScalarProperty Name="fkcuentasabono" ColumnName="fkcuentasabono" />
-                <ScalarProperty Name="fkcuentascargo" ColumnName="fkcuentascargo" />
-                <ScalarProperty Name="porcentajeretencion" ColumnName="porcentajeretencion" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>

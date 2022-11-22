@@ -1003,4 +1003,7 @@
   <data name="LblDetallado" xml:space="preserve">
     <value>Detallado</value>
   </data>
+  <data name="ErrorBorradoEstadosUsados" xml:space="preserve">
+    <value>No se puede borrar el estado porque ya ha sido utilizado en algún documento.</value>
+  </data>
 </root>
