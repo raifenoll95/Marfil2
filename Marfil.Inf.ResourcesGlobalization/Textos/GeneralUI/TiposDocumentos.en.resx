@@ -121,9 +121,36 @@
     <value>Sell Estimation</value>
   </data>
   <data name="EnumPedidosVentas" xml:space="preserve">
-    <value>Sell Orders</value>
+    <value>Sales orders</value>
   </data>
   <data name="EnumFacturasVentas" xml:space="preserve">
-    <value>Sell Invoices</value>
+    <value>Sale invoices</value>
+  </data>
+  <data name="EnumAlbaranesVentas" xml:space="preserve">
+    <value>Delivery sheets</value>
+  </data>
+  <data name="EnumPresupuestosCompras" xml:space="preserve">
+    <value>Purchase quotations</value>
+  </data>
+  <data name="EnumPedidosCompras" xml:space="preserve">
+    <value>Purchase orders</value>
+  </data>
+  <data name="EnumAlbaranesCompras" xml:space="preserve">
+    <value>Purchase sheets</value>
+  </data>
+  <data name="EnumFacturasCompras" xml:space="preserve">
+    <value>Purchase invoices</value>
+  </data>
+  <data name="EnumReservas" xml:space="preserve">
+    <value>Stock reserves</value>
+  </data>
+  <data name="EnumTraspasos" xml:space="preserve">
+    <value>Warehouse transfers</value>
+  </data>
+  <data name="EnumEntradasVarias" xml:space="preserve">
+    <value>Input varies</value>
+  </data>
+  <data name="EnumSalidasVarias" xml:space="preserve">
+    <value>Several outputs</value>
   </data>
 </root>

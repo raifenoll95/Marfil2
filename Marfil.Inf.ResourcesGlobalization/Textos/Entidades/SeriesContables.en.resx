@@ -153,4 +153,19 @@
   <data name="TipoDocumentosIVAsoportado" xml:space="preserve">
     <value>VAT supported</value>
   </data>
+  <data name="Fkejercicios" xml:space="preserve">
+    <value>Accounting year</value>
+  </data>
+  <data name="Bloqueo" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="TipoDocumentosAsientos" xml:space="preserve">
+    <value>Accounting record</value>
+  </data>
+  <data name="ErrorContadorPridado" xml:space="preserve">
+    <value>Cannot save the record because the series is using a counter of type private</value>
+  </data>
+  <data name="ErrorSerieYaUtilizada" xml:space="preserve">
+    <value>The series counter cannot be modified because it has already been used.</value>
+  </data>
 </root>

@@ -121,12 +121,141 @@
     <value>Entreprises</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="TipoEmpresa" xml:space="preserve">
-    <value>Tipe d'entreprise</value>
+    <value>Type d'entreprise</value>
   </data>
   <data name="ErrorBorrar" xml:space="preserve">
-    <value>N'est pas possible supprimer une entreprise</value>
+    <value>Impossible de supprimer une entreprise</value>
+  </data>
+  <data name="Razonsocial" xml:space="preserve">
+    <value>Raison sociale</value>
+  </data>
+  <data name="Fkpais" xml:space="preserve">
+    <value>Pays</value>
+  </data>
+  <data name="Fkplangeneralcontable" xml:space="preserve">
+    <value>plan comptable général</value>
+  </data>
+  <data name="Administrador" xml:space="preserve">
+    <value>Administrateur</value>
+  </data>
+  <data name="NifCifAdministrador" xml:space="preserve">
+    <value>nif</value>
+  </data>
+  <data name="ActividadPrincipal" xml:space="preserve">
+    <value>Activité principal</value>
+  </data>
+  <data name="Cnae" xml:space="preserve">
+    <value>Code CNAE</value>
+  </data>
+  <data name="Nivel" xml:space="preserve">
+    <value>niveau d'entreprise</value>
+  </data>
+  <data name="Criterioiva" xml:space="preserve">
+    <value>Critères TVA</value>
+  </data>
+  <data name="Liquidacioniva" xml:space="preserve">
+    <value>Règlement TVA</value>
+  </data>
+  <data name="FkMonedaBase" xml:space="preserve">
+    <value>devise de base</value>
+  </data>
+  <data name="FkMonedaAdicional" xml:space="preserve">
+    <value>devise supplémentaire</value>
+  </data>
+  <data name="DigitosCuentas" xml:space="preserve">
+    <value>Chiffres du compte</value>
+  </data>
+  <data name="NivelCuentas" xml:space="preserve">
+    <value>Niveaux de compte</value>
+  </data>
+  <data name="GuiaAnuales" xml:space="preserve">
+    <value>Guide des soldes des comptes annuels</value>
+  </data>
+  <data name="GuiaPerdidas" xml:space="preserve">
+    <value>Guide des comptes de profits et pertes</value>
+  </data>
+  <data name="Datosregistrales" xml:space="preserve">
+    <value>Données du registre</value>
+  </data>
+  <data name="CriterioIvaDevengo" xml:space="preserve">
+    <value>régularisation</value>
+  </data>
+  <data name="CriterioIvaCaja" xml:space="preserve">
+    <value>Caisse</value>
+  </data>
+  <data name="LiquidacionIvaTrimestral" xml:space="preserve">
+    <value>Trimestriel</value>
+  </data>
+  <data name="LiquidacionIvaMensual" xml:space="preserve">
+    <value>Mensuel</value>
+  </data>
+  <data name="LblConfiguracionMonedas" xml:space="preserve">
+    <value>paramètres de devise</value>
+  </data>
+  <data name="LblConfiguracionCuentas" xml:space="preserve">
+    <value>Paramètres du compte</value>
+  </data>
+  <data name="LblConfiguracionBalance" xml:space="preserve">
+    <value>soldes des comptes</value>
+  </data>
+  <data name="ErrorCantidadDigitosCuentas" xml:space="preserve">
+    <value>Les chiffres du compte doivent être supérieurs à</value>
+  </data>
+  <data name="Fktarifasventas" xml:space="preserve">
+    <value>frais de vente</value>
+  </data>
+  <data name="Fktarifascompras" xml:space="preserve">
+    <value>frais d'achat</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime de TVA habituel</value>
+  </data>
+  <data name="FkCuentaEntradasVariasAlmacen" xml:space="preserve">
+    <value>Compte fournisseur diverses écritures</value>
+  </data>
+  <data name="FkCuentaSalidasVariasAlmacen" xml:space="preserve">
+    <value>Compte client diverses sorties</value>
+  </data>
+  <data name="Fkseriescontables" xml:space="preserve">
+    <value>série comptable</value>
+  </data>
+  <data name="Ean13" xml:space="preserve">
+    <value>Société EAN-13</value>
+  </data>
+  <data name="Decimalesprecios" xml:space="preserve">
+    <value>prix décimaux</value>
+  </data>
+  <data name="CuentasAnuales" xml:space="preserve">
+    <value>Comptes de solde comptes annuels</value>
+  </data>
+  <data name="CuentasPerdidas" xml:space="preserve">
+    <value>Rapport de profits et pertes sur les comptes</value>
+  </data>
+  <data name="CuentaPG" xml:space="preserve">
+    <value>Compte de profits et pertes</value>
+  </data>
+  <data name="CuentasExistencias" xml:space="preserve">
+    <value>comptes de stock</value>
+  </data>
+  <data name="Cuentascaja" xml:space="preserve">
+    <value>comptes de trésorerie</value>
+  </data>
+  <data name="Contable" xml:space="preserve">
+    <value>Date d'enregistrement comptable</value>
+  </data>
+  <data name="Factura" xml:space="preserve">
+    <value>Date de facturation</value>
+  </data>
+  <data name="Operacion" xml:space="preserve">
+    <value>Date de transaction</value>
+  </data>
+  <data name="Ivarepercutido" xml:space="preserve">
+    <value>TVA en sortie</value>
+  </data>
+  <data name="Ivasoportado" xml:space="preserve">
+    <value>TVA prise en charge</value>
   </data>
 </root>

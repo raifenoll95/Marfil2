@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Articles</value>
+    <value>Items</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -142,13 +142,13 @@
     <value>Thickness</value>
   </data>
   <data name="Coste" xml:space="preserve">
-    <value>Cost</value>
+    <value>Acquisition cost</value>
   </data>
   <data name="Preciominimoventa" xml:space="preserve">
     <value>Minimum price</value>
   </data>
   <data name="TarifaDescripcion" xml:space="preserve">
-    <value>Rate</value>
+    <value>Price list</value>
   </data>
   <data name="TarifaCuenta" xml:space="preserve">
     <value>Account</value>
@@ -160,7 +160,7 @@
     <value>Indirect costs</value>
   </data>
   <data name="Costefabricacion" xml:space="preserve">
-    <value>Building cost</value>
+    <value>Manufacturing cost</value>
   </data>
   <data name="Otroscostes" xml:space="preserve">
     <value>Other costs</value>
@@ -175,7 +175,7 @@
     <value>Raw material cost</value>
   </data>
   <data name="Costeelaboracionmateriaprima" xml:space="preserve">
-    <value>Elab. raw material</value>
+    <value>Elab. cost material</value>
   </data>
   <data name="Medidas" xml:space="preserve">
     <value>Dimensions</value>
@@ -184,7 +184,7 @@
     <value>VAT group</value>
   </data>
   <data name="ErrorArticuloInexistente" xml:space="preserve">
-    <value>The article doesn't exist</value>
+    <value>Item doesn't exist</value>
   </data>
   <data name="Descuento" xml:space="preserve">
     <value>% Dto.</value>
@@ -193,9 +193,153 @@
     <value>Stock</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Article</value>
+    <value>Item</value>
   </data>
   <data name="Codigolibre" xml:space="preserve">
     <value>Code</value>
+  </data>
+  <data name="Acabados" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="Porcentajemerma" xml:space="preserve">
+    <value>% Decrease</value>
+  </data>
+  <data name="Fkguiascontables" xml:space="preserve">
+    <value>accounting guide</value>
+  </data>
+  <data name="Partidaarancelaria" xml:space="preserve">
+    <value>Tariff item</value>
+  </data>
+  <data name="Kilosud" xml:space="preserve">
+    <value>Kilos/Unit of measurement</value>
+  </data>
+  <data name="Medidalibre" xml:space="preserve">
+    <value>Free measure</value>
+  </data>
+  <data name="Labor" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="Excluircomisiones" xml:space="preserve">
+    <value>Exclude from commissions</value>
+  </data>
+  <data name="Exentoretencion" xml:space="preserve">
+    <value>exempt from withholding</value>
+  </data>
+  <data name="Gestionarcaducidad" xml:space="preserve">
+    <value>Manage expiration</value>
+  </data>
+  <data name="Tiempostandardfabricacion" xml:space="preserve">
+    <value>Standard manufacturing time (min.)</value>
+  </data>
+  <data name="Gestionstock" xml:space="preserve">
+    <value>Stock management</value>
+  </data>
+  <data name="Tipogestionlotes" xml:space="preserve">
+    <value>Lots management</value>
+  </data>
+  <data name="Stocknegativoautorizado" xml:space="preserve">
+    <value>Authorized negative stock</value>
+  </data>
+  <data name="Existenciasminimasmetros" xml:space="preserve">
+    <value>Minimum stock meters</value>
+  </data>
+  <data name="Existenciasmaximasmetros" xml:space="preserve">
+    <value>Maximum stock meters</value>
+  </data>
+  <data name="Existenciasminimasunidades" xml:space="preserve">
+    <value>Minimum stock units</value>
+  </data>
+  <data name="Existenciasmaximasunidades" xml:space="preserve">
+    <value>Maximum stock units</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Viewable on the web</value>
+  </data>
+  <data name="Fkcontadores" xml:space="preserve">
+    <value>Counter</value>
+  </data>
+  <data name="Fkunidades" xml:space="preserve">
+    <value>Measure unit</value>
+  </data>
+  <data name="Singestion" xml:space="preserve">
+    <value>No management</value>
+  </data>
+  <data name="Loteobligatorio" xml:space="preserve">
+    <value>Mandatory lot</value>
+  </data>
+  <data name="Loteopcional" xml:space="preserve">
+    <value>Optional lot</value>
+  </data>
+  <data name="Rendimientom2m3" xml:space="preserve">
+    <value>Yield m2/ m3</value>
+  </data>
+  <data name="Articulocomentario" xml:space="preserve">
+    <value>It's article comment</value>
+  </data>
+  <data name="Lotefraccionable" xml:space="preserve">
+    <value>Divisible lot</value>
+  </data>
+  <data name="Tipoivavariable" xml:space="preserve">
+    <value>variable VAT rate</value>
+  </data>
+  <data name="Piezascaja" xml:space="preserve">
+    <value>Pieces x box</value>
+  </data>
+  <data name="Categoria" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="TipoCategoriaAmbas" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="TipoCategoriaVentas" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="TipoCategoriaCompras" xml:space="preserve">
+    <value>Purchases</value>
+  </data>
+  <data name="UltimaSalida" xml:space="preserve">
+    <value>exit document</value>
+  </data>
+  <data name="UltimaEntrada" xml:space="preserve">
+    <value>Entry document</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Movimientos" xml:space="preserve">
+    <value>Registers</value>
+  </data>
+  <data name="Consumibles" xml:space="preserve">
+    <value>Consumable</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Item classification</value>
+  </data>
+  <data name="ArticulosTercero" xml:space="preserve">
+    <value>Third party items</value>
+  </data>
+  <data name="Componentes" xml:space="preserve">
+    <value>Parts</value>
+  </data>
+  <data name="Ean13" xml:space="preserve">
+    <value>ean13</value>
+  </data>
+  <data name="Metros" xml:space="preserve">
+    <value>In meters</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>In pieces</value>
+  </data>
+  <data name="Stockmaximo" xml:space="preserve">
+    <value>Maximum stock</value>
+  </data>
+  <data name="Stockminimo" xml:space="preserve">
+    <value>Minimum stock</value>
+  </data>
+  <data name="Stockseguridad" xml:space="preserve">
+    <value>Security stock</value>
+  </data>
+  <data name="Almacenes" xml:space="preserve">
+    <value>Warehouses</value>
   </data>
 </root>

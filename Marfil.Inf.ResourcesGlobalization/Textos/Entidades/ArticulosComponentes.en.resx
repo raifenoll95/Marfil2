@@ -118,6 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Componentes</value>
+    <value>Parts</value>
+  </data>
+  <data name="FkArticulo" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="ArticuloComponente" xml:space="preserve">
+    <value>Component</value>
+  </data>
+  <data name="DescripcionComponente" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>Pieces</value>
+  </data>
+  <data name="Largo" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="Ancho" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Grueso" xml:space="preserve">
+    <value>Thickness</value>
+  </data>
+  <data name="Merma" xml:space="preserve">
+    <value>Loss %</value>
   </data>
 </root>

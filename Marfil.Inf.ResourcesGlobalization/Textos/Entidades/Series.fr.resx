@@ -118,21 +118,102 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Series</value>
+    <value>Série</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Serie</value>
+    <value>Série</value>
   </data>
   <data name="SalidasVarias" xml:space="preserve">
-    <value>Différentes sorties</value>
+    <value>Diverses sorties</value>
   </data>
   <data name="EntradasVarias" xml:space="preserve">
-    <value>Différentes entrées</value>
+    <value>Billets divers</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>pièces de monnaie</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="Fkcontadores" xml:space="preserve">
+    <value>Compteur</value>
+  </data>
+  <data name="Fkejercicios" xml:space="preserve">
+    <value>Exercer</value>
+  </data>
+  <data name="Tipoimpresion" xml:space="preserve">
+    <value>type d'impression</value>
+  </data>
+  <data name="Riesgo" xml:space="preserve">
+    <value>Il est inclus dans le risque</value>
+  </data>
+  <data name="Exentoiva" xml:space="preserve">
+    <value>Il est exonéré de TVA</value>
+  </data>
+  <data name="Borrador" xml:space="preserve">
+    <value>Projet de série</value>
+  </data>
+  <data name="Rectificativa" xml:space="preserve">
+    <value>série rectificative</value>
+  </data>
+  <data name="Fkseriesasociada" xml:space="preserve">
+    <value>série associée</value>
+  </data>
+  <data name="Bloqueo" xml:space="preserve">
+    <value>Blocage</value>
+  </data>
+  <data name="TipoDocumentosPresupuestosCompra" xml:space="preserve">
+    <value>Budgets d'achat</value>
+  </data>
+  <data name="TipoDocumentosReservasCompra" xml:space="preserve">
+    <value>réservations d'achat</value>
+  </data>
+  <data name="TipoDocumentosAlbaranesCompra" xml:space="preserve">
+    <value>Bons de livraison d'achat</value>
+  </data>
+  <data name="TipoDocumentosPedidosCompra" xml:space="preserve">
+    <value>Acheter en ligne</value>
+  </data>
+  <data name="TipoDocumentosFacturasCompra" xml:space="preserve">
+    <value>Factures d'achat</value>
+  </data>
+  <data name="TipoDocumentosPresupuestosVentas" xml:space="preserve">
+    <value>budget de vente</value>
+  </data>
+  <data name="TipoDocumentosReservasVentas" xml:space="preserve">
+    <value>réservations de vente</value>
+  </data>
+  <data name="TipoDocumentosAlbaranesVentas" xml:space="preserve">
+    <value>reçus de vente</value>
+  </data>
+  <data name="TipoDocumentosPedidosVentas" xml:space="preserve">
+    <value>commandes</value>
+  </data>
+  <data name="TipoDocumentosFacturasVentas" xml:space="preserve">
+    <value>factures des ventes</value>
+  </data>
+  <data name="TipoDocumentosApuntesAlmacen" xml:space="preserve">
+    <value>notes d'entrepôt</value>
+  </data>
+  <data name="Tipodocumento" xml:space="preserve">
+    <value>Type de document</value>
+  </data>
+  <data name="ErrorContadorPridado" xml:space="preserve">
+    <value>Impossible de sauvegarder l'enregistrement car la série utilise un compteur de type privé déjà affecté à une autre série.</value>
+  </data>
+  <data name="ErrorSerieYaUtilizada" xml:space="preserve">
+    <value>Le compteur de séries ne peut pas être modifié car il a déjà été utilisé.</value>
+  </data>
+  <data name="TipoAlmacenLote" xml:space="preserve">
+    <value>Type de lot</value>
+  </data>
+  <data name="Fkgruposusuarios" xml:space="preserve">
+    <value>groupe d'utilisateurs</value>
   </data>
 </root>

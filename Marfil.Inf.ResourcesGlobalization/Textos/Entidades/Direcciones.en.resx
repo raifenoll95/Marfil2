@@ -121,7 +121,7 @@
     <value>Addresses</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Notes</value>
+    <value>Comments</value>
   </data>
   <data name="Web" xml:space="preserve">
     <value>Web</value>
@@ -139,10 +139,10 @@
     <value>Telephone</value>
   </data>
   <data name="Personacontacto" xml:space="preserve">
-    <value>Contact</value>
+    <value>Contact person</value>
   </data>
   <data name="Fkprovincia" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Fktipodireccion" xml:space="preserve">
     <value>Type of address</value>
@@ -160,10 +160,10 @@
     <value>Address</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
-    <value>Town</value>
+    <value>City</value>
   </data>
   <data name="Cp" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Zip code</value>
   </data>
   <data name="Fkpais" xml:space="preserve">
     <value>Country</value>

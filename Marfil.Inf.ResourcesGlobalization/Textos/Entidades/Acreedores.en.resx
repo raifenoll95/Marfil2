@@ -130,7 +130,7 @@
     <value>Main language</value>
   </data>
   <data name="LblMensajeTipoCuenta" xml:space="preserve">
-    <value>There is not a type of account for acreedores</value>
+    <value>There is not a type of account for creditors</value>
   </data>
   <data name="Clasificacion" xml:space="preserve">
     <value>Clasification</value>
@@ -139,10 +139,10 @@
     <value>Payments</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
-    <value>Town</value>
+    <value>City</value>
   </data>
   <data name="Provincia" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Nif" xml:space="preserve">
     <value>Id Number</value>
@@ -154,13 +154,13 @@
     <value>Crediter</value>
   </data>
   <data name="PrevisionPagosPeriodicos" xml:space="preserve">
-    <value>Provision for periodic payments. Conciliate with </value>
+    <value>Provision for periodic payments. Conciliate with</value>
   </data>
   <data name="Fkmonedas" xml:space="preserve">
     <value>Currency</value>
   </data>
   <data name="Fkgruposiva" xml:space="preserve">
-    <value>Tax Group</value>
+    <value>VAT groups</value>
   </data>
   <data name="RazonSocial" xml:space="preserve">
     <value>Company name</value>
@@ -175,13 +175,13 @@
     <value>Company type</value>
   </data>
   <data name="Fkunidadnegocio" xml:space="preserve">
-    <value>Operating unit</value>
+    <value>Business unit</value>
   </data>
   <data name="Fkincoterm" xml:space="preserve">
     <value>Incoterm</value>
   </data>
   <data name="Fkregimeniva" xml:space="preserve">
-    <value>VAT classification</value>
+    <value>VAT group</value>
   </data>
   <data name="Criterioiva" xml:space="preserve">
     <value>VAT criteria</value>
@@ -199,7 +199,7 @@
     <value>Treasury account</value>
   </data>
   <data name="Fkformaspago" xml:space="preserve">
-    <value>Payment terms</value>
+    <value>Payment method</value>
   </data>
   <data name="Descuentoprontopago" xml:space="preserve">
     <value>Cash discount %</value>
@@ -223,7 +223,7 @@
     <value>Accrual</value>
   </data>
   <data name="CriterioIVACaja" xml:space="preserve">
-    <value>Cash account</value>
+    <value>Box</value>
   </data>
   <data name="TipoportesPagados" xml:space="preserve">
     <value>Paid</value>
@@ -232,12 +232,18 @@
     <value>Due</value>
   </data>
   <data name="Facturacion" xml:space="preserve">
-    <value>Invoicing </value>
+    <value>Invoicing</value>
   </data>
   <data name="Fkcriteriosagrupacion" xml:space="preserve">
     <value>Grouping criteria</value>
   </data>
   <data name="Fktipofactura" xml:space="preserve">
     <value>Default invoice</value>
+  </data>
+  <data name="Periodonopagodesde" xml:space="preserve">
+    <value>Non-payment period from</value>
+  </data>
+  <data name="Periodonopagohasta" xml:space="preserve">
+    <value>Non-payment period until</value>
   </data>
 </root>

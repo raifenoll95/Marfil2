@@ -118,18 +118,87 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Contadeurs</value>
+    <value>comptables</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="TiposSegmentosSemana" xml:space="preserve">
-    <value>Semaine</value>
+    <value>La semaine</value>
   </data>
   <data name="TipoInicioSemanal" xml:space="preserve">
-    <value>Par semaine</value>
+    <value>Hebdomadaire</value>
+  </data>
+  <data name="Tipoinicio" xml:space="preserve">
+    <value>Niveau de redémarrage</value>
+  </data>
+  <data name="Primerdocumento" xml:space="preserve">
+    <value>Valeur du premier document</value>
+  </data>
+  <data name="Tiposegmento" xml:space="preserve">
+    <value>type de segments</value>
+  </data>
+  <data name="Longitud" xml:space="preserve">
+    <value>Longueur</value>
+  </data>
+  <data name="Valor" xml:space="preserve">
+    <value>La peine</value>
+  </data>
+  <data name="ErrorLineaObligatoria" xml:space="preserve">
+    <value>Il est obligatoire de spécifier une configuration pour le compteur</value>
+  </data>
+  <data name="ErrorLongitudMaximaLineas" xml:space="preserve">
+    <value>La longueur maximale du compteur est de 12 caractères</value>
+  </data>
+  <data name="TipoInicioSinreinicio" xml:space="preserve">
+    <value>pas de redémarrage</value>
+  </data>
+  <data name="TipoInicioAnual" xml:space="preserve">
+    <value>Annuel</value>
+  </data>
+  <data name="TipoInicioMensual" xml:space="preserve">
+    <value>Mensuel</value>
+  </data>
+  <data name="TiposSegmentosConstante" xml:space="preserve">
+    <value>Constant</value>
+  </data>
+  <data name="TiposSegmentosSerie" xml:space="preserve">
+    <value>Série</value>
+  </data>
+  <data name="TiposSegmentosAño" xml:space="preserve">
+    <value>An</value>
+  </data>
+  <data name="TiposSegmentosMes" xml:space="preserve">
+    <value>Mois</value>
+  </data>
+  <data name="TiposSegmentosSecuencia" xml:space="preserve">
+    <value>Séquence</value>
+  </data>
+  <data name="TipoContadorMultidocumento" xml:space="preserve">
+    <value>multi-document</value>
+  </data>
+  <data name="TipoContadorPrivado" xml:space="preserve">
+    <value>Privé</value>
+  </data>
+  <data name="Tipocontador" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ErrorSegmentoObligatorio" xml:space="preserve">
+    <value>Il est obligatoire d'indiquer le segment identifiant du compteur</value>
+  </data>
+  <data name="ErrorSegmentoMesObligatorio" xml:space="preserve">
+    <value>Si le compteur est initialisé tous les mois, il est obligatoire d'indiquer le segment du mois</value>
+  </data>
+  <data name="ErrorSegmentoAñoObligatorio" xml:space="preserve">
+    <value>Si le compteur est initialisé tous les ans, il est obligatoire d'indiquer le segment de l'année</value>
+  </data>
+  <data name="ErrorContadorSerieUtilizada" xml:space="preserve">
+    <value>Impossible de modifier le compteur car il est affecté à une série de documents</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Décalage</value>
   </data>
 </root>

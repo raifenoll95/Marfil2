@@ -118,9 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Fkcuentas" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
   </data>
   <data name="ErrorCuentaObligatoria" xml:space="preserve">
-    <value>Il est obligatoire d'especificer une comte</value>
+    <value>Il est obligatoire d'indiquer un Compte</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>agents</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Raison sociale</value>
+  </data>
+  <data name="Fktipoirpf" xml:space="preserve">
+    <value>Type de retenue</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="Fkformapago" xml:space="preserve">
+    <value>Mode de paiement</value>
+  </data>
+  <data name="Porcentajecomision" xml:space="preserve">
+    <value>% Commission</value>
+  </data>
+  <data name="Comisionporm2" xml:space="preserve">
+    <value>Commission par m2</value>
+  </data>
+  <data name="Comisionporm3" xml:space="preserve">
+    <value>Commission par m3</value>
+  </data>
+  <data name="Porcentajeincrementosobreptb" xml:space="preserve">
+    <value>% d'augmentation sur le prix du tarif de base</value>
+  </data>
+  <data name="Porcentajedecrementosobreptb" xml:space="preserve">
+    <value>% de réduction sur le tarif de base</value>
+  </data>
+  <data name="Primaincrementosobreptb" xml:space="preserve">
+    <value>#NAME?</value>
+  </data>
+  <data name="Primadecrementosobreptb" xml:space="preserve">
+    <value>#NAME?</value>
+  </data>
+  <data name="InformacionAgente" xml:space="preserve">
+    <value>informations sur l'agent</value>
+  </data>
+  <data name="LblMensajeTipoCuenta" xml:space="preserve">
+    <value>Aucun type de compte n'a été défini pour les agents.</value>
+  </data>
+  <data name="ErrorTipoCuentaConfiguracion" xml:space="preserve">
+    <value>Le type de compte n'a pas été configuré pour les agents</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>Agent</value>
   </data>
 </root>

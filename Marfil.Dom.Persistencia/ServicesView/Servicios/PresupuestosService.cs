@@ -155,6 +155,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        public int Recalcularpeso(PresupuestosModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas) { 
+
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal = (int)(item.Metros * articulo.Kilosud);
+            }
+
+            return pesototal;
+        }
+
         public PresupuestosModel Clonar(string id)
         {
             var appService=new ApplicationHelper(_context);
@@ -255,14 +270,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model,TipoDocumentos.PresupuestosVentas, _context, _db);
 
+                //Se calcula el peso del material en el documento
+                if(model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
+
                 base.create(model);
 
                 //generar carpeta
                 tran.Complete();
             }
-        }
-
-       
+        } 
 
         public override void edit(IModelView obj)
         {
@@ -282,7 +301,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //{
                 //    model.Clientepais = service.GetListPaises().Where(f => f.Valor == cuenta.FkPais).Select(f => f.Descripcion).SingleOrDefault();
                 //}
-                
+
+                //Se calcula el peso del material en el documento
+                if (model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
+
                 base.edit(model);
                 tran.Complete();
             }

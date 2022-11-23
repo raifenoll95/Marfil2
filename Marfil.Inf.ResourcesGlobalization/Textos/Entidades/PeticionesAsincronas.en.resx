@@ -127,10 +127,10 @@
     <value>Company</value>
   </data>
   <data name="Estado" xml:space="preserve">
-    <value>Status</value>
+    <value>State</value>
   </data>
   <data name="EstadoPeticionEnCurso" xml:space="preserve">
-    <value>ongoing process</value>
+    <value>In progress</value>
   </data>
   <data name="EstadoPeticionError" xml:space="preserve">
     <value>Error</value>
@@ -143,5 +143,50 @@
   </data>
   <data name="Fecha" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="EnEjecucion" xml:space="preserve">
+    <value>The process is running</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Some error has occurred/ below is the error log</value>
+  </data>
+  <data name="ErrorCritico" xml:space="preserve">
+    <value>Execution has stopped due to the following exception</value>
+  </data>
+  <data name="Resultado" xml:space="preserve">
+    <value>Execution result:</value>
+  </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TipoImportacionImportarAcreedores" xml:space="preserve">
+    <value>Import Creditors</value>
+  </data>
+  <data name="TipoImportacionImportarArticulos" xml:space="preserve">
+    <value>Import items</value>
+  </data>
+  <data name="TipoImportacionImportarClientes" xml:space="preserve">
+    <value>Import Customres</value>
+  </data>
+  <data name="TipoImportacionImportarMovs" xml:space="preserve">
+    <value>import accounting journal</value>
+  </data>
+  <data name="TipoImportacionImportarProveedores" xml:space="preserve">
+    <value>Import Suppliers</value>
+  </data>
+  <data name="TipoImportacionImportarStock" xml:space="preserve">
+    <value>import stock</value>
+  </data>
+  <data name="TipoPeticionCalculo" xml:space="preserve">
+    <value>Calculation</value>
+  </data>
+  <data name="TipoPeticionImportacion" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Asynchronous Requests</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>User</value>
   </data>
 </root>

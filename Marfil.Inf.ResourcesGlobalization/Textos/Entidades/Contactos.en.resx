@@ -124,7 +124,7 @@
     <value>Contact address</value>
   </data>
   <data name="Observaciones" xml:space="preserve">
-    <value>Notes</value>
+    <value>Comments</value>
   </data>
   <data name="Nifcif" xml:space="preserve">
     <value>Id Number</value>
@@ -145,12 +145,15 @@
     <value>Language</value>
   </data>
   <data name="Fkcargoempresa" xml:space="preserve">
-    <value>Charge in the company</value>
+    <value>Position in company</value>
   </data>
   <data name="Nombre" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="ErrorNifObligatorioCargoEmpresa" xml:space="preserve">
     <value>The field Id Number is required for the current company position</value>
+  </data>
+  <data name="Fktipocontacto" xml:space="preserve">
+    <value>Type of contact</value>
   </data>
 </root>

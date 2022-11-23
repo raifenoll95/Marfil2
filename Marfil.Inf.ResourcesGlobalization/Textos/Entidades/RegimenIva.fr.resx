@@ -121,9 +121,78 @@
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Normal" xml:space="preserve">
     <value>Normal</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="Recargo" xml:space="preserve">
+    <value>Surtaxe</value>
+  </data>
+  <data name="ExentoTasa" xml:space="preserve">
+    <value>exonéré d'impôt</value>
+  </data>
+  <data name="OperacionUe" xml:space="preserve">
+    <value>Opération UE</value>
+  </data>
+  <data name="InversionSujetoPasivo" xml:space="preserve">
+    <value>Inv. sujet passif</value>
+  </data>
+  <data name="OperacionesNoSujetas" xml:space="preserve">
+    <value>Opérations non soumises</value>
+  </data>
+  <data name="ZonasEspeciales" xml:space="preserve">
+    <value>Zones spéciales (Canaries, Ceuta et Melilla)</value>
+  </data>
+  <data name="CanariasIgic" xml:space="preserve">
+    <value>IGIC des îles Canaries</value>
+  </data>
+  <data name="Extranjero" xml:space="preserve">
+    <value>Étranger</value>
+  </data>
+  <data name="IvaDiferido" xml:space="preserve">
+    <value>TVA différée</value>
+  </data>
+  <data name="IvaImportacion" xml:space="preserve">
+    <value>TVA à l'importation</value>
+  </data>
+  <data name="IncompatibleCriterioCaja" xml:space="preserve">
+    <value>Incompatible avec les critères de trésorerie</value>
+  </data>
+  <data name="SoportableRepercutidoAmbos" xml:space="preserve">
+    <value>Pris en charge/affecté/les deux</value>
+  </data>
+  <data name="BienInversion" xml:space="preserve">
+    <value>bon investissement</value>
+  </data>
+  <data name="ExentoVentas" xml:space="preserve">
+    <value>ventes exonérées</value>
+  </data>
+  <data name="ClaveOperacion340" xml:space="preserve">
+    <value>Code opération 340</value>
+  </data>
+  <data name="Incluirmodelo347" xml:space="preserve">
+    <value>Inclure dans le modèle 347</value>
+  </data>
+  <data name="Exportacion" xml:space="preserve">
+    <value>Exporter</value>
+  </data>
+  <data name="SraSoportado" xml:space="preserve">
+    <value>prise en charge</value>
+  </data>
+  <data name="SraRepercutido" xml:space="preserve">
+    <value>répercuté</value>
+  </data>
+  <data name="SraAmbos" xml:space="preserve">
+    <value>Les deux</value>
+  </data>
+  <data name="DatosSII" xml:space="preserve">
+    <value>Données SII</value>
+  </data>
+  <data name="Tipooperacionclassic" xml:space="preserve">
+    <value>Type d'opération Ivoire Classique</value>
   </data>
 </root>

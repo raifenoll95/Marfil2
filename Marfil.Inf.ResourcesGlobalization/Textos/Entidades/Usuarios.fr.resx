@@ -118,18 +118,72 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Utilisateurs</value>
+    <value>utilisateurs</value>
   </data>
   <data name="usuario" xml:space="preserve">
     <value>Utilisateur</value>
   </data>
   <data name="password" xml:space="preserve">
-    <value>Pass</value>
+    <value>Mot de passe</value>
   </data>
   <data name="confirmacionPassword" xml:space="preserve">
-    <value>Check pass</value>
+    <value>Confirmation mot de passe</value>
   </data>
   <data name="Nivel" xml:space="preserve">
-    <value>Level</value>
+    <value>Niveau</value>
+  </data>
+  <data name="ErrorUsuarioDuplicado" xml:space="preserve">
+    <value>L'utilisateur {0} existe déjà</value>
+  </data>
+  <data name="Usuariomail" xml:space="preserve">
+    <value>Utilisateur</value>
+  </data>
+  <data name="Passwordmail" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="Smtp" xml:space="preserve">
+    <value>smtp</value>
+  </data>
+  <data name="Puerto" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Ssl" xml:space="preserve">
+    <value>SSL</value>
+  </data>
+  <data name="Firma" xml:space="preserve">
+    <value>Signature</value>
+  </data>
+  <data name="ConfiguracionEmail" xml:space="preserve">
+    <value>configurer le courrier électronique</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="LblProbarEmail" xml:space="preserve">
+    <value>e-mail d'essai</value>
+  </data>
+  <data name="Nombre" xml:space="preserve">
+    <value>nom</value>
+  </data>
+  <data name="Copiaremitente" xml:space="preserve">
+    <value>Envoyer une copie à l'expéditeur</value>
+  </data>
+  <data name="Cambiarempresa" xml:space="preserve">
+    <value>changer d'entreprise</value>
+  </data>
+  <data name="Cambiaralmacen" xml:space="preserve">
+    <value>changer d'entrepôt</value>
+  </data>
+  <data name="Codigooperariousuario" xml:space="preserve">
+    <value>code opérateur</value>
+  </data>
+  <data name="Operario" xml:space="preserve">
+    <value>opérateur utilisateur</value>
+  </data>
+  <data name="Bloquearseries" xml:space="preserve">
+    <value>bloc série</value>
+  </data>
+  <data name="Fkdelegacion" xml:space="preserve">
+    <value>Délégation</value>
   </data>
 </root>

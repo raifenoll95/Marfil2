@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EnumNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="EnumSimulacion" xml:space="preserve">
+    <value>Simulation</value>
+  </data>
+  <data name="EnumAsientoVinculado" xml:space="preserve">
+    <value>Linked accounting entry</value>
+  </data>
+  <data name="EnumAperturaProvisional" xml:space="preserve">
+    <value>Provisional accounting opening</value>
+  </data>
+  <data name="EnumApertura" xml:space="preserve">
+    <value>Opening</value>
+  </data>
+  <data name="EnumRegularizacionExistencias" xml:space="preserve">
+    <value>Regularization of stocks</value>
+  </data>
+  <data name="EnumRegularizacionGrupos6y7" xml:space="preserve">
+    <value>Regularization of groups 6 and 7</value>
+  </data>
+  <data name="EnumCierre" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="EnumAsientos" xml:space="preserve">
+    <value>Account journal</value>
+  </data>
 </root>

@@ -91,7 +91,18 @@ namespace Marfil.App.WebMain.Controllers
             }
             model.Context = ContextService;
             TempData["model"] = model;
-            return RedirectToAction("Create","Pedidos");
+
+            //Creamos el pedido para evitar sobreescribir los datos
+            using (var gestionService = createService(model))
+            {
+
+                gestionService.create(model);
+                TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+
+                //Redireccionamos a la ventana de edición
+                return RedirectToAction("Edit", "Pedidos", new { id = model.Id });
+            }
+
         }
 
         public ActionResult RedirigirPedidoReferencia(string id)

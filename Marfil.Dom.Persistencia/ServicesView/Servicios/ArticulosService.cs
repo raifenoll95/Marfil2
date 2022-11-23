@@ -483,6 +483,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.Append(" when '100'  then gi.fktiposivasinrecargo");
                 sb.Append(" when '010'  then gi.fktiposivaconrecargo");
                 sb.Append(" when '001'  then gi.fktiposivaexentoiva");
+                sb.Append(" else gi.fktiposivasinrecargo");
                 sb.Append(" end");
                 sb.Append(" from GruposIvaLin as gi where gi.empresa = a.empresa and gi.fkgruposiva = a.fkgruposiva and gi.desde <= getdate() order by gi.desde desc)");
                 sb.AppendFormat(" where a.empresa = '{0}' and a.id='{1}' and (a.categoria=0 or a.categoria=1)", Empresa, id);
@@ -507,6 +508,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.Append(" when '100'  then gi.fktiposivasinrecargo");
                 sb.Append(" when '010'  then gi.fktiposivaconrecargo");
                 sb.Append(" when '001'  then gi.fktiposivaexentoiva");
+                sb.Append(" else gi.fktiposivasinrecargo");
                 sb.Append(" end");
                 sb.Append(" from GruposIvaLin as gi where gi.empresa = a.empresa and gi.fkgruposiva = a.fkgruposiva and gi.desde <= getdate() order by gi.desde desc)");
                 sb.AppendFormat(" where a.empresa = '{0}' and a.id='{1}' and (a.categoria=0 or a.categoria=2)", Empresa, id);

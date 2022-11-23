@@ -124,7 +124,7 @@
     <value>Code</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>TAX</value>
+    <value>Name</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
@@ -143,5 +143,41 @@
   </data>
   <data name="Ver" xml:space="preserve">
     <value>View</value>
+  </data>
+  <data name="PorcentajeIva" xml:space="preserve">
+    <value>% VAT</value>
+  </data>
+  <data name="PorcentajeRecargoEquivalencia" xml:space="preserve">
+    <value>% Tax 2</value>
+  </data>
+  <data name="CtaIvaSoportado" xml:space="preserve">
+    <value>Supported VAT account</value>
+  </data>
+  <data name="CtaIvaRepercutido" xml:space="preserve">
+    <value>Output VAT account</value>
+  </data>
+  <data name="CtaIvaNoDeducible" xml:space="preserve">
+    <value>Non-deductible VAT account</value>
+  </data>
+  <data name="CtaRecargoEquivalenciaRepercutido" xml:space="preserve">
+    <value>Surcharge account equiv. passed on</value>
+  </data>
+  <data name="CtaIvaSoportadoCriterioCaja" xml:space="preserve">
+    <value>Supported VAT account cash criteria</value>
+  </data>
+  <data name="CtaIvaRepercutidoCriterioCaja" xml:space="preserve">
+    <value>Output VAT account cash criteria</value>
+  </data>
+  <data name="CtaRecargoEquivalenciaRepercutidoCriterioCaja" xml:space="preserve">
+    <value>Surcharge account equiv. passed on cash criterion</value>
+  </data>
+  <data name="IvaSoportado" xml:space="preserve">
+    <value>supported VAT</value>
+  </data>
+  <data name="IvaDeducible" xml:space="preserve">
+    <value>Tax-deductible</value>
+  </data>
+  <data name="PorcentajeDeducible" xml:space="preserve">
+    <value>% Deductible</value>
   </data>
 </root>

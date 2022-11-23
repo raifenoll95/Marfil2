@@ -142,10 +142,10 @@
     <value>Revision date</value>
   </data>
   <data name="Fkalmacen" xml:space="preserve">
-    <value>Store</value>
+    <value>Warehouse</value>
   </data>
   <data name="Fkproveedores" xml:space="preserve">
-    <value>Provider</value>
+    <value>Supplier</value>
   </data>
   <data name="Nombreproveedor" xml:space="preserve">
     <value>Name</value>
@@ -163,7 +163,7 @@
     <value>Country</value>
   </data>
   <data name="Proveedorprovincia" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Proveedortelefono" xml:space="preserve">
     <value>Telephone</value>
@@ -220,7 +220,7 @@
     <value>Total (Base currency)</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Remarks</value>
+    <value>Comments</value>
   </data>
   <data name="Estado" xml:space="preserve">
     <value>State</value>
@@ -262,7 +262,7 @@
     <value>Amount</value>
   </data>
   <data name="Cantidadpedida" xml:space="preserve">
-    <value>Ordered amount</value>
+    <value>Amount delivered</value>
   </data>
   <data name="Largo" xml:space="preserve">
     <value>Large</value>
@@ -319,7 +319,7 @@
     <value>The currency of the serie is not the same as the client one</value>
   </data>
   <data name="Lineas" xml:space="preserve">
-    <value>Quotation lines</value>
+    <value>Estimation lines</value>
   </data>
   <data name="ImporteBase" xml:space="preserve">
     <value>Subtotal</value>
@@ -328,16 +328,16 @@
     <value>Header discounts</value>
   </data>
   <data name="Fkregimeniva" xml:space="preserve">
-    <value>VAT</value>
+    <value>VAT group</value>
   </data>
   <data name="Fktransportista" xml:space="preserve">
     <value>Transporter</value>
   </data>
   <data name="Tipocambio" xml:space="preserve">
-    <value>Change</value>
+    <value>Currency exchange</value>
   </data>
   <data name="BrutoTotal" xml:space="preserve">
-    <value>Gross</value>
+    <value>Raw</value>
   </data>
   <data name="RefereciaDesde" xml:space="preserve">
     <value>From Ref.</value>
@@ -352,19 +352,19 @@
     <value>To date</value>
   </data>
   <data name="Fkfamilias" xml:space="preserve">
-    <value>Article family</value>
+    <value>Item family</value>
   </data>
   <data name="ClienteDesde" xml:space="preserve">
-    <value>From client</value>
+    <value>From customer</value>
   </data>
   <data name="ClienteHasta" xml:space="preserve">
-    <value>To client</value>
+    <value>To customer</value>
   </data>
   <data name="FkarticulosDesde" xml:space="preserve">
-    <value>From article</value>
+    <value>From item</value>
   </data>
   <data name="FkarticulosHasta" xml:space="preserve">
-    <value>To article</value>
+    <value>To item</value>
   </data>
   <data name="FamiliaDesde" xml:space="preserve">
     <value>Family from</value>
@@ -412,7 +412,7 @@
     <value>Id Number</value>
   </data>
   <data name="Clientecp" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Zip code</value>
   </data>
   <data name="Clientedireccion" xml:space="preserve">
     <value>Address</value>
@@ -430,16 +430,16 @@
     <value>Country</value>
   </data>
   <data name="Clientepoblacion" xml:space="preserve">
-    <value>Poblation</value>
+    <value>City</value>
   </data>
   <data name="Clienteprovincia" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Clientetelefono" xml:space="preserve">
     <value>Telephone</value>
   </data>
   <data name="Fkclientes" xml:space="preserve">
-    <value>Client</value>
+    <value>Customer</value>
   </data>
   <data name="Nombrecliente" xml:space="preserve">
     <value>Name</value>
@@ -448,7 +448,7 @@
     <value>Import order lines</value>
   </data>
   <data name="ErrorLineasAsociadasAAlbaranes" xml:space="preserve">
-    <value>It's not possible to update the order because it contains lines associated to another note.</value>
+    <value>It's not possible to update the order because it contains lines associated to another note</value>
   </data>
   <data name="ErrorSinCantidadPendiente" xml:space="preserve">
     <value>It's not possible to import the order because it doesn't have pending lines</value>
@@ -490,7 +490,7 @@
     <value>Return</value>
   </data>
   <data name="TipoAlbaranReclamacion" xml:space="preserve">
-    <value>Reclamation</value>
+    <value>Claim</value>
   </data>
   <data name="Identificadorsegmento" xml:space="preserve">
     <value>Code</value>
@@ -526,6 +526,294 @@
     <value>To Finishing</value>
   </data>
   <data name="FamiliaMateriales" xml:space="preserve">
-    <value>Material </value>
+    <value>Material</value>
+  </data>
+  <data name="ErrorFechaEjercicio" xml:space="preserve">
+    <value>The date of the document does not correspond to the date of the exercise of the document</value>
+  </data>
+  <data name="Vencimientocartacredito" xml:space="preserve">
+    <value>Expiration letter Credit</value>
+  </data>
+  <data name="Costeadicionalvariable" xml:space="preserve">
+    <value>Additional costs. Variable</value>
+  </data>
+  <data name="Costeadicionalotro" xml:space="preserve">
+    <value>Additional cost. Others</value>
+  </data>
+  <data name="Costeadicionalportes" xml:space="preserve">
+    <value>Additional cost. Portage</value>
+  </data>
+  <data name="Costeadicionalmaterial" xml:space="preserve">
+    <value>Additional cost. Material</value>
+  </data>
+  <data name="Importenetolinea" xml:space="preserve">
+    <value>Net amount line</value>
+  </data>
+  <data name="Bundle" xml:space="preserve">
+    <value>Bundles / Kits</value>
+  </data>
+  <data name="Fkcuentastesoreria" xml:space="preserve">
+    <value>Treasury</value>
+  </data>
+  <data name="Numerodocumentoproveedor" xml:space="preserve">
+    <value>Supplier document number</value>
+  </data>
+  <data name="Fechadocumentoproveedor" xml:space="preserve">
+    <value>Supplier document date</value>
+  </data>
+  <data name="Fkclientesreserva" xml:space="preserve">
+    <value>Customer reservation</value>
+  </data>
+  <data name="Fktiposalbaranes" xml:space="preserve">
+    <value>Type of delivery note</value>
+  </data>
+  <data name="Nombretransportista" xml:space="preserve">
+    <value>Carrier name</value>
+  </data>
+  <data name="Conductor" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="Matricula" xml:space="preserve">
+    <value>Plate</value>
+  </data>
+  <data name="Bultos" xml:space="preserve">
+    <value>No. of packages</value>
+  </data>
+  <data name="Volumen" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Envio" xml:space="preserve">
+    <value>Observations shipping</value>
+  </data>
+  <data name="Fkoperariostransporte" xml:space="preserve">
+    <value>Transport operator</value>
+  </data>
+  <data name="LblGestionDevoluciones" xml:space="preserve">
+    <value>generate return</value>
+  </data>
+  <data name="LblGenerarDevolucion" xml:space="preserve">
+    <value>Generate return delivery note</value>
+  </data>
+  <data name="Fkmotivosdevolucion" xml:space="preserve">
+    <value>return reason</value>
+  </data>
+  <data name="ErrorAlbaranFacturado" xml:space="preserve">
+    <value>The delivery note cannot be modified because it is already invoiced</value>
+  </data>
+  <data name="LblBuscarDireccion" xml:space="preserve">
+    <value>Find addresses associated with the Customer</value>
+  </data>
+  <data name="Costeportes" xml:space="preserve">
+    <value>Shipping costs</value>
+  </data>
+  <data name="Fkejercicio" xml:space="preserve">
+    <value>Accounting year</value>
+  </data>
+  <data name="ErrorDividirLineaCantidadCero" xml:space="preserve">
+    <value>The amount of the new line cannot be equal to or greater than the amount of the line that</value>
+  </data>
+  <data name="ProveedorDesde" xml:space="preserve">
+    <value>From supplier</value>
+  </data>
+  <data name="ProveedorHasta" xml:space="preserve">
+    <value>To supplier</value>
+  </data>
+  <data name="LblBuscarDireccionProveedor" xml:space="preserve">
+    <value>Search addresses associated with the Provider</value>
+  </data>
+  <data name="EntradaStock" xml:space="preserve">
+    <value>stock delivery</value>
+  </data>
+  <data name="LoteAutomatico" xml:space="preserve">
+    <value>Automatic lot</value>
+  </data>
+  <data name="CodigoLote" xml:space="preserve">
+    <value>Lot code</value>
+  </data>
+  <data name="Veralmacen" xml:space="preserve">
+    <value>See warehouse</value>
+  </data>
+  <data name="ErrorZonaAlmacen" xml:space="preserve">
+    <value>Zone {0} does not exist within warehouse {1}</value>
+  </data>
+  <data name="LoteDesde" xml:space="preserve">
+    <value>From lot</value>
+  </data>
+  <data name="LoteHasta" xml:space="preserve">
+    <value>To lot</value>
+  </data>
+  <data name="Loteid" xml:space="preserve">
+    <value>lot id</value>
+  </data>
+  <data name="entregasstock" xml:space="preserve">
+    <value>stock deliveries</value>
+  </data>
+  <data name="AlbaranTaller" xml:space="preserve">
+    <value>Non stock delivery</value>
+  </data>
+  <data name="Seleccionarlotes" xml:space="preserve">
+    <value>Select lots</value>
+  </data>
+  <data name="ListadoLotes" xml:space="preserve">
+    <value>Lots report</value>
+  </data>
+  <data name="Vendido" xml:space="preserve">
+    <value>Sold out</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="FkzonasDesde" xml:space="preserve">
+    <value>From zone</value>
+  </data>
+  <data name="FkzonasHasta" xml:space="preserve">
+    <value>To zone</value>
+  </data>
+  <data name="Añadirpedidoscompra" xml:space="preserve">
+    <value>Purchase order statuses</value>
+  </data>
+  <data name="Descontarreservasstock" xml:space="preserve">
+    <value>States reservations</value>
+  </data>
+  <data name="Descontarpedidostaller" xml:space="preserve">
+    <value>Sales Order Statuses</value>
+  </data>
+  <data name="Categoria" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="CategoriaMovimientosPrincipal" xml:space="preserve">
+    <value>Show only main movements</value>
+  </data>
+  <data name="CategoriaMovimientosSecundario" xml:space="preserve">
+    <value>show all moves</value>
+  </data>
+  <data name="EnStock" xml:space="preserve">
+    <value>In stock</value>
+  </data>
+  <data name="SinStock" xml:space="preserve">
+    <value>Without stock</value>
+  </data>
+  <data name="Reservado" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="Transformacion" xml:space="preserve">
+    <value>in transformation</value>
+  </data>
+  <data name="TipoOperacionServiceFinalizarTransformacionloteStock" xml:space="preserve">
+    <value>finish transformations</value>
+  </data>
+  <data name="TipoOperacionServiceActualizarcosteTransformacionloteStock" xml:space="preserve">
+    <value>Update transformation costs</value>
+  </data>
+  <data name="TipoOperacionServiceTransformacionloteInsertar" xml:space="preserve">
+    <value>Insert lots transform</value>
+  </data>
+  <data name="TipoOperacionServiceTransformacionloteActualizar" xml:space="preserve">
+    <value>Update lot transformation</value>
+  </data>
+  <data name="TipoOperacionServiceInsertarRecepcionStockDevolucion" xml:space="preserve">
+    <value>Insert stock receipt return</value>
+  </data>
+  <data name="TipoOperacionServiceActualizarRecepcionStockDevolucion" xml:space="preserve">
+    <value>Update Stock Receipt Return</value>
+  </data>
+  <data name="TipoOperacionServiceInsertarDevolucionEntregaStock" xml:space="preserve">
+    <value>Insert Stock Delivery Return</value>
+  </data>
+  <data name="TipoAlmacenLote" xml:space="preserve">
+    <value>Lot type</value>
+  </data>
+  <data name="TipoOperacionServiceActualizarEntregaStockDevolucion" xml:space="preserve">
+    <value>Update Stock Delivery Return</value>
+  </data>
+  <data name="TipoAlbaranEntradaRegularizacion" xml:space="preserve">
+    <value>Stock regularization entry</value>
+  </data>
+  <data name="TipoAlbaranImputacionMateriales" xml:space="preserve">
+    <value>Allocation of manufacturing materials</value>
+  </data>
+  <data name="TipoAlbaranMuestras" xml:space="preserve">
+    <value>Samples</value>
+  </data>
+  <data name="TipoAlbaranRoturas" xml:space="preserve">
+    <value>Breaks</value>
+  </data>
+  <data name="TipoAlbaranSalidaRegularizacion" xml:space="preserve">
+    <value>Stock regularization output</value>
+  </data>
+  <data name="SalidaMaterialElaborado" xml:space="preserve">
+    <value>Elaborated material output</value>
+  </data>
+  <data name="TipoAlbaranMaterialElaborarTercero" xml:space="preserve">
+    <value>Material to be produced by third parties</value>
+  </data>
+  <data name="TipoAlbaranMercanciasConsigna" xml:space="preserve">
+    <value>Goods in consignment</value>
+  </data>
+  <data name="AgenteDesde" xml:space="preserve">
+    <value>From agent</value>
+  </data>
+  <data name="AgenteHasta" xml:space="preserve">
+    <value>To agent</value>
+  </data>
+  <data name="ArticuloDesde" xml:space="preserve">
+    <value>From item</value>
+  </data>
+  <data name="ArticuloHasta" xml:space="preserve">
+    <value>Ti item</value>
+  </data>
+  <data name="ComercialDesde" xml:space="preserve">
+    <value>From commercial</value>
+  </data>
+  <data name="ComercialHasta" xml:space="preserve">
+    <value>To commercial</value>
+  </data>
+  <data name="Empresa" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="FechaInforme" xml:space="preserve">
+    <value>Report date</value>
+  </data>
+  <data name="MetrosDisponibles" xml:space="preserve">
+    <value>Meters Available</value>
+  </data>
+  <data name="TipoOperacionServiceActualizarCostes" xml:space="preserve">
+    <value>Additional cost update</value>
+  </data>
+  <data name="TipoOperacionServiceInsertarCostes" xml:space="preserve">
+    <value>Insert additional costs</value>
+  </data>
+  <data name="Merma" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="LblGestionReclamaciones" xml:space="preserve">
+    <value>Generate claim</value>
+  </data>
+  <data name="LblGenerarReclamacion" xml:space="preserve">
+    <value>Generate claim delivery note</value>
+  </data>
+  <data name="SeleccionarReclamacion" xml:space="preserve">
+    <value>Select lines to claim</value>
+  </data>
+  <data name="TipoOperacionServiceSalidaReclamacion" xml:space="preserve">
+    <value>Departure in claim</value>
+  </data>
+  <data name="TipoOperacionServiceEntradaReclamacion" xml:space="preserve">
+    <value>Entry in claim</value>
+  </data>
+  <data name="LblGestionContenedores" xml:space="preserve">
+    <value>Assign containers</value>
+  </data>
+  <data name="Fechabl" xml:space="preserve">
+    <value>B.L.Date</value>
+  </data>
+  <data name="Remolque" xml:space="preserve">
+    <value>Trailer</value>
+  </data>
+  <data name="AsistenteLecturas" xml:space="preserve">
+    <value>Terminal readings wizard</value>
+  </data>
+  <data name="GenerarLecturas" xml:space="preserve">
+    <value>insert readings</value>
   </data>
 </root>

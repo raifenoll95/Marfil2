@@ -139,10 +139,10 @@
     <value>Country</value>
   </data>
   <data name="Contrapartida" xml:space="preserve">
-    <value>Common contrapartida</value>
+    <value>Usual counterpart</value>
   </data>
   <data name="ContrapartidaDescripcion" xml:space="preserve">
-    <value>Common contrapartida</value>
+    <value>Usual counterpart</value>
   </data>
   <data name="BloqueoModel" xml:space="preserve">
     <value>Block</value>
@@ -157,7 +157,7 @@
     <value>Description</value>
   </data>
   <data name="LblCuentasContrapartida" xml:space="preserve">
-    <value>Acconts for contrapartida</value>
+    <value>Acconts for counterpart</value>
   </data>
   <data name="ErrorBorrado" xml:space="preserve">
     <value>It is not possible to delete the account because it has sub accounts associated</value>
@@ -185,5 +185,11 @@
   </data>
   <data name="Nombre" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Descripcion2" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="Nifrequired" xml:space="preserve">
+    <value>Id number required</value>
   </data>
 </root>

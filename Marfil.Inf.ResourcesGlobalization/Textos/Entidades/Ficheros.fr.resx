@@ -118,24 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Fichiers</value>
+    <value>des dossiers</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Fichier</value>
+    <value>Dossier</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Ruta" xml:space="preserve">
-    <value>Route</value>
+    <value>Itinéraire</value>
   </data>
   <data name="Tipo" xml:space="preserve">
-    <value>Tipe</value>
+    <value>Type</value>
+  </data>
+  <data name="Carpetas" xml:space="preserve">
+    <value>Dossiers</value>
   </data>
 </root>

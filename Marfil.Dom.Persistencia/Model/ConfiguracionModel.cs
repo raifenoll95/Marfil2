@@ -159,6 +159,13 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Formatounidad = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "Relacionbrutoneto")]
+        public double Relacionbrutoneto
+        {
+            get { return Model.Relacionbrutoneto; }
+            set { Model.Relacionbrutoneto = value; }
+        }
+
         //presupuestos
 
         [Display(ResourceType = typeof (RConfiguracion), Name = "Gestionarrevisiones")]
@@ -782,7 +789,8 @@ namespace Marfil.Dom.Persistencia.Model
         public double Espesordisco { get; set; }
         public TipoFormatoGrosor Formatogrosor { get; set; }
         public TipoFormatoUnidad Formatounidad { get; set; }
-        
+        public double Relacionbrutoneto { get; set; }
+
         public bool VentasUsarCanal { get; set; }
         public bool VentasCanalObligatorio { get; set; }
 

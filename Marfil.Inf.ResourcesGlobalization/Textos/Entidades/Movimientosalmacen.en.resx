@@ -121,12 +121,24 @@
     <value>Change Location</value>
   </data>
   <data name="Lote" xml:space="preserve">
-    <value>Lote</value>
+    <value>Lot</value>
   </data>
   <data name="Zonaactual" xml:space="preserve">
     <value>Current zone</value>
   </data>
   <data name="Comprobarlote" xml:space="preserve">
-    <value>Check lote</value>
+    <value>Check lots</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Fkzonaalmacen" xml:space="preserve">
+    <value>New zone</value>
+  </data>
+  <data name="MovimientoRealizadoCorrectamente" xml:space="preserve">
+    <value>The change of zone has been carried out correctly</value>
+  </data>
+  <data name="RealizarCambioUbicacion" xml:space="preserve">
+    <value>Move lot</value>
   </data>
 </root>

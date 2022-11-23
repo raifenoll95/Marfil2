@@ -136,7 +136,7 @@
     <value>Please write an valid email address</value>
   </data>
   <data name="EqualTo" xml:space="preserve">
-    <value>The confirmation is not write</value>
+    <value>Fields do not match</value>
   </data>
   <data name="FieldMustBeDate" xml:space="preserve">
     <value>The field {0} must be a date</value>

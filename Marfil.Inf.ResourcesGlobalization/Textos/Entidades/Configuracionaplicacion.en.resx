@@ -138,4 +138,172 @@
   <data name="Estadototal" xml:space="preserve">
     <value>Total delivery state</value>
   </data>
+  <data name="Relacionbrutoneto" xml:space="preserve">
+    <value>Gross/net weight ratio %</value>
+  </data>
+  <data name="Espesorfleje" xml:space="preserve">
+    <value>Strip thickness (cm)</value>
+  </data>
+  <data name="Espesordisco" xml:space="preserve">
+    <value>Disc thickness (cm)</value>
+  </data>
+  <data name="Formatogrosor" xml:space="preserve">
+    <value>Thickness format</value>
+  </data>
+  <data name="Formatounidad" xml:space="preserve">
+    <value>Unit format</value>
+  </data>
+  <data name="VentasUsarCanal" xml:space="preserve">
+    <value>Use channel</value>
+  </data>
+  <data name="VentasCanalObligatorio" xml:space="preserve">
+    <value>Mandatory channel</value>
+  </data>
+  <data name="ComprasUsarCanal" xml:space="preserve">
+    <value>Use channel</value>
+  </data>
+  <data name="ComprasCanalObligatorio" xml:space="preserve">
+    <value>Mandatory channel</value>
+  </data>
+  <data name="DocumentosVentas" xml:space="preserve">
+    <value>sales documents</value>
+  </data>
+  <data name="DocumentosCompras" xml:space="preserve">
+    <value>purchase documents</value>
+  </data>
+  <data name="Descontardescuentocomercial" xml:space="preserve">
+    <value>Subtract trade discount</value>
+  </data>
+  <data name="Descontardescuentoprontopago" xml:space="preserve">
+    <value>Subtract early payment discount</value>
+  </data>
+  <data name="Descontarrecargofinanciero" xml:space="preserve">
+    <value>Subtract financial surcharge F.P.</value>
+  </data>
+  <data name="Fksituacioncomisioncrear" xml:space="preserve">
+    <value>Commission situation when creating invoice</value>
+  </data>
+  <data name="Fksituacioncomisionliquidar" xml:space="preserve">
+    <value>Situation when settling commissions</value>
+  </data>
+  <data name="Estadoentregada" xml:space="preserve">
+    <value>delivered status</value>
+  </data>
+  <data name="Estadoliberada" xml:space="preserve">
+    <value>released state</value>
+  </data>
+  <data name="AlbaranesEstadototal" xml:space="preserve">
+    <value>Status: Completed</value>
+  </data>
+  <data name="Materialentradaigualsalida" xml:space="preserve">
+    <value>Output Material = Input Material</value>
+  </data>
+  <data name="Estadofinal" xml:space="preserve">
+    <value>Final state doc.</value>
+  </data>
+  <data name="Cancelacionriesgoremesa" xml:space="preserve">
+    <value>Remittance risk cancellation days</value>
+  </data>
+  <data name="Tesoreria" xml:space="preserve">
+    <value>Treasury</value>
+  </data>
+  <data name="Contabilidad" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="Invertirasiento" xml:space="preserve">
+    <value>Reverse entry when voiding a journal document</value>
+  </data>
+  <data name="ComentarioCuentasDetalle" xml:space="preserve">
+    <value>Comment accounts detail</value>
+  </data>
+  <data name="ComentarioDebePYG" xml:space="preserve">
+    <value>Comment Must P&amp;L account</value>
+  </data>
+  <data name="ComentarioExistenciasFinales" xml:space="preserve">
+    <value>Final stock comment</value>
+  </data>
+  <data name="ComentarioExistenciasIniciales" xml:space="preserve">
+    <value>Comment initial stock</value>
+  </data>
+  <data name="ComentarioHaberPYG" xml:space="preserve">
+    <value>Comment Have account P&amp;L</value>
+  </data>
+  <data name="ComentarioAperturaEjercicio" xml:space="preserve">
+    <value>Exercise opening comment</value>
+  </data>
+  <data name="ComentarioCierreEjercicio" xml:space="preserve">
+    <value>Year-end comment</value>
+  </data>
+  <data name="CuentaPYG" xml:space="preserve">
+    <value>Profit and loss account</value>
+  </data>
+  <data name="ComentarioApertura" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="ComentarioCierre" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="EstadoEjercicioRevertir" xml:space="preserve">
+    <value>State to which the exercise is to be reverted</value>
+  </data>
+  <data name="ComentarioAperturaProvisional" xml:space="preserve">
+    <value>Provisional opening comment</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>From account</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>To account</value>
+  </data>
+  <data name="CuentaReapertura" xml:space="preserve">
+    <value>provisional reopening account</value>
+  </data>
+  <data name="PrefijosPrestacionServicios" xml:space="preserve">
+    <value>Prefix Accounts Provision of services</value>
+  </data>
+  <data name="CuentaClientesVarios" xml:space="preserve">
+    <value>Multiple customer account</value>
+  </data>
+  <data name="CuentaProveedoresVarios" xml:space="preserve">
+    <value>Various suppliers account</value>
+  </data>
+  <data name="Sii" xml:space="preserve">
+    <value>SII</value>
+  </data>
+  <data name="SiiDesc" xml:space="preserve">
+    <value>SII (Immediate Supply of Information)</value>
+  </data>
+  <data name="SiiUrl" xml:space="preserve">
+    <value>Production Environment URL</value>
+  </data>
+  <data name="FasePruebas" xml:space="preserve">
+    <value>Test phase</value>
+  </data>
+  <data name="PlazoPresentacion" xml:space="preserve">
+    <value>Submission period (days)</value>
+  </data>
+  <data name="PlazoPresentacion2017" xml:space="preserve">
+    <value>Submission period 2017 (days)</value>
+  </data>
+  <data name="RellenarCeros" xml:space="preserve">
+    <value>Invoices issued: fill in with zeros no. Fra.</value>
+  </data>
+  <data name="UrlBienesInversion" xml:space="preserve">
+    <value>Investment Goods</value>
+  </data>
+  <data name="UrlCobrosMetalico" xml:space="preserve">
+    <value>Cash collection</value>
+  </data>
+  <data name="UrlFacturasEmitidas" xml:space="preserve">
+    <value>Issued invoices</value>
+  </data>
+  <data name="UrlFacturasRecibidas" xml:space="preserve">
+    <value>Invoices Received</value>
+  </data>
+  <data name="UrlPagosIvaCaja" xml:space="preserve">
+    <value>Cash VAT payments</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
 </root>

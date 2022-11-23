@@ -42,6 +42,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             //establecer los estados por defecto
             var modelconfiguracion = _configuracionService.GetModel();
 
+            //produccion
+            modelconfiguracion.Relacionbrutoneto = Math.Round(2.1,2);
+
             //presupuestos
             modelconfiguracion.Gestionarrevisiones = true;
             modelconfiguracion.Estadoinicial= modelconfiguracion.Estados.Single(f => f.Tipoestado == TipoEstado.Diseño).CampoId;

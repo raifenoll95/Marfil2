@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Fkejercicio" xml:space="preserve">
-    <value>Exercise</value>
+    <value>Accounting year</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
     <value>Account</value>
   </data>
   <data name="Esdebe" xml:space="preserve">
-    <value>Debit?</value>
+    <value>Debit</value>
   </data>
   <data name="Debe" xml:space="preserve">
     <value>Debit</value>
@@ -137,5 +137,11 @@
   </data>
   <data name="Saldo" xml:space="preserve">
     <value>Balance</value>
+  </data>
+  <data name="ImportarMaes" xml:space="preserve">
+    <value>import chart of accounts</value>
+  </data>
+  <data name="AsistenteMaes" xml:space="preserve">
+    <value>Assistant chart of acconts create</value>
   </data>
 </root>

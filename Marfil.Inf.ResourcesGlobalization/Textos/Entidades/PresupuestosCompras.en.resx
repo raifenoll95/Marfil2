@@ -121,7 +121,7 @@
     <value>Sale quotations</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Sale quotation</value>
+    <value>Purchase estimation</value>
   </data>
   <data name="Fkseries" xml:space="preserve">
     <value>Serie</value>
@@ -142,7 +142,7 @@
     <value>Revision date</value>
   </data>
   <data name="Fkalmacen" xml:space="preserve">
-    <value>Store</value>
+    <value>Warehouse</value>
   </data>
   <data name="Fkproveedores" xml:space="preserve">
     <value>Supplier</value>
@@ -154,16 +154,16 @@
     <value>Address</value>
   </data>
   <data name="Clientepoblacion" xml:space="preserve">
-    <value>Poblation</value>
+    <value>City</value>
   </data>
   <data name="Clientecp" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Zip code</value>
   </data>
   <data name="Clientepais" xml:space="preserve">
     <value>Country</value>
   </data>
   <data name="Clienteprovincia" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Clientetelefono" xml:space="preserve">
     <value>Telephone</value>
@@ -196,10 +196,10 @@
     <value>Additional change</value>
   </data>
   <data name="Importebruto" xml:space="preserve">
-    <value>Gross</value>
+    <value>Gross amount</value>
   </data>
   <data name="Importebaseimponible" xml:space="preserve">
-    <value>Net</value>
+    <value>Base</value>
   </data>
   <data name="Importeportes" xml:space="preserve">
     <value>Shipping amount</value>
@@ -220,13 +220,13 @@
     <value>Total (Base currency)</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Notes</value>
+    <value>Comments</value>
   </data>
   <data name="Estado" xml:space="preserve">
     <value>State</value>
   </data>
   <data name="Fkobras" xml:space="preserve">
-    <value>Build</value>
+    <value>Project</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
     <value>Incoterm code</value>
@@ -247,16 +247,16 @@
     <value>Office time</value>
   </data>
   <data name="Fkarticulos" xml:space="preserve">
-    <value>Article code</value>
+    <value>Item code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Article</value>
+    <value>Item</value>
   </data>
   <data name="Lote" xml:space="preserve">
-    <value>Lote</value>
+    <value>Lot</value>
   </data>
   <data name="Tabla" xml:space="preserve">
-    <value>Table</value>
+    <value>Slab id.</value>
   </data>
   <data name="Cantidad" xml:space="preserve">
     <value>Amount</value>
@@ -274,7 +274,7 @@
     <value>Thickness</value>
   </data>
   <data name="Fkunidades" xml:space="preserve">
-    <value>Unit</value>
+    <value>Measure unit</value>
   </data>
   <data name="Metros" xml:space="preserve">
     <value>Meters</value>
@@ -307,7 +307,7 @@
     <value>Revision</value>
   </data>
   <data name="Basetotal" xml:space="preserve">
-    <value>Net</value>
+    <value>Base</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
     <value>Subtotal</value>
@@ -328,16 +328,16 @@
     <value>Header discounts</value>
   </data>
   <data name="Fkregimeniva" xml:space="preserve">
-    <value>VAT</value>
+    <value>VAT group</value>
   </data>
   <data name="Fktransportista" xml:space="preserve">
     <value>Transporter</value>
   </data>
   <data name="Tipocambio" xml:space="preserve">
-    <value>Change</value>
+    <value>Currency exchange</value>
   </data>
   <data name="BrutoTotal" xml:space="preserve">
-    <value>Gross</value>
+    <value>Raw</value>
   </data>
   <data name="RefereciaDesde" xml:space="preserve">
     <value>From Ref.</value>
@@ -352,7 +352,7 @@
     <value>To date</value>
   </data>
   <data name="Fkfamilias" xml:space="preserve">
-    <value>Article family</value>
+    <value>Item family</value>
   </data>
   <data name="ProveedorDesde" xml:space="preserve">
     <value>From supplier</value>
@@ -361,10 +361,10 @@
     <value>To supplier</value>
   </data>
   <data name="FkarticulosDesde" xml:space="preserve">
-    <value>From article</value>
+    <value>From item</value>
   </data>
   <data name="FkarticulosHasta" xml:space="preserve">
-    <value>To article</value>
+    <value>To item</value>
   </data>
   <data name="FamiliaDesde" xml:space="preserve">
     <value>Family from</value>
@@ -412,7 +412,7 @@
     <value>Id Number</value>
   </data>
   <data name="ErrorNoExisteSerieAsociada" xml:space="preserve">
-    <value>The current serie is not well configured to perform the process. You need to set up the associated serie.</value>
+    <value>The current serie is not well configured to perform the process. You need to set up the as</value>
   </data>
   <data name="PresupuestosDesde" xml:space="preserve">
     <value>From estimation</value>
@@ -421,12 +421,57 @@
     <value>To estimation</value>
   </data>
   <data name="ErrorLineasAsociadasAPedidos" xml:space="preserve">
-    <value>It's not possible to update the estimation because it contains lines associated to another order.</value>
+    <value>It's not possible to update the estimation because it contains lines associated to another</value>
   </data>
   <data name="Identificadorsegmento" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Enviaremail" xml:space="preserve">
     <value>Send email</value>
+  </data>
+  <data name="Importedescuentoprontopago" xml:space="preserve">
+    <value>Pay soon amount</value>
+  </data>
+  <data name="Cuotaiva" xml:space="preserve">
+    <value>VAT amount</value>
+  </data>
+  <data name="Porcentajerecargoequivalencia" xml:space="preserve">
+    <value>Tax2 %</value>
+  </data>
+  <data name="Cuotarecargoequivalencia" xml:space="preserve">
+    <value>Tax 2 amount</value>
+  </data>
+  <data name="AcabadosDesde" xml:space="preserve">
+    <value>From finishing</value>
+  </data>
+  <data name="AcabadosHasta" xml:space="preserve">
+    <value>To Finishing</value>
+  </data>
+  <data name="FamiliaMateriales" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="ErrorFechaEjercicio" xml:space="preserve">
+    <value>The date of the document does not correspond to the date of the exercise of the document</value>
+  </data>
+  <data name="Vencimientocartacredito" xml:space="preserve">
+    <value>Expiration letter Credit</value>
+  </data>
+  <data name="ErroPresupuestosPedidoCompleto" xml:space="preserve">
+    <value>Cannot set status {0} because the order is fully requested.</value>
+  </data>
+  <data name="ErrorSinCantidadPendiente" xml:space="preserve">
+    <value>Quotationt does not have amounts pending to serve</value>
+  </data>
+  <data name="Fkejercicio" xml:space="preserve">
+    <value>Accounting year</value>
+  </data>
+  <data name="Numerodocumentoproveedor" xml:space="preserve">
+    <value>Supplier document number</value>
+  </data>
+  <data name="Fechadocumentoproveedor" xml:space="preserve">
+    <value>Supplier document date</value>
+  </data>
+  <data name="LblBuscarDireccion" xml:space="preserve">
+    <value>Find addresses associated with the provider</value>
   </data>
 </root>

@@ -502,6 +502,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Relación peso bruto/neto %.
+        /// </summary>
+        public static string Relacionbrutoneto {
+            get {
+                return ResourceManager.GetString("Relacionbrutoneto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Facturas emitidas: rellenar con ceros núm. Fra..
         /// </summary>
         public static string RellenarCeros {

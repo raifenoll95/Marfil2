@@ -118,33 +118,75 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Employees</value>
+    <value>les opérateurs</value>
   </data>
   <data name="Fechanacimiento" xml:space="preserve">
     <value>Date de naissance</value>
   </data>
   <data name="Fkestadocivil" xml:space="preserve">
-    <value>Estate sociale</value>
+    <value>État civil</value>
   </data>
   <data name="Numerohijos" xml:space="preserve">
-    <value>Quantitée de garçons</value>
+    <value>Nombre d'enfants</value>
   </data>
   <data name="Fechaingreso" xml:space="preserve">
-    <value>Date d'entrée</value>
+    <value>Date d'admission</value>
   </data>
   <data name="Fkcargo" xml:space="preserve">
-    <value>Nom du poste</value>
+    <value>Position dans l'entreprise</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
   </data>
   <data name="Nif" xml:space="preserve">
-    <value>Id fiscal</value>
+    <value>nif</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
     <value>Ville</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Employee</value>
+    <value>Opérateur</value>
+  </data>
+  <data name="Numeroseguridadsocial" xml:space="preserve">
+    <value>numéro de sécurité sociale</value>
+  </data>
+  <data name="Fkcontratoactual" xml:space="preserve">
+    <value>Type de contrat</value>
+  </data>
+  <data name="Fechaalta" xml:space="preserve">
+    <value>Date de sortie</value>
+  </data>
+  <data name="Vencimientocontrato" xml:space="preserve">
+    <value>Date d'échéance</value>
+  </data>
+  <data name="Ultimafechabaja" xml:space="preserve">
+    <value>Maladie/Accident Date du dernier congé</value>
+  </data>
+  <data name="Ultimafechaalta" xml:space="preserve">
+    <value>Dernière maladie/accident Date de sortie</value>
+  </data>
+  <data name="Tallacamisa" xml:space="preserve">
+    <value>Taille de chemise</value>
+  </data>
+  <data name="Tallapantalon" xml:space="preserve">
+    <value>Taille de pantalon</value>
+  </data>
+  <data name="Tallacalzado" xml:space="preserve">
+    <value>Pointure</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes :</value>
+  </data>
+  <data name="Fkcuentatesoreria" xml:space="preserve">
+    <value>Compt. Trésorerie</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Raison sociale</value>
+  </data>
+  <data name="LblMensajeTipoCuenta" xml:space="preserve">
+    <value>Un type de compte n'a pas été défini pour les opérateurs.</value>
   </data>
 </root>

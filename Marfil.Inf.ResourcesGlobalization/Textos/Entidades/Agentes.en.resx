@@ -124,7 +124,7 @@
     <value>Account</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Desciption</value>
+    <value>Description</value>
   </data>
   <data name="LblMensajeTipoCuenta" xml:space="preserve">
     <value>There is not a type of account for Agents</value>
@@ -148,10 +148,10 @@
     <value>Withhold code</value>
   </data>
   <data name="Fkregimeniva" xml:space="preserve">
-    <value>VAT classification</value>
+    <value>VAT group</value>
   </data>
   <data name="Fkformapago" xml:space="preserve">
-    <value>Payment terms</value>
+    <value>Payment method</value>
   </data>
   <data name="Porcentajecomision" xml:space="preserve">
     <value>Commission %</value>
@@ -169,9 +169,9 @@
     <value>% Decrease on the Base Rate Price</value>
   </data>
   <data name="Primaincrementosobreptb" xml:space="preserve">
-    <value>Bonus +</value>
+    <value>+Bonus</value>
   </data>
   <data name="Primadecrementosobreptb" xml:space="preserve">
-    <value>Bonus -</value>
+    <value>-Bonus</value>
   </data>
 </root>

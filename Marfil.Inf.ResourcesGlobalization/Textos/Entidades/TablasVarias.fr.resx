@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TipoTablaOtros" xml:space="preserve">
-    <value>Autres</value>
+    <value>Les autres</value>
   </data>
   <data name="TipoTablaGestion" xml:space="preserve">
-    <value>Gestion</value>
+    <value>La gestion</value>
   </data>
   <data name="TipoTablaConfiguracion" xml:space="preserve">
-    <value>Configuration</value>
+    <value>Paramètre</value>
   </data>
   <data name="TipoTablaProduccion" xml:space="preserve">
     <value>Production</value>
   </data>
   <data name="TipoTablaContabilidad" xml:space="preserve">
-    <value>Contabilitée</value>
+    <value>Comptabilité</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -139,54 +139,93 @@
     <value>Classe</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="Tipo" xml:space="preserve">
-    <value>Tipe</value>
+    <value>Type</value>
   </data>
   <data name="Noeditable" xml:space="preserve">
-    <value>Pas modifiable</value>
+    <value>Non modifiable</value>
   </data>
   <data name="Valor" xml:space="preserve">
-    <value>Valeur</value>
+    <value>La peine</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Descripcion2" xml:space="preserve">
-    <value>Description 2</value>
+    <value>Descriptif 2</value>
   </data>
   <data name="NifObligatorio" xml:space="preserve">
-    <value>Id obligatoire</value>
+    <value>Identifiant fiscal obligatoire</value>
   </data>
   <data name="EnAlmacen" xml:space="preserve">
-    <value>En le magasin</value>
+    <value>En stock</value>
   </data>
   <data name="Disponible" xml:space="preserve">
     <value>Disponible</value>
   </data>
   <data name="Campo" xml:space="preserve">
-    <value>Camp</value>
+    <value>Campagne</value>
   </data>
   <data name="Efectivo" xml:space="preserve">
-    <value>Especes</value>
+    <value>En espèces</value>
   </data>
   <data name="VerificaValor" xml:space="preserve">
-    <value>Verifier valeur</value>
+    <value>vérifier la valeur</value>
   </data>
   <data name="CodigoIsoAlfa2" xml:space="preserve">
-    <value>ISO 2</value>
+    <value>Code ISO2</value>
   </data>
   <data name="CodigoIsoAlfa3" xml:space="preserve">
-    <value>ISO 3</value>
+    <value>Code ISO 3</value>
   </data>
   <data name="CodigoIsoNumerico" xml:space="preserve">
-    <value>ISO numérique</value>
+    <value>code ISO numérique</value>
   </data>
   <data name="NifEuropeo" xml:space="preserve">
-    <value>Nif européen</value>
+    <value>NIF européen</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>divers tableaux</value>
+  </data>
+  <data name="Remesable" xml:space="preserve">
+    <value>remise</value>
+  </data>
+  <data name="MandatoRequerido" xml:space="preserve">
+    <value>mandat requis</value>
+  </data>
+  <data name="Camposadicionales" xml:space="preserve">
+    <value>champs supplémentaires</value>
+  </data>
+  <data name="BloqueoRGPD" xml:space="preserve">
+    <value>Blocage RGPD/LODP</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Valeur par défaut</value>
+  </data>
+  <data name="MovAutomatico" xml:space="preserve">
+    <value>mouvement automatique</value>
+  </data>
+  <data name="CosteAdq" xml:space="preserve">
+    <value>Coût d'acquisition</value>
+  </data>
+  <data name="EntradasV" xml:space="preserve">
+    <value>Billets V</value>
+  </data>
+  <data name="SalidasV" xml:space="preserve">
+    <value>Sorties V</value>
+  </data>
+  <data name="TipoTablaCRM" xml:space="preserve">
+    <value>GRC</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="Codigo" xml:space="preserve">
+    <value>Code</value>
   </data>
 </root>

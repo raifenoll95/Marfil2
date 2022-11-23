@@ -118,36 +118,48 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Grosor" xml:space="preserve">
-    <value>Épaisseur (m)</value>
+    <value>Epaisseur (m)</value>
   </data>
   <data name="Descripcionabreviada" xml:space="preserve">
-    <value>Description courte</value>
+    <value>brève description</value>
   </data>
   <data name="TipoFormatoGrosorCodigo" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="TipoFormatoGrosorCodigoyUnidad" xml:space="preserve">
-    <value>Code + unitée</value>
+    <value>code + unité</value>
   </data>
   <data name="TipoFormatoGrosorGrosorcm" xml:space="preserve">
-    <value>Épaiseur en cm</value>
+    <value>épaisseur en cm</value>
   </data>
   <data name="TipoFormatoGrosorGrosorcmyUnidad" xml:space="preserve">
-    <value>Épaiseur en cm + unit</value>
+    <value>Epaisseur en cm + unité</value>
   </data>
   <data name="TipoFormatoGrosorGrosorm" xml:space="preserve">
-    <value>Épaiseur en m</value>
+    <value>épaisseur en m</value>
   </data>
   <data name="TipoFormatoGrosorGrosormyUnidad" xml:space="preserve">
-    <value>Épaiseur en m + unitée</value>
+    <value>Epaisseur en m + unité</value>
   </data>
   <data name="LblParaEspesorDisco" xml:space="preserve">
-    <value>Pour un épaiseur de disque de &lt;strong&gt;{0}&lt;/strong&gt; cm</value>
+    <value>pour une épaisseur de disque de &lt;strong&gt;{0}&lt;/strong&gt; cm</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>épaisseurs</value>
+  </data>
+  <data name="Coficientecortabloques" xml:space="preserve">
+    <value>Coefficient de coupe de bloc</value>
+  </data>
+  <data name="Coeficientetelares" xml:space="preserve">
+    <value>Coefficient de coupe du métier à tisser</value>
+  </data>
+  <data name="LblParaEspesorFleje" xml:space="preserve">
+    <value>pour une épaisseur de bande de &lt;strong&gt;{0}&lt;/strong&gt; cm</value>
   </data>
 </root>

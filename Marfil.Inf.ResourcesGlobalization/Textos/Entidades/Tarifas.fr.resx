@@ -118,18 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Taux</value>
+    <value>les taux</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Tipotarifa" xml:space="preserve">
-    <value>Tipe</value>
+    <value>Type</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
+  </data>
+  <data name="Tipoflujo" xml:space="preserve">
+    <value>Mouvement</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Devise</value>
+  </data>
+  <data name="Asignartarifaalcreararticulos" xml:space="preserve">
+    <value>Inclure dans le tarif lors de la création de l'article</value>
+  </data>
+  <data name="Precioobligatorio" xml:space="preserve">
+    <value>prix obligatoire</value>
+  </data>
+  <data name="Validodesde" xml:space="preserve">
+    <value>Valide à partir de</value>
+  </data>
+  <data name="Validohasta" xml:space="preserve">
+    <value>Valide jusqu'à</value>
+  </data>
+  <data name="Ivaincluido" xml:space="preserve">
+    <value>TVA incluse</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Precioautomaticobase" xml:space="preserve">
+    <value>Prix ​​de base</value>
+  </data>
+  <data name="Precioautomaticoporcentajebase" xml:space="preserve">
+    <value>% prix de base</value>
+  </data>
+  <data name="Precioautomaticoporcentajefijo" xml:space="preserve">
+    <value>Constant</value>
+  </data>
+  <data name="Precioautomaticofkfamiliasproductosdesde" xml:space="preserve">
+    <value>famille depuis</value>
+  </data>
+  <data name="Precioautomaticofkfamiliasproductoshasta" xml:space="preserve">
+    <value>faire de la famille</value>
+  </data>
+  <data name="Precioautomaticofkmaterialesdesde" xml:space="preserve">
+    <value>matériel de</value>
+  </data>
+  <data name="Precioautomaticofkmaterialeshasta" xml:space="preserve">
+    <value>trucs</value>
+  </data>
+  <data name="Fkarticulos" xml:space="preserve">
+    <value>Code de l'article</value>
+  </data>
+  <data name="Fkarticulosdescripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Fkarticuloscodigounidad" xml:space="preserve">
+    <value>Unité</value>
+  </data>
+  <data name="Precio" xml:space="preserve">
+    <value>Prix</value>
+  </data>
+  <data name="Descuento" xml:space="preserve">
+    <value>Remise</value>
+  </data>
+  <data name="TipoTarifaSistema" xml:space="preserve">
+    <value>Système</value>
+  </data>
+  <data name="TipoTarifaEspecifica" xml:space="preserve">
+    <value>spécifique</value>
+  </data>
+  <data name="TipoFlujoCompra" xml:space="preserve">
+    <value>Acheter</value>
+  </data>
+  <data name="TipoFlujoVenta" xml:space="preserve">
+    <value>Vente</value>
+  </data>
+  <data name="ErrorLineasExistentes" xml:space="preserve">
+    <value>Le tarif ne peut pas être supprimé car il a des valeurs associées</value>
+  </data>
+  <data name="LblCalculoprecio" xml:space="preserve">
+    <value>Configuration du calcul des prix</value>
+  </data>
+  <data name="Lbllistadotarifas" xml:space="preserve">
+    <value>Des articles</value>
+  </data>
+  <data name="LblFormula" xml:space="preserve">
+    <value>Formule</value>
+  </data>
+  <data name="Coste" xml:space="preserve">
+    <value>Coût</value>
+  </data>
+  <data name="Preciominimoventa" xml:space="preserve">
+    <value>prix de vente minimal</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>Évaluer</value>
+  </data>
+  <data name="Unidades" xml:space="preserve">
+    <value>euh</value>
+  </data>
+  <data name="Valorarcomponentes" xml:space="preserve">
+    <value>Évaluer les composants</value>
   </data>
 </root>

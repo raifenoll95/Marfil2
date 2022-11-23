@@ -127,7 +127,7 @@
     <value>User</value>
   </data>
   <data name="LblPermisos" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Rights</value>
   </data>
   <data name="ErrorGrupoExistente" xml:space="preserve">
     <value>The group already exists</value>

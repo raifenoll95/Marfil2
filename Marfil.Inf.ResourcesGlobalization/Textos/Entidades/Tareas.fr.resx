@@ -118,6 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Tâches</value>
+    <value>Corvées</value>
+  </data>
+  <data name="Año" xml:space="preserve">
+    <value>An</value>
+  </data>
+  <data name="CantidadPiezas" xml:space="preserve">
+    <value>Quantité pièces</value>
+  </data>
+  <data name="Capacidad" xml:space="preserve">
+    <value>Aptitude</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="ErrorFormatoAño" xml:space="preserve">
+    <value>L'année doit être un nombre à 4 chiffres</value>
+  </data>
+  <data name="ErrorPrecio" xml:space="preserve">
+    <value>Le champ prix doit avoir une valeur comprise entre 0 et 9 999 999,99</value>
+  </data>
+  <data name="ErrorRangoCapacidad" xml:space="preserve">
+    <value>Le champ capacité doit avoir une valeur comprise entre 0 et 9 999,99</value>
+  </data>
+  <data name="ErrorRangoFecha" xml:space="preserve">
+    <value>La date doit être une année comprise entre 2000 et 2100</value>
+  </data>
+  <data name="Horas" xml:space="preserve">
+    <value>Heures</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="Imputacion" xml:space="preserve">
+    <value>imputation</value>
+  </data>
+  <data name="Metros" xml:space="preserve">
+    <value>mètres</value>
+  </data>
+  <data name="Minutos" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Pedido" xml:space="preserve">
+    <value>Ordre</value>
+  </data>
+  <data name="Precio" xml:space="preserve">
+    <value>Prix</value>
+  </data>
+  <data name="PrecioReferencia" xml:space="preserve">
+    <value>Prix ​​de référence</value>
+  </data>
+  <data name="SeccionProduccion" xml:space="preserve">
+    <value>section de production</value>
+  </data>
+  <data name="Unidad" xml:space="preserve">
+    <value>Unité</value>
   </data>
 </root>

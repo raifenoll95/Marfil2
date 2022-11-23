@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Payment method</value>
+    <value>Payment methods</value>
   </data>
   <data name="FkGruposformaspago" xml:space="preserve">
     <value>Group</value>
@@ -139,7 +139,7 @@
     <value>Payment percentage</value>
   </data>
   <data name="ErrorSumaPorcentajes" xml:space="preserve">
-    <value>In case you set the percentages, the total percentage has to be 100%</value>
+    <value>In case you set the percentages/ the total percentage has to be 100%</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Payment method</value>
@@ -149,5 +149,38 @@
   </data>
   <data name="Editable" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="ExcluirFestivos" xml:space="preserve">
+    <value>Exclude expirations on holidays</value>
+  </data>
+  <data name="RecargoFinanciero" xml:space="preserve">
+    <value>Financial surcharge on the commission</value>
+  </data>
+  <data name="ImprimirVencimientoFacturas" xml:space="preserve">
+    <value>Print due dates on invoices</value>
+  </data>
+  <data name="DiasVencimiento" xml:space="preserve">
+    <value>Expiration days</value>
+  </data>
+  <data name="Instruccion" xml:space="preserve">
+    <value>Instruction</value>
+  </data>
+  <data name="Remesa" xml:space="preserve">
+    <value>Consignment</value>
+  </data>
+  <data name="Riesgo" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="Docsventaimprimircuenta" xml:space="preserve">
+    <value>docs. sale print bill</value>
+  </data>
+  <data name="Ninguna" xml:space="preserve">
+    <value>None (Blank)</value>
+  </data>
+  <data name="Tercero" xml:space="preserve">
+    <value>third party account</value>
+  </data>
+  <data name="Tesoreria" xml:space="preserve">
+    <value>company treasury account</value>
   </data>
 </root>

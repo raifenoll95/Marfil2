@@ -127,6 +127,12 @@
     <value>Pays</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>ports</value>
+  </data>
+  <data name="Puerto" xml:space="preserve">
+    <value>Port</value>
   </data>
 </root>

@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Constructions</value>
+    <value>Pièces</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Construction</value>
+    <value>Chantier de construction</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -130,13 +130,13 @@
     <value>Client</value>
   </data>
   <data name="Nombreobra" xml:space="preserve">
-    <value>Nom de construction</value>
+    <value>Nom du travail</value>
   </data>
   <data name="Codigopostal" xml:space="preserve">
-    <value>Code postal</value>
+    <value>C postale.</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
-    <value>Poblation</value>
+    <value>Ville</value>
   </data>
   <data name="Fkpaises" xml:space="preserve">
     <value>Pays</value>
@@ -145,27 +145,60 @@
     <value>Province</value>
   </data>
   <data name="Telefono" xml:space="preserve">
-    <value>Telefone</value>
+    <value>Téléphone</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
   </data>
   <data name="Contacto" xml:space="preserve">
-    <value>Contacte</value>
+    <value>Contact</value>
   </data>
   <data name="Fktiposobra" xml:space="preserve">
-    <value>Tipe de construction</value>
+    <value>Type de travail</value>
   </data>
   <data name="Fkagentes" xml:space="preserve">
-    <value>Agente</value>
+    <value>Agent</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Nombrecliente" xml:space="preserve">
-    <value>Prenom</value>
+    <value>nom</value>
   </data>
   <data name="toni" xml:space="preserve">
-    <value>mesa</value>
+    <value>Tony</value>
+  </data>
+  <data name="Direccion" xml:space="preserve">
+    <value>adresse</value>
+  </data>
+  <data name="Movil" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Fkcomerciales" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="Retencion" xml:space="preserve">
+    <value>rétention financière</value>
+  </data>
+  <data name="Fechainicio" xml:space="preserve">
+    <value>Date de début</value>
+  </data>
+  <data name="Fechafin" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="Certificado" xml:space="preserve">
+    <value>Certificat</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Fecharevision" xml:space="preserve">
+    <value>Date de la dernière révision</value>
+  </data>
+  <data name="Finalizada" xml:space="preserve">
+    <value>achevé</value>
   </data>
 </root>

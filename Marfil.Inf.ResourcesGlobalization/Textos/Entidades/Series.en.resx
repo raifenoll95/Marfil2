@@ -130,7 +130,7 @@
     <value>Currency</value>
   </data>
   <data name="Fkregimeniva" xml:space="preserve">
-    <value>TAX</value>
+    <value>VAT group</value>
   </data>
   <data name="Fkcontadores" xml:space="preserve">
     <value>Counter</value>
@@ -145,7 +145,7 @@
     <value>TAX excluded</value>
   </data>
   <data name="Borrador" xml:space="preserve">
-    <value>Draft</value>
+    <value>Draft serie</value>
   </data>
   <data name="Tipodocumento" xml:space="preserve">
     <value>Document type</value>
@@ -158,5 +158,62 @@
   </data>
   <data name="EntradasVarias" xml:space="preserve">
     <value>Several inputs</value>
+  </data>
+  <data name="Fkejercicios" xml:space="preserve">
+    <value>Accounting year</value>
+  </data>
+  <data name="Rectificativa" xml:space="preserve">
+    <value>Rectifying series</value>
+  </data>
+  <data name="Fkseriesasociada" xml:space="preserve">
+    <value>Associated series</value>
+  </data>
+  <data name="Bloqueo" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="TipoDocumentosPresupuestosCompra" xml:space="preserve">
+    <value>Sale quotations</value>
+  </data>
+  <data name="TipoDocumentosReservasCompra" xml:space="preserve">
+    <value>Purchase reservations</value>
+  </data>
+  <data name="TipoDocumentosAlbaranesCompra" xml:space="preserve">
+    <value>Purchase sheets</value>
+  </data>
+  <data name="TipoDocumentosPedidosCompra" xml:space="preserve">
+    <value>Purchase orders</value>
+  </data>
+  <data name="TipoDocumentosFacturasCompra" xml:space="preserve">
+    <value>Purchase invoices</value>
+  </data>
+  <data name="TipoDocumentosPresupuestosVentas" xml:space="preserve">
+    <value>Estimations</value>
+  </data>
+  <data name="TipoDocumentosReservasVentas" xml:space="preserve">
+    <value>Sales reservations</value>
+  </data>
+  <data name="TipoDocumentosAlbaranesVentas" xml:space="preserve">
+    <value>Delivery sheets</value>
+  </data>
+  <data name="TipoDocumentosPedidosVentas" xml:space="preserve">
+    <value>Sales orders</value>
+  </data>
+  <data name="TipoDocumentosFacturasVentas" xml:space="preserve">
+    <value>Sale invoices</value>
+  </data>
+  <data name="TipoDocumentosApuntesAlmacen" xml:space="preserve">
+    <value>Warehouse notes</value>
+  </data>
+  <data name="ErrorContadorPridado" xml:space="preserve">
+    <value>Cannot save the record because the series is using a counter of type private</value>
+  </data>
+  <data name="ErrorSerieYaUtilizada" xml:space="preserve">
+    <value>The series counter cannot be modified because it has already been used.</value>
+  </data>
+  <data name="TipoAlmacenLote" xml:space="preserve">
+    <value>Lot Type</value>
+  </data>
+  <data name="Fkgruposusuarios" xml:space="preserve">
+    <value>Users group</value>
   </data>
 </root>

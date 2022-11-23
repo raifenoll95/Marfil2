@@ -124,7 +124,7 @@
     <value>Code</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="Bic" xml:space="preserve">
     <value>BIC</value>

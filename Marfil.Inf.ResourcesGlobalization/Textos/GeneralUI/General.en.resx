@@ -133,7 +133,7 @@
     <value>Logout</value>
   </data>
   <data name="LblEmpresas" xml:space="preserve">
-    <value>Company</value>
+    <value>Companies</value>
   </data>
   <data name="LblGestionGrupos" xml:space="preserve">
     <value>Groups management</value>
@@ -253,10 +253,10 @@
     <value>Close</value>
   </data>
   <data name="LblIndicaMotivoBloqueo" xml:space="preserve">
-    <value>Why do you want to block </value>
+    <value>Why do you want to block</value>
   </data>
   <data name="LblBloqueoConfirmacionParte1" xml:space="preserve">
-    <value>You are about to unblock the current register, Do you want to continue?</value>
+    <value>You are about to unblock the current register/ Do you want to continue?</value>
   </data>
   <data name="LblDesbloqueo" xml:space="preserve">
     <value>Unblock</value>
@@ -268,7 +268,7 @@
     <value>Blocked</value>
   </data>
   <data name="LblNoBloqueada" xml:space="preserve">
-    <value>Unblocked</value>
+    <value>Unlocked</value>
   </data>
   <data name="LblAtencion" xml:space="preserve">
     <value>Warning</value>
@@ -277,7 +277,7 @@
     <value>Configure it from</value>
   </data>
   <data name="LblAqui" xml:space="preserve">
-    <value>here</value>
+    <value>Here</value>
   </data>
   <data name="LblGeneral" xml:space="preserve">
     <value>General</value>
@@ -298,10 +298,10 @@
     <value>Activity</value>
   </data>
   <data name="LblContabilidad" xml:space="preserve">
-    <value>Accounting</value>
+    <value>Accounting import</value>
   </data>
   <data name="LblAdministrador" xml:space="preserve">
-    <value>Admin</value>
+    <value>Administrator</value>
   </data>
   <data name="LblAñadir" xml:space="preserve">
     <value>Add</value>
@@ -316,7 +316,7 @@
     <value>The operation has been done succesfully</value>
   </data>
   <data name="LblBien" xml:space="preserve">
-    <value>Great</value>
+    <value>Right</value>
   </data>
   <data name="ErrorModificarRegistroBloqueado" xml:space="preserve">
     <value>It is not possible to change a blocked entity</value>
@@ -325,7 +325,7 @@
     <value>The type of account is not rigth</value>
   </data>
   <data name="ErrorCuentaObligatoria" xml:space="preserve">
-    <value>The field account is required</value>
+    <value>The account is required</value>
   </data>
   <data name="ErrorTipoCuentaConfiguracion" xml:space="preserve">
     <value>There is not configuration for the {0} type of account</value>
@@ -388,16 +388,16 @@
     <value>Is not allowed to block the current entity</value>
   </data>
   <data name="LblTarifasVentas" xml:space="preserve">
-    <value>Sale rates</value>
+    <value>Sales price list</value>
   </data>
   <data name="LblTarifasCompras" xml:space="preserve">
-    <value>Buy rates</value>
+    <value>Purchase price list</value>
   </data>
   <data name="LblTarifasEspecificasVentas" xml:space="preserve">
-    <value>Custom rate sale</value>
+    <value>Sales custom proce list</value>
   </data>
   <data name="LblTarifasEspecificasCompras" xml:space="preserve">
-    <value>Custom rate buy</value>
+    <value>Purchase custom price list</value>
   </data>
   <data name="LblCerrarSesion" xml:space="preserve">
     <value>Logout</value>
@@ -430,13 +430,13 @@
     <value>Sell estimation</value>
   </data>
   <data name="EnumPedidosVentas" xml:space="preserve">
-    <value>Sell order</value>
+    <value>Sales order</value>
   </data>
   <data name="EnumAlbaranesVentas" xml:space="preserve">
-    <value>Sell packing list</value>
+    <value>Packing list</value>
   </data>
   <data name="EnumFacturasVentas" xml:space="preserve">
-    <value>Sell invoice</value>
+    <value>Sale invoice</value>
   </data>
   <data name="LblPresupuestos" xml:space="preserve">
     <value>Estimations</value>
@@ -451,7 +451,7 @@
     <value>There are no more exercices</value>
   </data>
   <data name="LblCambiarEjercicio" xml:space="preserve">
-    <value>Change exercice</value>
+    <value>Change accounting yr.</value>
   </data>
   <data name="LblClonar" xml:space="preserve">
     <value>Clone</value>
@@ -463,7 +463,7 @@
     <value>There are any bank for the current client</value>
   </data>
   <data name="ErrorBorradoArticulosUsados" xml:space="preserve">
-    <value>Is not possible to delete the article because it has been already used in some document.</value>
+    <value>Is not possible to delete the item because it has been already used in some document</value>
   </data>
   <data name="LblGenerarPedido" xml:space="preserve">
     <value>Create order</value>
@@ -499,7 +499,7 @@
     <value>In progress</value>
   </data>
   <data name="EnumFinalizado" xml:space="preserve">
-    <value>Finished</value>
+    <value>Done</value>
   </data>
   <data name="EnumAnulado" xml:space="preserve">
     <value>Cancelled</value>
@@ -511,7 +511,7 @@
     <value>The documents in state {0} can not be modified</value>
   </data>
   <data name="ErrorBorradoUnidadesUsadas" xml:space="preserve">
-    <value>Is not possible to delete the unite mesure because it has been already used in some article</value>
+    <value>Is not possible to delete the unite mesure because it has been already used in some items</value>
   </data>
   <data name="LblUltimo" xml:space="preserve">
     <value>Last</value>
@@ -529,7 +529,7 @@
     <value>Print</value>
   </data>
   <data name="LblCambiarEstado" xml:space="preserve">
-    <value>Change state</value>
+    <value>Change status</value>
   </data>
   <data name="LblDividir" xml:space="preserve">
     <value>Split</value>
@@ -598,7 +598,7 @@
     <value>Invoice type</value>
   </data>
   <data name="LblRegimenEspecial" xml:space="preserve">
-    <value>Special regime</value>
+    <value>Special tax group</value>
   </data>
   <data name="ErrorDocumentoSinLineas" xml:space="preserve">
     <value>The document doesn't have lines</value>
@@ -616,9 +616,390 @@
     <value>File</value>
   </data>
   <data name="AsignarCartera" xml:space="preserve">
-    <value>Asignar a cartera</value>
+    <value>Assign to portfolio</value>
   </data>
   <data name="ErrorBorradoEstadosUsados" xml:space="preserve">
     <value>Is not possible to delete the state because it has been already used in some document.</value>
+  </data>
+  <data name="LblVencimientos" xml:space="preserve">
+    <value>Maturities</value>
+  </data>
+  <data name="LblMandatoRequerido" xml:space="preserve">
+    <value>Mandate required</value>
+  </data>
+  <data name="LblRemesable" xml:space="preserve">
+    <value>Remittance</value>
+  </data>
+  <data name="LblRazonSocial" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="ErrorRangoExistente" xml:space="preserve">
+    <value>Date range already exists</value>
+  </data>
+  <data name="ErrorCuentaExistente" xml:space="preserve">
+    <value>An account of type {0} already exists with the code {1}</value>
+  </data>
+  <data name="LblMediacion" xml:space="preserve">
+    <value>Mediation</value>
+  </data>
+  <data name="LblTransporte" xml:space="preserve">
+    <value>Transport</value>
+  </data>
+  <data name="LblGenerarAlbaran" xml:space="preserve">
+    <value>Generate delivery note</value>
+  </data>
+  <data name="LblFacturar" xml:space="preserve">
+    <value>Check in</value>
+  </data>
+  <data name="LblAgrupacion" xml:space="preserve">
+    <value>Grouping</value>
+  </data>
+  <data name="LblDesglosado" xml:space="preserve">
+    <value>broken down</value>
+  </data>
+  <data name="LblSinDesglose" xml:space="preserve">
+    <value>Not broken down</value>
+  </data>
+  <data name="LblDetalle" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="LblAgrupadoporcliente" xml:space="preserve">
+    <value>Grouped by clustomer</value>
+  </data>
+  <data name="ErrorGenerarMovimientoStock" xml:space="preserve">
+    <value>The already exists an article with the lot: {0}.{1}</value>
+  </data>
+  <data name="LblNoExistenMasAlmacenes" xml:space="preserve">
+    <value>There is no warehouse</value>
+  </data>
+  <data name="LblAgrupadoporproveedor" xml:space="preserve">
+    <value>Grouped by supplier</value>
+  </data>
+  <data name="TipoOperacionServiceInsertar" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="TipoOperacionServiceActualizar" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="TipoOperacionServiceEliminar" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="TipoOperacionServiceMovimientoAlmacen" xml:space="preserve">
+    <value>Warehouse movement</value>
+  </data>
+  <data name="TipoOperacionServiceKit" xml:space="preserve">
+    <value>Kit</value>
+  </data>
+  <data name="TipoOperacionServiceBundle" xml:space="preserve">
+    <value>Bundle</value>
+  </data>
+  <data name="TipoOperacionServiceRemedir" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="LblEntregar" xml:space="preserve">
+    <value>Generate delivery</value>
+  </data>
+  <data name="LblServicios" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="LblCostesproducto" xml:space="preserve">
+    <value>product cost</value>
+  </data>
+  <data name="LblDocumentosrelacionados" xml:space="preserve">
+    <value>Related documents</value>
+  </data>
+  <data name="LblMedidas" xml:space="preserve">
+    <value>Dimensions</value>
+  </data>
+  <data name="Entrada" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="Produccion" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="Salida" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="Lotes" xml:space="preserve">
+    <value>Lots control center</value>
+  </data>
+  <data name="DetalleLotes" xml:space="preserve">
+    <value>Lot detail</value>
+  </data>
+  <data name="LblGraficas" xml:space="preserve">
+    <value>create graph</value>
+  </data>
+  <data name="LblConfigurarGraficas" xml:space="preserve">
+    <value>Graphics management</value>
+  </data>
+  <data name="Filtros" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="LblConfigurarPanelControl" xml:space="preserve">
+    <value>Configure dashboard</value>
+  </data>
+  <data name="LblListado" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="ErrorRangoEntre" xml:space="preserve">
+    <value>The value of {0} has to be between {1} and {2}</value>
+  </data>
+  <data name="LblCajas" xml:space="preserve">
+    <value>Boxes</value>
+  </data>
+  <data name="Unidades" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="ErrorLineasObligatoriasCostes" xml:space="preserve">
+    <value>It is mandatory to indicate at least one line when additional costs are added</value>
+  </data>
+  <data name="Sinagrupar" xml:space="preserve">
+    <value>No grouping</value>
+  </data>
+  <data name="LblFinalizar" xml:space="preserve">
+    <value>To finalize</value>
+  </data>
+  <data name="LblGenerarEntrega" xml:space="preserve">
+    <value>Generate stock delivery</value>
+  </data>
+  <data name="LblGenerarRecepcionStock" xml:space="preserve">
+    <value>Generate Stock Receipt</value>
+  </data>
+  <data name="LblSaldarPedido" xml:space="preserve">
+    <value>Settle order</value>
+  </data>
+  <data name="CantidadPedida" xml:space="preserve">
+    <value>Qty. Order</value>
+  </data>
+  <data name="CantidadAlbaran" xml:space="preserve">
+    <value>Qty. Delivery</value>
+  </data>
+  <data name="MetrosAlbaran" xml:space="preserve">
+    <value>Delivery meters</value>
+  </data>
+  <data name="CantidadPendiente" xml:space="preserve">
+    <value>Qty. pending</value>
+  </data>
+  <data name="LblPedidos" xml:space="preserve">
+    <value>Sales orders</value>
+  </data>
+  <data name="LblAlbaranes" xml:space="preserve">
+    <value>Packing list</value>
+  </data>
+  <data name="LblTextoDesconexion" xml:space="preserve">
+    <value>User {0} is already in use. Do you want to force the user to log out?</value>
+  </data>
+  <data name="BtnDesconectarUsuario" xml:space="preserve">
+    <value>Disconnect user</value>
+  </data>
+  <data name="MensajeExitoOperacionForzarDesconexion" xml:space="preserve">
+    <value>The other user has been successfully disconnected. You can now try to connect to the app</value>
+  </data>
+  <data name="LblHistoricoPrecios" xml:space="preserve">
+    <value>Historical prices</value>
+  </data>
+  <data name="Fabricacion" xml:space="preserve">
+    <value>Manufacturing</value>
+  </data>
+  <data name="LblPlanContable" xml:space="preserve">
+    <value>Accounting plan</value>
+  </data>
+  <data name="LblDiarioContable" xml:space="preserve">
+    <value>Accounting journal</value>
+  </data>
+  <data name="LblGenerarCuentas" xml:space="preserve">
+    <value>import accounts</value>
+  </data>
+  <data name="LblGenerarDiarioContable" xml:space="preserve">
+    <value>Generate accounting journal</value>
+  </data>
+  <data name="LblDelimitador" xml:space="preserve">
+    <value>Delimiter</value>
+  </data>
+  <data name="LblCabecera" xml:space="preserve">
+    <value>contains header</value>
+  </data>
+  <data name="LblIso" xml:space="preserve">
+    <value>ISO code</value>
+  </data>
+  <data name="LblGenerarSecciones" xml:space="preserve">
+    <value>Analitic sections</value>
+  </data>
+  <data name="ErrorDelimitadorFormato" xml:space="preserve">
+    <value>Incorrect csv delimiter or format</value>
+  </data>
+  <data name="ErrorFichero" xml:space="preserve">
+    <value>Please upload your file</value>
+  </data>
+  <data name="ErrorFormatoFichero" xml:space="preserve">
+    <value>This file format is not supported</value>
+  </data>
+  <data name="LblContabilizar" xml:space="preserve">
+    <value>To record</value>
+  </data>
+  <data name="LblExportarClassic" xml:space="preserve">
+    <value>Export to Marfil Classic</value>
+  </data>
+  <data name="LblGenerarImputacionMateriales" xml:space="preserve">
+    <value>Allocation of materials</value>
+  </data>
+  <data name="ImputacionMateriales" xml:space="preserve">
+    <value>materials imputation</value>
+  </data>
+  <data name="LblVariedades" xml:space="preserve">
+    <value>Varieties/ Gashes</value>
+  </data>
+  <data name="StockActual" xml:space="preserve">
+    <value>Current stock</value>
+  </data>
+  <data name="SubirImagen" xml:space="preserve">
+    <value>Upload image</value>
+  </data>
+  <data name="LblCierre" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="LblGenerarSeguimiento" xml:space="preserve">
+    <value>Generate Follow Up</value>
+  </data>
+  <data name="LblGestionDeGraficas" xml:space="preserve">
+    <value>Graphics configuration management</value>
+  </data>
+  <data name="LblPeticionesAsincronas" xml:space="preserve">
+    <value>Asynchronous requests</value>
+  </data>
+  <data name="LblImportarStock" xml:space="preserve">
+    <value>Import Stock</value>
+  </data>
+  <data name="LblSerie" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="LblTipoAlmacenLote" xml:space="preserve">
+    <value>Lot type</value>
+  </data>
+  <data name="ErrorDocumentoFinalizado" xml:space="preserve">
+    <value>Cannot delete a document in finished state</value>
+  </data>
+  <data name="LblImportarArticulos" xml:space="preserve">
+    <value>Import items</value>
+  </data>
+  <data name="ErrorLoteSinStock" xml:space="preserve">
+    <value>Cannot generate a lot that has already been sold</value>
+  </data>
+  <data name="Lblarticulostercero" xml:space="preserve">
+    <value>Third party items</value>
+  </data>
+  <data name="Lbltercero" xml:space="preserve">
+    <value>Thirds</value>
+  </data>
+  <data name="lblCorreos" xml:space="preserve">
+    <value>Emails sent</value>
+  </data>
+  <data name="LblVencimientosSeguimientos" xml:space="preserve">
+    <value>Follow</value>
+  </data>
+  <data name="LblAsiento" xml:space="preserve">
+    <value>Accounting record</value>
+  </data>
+  <data name="VencimientosCobros" xml:space="preserve">
+    <value>Collection forecast management</value>
+  </data>
+  <data name="VencimientosPagos" xml:space="preserve">
+    <value>Payment forecast management</value>
+  </data>
+  <data name="Contabilidad" xml:space="preserve">
+    <value>Accounting</value>
+  </data>
+  <data name="LblPrevisiones" xml:space="preserve">
+    <value>Forecast</value>
+  </data>
+  <data name="LblCartera" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
+  <data name="MovimientosTesoreria" xml:space="preserve">
+    <value>Treasury registers</value>
+  </data>
+  <data name="GenerarMovimiento" xml:space="preserve">
+    <value>generate movement</value>
+  </data>
+  <data name="configurardocumentoscartera" xml:space="preserve">
+    <value>Document Configurator: Portfolio</value>
+  </data>
+  <data name="ErrorEan13" xml:space="preserve">
+    <value>The ean13 field must have a maximum length of 10 digits</value>
+  </data>
+  <data name="ErrorDecimalesPrecios" xml:space="preserve">
+    <value>The decimal prices field must be between 0 and 4</value>
+  </data>
+  <data name="Fabricar" xml:space="preserve">
+    <value>Manufacture</value>
+  </data>
+  <data name="Presupuestar" xml:space="preserve">
+    <value>Quote</value>
+  </data>
+  <data name="LblBuscarComponente" xml:space="preserve">
+    <value>search component</value>
+  </data>
+  <data name="LblAlbaranImportar" xml:space="preserve">
+    <value>Delivery note (various entries)</value>
+  </data>
+  <data name="LblImportar2" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="LblTarifa1" xml:space="preserve">
+    <value>Tariff 1</value>
+  </data>
+  <data name="LblTarifa2" xml:space="preserve">
+    <value>Tariff 2</value>
+  </data>
+  <data name="LblTarifa3" xml:space="preserve">
+    <value>Tariff 3</value>
+  </data>
+  <data name="LblFamilia" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="LblMensajeConfirmacionAnulado" xml:space="preserve">
+    <value>You are going to create a new cancellation entry. Do you want to continue?</value>
+  </data>
+  <data name="LblAnular" xml:space="preserve">
+    <value>Cancel accounting entry</value>
+  </data>
+  <data name="Configuracion" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="LblRevertirAsientoContable" xml:space="preserve">
+    <value>Reverse accounting entry</value>
+  </data>
+  <data name="LblImportarTerceros" xml:space="preserve">
+    <value>Import Third Parties</value>
+  </data>
+  <data name="ErrorCuentaConSaldos" xml:space="preserve">
+    <value>It is not possible to delete an account with which movements have been made and has values</value>
+  </data>
+  <data name="LblImportarClassic" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="MensajeRoturaStock" xml:space="preserve">
+    <value>Items below safety stock have been found</value>
+  </data>
+  <data name="LblVerificar" xml:space="preserve">
+    <value>VerifyAccounting</value>
+  </data>
+  <data name="LblTarifa" xml:space="preserve">
+    <value>Price list</value>
+  </data>
+  <data name="LblFactura" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="LblSIIDatos" xml:space="preserve">
+    <value>SII-Data</value>
+  </data>
+  <data name="LblSIIFactura" xml:space="preserve">
+    <value>SII-Invoice</value>
+  </data>
+  <data name="LblSIIOperacion" xml:space="preserve">
+    <value>SII-Operation</value>
+  </data>
+  <data name="LblDetallado" xml:space="preserve">
+    <value>Detailed</value>
   </data>
 </root>

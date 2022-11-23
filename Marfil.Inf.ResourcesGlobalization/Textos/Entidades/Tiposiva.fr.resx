@@ -121,24 +121,63 @@
     <value>Code</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>nom d'impot</value>
+    <value>nom</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="Cuentas" xml:space="preserve">
-    <value>Comtes</value>
+    <value>comptes</value>
   </data>
   <data name="GruposIva" xml:space="preserve">
-    <value>Groupes d'impots</value>
+    <value>Groupes TVA</value>
   </data>
   <data name="MensajeGruposIva" xml:space="preserve">
-    <value>Le tipe d'impot n'est pas dans aucune groupe</value>
+    <value>Le taux de TVA n'appartient à aucun groupe</value>
   </data>
   <data name="Grupo" xml:space="preserve">
     <value>Groupe</value>
   </data>
   <data name="Ver" xml:space="preserve">
-    <value>Voir</value>
+    <value>Regarder</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Taux de TVA</value>
+  </data>
+  <data name="PorcentajeIva" xml:space="preserve">
+    <value>% TVA</value>
+  </data>
+  <data name="PorcentajeRecargoEquivalencia" xml:space="preserve">
+    <value>% surtaxe d'équivalence</value>
+  </data>
+  <data name="CtaIvaSoportado" xml:space="preserve">
+    <value>Compte de TVA pris en charge</value>
+  </data>
+  <data name="CtaIvaRepercutido" xml:space="preserve">
+    <value>Compte de TVA en sortie</value>
+  </data>
+  <data name="CtaIvaNoDeducible" xml:space="preserve">
+    <value>Compte de TVA non déductible</value>
+  </data>
+  <data name="CtaRecargoEquivalenciaRepercutido" xml:space="preserve">
+    <value>Équiv. transmis</value>
+  </data>
+  <data name="CtaIvaSoportadoCriterioCaja" xml:space="preserve">
+    <value>Critères de trésorerie du compte de TVA pris en charge</value>
+  </data>
+  <data name="CtaIvaRepercutidoCriterioCaja" xml:space="preserve">
+    <value>Critères de trésorerie du compte TVA collectée</value>
+  </data>
+  <data name="CtaRecargoEquivalenciaRepercutidoCriterioCaja" xml:space="preserve">
+    <value>Équiv. transmis sur critère de trésorerie</value>
+  </data>
+  <data name="IvaSoportado" xml:space="preserve">
+    <value>TVA prise en charge</value>
+  </data>
+  <data name="IvaDeducible" xml:space="preserve">
+    <value>Déductible d'impôts</value>
+  </data>
+  <data name="PorcentajeDeducible" xml:space="preserve">
+    <value>% déductible</value>
   </data>
 </root>

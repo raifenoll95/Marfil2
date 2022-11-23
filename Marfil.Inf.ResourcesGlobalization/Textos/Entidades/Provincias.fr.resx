@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Provinces</value>
+    <value>provinces</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -127,9 +127,9 @@
     <value>Pays</value>
   </data>
   <data name="Codigopais" xml:space="preserve">
-    <value>Code pays</value>
+    <value>Code postal</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
 </root>

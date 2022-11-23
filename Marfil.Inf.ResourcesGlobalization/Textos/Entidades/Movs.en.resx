@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Fkejercicio" xml:space="preserve">
-    <value>Exercise</value>
+    <value>Accounting year</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
     <value>Account</value>
@@ -133,7 +133,7 @@
     <value>Reference</value>
   </data>
   <data name="Fkseriescontables" xml:space="preserve">
-    <value>Series</value>
+    <value>Serie</value>
   </data>
   <data name="Esdebe" xml:space="preserve">
     <value>Debit</value>
@@ -157,12 +157,159 @@
     <value>User's reference</value>
   </data>
   <data name="Bloqueado" xml:space="preserve">
-    <value>Locked</value>
+    <value>Blocked</value>
   </data>
   <data name="ErrorDescuadreDebeHaber" xml:space="preserve">
     <value>Balance unmatched amounts</value>
   </data>
   <data name="TipoDocumento" xml:space="preserve">
     <value>Document type</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Codigodescripcionasiento" xml:space="preserve">
+    <value>Description code</value>
+  </data>
+  <data name="Descripcionasiento" xml:space="preserve">
+    <value>Accounting record description</value>
+  </data>
+  <data name="Vinculo" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Canalcontable" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="Traza" xml:space="preserve">
+    <value>Trace</value>
+  </data>
+  <data name="Fkseccionesanaliticas" xml:space="preserve">
+    <value>Analitic section</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Importemonedadocumento" xml:space="preserve">
+    <value>Amount document currency</value>
+  </data>
+  <data name="Codigocomentario" xml:space="preserve">
+    <value>Remark code</value>
+  </data>
+  <data name="Comentario" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="Conciliado" xml:space="preserve">
+    <value>Conciliated</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Accounting registers</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>AccountingMovement</value>
+  </data>
+  <data name="TipoAsientoNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="TipoAsientoSimulacion" xml:space="preserve">
+    <value>Simulation</value>
+  </data>
+  <data name="TipoAsientoVinculado" xml:space="preserve">
+    <value>Bound</value>
+  </data>
+  <data name="TipoAsientoAperturaProvisional" xml:space="preserve">
+    <value>Provisional accounting opening</value>
+  </data>
+  <data name="TipoAsientoApertura" xml:space="preserve">
+    <value>Opening</value>
+  </data>
+  <data name="TipoAsientoRegularizacionExistencias" xml:space="preserve">
+    <value>Regularization of stocks</value>
+  </data>
+  <data name="TipoAsientoRegularizacionGrupos6y7" xml:space="preserve">
+    <value>Regularization groups 6 and 7</value>
+  </data>
+  <data name="TipoAsientoCierre" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="TipoAsiento" xml:space="preserve">
+    <value>Account record type</value>
+  </data>
+  <data name="ErrorLongitudCuenta" xml:space="preserve">
+    <value>Missing digits in the account</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>From date</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>To date</value>
+  </data>
+  <data name="Saldo" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="ErrorFechaEjercicio" xml:space="preserve">
+    <value>The date of the document does not correspond to the date of the exercise of the document</value>
+  </data>
+  <data name="DocumentoDesde" xml:space="preserve">
+    <value>From document</value>
+  </data>
+  <data name="DocumentoHasta" xml:space="preserve">
+    <value>To document</value>
+  </data>
+  <data name="SumaAnteriorDebe" xml:space="preserve">
+    <value>Prior sum credit</value>
+  </data>
+  <data name="SumaAnteriorHaber" xml:space="preserve">
+    <value>Prior sum debit</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>From account</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>To account</value>
+  </data>
+  <data name="MostrarCuentasSinSaldo" xml:space="preserve">
+    <value>Show accounts with no balance</value>
+  </data>
+  <data name="SaldosAnteriores" xml:space="preserve">
+    <value>Previous balances</value>
+  </data>
+  <data name="MostrarCuentasSinMovimientos" xml:space="preserve">
+    <value>Show accounts without movements</value>
+  </data>
+  <data name="PorGrupos" xml:space="preserve">
+    <value>By groups</value>
+  </data>
+  <data name="PorMayor" xml:space="preserve">
+    <value>By level 3</value>
+  </data>
+  <data name="PorNivelCinco" xml:space="preserve">
+    <value>By level 5</value>
+  </data>
+  <data name="PorSubcuenta" xml:space="preserve">
+    <value>By subaccount</value>
+  </data>
+  <data name="PorSubgrupos" xml:space="preserve">
+    <value>By level 2</value>
+  </data>
+  <data name="PorSubmayor" xml:space="preserve">
+    <value>by level 4</value>
+  </data>
+  <data name="FechaInforme" xml:space="preserve">
+    <value>Report date</value>
+  </data>
+  <data name="CuentaDesdeTesoreria" xml:space="preserve">
+    <value>From treasury account</value>
+  </data>
+  <data name="CuentaHastaTesoreria" xml:space="preserve">
+    <value>To treasury account</value>
+  </data>
+  <data name="FechaDesdeVencimiento" xml:space="preserve">
+    <value>From expiration date</value>
+  </data>
+  <data name="FechaHastaVencimiento" xml:space="preserve">
+    <value>To expiration date</value>
+  </data>
+  <data name="FormaPago" xml:space="preserve">
+    <value>Payment method</value>
   </data>
 </root>

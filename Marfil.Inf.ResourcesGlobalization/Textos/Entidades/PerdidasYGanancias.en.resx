@@ -127,7 +127,7 @@
     <value>Current accounting year</value>
   </data>
   <data name="Ejercicioanterior" xml:space="preserve">
-    <value>Previous accounting year</value>
+    <value>Preceding Tax year</value>
   </data>
   <data name="Guia" xml:space="preserve">
     <value>Guide</value>

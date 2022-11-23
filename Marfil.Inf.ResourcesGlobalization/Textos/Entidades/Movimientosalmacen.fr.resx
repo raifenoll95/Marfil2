@@ -118,15 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CambioUbicacion" xml:space="preserve">
-    <value>Modifier lieu</value>
+    <value>changement de zone</value>
   </data>
   <data name="Lote" xml:space="preserve">
-    <value>Lote</value>
+    <value>Lot</value>
   </data>
   <data name="Zonaactual" xml:space="preserve">
-    <value>Zone actuelle</value>
+    <value>zone actuelle</value>
   </data>
   <data name="Comprobarlote" xml:space="preserve">
-    <value>Check lote</value>
+    <value>vérifier le lot</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Entrepôt</value>
+  </data>
+  <data name="Fkzonaalmacen" xml:space="preserve">
+    <value>nouvelle zone</value>
+  </data>
+  <data name="MovimientoRealizadoCorrectamente" xml:space="preserve">
+    <value>Le changement de zone a été effectué correctement</value>
+  </data>
+  <data name="RealizarCambioUbicacion" xml:space="preserve">
+    <value>changer de zone</value>
   </data>
 </root>

@@ -118,12 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Prospects</value>
+    <value>perspectives</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Prospect</value>
+    <value>Perspective</value>
   </data>
   <data name="Clasificacion" xml:space="preserve">
     <value>Classification</value>
+  </data>
+  <data name="LblMensajeTipoCuenta" xml:space="preserve">
+    <value>Aucun type de compte n'a été défini pour les prospects.</value>
+  </data>
+  <data name="Comercial" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="Fkmodocontacto" xml:space="preserve">
+    <value>contact</value>
+  </data>
+  <data name="ConvertirProspectoCliente" xml:space="preserve">
+    <value>Convertir un prospect en client</value>
+  </data>
+  <data name="ErrorCrearPedidoProspecto" xml:space="preserve">
+    <value>Impossible de créer une commande client avec un prospect</value>
   </data>
 </root>

@@ -354,6 +354,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     presupuesto.Fkestados = Confservice.GetEstadoFinPresupuestoVentas();
 
                     var newItem = presupuestosService._converterModel.CreatePersitance(presupuesto);
+                    newItem.id = (int)presupuesto.Id; //Que tome el id del presupuesto que modificamos para que no cree uno nuevo
                     _db.Set<Presupuestos>().AddOrUpdate(newItem);
 
                     _db.SaveChanges();

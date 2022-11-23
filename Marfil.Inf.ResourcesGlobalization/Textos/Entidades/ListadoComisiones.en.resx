@@ -121,9 +121,12 @@
     <value>Agents</value>
   </data>
   <data name="TipoComisionComerciales" xml:space="preserve">
-    <value>Commercials</value>
+    <value>Commercial agent</value>
   </data>
   <data name="Cuenta" xml:space="preserve">
     <value>Account</value>
+  </data>
+  <data name="TituloListado" xml:space="preserve">
+    <value>Commission report</value>
   </data>
 </root>

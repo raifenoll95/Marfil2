@@ -130,15 +130,18 @@
     <value>Short description</value>
   </data>
   <data name="Fkfamiliasmateriales" xml:space="preserve">
-    <value>Fkfamiliasmateriales</value>
+    <value>Material line</value>
   </data>
   <data name="Dureza" xml:space="preserve">
-    <value>Strength</value>
+    <value>Hardness</value>
   </data>
   <data name="Codigovariedad" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Variedadestajos" xml:space="preserve">
     <value>Varieties/ Gashes</value>
+  </data>
+  <data name="Fkgruposmateriales" xml:space="preserve">
+    <value>Materials group</value>
   </data>
 </root>

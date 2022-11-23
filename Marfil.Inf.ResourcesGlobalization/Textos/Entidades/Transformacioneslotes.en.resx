@@ -118,9 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Lote transformations</value>
+    <value>Finishing transformations</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Lote transformation</value>
+    <value>Finishing transformations</value>
+  </data>
+  <data name="Costexm2" xml:space="preserve">
+    <value>Cost x sq.</value>
+  </data>
+  <data name="Costexm3" xml:space="preserve">
+    <value>Cost per m3</value>
   </data>
 </root>

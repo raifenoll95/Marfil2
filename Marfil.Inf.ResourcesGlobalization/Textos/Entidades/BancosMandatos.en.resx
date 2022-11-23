@@ -130,25 +130,25 @@
     <value>Default</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Notes</value>
+    <value>Comments</value>
   </data>
   <data name="Devolvera" xml:space="preserve">
     <value>Return to</value>
   </data>
   <data name="Personacontacto" xml:space="preserve">
-    <value>Contact</value>
+    <value>Contact person</value>
   </data>
   <data name="Telefonobanco" xml:space="preserve">
     <value>Bank telephone</value>
   </data>
   <data name="Fkprovincias" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Ciudad" xml:space="preserve">
-    <value>Town</value>
+    <value>City</value>
   </data>
   <data name="Cpostal" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Zip code</value>
   </data>
   <data name="Direccion" xml:space="preserve">
     <value>Address</value>
@@ -169,7 +169,7 @@
     <value>Bank</value>
   </data>
   <data name="TipoBancosMandatosMandato" xml:space="preserve">
-    <value>Mandate</value>
+    <value>Bank</value>
   </data>
   <data name="TipoAdeudoUnico" xml:space="preserve">
     <value>Unique</value>
@@ -197,5 +197,68 @@
   </data>
   <data name="Riesgoextranjero" xml:space="preserve">
     <value>Foreigner risk</value>
+  </data>
+  <data name="Iban" xml:space="preserve">
+    <value>IBAN</value>
+  </data>
+  <data name="Bic" xml:space="preserve">
+    <value>BIC</value>
+  </data>
+  <data name="Sufijoacreedor" xml:space="preserve">
+    <value>Creditor suffix</value>
+  </data>
+  <data name="Contratoconfirmig" xml:space="preserve">
+    <value>Confirming contract</value>
+  </data>
+  <data name="Contadorconfirming" xml:space="preserve">
+    <value>counter confirming</value>
+  </data>
+  <data name="Idmandato" xml:space="preserve">
+    <value>Mandate ID</value>
+  </data>
+  <data name="Idacreedor" xml:space="preserve">
+    <value>Creditor ID</value>
+  </data>
+  <data name="Tiposecuenciasepa" xml:space="preserve">
+    <value>SEPA sequence</value>
+  </data>
+  <data name="Tipoadeudo" xml:space="preserve">
+    <value>Type of debit</value>
+  </data>
+  <data name="Importemandato" xml:space="preserve">
+    <value>Mandate amount</value>
+  </data>
+  <data name="Recibosmandato" xml:space="preserve">
+    <value>Mandated receipts</value>
+  </data>
+  <data name="Importelimiterecibo" xml:space="preserve">
+    <value>Receipt limit amount</value>
+  </data>
+  <data name="Fechafirma" xml:space="preserve">
+    <value>Signature Date</value>
+  </data>
+  <data name="Fechaexpiracion" xml:space="preserve">
+    <value>Expiration date</value>
+  </data>
+  <data name="Fechaultimaremesa" xml:space="preserve">
+    <value>Date of the last shipment</value>
+  </data>
+  <data name="Importeremesados" xml:space="preserve">
+    <value>remittance amount</value>
+  </data>
+  <data name="Recibosremesados" xml:space="preserve">
+    <value>Remittance receipts</value>
+  </data>
+  <data name="TipoAdeudoPrimerAdeudoRecurrente" xml:space="preserve">
+    <value>First recurring debit</value>
+  </data>
+  <data name="TipoAdeudoAdeudoRecurrente" xml:space="preserve">
+    <value>Recurring debit</value>
+  </data>
+  <data name="TipoAdeudoUltimoAdeudoRecurrente" xml:space="preserve">
+    <value>Last recurring debit</value>
+  </data>
+  <data name="Remesas" xml:space="preserve">
+    <value>Remittances</value>
   </data>
 </root>

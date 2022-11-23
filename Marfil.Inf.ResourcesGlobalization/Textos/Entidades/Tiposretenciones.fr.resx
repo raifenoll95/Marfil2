@@ -121,6 +121,27 @@
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Types de retenues</value>
+  </data>
+  <data name="Porcentajeretencion" xml:space="preserve">
+    <value>% rétention</value>
+  </data>
+  <data name="Fkcuentarecargo" xml:space="preserve">
+    <value>Compte débité</value>
+  </data>
+  <data name="Fkcuentaabono" xml:space="preserve">
+    <value>compte créditeur</value>
+  </data>
+  <data name="Tiporendimiento" xml:space="preserve">
+    <value>type de performances</value>
+  </data>
+  <data name="TipoRendimientoDinerario" xml:space="preserve">
+    <value>argent</value>
+  </data>
+  <data name="TipoRendimientoEspecie" xml:space="preserve">
+    <value>Espèces</value>
   </data>
 </root>

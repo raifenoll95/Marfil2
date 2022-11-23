@@ -118,21 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Directions</value>
+    <value>Adresses</value>
   </data>
   <data name="Web" xml:space="preserve">
-    <value>Web</value>
+    <value>la toile</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
   </data>
   <data name="Telefonomovil" xml:space="preserve">
-    <value>Movile</value>
+    <value>Mobile</value>
   </data>
   <data name="Telefono" xml:space="preserve">
-    <value>Telephone</value>
+    <value>Téléphone</value>
+  </data>
+  <data name="Fktipodireccion" xml:space="preserve">
+    <value>Type d'adresse</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Adresse par défaut</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Fktipovia" xml:space="preserve">
+    <value>Type de vie</value>
+  </data>
+  <data name="Direccion" xml:space="preserve">
+    <value>adresse</value>
+  </data>
+  <data name="Poblacion" xml:space="preserve">
+    <value>Ville</value>
+  </data>
+  <data name="Cp" xml:space="preserve">
+    <value>Code postal</value>
+  </data>
+  <data name="Fkpais" xml:space="preserve">
+    <value>Pays</value>
+  </data>
+  <data name="Fkprovincia" xml:space="preserve">
+    <value>Province</value>
+  </data>
+  <data name="Personacontacto" xml:space="preserve">
+    <value>Personne de contact</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Contacto" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Otros" xml:space="preserve">
+    <value>Les autres</value>
   </data>
 </root>

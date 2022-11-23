@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Unitées</value>
+    <value>unités</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Codigounidad" xml:space="preserve">
-    <value>Unitée</value>
+    <value>Unité</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Descripcion2" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Textocorto" xml:space="preserve">
     <value>Texte court</value>
@@ -139,9 +139,54 @@
     <value>Texte court</value>
   </data>
   <data name="Decimalestotales" xml:space="preserve">
-    <value>Decimals total</value>
+    <value>nombre total de décimales</value>
   </data>
   <data name="Formula" xml:space="preserve">
     <value>Formule</value>
+  </data>
+  <data name="Tiposmovimientostock" xml:space="preserve">
+    <value>Type de mouvement</value>
+  </data>
+  <data name="Tipostock" xml:space="preserve">
+    <value>type de stock</value>
+  </data>
+  <data name="Tipototal" xml:space="preserve">
+    <value>typologie totale</value>
+  </data>
+  <data name="TiposStockMovimientosCantidad" xml:space="preserve">
+    <value>Quantité</value>
+  </data>
+  <data name="TiposStockMovimientosCantidadYTotal" xml:space="preserve">
+    <value>quantité et total</value>
+  </data>
+  <data name="TiposStockMovimientosTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="TiposStockUnitario" xml:space="preserve">
+    <value>Unitaire</value>
+  </data>
+  <data name="TiposStockLote" xml:space="preserve">
+    <value>Lot</value>
+  </data>
+  <data name="TipoStockTotalCalculado" xml:space="preserve">
+    <value>Calculé</value>
+  </data>
+  <data name="TipoStockTotalEditado" xml:space="preserve">
+    <value>édité</value>
+  </data>
+  <data name="TipoStockFormulasSuperficie" xml:space="preserve">
+    <value>Surface</value>
+  </data>
+  <data name="TipoStockFormulasVolumen" xml:space="preserve">
+    <value>Le volume</value>
+  </data>
+  <data name="TipoStockFormulasLinear" xml:space="preserve">
+    <value>linéaire</value>
+  </data>
+  <data name="TipoStockFormulasCantidad" xml:space="preserve">
+    <value>Quantité</value>
+  </data>
+  <data name="TipoStockFormulasTotal" xml:space="preserve">
+    <value>Total</value>
   </data>
 </root>

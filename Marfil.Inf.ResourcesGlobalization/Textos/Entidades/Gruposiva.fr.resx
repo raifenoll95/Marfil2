@@ -118,18 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Groupes d'impots</value>
+    <value>Groupes TVA</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="TiposIva" xml:space="preserve">
-    <value>Tipes d'impots</value>
+    <value>Taux de TVA</value>
   </data>
   <data name="FkGruposIva" xml:space="preserve">
-    <value>Group d'impot</value>
+    <value>Groupe TVA</value>
+  </data>
+  <data name="Desde" xml:space="preserve">
+    <value>Depuis</value>
+  </data>
+  <data name="FkTiposIvaSinRecargo" xml:space="preserve">
+    <value>Taux de TVA sans surcoût</value>
+  </data>
+  <data name="FkTiposIvaConRecargo" xml:space="preserve">
+    <value>Taux de TVA avec supplément</value>
+  </data>
+  <data name="FkTiposIvaExentoIva" xml:space="preserve">
+    <value>Taux d'exonération de TVA</value>
   </data>
 </root>

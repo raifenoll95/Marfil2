@@ -124,15 +124,21 @@
     <value>There is not a type of account for transporters</value>
   </data>
   <data name="LblTransporte" xml:space="preserve">
-    <value>Transporte</value>
+    <value>Transport</value>
   </data>
   <data name="Conductorhabitual" xml:space="preserve">
-    <value>Common driver</value>
+    <value>Regular driver</value>
   </data>
   <data name="Matricula" xml:space="preserve">
     <value>Plate</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Transporter</value>
+  </data>
+  <data name="Remolque" xml:space="preserve">
+    <value>Trailer</value>
+  </data>
+  <data name="Tipotransporte" xml:space="preserve">
+    <value>Type of transport</value>
   </data>
 </root>

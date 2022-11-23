@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Stores</value>
+    <value>Warehouses</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Store</value>
+    <value>Warehouse</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -140,5 +140,8 @@
   </data>
   <data name="Privado" xml:space="preserve">
     <value>Private</value>
+  </data>
+  <data name="Articulos" xml:space="preserve">
+    <value>Items</value>
   </data>
 </root>

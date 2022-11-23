@@ -133,7 +133,7 @@
     <value>Entrance date</value>
   </data>
   <data name="Fkcargo" xml:space="preserve">
-    <value>Charge in the company</value>
+    <value>Position in company</value>
   </data>
   <data name="Numeroseguridadsocial" xml:space="preserve">
     <value>Health care number</value>
@@ -145,18 +145,48 @@
     <value>Account</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Desciption</value>
+    <value>Description</value>
   </data>
   <data name="Nif" xml:space="preserve">
     <value>Id number</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
-    <value>Town</value>
+    <value>City</value>
   </data>
   <data name="LblMensajeTipoCuenta" xml:space="preserve">
     <value>There is not a type of account for workers</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Worker</value>
+  </data>
+  <data name="Fechaalta" xml:space="preserve">
+    <value>Register date</value>
+  </data>
+  <data name="Vencimientocontrato" xml:space="preserve">
+    <value>Expiration date</value>
+  </data>
+  <data name="Ultimafechabaja" xml:space="preserve">
+    <value>Illness/Accident Last Date of Leave</value>
+  </data>
+  <data name="Ultimafechaalta" xml:space="preserve">
+    <value>Last Illness/Accident Discharge date</value>
+  </data>
+  <data name="Tallacamisa" xml:space="preserve">
+    <value>Shirt Size</value>
+  </data>
+  <data name="Tallapantalon" xml:space="preserve">
+    <value>Pant Size</value>
+  </data>
+  <data name="Tallacalzado" xml:space="preserve">
+    <value>Shoe Size</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes:</value>
+  </data>
+  <data name="Fkcuentatesoreria" xml:space="preserve">
+    <value>Treasury account</value>
+  </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Company name</value>
   </data>
 </root>

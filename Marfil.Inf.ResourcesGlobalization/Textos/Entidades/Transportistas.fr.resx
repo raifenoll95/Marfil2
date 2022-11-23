@@ -118,6 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Transporteurs</value>
+    <value>transporteurs</value>
+  </data>
+  <data name="LblMensajeTipoCuenta" xml:space="preserve">
+    <value>Aucun type de compte n'a été défini pour les transporteurs.</value>
+  </data>
+  <data name="LblTransporte" xml:space="preserve">
+    <value>Transport</value>
+  </data>
+  <data name="Conductorhabitual" xml:space="preserve">
+    <value>conducteur régulier</value>
+  </data>
+  <data name="Matricula" xml:space="preserve">
+    <value>Frais de scolarité</value>
+  </data>
+  <data name="Remolque" xml:space="preserve">
+    <value>Bande annonce</value>
+  </data>
+  <data name="Tipotransporte" xml:space="preserve">
+    <value>type de transports</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>Transporteur</value>
   </data>
 </root>

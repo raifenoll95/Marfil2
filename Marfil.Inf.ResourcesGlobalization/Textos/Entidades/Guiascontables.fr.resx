@@ -120,4 +120,37 @@
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>guides comptables</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Fkcuentascompras" xml:space="preserve">
+    <value>compte d'achat</value>
+  </data>
+  <data name="Fkcuentasventas" xml:space="preserve">
+    <value>compte de vente</value>
+  </data>
+  <data name="Fkcuentasdevolucioncompras" xml:space="preserve">
+    <value>Compte de retours d'achat</value>
+  </data>
+  <data name="Fkcuentasdevolucionventas" xml:space="preserve">
+    <value>compte de retour sur ventes</value>
+  </data>
+  <data name="LblCuentasDefecto" xml:space="preserve">
+    <value>Comptes par défaut</value>
+  </data>
+  <data name="LblCuentasguias" xml:space="preserve">
+    <value>Comptes par régime de TVA (facultatif)</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="ErrorRegimenIvaDuplicado" xml:space="preserve">
+    <value>Le régime de TVA ne peut pas être dupliqué</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Par défaut</value>
+  </data>
 </root>
