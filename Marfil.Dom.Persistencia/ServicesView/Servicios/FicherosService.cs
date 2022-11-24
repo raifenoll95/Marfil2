@@ -210,6 +210,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     CloudBlobClient BlobClient = StorageAccount.CreateCloudBlobClient();
                     CloudBlobContainer Content = BlobClient.GetContainerReference(myBlobContainerReferenceKey);
+                    Content.CreateIfNotExists();//Si no existe lo crea
                     CloudBlockBlob blockBlob = Content.GetBlockBlobReference(string.Format("{0}{1}", idfichero, fi.Extension));
 
                     item.Datos.Position = 0;

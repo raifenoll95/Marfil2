@@ -168,6 +168,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        public int Recalcularpeso(PedidosModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal = (int)(item.Metros * articulo.Kilosud);
+            }
+
+            return pesototal;
+        }
+
         public PedidosModel Clonar(string id)
         {
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
@@ -281,6 +297,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.PedidosVentas, _context, _db);
 
+                //Se calcula el peso del material en el documento
+                if (model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
+
                 base.create(model);
 
                 ModificarCantidadesPedidasPresupuestos(obj as PedidosModel);
@@ -295,13 +317,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
+                var model = obj as PedidosModel;
                 var validation = _validationService as PedidosValidation;
                 validation.EjercicioId = EjercicioId;
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.PedidosVentas, _context, _db);
-                base.edit(obj);
+
+                //Se calcula el peso del material en el documento
+                if (model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
+
+                base.edit(model);
 
 
-                ModificarCantidadesPedidasPresupuestos(obj as PedidosModel);
+                ModificarCantidadesPedidasPresupuestos(model);
                 _db.SaveChanges();
                 tran.Complete();
             }

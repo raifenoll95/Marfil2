@@ -314,6 +314,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var estado = nodo[0].InnerText;
             return estado;
         }
+
+        public double GetRelacionBrutoNeto()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Relacionbrutoneto");
+            var relacion = nodo[0].InnerText.Replace('.',',');
+            var relacionparse = double.Parse(relacion);
+            return relacionparse;
+        }
+
     }
 
 }

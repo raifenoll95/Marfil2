@@ -175,6 +175,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        public int Recalcularpeso(AlbaranesModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal = (int)(item.Metros * articulo.Kilosud);
+            }
+
+            return pesototal;
+        }
+
         public AlbaranesModel Clonar(string id)
         {
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
@@ -345,6 +361,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 //fin actualizar precios
 
+                //Se calcula el peso del material en el documento
+                if (model.Pesobruto <= 0 || model.Pesobruto == null)
+                {
+                    var ConfService = new ConfiguracionService(_context, _db);
+                    var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                    model.Pesobruto = Recalcularpeso(model);
+                    model.Pesoneto = Math.Round((double)(model.Pesobruto - (model.Pesobruto * relacionbrutoneto / 100)), 2);
+                }
+
                 //Cambiar el Kit/Bundel a Vendido si procede
                 ComprobarEstadoKitBundle(model.Lineas);
 
@@ -386,6 +411,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                         {
                             editado.Clientepais = service.GetListPaises().Where(f => f.Valor == cuenta.FkPais).Select(f => f.Descripcion).SingleOrDefault();
+                        }
+
+                        //Se calcula el peso del material en el documento
+                        if (editado.Pesobruto <= 0 || editado.Pesobruto == null)
+                        {
+                            var ConfService = new ConfiguracionService(_context, _db);
+                            var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                            editado.Pesobruto = Recalcularpeso(editado);
+                            editado.Pesoneto = Math.Round((double)(editado.Pesobruto - (editado.Pesobruto * relacionbrutoneto / 100)), 2);
                         }
 
                         base.edit(obj);
@@ -721,6 +755,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     }
                 }
             }
+
+            //Calcular peso
+            result.Pesobruto = result.Peso;
+            var ConfService = new ConfiguracionService(_context, _db);
+            var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+            result.Pesoneto = Math.Round((double)(result.Pesobruto - (result.Pesobruto * relacionbrutoneto / 100)), 2);
 
             result.Fechadocumento = DateTime.Now;
             result.Fkestados = _appService.GetConfiguracion().Estadoalbaranesventasinicial;

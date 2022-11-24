@@ -268,6 +268,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //    model.Clientepais = service.GetListPaises().Where(f => f.Valor == cuenta.FkPais).Select(f => f.Descripcion).SingleOrDefault();
                 //}
 
+                //generar carpeta
                 DocumentosHelpers.GenerarCarpetaAsociada(model,TipoDocumentos.PresupuestosVentas, _context, _db);
 
                 //Se calcula el peso del material en el documento
@@ -278,7 +279,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 base.create(model);
 
-                //generar carpeta
+                
                 tran.Complete();
             }
         } 

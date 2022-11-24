@@ -3863,6 +3863,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local.en.resx" />
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local.fr.resx" />
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local_en.en.resx" />
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local_en.fr.resx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

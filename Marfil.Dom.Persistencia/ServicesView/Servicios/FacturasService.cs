@@ -372,11 +372,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
 
                     var albaran = albaranesService.GetByReferencia(albaranesreferencia.First());
-                    result.Importado = true;
-
-                    //Sumar totales
-                    result.Pesobruto += albaran.Pesobruto;
-                    result.Pesoneto += albaran.Pesoneto;
+                    result.Importado = true;               
 
                     ImportarCabecera(albaran, serie, fecha, result);
 
@@ -407,6 +403,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                         var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
                         albaranEstado.Fkestados = Confservice.GetEstadoFinAlbaranesVentas();
+
+                        //Sumar pesos
+                        result.Peso += albaranEstado.Peso;
+                        result.Pesobruto += albaranEstado.Pesobruto;
+                        result.Pesoneto += albaranEstado.Pesoneto;
 
                         var newItem = albaranesService._converterModel.CreatePersitance(albaranEstado);
                         _db.Set<Albaranes>().AddOrUpdate(newItem);
@@ -524,7 +525,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var properties = typeof(FacturasModel).GetProperties();
             foreach (var item in properties)
             {
-                if (item.Name != "Lineas" && item.Name != "Totales")
+                //Nov2022 - Tampoco tenemos en cuenta los peso porque puede haber más de un albarán y aquí solo tomaría el primero, se calculan en ImportarAlbaranes
+                if (item.Name != "Lineas" && item.Name != "Totales" && item.Name != "Peso" && item.Name != "Pesoneto" && item.Name != "Pesobruto")
                 {
                     var property = typeof(AlbaranesModel).GetProperty(item.Name);
                     if (property != null && property.CanWrite)
@@ -545,6 +547,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 result.Fktipofactura = tipofactura;
             }
+
+            //Nov2022 - Inicializamos el peso para con no sea null y poder calcularlo
+            result.Pesobruto = 0;
+            result.Pesoneto = 0;
 
             var appService = new ApplicationHelper(_context);
             result.Fkestados = appService.GetConfiguracion().Estadofacturasventasinicial;

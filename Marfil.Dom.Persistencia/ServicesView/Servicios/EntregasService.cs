@@ -193,11 +193,36 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return haystockdisponible;
         }
 
+        public int Recalcularpeso(ReservasstockModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal = (int)(item.Metros * articulo.Kilosud);
+            }
+
+            return pesototal;
+        }
+
         public override void create(IModelView obj)
         {
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
                 var model = obj as AlbaranesModel;
+
+                //Se calcula el peso del material en el documento
+                if (model.Pesobruto <= 0)
+                {
+                    var ConfService = new ConfiguracionService(_context, _db);
+                    var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                    model.Pesobruto = Recalcularpeso(model);
+                    model.Pesoneto = Math.Round((double)(model.Pesobruto - (model.Pesobruto * relacionbrutoneto / 100)), 2);
+                }
 
                 base.create(obj);
 
@@ -275,6 +300,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 else
                 {
+                    //Se calcula el peso del material en el documento
+                    if (editado.Pesobruto <= 0)
+                    {
+                        var ConfService = new ConfiguracionService(_context, _db);
+                        var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                        editado.Pesobruto = Recalcularpeso(editado);
+                        editado.Pesoneto = Math.Round((double)(editado.Pesobruto - (editado.Pesobruto * relacionbrutoneto / 100)), 2);
+                    }
+
                     base.edit(obj);
                     //ActualizarStock(original, editado);
                     GenerarMovimientosLineas(original.Lineas, original, TipoOperacionService.EliminarEntregaStock);

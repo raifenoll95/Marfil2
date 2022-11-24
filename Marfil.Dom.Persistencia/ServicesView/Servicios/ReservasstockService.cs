@@ -147,6 +147,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        public int Recalcularpeso(ReservasstockModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal = (int)(item.Metros * articulo.Kilosud);
+            }
+
+            return pesototal;
+        }
+
         public ReservasstockModel Clonar(string id)
         {
             var appService=new ApplicationHelper(_context);
@@ -261,6 +277,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Reservas, _context, _db);
 
+                //Se calcula el peso del material en el documento
+                if (model.Pesobruto <= 0 || model.Pesobruto == null)
+                {
+                    var ConfService = new ConfiguracionService(_context, _db);
+                    var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                    model.Pesobruto = Recalcularpeso(model);
+                    model.Pesoneto = Math.Round((double)(model.Pesobruto - (model.Pesobruto * relacionbrutoneto / 100)), 2);
+                }
+
                 base.create(obj);
 
 
@@ -295,7 +320,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var validation = _validationService as ReservasstockValidation;
                     validation.EjercicioId = EjercicioId;
                     DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.Reservas, _context, _db);
-                    base.edit(obj);
+
+                    //Se calcula el peso del material en el documento
+                    if (editado.Pesobruto <= 0 || editado.Pesobruto == null)
+                    {
+                        var ConfService = new ConfiguracionService(_context, _db);
+                        var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                        editado.Pesobruto = Recalcularpeso(editado);
+                        editado.Pesoneto = editado.Pesobruto - (editado.Pesobruto * relacionbrutoneto / 100);
+                    }
+
+                    base.edit(editado);
 
                     if (!_flagconsumirreserva)
                     {

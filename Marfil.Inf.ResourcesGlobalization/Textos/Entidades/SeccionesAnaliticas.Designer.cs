@@ -22,7 +22,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SeccionesAnaliticas {
+    public class SeccionesAnaliticas {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         ///   Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Marfil.Inf.ResourcesGlobalization.Textos.Entidades.SeccionesAnaliticas", typeof(SeccionesAnaliticas).Assembly);
@@ -51,7 +51,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         ///   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Busca una cadena traducida similar a Grupo.
         /// </summary>
-        internal static string Grupo {
+        public static string Grupo {
             get {
                 return ResourceManager.GetString("Grupo", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Busca una cadena traducida similar a Sección.
         /// </summary>
-        internal static string Id {
+        public static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Busca una cadena traducida similar a Nombre.
         /// </summary>
-        internal static string Nombre {
+        public static string Nombre {
             get {
                 return ResourceManager.GetString("Nombre", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Busca una cadena traducida similar a Secciones analíticas.
         /// </summary>
-        internal static string TituloEntidad {
+        public static string TituloEntidad {
             get {
                 return ResourceManager.GetString("TituloEntidad", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Busca una cadena traducida similar a Sección analítica.
         /// </summary>
-        internal static string TituloEntidadSingular {
+        public static string TituloEntidadSingular {
             get {
                 return ResourceManager.GetString("TituloEntidadSingular", resourceCulture);
             }
