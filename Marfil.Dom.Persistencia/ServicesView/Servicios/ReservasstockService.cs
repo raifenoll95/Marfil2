@@ -154,10 +154,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             foreach (var item in model.Lineas)
             {
-
                 var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
 
-                pesototal = (int)(item.Metros * articulo.Kilosud);
+                pesototal = (int)(item.Metros * articulo.Kilosud ?? 0);
             }
 
             return pesototal;

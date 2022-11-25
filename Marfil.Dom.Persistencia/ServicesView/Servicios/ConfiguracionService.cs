@@ -251,8 +251,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             XmlElement datosParse = doc.DocumentElement;
 
             XmlNodeList nodo = datosParse.GetElementsByTagName("CuentaClientesVarios");
-            var cuenta = nodo[0].InnerText;
-            return cuenta;
+            if (nodo.Count > 0) {
+                var cuenta = nodo[0].InnerText;
+                return cuenta;
+            }
+            return "";
         }
 
         public string GetEstadoFinAlbaranesCompras()

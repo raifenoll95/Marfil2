@@ -132,6 +132,8 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     var cargo = service.GetCuentaCargo1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(cargo));
+                    /*var clientes = service.GetClientesTipoFacturaCargo(idtipofactura, cargo);
+                    list = list.Where(f => clientes.Contains(f.Id));*/
 
                 }
                 else if (cuenta == "ventas")
@@ -146,6 +148,8 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     var cargo = service.GetCuentaCargo1(inttipofacturaiva, idtipofactura);
                     list = list.Where(f => f.Id.StartsWith(cargo));
+                    /*var clientes = service.GetClientesTipoFacturaCargo(idtipofactura, cargo);
+                    list = list.Where(f => clientes.Contains(f.Id));*/
                 }
                 else if (cuenta == "ventas")
                 {

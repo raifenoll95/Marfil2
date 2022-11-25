@@ -160,11 +160,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
             var pesototal = 0;
 
-            foreach (var item in model.Lineas) { 
-
+            foreach (var item in model.Lineas) 
+            { 
                 var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
 
-                pesototal = (int)(item.Metros * articulo.Kilosud);
+                pesototal = (int)(item.Metros * articulo.Kilosud ?? 0);
             }
 
             return pesototal;

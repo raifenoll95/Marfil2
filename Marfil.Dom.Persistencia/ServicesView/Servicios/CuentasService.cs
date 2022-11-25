@@ -1169,6 +1169,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             
         }
 
+        public List<string> GetClientesTipoFacturaCargo(string idtipofactura, string cargo)
+        {
+            if (string.IsNullOrEmpty(idtipofactura))
+            {
+                return _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas.StartsWith(cargo)).Select(x => x.fkcuentas).ToList();
+            }
+            else
+            {
+                return _db.Clientes.Where(f => f.empresa == Empresa && f.fktipofactura == idtipofactura && f.fkcuentas.StartsWith(cargo)).Select(x => x.fkcuentas).ToList();
+            }
+        }
+
         public string GetCuentaAbono1(int inttipofacturaiva, string idtipofactura)
         {
             if (string.IsNullOrEmpty(idtipofactura))

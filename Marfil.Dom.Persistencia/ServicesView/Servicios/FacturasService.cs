@@ -103,7 +103,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             st.ExcludedColumns =
                 propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
             st.ColumnasCombo.Add("Fkestados", estadosService.GetStates(DocumentoEstado.FacturasVentas, TipoMovimientos.Todos).Select(f => new Tuple<string, string>(f.CampoId, f.Descripcion)));
-
+            st.EstiloFilas.Add("Facturarectificativa", new EstiloFilas() { Estilos = new[] { new Tuple<object, string>(true, "#FCF8E3")} });
 
             return st;
         }
