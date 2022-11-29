@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Constructions</value>
+    <value>Projects</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Construction</value>
+    <value>Project</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Fkclientes" xml:space="preserve">
-    <value>Client</value>
+    <value>Customer</value>
   </data>
   <data name="Nombreobra" xml:space="preserve">
-    <value>Construction name</value>
+    <value>Project name</value>
   </data>
   <data name="Direccion" xml:space="preserve">
     <value>Address</value>
   </data>
   <data name="Codigopostal" xml:space="preserve">
-    <value>Postal code</value>
+    <value>Zip code</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
-    <value>Poblation</value>
+    <value>City</value>
   </data>
   <data name="Fkpaises" xml:space="preserve">
     <value>Country</value>
   </data>
   <data name="Fkprovincias" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Telefono" xml:space="preserve">
     <value>Telephone</value>
@@ -157,7 +157,7 @@
     <value>Contact</value>
   </data>
   <data name="Fktiposobra" xml:space="preserve">
-    <value>Construction type</value>
+    <value>Project type</value>
   </data>
   <data name="Fkagentes" xml:space="preserve">
     <value>Agent</value>
@@ -182,5 +182,23 @@
   </data>
   <data name="Finalizada" xml:space="preserve">
     <value>Finished</value>
+  </data>
+  <data name="Movil" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>VAT group</value>
+  </data>
+  <data name="Retencion" xml:space="preserve">
+    <value>Financial retention</value>
+  </data>
+  <data name="Certificado" xml:space="preserve">
+    <value>Certified</value>
+  </data>
+  <data name="Fecharevision" xml:space="preserve">
+    <value>Last revision date</value>
+  </data>
+  <data name="toni" xml:space="preserve">
+    <value>Tony</value>
   </data>
 </root>

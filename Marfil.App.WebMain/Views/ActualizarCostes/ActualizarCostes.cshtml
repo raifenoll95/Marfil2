@@ -1,0 +1,102 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Resources
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@model Marfil.Dom.Persistencia.Model.Stock.ActualizarCostesModel
+@{
+    ViewBag.Title = Model.TituloPagina;
+
+    var series = WebHelper.GetApplicationHelper().SeriesListadoCompras();
+    var cvarticulos = FCampoverificacion.Instance.GetModel<ArticulosModel>(WebHelper.ContextService);
+}
+
+@using (Html.BeginForm("ActualizarCostes", "ActualizarCostes", FormMethod.Post, new { @class = "form-horizontal margin-top", @id = "mainform" }))
+{
+    <div class="col-md-10">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Series, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="Series" class="form-control" name="Series" multiple="multiple">
+                    @foreach (var item in series)
+                    {
+                        <option value="@item.Id" @Html.Raw(Model.Series.Any(f => f == item.Id) ? "selected=\"selected\"" : string.Empty)>@item.Descripcion</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-10 col-md-offset-2">@Html.ValidationMessageFor(f => Model.Series, "", new { @class = "text-danger" })</div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.FechaDesde, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaDesde)
+            </div>
+            @Html.LabelFor(f => Model.FechaHasta, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(f => Model.FechaHasta)
+            </div>
+            <div class="col-md-12"></div>
+            <div class="col-md-4 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.FechaDesde, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.FechaHasta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-12"><h1></h1></div>
+        <div class="form-group">
+            @Html.LabelFor(f => Model.ArticulosDesde, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvarticulos.Name = "ArticulosDesde";
+                    cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+                    cvarticulos.Valor = Model.ArticulosDesde;
+                    cvarticulos.Autofocus = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvarticulos)
+                @Html.ValidationMessageFor(f => Model.ArticulosDesde, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(f => Model.ArticulosHasta, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvarticulos.Name = "ArticulosHasta";
+                    cvarticulos.Url = Url.Action("ArticulosApi", "Api");
+                    cvarticulos.Valor = Model.ArticulosHasta;
+                    cvarticulos.Autofocus = false;
+                }
+                @Html.Partial("CampoverificacionUI", cvarticulos)
+                @Html.ValidationMessageFor(f => Model.ArticulosHasta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="margin-top">
+            <div class="col-md-2  col-md-offset-2">
+                <button class="btn btn-info no-margin-left" type="Submit">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    @General.BtnGuardar
+                </button>
+            </div>
+        </div>
+
+    </div>
+}
+
+<link rel="stylesheet" href="@Url.Content("~/components/bootstrap-multiselect/css/bootstrap-multiselect.css")" />
+<script src="@Url.Content("~/components/bootstrap-multiselect/js/bootstrap-multiselect.js")"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $('#Series').multiselect({
+            includeSelectAllOption: true
+        });
+
+    });
+
+</script>

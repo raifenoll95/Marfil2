@@ -835,7 +835,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
         [Display(ResourceType = typeof(RAlbaranes), Name = "Pesobruto")]
         public double? Pesobruto { get; set; }
 
-        [MaxLength(2,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(15,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RAlbaranes), Name = "Bundle")]
         public string Bundle { get; set; }
 

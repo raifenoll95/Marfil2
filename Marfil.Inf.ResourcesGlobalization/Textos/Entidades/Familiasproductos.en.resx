@@ -139,7 +139,7 @@
     <value>Stock management</value>
   </data>
   <data name="Articulonegocio" xml:space="preserve">
-    <value>Is business article</value>
+    <value>Is business item</value>
   </data>
   <data name="Fkunidadesmedida" xml:space="preserve">
     <value>Units</value>
@@ -172,7 +172,7 @@
     <value>Block</value>
   </data>
   <data name="TipoFamiliaTabla" xml:space="preserve">
-    <value>Table</value>
+    <value>Slab id.</value>
   </data>
   <data name="PartesDescripcionFamilia" xml:space="preserve">
     <value>Family</value>
@@ -181,6 +181,90 @@
     <value>Thickness</value>
   </data>
   <data name="Fkgruposiva" xml:space="preserve">
-    <value>Group of VAT</value>
+    <value>VAT group</value>
+  </data>
+  <data name="Fkguiascontables" xml:space="preserve">
+    <value>accounting guide</value>
+  </data>
+  <data name="Descripcionarticuloacabado" xml:space="preserve">
+    <value>Include finish description</value>
+  </data>
+  <data name="Descripcionarticulogrosor" xml:space="preserve">
+    <value>include description thickness</value>
+  </data>
+  <data name="Descripcionarticulocaracteristica" xml:space="preserve">
+    <value>Include feature description</value>
+  </data>
+  <data name="Descripcionarticulomaterial" xml:space="preserve">
+    <value>Include material description</value>
+  </data>
+  <data name="Descripionarticulofamilia" xml:space="preserve">
+    <value>Include family description</value>
+  </data>
+  <data name="Validaracabado" xml:space="preserve">
+    <value>Validate finish</value>
+  </data>
+  <data name="Validargrosor" xml:space="preserve">
+    <value>Validate thickness</value>
+  </data>
+  <data name="Validarcaracteristica" xml:space="preserve">
+    <value>Validate feature</value>
+  </data>
+  <data name="Validarmaterial" xml:space="preserve">
+    <value>Validate material</value>
+  </data>
+  <data name="PartesDescripcionMaterial" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="PartesDescripcionCaracteristica" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="PartesDescripcionAcabado" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="PartesDescripcionFamiliamaterial" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="ErrorContadorGestionStock" xml:space="preserve">
+    <value>A counter cannot be assigned to a family that does not have stock/lot management</value>
+  </data>
+  <data name="TipoLibreTabla" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="ErrorAncho" xml:space="preserve">
+    <value>The width value of the article {0} must be between {1} and {2}</value>
+  </data>
+  <data name="ErrorGrueso" xml:space="preserve">
+    <value>The gross value of the item {0} must be between {1} and {2}</value>
+  </data>
+  <data name="ErrorLargo" xml:space="preserve">
+    <value>The long value of the article {0} must be between {1} and {2}</value>
+  </data>
+  <data name="ValidarDimensiones" xml:space="preserve">
+    <value>Validate dimensions</value>
+  </data>
+  <data name="MinLargo" xml:space="preserve">
+    <value>Minimum length</value>
+  </data>
+  <data name="MaxLargo" xml:space="preserve">
+    <value>Length maximum</value>
+  </data>
+  <data name="MinAncho" xml:space="preserve">
+    <value>Min. width</value>
+  </data>
+  <data name="MaxAncho" xml:space="preserve">
+    <value>Max. width</value>
+  </data>
+  <data name="MinGrueso" xml:space="preserve">
+    <value>minimum thickness</value>
+  </data>
+  <data name="MaxGrueso" xml:space="preserve">
+    <value>maximum thickness</value>
+  </data>
+  <data name="Consumibles" xml:space="preserve">
+    <value>Consumables</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Item classification</value>
   </data>
 </root>

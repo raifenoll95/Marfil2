@@ -98,6 +98,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.Tipodealmacenlote = (DOMAlbaranesComprasModel.TipoAlmacenlote?)obj.tipoalmacenlote; 
 
             result.Decimalesmonedas = monedasObj.decimales ?? 2;
+
+            result.Fkoperariostransporte = obj.fkoperadortransporte;
             //Lineas
             result.Lineas = obj.AlbaranesLin.ToList().Select(f => new AlbaranesLinModel()
             {
@@ -144,6 +146,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Cuotarecargoequivalencia = f.cuotarecargoequivalencia
                 ,
                 Importe = f.importe
+                ,            
+                Importenetolinea = f.importenetolinea
                 ,
                 Notas = f.notas
                 ,
@@ -271,6 +275,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.tipoportes = (int?)viewmodel.Tipodeportes;
             result.empresa = Empresa;
             result.remolque = viewmodel.Remolque;
+            result.fkoperadortransporte = viewmodel.Fkoperariostransporte;
 
             result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;
 
@@ -383,10 +388,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;
             result.fkpuertosid = viewmodel.Fkpuertos.Id;
             result.tipoportes = (int?)viewmodel.Tipodeportes;
-            result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;
-            result.AlbaranesLin.Clear();
+            result.tipoalmacenlote = (int?)viewmodel.Tipodealmacenlote;           
             result.remolque = viewmodel.Remolque;
+            result.fkoperadortransporte = viewmodel.Fkoperariostransporte;
 
+            result.AlbaranesLin.Clear();
             foreach (var item in viewmodel.Lineas)
             {
                 var newItem = _db.Set<AlbaranesLin>().Create();
@@ -475,6 +481,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             result.Fkpuertos.Fkpaises = obj.fkpuertosfkpaises;
             result.Fkpuertos.Id = obj.fkpuertosid;
+            result.Fkoperariostransporte = obj.fkoperadortransporte;
 
             return result;
         }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>TAX</value>
+    <value>VAT group</value>
   </data>
   <data name="Exportacion" xml:space="preserve">
     <value>Export</value>
@@ -134,5 +134,65 @@
   </data>
   <data name="SraSoportado" xml:space="preserve">
     <value>Supported</value>
+  </data>
+  <data name="Recargo" xml:space="preserve">
+    <value>Surcharge</value>
+  </data>
+  <data name="ExentoTasa" xml:space="preserve">
+    <value>tax exempt</value>
+  </data>
+  <data name="OperacionUe" xml:space="preserve">
+    <value>EU operation</value>
+  </data>
+  <data name="InversionSujetoPasivo" xml:space="preserve">
+    <value>Inv. passive subject</value>
+  </data>
+  <data name="OperacionesNoSujetas" xml:space="preserve">
+    <value>Operations not subject</value>
+  </data>
+  <data name="ZonasEspeciales" xml:space="preserve">
+    <value>Special zones (Canary Islands/ Ceuta and Melilla)</value>
+  </data>
+  <data name="CanariasIgic" xml:space="preserve">
+    <value>Canary IGIC</value>
+  </data>
+  <data name="Extranjero" xml:space="preserve">
+    <value>Foreign</value>
+  </data>
+  <data name="IvaDiferido" xml:space="preserve">
+    <value>deferred VAT</value>
+  </data>
+  <data name="IvaImportacion" xml:space="preserve">
+    <value>import VAT</value>
+  </data>
+  <data name="IncompatibleCriterioCaja" xml:space="preserve">
+    <value>Incompatible with cash criteria</value>
+  </data>
+  <data name="SoportableRepercutidoAmbos" xml:space="preserve">
+    <value>Supported/Impacted/Both</value>
+  </data>
+  <data name="BienInversion" xml:space="preserve">
+    <value>investment good</value>
+  </data>
+  <data name="ExentoVentas" xml:space="preserve">
+    <value>exempt sales</value>
+  </data>
+  <data name="ClaveOperacion340" xml:space="preserve">
+    <value>Key operation 340</value>
+  </data>
+  <data name="Incluirmodelo347" xml:space="preserve">
+    <value>Include in model 347</value>
+  </data>
+  <data name="SraRepercutido" xml:space="preserve">
+    <value>Repercussed</value>
+  </data>
+  <data name="SraAmbos" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="DatosSII" xml:space="preserve">
+    <value>SII data</value>
+  </data>
+  <data name="Tipooperacionclassic" xml:space="preserve">
+    <value>Type of operation Marfil Classic</value>
   </data>
 </root>

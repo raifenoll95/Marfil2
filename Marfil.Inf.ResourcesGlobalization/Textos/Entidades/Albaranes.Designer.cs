@@ -142,6 +142,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Asistente de inserción de lecturas.
+        /// </summary>
+        public static string AsistenteLecturas {
+            get {
+                return ResourceManager.GetString("AsistenteLecturas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Base.
         /// </summary>
         public static string Basetotal {
@@ -169,7 +178,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Bundle.
+        ///   Busca una cadena traducida similar a Bundles / Kit.
         /// </summary>
         public static string Bundle {
             get {
@@ -1074,6 +1083,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string FkzonasHasta {
             get {
                 return ResourceManager.GetString("FkzonasHasta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Insertar lecturas.
+        /// </summary>
+        public static string GenerarLecturas {
+            get {
+                return ResourceManager.GetString("GenerarLecturas", resourceCulture);
             }
         }
         

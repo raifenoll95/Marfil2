@@ -1,0 +1,196 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+
+
+    var listpaises = WebHelper.GetApplicationHelper().GetListPaises().Select(f => new SelectListItem() { Text = f.CodigoIsoAlfa2 + " - " + f.Descripcion, Value = f.CodigoIsoAlfa2 }).ToList();
+    var listtiposidentificacion = WebHelper.GetApplicationHelper().GetListTiposNif().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList();
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+<div class="form-group">
+    <div class="col-md-2">
+        <h4>DATOS ENVIO AEAT</h4>
+    </div>
+
+    @if (Model.Estado == TipoEstadoEnvio.Correcto)
+    {
+        @Html.LabelFor(f => Model.Enviarmodificacion, new { @class = "control-label col-md-2" })
+        <div class="col-md-1">
+            @Html.CheckBoxFor(f => Model.Enviarmodificacion)
+        </div>
+
+        @Html.LabelFor(f => Model.Enviarbaja, new { @class = "control-label col-md-1" })
+        <div class="col-md-1">
+            @Html.CheckBoxFor(f => Model.Enviarbaja)
+        </div>
+    }
+
+
+</div>
+@*Tipo Envío / Comunicación, FechaAlta, Estado*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipoenvio, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipoenvio", Model.Tipoenvio, (object)new { @disabled = "disabled", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipoenvio, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Fechaalta, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Fechaalta, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+    </div>
+
+    @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Estado", Model.Estado, (object)new { @disabled = "disabled", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*CSV, Descripción error *@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Csv, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Csv, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        @Html.ValidationMessageFor(f => Model.Csv, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Descripcionerror, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.TextBoxFor(f => Model.Descripcionerror, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        @Html.ValidationMessageFor(f => Model.Descripcionerror, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<h4>DATOS CONTRAPARTE</h4>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Variosdestinatarios, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Variosdestinatarios, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Variosdestinatarios)
+        }
+    </div>
+
+    @*@Html.LabelFor(f => Model.Cuentaclientecontraparte, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Cuentaclientecontraparte, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+            @Html.ValidationMessageFor(f => Model.Cuentaclientecontraparte, "", new { @class = "text-danger" })
+        </div>*@
+
+    @Html.LabelFor(f => Model.Nombrecontraparte, new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @Html.TextBoxFor(f => Model.Nombrecontraparte, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Nombrecontraparte, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Nifrepresentante, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Nifrepresentante, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Nifrepresentante, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipoidentificacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipoidentificacion", Model.Tipoidentificacion, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipoidentificacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group" id="divnif">
+    @Html.LabelFor(f => Model.Nifcontraparte, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Nifcontraparte, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Nifcontraparte, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group" id="divotro">
+    @Html.LabelFor(f => Model.Codigopais, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Codigopais, listpaises, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Codigopais, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Tipoidentificacionotro, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.DropDownListFor(f => Model.Tipoidentificacionotro, listtiposidentificacion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Tipoidentificacionotro, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Identificacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Identificacion, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Identificacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+
+
+
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content(" ~ /components/bootbox.js/bootbox.min.js")"></script>
+    }
+}
+
+<script type="text/javascript">
+
+
+    window.onload = init();
+
+    function init() {
+        var tipoidentificacion = document.getElementById("Tipoidentificacion");
+        var valor = tipoidentificacion.options[tipoidentificacion.selectedIndex].value;
+
+        if (valor == 0) {
+            $("#divnif").show();
+            $("#divotro").hide();
+        } else if (valor == 1) {
+            $("#divotro").show();
+            $("#divnif").hide();
+        }
+    }
+
+    $("#Tipoidentificacion").on('change', function () {
+
+        var tipoidentificacion = document.getElementById("Tipoidentificacion");
+        var valor = tipoidentificacion.options[tipoidentificacion.selectedIndex].value;
+
+        if (valor == 0) {
+            $("#divnif").show();
+            $("#divotro").hide();
+        } else if (valor == 1) {
+            $("#divotro").show();
+            $("#divnif").hide();
+        }
+    });
+
+</script>

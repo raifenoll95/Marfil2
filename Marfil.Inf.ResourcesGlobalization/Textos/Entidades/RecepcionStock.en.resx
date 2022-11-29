@@ -120,4 +120,10 @@
   <data name="TituloEntidad" xml:space="preserve">
     <value>Stock entry</value>
   </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>stock receipt</value>
+  </data>
+  <data name="TituloReclamacion" xml:space="preserve">
+    <value>Claim</value>
+  </data>
 </root>

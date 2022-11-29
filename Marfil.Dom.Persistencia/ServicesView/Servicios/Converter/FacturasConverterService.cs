@@ -29,12 +29,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
         public override IModelView CreateView(string id)
         {
+            var obj = new Facturas();
 
-          
-            var identificador = Funciones.Qint(id);
-            var obj = _db.Set<Facturas>().Where(f => f.empresa==Empresa && f.id == identificador).Include(f => f.FacturasLin).Include(f=>f.FacturasTotales).Single();
+            //Si llega referencia en lugar de id
+            if (id.Length >= 10)
+            {
+                obj = _db.Set<Facturas>().Where(f => f.empresa == Empresa && f.referencia == id).Include(f => f.FacturasLin).Include(f => f.FacturasTotales).Single();
+            }
+            else
+            {
+                var identificador = Funciones.Qint(id);
+                obj = _db.Set<Facturas>().Where(f => f.empresa == Empresa && f.id == identificador).Include(f => f.FacturasLin).Include(f => f.FacturasTotales).Single();
+            }
+
             var monedasObj = _db.Monedas.Single(f => f.id == obj.fkmonedas);
-            
            
             var result = GetModelView(obj) as FacturasModel;
 
@@ -282,7 +290,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             //todo asignar contador y referencia
             result.fechamodificacion = DateTime.Now;
             result.fkusuariomodificacion  = Context.Id;
-            result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;
+            result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises.Length > 3 ? "" : viewmodel.Fkpuertos.Fkpaises;
             result.fkpuertosid = viewmodel.Fkpuertos.Id;
             result.fkfacturarectificada = viewmodel.Fkfacturarectificativa;
             result.facturarectificativa = viewmodel.Facturarectificativa;

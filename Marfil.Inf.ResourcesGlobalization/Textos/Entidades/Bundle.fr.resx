@@ -118,12 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Bundles</value>
+    <value>Liasses</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Bundle</value>
+    <value>Paquet</value>
   </data>
   <data name="Fkzonaalmacendescripcion" xml:space="preserve">
     <value>Zone</value>
+  </data>
+  <data name="ErrorLoteUtilizado" xml:space="preserve">
+    <value>Le bundle {0} ne peut pas être ajouté au bundle car il a déjà été utilisé dans un autre bundle.</value>
+  </data>
+  <data name="Empresa" xml:space="preserve">
+    <value>Entreprise</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Paquet</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Entrepôt</value>
+  </data>
+  <data name="Fkzonaalmacen" xml:space="preserve">
+    <value>Localiser dans la zone</value>
+  </data>
+  <data name="Fkoperarios" xml:space="preserve">
+    <value>Opérateur</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Lineas" xml:space="preserve">
+    <value>Composition du forfait</value>
+  </data>
+  <data name="LoteDesde" xml:space="preserve">
+    <value>lot de</value>
+  </data>
+  <data name="LoteHasta" xml:space="preserve">
+    <value>regrouper</value>
+  </data>
+  <data name="ErrorLotesMismoBloque" xml:space="preserve">
+    <value>Impossible d'ajouter des tables de différents lots</value>
+  </data>
+  <data name="ErrorBudleLote" xml:space="preserve">
+    <value>Le lot {0} appartient déjà à un autre lot</value>
+  </data>
+  <data name="ErrorBundleLoteUnico" xml:space="preserve">
+    <value>Le lot ne peut contenir qu'un seul lot</value>
+  </data>
+  <data name="ErrorKitLoteUtilizado" xml:space="preserve">
+    <value>Le lot {0} appartient déjà à un kit</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>Pièces</value>
   </data>
 </root>

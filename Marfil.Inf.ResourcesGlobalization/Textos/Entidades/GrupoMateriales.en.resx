@@ -120,4 +120,19 @@
   <data name="Codigo" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>Description Spanish</value>
+  </data>
+  <data name="Descripcion2" xml:space="preserve">
+    <value>Description English</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Materials group</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Fkejercicio" xml:space="preserve">
+    <value>Fkeexercise</value>
+  </data>
 </root>

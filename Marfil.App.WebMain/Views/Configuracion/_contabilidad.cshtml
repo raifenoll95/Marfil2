@@ -2,68 +2,116 @@
 @using Marfil.App.WebMain.Misc
 @using Marfil.Dom.Persistencia.Helpers
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @model Marfil.Dom.Persistencia.Model.ConfiguracionModel
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Invertirasiento, new {@class = "control-label col-md-4"})
-        <div class="col-md-1">
-            @Html.CheckBoxFor(f => Model.Invertirasiento)
-        </div>
-    </div>
+@{
+    var cvcuenta = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+}
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioExistenciasIniciales, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioExistenciasIniciales, new { @class = "form-control" })
-        </div>
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(f => Model.Invertirasiento, new { @class = "control-label col-md-8" })
+                <div class="col-md-1">
+                    @Html.CheckBoxFor(f => Model.Invertirasiento)
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioExistenciasFinales, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioExistenciasFinales, new { @class = "form-control" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(f => Model.PrefijosPrestacionServicios, new { @class = "control-label col-md-8" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(f => Model.PrefijosPrestacionServicios, new { @class = "form-control" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioDebePYG, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioDebePYG, new { @class = "form-control" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioExistenciasIniciales, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioExistenciasIniciales, new { @class = "form-control" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioHaberPYG, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioHaberPYG, new { @class = "form-control" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioExistenciasFinales, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioExistenciasFinales, new { @class = "form-control" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioCuentasDetalle, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioCuentasDetalle, new { @class = "form-control" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioDebePYG, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioDebePYG, new { @class = "form-control" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioCierreEjercicio, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioCierreEjercicio, new { @class = "form-control" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioHaberPYG, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioHaberPYG, new { @class = "form-control" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioAperturaEjercicio, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioAperturaEjercicio, new { @class = "form-control" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioCuentasDetalle, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioCuentasDetalle, new { @class = "form-control" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.ComentarioAperturaProvisional, new { @class = "control-label col-md-4" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(f => Model.ComentarioAperturaProvisional, new { @class = "form-control" })
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioCierreEjercicio, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioCierreEjercicio, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioAperturaEjercicio, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioAperturaEjercicio, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => Model.ComentarioAperturaProvisional, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(f => Model.ComentarioAperturaProvisional, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(f => Model.CuentaProveedoresVarios, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @{
+                        cvcuenta.Name = "CuentaProveedoresVarios";
+                        cvcuenta.Url = Url.Action("CuentasApi", "Api");
+                        cvcuenta.Valor = Model.CuentaProveedoresVarios;
+                        cvcuenta.Titulo = Proveedores.TituloEntidadSingular;
+                        cvcuenta.Obligatorio = false;
+                    }
+                    @Html.Partial("CampoverificacionUI", cvcuenta)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => Model.CuentaClientesVarios, new { @class = "control-label col-md-6" })
+                <div class="col-md-6">
+                    @{
+                        cvcuenta.Name = "CuentaClientesVarios";
+                        cvcuenta.Url = Url.Action("CuentasApi", "Api");
+                        cvcuenta.Valor = Model.CuentaClientesVarios;
+                        cvcuenta.Titulo = Clientes.TituloEntidadSingular;
+                        cvcuenta.Obligatorio = false;
+                    }
+                    @Html.Partial("CampoverificacionUI", cvcuenta)
+                </div>
+            </div>
         </div>
     </div>
+</div>
 

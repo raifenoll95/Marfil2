@@ -1,728 +1,730 @@
-1;0;1;;A;A00000000;T;A00060000+A00050000+A00040000+A00030000+A00020000+A00010000+;;ACTIVO NO CORRIENTE;A; 
-2;0;1;I;A;A00010000;D;;;Inmovilizado intagible.;A; 
-3;0;1;II;A;A00020000;D;;;Inmovilizado material.;A; 
-4;0;1;III;A;A00030000;D;;;Inversiones inmobiliarias.;A; 
-5;0;1;IV;A;A00040000;D;;;Inversiones en empresas del grupo y asociadas a largo plazo.;A; 
-6;0;1;V;A;A00050000;D;;;Inversiones financieras a largo plazo.;A; 
-7;0;1;VI;A;A00060000;D;;;Activos por impuesto diferido.;A; 
-8;0;1;;A;B00000000;T;B00020000+B00010000+;;ACTIVO CORRIENTE;A; 
-9;0;1;I;A;B00010000;D;;;Activos no corrientes mantenidos para la venta.;A; 
-10;0;1;II;A;B00020000;D;;;Existencias.;A; 
-11;0;1;III;A;B00030000;T;B00070000+B00060000+B00050000+B00040000+B00030300+B00030200+;;Deudores comerciales y otras cuentas a cobrar.;A; 
-12;0;1;III.1;A;B00030100;D;;;Clientes por venta y prestaciones de servicios.;A; 
-13;0;1;III.2;A;B00030200;D;;;Accionistas (socios) por desembolsos exigidos.;A; 
-14;0;1;III.3;A;B00030300;D;;;Otros deudores.;A; 
-15;0;1;IV;A;B00040000;D;;;Inversiones en empresas del grupo y asociadas a corto plazo.;A; 
-16;0;1;V;A;B00050000;D;;;Invesiones financieras a corto plazo.;A; 
-17;0;1;VI;A;B00060000;D;;;Periodificaciones a corto plazo.;A; 
-18;0;1;VII;A;B00070000;D;;;Efectivo y otros activos líquidos equivalentes.;A; 
-19;0;1;;P;A00000000;T;;;PATRIMONIO NETO;A; 
-20;0;1;;P;A01000000;T;;;Fondos propios.;A; 
-21;0;1;I;P;A01010000;T;A03000000+A02000000+A01090000+A01080000+A01070000+A01060000+;;Capital.;A; 
-22;0;1;I.1;P;A01010100;D;;;Capital escriturado.;A; 
-23;0;1;I.2;P;A01010200;D;;;(Capital no exigido).;A; 
-24;0;1;II;P;A01020000;D;;;Prima de emisión.;A; 
-25;0;1;III;P;A01030000;D;;;Reservas.;A; 
-26;0;1;IV;P;A01040000;D;;;(Acciones y participaciones en patrimonio propias).;A; 
-27;0;1;V;P;A01050000;D;;;Resultados de ejercicios anteriores.;A; 
-28;0;1;VI;P;A01060000;D;;;Otras aportaciones de socios.;A; 
-29;0;1;VII;P;A01070000;D;;;Resultado del ejercicio.;A; 
-30;0;1;VIII;P;A01080000;D;;;(Dividendo a cuenta).;A; 
-31;0;1;IV;P;A01090000;D;;;Otros instrumentos de patrimonio neto.;A; 
-32;0;1;;P;A02000000;D;;;Ajustes por cambios de valor.;A; 
-33;0;1;;P;A03000000;D;;;Subvenciones, donaciones y legados recibidos.;A; 
-34;0;1;;P;B00000000;T;B00010000+;;PASIVO NO CORRIENTE;A; 
-35;0;1;I;P;B00010000;D;;;Provisiones a largo plazo.;A; 
-36;0;1;II;P;B00020000;T;B00050000+B00040000+B00030000+B00020300+B00020200+B00020100+;;Deudas a largo plazo.;A; 
-37;0;1;II.1;P;B00020100;D;;;Deudas con entidades de crédito.;A; 
-38;0;1;II.2;P;B00020200;D;;;Acreedores por arrendamiento financiero.;A; 
-39;0;1;II.3;P;B00020300;D;;;Otras deudas a largo plazo.;A; 
-40;0;1;III;P;B00030000;D;;;Deudas con empresas del grupo y asociadas a largo plazo.;A; 
-41;0;1;IV;P;B00040000;D;;;Pasivos por impuesto diferido.;A; 
-42;0;1;V;P;B00050000;D;;;Periodificaciones a largo plazo.;A; 
-43;0;1;;P;C00000000;T;C00020000+C00010000+;;PASIVO CORRIENTE;A; 
-44;0;1;I;P;C00010000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;A; 
-45;0;1;II;P;C00020000;D;;;Provisiones a corto plazo.;A; 
-46;0;1;III;P;C00030000;T;C00040000+C00030300+C00030200+C00030100+;;Deudas a corto plazo.;A; 
-47;0;1;III.1;P;C00030100;D;;;Deudas con entidades de crédito.;A; 
-48;0;1;III.2;P;C00030200;D;;;Acreedores por arrendamiento financiero.;A; 
-49;0;1;III.3;P;C00030300;D;;;Otras deudas a largo plazo.;A; 
-50;0;1;IV;P;C00040000;D;;;Deudas con empresas del grupo y asociadas a corto plazo.;A; 
-51;0;1;V;P;C00050000;T;C00050200+C00050100+;;Acreedores comerciales y otras cuentas a pagar.;A; 
-52;0;1;V.1;P;C00050100;D;;;Proveedores.;A; 
-53;0;1;V.2;P;C00050200;D;;;Otros acreedores.;A; 
-54;0;1;VI;P;C00060000;D;;;Periodificaciones a corto plazo.;A; 
-55;0;2;;A;A00000000;T;A00030000+A00020000+A00010000+;;ACTIVO NO CORRIENTE;D; 
-56;0;2;I;A;A00010000;D;;;Inmovilizado intagible.;D; 
-57;0;2;II;A;A00020000;D;;;Inmovilizado material.;D; 
-58;0;2;III;A;A00030000;D;;;Inversiones inmobiliarias.;D; 
-59;0;2;IV;A;A00040000;T;A00040100+;;Inversiones a largo plazo en empresas del grupo, asociadas y socios.;D; 
-60;0;2;IV.1;A;A00040100;D;;;Créditos a largo plazo con socios.;D; 
-61;0;2;IV.2;A;A00040200;T;A00060000+A00050000+;;Otras inversiones.;D; 
-62;0;2;V;A;A00050000;D;;;Inversiones financieras a largo plazo.;D; 
-63;0;2;VI;A;A00060000;D;;;Activos por impuesto diferido.;D; 
-64;0;2;;A;B00000000;T;B00020000+B00010000+;;ACTIVO CORRIENTE;D; 
-65;0;2;I;A;B00010000;D;;;Activos no corrientes mantenidos para la venta.;D; 
-66;0;2;II;A;B00020000;D;;;Existencias.;D; 
-67;0;2;III;A;B00030000;T;B00030400+B00030300+B00030200+B00030100+;;Deudores comerciales y otras cuentas a cobrar.;D; 
-68;0;2;III.1;A;B00030100;D;;;Clientes por venta y prestaciones de servicios.;D; 
-69;0;2;III.2;A;B00030200;D;;;Socios por desembolsos exigidos.;D; 
-70;0;2;III.3;A;B00030300;D;;;Socios deudores;D; 
-71;0;2;III.4;A;B00030400;D;;;Otros deudores.;D; 
-72;0;2;IV;A;B00040000;T;B00070000+B00060000+B00050000+B00040200+B00040100+;;Inversiones corto plazo en empresas del grupo, asociadas y socios.;D; 
-73;0;2;IV.1;A;B00040100;D;;;Créditos a corto plazo con socios.;D; 
-74;0;2;IV.2;A;B00040200;D;;;Otras inversiones.;D; 
-75;0;2;V;A;B00050000;D;;;Inversiones financieras a corto plazo.;D; 
-76;0;2;VI;A;B00060000;D;;;Periodificaciones a corto plazo.;D; 
-77;0;2;VII;A;B00070000;D;;;Efectivo y otros activos líquidos equivalentes.;D; 
-78;0;2;;P;A00000000;T;;;PATRIMONIO NETO;D; 
-79;0;2;;P;A01000000;T;;;Fondos propios.;D; 
-80;0;2;I;P;A01010000;T;A01010200+A01010100+;;Capital.;D; 
-81;0;2;I.1;P;A01010100;D;;;Capital suscrito cooperativo.;D; 
-82;0;2;I.2;P;A01010200;D;;;(Capital no exigido).;D; 
-83;0;2;II;P;A01020000;T;A01040000+A01030000+A01020300+A01020200+A01020100+;;Reservas.;D; 
-84;0;2;II.1;P;A01020100;D;;;Fondo de reserva obligatorio.;D; 
-85;0;2;II.2;P;A01020200;D;;;Fondo de reembolso o actualización.;D; 
-86;0;2;II.3;P;A01020300;D;;;Otras reservas.;D; 
-87;0;2;III;P;A01030000;D;;;Resultados de ejercicios anteriores.;D; 
-88;0;2;IV;P;A01040000;D;;;Otras aportaciones de socios.;D; 
-89;0;2;V;P;A01050000;T;A03000000+A02000000+A01080000+A01070000+A01060000+;;Excedente de la cooperativa (positivo o negativo).;D; 
-90;0;2;VI;P;A01060000;D;;;Remuneraciones al capital a cuenta y retor. coop. a cuenta entreg.en ejer.;D; 
-91;0;2;VII;P;A01070000;D;;;Fondos capitalizados.;D; 
-92;0;2;VIII;P;A01080000;D;;;Otros instrumentos de patrimonio neto.;D; 
-93;0;2;;P;A02000000;D;;;Ajustes por cambios de valor.;D; 
-94;0;2;;P;A03000000;D;;;Subvenciones, donaciones y legados recibidos.;D; 
-95;0;2;;P;B00000000;T;B00010000+;;PASIVO NO CORRIENTE;D; 
-96;0;2;I;P;B00010000;D;;;Fondo de educación, formación y promoción a largo plazo.;D; 
-97;0;2;II;P;B00020000;T;B00020100+;;Deudas con características especiales a largo plazo.;D; 
-98;0;2;II.1;P;B00020100;D;;;“Capital” reembolsable exigible.;D; 
-99;0;2;II.2;P;B00020200;T;;;Acreedores por “Capital” temporal a largo plazo.;D; 
-100;0;2;II.3;P;B00020300;T;B00040000+B00030000+;;Otras deudas con características especiales a largo.;D; 
-101;0;2;III;P;B00030000;D;;;Provisiones a largo plazo.;D; 
-102;0;2;IV;P;B00040000;D;;;Deudas a largo plazo.;D; 
-103;0;2;V;P;B00050000;T;B00070000+B00060000+B00050300+B00050200+B00050100+;;Deudas a largo plazo con empresas del grupo, asociadas y socios.;D; 
-104;0;2;V.1;P;B00050100;D;;;Deudas con empresas del grupo.;D; 
-105;0;2;V.2;P;B00050200;D;;;Deudas con empresas asociadas.;D; 
-106;0;2;V.3;P;B00050300;D;;;Deudas con socios.;D; 
-107;0;2;VI;P;B00060000;D;;;Pasivos por impuesto diferido.;D; 
-108;0;2;VII;P;B00070000;D;;;Periodificaciones a largo plazo.;D; 
-109;0;2;;P;C00000000;T;C00010000+;;PASIVO CORRIENTE;D; 
-110;0;2;I;P;C00010000;D;;;Fondo de educación, formación y promoción a corto plazo.;D; 
-111;0;2;II;P;C00020000;T;C00020100+;;Deudas con características especiales a corto plazo.;D; 
-112;0;2;II.1;P;C00020100;D;;;“Capital” reembolsable exigible.;D; 
-113;0;2;II.2;P;C00020200;T;;;Acreedores por “Capital” temporal a corto plazo.;D; 
-114;0;2;II.3;P;C00020300;T;C00040000+C00030000+;;Otras deudas con características especiales a corto;D; 
-115;0;2;III;P;C00030000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;D; 
-116;0;2;IV;P;C00040000;D;;;Provisiones a corto plazo.;D; 
-117;0;2;V;P;C00050000;T;C00050200+C00050100+;;Deudas a corto plazo.;D; 
-118;0;2;V.1;P;C00050100;D;;;Deudas con entidades de crédito.;D; 
-119;0;2;V.2;P;C00050200;D;;;Acreedores por arrendamiento financiero.;D; 
-120;0;2;V.3;P;C00050300;T;C00050400+;;Otras participaciones a corto plazo.;D; 
-121;0;2;V.4;P;C00050400;D;;;Otras deudas a corto plazo.;D; 
-122;0;2;VI;P;C00060000;T;C00060300+C00060200+C00060100+;;Deudas a corto plazo con empresas del grupo, asociadas y socios.;D; 
-123;0;2;VI.1;P;C00060100;D;;;Deudas con empresas del grupo.;D; 
-124;0;2;VI.2;P;C00060200;D;;;Deudas con empresas asociadas.;D; 
-125;0;2;VI.3;P;C00060300;D;;;Deudas con socios.;D; 
-126;0;2;VII;P;C00070000;T;C00070200+C00070100+;;Acreedores comerciales y otras cuentas a pagar.;D; 
-127;0;2;VII.1;P;C00070100;D;;;Proveedores.;D; 
-128;0;2;VII.2;P;C00070200;D;;;Otros acreedores.;D; 
-129;0;2;VIII;P;C00080000;D;;;Periodificaciones a corto plazo.;D; 
-130;0;3;;A;A00000000;T;;;ACTIVO NO CORRIENTE;C; 
-131;0;3;I;A;A00010000;T;A00010700+A00010600+A00010500+A00010400+A00010300+A00010200+;;Inmovilizado intagible.;C; 
-132;0;3;I.1;A;A00010100;D;;;Desarrollo.;C; 
-133;0;3;I.2;A;A00010200;D;;;Concesiones.;C; 
-134;0;3;I.3;A;A00010300;D;;;Patentes, licencias, marcas y similares.;C; 
-135;0;3;I.4;A;A00010400;D;;;Fondo de comercio.;C; 
-136;0;3;I.5;A;A00010500;D;;;Aplicaciones informáticas.;C; 
-137;0;3;I.6;A;A00010600;D;;;Investigación.;C; 
-138;0;3;I.7;A;A00010700;D;;;Otro inmovilizado intangible.;C; 
-139;0;3;II;A;A00020000;T;A00020300+A00020200+A00020100+;;Inmovilizado material.;C; 
-140;0;3;II.1;A;A00020100;D;;;Terrenos y construcciones.;C; 
-141;0;3;II.2;A;A00020200;D;;;Instalaciones técnicas, y otro inmovilizado material.;C; 
-142;0;3;II.3;A;A00020300;D;;;Inmovilizado en curso y anticipos.;C; 
-143;0;3;III;A;A00030000;T;A00030200+A00030100+;;Inversiones inmobiliarias.;C; 
-144;0;3;III.1;A;A00030100;D;;;Terrenos.;C; 
-145;0;3;III.2;A;A00030200;D;;;Construcciones.;C; 
-146;0;3;IV;A;A00040000;T;A00040100+;;Inversiones a largo plazo en empresas del grupo, asociadas y socios.;C; 
-147;0;3;IV.1;A;A00040100;D;;;Instrumentos de patrimonio.;C; 
-148;0;3;IV.2;A;A00040200;T;A00040300+A00040202+A00040201+;;Créditos a empresas.;C; 
-149;0;3;IV.2;A;A00040201;D;;;a) Del grupo.;C; 
-150;0;3;IV.2;A;A00040202;D;;;b) Asociadas.;C; 
-151;0;3;IV.3;A;A00040300;D;;;Valores representativos de deuda.;C; 
-152;0;3;IV.4;A;A00040400;T;;;Derivados.;C; 
-153;0;3;IV.5;A;A00040500;T;A00040600+;;Otros activos financieros.;C; 
-154;0;3;IV.6;A;A00040600;D;;;Créditos a socios.;C; 
-155;0;3;V;A;A00050000;T;A00060000+A00050600+A00050500+A00050400+A00050300+A00050200+;;Inversiones financieras a largo plazo.;C; 
-156;0;3;V.1;A;A00050100;D;;;Instrumentos de patrimonio.;C; 
-157;0;3;V.2;A;A00050200;D;;;Créditos a terceros.;C; 
-158;0;3;V.3;A;A00050300;D;;;Valores representativos de deuda.;C; 
-159;0;3;V.4;A;A00050400;D;;;Derivados.;C; 
-160;0;3;V.5;A;A00050500;D;;;Otros activos financieros.;C; 
-161;0;3;V.6;A;A00050600;D;;;Otras inversiones.;C; 
-162;0;3;VI;A;A00060000;D;;;Activos por impuesto diferido.;C; 
-163;0;3;;A;B00000000;T;B00010000+;;ACTIVO CORRIENTE;C; 
-164;0;3;I;A;B00010000;D;;;Activos no corrientes mantenidos para la venta.;C; 
-165;0;3;II;A;B00020000;T;B00020600+B00020500+B00020400+B00020300+B00020200+B00020100+;;Existencias.;C; 
-166;0;3;II.1;A;B00020100;D;;;Comerciales.;C; 
-167;0;3;II.2;A;B00020200;D;;;Materias primas y otros aprovisionamientos.;C; 
-168;0;3;II.3;A;B00020300;D;;;Productos en curso.;C; 
-169;0;3;II.4;A;B00020400;D;;;Productos terminados.;C; 
-170;0;3;II.5;A;B00020500;D;;;Subproductos, residuos y materiales recuperados.;C; 
-171;0;3;II.6;A;B00020600;D;;;Anticipos a proveedores.;C; 
-172;0;3;III;A;B00030000;T;B00030100+;;Deudores comerciales y otras cuentas a cobrar.;C; 
-173;0;3;III.1;A;B00030100;D;;;Clientes por venta y prestaciones de servicios.;C; 
-174;0;3;III.2;A;B00030200;T;B00030700+B00030600+B00030500+B00030400+B00030300+B00030203+;;Clientes, empresas del grupo y asociadas y socios deudores.;C; 
-175;0;3;III.2;A;B00030201;D;;;a) Empresas del grupo.;C; 
-176;0;3;III.2;A;B00030202;D;;;b) Empresas asociadas.;C; 
-177;0;3;III.2;A;B00030203;D;;;c) Socios deudores;C; 
-178;0;3;III.3;A;B00030300;D;;;Deudores varios.;C; 
-179;0;3;III.4;A;B00030400;D;;;Personal.;C; 
-180;0;3;III.5;A;B00030500;D;;;Activos por impuestos corriente.;C; 
-181;0;3;III.6;A;B00030600;D;;;Otros créditos con las Administraciones Públicas.;C; 
-182;0;3;III.7;A;B00030700;D;;;Socios por desembolsos exigidos.;C; 
-183;0;3;IV;A;B00040000;T;B00040100+;;Inversiones corto plazo en empresas del grupo, asociadas y socios.;C; 
-184;0;3;IV.1;A;B00040100;D;;;Instrumentos de Patrimonio.;C; 
-185;0;3;IV.2;A;B00040200;T;B00040300+B00040202+B00040201+;;Créditos a empresas.;C; 
-186;0;3;IV.2;A;B00040201;D;;;a) Empresas del grupo.;C; 
-187;0;3;IV.2;A;B00040202;D;;;b) Empresas asociadas.;C; 
-188;0;3;IV.3;A;B00040300;D;;;Valores representativos de deuda.;C; 
-189;0;3;IV.4;A;B00040400;T;B00040600+B00040500+;;Derivados.;C; 
-190;0;3;IV.5;A;B00040500;D;;;Otros activos financieros.;C; 
-191;0;3;IV.6;A;B00040600;D;;;Créditos a socios.;C; 
-192;0;3;V;A;B00050000;T;B00060000+B00050500+B00050400+B00050300+B00050200+B00050100+;;Inversiones financieras a corto plazo.;C; 
-193;0;3;V.1;A;B00050100;D;;;Instrumentos de patrimonio.;C; 
-194;0;3;V.2;A;B00050200;D;;;Créditos a empresas.;C; 
-195;0;3;V.3;A;B00050300;D;;;Valores representativos de deuda.;C; 
-196;0;3;V.4;A;B00050400;D;;;Derivados.;C; 
-197;0;3;V.5;A;B00050500;D;;;Otros activos financieros.;C; 
-198;0;3;VI;A;B00060000;D;;;Periodificaciones a corto plazo.;C; 
-199;0;3;VII;A;B00070000;T;B00070200+B00070100+;;Efectivo y otros activos líquidos equivalentes.;C; 
-200;0;3;VII.1;A;B00070100;D;;;Tesorería.;C; 
-201;0;3;VII.2;A;B00070200;D;;;Otros activos líquidos equivalentes.;C; 
-202;0;3;;P;A00000000;T;;;PATRIMONIO NETO;C; 
-203;0;3;;P;A01000000;T;;;Fondos propios.;C; 
-204;0;3;I;P;A01010000;T;A01010200+A01010100+;;Capital.;C; 
-205;0;3;I.1;P;A01010100;D;;;Capital suscrito cooperativo.;C; 
-206;0;3;I.2;P;A01010200;D;;;(Capital no exigido).;C; 
-207;0;3;II;P;A01020000;T;A01020400+A01020300+A01020200+A01020100+;;Reservas.;C; 
-208;0;3;II.1;P;A01020100;D;;;Fondo de reserva obligatorio.;C; 
-209;0;3;II.2;P;A01020200;D;;;Fondo de reembolso o actualización.;C; 
-210;0;3;II.3;P;A01020300;D;;;Reservas estatutarias;C; 
-211;0;3;II.4;P;A01020400;D;;;Otras reservas.;C; 
-212;0;3;III;P;A01030000;T;A01040000+A01030200+A01030100+;;Resultados de ejercicios anteriores.;C; 
-213;0;3;III.1;P;A01030100;D;;;Remanente.;C; 
-214;0;3;III.2;P;A01030200;D;;;(Resultados negativos de ejercicios anteriores).;C; 
-215;0;3;IV;P;A01040000;D;;;Otras aportaciones de socios.;C; 
-216;0;3;V;P;A01050000;T;A01080000+A01070000+A01060000+;;Excedente de la cooperativa (positivo o negativo).;C; 
-217;0;3;VI;P;A01060000;D;;;Remuneraciones al capital a cuenta y retor. coop. a cuenta entreg.en ejer.;C; 
-218;0;3;VII;P;A01070000;D;;;Fondos capitalizados.;C; 
-219;0;3;VIII;P;A01080000;D;;;Otros instrumentos de patrimonio neto.;C; 
-220;0;3;;P;A02000000;T;A03000000+A02030000+A02020000+A02010000+;;Ajustes por cambios de valor.;C; 
-221;0;3;I;P;A02010000;D;;;Activos financieros disponibles para la venta.;C; 
-222;0;3;II;P;A02020000;D;;;Operaciones de cobertura.;C; 
-223;0;3;III;P;A02030000;D;;;Otros.;C; 
-224;0;3;;P;A03000000;D;;;Subvenciones, donaciones y legados recibidos.;C; 
-225;0;3;;P;B00000000;T;B00010000+;;PASIVO NO CORRIENTE;C; 
-226;0;3;I;P;B00010000;D;;;Fondo de educación, formación y promoción a largo plazo.;C; 
-227;0;3;II;P;B00020000;T;B00020100+;;Deudas con características especiales a largo plazo.;C; 
-228;0;3;II.1;P;B00020100;D;;;“Capital” reembolsable exigible.;C; 
-229;0;3;II.2;P;B00020200;T;;;Acreedores por “Capital” temporal a largo plazo.;C; 
-230;0;3;II.3;P;B00020300;T;;;Otras deudas con características especiales a largo.;C; 
-231;0;3;III;P;B00030000;T;B00030400+B00030300+B00030200+B00030100+;;Provisiones a largo plazo.;C; 
-232;0;3;III.1;P;B00030100;D;;;Obligaciones por prestaciones a largo plazo al personal.;C; 
-233;0;3;III.2;P;B00030200;D;;;Actuaciones medioambientales.;C; 
-234;0;3;III.3;P;B00030300;D;;;Provisiones por reestructuración.;C; 
-235;0;3;III.4;P;B00030400;D;;;Otras provisiones.;C; 
-236;0;3;IV;P;B00040000;T;B00040400+B00040300+B00040200+B00040100+;;Deudas a largo plazo.;C; 
-237;0;3;IV.1;P;B00040100;D;;;Obligaciones y otros valores negociables.;C; 
-238;0;3;IV.2;P;B00040200;D;;;Deudas con entidades de crédito.;C; 
-239;0;3;IV.3;P;B00040300;D;;;Acreedores por arrendamiento financiero.;C; 
-240;0;3;IV.4;P;B00040400;D;;;Derivados.;C; 
-241;0;3;IV.5;P;B00040500;T;B00040600+;;Otras participaciones a largo plazo.;C; 
-242;0;3;IV.6;P;B00040600;D;;;Otros pasivos financieros.;C; 
-243;0;3;V;P;B00050000;T;B00070000+B00060000+B00050300+B00050200+B00050100+;;Deudas a largo plazo con empresas del grupo, asociadas y socios.;C; 
-244;0;3;V.1;P;B00050100;D;;;Deudas con empresas del grupo.;C; 
-245;0;3;V.2;P;B00050200;D;;;Deudas con empresas asociadas.;C; 
-246;0;3;V.3;P;B00050300;D;;;Deudas con socios.;C; 
-247;0;3;VI;P;B00060000;D;;;Pasivos por impuesto diferido.;C; 
-248;0;3;VII;P;B00070000;D;;;Periodificaciones a largo plazo.;C; 
-249;0;3;;P;C00000000;T;C00010000+;;PASIVO CORRIENTE;C; 
-250;0;3;I;P;C00010000;D;;;Fondo de educación, formación y promoción a corto plazo.;C; 
-251;0;3;II;P;C00020000;T;C00020100+;;Deudas con características especiales a corto plazo.;C; 
-252;0;3;II.1;P;C00020100;D;;;“Capital” reembolsable exigible.;C; 
-253;0;3;II.2;P;C00020200;T;;;Acreedores por “Capital” temporal a corto plazo.;C; 
-254;0;3;II.3;P;C00020300;T;C00040000+C00030000+;;Otras deudas con características especiales a corto;C; 
-255;0;3;III;P;C00030000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;C; 
-256;0;3;IV;P;C00040000;D;;;Provisiones a corto plazo.;C; 
-257;0;3;V;P;C00050000;T;C00050400+C00050300+C00050200+C00050100+;;Deudas a corto plazo.;C; 
-258;0;3;V.1;P;C00050100;D;;;Obligaciones y otros valores negociables.;C; 
-259;0;3;V.2;P;C00050200;D;;;Deudas con entidades de crédito.;C; 
-260;0;3;V.3;P;C00050300;D;;;Acreedores por arrendamiento financiero.;C; 
-261;0;3;V.4;P;C00050400;D;;;Derivados.;C; 
-262;0;3;V.5;P;C00050500;T;C00050600+;;Otras participaciones a corto plazo.;C; 
-263;0;3;V.6;P;C00050600;D;;;Otros pasivos financieros.;C; 
-264;0;3;VI;P;C00060000;T;C00060300+C00060200+C00060100+;;Deudas a corto plazo con empresas del grupo, asociadas y socios.;C; 
-265;0;3;VI.1;P;C00060100;D;;;Deudas con empresas del grupo.;C; 
-266;0;3;VI.2;P;C00060200;D;;;Deudas con empresas asociadas.;C; 
-267;0;3;VI.3;P;C00060300;D;;;Deudas con socios.;C; 
-268;0;3;VII;P;C00070000;T;C00070700+C00070600+C00070500+C00070400+C00070300+C00070200+;;Acreedores comerciales y otras cuentas a pagar.;C; 
-269;0;3;VII.1;P;C00070100;D;;;Proveedores.;C; 
-270;0;3;VII.2;P;C00070200;D;;;Proveedores, empresas del grupo asociadas.;C; 
-271;0;3;VII.3;P;C00070300;D;;;Acreedores varios.;C; 
-272;0;3;VII.4;P;C00070400;D;;;Personal (remuneraciones pendientes de pago).;C; 
-273;0;3;VII.5;P;C00070500;D;;;Pasivos por impuesto corriente.;C; 
-274;0;3;VII.6;P;C00070600;D;;;Otras deudas con las Administraciones Públicas.;C; 
-275;0;3;VII.7;P;C00070700;D;;;Anticipos de Clientes.;C; 
-276;0;3;VIII;P;C00080000;D;;;Periodificaciones a corto plazo.;C; 
-277;0;4;;A;A00000000;T;;;ACTIVO NO CORRIENTE;N; 
-278;0;4;I;A;A00010000;T;A00010600+A00010500+A00010400+A00010300+A00010200+A00010100+;;Inmovilizado intagible.;N; 
-279;0;4;I.1;A;A00010100;D;;;Desarrollo.;N; 
-280;0;4;I.2;A;A00010200;D;;;Concesiones.;N; 
-281;0;4;I.3;A;A00010300;D;;;Patentes, licencias, marcas y similares.;N; 
-282;0;4;I.4;A;A00010400;D;;;Fondo de comercio. GTOS AMORTIZABLES;N; 
-283;0;4;I.5;A;A00010500;D;;;Aplicaciones informáticas.;N; 
-284;0;4;I.6;A;A00010600;D;;;Otro inmovilizado intangible.;N; 
-285;0;4;II;A;A00020000;T;A00020300+A00020200+A00020100+;;Inmovilizado material.;N; 
-286;0;4;II.1;A;A00020100;D;;;Terrenos y construcciones.;N; 
-287;0;4;II.2;A;A00020200;D;;;Instalaciones técnicas, y otro inmovilizado material.;N; 
-288;0;4;II.3;A;A00020300;D;;;Inmovilizado en curso y anticipos.;N; 
-289;0;4;III;A;A00030000;T;A00030200+A00030100+;;Inversiones inmobiliarias.;N; 
-290;0;4;III.1;A;A00030100;D;;;Terrenos.;N; 
-291;0;4;III.2;A;A00030200;D;;;Construcciones.;N; 
-292;0;4;IV;A;A00040000;T;A00040300+A00040200+A00040100+;;Inversiones en empresas del grupo y asociadas a largo plazo.;N; 
-293;0;4;IV.1;A;A00040100;D;;;Instrumentos de patrimonio.;N; 
-294;0;4;IV.2;A;A00040200;D;;;Créditos a empresas.;N; 
-295;0;4;IV.3;A;A00040300;D;;;Valores representativos de deuda.;N; 
-296;0;4;IV.4;A;A00040400;T;;;Derivados.;N; 
-297;0;4;IV.5;A;A00040500;T;;;Otros activos financieros.;N; 
-298;0;4;V;A;A00050000;T;A00060000+A00050500+A00050400+A00050300+A00050200+A00050100+;;Inversiones financieras a largo plazo.;N; 
-299;0;4;V.1;A;A00050100;D;;;Instrumentos de patrimonio.;N; 
-300;0;4;V.2;A;A00050200;D;;;Créditos a terceros.;N; 
-301;0;4;V.3;A;A00050300;D;;;Valores representativos de deuda.;N; 
-302;0;4;V.4;A;A00050400;D;;;Derivados.;N; 
-303;0;4;V.5;A;A00050500;D;;;Otros activos financieros.;N; 
-304;0;4;VI;A;A00060000;D;;;Activos por impuesto diferido.;N; 
-305;0;4;;A;B00000000;T;B00010000+;;ACTIVO CORRIENTE;N; 
-306;0;4;I;A;B00010000;D;;;Activos no corrientes mantenidos para la venta.;N; 
-307;0;4;II;A;B00020000;T;B00020600+B00020500+B00020400+B00020300+B00020200+B00020100+;;Existencias.;N; 
-308;0;4;II.1;A;B00020100;D;;;Comerciales.;N; 
-309;0;4;II.2;A;B00020200;D;;;Materias primas y otros aprovisionamientos.;N; 
-310;0;4;II.3;A;B00020300;D;;;Productos en curso.;N; 
-311;0;4;II.4;A;B00020400;D;;;Productos terminados.;N; 
-312;0;4;II.5;A;B00020500;D;;;Subproductos, residuos y materiales recuperados.;N; 
-313;0;4;II.6;A;B00020600;D;;;Anticipos a proveedores.;N; 
-314;0;4;III;A;B00030000;T;B00030700+B00030600+B00030500+B00030400+B00030300+B00030200+;;Deudores comerciales y otras cuentas a cobrar.;N; 
-315;0;4;III.1;A;B00030100;D;;;Clientes por venta y prestaciones de servicios.;N; 
-316;0;4;III.2;A;B00030200;D;;;Clientes, empresas del grupo y asociadas.;N; 
-317;0;4;III.3;A;B00030300;D;;;Deudores varios.;N; 
-318;0;4;III.4;A;B00030400;D;;;Personal.;N; 
-319;0;4;III.5;A;B00030500;D;;;Activos por impuestos corriente.;N; 
-320;0;4;III.6;A;B00030600;D;;;Otros créditos con las Administraciones Públicas.;N; 
-321;0;4;III.7;A;B00030700;D;;;Accionistas(socios) por desembolsos exigidos.;N; 
-322;0;4;IV;A;B00040000;T;B00040300+B00040200+B00040100+;;Inversiones en empresas del grupo y asociadas a corto plazo.;N; 
-323;0;4;IV.1;A;B00040100;D;;;Instrumentos de Patrimonio.;N; 
-324;0;4;IV.2;A;B00040200;D;;;Créditos a empresas.;N; 
-325;0;4;IV.3;A;B00040300;D;;;Valores representativos de deuda.;N; 
-326;0;4;IV.4;A;B00040400;T;B00040500+;;Derivados.;N; 
-327;0;4;IV.5;A;B00040500;D;;;Otros activos financieros.;N; 
-328;0;4;V;A;B00050000;T;B00060000+B00050500+B00050400+B00050300+B00050200+B00050100+;;Inversiones financieras a corto plazo.;N; 
-329;0;4;V.1;A;B00050100;D;;;Instrumentos de patrimonio.;N; 
-330;0;4;V.2;A;B00050200;D;;;Créditos a empresas.;N; 
-331;0;4;V.3;A;B00050300;D;;;Valores representativos de deuda.;N; 
-332;0;4;V.4;A;B00050400;D;;;Derivados.;N; 
-333;0;4;V.5;A;B00050500;D;;;Otros activos financieros.;N; 
-334;0;4;VI;A;B00060000;D;;;Periodificaciones a corto plazo.;N; 
-335;0;4;VII;A;B00070000;T;B00070200+B00070100+;;Efectivo y otros activos líquidos equivalentes.;N; 
-336;0;4;VII.1;A;B00070100;D;;;Tesorería.;N; 
-337;0;4;VII.2;A;B00070200;D;;;Otros activos líquidos equivalentes.;N; 
-338;0;4;;P;A00000000;T;;;PATRIMONIO NETO;N; 
-339;0;4;;P;A01000000;T;;;Fondos propios.;N; 
-340;0;4;I;P;A01010000;T;A01020000+A01010200+A01010100+;;Capital.;N; 
-341;0;4;I.1;P;A01010100;D;;;Capital escriturado.;N; 
-342;0;4;I.2;P;A01010200;D;;;(Capital no exigido).;N; 
-343;0;4;II;P;A01020000;D;;;Prima de emisión.;N; 
-344;0;4;III;P;A01030000;T;A01040000+A01030200+A01030100+;;Reservas.;N; 
-345;0;4;III.1;P;A01030100;D;;;Legal y estatutarias.;N; 
-346;0;4;III.2;P;A01030200;D;;;Otras reservas.;N; 
-347;0;4;IV;P;A01040000;D;;;(Acciones y participaciones en patrimonio propias).;N; 
-348;0;4;V;P;A01050000;T;A01090000+A01080000+A01070000+A01060000+A01050200+A01050100+;;Resultados de ejercicios anteriores.;N; 
-349;0;4;V.1;P;A01050100;D;;;Remanente.;N; 
-350;0;4;V.2;P;A01050200;D;;;(Resultados negativos de ejercicios anteriores).;N; 
-351;0;4;VI;P;A01060000;D;;;Otras aportaciones de socios.;N; 
-352;0;4;VII;P;A01070000;D;;;Resultado del ejercicio.;N; 
-353;0;4;VIII;P;A01080000;D;;;(Dividendo a cuenta).;N; 
-354;0;4;IV;P;A01090000;D;;;Otros instrumentos de patrimonio neto.;N; 
-355;0;4;;P;A02000000;T;A03000000+A02030000+A02020000+A02010000+;;Ajustes por cambios de valor.;N; 
-356;0;4;I;P;A02010000;D;;;Activos financieros disponibles para la venta.;N; 
-357;0;4;II;P;A02020000;D;;;Operaciones de cobertura.;N; 
-358;0;4;III;P;A02030000;D;;;Otros.;N; 
-359;0;4;;P;A03000000;D;;;Subvenciones, donaciones y legados recibidos.;N; 
-360;0;4;;P;B00000000;T;;;PASIVO NO CORRIENTE;N; 
-361;0;4;I;P;B00010000;T;B00010400+B00010300+B00010200+B00010100+;;Provisiones a largo plazo.;N; 
-362;0;4;I.1;P;B00010100;D;;;Obligaciones por prestaciones a largo plazo al personal.;N; 
-363;0;4;I.2;P;B00010200;D;;;Actuaciones medioambientales.;N; 
-364;0;4;I.3;P;B00010300;D;;;Provisiones por reestructuración.;N; 
-365;0;4;I.4;P;B00010400;D;;;Otras provisiones.;N; 
-366;0;4;II;P;B00020000;T;B00050000+B00040000+B00030000+B00020500+B00020400+B00020300+;;Deudas a largo plazo.;N; 
-367;0;4;II.1;P;B00020100;D;;;Obligaciones y otros valores negociables.;N; 
-368;0;4;II.2;P;B00020200;D;;;Deudas con entidades de crédito.;N; 
-369;0;4;II.3;P;B00020300;D;;;Acreedores por arrendamiento financiero.;N; 
-370;0;4;II.4;P;B00020400;D;;;Derivados.;N; 
-371;0;4;II.5;P;B00020500;D;;;Otros pasivos financieros.;N; 
-372;0;4;III;P;B00030000;D;;;Deudas con empresas del grupo y asociadas a largo plazo.;N; 
-373;0;4;IV;P;B00040000;D;;;Pasivos por impuesto diferido.;N; 
-374;0;4;V;P;B00050000;D;;;Periodificaciones a largo plazo.;N; 
-375;0;4;;P;C00000000;T;C00020000+C00010000+;;PASIVO CORRIENTE;N; 
-376;0;4;I;P;C00010000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;N; 
-377;0;4;II;P;C00020000;D;;;Provisiones a corto plazo.;N; 
-378;0;4;III;P;C00030000;T;C00040000+C00030500+C00030400+C00030300+C00030200+C00030100+;;Deudas a corto plazo.;N; 
-379;0;4;III.1;P;C00030100;D;;;Obligaciones y otros valores negociables.;N; 
-380;0;4;III.2;P;C00030200;D;;;Deudas con entidades de crédito.;N; 
-381;0;4;III.3;P;C00030300;D;;;Acreedores por arrendamiento financiero.;N; 
-382;0;4;III.4;P;C00030400;D;;;Derivados.;N; 
-383;0;4;III.5;P;C00030500;D;;;Otros pasivos financieros.;N; 
-384;0;4;IV;P;C00040000;D;;;Deudas con empresas del grupo y asociadas a corto plazo.;N; 
-385;0;4;V;P;C00050000;T;C00050700+C00050600+C00050500+C00050400+C00050300+C00050200+;;Acreedores comerciales y otras cuentas a pagar.;N; 
-386;0;4;V.1;P;C00050100;D;;;Proveedores.;N; 
-387;0;4;V.2;P;C00050200;D;;;Proveedores, empresas del grupo asociadas.;N; 
-388;0;4;V.3;P;C00050300;D;;;Acreedores varios.;N; 
-389;0;4;V.4;P;C00050400;D;;;Personal (remuneraciones pendientes de pago).;N; 
-390;0;4;V.5;P;C00050500;D;;;Pasivos por impuesto corriente.;N; 
-391;0;4;V.6;P;C00050600;D;;;Otras deudas con las Administraciones Públicas.;N; 
-392;0;4;V.7;P;C00050700;D;;;Anticipos de Clientes.;N; 
-393;0;4;VI;P;C00060000;D;;;Periodificaciones.;N; 
-394;0;5;;A;A00000000;T;A00060000+A00050000+A00040000+A00030000+A00020000+A00010000+;;ACTIVO NO CORRIENTE;P; 
-395;0;5;I;A;A00010000;D;;;Inmovilizado intagible.;P; 
-396;0;5;II;A;A00020000;D;;;Inmovilizado material.;P; 
-397;0;5;III;A;A00030000;D;;;Inversiones inmobiliarias.;P; 
-398;0;5;IV;A;A00040000;D;;;Inversiones en empresas del grupo y asociadas a largo plazo.;P; 
-399;0;5;V;A;A00050000;D;;;Inversiones financieras a largo plazo.;P; 
-400;0;5;VI;A;A00060000;D;;;Activos por impuesto diferido.;P; 
-401;0;5;;A;B00000000;T;B00010000+;;ACTIVO CORRIENTE;P; 
-402;0;5;I;A;B00010000;D;;;Existencias.;P; 
-403;0;5;II;A;B00020000;T;B00060000+B00050000+B00040000+B00030000+B00020300+B00020200+;;Deudores comerciales y otras cuentas a cobrar.;P; 
-404;0;5;II.1;A;B00020100;D;;;Clientes por venta y prestaciones de servicios.;P; 
-405;0;5;II.2;A;B00020200;D;;;Accionistas (socios) por desembolsos exigidos.;P; 
-406;0;5;II.3;A;B00020300;D;;;Otros deudores.;P; 
-407;0;5;III;A;B00030000;D;;;Inversiones en empresas del grupo y asociadas a corto plazo.;P; 
-408;0;5;IV;A;B00040000;D;;;Invesiones financieras a corto plazo.;P; 
-409;0;5;V;A;B00050000;D;;;Periodificaciones a corto plazo.;P; 
-410;0;5;VI;A;B00060000;D;;;Efectivo y otros activos líquidos equivalentes.;P; 
-411;0;5;;P;A00000000;T;;;PATRIMONIO NETO;P; 
-412;0;5;;P;A01000000;T;;;Fondos propios.;P; 
-413;0;5;I;P;A01010000;T;A02000000+A01080000+A01070000+A01060000+A01050000+A01040000+;;Capital.;P; 
-414;0;5;I.1;P;A01010100;D;;;Capital escriturado.;P; 
-415;0;5;I.2;P;A01010200;D;;;(Capital no exigido).;P; 
-416;0;5;II;P;A01020000;D;;;Prima de emisión.;P; 
-417;0;5;III;P;A01030000;D;;;Reservas.;P; 
-418;0;5;IV;P;A01040000;D;;;(Acciones y participaciones en patrimonio propias).;P; 
-419;0;5;V;P;A01050000;D;;;Resultados de ejercicios anteriores.;P; 
-420;0;5;VI;P;A01060000;D;;;Otras aportaciones de socios.;P; 
-421;0;5;VII;P;A01070000;D;;;Resultado del ejercicio.;P; 
-422;0;5;VIII;P;A01080000;D;;;(Dividendo a cuenta).;P; 
-423;0;5;;P;A02000000;D;;;Subvenciones, donaciones y legados recibidos.;P; 
-424;0;5;;P;B00000000;T;B00010000+;;PASIVO NO CORRIENTE;P; 
-425;0;5;I;P;B00010000;D;;;Provisiones a largo plazo.;P; 
-426;0;5;II;P;B00020000;T;B00050000+B00040000+B00030000+B00020300+B00020200+B00020100+;;Deudas a largo plazo.;P; 
-427;0;5;II.1;P;B00020100;D;;;Deudas con entidades de crédito.;P; 
-428;0;5;II.2;P;B00020200;D;;;Acreedores por arrendamiento financiero.;P; 
-429;0;5;II.3;P;B00020300;D;;;Otras deudas a largo plazo.;P; 
-430;0;5;III;P;B00030000;D;;;Deudas con empresas del grupo y asociadas a largo plazo.;P; 
-431;0;5;IV;P;B00040000;D;;;Pasivos por impuesto diferido.;P; 
-432;0;5;V;P;B00050000;D;;;Periodificaciones a largo plazo.;P; 
-433;0;5;VI;P;B00060000;T;B00070000+;;Acreedores comerciales no corrientes;P; 
-434;0;5;VII;P;B00070000;D;;;Deuda con características especiales a largo plazo;P; 
-435;0;5;;P;C00000000;T;C00010000+;;PASIVO CORRIENTE;P; 
-436;0;5;I;P;C00010000;D;;;Provisiones a corto plazo.;P; 
-437;0;5;II;P;C00020000;T;C00030000+C00020300+C00020200+C00020100+;;Deudas a corto plazo.;P; 
-438;0;5;II.1;P;C00020100;D;;;Deudas con entidades de crédito.;P; 
-439;0;5;II.2;P;C00020200;D;;;Acreedores por arrendamiento financiero.;P; 
-440;0;5;II.3;P;C00020300;D;;;Otras deudas a largo plazo.;P; 
-441;0;5;III;P;C00030000;D;;;Deudas con empresas del grupo y asociadas a corto plazo.;P; 
-442;0;5;IV;P;C00040000;T;C00060000+C00050000+C00040200+C00040100+;;Acreedores comerciales y otras cuentas a pagar.;P; 
-443;0;5;IV.1;P;C00040100;D;;;Proveedores.;P; 
-444;0;5;IV.2;P;C00040200;D;;;Otros acreedores.;P; 
-445;0;5;V;P;C00050000;D;;;Periodificaciones a corto plazo.;P; 
-446;0;5;VI;P;C00060000;D;;;Deuda con características especiales a corto plazo;P; 
-447;1;0;; ;B01;T;;;Importe neto de la cifra de negocios.;A; 
-448;1;0;; ;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;A; 
-449;1;0;; ;B03;T;;;Trabajos realizados por la empresa para su activo.;A; 
-450;1;0;; ;B04;T;;;Aprovisionamientos.;A; 
-451;1;0;; ;B05;T;;;Otros ingresos de explotación.;A; 
-452;1;0;; ;B06;T;;;Gastos de personal.;A; 
-453;1;0;; ;B07;T;;;Otros gastos de explotación.;A; 
-454;1;0;; ;B08;T;;;Amortización del inmovilizado.;A; 
-455;1;0;; ;B09;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;A; 
-456;1;0;; ;B10;T;;;Exceso de provisiones.;A; 
-457;1;0;; ;B11;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;A; 
-458;1;0;; ;B12;T;;;Diferencia negativa de combinaciones de negocio;A; 
-459;1;0;; ;B13;T;;;Otros resultados.;A; 
-460;1;0;A); ;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACIÓN;A; 
-461;1;0;; ;D14;T;;;Ingresos financieros.;A; 
-462;1;0;; ;D14a;D;;;Imputación de subv., donac. y legados de carácter financiero;A; 
-463;1;0;; ;D14b;D;;;Otros ingresos financieros;A; 
-464;1;0;; ;D15;T;;;Gastos financieros;A; 
-465;1;0;; ;D16;T;;;Variación de valor razonable en instrumentos financieros.;A; 
-466;1;0;; ;D17;T;;;Diferencias de cambio.;A; 
-467;1;0;; ;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;A; 
-468;1;0;B); ;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;A; 
-469;1;0;C); ;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;A; 
-470;1;0;; ;G19;T;;;Impuestos sobre beneficios.;A; 
-471;1;0;D); ;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;A; 
-472;1;2;; ;B01;T;;;Importe neto de la cifra de negocios.;D; 
-473;1;2;; ;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;D; 
-474;1;2;; ;B03;T;;;Trabajos realizados por la cooperativa para su activo.;D; 
-475;1;2;; ;B04;T;;;Aprovisionamientos.;D; 
-476;1;2;; ;B05;T;;;Otros ingresos de explotación.;D; 
-477;1;2;; ;B05a;D;;;Ingresos por operaciones con socios.;D; 
-478;1;2;; ;B05b;D;;;Otros ingresos.;D; 
-479;1;2;; ;B06;T;;;Gastos de personal.;D; 
-480;1;2;; ;B07;T;;;Adquisiciones a los socios.;D; 
-481;1;2;; ;B08;T;;;Otros gastos de explotación.;D; 
-482;1;2;; ;B09;T;;;Amortización del inmovilizado.;D; 
-483;1;2;; ;B10;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;D; 
-484;1;2;; ;B11;T;;;Exceso de provisiones.;D; 
-485;1;2;; ;B12;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;D; 
-486;1;2;; ;B13;T;;;Otros resultados;D; 
-487;1;2;A); ;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACIÓN;D; 
-488;1;2;; ;D14;T;;;Ingresos financieros.;D; 
-489;1;2;; ;D14a;D;;;De socios.;D; 
-490;1;2;; ;D14b;D;;;Otros.;D; 
-491;1;2;; ;D15;T;;;Gastos financieros;D; 
-492;1;2;; ;D16;T;;;Variación de valor razonable en instrumentos financieros.;D; 
-493;1;2;; ;D17;T;;;Diferencias de cambio.;D; 
-494;1;2;; ;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;D; 
-495;1;2;B); ;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;D; 
-496;1;2;C); ;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;D; 
-497;1;2;; ;G19;T;;;Impuestos sobre beneficios.;D; 
-498;1;2;D); ;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;D; 
-499;1;2;; ;I20;T;;;Ingresos imputables al fondo de educación, formación y promoción.;D; 
-500;1;2;; ;J21;T;;;Dotación al fondo de educación, formación y promoción.;D; 
-501;1;2;; ;K22;T;;;Intereses de las aportaciones al capital social y otros fondos.;D; 
-502;1;2;E); ;L00;F;H00+I20+J21+K22;;EXCEDENTE DE LA COOPERATIVA;D; 
-503;1;3;A); ;A00;Z;;;OPERACIONES CONTINUADAS;C; 
-504;1;3;; ;B01;T;;;Importe neto de la cifra de negocios.;C; 
-505;1;3;; ;B01a;D;;;Ventas;C; 
-506;1;3;; ;B01b;D;;;Prestaciones de servicios.;C; 
-507;1;3;; ;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;C; 
-508;1;3;; ;B03;T;;;Trabajos realizados por la cooperativa para su activo.;C; 
-509;1;3;; ;B04;T;;;Aprovisionamientos.;C; 
-510;1;3;; ;B04a;D;;;Consumo de mercaderías.;C; 
-511;1;3;; ;B04b;D;;;Consumo de materias primas y otras materias consumibles.;C; 
-512;1;3;; ;B04c;D;;;Trabajos realizados por otras empresas.;C; 
-513;1;3;; ;B04d;D;;;Deterioro de mercaderías, materias primas y otros aprovisionamientos.;C; 
-514;1;3;; ;B05;T;;;Otros ingresos de explotación.;C; 
-515;1;3;; ;B05a;D;;;Ingresos accesorios y otros de gestión corriente.;C; 
-516;1;3;; ;B05b;D;;;Subvenciones de explotación incorporadas al resultado del ejercicio.;C; 
-517;1;3;; ;B05c;D;;;Ingresos por operaciones con socios.;C; 
-518;1;3;; ;B06;T;;;Gastos de personal.;C; 
-519;1;3;; ;B06a;D;;;Sueldos, salarios y asalariados.;C; 
-520;1;3;; ;B06b;D;;;Cargas sociales.;C; 
-521;1;3;; ;B06c;D;;;Provisiones.;C; 
-522;1;3;; ;B07;T;;;Adquisiciones a los socios.;C; 
-523;1;3;; ;B08;T;;;Otros gastos de explotación.;C; 
-524;1;3;; ;B08a;D;;;Servicios exteriores.;C; 
-525;1;3;; ;B08b;D;;;Tributos.;C; 
-526;1;3;; ;B08c;D;;;Pérdidas, deterioro y variación de provisiones por operaciones comerciales.;C; 
-527;1;3;; ;B08d;D;;;Otros gastos de gestión corriente.;C; 
-528;1;3;; ;B09;T;;;Amortización del inmovilizado.;C; 
-529;1;3;; ;B10;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;C; 
-530;1;3;; ;B11;T;;;Exceso de provisiones.;C; 
-531;1;3;; ;B12;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;C; 
-532;1;3;; ;B12a;D;;;Deterioros y pérdidas.;C; 
-533;1;3;; ;B12b;D;;;Resultado por enajenaciones y otras.;C; 
-534;1;3;; ;B13;T;;;Otros resultados;C; 
-535;1;3;A.1); ;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACIÓN;C; 
-536;1;3;; ;D14;T;;;Ingresos financieros.;C; 
-537;1;3;; ;D14a;T;;;De participaciones en instrumentos de patrimonio.;C; 
-538;1;3;; ;D14a1;D;;;En empresas del grupo y asociadas.;C; 
-539;1;3;; ;D14a2;D;;;En terceros.;C; 
-540;1;3;; ;D14b;T;;;De valores negociables y otros instrumentos financieros.;C; 
-541;1;3;; ;D14b1;D;;;De empresas del grupo y asociadas.;C; 
-542;1;3;; ;D14b2;D;;;De terceros.;C; 
-543;1;3;; ;D14b3;D;;;De socios.;C; 
-544;1;3;; ;D15;T;;;Gastos financieros;C; 
-545;1;3;; ;D15a;D;;;Por deudas con empresas del grupo y asociadas.;C; 
-546;1;3;; ;D15b;D;;;Por deudas con terceros.;C; 
-547;1;3;; ;D15c;D;;;Por actualización de provisiones.;C; 
-548;1;3;; ;D16;T;;;Variación de valor razonable en instrumentos financieros.;C; 
-549;1;3;; ;D16a;D;;;Cartera de negociación y otros.;C; 
-550;1;3;; ;D16b;D;;;Imputación al resultado del ejercicio por activos financieros disponibles para la venta.;C; 
-551;1;3;; ;D17;T;;;Diferencias de cambio.;C; 
-552;1;3;; ;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;C; 
-553;1;3;; ;D18a;D;;;Deterioro y pérdidas.;C; 
-554;1;3;; ;D18b;D;;;Resultado por enajenaciones y otras.;C; 
-555;1;3;A.2); ;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;C; 
-556;1;3;A.3); ;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;C; 
-557;1;3;; ;G19;T;;;Impuestos sobre beneficios.;C; 
-558;1;3;A.4); ;H00;F;F00+G19;;RESULTADO DEL EJERCICIO PROCEDENTE DE OPERACIONES CONTINUADAS;C; 
-559;1;3;B); ;I00;Z;;;OPERACIONES INTERRUMPIDAS;C; 
-560;1;3;; ;J20;T;;;Resultado del ejercicio procedente de operaciones interrumpidas neto de impuestos.;C; 
-561;1;3;A.5); ;K00;F;H00+J20;;RESULTADO DEL EJERCICIO;C; 
-562;1;3;; ;L21;T;;;Ingresos imputables al fondo de educación, formación y promoción.;C; 
-563;1;3;; ;M22;T;;;Dotación al fondo de educación, formación y promoción.;C; 
-564;1;3;; ;N23;T;;;Intereses de las aportaciones al capital social y otros fondos.;C; 
-565;1;3;A.6); ;Ñ00;F;K00+L21+M22+N23;;EXCEDENTE DE LA COOPERATIVA;C; 
-566;1;4;A); ;A00;Z;;;OPERACIONES CONTINUADAS;N; 
-567;1;4;; ;B01;T;;;Importe neto de la cifra de negocios.;N; 
-568;1;4;; ;B01a;D;;;Ventas;N; 
-569;1;4;; ;B01b;D;;;Prestaciones de servicios.;N; 
-570;1;4;; ;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;N; 
-571;1;4;; ;B03;T;;;Trabajos realizados por la empresa para su activo.;N; 
-572;1;4;; ;B04;T;;;Aprovisionamientos.;N; 
-573;1;4;; ;B04a;D;;;Consumo de mercaderías.;N; 
-574;1;4;; ;B04b;D;;;Consumo de materias primas y otras materias consumibles.;N; 
-575;1;4;; ;B04c;D;;;Trabajos realizados por otras empresas.;N; 
-576;1;4;; ;B04d;D;;;Deterioro de mercaderías, materias primas y otros aprovisionamientos.;N; 
-577;1;4;; ;B05;T;;;Otros ingresos de explotación.;N; 
-578;1;4;; ;B05a;D;;;Ingresos accesorios y otros de gestión corriente.;N; 
-579;1;4;; ;B05b;D;;;Subvenciones de explotación incorporadas al resultado del ejercicio.;N; 
-580;1;4;; ;B06;T;;;Gastos de personal.;N; 
-581;1;4;; ;B06a;D;;;Sueldos, salarios y asalariados.;N; 
-582;1;4;; ;B06b;D;;;Cargas sociales.;N; 
-583;1;4;; ;B06c;D;;;Provisiones.;N; 
-584;1;4;; ;B07;T;;;Otros gastos de explotación.;N; 
-585;1;4;; ;B07a;D;;;Servicios exteriores.;N; 
-586;1;4;; ;B07b;D;;;Tributos.;N; 
-587;1;4;; ;B07c;D;;;Pérdidas, deterioro y variación de provisiones por operaciones comerciales.;N; 
-588;1;4;; ;B07d;D;;;Otros gastos de gestión corriente.;N; 
-589;1;4;; ;B08;T;;;Amortización del inmovilizado.;N; 
-590;1;4;; ;B09;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;N; 
-591;1;4;; ;B10;T;;;Exceso de provisiones.;N; 
-592;1;4;; ;B11;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;N; 
-593;1;4;; ;B11a;D;;;Deterioros y pérdidas.;N; 
-594;1;4;; ;B11b;D;;;Resultado por enajenaciones y otras.;N; 
-595;1;4;; ;B12;T;;;Diferencia negativa de combinaciones de negocio.;N; 
-596;1;4;; ;B13;T;;;Otros resultados;N; 
-597;1;4;A.1); ;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACIÓN;N; 
-598;1;4;; ;D14;T;;;Ingresos financieros.;N; 
-599;1;4;; ;D14a;T;;;De participaciones en instrumentos de patrimonio.;N; 
-600;1;4;; ;D14a1;D;;;En empresas del grupo y asociadas.;N; 
-601;1;4;; ;D14a2;D;;;En terceros.;N; 
-602;1;4;; ;D14b;T;;;De valores negociables y otros instrumentos financieros.;N; 
-603;1;4;; ;D14b1;D;;;De empresas del grupo y asociadas.;N; 
-604;1;4;; ;D14b2;D;;;De terceros.;N; 
-605;1;4;; ;D15;T;;;Gastos financieros;N; 
-606;1;4;; ;D15a;D;;;Por deudas con empresas del grupo y asociadas.;N; 
-607;1;4;; ;D15b;D;;;Por deudas con terceros.;N; 
-608;1;4;; ;D15c;D;;;Por actualización de provisiones.;N; 
-609;1;4;; ;D16;T;;;Variación de valor razonable en instrumentos financieros.;N; 
-610;1;4;; ;D16a;D;;;Cartera de negociación y otros.;N; 
-611;1;4;; ;D16b;D;;;Imputación al resultado del ejercicio por activos financieros disponibles para la venta.;N; 
-612;1;4;; ;D17;T;;;Diferencias de cambio.;N; 
-613;1;4;; ;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;N; 
-614;1;4;; ;D18a;D;;;Deterioro y pérdidas.;N; 
-615;1;4;; ;D18b;D;;;Resultado por enajenaciones y otras.;N; 
-616;1;4;A.2); ;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;N; 
-617;1;4;A.3); ;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;N; 
-618;1;4;; ;G19;T;;;Impuestos sobre beneficios.;N; 
-619;1;4;A.4); ;H00;F;F00+G19;;RESULTADO DEL EJERCICIO PROCEDENTE DE OPERACIONES CONTINUADAS;N; 
-620;1;4;B); ;I00;Z;;;OPERACIONES INTERRUMPIDAS;N; 
-621;1;4;; ;J20;T;;;Resultado del ejercicio procedente de operaciones interrumpidas neto de impuestos.;N; 
-622;1;4;A.5); ;K00;F;H00+J20;;RESULTADO DEL EJERCICIO;N; 
-623;1;5;; ;B01;T;;;Importe neto de la cifra de negocios.;P; 
-624;1;5;; ;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;P; 
-625;1;5;; ;B03;T;;;Trabajos realizados por la empresa para su activo.;P; 
-626;1;5;; ;B04;T;;;Aprovisionamientos.;P; 
-627;1;5;; ;B05;T;;;Otros ingresos de explotación.;P; 
-628;1;5;; ;B06;T;;;Gastos de personal.;P; 
-629;1;5;; ;B07;T;;;Otros gastos de explotación.;P; 
-630;1;5;; ;B08;T;;;Amortización del inmovilizado.;P; 
-631;1;5;; ;B09;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;P; 
-632;1;5;; ;B10;T;;;Exceso de provisiones.;P; 
-633;1;5;; ;B11;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;P; 
-634;1;5;; ;B12;T;;;Otros resultados.;P; 
-635;1;5;A); ;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12;;RESULTADO DE EXPLOTACIÓN;P; 
-636;1;5;; ;D14;T;;;Ingresos financieros.;P; 
-637;1;5;; ;D14a;D;;;Imputación de subv., donac. y legados de carácter financiero;P; 
-638;1;5;; ;D14b;D;;;Otros ingresos financieros;P; 
-639;1;5;; ;D15;T;;;Gastos financieros;P; 
-640;1;5;; ;D16;T;;;Variación de valor razonable en instrumentos financieros.;P; 
-641;1;5;; ;D17;T;;;Diferencias de cambio.;P; 
-642;1;5;; ;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;P; 
-643;1;5;B); ;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;P; 
-644;1;5;C); ;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;P; 
-645;1;5;; ;G19;T;;;Impuestos sobre beneficios.;P; 
-646;1;5;D); ;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;P; 
-647;2;6;; ;10;D;;;Ventas Netas.;; 
-648;2;6;; ;11;D;;;Otros ingresos de gestion;; 
-649;2;6;; ;50;F;10+11;;VENTAS NETAS e INGRESOS EXPLOTACION;; 
-650;2;6;; ;60;D;;;Compras materiales;; 
-651;2;6;; ;70;D;;;( +/- ) Variacion de existencias.;; 
-652;2;6;; ;71;D;;;Trabajos de Terceros;; 
-653;2;6;; ;72;D;;;Mano de Obra Directa;; 
-654;2;6;; ;73;D;;;Comisiones de Ventas;; 
-655;2;6;; ;74;D;;;Rappels sobre Ventas;; 
-656;2;6;; ;75;D;;;Transportes de Ventas;; 
-657;2;6;; ;90;F;50+60+70+71+72+73+74+75;;MARGEN BRUTO;; 
-658;2;6;; ;100;D;;;Amortizaciones;; 
-659;2;6;; ;120;D;;;Mano de obra indirecta;; 
-660;2;6;; ;125;D;;;Otros costes fijos;; 
-661;2;6;; ;130;F;90+100+120+125;;RESULTADO de  EXPLOTACION  (BAIT);; 
-662;2;6;; ;140;D;;;Gastos Financieros;; 
-663;2;6;; ;180;D;;;Ingresos financieros;; 
-664;2;6;; ;190;D;;;Rtdos Extraordinarios/ Extrafunc. Negativos;; 
-665;2;6;; ;192;D;;;Rtdos Extraordinarios / Extrafunc. Positivos;; 
-666;2;6;; ;210;F;130+140+180+190+192;;RESULTADO ANTES DE IMPUESTOS;; 
-667;2;6;; ;260;D;;;Impuesto sobre sociedades;; 
-668;2;6;; ;270;F;210+260;;RESULTADO DESPUES DE IMPUESTOS (BENEF.O PERD);; 
-669;3;6;; ;10;D;;;Ventas Netas;;N
-670;3;6;; ;20;F;10;;VENTAS NETAS;;P
-671;3;6;; ;30;D;;;Compras de Materiales;;N
-672;3;6;; ;40;D;;;(+/-) Variacion de Existencias;;N
-673;3;6;; ;50;D;;;Trabajos de Terceros;;N
-674;3;6;; ;60;D;;;Mano de Obra Directa ( Variable);;N
-675;3;6;; ;70;D;;;Comisiones S/ Ventas;;N
-676;3;6;; ;80;D;;;Rappels S/ Ventas;;N
-677;3;6;; ;90;D;;;Transportes de Ventas;;N
-678;3;6;; ;95;D;;;Gastos Cobro Ventas;;N
-679;3;6;; ;100;F;30+40+50+60+70+80+90+95+31;; - COSTE DE VENTAS ( VARIABLES);;S
-680;3;6;; ;105;G;20+100;; = MARGEN BRUTO;;S
-681;3;6;; ;110;D;;;Amortizaciones;;N
-682;3;6;; ;115;D;;;Mano de Obra Indirecta ( Fija);;N
-683;3;6;; ;120;D;;;Otros Costes Fijos;;N
-684;3;6;; ;130;F;110+115+120;;#¿NOMBRE?;;S
-685;3;6;; ;140;G;20+100+130;; = RESULTADOS DE EXPLOTACION  (BAIT);;S
-686;3;6;; ;150;D;;; + - RESULTADOS FINANCIEROS;;S
-687;3;6;; ;160;D;;; + - RESULTADOS EXTRA Y EXTRAFUNCIONAL;;S
-688;3;6;; ;180;D;;;Impuestos;;N
-689;3;6;; ;170;G;140+150+160;; = RESULTADOS ANTES DE IMPUESTOS;;S
-690;3;6;; ;190;G;170+180;; = BENEFICIO NETO  (BN);;S
-691;3;6;; ;31;D;;;Compras de Consumibles Almacen;;N
-692;3;6;; ;0; ;;;;; 
-693;3;7;; ;10;D;;;Ventas Mercaderías;;S
-694;3;7;; ;20;D;;;Ventas Productos Terminados;;S
-695;3;7;; ;30;D;;;Otras Ventas;;S
-696;3;7;; ;40;D;;;Rappels y Devoluciones de Ventas;;S
-697;3;7;; ;50;D;;;Trab. realizados por otras empresas;;S
-698;3;7;; ;60;D;;;Subvenciones a la Explotación;;S
-699;3;7;; ;70;D;;;Otros Ingresos de gestión;;S
-700;3;7;; ;80;F;10+20+30+40+50+60+70;;*** TOTAL VENTAS NETAS E INGRESOS EXPLOT;;P
-701;3;7;; ;90;D;;;Compras Netas Mercaderías;;S
-702;3;7;; ;100;D;;;Compras Netas Materias Primas;;S
-703;3;7;; ;110;D;;;Compras Netas Otros Aprovisionamientos;;S
-704;3;7;; ;120;D;;;Trabajos Realizados por otras empresas;;S
-705;3;7;; ;130;D;;;Variación Exis. Mercaderias;;S
-706;3;7;; ;140;D;;;Variación Exist. Materias Primas;;S
-707;3;7;; ;150;D;;;Variación Exist. Otros Aprovi.;;S
-708;3;7;; ;160;D;;;Variación Productos Term. y en curso;;S
-709;3;7;; ;170;F;90+100+110+120+130+140+150+160;;*** TOTAL CONSUMO;;S
-710;3;7;; ;180;F;80+170;;*** MARGEN BRUTO;;S
-711;3;7;; ;190;D;;;Gastos de Personal;;S
-712;3;7;; ;200;D;;;Suministros y Serv. Exteriores;;S
-713;3;7;; ;210;D;;;Tributos;;S
-714;3;7;; ;220;D;;;Otros Gastos de Gestión;;S
-715;3;7;; ;230;F;190+200+210+220;;*** TOTAL GASTOS EXPLOTACIÓN;;S
-716;3;7;; ;240;F;180+230;;*** RESULTADO BRUTO EXPLOTACIÓN;;S
-717;3;7;; ;250;D;;;Dotación amortización Inmovilizado;;S
-718;3;7;; ;260;D;;;Variación Provisiones;;S
-719;3;7;; ;270;F;240+250+260;;*** RESULTADO NETO EXPLOTACIÓN;;S
-720;3;7;; ;280;D;;;Ingresos Financieros;;S
-721;3;7;; ;290;D;;;Gastos Financieros;;S
-722;3;7;; ;300;F;270+280+290;;*** RESULTADO ACTIVIDAD ORDINARIA;;S
-723;3;7;; ;310;D;;;Ing. y Bº Extraordinarios;;S
-724;3;7;; ;320;D;;;Gastos y Pérdidas Extraordinarios;;S
-725;3;7;; ;330;F;300+310+320;;*** RESULTADO ANTES DE IMPUESTOS;;S
-726;3;7;; ;340;D;;;Impuesto s/Beneficios;;S
-727;3;7;; ;350;F;330+340;;*** RESULTADO NETO CONTABLE;;S
-728;3;7;; ;360;F;350+250+260;;*** CASH FLOW GENERADO;;S
+1;0;1;;A;AA00000000;G;AA00060000+AA00050000+AA00040000+AA00030000+AA00020000+AA00010000;;ACTIVO NO CORRIENTE;A
+2;0;1;I;A;AA00010000;D;;;Inmovilizado intagible.;A
+3;0;1;II;A;AA00020000;D;;;Inmovilizado material.;A
+4;0;1;III;A;AA00030000;D;;;Inversiones inmobiliarias.;A
+5;0;1;IV;A;AA00040000;D;;;Inversiones en empresas del grupo y asociadas a largo plazo.;A
+6;0;1;V;A;AA00050000;D;;;Inversiones financieras a largo plazo.;A
+7;0;1;VI;A;AA00060000;D;;;Activos por impuesto diferido.;A
+8;0;1;;A;AB00000000;G;AB00010000+AB00020000+AB00030000+AB00040000+AB00050000+AB00060000+AB00070000;;ACTIVO CORRIENTE;A
+9;0;1;I;A;AB00010000;D;;;Activos no corrientes mantenidos para la venta.;A
+10;0;1;II;A;AB00020000;D;;;Existencias.;A
+11;0;1;III;A;AB00030000;F;AB00030100+AB00030200+AB00030300;;Deudores comerciales y otras cuentas a cobrar.;A
+12;0;1;III.1;A;AB00030100;D;;;Clientes por venta y prestaciones de servicios.;A
+13;0;1;III.2;A;AB00030200;D;;;Accionistas (socios) por desembolsos exigidos.;A
+14;0;1;III.3;A;AB00030300;D;;;Otros deudores.;A
+15;0;1;IV;A;AB00040000;D;;;Inversiones en empresas del grupo y asociadas a corto plazo.;A
+16;0;1;V;A;AB00050000;D;;;Invesiones financieras a corto plazo.;A
+17;0;1;VI;A;AB00060000;D;;;Periodificaciones a corto plazo.;A
+18;0;1;VII;A;AB00070000;D;;;Efectivo y otros activos líquidos equivalentes.;A
+19;0;1;;P;PA00000000;G;PA01010000+PA01020000+PA01030000+PA01040000+PA01050000+PA01060000+PA01070000+PA01080000+PA01090000;;PATRIMONIO NETO;A
+20;0;1;;P;PA01000000;T;;;Fondos propios.;A
+21;0;1;I;P;PA01010000;F;PA01010100+PA01020100;;Capital.;A
+22;0;1;I.1;P;PA01010100;D;;;Capital escriturado.;A
+23;0;1;I.2;P;PA01010200;D;;;(Capital no exigido).;A
+24;0;1;II;P;PA01020000;D;;;Prima de emisión.;A
+25;0;1;III;P;PA01030000;D;;;Reservas.;A
+26;0;1;IV;P;PA01040000;D;;;(Acciones y participaciones en patrimonio propias).;A
+27;0;1;V;P;PA01050000;D;;;Resultados de ejercicios anteriores.;A
+28;0;1;VI;P;PA01060000;D;;;Otras aportaciones de socios.;A
+29;0;1;VII;P;PA01070000;D;;;Resultado del ejercicio.;A
+30;0;1;VIII;P;PA01080000;D;;;(Dividendo a cuenta).;A
+31;0;1;IX;P;PA01090000;D;;;Otros instrumentos de patrimonio neto.;A
+32;0;1;;P;PA02000000;D;;;Ajustes por cambios de valor.;A
+33;0;1;;P;PA03000000;D;;;Subvenciones, donaciones y legados recibidos.;A
+34;0;1;;P;PB00000000;G;PB00010000+PB00020000+PB00030000+PB00040000+PB00050000;;PASIVO NO CORRIENTE;A
+35;0;1;I;P;PB00010000;D;;;Provisiones a largo plazo.;A
+36;0;1;II;P;PB00020000;F;PB00020100+PB00020200+PB00020300;;Deudas a largo plazo.;A
+37;0;1;II.1;P;PB00020100;D;;;Deudas con entidades de crédito.;A
+38;0;1;II.2;P;PB00020200;D;;;Acreedores por arrendamiento financiero.;A
+39;0;1;II.3;P;PB00020300;D;;;Otras deudas a largo plazo.;A
+40;0;1;III;P;PB00030000;D;;;Deudas con empresas del grupo y asociadas a largo plazo.;A
+41;0;1;IV;P;PB00040000;D;;;Pasivos por impuesto diferido.;A
+42;0;1;V;P;PB00050000;D;;;Periodificaciones a largo plazo.;A
+43;0;1;;P;PC00000000;G;PC00010000+PC00020000+PC00030000+PC00040000+PC00050000+PC00060000;;PASIVO CORRIENTE;A
+44;0;1;I;P;PC00010000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;A
+45;0;1;II;P;PC00020000;D;;;Provisiones a corto plazo.;A
+46;0;1;III;P;PC00030000;F;PC00030100+PC00030200+PC00030300;;Deudas a corto plazo.;A
+47;0;1;III.1;P;PC00030100;D;;;Deudas con entidades de crédito.;A
+48;0;1;III.2;P;PC00030200;D;;;Acreedores por arrendamiento financiero.;A
+49;0;1;III.3;P;PC00030300;D;;;Otras deudas a largo plazo.;A
+50;0;1;IV;P;PC00040000;D;;;Deudas con empresas del grupo y asociadas a corto plazo.;A
+51;0;1;V;P;PC00050000;F;PC00050200+PC00050100;;Acreedores comerciales y otras cuentas a pagar.;A
+52;0;1;V.1;P;PC00050100;D;;;Proveedores.;A
+53;0;1;V.2;P;PC00050200;D;;;Otros acreedores.;A
+54;0;1;VI;P;PC00060000;D;;;Periodificaciones a corto plazo.;A
+55;0;2;A);A;AA00000000;G;AA00010000+AA00020000+AA00030000+AA00040000+AA00050000+AA00060000;;ACTIVO NO CORRIENTE;D
+56;0;2;I;A;AA00010000;D;;;Inmovilizado intagible.;D
+57;0;2;II;A;AA00020000;D;;;Inmovilizado material.;D
+58;0;2;III;A;AA00030000;D;;;Inversiones inmobiliarias.;D
+59;0;2;IV;A;AA00040000;F;AA00040100+AA00040200;;Inversiones a largo plazo en empresas del grupo, asociadas y socios.;D
+60;0;2;IV.2;A;AA00040200;D;;;Otras inversiones;D
+61;0;2;IV.1;A;AA00040100;D;;;Créditos a largo plazo con socios.;D
+62;0;2;V;A;AA00050000;D;;;Inversiones financieras a largo plazo.;D
+63;0;2;VI;A;AA00060000;D;;;Activos por impuesto diferido.;D
+64;0;2;B);A;AB00000000;G;AB00010000+AB00020000+AB00030000+AB00040000+AB00050000+AB00060000+AB00070000;;ACTIVO CORRIENTE;D
+65;0;2;I;A;AB00010000;D;;;Activos no corrientes mantenidos para la venta.;D
+66;0;2;II;A;AB00020000;D;;;Existencias.;D
+67;0;2;III;A;AB00030000;F;AB00030100+AB00030200+AB00030300+AB00030400;;Deudores comerciales y otras cuentas a cobrar.;D
+68;0;2;III.1;A;AB00030100;D;;;Clientes por venta y prestaciones de servicios.;D
+69;0;2;III.2;A;AB00030200;D;;;Socios por desembolsos exigidos.;D
+70;0;2;III.3;A;AB00030300;D;;;Socios deudores;D
+71;0;2;III.4;A;AB00030400;D;;;Otros deudores.;D
+72;0;2;IV;A;AB00040000;F;AB00040100+AB00040200;;Inversiones corto plazo en empresas del grupo, asociadas y socios.;D
+73;0;2;IV.1;A;AB00040100;D;;;Créditos a corto plazo con socios.;D
+74;0;2;IV.2;A;AB00040200;D;;;Otras inversiones.;D
+75;0;2;V;A;AB00050000;D;;;Inversiones financieras a corto plazo.;D
+76;0;2;VI;A;AB00060000;D;;;Periodificaciones a corto plazo.;D
+77;0;2;VII;A;AB00070000;D;;;Efectivo y otros activos líquidos equivalentes.;D
+78;0;2;A);P;PA00000000;G;PA01010000+PA01020000+PA01030000+PA01040000+PA01050000+PA01060000+PA01070000+PA01080000;;PATRIMONIO NETO;D
+79;0;2;;P;PA01000000;T;;;Fondos propios.;D
+80;0;2;I;P;PA01010000;F;PA01010100+PA01010200;;Capital.;D
+81;0;2;I.1;P;PA01010100;D;;;Capital cooperativo suscrito.;D
+82;0;2;I.2;P;PA01010200;D;;;(Capital no exigido).;D
+83;0;2;II;P;PA01020000;F;PA01020100+PA01020200+PA01020300+PA01020400;;Reservas.;D
+84;0;2;II.1;P;PA01020100;D;;;Fondo de reserva obligatorio.;D
+85;0;2;II.2;P;PA01020200;D;;;Fondo de reembolso o actualización.;D
+86;0;2;II.3;P;PA01020300;D;;;Fondo de Reserva Voluntario;D
+87;0;2;III;P;PA01030000;D;;;Resultados de ejercicios anteriores.;D
+88;0;2;IV;P;PA01040000;D;;;Otras aportaciones de socios.;D
+89;0;2;V;P;PA01050000;D;;;Excedente de la cooperativa (positivo o negativo).;D
+90;0;2;VI;P;PA01060000;D;;;Remuneraciones al capital a cuenta y retor. coop. a cuenta entreg.en ejer.;D
+91;0;2;VII;P;PA01070000;D;;;Fondos capitalizados.;D
+92;0;2;VIII;P;PA01080000;D;;;Otros instrumentos de patrimonio neto.;D
+93;0;2;A-2);P;PA02000000;D;;;Ajustes por cambios de valor.;D
+94;0;2;A-3);P;PA03000000;D;;;Subvenciones, donaciones y legados recibidos.;D
+95;0;2;B);P;PB00000000;G;PB00010000+PB00020000+PB00030000+PB00040000+PB00050000+PB00060000+PB00070000;;PASIVO NO CORRIENTE;D
+96;0;2;I;P;PB00010000;D;;;Fondo de educación, formación y promoción a largo plazo.;D
+97;0;2;II;P;PB00020000;F;PB00020100+PB00020200+PB00020300;;Deudas con características especiales a largo plazo.;D
+98;0;2;II.1;P;PB00020100;D;;;Capital reembolsable exigible.;D
+99;0;2;II.2;P;PB00020200;T;;;Fondos especiales calificados como pasivos;D
+100;0;2;II.3;P;PB00020300;D;;;Acreedores por fondos capitalizados a largo plazo;D
+101;0;2;III;P;PB00030000;D;;;Provisiones a largo plazo.;D
+102;0;2;IV;P;PB00040000;F;PB00040100+PB00040200+PB00040300;;Deudas a largo plazo.;D
+103;0;2;V;P;PB00050000;F;PB00050100+PB00050200+PB00050300;;Deudas a largo plazo con empresas del grupo, asociadas y socios.;D
+104;0;2;V.1;P;PB00050100;D;;;Deudas con empresas del grupo.;D
+105;0;2;V.2;P;PB00050200;D;;;Deudas con empresas asociadas.;D
+106;0;2;V.3;P;PB00050300;D;;;Deudas con socios.;D
+107;0;2;VI;P;PB00060000;D;;;Pasivos por impuesto diferido.;D
+108;0;2;VII;P;PB00070000;D;;;Periodificaciones a largo plazo.;D
+109;0;2;C);P;PC00000000;G;PC00010000+PC00020000+PC00030000+PC00040000+PC00050000+PC00060000+PC00070000+PC00080000;;PASIVO CORRIENTE;D
+110;0;2;I;P;PC00010000;D;;;Fondo de educaci?n, formaci?n y promoci?n a corto plazo.;D
+111;0;2;II;P;PC00020000;F;PC00020100+PC00020200+PC00020300;;Deudas con caracter?sticas especiales a corto plazo.;D
+112;0;2;II.1;P;PC00020100;D;;;?Capital? reembolsable exigible.;D
+113;0;2;II.2;P;PC00020200;T;;;Fondos especiales calificados como pasivo;D
+114;0;2;II.3;P;PC00020300;D;;;Acreedores por fondos capitalizados a largo plazo;D
+115;0;2;III;P;PC00030000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;D
+116;0;2;IV;P;PC00040000;D;;;Provisiones a corto plazo.;D
+117;0;2;V;P;PC00050000;F;PC00050100+PC00050200+PC00050300;;Deudas a corto plazo.;D
+118;0;2;V.1;P;PC00050100;D;;;Deudas con entidades de crédito.;D
+119;0;2;V.2;P;PC00050200;D;;;Acreedores por arrendamiento financiero.;D
+120;0;2;V.3;P;PC00050300;D;;;Otras deudas a corto plazo.;D
+122;0;2;VI;P;PC00060000;F;PC00060100+PC00060200+PC00060300;;Deudas a corto plazo con empresas del grupo, asociadas y socios.;D
+123;0;2;VI.1;P;PC00060100;D;;;Deudas con empresas del grupo.;D
+124;0;2;VI.2;P;PC00060200;D;;;Deudas con empresas asociadas.;D
+125;0;2;VI.3;P;PC00060300;D;;;Deudas con socios.;D
+126;0;2;VII;P;PC00070000;F;PC00070100+PC00070200+PC00070300;;Acreedores comerciales y otras cuentas a pagar.;D
+127;0;2;VII.1;P;PC00070100;D;;;Socios proveedores.;D
+128;0;2;VII.2;P;PC00070200;D;;;Proveedores;D
+129;0;2;VIII;P;PC00080000;D;;;Periodificaciones a corto plazo.;D
+130;0;3;A);A;AA00000000;G;AA00010000+AA00020000+AA00030000+AA00040000+AA00050000+AA00060000;;ACTIVO NO CORRIENTE;C
+131;0;3;I;A;AA00010000;F;AA00010100+AA00010200+AA00010300+AA00010400+AA00010500+AA00010600;;Inmovilizado intagible.;C
+132;0;3;I.1;A;AA00010100;D;;;Desarrollo.;C
+133;0;3;I.2;A;AA00010200;D;;;Concesiones.;C
+134;0;3;I.3;A;AA00010300;D;;;Patentes, licencias, marcas y similares.;C
+135;0;3;I.4;A;AA00010400;D;;;Fondo de comercio.;C
+136;0;3;I.5;A;AA00010500;D;;;Aplicaciones informáticas.;C
+137;0;3;I.6;A;AA00010600;D;;;Otro inmovilizado intangible.;C
+139;0;3;II;A;AA00020000;F;AA00020100+AA00020200+AA00020300;;Inmovilizado material.;C
+140;0;3;II.1;A;AA00020100;D;;;Terrenos y construcciones.;C
+141;0;3;II.2;A;AA00020200;D;;;Instalaciones técnicas, y otro inmovilizado material.;C
+142;0;3;II.3;A;AA00020300;D;;;Inmovilizado en curso y anticipos.;C
+143;0;3;III;A;AA00030000;F;AA00030100+AA00030200;;Inversiones inmobiliarias.;C
+144;0;3;III.1;A;AA00030100;D;;;Terrenos.;C
+145;0;3;III.2;A;AA00030200;D;;;Construcciones.;C
+146;0;3;IV;A;AA00040000;F;AA00040100+AA00040200+AA00040202+AA00040300+AA00040400+AA00040500+AA00040600;;Inversiones a largo plazo en empresas del grupo, asociadas y socios.;C
+147;0;3;IV.1;A;AA00040100;D;;;Instrumentos de patrimonio.;C
+149;0;3;IV.2.1;A;AA00040200;D;;;Créditos a empresas del grupo.;C
+150;0;3;IV.2.2;A;AA00040202;D;;;Créditos a empresas asociadas.;C
+151;0;3;IV.3;A;AA00040300;D;;;Valores representativos de deuda.;C
+152;0;3;IV.4;A;AA00040400;T;;;Derivados.;C
+153;0;3;IV.5;A;AA00040500;T;;;Otros activos financieros.;C
+154;0;3;IV.6;A;AA00040600;D;;;Créditos a socios.;C
+155;0;3;V;A;AA00050000;F;AA00050100+AA00050200+AA00050300+AA00050400+AA00050500+AA00050600;;Inversiones financieras a largo plazo.;C
+156;0;3;V.1;A;AA00050100;D;;;Instrumentos de patrimonio.;C
+157;0;3;V.2;A;AA00050200;D;;;Cr?ditos a terceros.;C
+158;0;3;V.3;A;AA00050300;D;;;Valores representativos de deuda.;C
+159;0;3;V.4;A;AA00050400;D;;;Derivados.;C
+160;0;3;V.5;A;AA00050500;D;;;Otros activos financieros.;C
+161;0;3;V.6;A;AA00050600;D;;;Otras inversiones.;C
+162;0;3;VI;A;AA00060000;D;;;Activos por impuesto diferido.;C
+163;0;3;B);A;AB00000000;G;AB00010000+AB00020000+AB00030000+AB00040000+AB00050000+AB00060000+AB00070000;;ACTIVO CORRIENTE;C
+164;0;3;I;A;AB00010000;D;;;Activos no corrientes mantenidos para la venta.;C
+165;0;3;II;A;AB00020000;F;AB00020100+AB00020200+AB00020300+AB00020400+AB00020500+AB00020600;;Existencias.;C
+166;0;3;II.1;A;AB00020100;D;;;Comerciales.;C
+167;0;3;II.2;A;AB00020200;D;;;Materias primas y otros aprovisionamientos.;C
+168;0;3;II.3;A;AB00020300;D;;;Productos en curso.;C
+169;0;3;II.4;A;AB00020400;D;;;Productos terminados.;C
+170;0;3;II.5;A;AB00020500;D;;;Subproductos, residuos y materiales recuperados.;C
+171;0;3;II.6;A;AB00020600;D;;;Anticipos a proveedores.;C
+172;0;3;III;A;AB00030000;F;AB00030100+AB00030200++AB00030201+AB00030202+AB00030203+AB00030300+AB00030400+AB00030500+AB00030600+AB00030700;;Deudores comerciales y otras cuentas a cobrar.;C
+173;0;3;III.1;A;AB00030100;T;;;Clientes por ventas y prestaciones de servicios.;C
+174;0;3;III.2;A;AB00030200;D;;;Clientes, empresas del grupo y asociadas y socios deudores.;C
+175;0;3;III.2.1;A;AB00030201;D;;;a) Empresas del grupo.;C
+176;0;3;III.2.2;A;AB00030202;D;;;b) Empresas asociadas.;C
+177;0;3;III.2.3;A;AB00030203;D;;;c) Socios deudores;C
+178;0;3;III.3;A;AB00030300;D;;;Deudores varios.;C
+179;0;3;III.4;A;AB00030400;D;;;Personal.;C
+180;0;3;III.5;A;AB00030500;D;;;Activos por impuestos corriente.;C
+181;0;3;III.6;A;AB00030600;D;;;Otros créditos con las Administraciones Públicas.;C
+182;0;3;III.7;A;AB00030700;D;;;Socios por desembolsos exigidos.;C
+183;0;3;IV;A;AB00040000;F;AB00040100+AB00040200+AB00040300+AB00040400+AB00040500+AB00040600;;Inversiones corto plazo en empresas del grupo, asociadas y socios.;C
+184;0;3;IV.1;A;AB00040100;D;;;Instrumentos de Patrimonio.;C
+185;0;3;IV.2;A;AB00040200;F;AB00040201+AB00040202;;Créditos a empresas.;C
+186;0;3;IV.2.1;A;AB00040201;D;;;a) Empresas del grupo.;C
+187;0;3;IV.2.2;A;AB00040202;D;;;b) Empresas asociadas.;C
+188;0;3;IV.3;A;AB00040300;D;;;Valores representativos de deuda.;C
+189;0;3;IV.4;A;AB00040400;T;;;Derivados.;C
+190;0;3;IV.5;A;AB00040500;D;;;Otros activos financieros.;C
+191;0;3;IV.6;A;AB00040600;D;;;Créditos a socios.;C
+192;0;3;V;A;AB00050000;F;AB00050100+AB00050200+AB00050300+AB00050400+AB00050500;;Inversiones financieras a corto plazo.;C
+193;0;3;V.1;A;AB00050100;D;;;Instrumentos de patrimonio.;C
+194;0;3;V.2;A;AB00050200;D;;;Créditos a empresas.;C
+195;0;3;V.3;A;AB00050300;D;;;Valores representativos de deuda.;C
+196;0;3;V.4;A;AB00050400;D;;;Derivados.;C
+197;0;3;V.5;A;AB00050500;D;;;Otros activos financieros.;C
+198;0;3;VI;A;AB00060000;D;;;Periodificaciones a corto plazo.;C
+199;0;3;VII;A;AB00070000;F;AB00070100+AB00070200;;Efectivo y otros activos líquidos equivalentes.;C
+200;0;3;VII.1;A;AB00070100;D;;;Tesorería.;C
+201;0;3;VII.2;A;AB00070200;D;;;Otros activos líquidos equivalentes.;C
+202;0;3;A);P;PA00000000;G;PA01010000+PA01020000+PA01030000+PA01040000+PA01050000+PA01060000+PA01070000+PA01080000;;PATRIMONIO NETO;C
+203;0;3;A-1);P;PA01000000;T;;;Fondos propios.;C
+204;0;3;I;P;PA01010000;F;PA01010100+PA01010200;;Capital.;C
+205;0;3;I.1;P;PA01010100;D;;;Capital suscrito cooperativo.;C
+206;0;3;I.2;P;PA01010200;D;;;(Capital cooperativo no exigido).;C
+207;0;3;II;P;PA01020000;F;PA01020100+PA01020200+PA01020300+PA01020400+PA01020500;;Reservas.;C
+208;0;3;II.1;P;PA01020100;D;;;Fondo de reserva obligatorio.;C
+209;0;3;II.2;P;PA01020200;D;;;Fondo de reembolso o actualización.;C
+210;0;3;II.3;P;PA01020300;D;;;Fondo de Reserva Voluntario;C
+211;0;3;II.4;P;PA01020400;D;;;Reservas estatutarias;C
+212;0;3;III;P;PA01030000;F;PA01030100+PA01030200;;Resultados de ejercicios anteriores.;C
+213;0;3;III.1;P;PA01030100;D;;;Remanente.;C
+214;0;3;III.2;P;PA01030200;D;;;(Resultados negativos de ejercicios anteriores).;C
+215;0;3;IV;P;PA01040000;D;;;Otras aportaciones de socios.;C
+216;0;3;V;P;PA01050000;D;;;Resultado de la cooperativa (positivo o negativo).;C
+217;0;3;VI;P;PA01060000;D;;;(Retorno cooperativo y remuneración discrecional a cuenta entregada en el ejercicio).;C
+218;0;3;VII;P;PA01070000;D;;;Fondos capitalizados.;C
+219;0;3;VIII;P;PA01080000;D;;;Otros instrumentos de patrimonio neto.;C
+220;0;3;A-2);P;PA02000000;F;PA02010000+PA02020000+PA02030000;;Ajustes por cambios de valor.;C
+221;0;3;I;P;PA02010000;D;;;Activos financieros disponibles para la venta.;C
+222;0;3;II;P;PA02020000;D;;;Operaciones de cobertura.;C
+223;0;3;III;P;PA02030000;D;;;Otros.;C
+224;0;3;A-3);P;PA03000000;D;;;Subvenciones, donaciones y legados recibidos.;C
+225;0;3;B);P;PB00000000;G;PB00010000+PB00020000+PB00030000+PB00040000+PB00050000+PB00060000+PB00070000;;PASIVO NO CORRIENTE;C
+226;0;3;I;P;PB00010000;D;;;Fondo de educación, formación y promoción a largo plazo.;C
+227;0;3;II;P;PB00020000;F;PB00020100+PB00020200+PB00020300;;Deudas con características especiales a largo plazo.;C
+228;0;3;II.1;P;PB00020100;D;;;Capital reembolsable exigible.;C
+229;0;3;II.2;P;PB00020200;D;;;Fondos especiales calificados como pasivos.;C
+230;0;3;II.3;P;PB00020300;D;;;Acreedores por fondos capitalizados a largo plazo.;C
+231;0;3;III;P;PB00030000;F;PB00030100+PB00030200+PB00030300+PB00030400;;Provisiones a largo plazo.;C
+232;0;3;III.1;P;PB00030100;D;;;Obligaciones por prestaciones a largo plazo al personal.;C
+233;0;3;III.2;P;PB00030200;D;;;Actuaciones medioambientales.;C
+234;0;3;III.3;P;PB00030300;D;;;Provisiones por reestructuración.;C
+235;0;3;III.4;P;PB00030400;D;;;Otras provisiones.;C
+236;0;3;IV;P;PB00040000;F;PB00040100+PB00040200+PB00040300+PB00040400+PB00040500;;Deudas a largo plazo.;C
+237;0;3;IV.1;P;PB00040100;D;;;Obligaciones y otros valores negociables.;C
+238;0;3;IV.2;P;PB00040200;D;;;Deudas con entidades de crédito.;C
+239;0;3;IV.3;P;PB00040300;D;;;Acreedores por arrendamiento financiero.;C
+240;0;3;IV.4;P;PB00040400;D;;;Derivados.;C
+241;0;3;IV.5;P;PB00040500;D;;;Otros pasivos financieros.;C
+243;0;3;V;P;PB00050000;F;PB00050100+PB00050200+PB00050300;;Deudas a largo plazo con empresas del grupo, asociadas y socios.;C
+244;0;3;V.1;P;PB00050100;D;;;Deudas con empresas del grupo.;C
+245;0;3;V.2;P;PB00050200;D;;;Deudas con empresas asociadas.;C
+246;0;3;V.3;P;PB00050300;D;;;Deudas con socios.;C
+247;0;3;VI;P;PB00060000;D;;;Pasivos por impuesto diferido.;C
+248;0;3;VII;P;PB00070000;D;;;Periodificaciones a largo plazo.;C
+249;0;3;C);P;PC00000000;G;PC00010000+PC00020000+PC00030000+PC00040000+PC00050000+PC00060000+PC00070000+PC00080000;;PASIVO CORRIENTE;C
+250;0;3;I;P;PC00010000;D;;;Fondo de educación, formación y promoción a corto plazo.;C
+251;0;3;II;P;PC00020000;F;PC00020100+PC00020200+PC00020300;;Deudas con características especiales a corto plazo.;C
+252;0;3;II.1;P;PC00020100;D;;;«Capital» reembolsable exigible.;C
+253;0;3;II.2;P;PC00020200;D;;;Fondos especiales calificados como pasivos.;C
+254;0;3;II.3;P;PC00020300;D;;;Acreedores por fondos capitalizados a corto plazo.;C
+255;0;3;III;P;PC00030000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;C
+256;0;3;IV;P;PC00040000;D;;;Provisiones a corto plazo.;C
+257;0;3;V;P;PC00050000;F;PC00050100+PC00050200+PC00050300+PC00050400+PC00050500;;Deudas a corto plazo.;C
+258;0;3;V.1;P;PC00050100;D;;;Obligaciones y otros valores negociables.;C
+259;0;3;V.2;P;PC00050200;D;;;Deudas con entidades de crédito.;C
+260;0;3;V.3;P;PC00050300;D;;;Acreedores por arrendamiento financiero.;C
+261;0;3;V.4;P;PC00050400;D;;;Derivados.;C
+262;0;3;V.5;P;PC00050500;D;;;Otros pasivos financieros.;C
+264;0;3;VI;P;PC00060000;F;PC00060100+PC00060200+PC00060300;;Deudas a corto plazo con empresas del grupo, asociadas y socios.;C
+265;0;3;VI.1;P;PC00060100;D;;;Deudas con empresas del grupo.;C
+266;0;3;VI.2;P;PC00060200;D;;;Deudas con empresas asociadas.;C
+267;0;3;VI.3;P;PC00060300;D;;;Deudas con socios.;C
+268;0;3;VII;P;PC00070000;F;PC00070100+PC00070201+PC00070202+PC00070300+PC00070400+PC00070500+PC00070600+PC00070700;;Acreedores comerciales y otras cuentas a pagar.;C
+269;0;3;VII.1;P;PC00070100;D;;;Proveedores.;C
+270;0;3;VII.2;P;PC00070200;T;;;Proveedores, empresas del grupo, asociadas y socios.;C
+271;0;3;VII.3;P;PC00070300;D;;;Acreedores varios.;C
+272;0;3;VII.4;P;PC00070400;D;;;Personal (remuneraciones pendientes de pago).;C
+273;0;3;VII.5;P;PC00070500;D;;;Pasivos por impuesto corriente.;C
+274;0;3;VII.6;P;PC00070600;D;;;Otras deudas con las Administraciones Públicas.;C
+275;0;3;VII.7;P;PC00070700;D;;;Anticipos de Clientes.;C
+276;0;3;VIII;P;PC00080000;D;;;Periodificaciones a corto plazo.;C
+277;0;4;A);A;AA00000000;G;AA00010000+AA00020000+AA00030000+AA00040000+AA00050000+AA00060000;;ACTIVO NO CORRIENTE;N
+278;0;4;I;A;AA00010000;F;AA00010100+AA00010200+AA00010300+AA00010400+AA00010500+AA00010600;;Inmovilizado intagible.;N
+279;0;4;I.1;A;AA00010100;D;;;Desarrollo.;N
+280;0;4;I.2;A;AA00010200;D;;;Concesiones.;N
+281;0;4;I.3;A;AA00010300;D;;;Patentes, licencias, marcas y similares.;N
+282;0;4;I.4;A;AA00010400;D;;;Fondo de comercio. GTOS AMORTIZABLES;N
+283;0;4;I.5;A;AA00010500;D;;;Aplicaciones informáticas.;N
+284;0;4;I.6;A;AA00010600;D;;;Otro inmovilizado intangible.;N
+285;0;4;II;A;AA00020000;F;AA00020300+AA00020200+AA00020100;;Inmovilizado material.;N
+286;0;4;II.1;A;AA00020100;D;;;Terrenos y construcciones.;N
+287;0;4;II.2;A;AA00020200;D;;;Instalaciones técnicas, y otro inmovilizado material.;N
+288;0;4;II.3;A;AA00020300;D;;;Inmovilizado en curso y anticipos.;N
+289;0;4;III;A;AA00030000;F;AA00030200+AA00030100;;Inversiones inmobiliarias.;N
+290;0;4;III.1;A;AA00030100;D;;;Terrenos.;N
+291;0;4;III.2;A;AA00030200;D;;;Construcciones.;N
+292;0;4;IV;A;AA00040000;F;AA00040300+AA00040200+AA00040100;;Inversiones en empresas del grupo y asociadas a largo plazo.;N
+293;0;4;IV.1;A;AA00040100;D;;;Instrumentos de patrimonio.;N
+294;0;4;IV.2;A;AA00040200;D;;;Créditos a empresas.;N
+295;0;4;IV.3;A;AA00040300;D;;;Valores representativos de deuda.;N
+296;0;4;IV.4;A;AA00040400;T;;;Derivados.;N
+297;0;4;IV.5;A;AA00040500;T;;;Otros activos financieros.;N
+298;0;4;V;A;AA00050000;F;AA00050500+AA00050400+AA00050300+AA00050200+AA00050100;;Inversiones financieras a largo plazo.;N
+299;0;4;V.1;A;AA00050100;D;;;Instrumentos de patrimonio.;N
+300;0;4;V.2;A;AA00050200;D;;;Créditos a terceros.;N
+301;0;4;V.3;A;AA00050300;D;;;Valores representativos de deuda.;N
+302;0;4;V.4;A;AA00050400;D;;;Derivados.;N
+303;0;4;V.5;A;AA00050500;D;;;Otros activos financieros.;N
+304;0;4;VI;A;AA00060000;D;;;Activos por impuesto diferido.;N
+305;0;4;B);A;AB00000000;G;AB00010000+AB00020000+AB00030000+AB00040000+AB00050000+AB00060000+AB00070000;;ACTIVO CORRIENTE;N
+306;0;4;I;A;AB00010000;D;;;Activos no corrientes mantenidos para la venta.;N
+307;0;4;II;A;AB00020000;F;AB00020600+AB00020500+AB00020400+AB00020300+AB00020200+AB00020100;;Existencias.;N
+308;0;4;II.1;A;AB00020100;D;;;Comerciales.;N
+309;0;4;II.2;A;AB00020200;D;;;Materias primas y otros aprovisionamientos.;N
+310;0;4;II.3;A;AB00020300;D;;;Productos en curso.;N
+311;0;4;II.4;A;AB00020400;D;;;Productos terminados.;N
+312;0;4;II.5;A;AB00020500;D;;;Subproductos, residuos y materiales recuperados.;N
+313;0;4;II.6;A;AB00020600;D;;;Anticipos a proveedores.;N
+314;0;4;III;A;AB00030000;F;AB00030100+AB00030200+AB00030300+AB00030400+AB00030500+AB00030600+AB00030700;;Deudores comerciales y otras cuentas a cobrar.;N
+315;0;4;III.1;A;AB00030100;D;;;Clientes por venta y prestaciones de servicios.;N
+316;0;4;III.2;A;AB00030200;D;;;Clientes, empresas del grupo y asociadas.;N
+317;0;4;III.3;A;AB00030300;D;;;Deudores varios.;N
+318;0;4;III.4;A;AB00030400;D;;;Personal.;N
+319;0;4;III.5;A;AB00030500;D;;;Activos por impuestos corriente.;N
+320;0;4;III.6;A;AB00030600;D;;;Otros créditos con las Administraciones Públicas.;N
+321;0;4;III.7;A;AB00030700;D;;;Accionistas(socios) por desembolsos exigidos.;N
+322;0;4;IV;A;AB00040000;F;AB00040300+AB00040200+AB00040100;;Inversiones en empresas del grupo y asociadas a corto plazo.++;N
+323;0;4;IV.1;A;AB00040100;D;;;Instrumentos de Patrimonio.;N
+324;0;4;IV.2;A;AB00040200;D;;;Créditos a empresas.;N
+325;0;4;IV.3;A;AB00040300;D;;;Valores representativos de deuda.;N
+326;0;4;IV.4;A;AB00040400;F;AB00040500;;Derivados.;N
+327;0;4;IV.5;A;AB00040500;D;;;Otros activos financieros.;N
+328;0;4;V;A;AB00050000;F;AB00060000+AB00050500+AB00050400+AB00050300+AB00050200+AB00050100;;Inversiones financieras a corto plazo.;N
+329;0;4;V.1;A;AB00050100;D;;;Instrumentos de patrimonio.;N
+330;0;4;V.2;A;AB00050200;D;;;Cr?ditos a empresas.;N
+331;0;4;V.3;A;AB00050300;D;;;Valores representativos de deuda.;N
+332;0;4;V.4;A;AB00050400;D;;;Derivados.;N
+333;0;4;V.5;A;AB00050500;D;;;Otros activos financieros.;N
+334;0;4;VI;A;AB00060000;D;;;Periodificaciones a corto plazo.;N
+335;0;4;VII;A;AB00070000;F;AB00070200+AB00070100;;Efectivo y otros activos l?quidos equivalentes.;N
+336;0;4;VII.1;A;AB00070100;D;;;Tesorería.;N
+337;0;4;VII.2;A;AB00070200;D;;;Otros activos l?quidos equivalentes.;N
+338;0;4;A);P;PA00000000;G;PA01010000+PA01020000+PA01030000+PA01040000+PA01050000+PA01060000+PA01070000+PA01080000+PA01090000;;PATRIMONIO NETO;N
+339;0;4;;P;PA01000000;T;;;Fondos propios.;N
+340;0;4;I;P;PA01010000;F;PA01010100+PA01010200;;Capital.;N
+341;0;4;I.1;P;PA01010100;D;;;Capital escriturado.;N
+342;0;4;I.2;P;PA01010200;D;;;(Capital no exigido).;N
+343;0;4;II;P;PA01020000;D;;;Prima de emisi?n.;N
+344;0;4;III;P;PA01030000;F;PA01030100+PA01030200+PA01030300;;Reservas.;N
+345;0;4;III.1;P;PA01030100;D;;;Legal y estatutarias.;N
+346;0;4;III.2;P;PA01030200;D;;;Otras reservas.;N
+347;0;4;IV;P;PA01040000;D;;;(Acciones y participaciones en patrimonio propias).;N
+348;0;4;V;P;PA01050000;F;PA01050100+PA01050200;;Resultados de ejercicios anteriores.;N
+349;0;4;V.1;P;PA01050100;D;;;Remanente.;N
+350;0;4;V.2;P;PA01050200;D;;;(Resultados negativos de ejercicios anteriores).;N
+351;0;4;VI;P;PA01060000;D;;;Otras aportaciones de socios.;N
+352;0;4;VII;P;PA01070000;D;;;Resultado del ejercicio.;N
+353;0;4;VIII;P;PA01080000;D;;;(Dividendo a cuenta).;N
+354;0;4;IX;P;PA01090000;D;;;Otros instrumentos de patrimonio neto.;N
+355;0;4;;P;PA02000000;F;PA03000000+PA02030000+PA02020000+PA02010000;;Ajustes por cambios de valor.;N
+356;0;4;I;P;PA02010000;D;;;Activos financieros disponibles para la venta.;N
+357;0;4;II;P;PA02020000;D;;;Operaciones de cobertura.;N
+358;0;4;III;P;PA02030000;D;;;Otros.;N
+359;0;4;;P;PA03000000;D;;;Subvenciones, donaciones y legados recibidos.;N
+360;0;4;;P;PB00000000;G;PB00010000+PB00020000+PB00030000+PB00040000+PB00050000;;PASIVO NO CORRIENTE;N
+361;0;4;I;P;PB00010000;F;PB00010400+PB00010300+PB00010200+PB00010100;;Provisiones a largo plazo.;N
+362;0;4;I.1;P;PB00010100;D;;;Obligaciones por prestaciones a largo plazo al personal.;N
+363;0;4;I.2;P;PB00010200;D;;;Actuaciones medioambientales.;N
+364;0;4;I.3;P;PB00010300;D;;;Provisiones por reestructuraci?n.;N
+365;0;4;I.4;P;PB00010400;D;;;Otras provisiones.;N
+366;0;4;II;P;PB00020000;F;PB00020100+PB00020200+PB00020300+PB00020400+PB00020500;;Deudas a largo plazo.;N
+367;0;4;II.1;P;PB00020100;D;;;Obligaciones y otros valores negociables.;N
+368;0;4;II.2;P;PB00020200;D;;;Deudas con entidades de crédito.;N
+369;0;4;II.3;P;PB00020300;D;;;Acreedores por arrendamiento financiero.;N
+370;0;4;II.4;P;PB00020400;D;;;Derivados.;N
+371;0;4;II.5;P;PB00020500;D;;;Otros pasivos financieros.;N
+372;0;4;III;P;PB00030000;D;;;Deudas con empresas del grupo y asociadas a largo plazo.;N
+373;0;4;IV;P;PB00040000;D;;;Pasivos por impuesto diferido.;N
+374;0;4;V;P;PB00050000;D;;;Periodificaciones a largo plazo.;N
+375;0;4;C);P;PC00000000;G;PC00010000+PC00020000+PC00030000+PC00040000+PC00050000+PC00060000;;PASIVO CORRIENTE;N
+376;0;4;I;P;PC00010000;D;;;Pasivos vinculados con activos no corrientes mantenidos para la venta.;N
+377;0;4;II;P;PC00020000;D;;;Provisiones a corto plazo.;N
+378;0;4;III;P;PC00030000;F;PC00040000+PC00030500+PC00030400+PC00030300+PC00030200+PC00030100;;Deudas a corto plazo.;N
+379;0;4;III.1;P;PC00030100;D;;;Obligaciones y otros valores negociables.;N
+380;0;4;III.2;P;PC00030200;D;;;Deudas con entidades de crédito.;N
+381;0;4;III.3;P;PC00030300;D;;;Acreedores por arrendamiento financiero.;N
+382;0;4;III.4;P;PC00030400;D;;;Derivados.;N
+383;0;4;III.5;P;PC00030500;D;;;Otros pasivos financieros.;N
+384;0;4;IV;P;PC00040000;D;;;Deudas con empresas del grupo y asociadas a corto plazo.;N
+385;0;4;V;P;PC00050000;F;PC00050100+PC00050200+PC00050300+PC00050400+PC00050500+PC00050600+PC00050700;;Acreedores comerciales y otras cuentas a pagar.;N
+386;0;4;V.1;P;PC00050100;D;;;Proveedores.;N
+387;0;4;V.2;P;PC00050200;D;;;Proveedores, empresas del grupo asociadas.;N
+388;0;4;V.3;P;PC00050300;D;;;Acreedores varios.;N
+389;0;4;V.4;P;PC00050400;D;;;Personal (remuneraciones pendientes de pago).;N
+390;0;4;V.5;P;PC00050500;D;;;Pasivos por impuesto corriente.;N
+391;0;4;V.6;P;PC00050600;D;;;Otras deudas con las Administraciones Públicas.;N
+392;0;4;V.7;P;PC00050700;D;;;Anticipos de Clientes.;N
+393;0;4;VI;P;PC00060000;D;;;Periodificaciones a corto plazo;N
+394;0;5;;A;AA00000000;G;AA00060000+AA00050000+AA00040000+AA00030000+AA00020000+AA00010000;;ACTIVO NO CORRIENTE;P
+395;0;5;I;A;AA00010000;D;;;Inmovilizado intagible.;P
+396;0;5;II;A;AA00020000;D;;;Inmovilizado material.;P
+397;0;5;III;A;AA00030000;D;;;Inversiones inmobiliarias.;P
+398;0;5;IV;A;AA00040000;D;;;Inversiones en empresas del grupo y asociadas a largo plazo.;P
+399;0;5;V;A;AA00050000;D;;;Inversiones financieras a largo plazo.;P
+400;0;5;VI;A;AA00060000;D;;;Activos por impuesto diferido.;P
+401;0;5;;A;AB00000000;G;AB00010000+AB00020000+AB00030000+AB00040000+AB00050000+AB00060000;;ACTIVO CORRIENTE;P
+402;0;5;I;A;AB00010000;D;;;Existencias.;P
+403;0;5;II;A;AB00020000;F;AB00020100+AB00020200+AB00020300;;Deudores comerciales y otras cuentas a cobrar.;P
+404;0;5;II.1;A;AB00020100;D;;;Clientes por venta y prestaciones de servicios.;P
+405;0;5;II.2;A;AB00020200;D;;;Accionistas (socios) por desembolsos exigidos.;P
+406;0;5;II.3;A;AB00020300;D;;;Otros deudores.;P
+407;0;5;III;A;AB00030000;D;;;Inversiones en empresas del grupo y asociadas a corto plazo.;P
+408;0;5;IV;A;AB00040000;D;;;Invesiones financieras a corto plazo.;P
+409;0;5;V;A;AB00050000;D;;;Periodificaciones a corto plazo.;P
+410;0;5;VI;A;AB00060000;D;;;Efectivo y otros activos líquidos equivalentes.;P
+411;0;5;;P;PA00000000;G;PA01010000+PA01020000+PA01030000+PA01040000+PA01050000+PA01060000+PA01070000+PA01080000;;PATRIMONIO NETO;P
+412;0;5;;P;PA01000000;T;;;Fondos propios.;P
+413;0;5;I;P;PA01010000;F;PA01010100+PA01010200;;Capital.;P
+414;0;5;I.1;P;PA01010100;D;;;Capital escriturado.;P
+415;0;5;I.2;P;PA01010200;D;;;(Capital no exigido).;P
+416;0;5;II;P;PA01020000;D;;;Prima de emisión.;P
+417;0;5;III;P;PA01030000;D;;;Reservas.;P
+418;0;5;IV;P;PA01040000;D;;;(Acciones y participaciones en patrimonio propias).;P
+419;0;5;V;P;PA01050000;D;;;Resultados de ejercicios anteriores.;P
+420;0;5;VI;P;PA01060000;D;;;Otras aportaciones de socios.;P
+421;0;5;VII;P;PA01070000;D;;;Resultado del ejercicio.;P
+422;0;5;VIII;P;PA01080000;D;;;(Dividendo a cuenta).;P
+423;0;5;;P;PA02000000;D;;;Subvenciones, donaciones y legados recibidos.;P
+424;0;5;;P;PB00000000;G;PB00010000+PB00020000+PB00030000+PB00040000+PB00050000+PB00060000+PB00070000;;PASIVO NO CORRIENTE;P
+425;0;5;I;P;PB00010000;D;;;Provisiones a largo plazo.;P
+426;0;5;II;P;PB00020000;F;PB00020100+PB00020200+PB00020300;;Deudas a largo plazo.;P
+427;0;5;II.1;P;PB00020100;D;;;Deudas con entidades de crédito.;P
+428;0;5;II.2;P;PB00020200;D;;;Acreedores por arrendamiento financiero.;P
+429;0;5;II.3;P;PB00020300;D;;;Otras deudas a largo plazo.;P
+430;0;5;III;P;PB00030000;D;;;Deudas con empresas del grupo y asociadas a largo plazo.;P
+431;0;5;IV;P;PB00040000;D;;;Pasivos por impuesto diferido.;P
+432;0;5;V;P;PB00050000;D;;;Periodificaciones a largo plazo.;P
+433;0;5;VI;P;PB00060000;D;;;Acreedores comerciales no corrientes;P
+434;0;5;VII;P;PB00070000;D;;;Deuda con características especiales a largo plazo;P
+435;0;5;;P;PC00000000;G;PC00010000+PC00020000+PC00030000+PC00040000+PC00050000+PC00060000;;PASIVO CORRIENTE;P
+436;0;5;I;P;PC00010000;D;;;Provisiones a corto plazo.;P
+437;0;5;II;P;PC00020000;F;PC00020100+PC00020200+PC00020300;;Deudas a corto plazo.;P
+438;0;5;II.1;P;PC00020100;D;;;Deudas con entidades de cr?dito.;P
+439;0;5;II.2;P;PC00020200;D;;;Acreedores por arrendamiento financiero.;P
+440;0;5;II.3;P;PC00020300;D;;;Otras deudas a largo plazo.;P
+441;0;5;III;P;PC00030000;D;;;Deudas con empresas del grupo y asociadas a corto plazo.;P
+442;0;5;IV;P;PC00040000;F;PC00040100+PC00040200;;Acreedores comerciales y otras cuentas a pagar.;P
+443;0;5;IV.1;P;PC00040100;D;;;Proveedores.;P
+444;0;5;IV.2;P;PC00040200;D;;;Otros acreedores.;P
+445;0;5;V;P;PC00050000;D;;;Periodificaciones a corto plazo.;P
+446;0;5;VI;P;PC00060000;D;;;Deuda con características especiales a corto plazo;P
+447;1;0;1.;A;B01;T;;;Importe neto de la cifra de negocios.;A
+448;1;0;2.;A;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;A
+449;1;0;3.;;B03;T;;;Trabajos realizados por la empresa para su activo.;A
+450;1;0;4.;;B04;T;;;Aprovisionamientos.;A
+451;1;0;5.;A;B05;T;;;Otros ingresos de explotación.;A
+452;1;0;6.;;B06;T;;;Gastos de personal.;A
+453;1;0;7.;;B07;T;;;Otros gastos de explotación.;A
+454;1;0;8.;A;B08;T;;;Amortización del inmovilizado.;A
+455;1;0;9.;A;B09;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;A
+456;1;0;10.;;B10;T;;;Exceso de provisiones.;A
+457;1;0;11.;;B11;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;A
+458;1;0;12.;;B12;T;;;Diferencia negativa de combinaciones de negocio;A
+459;1;0;13.;;B13;T;;;Otros resultados.;A
+460;1;0;A.1);;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACIÓN;A
+461;1;0;14.;;D14;T;;;Ingresos financieros.;A
+462;1;0;;;D14a;D;;;Imputación de subv., donac. y legados de carácter financiero;A
+463;1;0;;;D14b;D;;;Otros ingresos financieros;A
+464;1;0;15.;;D15;T;;;Gastos financieros;A
+465;1;0;16.;A;D16;T;;;Variación de valor razonable en instrumentos financieros.;A
+466;1;0;17.;;D17;T;;;Diferencias de cambio.;A
+467;1;0;18.;;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;A
+468;1;0;A.2);;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;A
+469;1;0;A.3);;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;A
+470;1;0;19.;;G19;T;;;Impuestos sobre beneficios.;A
+471;1;0;A.5);;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;A
+472;1;2;;A;B01;T;;;Importe neto de la cifra de negocios.;D
+473;1;2;;A;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;D
+474;1;2;;;B03;T;;;Trabajos realizados por la cooperativa para su activo.;D
+475;1;2;;;B04;T;;;Aprovisionamientos.;D
+476;1;2;;;B05;T;;;Otros ingresos de explotaci?n.;D
+477;1;2;;;B05a;D;;;Ingresos por operaciones con socios.;D
+478;1;2;;;B05b;D;;;Otros ingresos.;D
+479;1;2;;;B06;T;;;Gastos de personal.;D
+480;1;2;;;B07;T;;;Adquisiciones a los socios.;D
+481;1;2;;;B08;T;;;Otros gastos de explotaci?n.;D
+482;1;2;;;B09;T;;;Amortizaci?n del inmovilizado.;D
+483;1;2;;;B10;T;;;Imputaci?n de subvenciones de inmovilizado no financiero y otras.;D
+484;1;2;;;B11;T;;;Exceso de provisiones.;D
+485;1;2;;;B12;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;D
+486;1;2;;;B13;T;;;Otros resultados;D
+487;1;2;A);;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACI?N;D
+488;1;2;;;D14;T;;;Ingresos financieros.;D
+489;1;2;;;D14a;D;;;De socios.;D
+490;1;2;;;D14b;D;;;Otros.;D
+491;1;2;;;D15;T;;;Gastos financieros;D
+492;1;2;;;D16;T;;;Variaci?n de valor razonable en instrumentos financieros.;D
+493;1;2;;;D17;T;;;Diferencias de cambio.;D
+494;1;2;;;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;D
+495;1;2;B);;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;D
+496;1;2;C);;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;D
+497;1;2;;;G19;T;;;Impuestos sobre beneficios.;D
+498;1;2;D);;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;D
+499;1;2;;;I20;T;;;Ingresos imputables al fondo de educaci?n, formaci?n y promoci?n.;D
+500;1;2;;;J21;T;;;Dotaci?n al fondo de educaci?n, formaci?n y promoci?n.;D
+501;1;2;;;K22;T;;;Intereses de las aportaciones al capital social y otros fondos.;D
+502;1;2;E);;L00;F;H00+I20+J21+K22;;EXCEDENTE DE LA COOPERATIVA;D
+503;1;3;A);;A00;Z;;;OPERACIONES CONTINUADAS;C
+504;1;3;1.;;B01;T;;;Importe neto de la cifra de negocios.;C
+505;1;3;a);;B01a;D;;;Ventas;C
+506;1;3;b);;B01b;D;;;Prestaciones de servicios.;C
+507;1;3;2.;;B02;T;;;Variaci?n de existencias de productos terminados y en curso de fabricación.;C
+508;1;3;3.;;B03;T;;;Trabajos realizados por la cooperativa para su activo.;C
+509;1;3;4.;;B04;T;;;Aprovisionamientos.;C
+510;1;3;a);;B04a;D;;;Consumo de mercaderías.;C
+511;1;3;b);;B04b;D;;;Consumo de materias primas y otras materias consumibles.;C
+512;1;3;c);;B04c;D;;;Trabajos realizados por otras empresas.;C
+513;1;3;d);;B04d;D;;;Deterioro de mercaderías, materias primas y otros aprovisionamientos.;C
+514;1;3;5.;;B05;T;;;Otros ingresos de explotación.;C
+515;1;3;a);A;B05a;D;;;Ingresos accesorios y otros de gestión corriente.;C
+516;1;3;b);;B05b;D;;;Subvenciones de explotación incorporadas al resultado del ejercicio.;C
+517;1;3;c);;B05c;D;;;Ingresos por operaciones con socios.;C
+518;1;3;6.;;B06;T;;;Gastos de personal.;C
+519;1;3;a);;B06a;D;;;Sueldos, salarios y asalariados.;C
+520;1;3;b);;B06b;D;;;Cargas sociales.;C
+521;1;3;c);;B06c;D;;;Provisiones.;C
+522;1;3;7.;;B07;T;;;Adquisiciones a los socios.;C
+523;1;3;8.;;B08;T;;;Otros gastos de explotación.;C
+524;1;3;a);;B08a;D;;;Servicios exteriores.;C
+525;1;3;b);;B08b;D;;;Tributos.;C
+526;1;3;c);;B08c;D;;;P?rdidas, deterioro y variación de provisiones por operaciones comerciales.;C
+527;1;3;d);;B08d;D;;;Otros gastos de gestión corriente.;C
+528;1;3;9.;;B09;T;;;Amortización del inmovilizado.;C
+529;1;3;10.;;B10;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;C
+530;1;3;11.;;B11;T;;;Exceso de provisiones.;C
+531;1;3;12.;;B12;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;C
+532;1;3;a);;B12a;D;;;Deterioros y pérdidas.;C
+533;1;3;b);;B12b;D;;;Resultado por enajenaciones y otras.;C
+534;1;3;13.;;B13;T;;;Otros resultados;C
+535;1;3;A.1);;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACIÓN;C
+536;1;3;14.;;D14;T;;;Ingresos financieros.;C
+537;1;3;a);;D14a;T;;;De participaciones en instrumentos de patrimonio.;C
+538;1;3;a1);;D14a1;D;;;En empresas del grupo y asociadas.;C
+539;1;3;a2);;D14a2;D;;;En terceros.;C
+540;1;3;b);;D14b;T;;;De valores negociables y otros instrumentos financieros.;C
+541;1;3;b1);;D14b1;D;;;De empresas del grupo y asociadas.;C
+542;1;3;b2);;D14b2;D;;;De terceros.;C
+543;1;3;b3);;D14b3;D;;;De socios.;C
+544;1;3;15.;;D15;T;;;Gastos financieros;C
+545;1;3;a);;D15a;D;;;Por deudas con empresas del grupo y asociadas.;C
+546;1;3;b);;D15b;D;;;Por deudas con terceros.;C
+547;1;3;c);;D15c;D;;;Por actualización de provisiones.;C
+548;1;3;16.;;D16;T;;;Variación de valor razonable en instrumentos financieros.;C
+549;1;3;a);;D16a;D;;;Cartera de negociación y otros.;C
+550;1;3;b);;D16b;D;;;Imputación al resultado del ejercicio por activos financieros disponibles para la venta.;C
+551;1;3;17.;;D17;T;;;Diferencias de cambio.;C
+552;1;3;18.;;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;C
+553;1;3;a);;D18a;D;;;Deterioro y pérdidas.;C
+554;1;3;b);;D18b;D;;;Resultado por enajenaciones y otras.;C
+555;1;3;A.2);;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;C
+556;1;3;A.3);;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;C
+557;1;3;19.;;G19;T;;;Impuestos sobre beneficios.;C
+558;1;3;A.4);;H00;F;F00+G19;;RESULTADO DEL EJERCICIO PROCEDENTE DE OPERACIONES CONTINUADAS;C
+559;1;3;B);;I00;Z;;;OPERACIONES INTERRUMPIDAS;C
+560;1;3;20.;;J20;T;;;Resultado del ejercicio procedente de operaciones interrumpidas neto de impuestos.;C
+561;1;3;A.5);;K00;F;H00+J20;;RESULTADO DEL EJERCICIO;C
+562;1;3;21.;;L21;T;;;Ingresos imputables al fondo de educación, formación y promoción.;C
+563;1;3;22.;;M22;T;;;Dotación al fondo de educación, formación y promoción.;C
+564;1;3;23.;;N23;T;;;Intereses de las aportaciones al capital social y otros fondos.;C
+565;1;3;A.6);;?00;F;K00+L21+M22+N23;;EXCEDENTE DE LA COOPERATIVA;C
+566;1;4;A);A;A00;Z;;;OPERACIONES CONTINUADAS;N
+567;1;4;1.;A;B01;T;;;Importe neto de la cifra de negocios.;N
+568;1;4;a);A;B01a;D;;;Ventas;N
+569;1;4;b);;B01b;D;;;Prestaciones de servicios.;N
+570;1;4;2.;A;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;N
+571;1;4;3.;;B03;T;;;Trabajos realizados por la empresa para su activo.;N
+572;1;4;4.;;B04;T;;;Aprovisionamientos.;N
+573;1;4;a);A;B04a;D;;;Consumo de mercaderías.;N
+574;1;4;b);;B04b;D;;;Consumo de materias primas y otras materias consumibles.;N
+575;1;4;c);;B04c;D;;;Trabajos realizados por otras empresas.;N
+576;1;4;d);A;B04d;D;;;Deterioro de mercaderías, materias primas y otros aprovisionamientos.;N
+577;1;4;5.;A;B05;T;;;Otros ingresos de explotación.;N
+578;1;4;a);;B05a;D;;;Ingresos accesorios y otros de gestión corriente.;N
+579;1;4;b);;B05b;D;;;Subvenciones de explotación incorporadas al resultado del ejercicio.;N
+580;1;4;6.;;B06;T;;;Gastos de personal.;N
+581;1;4;a);;B06a;D;;;Sueldos, salarios y asalariados.;N
+582;1;4;b);;B06b;D;;;Cargas sociales.;N
+583;1;4;c);;B06c;D;;;Provisiones.;N
+584;1;4;7.;;B07;T;;;Otros gastos de explotación.;N
+585;1;4;a);;B07a;D;;;Servicios exteriores.;N
+586;1;4;b);;B07b;D;;;Tributos.;N
+587;1;4;c);;B07c;D;;;P?rdidas, deterioro y variación de provisiones por operaciones comerciales.;N
+588;1;4;d);;B07d;D;;;Otros gastos de gestión corriente.;N
+589;1;4;8.;;B08;T;;;Amortización del inmovilizado.;N
+590;1;4;9.;;B09;T;;;Imputación de subvenciones de inmovilizado no financiero y otras.;N
+591;1;4;10.;;B10;T;;;Exceso de provisiones.;N
+592;1;4;11.;;B11;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;N
+593;1;4;a);;B11a;D;;;Deterioros y pérdidas.;N
+594;1;4;b);;B11b;D;;;Resultado por enajenaciones y otras.;N
+595;1;4;12.;;B12;T;;;Diferencia negativa de combinaciones de negocio.;N
+596;1;4;13.;;B13;T;;;Otros resultados;N
+597;1;4;A.1);A;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12+B13;;RESULTADO DE EXPLOTACION;N
+598;1;4;14.;;D14;T;;;Ingresos financieros.;N
+599;1;4;a);;D14a;D;;;De participaciones en instrumentos de patrimonio.;N
+600;1;4;a1);;D14a1;D;;;En empresas del grupo y asociadas.;N
+601;1;4;a2);;D14a2;D;;;En terceros.;N
+602;1;4;b);;D14b;D;;;De valores negociables y otros instrumentos financieros.;N
+603;1;4;b1);;D14b1;D;;;De empresas del grupo y asociadas.;N
+604;1;4;b2);;D14b2;D;;;De terceros.;N
+605;1;4;15.;;D15;T;;;Gastos financieros;N
+606;1;4;a);;D15a;D;;;Por deudas con empresas del grupo y asociadas.;N
+607;1;4;b);;D15b;D;;;Por deudas con terceros.;N
+608;1;4;c);;D15c;D;;;Por actualización de provisiones.;N
+609;1;4;16.;;D16;T;;;Variación de valor razonable en instrumentos financieros.;N
+610;1;4;a);;D16a;D;;;Cartera de negociación y otros.;N
+611;1;4;b);;D16b;D;;;Imputación al resultado del ejercicio por activos financieros disponibles para la venta.;N
+612;1;4;17.;;D17;T;;;Diferencias de cambio.;N
+613;1;4;18.;A;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;N
+614;1;4;a);A;D18a;D;;;Deterioro y pérdidas.;N
+615;1;4;b);A;D18b;D;;;Resultado por enajenaciones y otras.;N
+616;1;4;A.2);;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;N
+617;1;4;A.3);;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;N
+618;1;4;19.;A;G19;T;;;Impuestos sobre beneficios.;N
+619;1;4;A.4);;H00;F;F00+G19;;RESULTADO DEL EJERCICIO PROCEDENTE DE OPERACIONES CONTINUADAS;N
+620;1;4;B);;I00;Z;;;OPERACIONES INTERRUMPIDAS;N
+621;1;4;20.;A;J20;T;;;Resultado del ejercicio procedente de operaciones interrumpidas neto de impuestos.;N
+622;1;4;A.5);;K00;F;H00+J20;;RESULTADO DEL EJERCICIO;N
+623;1;5;;;B01;T;;;Importe neto de la cifra de negocios.;P
+624;1;5;;A;B02;T;;;Variación de existencias de productos terminados y en curso de fabricación.;P
+625;1;5;;;B03;T;;;Trabajos realizados por la empresa para su activo.;P
+626;1;5;;;B04;T;;;Aprovisionamientos.;P
+627;1;5;;A;B05;T;;;Otros ingresos de explotación.;P
+628;1;5;;;B06;T;;;Gastos de personal.;P
+629;1;5;;;B07;T;;;Otros gastos de explotaci?n.;P
+630;1;5;;;B08;T;;;Amortizaci?n del inmovilizado.;P
+631;1;5;;;B09;T;;;Imputaci?n de subvenciones de inmovilizado no financiero y otras.;P
+632;1;5;;;B10;T;;;Exceso de provisiones.;P
+633;1;5;;;B11;T;;;Deterioro y resultado por enajenaciones del inmovilizado.;P
+634;1;5;;;B12;T;;;Otros resultados.;P
+635;1;5;A);;C00;F;B01+B02+B03+B04+B05+B06+B07+B08+B09+B10+B11+B12;;RESULTADO DE EXPLOTACI?N;P
+636;1;5;;;D14;T;;;Ingresos financieros.;P
+637;1;5;;;D14a;D;;;Imputaci?n de subv., donac. y legados de car?cter financiero;P
+638;1;5;;;D14b;D;;;Otros ingresos financieros;P
+639;1;5;;;D15;T;;;Gastos financieros;P
+640;1;5;;A;D16;T;;;Variación de valor razonable en instrumentos financieros.;P
+641;1;5;;;D17;T;;;Diferencias de cambio.;P
+642;1;5;;;D18;T;;;Deterioro y resultado por enajenaciones de instrumentos financieros.;P
+643;1;5;B);;E00;F;D14+D15+D16+D17+D18;;RESULTADO FINANCIERO;P
+644;1;5;C);;F00;F;C00+E00;;RESULTADO ANTES DE IMPUESTOS;P
+645;1;5;;;G19;T;;;Impuestos sobre beneficios.;P
+646;1;5;D);;H00;F;F00+G19;;RESULTADO DEL EJERCICIO;P
+647;2;6;+;A;10;D;;;Ventas Netas.;
+648;2;6;+;A;11;D;;;Otros ingresos de gestion;
+649;2;6;=;A;50;F;10+11;;VENTAS NETAS e INGRESOS EXPLOTACION;
+650;2;6;+;A;60;D;;;Compras materiales;
+651;2;6;+;;70;D;;;( +/- ) Variacion de existencias.;
+652;2;6;+;A;71;D;;;Trabajos de Terceros;
+653;2;6;+;;72;D;;;Mano de Obra Directa;
+654;2;6;+;;73;D;;;Comisiones de Ventas;
+655;2;6;+;;74;D;;;Rappels sobre Ventas;
+656;2;6;+;;75;D;;;Transportes de Ventas;
+657;2;6;=;A;90;F;50+60+70+71+72+73+74+75;;MARGEN BRUTO;
+658;2;6;+;;100;D;;;Amortizaciones;
+659;2;6;+;;120;D;;;Mano de obra indirecta;
+660;2;6;+;;125;D;;;Otros costes fijos;
+661;2;6;=;A;130;F;90+100+120+125;;RESULTADO de  EXPLOTACION  (BAIT);
+662;2;6;+;;140;D;;;Gastos Financieros;
+663;2;6;+;;180;D;;;Ingresos financieros;
+664;2;6;+;;190;D;;;Rtdos Extraordinarios/ Extrafunc. Negativos;
+665;2;6;+;;192;D;;;Rtdos Extraordinarios / Extrafunc. Positivos;
+666;2;6;=;;210;F;130+140+180+190+192;;RESULTADO ANTES DE IMPUESTOS;
+667;2;6;+;;260;D;;;Impuesto sobre sociedades;
+668;2;6;=;;270;F;210+260;;RESULTADO DESPUES DE IMPUESTOS (BENEF.O PERD);
+669;3;6;D;A;10;D;;;Ventas Netas;N
+670;3;6;F;;20;F;10;;VENTAS NETAS;P
+671;3;6;D;;30;D;;;Compras de Materiales;N
+672;3;6;D;;31;D;;;Compras de Consumibles Almacen;N
+673;3;6;D;;40;D;;;(+/-) Variacion de Existencias;N
+674;3;6;D;;50;D;;;Trabajos de Terceros;N
+675;3;6;D;;60;D;;;Mano de Obra Directa ( Variable);N
+676;3;6;D;;70;D;;;Comisiones S/ Ventas;N
+677;3;6;D;;80;D;;;Rappels S/ Ventas;N
+678;3;6;D;;90;D;;;Transportes de Ventas;N
+679;3;6;D;;95;D;;;Gastos Cobro Ventas;N
+680;3;6;F;A;100;F;30+40+50+60+70+80+90+95+31;;#¿NOMBRE?;S
+681;3;6;G;A;105;G;20+100;;#¿NOMBRE?;S
+682;3;6;D;;110;D;;;Amortizaciones;N
+683;3;6;D;;115;D;;;Mano de Obra Indirecta ( Fija);N
+684;3;6;D;;120;D;;;Otros Costes Fijos;N
+685;3;6;F;A;130;F;110+115+120;;#¿NOMBRE?;S
+686;3;6;G;A;140;G;20+100+130;;#¿NOMBRE?;S
+687;3;6;D;;150;D;;;#¿NOMBRE?;S
+688;3;6;D;;160;D;;;#¿NOMBRE?;S
+689;3;6;G;;170;G;140+150+160;;#¿NOMBRE?;S
+690;3;6;D;;180;D;;;Impuestos;N
+691;3;6;G;;190;G;170+180;;#¿NOMBRE?;S
+693;3;7;D;A;10;D;;;Ventas Mercaderías;S
+694;3;7;D;;20;D;;;Ventas Productos Terminados;S
+695;3;7;D;;30;D;;;Otras Ventas;S
+696;3;7;D;;40;D;;;Rappels y Devoluciones de Ventas;S
+697;3;7;D;;50;D;;;Trab. realizados por otras empresas;S
+698;3;7;D;A;60;D;;;Subvenciones a la Explotación;S
+699;3;7;D;A;70;D;;;Otros Ingresos de gestión;S
+700;3;7;F;A;80;F;10+20+30+40+50+60+70;;*** TOTAL VENTAS NETAS E INGRESOS EXPLOT;P
+701;3;7;D;A;90;D;;;Compras Netas Mercaderías;S
+702;3;7;D;;100;D;;;Compras Netas Materias Primas;S
+703;3;7;D;;110;D;;;Compras Netas Otros Aprovisionamientos;S
+704;3;7;D;;120;D;;;Trabajos Realizados por otras empresas;S
+705;3;7;D;A;130;D;;;Variación Existencias Mercaderías;S
+706;3;7;D;A;140;D;;;Variación Exist. Materias Primas;S
+707;3;7;D;A;150;D;;;Variación Exist. Otros Aprovisionamientos;S
+708;3;7;D;A;160;D;;;Variación productos terminados y en curso;S
+709;3;7;F;A;170;F;90+100+110+120+130+140+150+160;;*** TOTAL CONSUMO;S
+710;3;7;F;A;180;F;80+170;;*** MARGEN BRUTO;S
+711;3;7;D;;190;D;;;Gastos de Personal;S
+712;3;7;D;;200;D;;;Suministros y Serv. Exteriores;S
+713;3;7;D;;210;D;;;Tributos;S
+714;3;7;D;A;220;D;;;Otros Gastos de Gestión;S
+715;3;7;F;A;230;F;190+200+210+220;;*** TOTAL GASTOS EXPLOTACION;S
+716;3;7;F;A;240;F;180+230;;*** RESULTADO BRUTO EXPLOTACION;S
+717;3;7;D;A;250;D;;;Dotación amortización Inmovilizado;S
+718;3;7;D;A;260;D;;;Variación Provisiones;S
+719;3;7;F;A;270;F;240+250+260;;*** RESULTADO NETO EXPLOTACION;S
+720;3;7;D;;280;D;;;Ingresos Financieros;S
+721;3;7;D;;290;D;;;Gastos Financieros;S
+722;3;7;F;;300;F;270+280+290;;*** RESULTADO ACTIVIDAD ORDINARIA;S
+723;3;7;D;A;310;D;;;Ing. y Bº Extraordinarios;S
+724;3;7;D;A;320;D;;;Gastos y Pérdidas Extraordinarios;S
+725;3;7;F;;330;F;300+310+320;;*** RESULTADO ANTES DE IMPUESTOS;S
+726;3;7;D;;340;D;;;Impuesto s/Beneficios;S
+727;3;7;F;;350;F;330+340;;*** RESULTADO NETO CONTABLE;S
+728;3;7;F;;360;F;350+250+260;;*** CASH FLOW GENERADO;S
+2914;0;2;II.4;P;PA01020400;D;;;Otras reservas;
+2915;0;2;IV.1;P;PB00040100;D;;;Deudas con entidades de crédito.;
+2916;0;2;IV.2;P;PB00040200;D;;;Acreedores por arrendamiento financiero;
+2917;0;2;IV.3;P;PB00040300;D;;;Otras deudas a largo plazo;
+2918;0;2;VII.3;P;PC00070300;D;;;Otros acreedores;
+3650;0;3;VII.2.1;P;PC00070201;D;;;a) Socios proveedores.;
+3651;0;3;VII.2.2;P;PC00070202;D;;;b) Proveedores, empresas del grupo y asociadas.;
+3652;0;3;II.5;P;PA01020500;D;;;Otras reservas;

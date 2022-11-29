@@ -178,10 +178,10 @@
     <value>Check value</value>
   </data>
   <data name="CodigoIsoAlfa2" xml:space="preserve">
-    <value>ISO 2</value>
+    <value>ISO 2 code</value>
   </data>
   <data name="CodigoIsoAlfa3" xml:space="preserve">
-    <value>ISO 3</value>
+    <value>ISO 3 code</value>
   </data>
   <data name="CodigoIsoNumerico" xml:space="preserve">
     <value>Number ISO</value>
@@ -191,5 +191,38 @@
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
+  </data>
+  <data name="Remesable" xml:space="preserve">
+    <value>Remittance</value>
+  </data>
+  <data name="MandatoRequerido" xml:space="preserve">
+    <value>Mandate required</value>
+  </data>
+  <data name="Camposadicionales" xml:space="preserve">
+    <value>Additional fields</value>
+  </data>
+  <data name="BloqueoRGPD" xml:space="preserve">
+    <value>GDPR/LODP blocking</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Default value</value>
+  </data>
+  <data name="MovAutomatico" xml:space="preserve">
+    <value>Automatic movement</value>
+  </data>
+  <data name="EntradasV" xml:space="preserve">
+    <value>V tickets</value>
+  </data>
+  <data name="SalidasV" xml:space="preserve">
+    <value>Var. outputs</value>
+  </data>
+  <data name="TipoTablaCRM" xml:space="preserve">
+    <value>CRM</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Clasification</value>
+  </data>
+  <data name="Codigo" xml:space="preserve">
+    <value>Code</value>
   </data>
 </root>

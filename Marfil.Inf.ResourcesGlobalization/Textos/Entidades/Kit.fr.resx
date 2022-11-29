@@ -118,9 +118,69 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Kits</value>
+    <value>trousses</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Kit</value>
+    <value>Trousse</value>
+  </data>
+  <data name="Empresa" xml:space="preserve">
+    <value>Entreprise</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Entrepôt</value>
+  </data>
+  <data name="Fkzonaalmacen" xml:space="preserve">
+    <value>Localiser dans la zone</value>
+  </data>
+  <data name="Fkoperarios" xml:space="preserve">
+    <value>Opérateur</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Lineas" xml:space="preserve">
+    <value>Composition du kit</value>
+  </data>
+  <data name="ErrorLoteUtilizado" xml:space="preserve">
+    <value>Le lot {0} ne peut pas être ajouté au kit car il a déjà été utilisé dans un autre kit ou lot.</value>
+  </data>
+  <data name="EnumEnProceso" xml:space="preserve">
+    <value>En procès</value>
+  </data>
+  <data name="EnumMontado" xml:space="preserve">
+    <value>Monté</value>
+  </data>
+  <data name="EnumDesmontado" xml:space="preserve">
+    <value>Non monté</value>
+  </data>
+  <data name="EnumVendido" xml:space="preserve">
+    <value>Épuisé</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="ErrorModificacionKitEstado" xml:space="preserve">
+    <value>Impossible de modifier un kit dans l'état {0}</value>
+  </data>
+  <data name="Desmontar" xml:space="preserve">
+    <value>Démonter</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>Pièces</value>
+  </data>
+  <data name="Pesoneto" xml:space="preserve">
+    <value>Poids net</value>
+  </data>
+  <data name="Pesobruto" xml:space="preserve">
+    <value>Poids brut</value>
   </data>
 </root>

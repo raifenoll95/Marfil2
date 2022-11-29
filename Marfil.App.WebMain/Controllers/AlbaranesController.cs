@@ -78,9 +78,9 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var pedidosService = FService.Instance.GetService(typeof(PedidosModel), ContextService) as PedidosService)
                     {
-                        model = service.ImportarPedido(pedidosService.get(id) as PedidosModel);
+                        var pedido = pedidosService.get(id) as PedidosModel;
+                        model = service.ImportarPedido(pedido);
                     }
-
                 }
             }
             catch (Exception ex)
@@ -90,7 +90,18 @@ namespace Marfil.App.WebMain.Controllers
             }
             model.Context = ContextService;
             TempData["model"] = model;
-            return RedirectToAction("Create", "Albaranes");
+
+            //Creamos el albarán para evitar sobreescribir os datos
+            using (var gestionService = createService(model))
+            {
+
+                gestionService.create(model);
+                TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+
+                //Redireccionamos a la ventana de edición
+                return RedirectToAction("Edit", "Albaranes", new { id = model.Id });
+            }
+
         }
 
         #region Importar linea
@@ -112,7 +123,7 @@ namespace Marfil.App.WebMain.Controllers
 
                 var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
                 Session[session] = model;
-                Session[sessiontotales] = service.Recalculartotales(model, Funciones.Qdouble(descuentopp) ?? 0, Funciones.Qdouble(descuentocomercial) ?? 0, portes, decimales);
+                Session[sessiontotales] = service.Recalculartotales(model, Funciones.Qdouble(descuentopp) ?? 0, Funciones.Qdouble(descuentocomercial) ?? 0, portes, decimales, true);
             }
 
             return new EmptyResult();
@@ -393,7 +404,7 @@ namespace Marfil.App.WebMain.Controllers
 
                     var newmodel = Helper.fModel.GetModel<AlbaranesModel>(ContextService);
                     model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
-                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas).ToList();
+                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas,true).ToList();
                     TempData["model"] = model;
                     return RedirectToAction("Create");
                 }
@@ -433,11 +444,11 @@ namespace Marfil.App.WebMain.Controllers
                     }
 
                     service.edit(model);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", new { id = id });
                 }
             }
 
-            TempData["errors"] = "Ocurrió un problema al generar el albarán de reclamación";
+            TempData["errors"] = "Ocurrió un problema al asignar contenedores";
             return RedirectToAction("Edit", new { id = id });
         }
 
@@ -594,7 +605,7 @@ namespace Marfil.App.WebMain.Controllers
 
                             Session[session] = model;
                             var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-                            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+                            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
                         }
 
                     }
@@ -698,7 +709,7 @@ namespace Marfil.App.WebMain.Controllers
                         var portes = 0;
 
                         var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-                        Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+                        Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
                     }
                 }
             }
@@ -726,7 +737,7 @@ namespace Marfil.App.WebMain.Controllers
             var portes = 0;
 
             var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
-            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales);
+            Session[sessiontotales] = service.Recalculartotales(model, descuentopp, descuentocomercial, portes, monedaObj.Decimales,false);
 
             return PartialView("_Albaraneslin", model);
         }
@@ -748,7 +759,7 @@ namespace Marfil.App.WebMain.Controllers
             var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService;
             var lineas = service.RecalculaLineas(model, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, fkregimeniva, 0, decimales);
             Session[session] = lineas.ToList();
-            Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales);
+            Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales,true);
         }
 
         #endregion
@@ -821,8 +832,11 @@ namespace Marfil.App.WebMain.Controllers
                 Texto = General.LblEnviaremail,
                 Url = "javascript:eventAggregator.Publish('Enviaralbaran',\'\')"
             });
-            result.Add(new ToolbarSeparatorModel());
-            result.Add(CreateComboEstados(objModel));
+            if (objModel.Estado.Tipoestado != TipoEstado.Finalizado && objModel.Estado.Tipoestado != TipoEstado.Anulado)
+            {
+                result.Add(new ToolbarSeparatorModel());
+                result.Add(CreateComboEstados(objModel));
+            }
             return result;
         }
 
@@ -837,7 +851,7 @@ namespace Marfil.App.WebMain.Controllers
                 Texto = General.LblCambiarEstado,
                 Url = "#",
                 Desactivado = true,
-                Items = estados.Select(f => new ToolbarActionModel()
+                Items = estados.Where(f => f.Tipomovimiento != TipoMovimiento.Automatico).Select(f => new ToolbarActionModel()
                 {
                     Url = Url.Action("CambiarEstado", "Albaranes", new { documentoReferencia = objModel.Id, estadoNuevo = f.CampoId, returnUrl = Url.Action("Edit", "Albaranes", new { id = objModel.Id }) }),
                     Texto = f.Descripcion

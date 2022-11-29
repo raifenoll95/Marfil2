@@ -214,7 +214,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Descripció corta.
+        ///   Busca una cadena traducida similar a Descripción corta.
         /// </summary>
         public static string Descripcionabreviada {
             get {

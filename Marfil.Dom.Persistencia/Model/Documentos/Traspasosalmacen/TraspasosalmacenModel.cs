@@ -400,6 +400,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
         [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Matricula")]
         public string Matricula { get; set; }
 
+        [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Remolque")]
+        public string Remolque { get; set; }
+
         [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Bultos")]
         public int? Bultos { get; set; }
 
@@ -419,7 +422,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Traspasosalmacen
         public string Fkoperarios { get; set; }
 
         [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Fkoperariostransporte")]
-        public string Fkoperariostransporte { get; set; }
+        public string Fkoperadortransporte { get; set; }
 
         [Display(ResourceType = typeof(RTraspasosalmacen), Name = "Fkzonas")]
         public string Fkzonas { get; set; }

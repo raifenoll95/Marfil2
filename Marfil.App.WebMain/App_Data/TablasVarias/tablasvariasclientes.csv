@@ -11,6 +11,7 @@
 60;Costes variables por periodo;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;5;false
 71;Grupos de secciones;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;4;false
 80;Secciones producción;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
+400;Delegaciones;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;0;false
 700;Tipo de grano;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
 705;Tono materiales;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;3;false
 710;Calificación comercial;Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados.TablasVariasGeneralModel;1;false

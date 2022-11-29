@@ -118,9 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Transformations</value>
+    <value>transformations</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Transformation</value>
+  </data>
+  <data name="Salida" xml:space="preserve">
+    <value>Départ</value>
+  </data>
+  <data name="Entrada" xml:space="preserve">
+    <value>Entrée</value>
+  </data>
+  <data name="ErrorLineasObligatorias" xml:space="preserve">
+    <value>Il est obligatoire d'indiquer au moins une ligne dans {0}</value>
+  </data>
+  <data name="ErrorRepartoImporte" xml:space="preserve">
+    <value>Le type de répartition par montant n'est pas autorisé</value>
+  </data>
+  <data name="Fktrabajos" xml:space="preserve">
+    <value>Travaillé</value>
+  </data>
+  <data name="Costexm2" xml:space="preserve">
+    <value>Coût x m2</value>
+  </data>
+  <data name="Costexm3" xml:space="preserve">
+    <value>Coût au m3</value>
+  </data>
+  <data name="TituloEntidadSingularAcabados" xml:space="preserve">
+    <value>transformations de finition</value>
+  </data>
+  <data name="Fkmateriales" xml:space="preserve">
+    <value>reclasser le matériel</value>
   </data>
 </root>

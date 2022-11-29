@@ -69,7 +69,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService=new EstadosService(_context,_db);
-            st.List = st.List.OfType<PresupuestosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<PresupuestosModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkclientes", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<PresupuestosModel>();
             st.PrimaryColumnns = new[] { "Id" };
@@ -120,7 +137,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = Math.Round((item.Sum(f => (f.Metros * f.Precio)) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = Math.Round((item.Sum(f => (f.Importe))/* - item.Sum(f => f.Importedescuento)*/) ?? 0, decimalesmoneda);
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;
@@ -138,6 +155,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        public int Recalcularpeso(PresupuestosModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas) 
+            { 
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
+            }
+
+            return pesototal;
+        }
+
         public PresupuestosModel Clonar(string id)
         {
             var appService=new ApplicationHelper(_context);
@@ -153,9 +185,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     presupuestosLinModel.Cantidadpedida = 0;
                 }
-                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PRE";//Presupuesto ventas
+                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
 
@@ -220,9 +253,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo nuevo ID
-                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PRE";//Presupuesto ventas
+                var contador = ServiceHelper.GetNextId<Presupuestos>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Presupuestos>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 // Obtener el pais del cliente(tercero)
@@ -234,16 +268,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //    model.Clientepais = service.GetListPaises().Where(f => f.Valor == cuenta.FkPais).Select(f => f.Descripcion).SingleOrDefault();
                 //}
 
+                //generar carpeta
                 DocumentosHelpers.GenerarCarpetaAsociada(model,TipoDocumentos.PresupuestosVentas, _context, _db);
+
+                //Se calcula el peso del material en el documento
+                if(model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
 
                 base.create(model);
 
-                //generar carpeta
+                
                 tran.Complete();
             }
-        }
-
-       
+        } 
 
         public override void edit(IModelView obj)
         {
@@ -263,7 +302,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //{
                 //    model.Clientepais = service.GetListPaises().Where(f => f.Valor == cuenta.FkPais).Select(f => f.Descripcion).SingleOrDefault();
                 //}
-                
+
+                //Se calcula el peso del material en el documento
+                if (model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
+
                 base.edit(model);
                 tran.Complete();
             }

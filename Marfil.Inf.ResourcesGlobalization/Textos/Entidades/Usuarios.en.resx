@@ -162,4 +162,28 @@
   <data name="Nombre" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Copiaremitente" xml:space="preserve">
+    <value>Send copy to sender</value>
+  </data>
+  <data name="Nivel" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Cambiarempresa" xml:space="preserve">
+    <value>Change the current company</value>
+  </data>
+  <data name="Cambiaralmacen" xml:space="preserve">
+    <value>Change store</value>
+  </data>
+  <data name="Codigooperariousuario" xml:space="preserve">
+    <value>operator code</value>
+  </data>
+  <data name="Operario" xml:space="preserve">
+    <value>worker user</value>
+  </data>
+  <data name="Bloquearseries" xml:space="preserve">
+    <value>block series</value>
+  </data>
+  <data name="Fkdelegacion" xml:space="preserve">
+    <value>Delegation</value>
+  </data>
 </root>

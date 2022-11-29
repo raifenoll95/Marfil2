@@ -50,7 +50,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
             DataSource.Queries.Add(new CustomSqlQuery("Facturaslin", "SELECT fl.*, (fl.ancho * 100) AS ancho_cm, (fl.largo * 100) AS largo_cm, (fl.grueso * 100) AS grueso_cm, u.textocorto AS [Unidadesdescripcion], fp.descripcion AS [FamiliaArticulo], ar.descripcion2 FROM [FacturasLin] AS fl " +
                                                                      " INNER JOIN Familiasproductos AS fp ON fp.empresa=fl.empresa AND fp.id=substring(fl.fkarticulos,0,3)" +
                                                                      " LEFT JOIN unidades AS u ON fp.fkunidadesmedida=u.id" +
-                                                                     " INNER JOIN Articulos AS ar ON fl.fkarticulos = ar.id"));
+                                                                     " INNER JOIN Articulos AS ar ON fl.fkarticulos = ar.id and fl.empresa = ar.empresa"));
             // FACTURAS TOTALES
             DataSource.Queries.Add(new CustomSqlQuery("Facturastotales", "SELECT * FROM [FacturasTotales]"));
 

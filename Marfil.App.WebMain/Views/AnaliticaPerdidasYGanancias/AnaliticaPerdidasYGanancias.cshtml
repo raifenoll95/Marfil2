@@ -7,7 +7,7 @@
 
     var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadasAnalitica();
     var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
-    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYGAnalitica(filtrosAcumulado);
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYGAnalitica(filtrosAcumulado,false);
     var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
 
     var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCPGAN().Select(f => new SelectListItem()
@@ -156,6 +156,7 @@
 
         var data = {
             Ejercicio: document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value,
+            Ejercicioanterior: '',
             Guia: document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value,
             SinSaldo: document.getElementById('Lineassinsaldo').value,
             Desglosar: document.getElementById('Desglosarniveltres').value
@@ -165,7 +166,7 @@
 
         console.log(dataSerialized);
 
-        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Analitica Perdidas y Ganancias');
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Analitica de Perdidas y Ganancias');
 
         //Imprimir cuentas no asignadas
         $.ajax({

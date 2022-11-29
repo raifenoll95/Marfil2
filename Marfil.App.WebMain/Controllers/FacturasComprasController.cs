@@ -85,17 +85,28 @@ namespace Marfil.App.WebMain.Controllers
                     var vector = albaranesreferencia.Split(';');
                     model = service.ImportarAlbaranes(serie, fecha, vector);
                     
-                    TempData[Constantes.VariableMensajeWarning] = service.WarningList.Any() ? string.Join("<br/>",service.WarningList):string.Empty;
+                    //TempData[Constantes.VariableMensajeWarning] = service.WarningList.Any() ? string.Join("<br/>",service.WarningList):string.Empty;
                 }
             }
             catch (Exception ex)
             {
                 TempData["errors"] = ex.Message;
+                //var id = returnUrl.Substring(returnUrl.LastIndexOf('/') + 1);
                 return Redirect(returnUrl);
+                //return RedirectToAction("Edit", "RecepcionesStock", new { id = id });
             }
 
+            //Creamos la factura para evitar sobreescribir os datos
+            using (var gestionService = createService(model))
+            {
 
-            return RedirectToAction("Edit", "FacturasCompras", new { id = model.Id });
+                gestionService.create(model);
+                TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+
+                //Redireccionamos a la ventana de edición
+                return RedirectToAction("Edit", "FacturasCompras", new { id = model.Id });
+            }
+
         }
 
         #region Importar linea
@@ -842,7 +853,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     Icono = "fa fa-gear",
                     Texto = General.LblContabilizar,
-                    Url = Url.Action("Contabilizar", "Movs", new { IdFactura = objModel.Id, NombreTipo = typeof(FacturasComprasModel).ToString(), returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
+                    Url = Url.Action("Contabilizar", "Movs", new { IdFactura = objModel.Id, NombreTipo = typeof(FacturasComprasModel).ToString(), TipoFactura = objModel.Fktipofactura, returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
                 });
                 result.Add(new ToolbarSeparatorModel());
             }

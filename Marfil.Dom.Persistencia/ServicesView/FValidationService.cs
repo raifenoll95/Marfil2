@@ -52,6 +52,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _validationServices.Add(typeof(Cuentas),typeof(CuentasValidation));
             _validationServices.Add(typeof(Tiposcuentas),typeof(TiposcuentasValidation));
             _validationServices.Add(typeof(Inmuebles), typeof(InmueblesValidation));
+            _validationServices.Add(typeof(Lecturas), typeof(LecturasValidation));
             _validationServices.Add(typeof(Unidades),typeof(UnidadesValidation));
             _validationServices.Add(typeof(Direcciones),typeof(DireccionesValidation));
             _validationServices.Add(typeof(Contactos),typeof(ContactosValidation));
@@ -119,6 +120,8 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _validationServices.Add(typeof(Maes), typeof(MaesValidation));
             _validationServices.Add(typeof(Vencimientos), typeof(VencimientosValidation));
             _validationServices.Add(typeof(CircuitosTesoreriaCobros), typeof(CircuitosTesoreriaCobrosValidation));
+            _validationServices.Add(typeof(TiposFacturas), typeof(TiposFacturasIvaValidation));
+            _validationServices.Add(typeof(RegistroIVARepercutido), typeof(RegistroIvaRepercutidoValidation));
             _validationServices.Add(typeof(CarteraVencimientos), typeof(CarteraVencimientosValidation));
             _validationServices.Add(typeof(Remesas), typeof(RemesasValidation));
             _validationServices.Add(typeof(GuiasBalances), typeof(GuiasBalancesValidation));

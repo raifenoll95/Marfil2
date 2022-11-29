@@ -133,6 +133,12 @@
     <value>Contact mode</value>
   </data>
   <data name="Comercial" xml:space="preserve">
-    <value>Commercial agent</value>
+    <value>Commercial</value>
+  </data>
+  <data name="ConvertirProspectoCliente" xml:space="preserve">
+    <value>Convert Prospect to Customer</value>
+  </data>
+  <data name="ErrorCrearPedidoProspecto" xml:space="preserve">
+    <value>Cannot create a Sales Order with a Lead</value>
   </data>
 </root>

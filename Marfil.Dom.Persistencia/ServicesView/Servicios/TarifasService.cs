@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model.Interfaces;
@@ -96,21 +97,32 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         private void CreateRateLines(TarifasModel model)
         {
             var creartarifa = model.Asignartarifaalcreararticulos;
+            //Problema al usar el ng_disabled en la pantalla, no coge el valor cuando debería ser true en las de sistema
+            if (model.Tipotarifa == 0)
+            {
+                creartarifa = true;
+            }
             if (creartarifa)
             {
-                var articles = _db.Articulos.Where(f => f.empresa == Empresa);
+                var articles = _db.Articulos.Where(f => f.empresa == Empresa); 
+                
                 foreach (var item in articles)
                 {
+
                     if (
                         !_db.TarifasLin.Any(
                             f => f.empresa == Empresa && f.fktarifas == model.Id && f.fkarticulos == item.id) && Filtrar(model, item.id))
                     {
+                        var familiaUM = _db.Familiasproductos.Where(f => f.id == item.id.Substring(0, 2) && f.empresa == Empresa).FirstOrDefault().fkunidadesmedida;
+
+
                         var newLine = _db.TarifasLin.Create();
                         newLine.empresa = Empresa;
                         newLine.fktarifas = model.Id;
                         newLine.fkarticulos = item.id;
                         newLine.precio = CalcularPrecio(model, item);
                         newLine.descuento = 0;
+                        newLine.unidades = familiaUM;
                         _db.TarifasLin.Add(newLine);
                     }
                 }
@@ -195,6 +207,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<TarifasModel> GetTarifas()
         {
             return _db.Tarifas.Where(f => f.empresa == Empresa && f.tipotarifa == 0 && f.tipoflujo == 0).ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).ToList(); 
+        }
+
+        public IEnumerable<TarifasModel> GetTarifasTodas()
+        {
+            return _db.Tarifas.Where(f => f.empresa == Empresa).ToList().Select(f => _converterModel.GetModelView(f) as TarifasModel).ToList();
         }
 
         public TarifasModel GetTarifaCompleta(string id)

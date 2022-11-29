@@ -118,15 +118,78 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Exercice</value>
+    <value>Exercices</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Descripcioncorta" xml:space="preserve">
-    <value>Description courte</value>
+    <value>Brève description</value>
+  </data>
+  <data name="Desde" xml:space="preserve">
+    <value>Depuis</value>
+  </data>
+  <data name="Hasta" xml:space="preserve">
+    <value>Jusqu'à</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="Contabilidadcerradahasta" xml:space="preserve">
+    <value>Comptabilité fermée jusqu'au</value>
+  </data>
+  <data name="Registroivacerradohasta" xml:space="preserve">
+    <value>TVA fermée jusqu'au</value>
+  </data>
+  <data name="Criterioiva" xml:space="preserve">
+    <value>Critères TVA</value>
+  </data>
+  <data name="Fkejercicios" xml:space="preserve">
+    <value>exercice précédent</value>
+  </data>
+  <data name="Gestion" xml:space="preserve">
+    <value>La gestion</value>
+  </data>
+  <data name="FkseriescontablesAST" xml:space="preserve">
+    <value>série comptable</value>
+  </data>
+  <data name="FkseriescontablesIVS" xml:space="preserve">
+    <value>TVA prise en charge</value>
+  </data>
+  <data name="FkseriescontablesIVP" xml:space="preserve">
+    <value>TVA en sortie</value>
+  </data>
+  <data name="FkseriescontablesPRC" xml:space="preserve">
+    <value>Collectes prévisionnelles</value>
+  </data>
+  <data name="FkseriescontablesPRP" xml:space="preserve">
+    <value>prévoir les paiements</value>
+  </data>
+  <data name="FkseriescontablesINM" xml:space="preserve">
+    <value>Immobilisé</value>
+  </data>
+  <data name="FkseriescontablesCRC" xml:space="preserve">
+    <value>Collections de portefeuille</value>
+  </data>
+  <data name="FkseriescontablesCRP" xml:space="preserve">
+    <value>portefeuille de paiements</value>
+  </data>
+  <data name="FkseriescontablesREM" xml:space="preserve">
+    <value>Gestion des remises</value>
+  </data>
+  <data name="EstadoEjercicioAbierto" xml:space="preserve">
+    <value>Ouvert</value>
+  </data>
+  <data name="EstadoEjercicioCerrado" xml:space="preserve">
+    <value>Fermé</value>
+  </data>
+  <data name="EstadoEjercicioExistencias" xml:space="preserve">
+    <value>Stocks de régularisation</value>
+  </data>
+  <data name="EstadoEjercicioGrupos" xml:space="preserve">
+    <value>Groupes de régularisation 6 et 7</value>
   </data>
 </root>

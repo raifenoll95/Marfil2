@@ -148,7 +148,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var user = _context;
             var preferencia = service.GePreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto") as PreferenciaPanelControlDefecto ?? new PreferenciaPanelControlDefecto();
             preferencia.SetPanelControl(Empresa, modelo);
-            service.SetPreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto", preferencia);
+            service.SetPreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto", preferencia,true);
         }
 
         #endregion
@@ -169,7 +169,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 preferencia.DeletePanelControl(Empresa, configuraciongraficasModel.Codigo.ToString());
             }
             
-            service.SetPreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto", preferencia);
+            service.SetPreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto", preferencia, true);
         }
 
         private void EliminarPreferencias(ConfiguraciongraficasModel configuraciongraficasModel)
@@ -180,7 +180,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             if (preferencia != null)
             {
                 preferencia.DeletePanelControl(Empresa,configuraciongraficasModel.Codigo.ToString());
-                service.SetPreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto", preferencia);
+                service.SetPreferencia(TiposPreferencias.PanelControlDefecto, user.Id, "1", "Defecto", preferencia,true);
             }
         }
 

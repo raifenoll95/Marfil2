@@ -123,4 +123,19 @@
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Chart configuration</value>
   </data>
+  <data name="Titulo" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Agruparpor" xml:space="preserve">
+    <value>Group by</value>
+  </data>
+  <data name="Valores" xml:space="preserve">
+    <value>Values</value>
+  </data>
+  <data name="Apareceinicio" xml:space="preserve">
+    <value>Pin to start</value>
+  </data>
+  <data name="Tipografica" xml:space="preserve">
+    <value>Graphic type</value>
+  </data>
 </root>

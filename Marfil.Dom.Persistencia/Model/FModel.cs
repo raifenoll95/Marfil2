@@ -230,6 +230,11 @@ namespace Marfil.Dom.Persistencia.Model
 
                 return result as T;
             }
+            else if (typeof(AsistenteLecturasModel) == typeof(T))
+            {
+                var result = new AsistenteLecturasModel();
+                return result as T;
+            }
             else if (typeof(IncidenciasModel) == typeof(T))
             {
                 var result = new IncidenciasModel(context);
@@ -843,6 +848,14 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(LecturasModel) == typeof(T))
+            {
+
+                var result = new LecturasModel();
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
             else if (typeof(CuadernosBancariosModel) == typeof(T))
             {
 
@@ -1045,6 +1058,12 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Fkalmacen = almacen.Id;
                 return result as T;
             }
+            else if (typeof(ActualizarCostesModel) == typeof(T))
+            {
+                var result = new ActualizarCostesModel();
+
+                return result as T;
+            }
             else if (typeof(MovsModel) == typeof(T))
             {
                 var result = new MovsModel(context);
@@ -1189,6 +1208,12 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(VerificarContabilidadModel) == typeof(T))
+            {
+                var result = new VerificarContabilidadModel(context);
+
+                return result as T;
+            }
             else if (typeof(ConsultaVisualFullModel) == typeof(T))
             {
                 var result = new ConsultaVisualFullModel(context);
@@ -1212,6 +1237,20 @@ namespace Marfil.Dom.Persistencia.Model
             else if (typeof(CircuitoTesoreriaCobrosModel) == typeof(T))
             {
                 var result = new CircuitoTesoreriaCobrosModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
+            else if (typeof(TiposFacturasIvaModel) == typeof(T))
+            {
+                var result = new TiposFacturasIvaModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
+            else if (typeof(RegistroIvaRepercutidoModel) == typeof(T))
+            {
+                var result = new RegistroIvaRepercutidoModel(context);
                 var empresa = appService.GetCurrentEmpresa();
                 result.Empresa = empresa.Id;
                 return result as T;

@@ -1,0 +1,261 @@
+﻿@using Resources
+@using Marfil.App.WebMain.Misc
+@model Marfil.Dom.Persistencia.Listados.ComparativaPerdidasYGananciasAnalitica
+
+@{
+    ViewBag.Title = "ComparativaPYGAnalitica";
+
+    var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadasFuncional();
+
+    var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCPGAN().Select(f => new SelectListItem()
+    {
+        Text = f.Text,
+        Value = f.Value,
+
+    }).ToList();
+
+    // Ejercicio Actual
+    var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYGAnalitica(filtrosAcumulado, false);
+    var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
+
+    var listejercicios = new List<SelectListItem>();
+    var userAcumulado = WebHelper.GetApplicationHelper().GetFiltroAcumulador();
+
+    listejercicios.Insert(0, new SelectListItem() { Text = "Todo el ejercicio", Value = WebHelper.GetApplicationHelper().GetCurrentEjercicio().Id.ToString() });
+
+    if (userAcumulado != null && userAcumulado != "")
+    {
+        listejercicios.Insert(1, new SelectListItem()
+        {
+            Text = "P. acumulado " + filtrosAcumulado.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumulado.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumulado.seccion + " | Ejecutado el " + fechaRecalculoAcumulador,
+            Value = userAcumulado
+        });
+    }
+
+    //Ejercicio Anterior
+    var filtrosAcumuladoant = WebHelper.GetApplicationHelper().GetFiltrosAnt();
+    var textRecalculoant = WebHelper.GetApplicationHelper().TextRecalculoPYGAnalitica(filtrosAcumuladoant, true);
+    var fechaRecalculoAcumuladorant = WebHelper.GetApplicationHelper().GetRecalculoAnt();
+
+    var listejerciciosant = new List<SelectListItem>();
+    var userAcumuladoant = WebHelper.GetApplicationHelper().GetFiltroAcumuladorAnt();
+
+    listejerciciosant.Insert(0, new SelectListItem() { Text = "Todo el ejercicio", Value = WebHelper.GetApplicationHelper().GetCurrentEjercicio().Fkejercicios.ToString() });
+
+    if (userAcumuladoant != null && userAcumuladoant != "")
+    {
+        listejerciciosant.Insert(1, new SelectListItem()
+        {
+            Text = "P. acumulado " + filtrosAcumuladoant.fechaDesde.Value.ToString("dd/MM/yyyy") + " - " + filtrosAcumuladoant.fechaHasta.Value.ToString("dd/MM/yyyy") + " " + filtrosAcumuladoant.seccion + " | Ejecutado el " + fechaRecalculoAcumuladorant,
+            Value = userAcumuladoant
+        });
+    }
+}
+
+@Html.HiddenFor(model => model.Empresa)
+@*@Html.HiddenFor(model => model.fkEjercicio)*@
+<div class="col-md-10">
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Ejercicio, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(f => Model.Ejercicio, listejercicios, (object)new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Ejercicioanterior, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(f => Model.Ejercicioanterior, listejerciciosant, (object)new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Guia, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(f => Model.Guia, listguia, (object)new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-centered">
+        <div class="form-group">
+            <input class="btn btn-success" type="button" id="botonCalculo" value="Calcular Listado" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Lineassinsaldo, new { @class = "control-label col-md-3" })
+            <div class="col-md-2">
+                @Html.CheckBox("Lineassinsaldo")
+            </div>
+            @Html.LabelFor(f => Model.Desglosarniveltres, new { @class = "control-label col-md-4" })
+            <div class="col-md-2">
+                @Html.CheckBox("Desglosarniveltres")
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @if (textRecalculo != null && textRecalculo != "")
+            {
+                @Html.LabelFor(f => Model.Recalculo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculo })
+                    @Html.TextBoxFor(f => Model.Recalculo, (object)new { @class = "form-control", @readonly = true, @Value = textRecalculoant })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    window.onload = init;
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "imprimir"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", imprimir)
+
+        var i = document.createElement('i')
+        i.className = "fa fa-print"
+        i.innerText = " Imprimir"
+
+        button.appendChild(i)
+
+        // [1] Botón Limpiar
+        parentButtonListar.insertBefore(button, parentButtonListar.children[1])
+
+    }, false);
+
+    /*document.addEventListener('DOMContentLoaded', function () {
+
+        var parentButtonListar = document.getElementsByClassName('btn btn-info')[0].parentElement;
+
+        var button = document.createElement('button')
+        button.id = "listCuentas"
+        button.className = "btn btn-info"
+        button.type = "button"
+        button.style.margin = "5px"
+        button.addEventListener("click", listar)
+
+        var i = document.createElement('i')
+        //i.className = "fa fa-print"
+        i.innerText = "Listado Cuentas no asignadas"
+
+        button.appendChild(i)
+
+        parentButtonListar.insertBefore(button, parentButtonListar.children[2])
+
+    }, false);*/
+
+    $("#botonCalculo").click(function () {
+        var Ejercicio = document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value;
+        var Ejercicioant = document.getElementById('Ejercicioanterior').options[document.getElementById('Ejercicioanterior').selectedIndex].value;
+        var Guia = document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value;
+        var SinSaldo = document.getElementById('Lineassinsaldo').value;
+        var Desglosar = document.getElementById('Desglosarniveltres').value;
+
+        $.ajax({
+            url: '@Url.Action("CalculoAnalitica", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            data: { Ejercicio, Ejercicioant, Guia, SinSaldo, Desglosar },
+            success: function (data) {
+                location.reload();
+            }
+        });
+    });
+
+    $('#limpiar').hide();
+    $('#grafica').hide();
+
+    function imprimir() {
+
+        var data = {
+            Ejercicio: document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value,
+            Guia: document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value,
+            SinSaldo: document.getElementById('Lineassinsaldo').value,
+            Desglosar: document.getElementById('Desglosarniveltres').value
+        };
+
+        var dataSerialized = JSON.stringify(data);
+
+        console.log(dataSerialized);
+
+        window.open('@Url.Action("Visualizar", "Designer")' + '?primaryKey=' + dataSerialized + '&tipo=PerdidasYGanancias&reportId=Comparativa Cuenta Perdidas y Ganancias Analitica');
+
+        //Imprimir cuentas no asignadas
+        @*$.ajax({
+            url: '@Url.Action("CuentasNoAsignadas", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            success: function (data) {
+                var isTrueSet = (data === 'True');
+                if (isTrueSet == false) {
+                    //$("#listCuentas").prop('disabled', true);
+                    $("#listCuentas").hide();
+                } else {
+                    //$("#listCuentas").prop('disabled', false);
+                    $("#listCuentas").show();
+                }
+            }
+        });*@
+
+    };
+
+    @*function listar() {
+
+        window.open('@Url.Action("Listado", "ListadoCuentasNoAsignadas")' + '/CuentasNoAsignadas');
+
+    };*@
+
+    function init() {
+        //Comprobar si hay cuentas no asignadas
+       @* $.ajax({
+            url: '@Url.Action("CuentasNoAsignadas", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            success: function (data) {
+                var isTrueSet = (data === 'True');
+                if (isTrueSet == false) {
+                    //$("#listCuentas").prop('disabled', true);
+                    $("#listCuentas").hide();
+                } else {
+                    //$("#listCuentas").prop('disabled', false);
+                    $("#listCuentas").show();
+                }
+            }
+        });*@
+
+        //Configuración de Guia
+        @*$.ajax({
+            url: '@Url.Action("GuiaInforme", "GuiasBalances")',
+            dataType: "text",
+            type: "GET",
+            success: function (data) {
+                $('#Guia').val(data);
+            }
+        });*@
+    }
+
+</script>
+
+<style type="text/css">
+    .row-centered {
+        text-align: center;
+    }
+</style>

@@ -30,8 +30,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                     throw new ValidationException(string.Format(RCriteriosagrupacion.ErrorCriterioObligatorio, Funciones.GetEnumByStringValueAttribute(CamposAgrupacionAlbaran.Fkarticulos)));
                 if (model.CriteriosagrupacionLin.All(f => f.campo != (int)CamposAgrupacionAlbaran.Precio))
                     throw new ValidationException(string.Format(RCriteriosagrupacion.ErrorCriterioObligatorio, Funciones.GetEnumByStringValueAttribute(CamposAgrupacionAlbaran.Precio)));
-                if (model.CriteriosagrupacionLin.All(f => f.campo != (int)CamposAgrupacionAlbaran.Porcentajedescuento))
-                    throw new ValidationException(string.Format(RCriteriosagrupacion.ErrorCriterioObligatorio, Funciones.GetEnumByStringValueAttribute(CamposAgrupacionAlbaran.Porcentajedescuento)));
+                /*if (model.CriteriosagrupacionLin.All(f => f.campo != (int)CamposAgrupacionAlbaran.Porcentajedescuento))
+                    throw new ValidationException(string.Format(RCriteriosagrupacion.ErrorCriterioObligatorio, Funciones.GetEnumByStringValueAttribute(CamposAgrupacionAlbaran.Porcentajedescuento)));*/
             }
             
 

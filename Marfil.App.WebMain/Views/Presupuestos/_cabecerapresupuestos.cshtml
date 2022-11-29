@@ -54,35 +54,35 @@
         </div>
 
     </div>
-                }
+}
 
-                else
-                {
-                    
-                    @Html.HiddenFor(f => Model.Fkseries)
-                    
-                    @Html.HiddenFor(f => Model.Fkestados)
-                    <div class="form-group">
-                        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
-                        <div class="col-md-6">
-                            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
-                        </div>
+else
+{
 
-                        @Html.LabelFor(f => Model.Fkestados, new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
-                            @Html.HiddenFor(f => Model.Fkestados)
-                            <label class="control-label bolder dark green">@Model.Estado.Descripcion</label>
-                        </div>
+    @Html.HiddenFor(f => Model.Fkseries)
 
-                        <div class="col-md-12"></div>
-                        <div class="col-md-6 col-md-offset-2">
-                            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-2 col-md-offset-2">
-                            @Html.ValidationMessageFor(f => Model.Fkestados, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                }
+    @Html.HiddenFor(f => Model.Fkestados)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        @Html.LabelFor(f => Model.Fkestados, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.HiddenFor(f => Model.Fkestados)
+            <label class="control-label bolder dark green">@Model.Estado.Descripcion</label>
+        </div>
+
+        <div class="col-md-12"></div>
+        <div class="col-md-6 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkestados, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
 
 
 <div class="form-group">
@@ -123,7 +123,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Fkclientes, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Fkclientes, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
             campoverificacion.Name = "Fkclientes";
@@ -137,14 +137,14 @@
         @Html.Partial("CampoverificacionUI", campoverificacion)
     </div>
     <div class="col-md-10 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.Fkclientes, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Fkclientes, "", new { @class = "text-danger" })
     </div>
 </div>
 @if (iseditable)
 {
     <div class="form-group hide" id="convertirprospectocliente">
         <div class="col-md-offset-2 col-md-10">
-            <button type="button" class="btn btn-info" ng-click="ConvertirACliente()"><i class="fa fa-exchange" ></i> @Prospectos.ConvertirProspectoCliente</button>
+            <button type="button" class="btn btn-info" ng-click="ConvertirACliente()"><i class="fa fa-exchange"></i> @Prospectos.ConvertirProspectoCliente</button>
         </div>
     </div>
 

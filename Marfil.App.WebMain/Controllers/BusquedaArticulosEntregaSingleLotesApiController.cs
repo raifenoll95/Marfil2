@@ -96,7 +96,7 @@ namespace Marfil.App.WebMain.Controllers
             var solotablas = Funciones.Qbool(nvc["Solotablas"]);
 
             var service = new StockactualService(ContextService,MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
-            var list= service.GetArticuloPorLoteEntradaSingleOCodigo(id,almacen, ContextService.Empresa);
+            var list= service.GetArticuloPorLoteEntradaSingleOCodigo(id, articulosdesde, almacen, ContextService.Empresa);
 
             var response = Request.CreateResponse(list == null ? HttpStatusCode.InternalServerError : HttpStatusCode.OK);
             response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,

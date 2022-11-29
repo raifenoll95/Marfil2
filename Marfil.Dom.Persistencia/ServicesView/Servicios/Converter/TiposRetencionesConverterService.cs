@@ -52,6 +52,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             item.fkcuentascargo = objRetencion.Fkcuentarecargo;
             item.porcentajeretencion = objRetencion.Porcentajeretencion;
             item.tiporendimiento = (int?)objRetencion.Tiporendimiento;
+            item.retencionsobre = (int?)objRetencion.RetencionSobre;
+            item.inmueble = objRetencion.Inmueble;
             return item;
         }
 
@@ -64,6 +66,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             item.fkcuentascargo = objRetencion.Fkcuentarecargo;
             item.porcentajeretencion = objRetencion.Porcentajeretencion;
             item.tiporendimiento = (int?)objRetencion.Tiporendimiento;
+            item.retencionsobre = (int?)objRetencion.RetencionSobre;
+            item.inmueble = objRetencion.Inmueble;
             return item;
         }
 
@@ -77,7 +81,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Fkcuentaabono = obj.fkcuentasabono,
                 Fkcuentarecargo = obj.fkcuentascargo,
                 Porcentajeretencion = obj.porcentajeretencion??0,
-                Tiporendimiento = (TipoRendimiento?)obj.tiporendimiento
+                Tiporendimiento = (TipoRendimiento?)obj.tiporendimiento,
+                RetencionSobre = (TipoRetencionSobre)obj.retencionsobre,
+                Inmueble = obj.inmueble.Value
             };
         }
     }

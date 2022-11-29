@@ -87,7 +87,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService = new EstadosService(_context,_db);
-            st.List = st.List.OfType<AlbaranesComprasModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<AlbaranesComprasModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkproveedores", "Nombreproveedor", "Fkestados", "Importebaseimponible", "Tipoalbaran" };
             var propiedades = Helpers.Helper.getProperties<AlbaranesComprasModel>();
             st.PrimaryColumnns = new[] { "Id" };
@@ -185,9 +202,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     item.Cantidadpedida = 0;
                 }
                 obj.Fkestados = _appService.GetConfiguracion().Estadoalbaranescomprasinicial;
-                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "ALC";//Albarán de compra
+                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
                 if (_validationService.ValidarGrabar(newItem))
@@ -317,7 +335,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             string agrupacion;
             var columnas = GenerarColumnas(referencia, out agrupacion, albaran);
-            sb.AppendFormat("select {0} from albaranescompraslin as al inner join albaranescompras as a on a.empresa=@empresa and a.referencia=@referencia and a.id=al.fkalbaranes and a.empresa=al.empresa left join articulos as art on art.id=al.fkarticulos where al.empresa=@empresa {1}", columnas, agrupacion);
+            sb.AppendFormat("select {0} from albaranescompraslin as al inner join albaranescompras as a on a.empresa=@empresa and a.referencia=@referencia and a.id=al.fkalbaranes and a.empresa=al.empresa left join articulos as art on art.id=al.fkarticulos and al.empresa=art.empresa where al.empresa=@empresa {1}", columnas, agrupacion);
 
             return sb.ToString();
         }
@@ -411,9 +429,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "ALC";//Albarán de compra
+                var contador = ServiceHelper.GetNextId<AlbaranesCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<AlbaranesCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.AlbaranesCompras, _context, _db);
 

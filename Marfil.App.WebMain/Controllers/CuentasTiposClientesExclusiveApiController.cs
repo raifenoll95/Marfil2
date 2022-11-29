@@ -34,9 +34,15 @@ namespace Marfil.App.WebMain.Controllers
             {
                 var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
                 var primeracarga = Funciones.Qbool(nvc[Constantes.Primeracarga]);
+
+                //Solo mostrar cleintes de la delegación del usuario
+                var delegacion = service.obtenerdelegacionusuario(ContextService.Id);
+
+                var lista = delegacion == "" || delegacion == null ? service.GetCuentas(TiposCuentas.Clientes).Where(f => primeracarga || !(f.Bloqueado ?? false)) : service.GetCuentas(TiposCuentas.Clientes).Where(f => f.Fkdelegacion == delegacion && (primeracarga || !(f.Bloqueado ?? false)));
+
                 var result = new ResultBusquedas<CuentasBusqueda>()
                 {
-                    values = service.GetCuentas(TiposCuentas.Clientes).Where(f=> primeracarga || !(f.Bloqueado??false)),
+                    values = lista,
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Fkcuentas", displayName = "Cuentas", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},

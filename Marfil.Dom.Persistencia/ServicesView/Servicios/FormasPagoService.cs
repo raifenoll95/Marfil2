@@ -33,7 +33,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             model.ExcludedColumns = new[]
             {
                "Bloqueado","BloqueoModel", "Nombre2", "ImprimirVencimientoFacturas", "RecargoFinanciero", "Efectivo", "Remesable", "Mandato",
-                "ExcluirFestivos", "ModoPago", "ListModosPago", "Lineas", "NumeroVencimientos","Gruposformaspago","Toolbar"
+                "ExcluirFestivos", "ModoPago", "ListModosPago", "Lineas", "NumeroVencimientos","Gruposformaspago", "Docsventaimprimircuenta","Toolbar"
             };
             model.BloqueoColumn = "Bloqueado";
             using (var service = new TablasVariasService(_context,_db))
@@ -60,6 +60,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             formapago.bloqueada = operacion;
             _db.Entry(formapago).State = EntityState.Modified;
             _db.SaveChanges();
+        }
+
+        public string GetDescripcionFormaPago(string forma)
+        {
+            var idforma = int.Parse(forma);
+            var descripcion = _db.FormasPago.Where(f => f.id == idforma).Select(f => f.nombre).SingleOrDefault();
+
+            return descripcion;
         }
     }
 }

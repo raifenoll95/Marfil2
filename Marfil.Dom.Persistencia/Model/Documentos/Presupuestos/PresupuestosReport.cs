@@ -40,7 +40,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             DataSource.Queries.Add(new CustomSqlQuery("clientes", string.Format("SELECT c.*,d.direccion as [Direccioncliente],d.poblacion as [Poblacioncliente],d.cp as [Cpcliente],d.telefono as [Telefonocliente] FROM [Clientes] as c left join direcciones as d on d.empresa=c.empresa and d.tipotercero={0} and d.fkentidad=c.fkcuentas", (int)TiposCuentas.Clientes)));
 
             // EMPRESA
-            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
+            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero], " +
+                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais] " +
+                "FROM [Empresas] as e " +
+                "left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id " +
+                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais " +
+                "left join Paises as pa on pa.valor = d.fkpais and pa.Valor = d.fkpais"));
 
             DataSource.Queries.Add(mainQuery);
 
@@ -48,10 +53,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             DataSource.Queries.Add(new CustomSqlQuery("presupuestoslin", "SELECT pl.*, (pl.ancho * 100) AS ancho_cm, (pl.largo * 100) AS largo_cm, (pl.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2 FROM [PresupuestosLin] as pl" +
                                                                             " inner join Familiasproductos as fp on fp.empresa=pl.empresa and fp.id=substring(pl.fkarticulos,0,3)" +
                                                                             " left join unidades as u on fp.fkunidadesmedida=u.id" +
-                                                                            " INNER JOIN Articulos AS ar ON pl.fkarticulos = ar.id"));
+                                                                            " INNER JOIN Articulos AS ar ON pl.fkarticulos = ar.id and pl.empresa = ar.empresa"));
 
             // PRESUPUESTOS TOTALES
             DataSource.Queries.Add(new CustomSqlQuery("presupuestostotales", "SELECT * FROM [PresupuestosTotales]"));
+
+            // PRESUPUESTOS COMPONENTES LIN
+            DataSource.Queries.Add(new CustomSqlQuery("ComponentesLin", "SELECT * FROM [PresupuestosComponentesLin]"));
 
             // FORMAS PAGO
             DataSource.Queries.Add(new CustomSqlQuery("Formaspago", "SELECT * FROM [formaspago]"));
@@ -83,6 +91,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             DataSource.Relations.Add("presupuestos", "presupuestostotales", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("id", "fkpresupuestos")});
+
+            // PRESUPUESTOS LIN <-> PRESUPUESTOS COMPONENTES LIN
+            DataSource.Relations.Add("presupuestoslin", "ComponentesLin", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fkpresupuestos", "fkpresupuestos"),
+                    new RelationColumnInfo("id", "idlineaarticulo")});
 
             // PRESUPUESTOS <-> CLIENTES
             DataSource.Relations.Add("presupuestos", "clientes", new[] {

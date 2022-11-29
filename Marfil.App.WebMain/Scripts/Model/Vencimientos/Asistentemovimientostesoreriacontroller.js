@@ -5,7 +5,7 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
     $scope.UrlCompletarDatosCircuito;
     $scope.urlObtenerCuentaCargo;
     $scope.urlObtenerCuentaAbono;
-    $scope.urlObtenerDescripcionCobrador;
+    $scope.urlCuentaTesoreria;
     $scope.urlObtenerEjercicio;
 
 
@@ -26,11 +26,11 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
 
 
     //Init
-    $scope.init = function (UrlCompletarDatosCircuito, urlObtenerCuentaCargo, urlObtenerCuentaAbono, urlObtenerDescripcionCobrador, urlObtenerEjercicio) {
+    $scope.init = function (UrlCompletarDatosCircuito, urlObtenerCuentaCargo, urlObtenerCuentaAbono, urlCuentaTesoreria, urlObtenerEjercicio) {
         $scope.UrlCompletarDatosCircuito = UrlCompletarDatosCircuito;
         $scope.urlObtenerCuentaCargo = urlObtenerCuentaCargo;
         $scope.urlObtenerCuentaAbono = urlObtenerCuentaAbono;
-        $scope.urlObtenerDescripcionCobrador = urlObtenerDescripcionCobrador;
+        $scope.urlCuentaTesoreria = urlCuentaTesoreria;
         $scope.urlObtenerEjercicio = urlObtenerEjercicio;
     }
 
@@ -55,10 +55,14 @@ app.controller('AsistenteMovimientosTesoreriaCtrl', ['$scope', '$rootScope', '$h
                 $("#Fkcuentatesoreria").attr("readonly", !atributos.actualizarcuenta);
 
                 if (filas[0].FkcuentaTesoreria != null) {
+                    //Cuenta tesoreria
                     $('#Fkcuentatesoreria').val(filas[0].FkcuentaTesoreria);
-                    $http.get($scope.urlObtenerDescripcionCobrador + "?cuenta=" + filas[0].FkcuentaTesoreria).success(function (data) {
-                        var modelo = JSON.parse(data);
-                        document.getElementById("cv-Fkcuentatesoreria-descripcion").textContent = modelo.Descripcion;
+
+                    $http.get($scope.urlCuentaTesoreria + "?cuenta=" + filas[0].FkcuentaTesoreria).success(function (data) {
+                        var modeloCuenta = JSON.parse(data);
+                        window.document.getElementById("cv-Fkcuentatesoreria-descripcion").textContent = modeloCuenta.Descripcion;
+                    }).error(function (error) {
+                        console.log(error);
                     });
                 }
 

@@ -160,7 +160,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Bundle.
+        ///   Busca una cadena traducida similar a Bundles / Kit.
         /// </summary>
         public static string Bundle {
             get {
@@ -1029,6 +1029,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Fksituacioncomision {
             get {
                 return ResourceManager.GetString("Fksituacioncomision", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tipo factura.
+        /// </summary>
+        public static string Fktipofactura {
+            get {
+                return ResourceManager.GetString("Fktipofactura", resourceCulture);
             }
         }
         

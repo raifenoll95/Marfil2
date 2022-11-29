@@ -54,7 +54,7 @@ new Script { ExtensionSuite = ExtensionSuite.Editors }
         </div>
         @Html.LabelFor(f => Model.Tipoimputacion, new { @class = "control-label col-md-2" })
         <div class="col-md-4">
-            @Html.EnumDropDownListFor(f => Model.Tipoimputacion, isreadonly ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control", @ng_model = "Tipoimputacion", @ng_disabled = "Tipotrabajo=='1'" })
+            @Html.EnumDropDownListFor(f => Model.Tipoimputacion, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control", @ng_model = "Tipoimputacion" })
             @Html.ValidationMessageFor(f => Model.Tipoimputacion, "", new { @class = "text-danger" })
         </div>
     </div>

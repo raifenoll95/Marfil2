@@ -82,7 +82,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //var user = _db.Usuarios.Where(f => f.usuario == _context.Usuario).SingleOrDefault();
             //st.List = user.usuario_cliente == true ? st.List.OfType<PedidosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia).Where(f => f.Fkclientes == user.codigoclienteusuario)
             //    : st.List.OfType<PedidosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
-            st.List = st.List.OfType<PedidosModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<PedidosModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkclientes", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<PedidosModel>();
             st.PrimaryColumnns = new[] { "Id" };
@@ -120,7 +137,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
-        public IEnumerable<PedidosTotalesModel> Recalculartotales(IEnumerable<PedidosLinModel> model, double descuentopp, double descuentocomercial, double portes, int decimalesmoneda)
+        public IEnumerable<PedidosTotalesModel> Recalculartotales(IEnumerable<PedidosLinModel> model, double descuentopp, double descuentocomercial, double portes, int decimalesmoneda, bool esimportado)
         {
             var result = new List<PedidosTotalesModel>();
 
@@ -133,7 +150,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = Math.Round((item.Sum(f => (f.Metros) * (f.Precio)) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = Math.Round((item.Sum(f => f.Importe)) ?? 0, decimalesmoneda) ;
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;
@@ -149,6 +166,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             return result;
+        }
+
+        public int Recalcularpeso(PedidosModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
+            }
+
+            return pesototal;
         }
 
         public PedidosModel Clonar(string id)
@@ -171,9 +203,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 var appService=new ApplicationHelper(_context);
                 obj.Fkestados = appService.GetConfiguracion().Estadopedidosventasinicial;
-                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PED"; //Pedido Venta
+                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Pedidos>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Pedidos>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
 
                 var newItem = _converterModel.CreatePersitance(obj);
@@ -246,9 +279,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var validation = _validationService as PedidosValidation;
                 validation.EjercicioId = EjercicioId;
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PED"; //Pedido Venta
+                var contador = ServiceHelper.GetNextId<Pedidos>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Pedidos>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Pedidos>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 //Obtener el pais del cliente (tercero)
@@ -261,6 +295,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.PedidosVentas, _context, _db);
+
+                //Se calcula el peso del material en el documento
+                if (model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
 
                 base.create(model);
 
@@ -276,13 +316,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
+                var model = obj as PedidosModel;
                 var validation = _validationService as PedidosValidation;
                 validation.EjercicioId = EjercicioId;
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.PedidosVentas, _context, _db);
-                base.edit(obj);
+
+                //Se calcula el peso del material en el documento
+                if (model.Peso <= 0)
+                {
+                    model.Peso = Recalcularpeso(model);
+                }
+
+                base.edit(model);
 
 
-                ModificarCantidadesPedidasPresupuestos(obj as PedidosModel);
+                ModificarCantidadesPedidasPresupuestos(model);
                 _db.SaveChanges();
                 tran.Complete();
             }
@@ -305,29 +353,44 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public PedidosModel ImportarPresupuesto(PresupuestosModel presupuesto)
         {
-            //calcular serie asociada
-            if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
-                var prospectoService = FService.Instance.GetService(typeof(ProspectosModel), _context);
-                if (prospectoService.exists(presupuesto.Fkclientes))
+                //calcular serie asociada
+                if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
                 {
-                    throw new Exception(RProspectos.ErrorCrearPedidoProspecto);
+                    var prospectoService = FService.Instance.GetService(typeof(ProspectosModel), _context);
+                    if (prospectoService.exists(presupuesto.Fkclientes))
+                    {
+                        throw new Exception(RProspectos.ErrorCrearPedidoProspecto);
+                    }
+
+                    var result = Helper.fModel.GetModel<PedidosModel>(_context);
+                    result.Importado = true;
+                    ImportarCabecera(presupuesto, result);
+                    var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
+                    result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.Value.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
+                    EstablecerSerie(presupuesto.Fkseries, result);
+
+                    //recalculo importes lineas y totales
+                    RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
+                    result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
+                        result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
+                        result.Decimalesmonedas, (bool)result.Importado).ToList();
+
+                    //Cambiamos el estado del presupuesto
+                    var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                    var presupuestosService = FService.Instance.GetService(typeof(PresupuestosModel), _context) as PresupuestosService;
+                    presupuesto.Fkestados = Confservice.GetEstadoFinPresupuestoVentas();
+
+                    var newItem = presupuestosService._converterModel.CreatePersitance(presupuesto);
+                    newItem.id = (int)presupuesto.Id; //Que tome el id del presupuesto que modificamos para que no cree uno nuevo
+                    _db.Set<Presupuestos>().AddOrUpdate(newItem);
+
+                    _db.SaveChanges();
+                    tran.Complete();
+
+                    return result;
                 }
-
-                var result = Helper.fModel.GetModel<PedidosModel>(_context);
-                result.Importado = true;
-                ImportarCabecera(presupuesto, result);
-                var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
-                result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.Value.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
-                EstablecerSerie(presupuesto.Fkseries, result);
-
-                //recalculo importes lineas y totales
-                RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
-                result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
-                    result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
-                    result.Decimalesmonedas).ToList();
-
-                return result;
             }
 
             throw new ValidationException(RPresupuestos.ErrorSinCantidadPendiente);

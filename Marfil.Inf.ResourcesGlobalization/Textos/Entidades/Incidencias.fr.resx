@@ -124,7 +124,7 @@
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Documento" xml:space="preserve">
     <value>Document</value>
@@ -133,6 +133,18 @@
     <value>Groupe</value>
   </data>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Incidences</value>
+    <value>incidents</value>
+  </data>
+  <data name="Tipomaterial" xml:space="preserve">
+    <value>Type d'incident</value>
+  </data>
+  <data name="EnumMaterial" xml:space="preserve">
+    <value>Matériel</value>
+  </data>
+  <data name="EnumProduccion" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="EnumTodos" xml:space="preserve">
+    <value>Tout</value>
   </data>
 </root>

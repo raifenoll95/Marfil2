@@ -24,51 +24,65 @@
     @Html.LabelFor(f => Model.TipoEmpresa, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.DropDownListFor(f => Model.TipoEmpresa, WebHelper.GetApplicationHelper().GetListTiposEmpresas().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }), isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
-        @Html.ValidationMessageFor(f => Model.TipoEmpresa, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.TipoEmpresa, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.ActividadPrincipal, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.ActividadPrincipal, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(f => Model.ActividadPrincipal, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.ActividadPrincipal, "", new {@class = "text-danger"})
+        @Html.TextBoxFor(f => Model.ActividadPrincipal, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.ActividadPrincipal, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Cnae, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Cnae, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(f => Model.Cnae, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @readonly = "readonly"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Cnae, "", new {@class = "text-danger"})
+        @Html.TextBoxFor(f => Model.Cnae, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Cnae, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Nivel, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Nivel, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(f => Model.Nivel, (new[] {"0", "1", "2", "3", "4", "5"}).Select(f => new SelectListItem() {Value = f, Text = f}), isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Nivel, "", new {@class = "text-danger"})
+        @Html.DropDownListFor(f => Model.Nivel, (new[] { "0", "1", "2", "3", "4", "5" }).Select(f => new SelectListItem() { Value = f, Text = f }), isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Nivel, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Criterioiva, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Criterioiva, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.EnumDropDownList("Criterioiva", Model.Criterioiva, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Criterioiva, "", new {@class = "text-danger"})
+        @Html.EnumDropDownList("Criterioiva", Model.Criterioiva, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Criterioiva, "", new { @class = "text-danger" })
     </div>
 </div>
 
+<h5>Periodo de declaración del IVA</h5>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Liquidacioniva, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownList("Liquidacioniva", Model.Liquidacioniva, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Liquidacioniva, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Liquidacioniva, new {@class = "control-label col-md-2"})
-    <div class="col-md-10">
-        @Html.EnumDropDownList("Liquidacioniva", Model.Liquidacioniva, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Liquidacioniva, "", new {@class = "text-danger"})
+    @Html.LabelFor(f => Model.Ivasoportado, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.EnumDropDownList("Ivasoportado", Model.Ivasoportado, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Ivasoportado, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Ivarepercutido, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.EnumDropDownList("Ivarepercutido", Model.Ivarepercutido, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Ivarepercutido, "", new { @class = "text-danger" })
     </div>
 </div>
-
+<hr>
 <div class="form-group">
     @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
@@ -80,18 +94,18 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Datosregistrales, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Datosregistrales, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextAreaFor(f => Model.Datosregistrales, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Datosregistrales, "", new {@class = "text-danger"})
+        @Html.TextAreaFor(f => Model.Datosregistrales, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Datosregistrales, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Fktarifasventas, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Fktarifasventas, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(f => Model.Fktarifasventas, listatarifasventa, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Fktarifasventas, "", new {@class = "text-danger"})
+        @Html.DropDownListFor(f => Model.Fktarifasventas, listatarifasventa, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Fktarifasventas, "", new { @class = "text-danger" })
     </div>
 </div>
 

@@ -118,15 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CustomId" xml:space="preserve">
-    <value>Id</value>
+    <value>aller</value>
   </data>
   <data name="Tiporeport" xml:space="preserve">
-    <value>Tipe</value>
+    <value>Type</value>
   </data>
   <data name="Usuario" xml:space="preserve">
     <value>Utilisateur</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
+  </data>
+  <data name="Tipoprivacidad" xml:space="preserve">
+    <value>confidentialité</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Défaut</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>action</value>
   </data>
 </root>

@@ -108,6 +108,7 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
         componente.BuscarArticulo = false;
     }
 
+    //MOD Nov2022 - Cambiamos el redondeo a 3 decimales
     $scope.CalcularMetros = function (componente) {
         $http({
             url: $scope.urlObtenerMedida, method: "GET", params: { idArticulo: componente.IdComponente }
@@ -120,17 +121,17 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
 
             //Precio = Precio * cantidad * Metros (largo * ancho)
             else if (unidad == "02") {
-                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho).toFixed(2);
+                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho).toFixed(3);
             }
 
             //Precio = Precio * cantidad * Metros (largo * ancho * grueso)
             else if (unidad == "03") {
-                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho * componente.Grueso).toFixed(2);
+                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho * componente.Grueso).toFixed(3);
             }
 
             //Precio = Precio * cantidad * (largo)
             else if (unidad == "05") {
-                componente.Metros = (componente.Piezas * componente.Largo).toFixed(2);
+                componente.Metros = (componente.Piezas * componente.Largo).toFixed(3);
             }
 
             else {
@@ -143,6 +144,8 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
     }
 
     //Recalculamos metros y precio
+    /*MOD Nov2022 - Se modifican las condiciones que permiten editar las medidas según la UM porque estaban justo al contrario
+    y se comentan la igualaciones que no tienen sentido. Cambiamos el redondeo de los metros a 3 decimales*/
     $scope.CalcularPrecioMetros = function (componente) {
 
         $http({
@@ -151,9 +154,9 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
             var unidad = data.unidad;
 
             if (unidad == "01") {
-                componente.Largo = componente.Largo;
-                componente.Ancho = componente.Ancho;
-                componente.Grueso = componente.Grueso;
+                componente.Largo = 0; //$scope.LargoPadre.toString().replace(",", ".");
+                componente.Ancho = 0; //$scope.AnchoPadre.toString().replace(",", ".");
+                componente.Grueso = 0; //$scope.GruesoPadre.toString().replace(",", ".");
                 componente.Metros = componente.Piezas;
                 componente.Precio = (componente.PrecioInicial * componente.Metros).toFixed(2);
                 var incrementomerma = ((componente.Merma * componente.Precio) / 100).toFixed(2);
@@ -162,10 +165,10 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
 
             //Precio = Precio * cantidad * Metros (largo * ancho)
             else if (unidad == "02") {
-                componente.Largo = $scope.LargoPadre.toString().replace(",", ".");
-                componente.Ancho = $scope.AnchoPadre.toString().replace(",", ".");
-                componente.Grueso = componente.Grueso;
-                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho).toFixed(2);
+                componente.Largo = componente.Largo;
+                componente.Ancho = componente.Ancho;
+                componente.Grueso = $scope.GruesoPadre.toString().replace(",", ".");
+                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho).toFixed(3);
                 componente.Precio = (componente.PrecioInicial * componente.Metros).toFixed(2);
                 var incrementomerma = ((componente.Merma * componente.Precio) / 100).toFixed(2);
                 componente.Precio = (parseFloat(componente.Precio) + parseFloat(incrementomerma)).toFixed(2);
@@ -173,10 +176,10 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
 
             //Precio = Precio * cantidad * Metros (largo * ancho * grueso)
             else if (unidad == "03") {
-                componente.Largo = $scope.LargoPadre.toString().replace(",", ".");
-                componente.Ancho = $scope.AnchoPadre.toString().replace(",", ".");
-                componente.Grueso = $scope.GruesoPadre.toString().replace(",", ".");
-                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho * componente.Grueso).toFixed(2);
+                componente.Largo = componente.Largo;
+                componente.Ancho = componente.Ancho;
+                componente.Grueso = componente.Grueso;
+                componente.Metros = (componente.Piezas * componente.Largo * componente.Ancho * componente.Grueso).toFixed(3);
                 componente.Precio = (componente.PrecioInicial * componente.Metros).toFixed(2);
                 var incrementomerma = ((componente.Merma * componente.Precio) / 100).toFixed(2);
                 componente.Precio = (parseFloat(componente.Precio) + parseFloat(incrementomerma)).toFixed(2);
@@ -184,10 +187,10 @@ app.controller('PresupuestosAsistenteCtrl', ['$scope', '$rootScope', '$http', '$
 
             //Precio = Precio * cantidad * (largo)
             else if (unidad == "05") {
-                componente.Largo = $scope.LargoPadre.toString().replace(",", ".");
-                componente.Ancho = componente.Ancho;
-                componente.Grueso = componente.Grueso;
-                componente.Metros = (componente.Piezas * componente.Largo).toFixed(2);
+                componente.Largo = componente.Largo;
+                componente.Ancho = 0; //$scope.AnchoPadre.toString().replace(",", ".");
+                componente.Grueso = 0; //$scope.GruesoPadre.toString().replace(",", ".");
+                componente.Metros = (componente.Piezas * componente.Largo).toFixed(3);
                 componente.Precio = (componente.PrecioInicial * componente.Metros).toFixed(2);
                 var incrementomerma = ((componente.Merma * componente.Precio) / 100).toFixed(2);
                 componente.Precio = (parseFloat(componente.Precio) + parseFloat(incrementomerma)).toFixed(2);

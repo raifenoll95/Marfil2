@@ -147,6 +147,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
+        public int Recalcularpeso(ReservasstockModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
+            }
+
+            return pesototal;
+        }
+
         public ReservasstockModel Clonar(string id)
         {
             var appService=new ApplicationHelper(_context);
@@ -167,9 +182,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     item.Cantidadpedida = 0;
                 }
                 obj.Fkestados = appService.GetConfiguracion().Estadoreservasinicial;
-                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "RES"; //Reserva stock
+                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
                 if (_validationService.ValidarGrabar(newItem))
@@ -252,12 +268,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "RES"; //Reserva stock
+                var contador = ServiceHelper.GetNextId<Reservasstock>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Reservasstock>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Reservas, _context, _db);
+
+                //Se calcula el peso del material en el documento
+                if (model.Pesobruto <= 0 || model.Pesobruto == null)
+                {
+                    var ConfService = new ConfiguracionService(_context, _db);
+                    var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                    model.Pesobruto = Recalcularpeso(model);
+                    model.Pesoneto = Math.Round((double)(model.Pesobruto - (model.Pesobruto * relacionbrutoneto / 100)), 2);
+                }
 
                 base.create(obj);
 
@@ -293,7 +319,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var validation = _validationService as ReservasstockValidation;
                     validation.EjercicioId = EjercicioId;
                     DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.Reservas, _context, _db);
-                    base.edit(obj);
+
+                    //Se calcula el peso del material en el documento
+                    if (editado.Pesobruto <= 0 || editado.Pesobruto == null)
+                    {
+                        var ConfService = new ConfiguracionService(_context, _db);
+                        var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                        editado.Pesobruto = Recalcularpeso(editado);
+                        editado.Pesoneto = editado.Pesobruto - (editado.Pesobruto * relacionbrutoneto / 100);
+                    }
+
+                    base.edit(editado);
 
                     if (!_flagconsumirreserva)
                     {
@@ -459,11 +495,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var ancho = linea.Ancho;
                     var largo = linea.Largo;
                     var grueso = linea.Grueso;
-                    if (model.Modificarmedidas)
+                    //Se permite la modificación de medidas pero no es un Bundle / KIT, si no aplica las medidas del primer artículo a todos.
+                    if (model.Modificarmedidas && string.IsNullOrEmpty(linea.Bundle))
                     {
-                        ancho = model.Ancho;
-                        largo = model.Largo;
-                        grueso = model.Grueso;
+                        ancho = model.Ancho == 0 ? ancho : model.Ancho;
+                        largo = model.Largo == 0 ? largo : model.Largo;
+                        grueso = model.Grueso == 0 ? grueso : model.Grueso;
                     }
                     else
                     {
@@ -480,9 +517,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var tiposivaObj = tiposivaService.get(articuloObj.Fktiposiva) as TiposIvaModel;
                     var metros = UnidadesService.CalculaResultado(unidadesObj, linea.Cantidad, largo, ancho, grueso, model.Metros);
                     linea.Metros = metros;
+
+                    //Asignar importe según tarifa del cliente si es un KIT
+                    if (!string.IsNullOrEmpty(linea.Bundle))
+                    {
+                        /*var seriekit = _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == TipoDocumentos.Kit.ToString()).FirstOrDefault().id;
+
+                        if (linea.Bundle.Substring(0, seriekit.Length).Equals(seriekit))
+                        {*/
+                        var tarifacli = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == model.Fkcuenta).FirstOrDefault().fktarifas;
+                        model.Precio = (double)_db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifacli && f.fkarticulos == linea.Fkarticulos).FirstOrDefault().precio;
+                        //}
+                    }
+
                     var bruto = linea.Metros * model.Precio;
                     var importedescuento = Math.Round(((bruto) * model.Descuento / 100.0), model.Decimalesmonedas);
-                    var total = bruto - importedescuento;
+                    var total = bruto - importedescuento;                  
 
                     listado.Add(new ReservasstockLinModel()
                     {
@@ -507,7 +557,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fktiposiva = tiposivaObj.Id,
                         Porcentajeiva = tiposivaObj.PorcentajeIva,
                         Porcentajerecargoequivalencia = tiposivaObj.PorcentajeRecargoEquivalencia,
-                        Bundle = model.Tipopieza == TipoPieza.Bundle ? model.Lote.Replace(linea.Lote, string.Empty) : string.Empty,
+                        Bundle = linea.Bundle,
                         Caja = model.Caja,
                         Canal = model.Canal
                     }

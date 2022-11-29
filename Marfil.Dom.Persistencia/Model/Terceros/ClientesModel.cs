@@ -12,6 +12,7 @@ using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using RClientes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes;
 using Marfil.Dom.Persistencia.Model.CRM;
+using Marfil.Dom.Persistencia.ServicesView;
 
 namespace Marfil.Dom.Persistencia.Model.Terceros
 {
@@ -40,7 +41,10 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
         [Display(ResourceType = typeof(RClientes), Name = "Poblacion")]
         public string Poblacion { get; set; }
 
-        
+        [Display(ResourceType = typeof(RClientes), Name = "Fkdelegacion")]
+        public string Fkdelegacion { get; set; }
+
+
         public bool? Bloqueado { get; set; }
 
         public IEnumerable<ViewProperty> getProperties()
@@ -84,7 +88,7 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
 
         public ClientesModel()
         {
-            
+
         }
 
         public ClientesModel(IContextService context) : base(context)
@@ -92,6 +96,7 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
             _direcciones = fModel.GetModel<DireccionesModel>(context);
             _contactos = fModel.GetModel<ContactosModel>(context);
             _bancosMandatos = fModel.GetModel<BancosMandatosModel>(context);
+
         }
 
         #endregion
@@ -185,6 +190,9 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
         [Display(ResourceType = typeof(RClientes), Name = "Fkidiomas")]
         public string Fkidiomas { get; set; }
 
+        [Display(ResourceType = typeof(RClientes), Name = "Fkdelegacion")]
+        public string Fkdelegacion { get; set; }
+
         [Display(ResourceType = typeof(RClientes), Name = "Fkfamiliacliente")]
         public string Fkfamiliacliente { get; set; }
 
@@ -216,6 +224,9 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
 
         [Display(ResourceType = typeof(RClientes), Name = "Fkregimeniva")]
         public string Fkregimeniva { get; set; }
+
+        [Display(ResourceType = typeof(RClientes), Name = "Fktipofactura")]
+        public string Fktipofactura { get; set; }
 
         [Display(ResourceType = typeof(RClientes), Name = "Fkgruposiva")]
         public string Fkgruposiva { get; set; }

@@ -135,4 +135,16 @@
   <data name="TituloEntidad" xml:space="preserve">
     <value>Incidences</value>
   </data>
+  <data name="Tipomaterial" xml:space="preserve">
+    <value>Type of incident</value>
+  </data>
+  <data name="EnumMaterial" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="EnumProduccion" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="EnumTodos" xml:space="preserve">
+    <value>All</value>
+  </data>
 </root>

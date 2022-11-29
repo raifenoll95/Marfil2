@@ -24,6 +24,8 @@ using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
+using Marfil.Dom.Persistencia.Model.Iva;
 
 namespace Marfil.Dom.Persistencia.Helpers
 {
@@ -193,7 +195,8 @@ namespace Marfil.Dom.Persistencia.Helpers
                         RemoveItemMenu(menu, item.Nombre);
                     }
 
-                    List<MenuItemsAplicacionModel> _aux = menu.Where(item => !item.items.Any() && string.IsNullOrEmpty(item.url)).ToList();
+                    //Oct2022 - Se modifica el filtro para que no tenga en cuenta los items que son separadores
+                    List<MenuItemsAplicacionModel> _aux = menu.Where(item => (!item.items.Any() || item.items.Where(x => x.isSeparator == true).Count() == item.items.Count()) && string.IsNullOrEmpty(item.url)).ToList();
                     List<MenuItemsAplicacionModel> menuLst = menu as List<MenuItemsAplicacionModel>;
                     foreach (var item in _aux)
                         menuLst.Remove(item);
@@ -309,6 +312,17 @@ namespace Marfil.Dom.Persistencia.Helpers
 
                 //end Gestión de ejercicio
 
+                //VerificarContabilidad
+
+                var verificarItem = new MenuItemJavascriptModel()
+                {
+                    text = General.LblVerificar,
+                    link = helper.Content("~/VerificarContabilidad/Index"),
+                    icono = "fa fa-star"
+                };
+
+                //end VerificarContabilidad
+
                 #region Contabilidad
 
                 var contabilidadItem = new MenuItemJavascriptModel()
@@ -399,7 +413,7 @@ namespace Marfil.Dom.Persistencia.Helpers
                 };
 
                 configuracionItem.items = new[]
-                {configuracionSeguridadItem, configuracionAplicacionItem, configuracionEmpresasItem, ejercicioItem, contabilidadItem, importarStockItem, exportarItem, peticionesAsincronas};
+                {configuracionSeguridadItem, configuracionAplicacionItem, configuracionEmpresasItem, ejercicioItem, verificarItem, contabilidadItem, importarStockItem, exportarItem, peticionesAsincronas};
 
                 menu.Insert(0, configuracionItem);
             }
@@ -707,6 +721,16 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         }
 
+        public string GetFiltroAcumuladorAnt()
+        {
+
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), _context) as GuiasBalancesService)
+            {
+                return service.GetFiltroAcumuladorAnt();
+            }
+
+        }
+
         public  AlmacenesModel GetCurrentAlmacen()
         {
             
@@ -744,6 +768,16 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public DateTime? GetRecalculoAnt()
+        {
+            using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var usuario = _context.Usuario;
+                var ejercicio = int.Parse(_context.Ejercicio);
+                return service.GetRecalculoAnt(usuario, ejercicio);
+            }
+        }
+
         public FiltrosAcumulador GetFiltros()
         {
             using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -751,6 +785,16 @@ namespace Marfil.Dom.Persistencia.Helpers
                 var usuario = _context.Usuario;
                 var ejercicio = int.Parse(_context.Ejercicio);
                 return service.GetFiltros(usuario,ejercicio);
+            }
+        }
+
+        public FiltrosAcumulador GetFiltrosAnt()
+        {
+            using (var service = new SaldosAcumuladosPeriodosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var usuario = _context.Usuario;
+                var ejercicio = int.Parse(_context.Ejercicio);
+                return service.GetFiltrosAnt(usuario,ejercicio);
             }
         }
 
@@ -836,6 +880,15 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<SeriesModel> SeriesListadoCompras()
+        {
+            using (var service = FService.Instance.GetService(typeof(SeriesModel), _context) as SeriesService)
+            {
+
+                return service.GetSeriesTipoDocumento(TipoDocumento.AlbaranesCompras);
+            }
+        }
+
         public IEnumerable<ProvinciasModel> GetListProvincias(string pais)
         {
             using (var service = new ProvinciasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -874,6 +927,15 @@ namespace Marfil.Dom.Persistencia.Helpers
                 return service.GetTarifas();
             }
         }
+
+        public IEnumerable<TarifasModel> GetListTarifasTodas()
+        {
+            using (var service = new TarifasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetTarifasTodas();
+            }
+        }
+
         public double GetTotalRemesa(string referencia)
         {
             using (var service = new RemesasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -1142,6 +1204,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<TablasVariasGeneralModel> GetListDelegaciones()
+        {
+            using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetListDelegaciones();
+            }
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListZonaClienteProveedor()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
@@ -1219,11 +1289,95 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<SelectListItem> GetListPeriodoRegistroIva()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            using (var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                var liquidacion = service.GetLiquidacionIva(_context.Empresa);
+
+                if (liquidacion == 1)
+                {
+                    List.Add(new SelectListItem() { Value = "01", Text = "Enero" });
+                    List.Add(new SelectListItem() { Value = "02", Text = "Febrero" });
+                    List.Add(new SelectListItem() { Value = "03", Text = "Marzo" });
+                    List.Add(new SelectListItem() { Value = "04", Text = "Abril" });
+                    List.Add(new SelectListItem() { Value = "05", Text = "Mayo" });
+                    List.Add(new SelectListItem() { Value = "06", Text = "Junio" });
+                    List.Add(new SelectListItem() { Value = "07", Text = "Julio" });
+                    List.Add(new SelectListItem() { Value = "08", Text = "Agosto" });
+                    List.Add(new SelectListItem() { Value = "09", Text = "Septiembre" });
+                    List.Add(new SelectListItem() { Value = "10", Text = "Octubre" });
+                    List.Add(new SelectListItem() { Value = "11", Text = "Noviembre" });
+                    List.Add(new SelectListItem() { Value = "12", Text = "Diciembre" });
+                }
+                else
+                {
+                    List.Add(new SelectListItem() { Value = "1T", Text = "1º Trimestre" });
+                    List.Add(new SelectListItem() { Value = "2T", Text = "2º Trimestre" });
+                    List.Add(new SelectListItem() { Value = "3T", Text = "3º Trimestre" });
+                    List.Add(new SelectListItem() { Value = "4T", Text = "4º Trimestre" });
+                }
+
+                return List;
+            }
+
+        }
+
+        public IEnumerable<SelectListItem> GetTipoOperacionSii()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "S1", Text = "No exenta - Sin inversión sujeto pasivo" });
+            List.Add(new SelectListItem() { Value = "S2", Text = "No exenta - Con inversión sujeto pasivo" });
+            List.Add(new SelectListItem() { Value = "S3", Text = "No exenta - Sin y Con inversión sujeto pasivo" });
+            List.Add(new SelectListItem() { Value = "E1", Text = "Exenta - Art. 20" });
+            List.Add(new SelectListItem() { Value = "E2", Text = "Exenta - Art. 21" });
+            List.Add(new SelectListItem() { Value = "E3", Text = "Exenta - Art. 22" });
+            List.Add(new SelectListItem() { Value = "E4", Text = "Exenta - Art. 23 y 24" });
+            List.Add(new SelectListItem() { Value = "E5", Text = "Exenta - Art. 25" });
+            List.Add(new SelectListItem() { Value = "E6", Text = "Exenta - Otros" });
+            List.Add(new SelectListItem() { Value = "NS", Text = "No Sujeta" });
+
+           return List;
+
+        }
+
+        public string GetSerieRepercutidoEjercicio()
+        {
+            var service = new EjerciciosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+            var serie = service.GetSerieRepercutido();
+
+            return serie;
+        }
+
+        public TipoCriterioIva GetCriterioivaEmpresa()
+        {
+            var service = new EmpresasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+
+            var criterio = service.GetCriterioIVA(_context.Empresa);
+
+            criterio++;//El registro de Iva tiene blanco como opción 0, la empresa no.
+
+            return criterio;
+        }
+
+        /*public string GetRegimenivaTiposFacturaRepercutido()
+        {
+            var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+
+            var regimen = service.GetRegimenivaRepercutido(_context.Empresa);
+
+            return regimen;
+        }*/
+
         public IEnumerable<SelectListItem> GetListTipoGuiaCTPG()
         {
             List<SelectListItem> List = new List<SelectListItem>();
 
-            List.Add(new SelectListItem() { Value = "1", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "1", Text = "ABREVIADA" });
+            //List.Add(new SelectListItem() { Value = "2", Text = "Abreviado" });
             List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
             List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
             List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
@@ -1237,11 +1391,41 @@ namespace Marfil.Dom.Persistencia.Helpers
             List<SelectListItem> List = new List<SelectListItem>();
 
             /*List.Add(new SelectListItem() { Value = "1", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "2", Text = "Abreviado" });
             List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
             List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
             List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
             List.Add(new SelectListItem() { Value = "6", Text = "PYME" });*/
             List.Add(new SelectListItem() { Value = "7", Text = "ESTANDAR" });
+
+            return List;
+        }
+
+        public IEnumerable<SelectListItem> GetListTipoGuiaCPGFU()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            /*List.Add(new SelectListItem() { Value = "1", Text = "Abreviada" });
+            List.Add(new SelectListItem() { Value = "2", Text = "Abreviado" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "6", Text = "PYME" });*/
+            List.Add(new SelectListItem() { Value = "7", Text = "ESTANDAR" });
+            List.Add(new SelectListItem() { Value = "8", Text = "INF. GESTIÓN" });
+
+            return List;
+        }
+
+        public IEnumerable<SelectListItem> GetListTipoGuiaBALCA()
+        {
+            List<SelectListItem> List = new List<SelectListItem>();
+
+            List.Add(new SelectListItem() { Value = "2", Text = "ABREVIADO" });
+            List.Add(new SelectListItem() { Value = "3", Text = "COOP_ABREVIA" });
+            List.Add(new SelectListItem() { Value = "4", Text = "COOP_NORMAL" });
+            List.Add(new SelectListItem() { Value = "5", Text = "NORMAL" });
+            List.Add(new SelectListItem() { Value = "6", Text = "PYME" });
 
             return List;
         }
@@ -1258,20 +1442,6 @@ namespace Marfil.Dom.Persistencia.Helpers
 
             return List;
         }
-
-        public IEnumerable<SelectListItem> GetListTipoGuiaBALCA()
-        {
-            List<SelectListItem> List = new List<SelectListItem>();
-
-            List.Add(new SelectListItem() { Value = "1", Text = "Abreviado" });
-            List.Add(new SelectListItem() { Value = "2", Text = "COOP_ABREVIA" });
-            List.Add(new SelectListItem() { Value = "3", Text = "COOP_NORMAL" });
-            List.Add(new SelectListItem() { Value = "4", Text = "NORMAL" });
-            List.Add(new SelectListItem() { Value = "5", Text = "PYME" });
-
-            return List;
-        }
-
 
         public IEnumerable<SelectListItem> GetListActpas()
         {
@@ -1318,32 +1488,132 @@ namespace Marfil.Dom.Persistencia.Helpers
             return cuentas;
         }
 
-        public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador)
+        public bool ExistenCuentasNoAsignadasFuncional()
+        {
+            var cuentas = false;
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                cuentas = service.HayCuentasNoAsignadasFuncional();
+            }
+
+            return cuentas;
+        }
+
+        public bool ExistenCuentasNoAsignadasBalanceAnual()
+        {
+            var cuentas = false;
+            using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                cuentas = service.HayCuentasNoAsignadasBalanceAnual();
+            }
+
+            return cuentas;
+        }
+
+        public string TextRecalculoPYG(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
         {
             var text = "";
-            if (filtrosAcumulador != null)
-            {
+            //if (filtrosAcumulador != null)
+            //{
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
-                    text = service.TextRecalculoPYG(filtrosAcumulador);
+                    text = service.TextRecalculoPYG(filtrosAcumulador, esejercicioant);
                 }
-            }
+            //}
             
 
             return text;
         }
 
-        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulador)
+        public string TextRecalculoPYGAnalitica(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
         {
             var text = "";
-            if (filtrosAcumulador != null)
-            {
+            //if (filtrosAcumulador != null)
+            //{
                 using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                 {
-                    text = service.TextRecalculoPYGAnalitica(filtrosAcumulador);
+                    text = service.TextRecalculoPYGAnalitica(filtrosAcumulador, esejercicioant);
                 }
-            }
+            //}
             
+
+            return text;
+        }
+
+        public string TextRecalculoPYGFuncional(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
+        {
+            var text = "";
+            //if (filtrosAcumulador != null)
+            //{
+                using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+                {
+                    text = service.TextRecalculoPYGFuncional(filtrosAcumulador, esejercicioant);
+                }
+            //}
+
+
+            return text;
+        }
+
+        public string TextRecalculoPYGBalanceAnual(FiltrosAcumulador filtrosAcumulador, bool esejercicioant)
+        {
+            var text = "";
+            //if (filtrosAcumulador != null)
+            //{
+                using (var service = new GuiasBalancesService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+                {
+                    text = service.TextRecalculoPYGBalanceAnual(filtrosAcumulador, esejercicioant);
+                }
+            //}
+
+
+            return text;
+        }
+
+        public string GetTipoFacturaDefectoRepercutido()
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaDefectoRepercutido();
+            }
+
+            return text;
+        }
+
+        public string GetTipoFacturaDefectoSoportado()
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaDefectoSoportado();
+            }
+
+            return text;
+        }
+
+        public string GetTipoFacturaClientes(string codTercero)
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaClientes(codTercero);
+            }
+
+            return text;
+        }
+
+        public string GetTipoFacturaProveedores(string codTercero)
+        {
+            var text = "";
+
+            using (var service = new TiposFacturasIvaService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                text = service.GetTipoFacturaProveedores(codTercero);
+            }
 
             return text;
         }

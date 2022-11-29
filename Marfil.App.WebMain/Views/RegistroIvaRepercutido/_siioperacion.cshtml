@@ -1,0 +1,231 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipooperacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipooperacion", Model.Tipooperacion, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipooperacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Sujetanoexenta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Sujetanoexenta, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Sujetanoexenta)
+        }
+
+    </div>
+</div>
+
+<div class="form-group" id="divsujetopasivo">
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Invsujetopasivo", Model.Invsujetopasivo, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Invsujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Porcentajeivasujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SPorcentajeivasujetopasivo, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        @Html.ValidationMessageFor(f => Model.Porcentajeivasujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Baseimponiblesujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SBaseimponiblesujetopasivo, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        @Html.ValidationMessageFor(f => Model.Baseimponiblesujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Cuotaivasujetopasivo, new { @class = "control-label col-md-1" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SCuotaivasujetopasivo, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        @Html.ValidationMessageFor(f => Model.Cuotaivasujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Porcentajereceqsujetopasivo, new { @class = "control-label col-md-1", @id = "etiquetaPorcentajeRE" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Porcentajereceqsujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Porcentajereceqsujetopasivo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Cuotareceqsujetopasivo, new { @class = "control-label col-md-1", @id = "etiquetaCuotaRE" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Cuotareceqsujetopasivo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Cuotareceqsujetopasivo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Sujetaexenta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Sujetaexenta, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Sujetaexenta)
+        }
+    </div>
+</div>
+
+<div class="form-group" id="divsujetaexenta">
+    @Html.LabelFor(f => Model.Baseimponiblesujetaexenta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Baseimponiblesujetaexenta, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Baseimponiblesujetaexenta, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Causa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Causa", Model.Causa, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Causa, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Nosujeta, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Nosujeta, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Nosujeta)
+        }
+    </div>
+</div>
+
+<div class="form-group" id="divnosujeta">
+    @Html.LabelFor(f => Model.Importearticulos, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Importearticulos, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Importearticulos, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Importetai, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Importetai, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Importetai, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@*{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+    }
+}*@
+
+<script type="text/javascript">
+
+    /*window.onload = init();
+
+    function init() {
+
+        if ($("#Sujetanoexenta").is(':checked')) {
+            $("#divsujetopasivo").show();
+        } else {
+            $("#divsujetopasivo").hide();
+        }
+
+        if ($("#Sujetaexenta").is(':checked')) {
+            $("#divsujetaexenta").show();
+        } else {
+            $("#divsujetaexenta").hide();
+        }
+
+        if ($("#Nosujeta").is(':checked')) {
+            $("#divnosujeta").show();
+        } else {
+            $("#divnosujeta").hide();
+        }
+    }*/
+
+    $("#Sujetanoexenta").on('change', function () {
+        if ($("#Sujetanoexenta").is(':checked')) {
+            $("#divsujetopasivo").show();
+        } else {
+            $("#divsujetopasivo").hide();
+        }
+    });
+
+    $("#Sujetaexenta").on('change', function () {
+        if ($("#Sujetaexenta").is(':checked')) {
+            $("#divsujetaexenta").show();
+        } else {
+            $("#divsujetaexenta").hide();
+        }
+    });
+
+    $("#Nosujeta").on('change', function () {
+        if ($("#Nosujeta").is(':checked')) {
+            $("#divnosujeta").show();
+        } else {
+            $("#divnosujeta").hide();
+        }
+    });
+
+    $("#Invsujetopasivo").on('change', function () {
+        var valor = this.value;
+
+        if (valor == "2") {
+            $("#etiquetaPorcentajeRE").hide();
+            $("#Porcentajereceqsujetopasivo").hide();
+            $("#etiquetaCuotaRE").hide();
+            $("#Cuotareceqsujetopasivo").hide();
+        } else {
+            $("#etiquetaPorcentajeRE").show();
+            $("#Porcentajereceqsujetopasivo").show();
+            $("#etiquetaCuotaRE").show();
+            $("#Cuotareceqsujetopasivo").show();
+        }
+
+        $("#Porcentajeivasujetopasivo").val(0);
+        $("#Baseimponiblesujetopasivo").val(0);
+        $("#Cuotaivasujetopasivo").val(0);
+        $("#Porcentajereceqsujetopasivo").val(0);
+        $("#Cuotareceqsujetopasivo").val(0);
+    });
+
+</script>

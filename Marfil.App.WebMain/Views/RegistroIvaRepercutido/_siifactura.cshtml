@@ -1,0 +1,228 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+
+    var listtipofactura = WebHelper.GetApplicationHelper().GetListTipoFactura().Where(f => f.Valor != "F5" && f.Valor != "F6").Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList().OrderBy(x => x.Value);
+    var listregimenespecial = WebHelper.GetApplicationHelper().GetListRegimenEspecialEmitidas().Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }).ToList().OrderBy(x => x.Value);
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Clavetipofactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-6">
+        @Html.DropDownListFor(f => Model.Clavetipofactura, listtipofactura, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Clavetipofactura, "", new { @class = "text-danger" })
+    </div>
+    @*Obtenemos los datos de la pestaña factura, esto ya no es necesario
+        <div class="col-md-4">
+            @if (!isreadonly)
+            {
+                <span class="pull-right">
+                    <a class="btn btn-success btn-sm" href="javascript:CreateRectificadasRow(); " title="@General.LblCrear - (+)">
+                        <i class="fa fa-plus"></i>
+                        @General.BtnNuevoRegistro
+                    </a>
+                </span>
+            }
+        </div>*@
+</div>
+
+<div class="form-group" id="tipofacturarectificativa">
+    @Html.LabelFor(f => Model.Tipofacturarectificativa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipofacturarectificativa", Model.Tipofacturarectificativa, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipofacturarectificativa, "", new { @class = "text-danger" })
+    </div>
+    @*Obtenemos los datos de la pestaña factura, esto ya no es necesario
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("_rectificadas", Model.Rectificadas)
+        </div>*@
+</div>
+
+<div class="form-group" id="importerectificacion">
+    @Html.LabelFor(f => Model.Baserectificada, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SBaserectificada, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Baserectificada, (object)new { @class = "form-control", @autofocus = "" })
+        }
+    </div>
+
+    @Html.LabelFor(f => Model.Cuotaivarectificada, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SCuotaivarectificada, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Cuotaivarectificada, (object)new { @class = "form-control", @autofocus = "" })
+        }
+    </div>
+
+    @Html.LabelFor(f => Model.Cuotarectificadaeq, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SCuotarectificadaeq, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Cuotarectificadaeq, (object)new { @class = "form-control", @autofocus = "" })
+        }
+    </div>
+</div>
+
+<h4>DATOS FACTURA EMISOR</h4>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Facturaemitidaterceros, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @if (isreadonly)
+        {
+            @Html.CheckBoxFor(f => Model.Facturaemitidaterceros, (object)new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(f => Model.Facturaemitidaterceros)
+        }
+    </div>
+
+    @Html.LabelFor(f => Model.Importetotalemisor, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SImportetotalemisor, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Importetotalemisor, (object)new { @class = "form-control", @autofocus = "" })
+        }
+        @Html.ValidationMessageFor(f => Model.Importetotalemisor, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Importetransmisoremisor, new { @class = "control-label col-md-2" })
+    <div class="col-md-3">
+        @if (isreadonly)
+        {
+            @Html.TextBoxFor(f => Model.SImportetransmisoremisor, (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.EditorFor(f => Model.Importetransmisoremisor, (object)new { @class = "form-control", @autofocus = "" })
+        }
+        @Html.ValidationMessageFor(f => Model.Importetransmisoremisor, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Claveregimenespecial, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Claveregimenespecial, listregimenespecial, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Claveregimenespecial, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Descripcionoperacionemisor, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(f => Model.Descripcionoperacionemisor, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Descripcionoperacionemisor, "", new { @class = "text-danger" })
+    </div>
+</div>
+<h6>Si la descripción de operación es vacía cuando se crea o guarde el registro, se insertará la descripción de cuenta de ventas/servicios indicada en la pestaña Detalle</h6>
+
+@*{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        }
+    }*@
+
+<script type="text/javascript">
+
+
+    window.onload = init();
+
+    function init() {
+        var clave = document.getElementById("Clavetipofactura");
+        var valor = clave.options[clave.selectedIndex].value;
+
+        if (valor.substring(0, 1) == "R") {
+            $("#tipofacturarectificativa").show();
+
+            var clave = document.getElementById("Tipofacturarectificativa");
+            var valor = clave.options[clave.selectedIndex].value;
+
+            if (valor == 0) {
+                $("#importerectificacion").show();
+            } else {
+                $("#importerectificacion").hide();
+            }
+
+        } else {
+            $("#tipofacturarectificativa").hide();
+            $("#importerectificacion").hide();
+        }
+    }
+
+    $("#Clavetipofactura").on('change', function () {
+
+        var clave = document.getElementById("Clavetipofactura");
+        var valor = clave.options[clave.selectedIndex].value;
+
+        if (valor.substring(0, 1) == "R") {
+            $("#tipofacturarectificativa").show();
+
+            var clave = document.getElementById("Tipofacturarectificativa");
+            var valor = clave.options[clave.selectedIndex].value;
+
+            if (valor == 0) {
+                $("#importerectificacion").show();
+            } else {
+                $("#importerectificacion").hide();
+            }
+
+        } else {
+            $("#tipofacturarectificativa").hide();
+            $("#importerectificacion").hide();
+        }
+    });
+
+    $("#Tipofacturarectificativa").on('change', function () {
+
+        var clave = document.getElementById("Tipofacturarectificativa");
+        var valor = clave.options[clave.selectedIndex].value;
+
+        if (valor == 0) {
+            $("#importerectificacion").show();
+        } else {
+            $("#importerectificacion").hide();
+        }
+    });
+
+</script>

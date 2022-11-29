@@ -42,6 +42,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             //establecer los estados por defecto
             var modelconfiguracion = _configuracionService.GetModel();
 
+            //produccion
+            modelconfiguracion.Relacionbrutoneto = Math.Round(2.1,2);
+
             //presupuestos
             modelconfiguracion.Gestionarrevisiones = true;
             modelconfiguracion.Estadoinicial= modelconfiguracion.Estados.Single(f => f.Tipoestado == TipoEstado.Diseño).CampoId;
@@ -103,6 +106,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
 
             modelconfiguracion.Estadoincidenciasinicial = modelconfiguracion.Estadosincidencias.Single(f => f.Tipoestado == TipoEstado.Diseño).CampoId;
             modelconfiguracion.Estadoincidenciastotal = modelconfiguracion.Estadosincidencias.Single(f => f.Tipoestado == TipoEstado.Finalizado).CampoId;
+
+            //Contabilidad
+            modelconfiguracion.PrefijosPrestacionServicios = "705,629,623";
+            modelconfiguracion.ComentarioExistenciasIniciales = "REGUL. EXISTENCIAS INICIALES";
+            modelconfiguracion.ComentarioExistenciasFinales = "EXIST. FINALES S/INVENTARIO";
+            modelconfiguracion.ComentarioDebePYG = "REGULARIZAR SALDOS DEUDORES";
+            modelconfiguracion.ComentarioHaberPYG = "REGULARIZAR SALDOS ACREEDORES";
+            modelconfiguracion.ComentarioCuentasDetalle = "REGULARIZACION DE SALDO";
+            modelconfiguracion.ComentarioCierreEjercicio = "CIERRE DEL EJERCICIO";
+            modelconfiguracion.ComentarioAperturaEjercicio = "REAPERTURA DEL EJERCICIO";
+            modelconfiguracion.ComentarioAperturaProvisional = "APERTURA PROVISIONAL";
 
             _configuracionService.CreateOrUpdate(modelconfiguracion);
         }

@@ -610,8 +610,8 @@
   <data name="LblSinDesglose" xml:space="preserve">
     <value>Sin Desglosar</value>
   </data>
-  <data name="LblDetallado" xml:space="preserve">
-    <value>Detallado</value>
+  <data name="LblDetalle" xml:space="preserve">
+    <value>Detalle</value>
   </data>
   <data name="LblAgrupadoporcliente" xml:space="preserve">
     <value>Agrupado por cliente</value>
@@ -981,5 +981,29 @@
   </data>
   <data name="MensajeRoturaStock" xml:space="preserve">
     <value>Se han encontrado artículos por debajo del stock de seguridad</value>
+  </data>
+  <data name="LblVerificar" xml:space="preserve">
+    <value>VerificarContabilidad</value>
+  </data>
+  <data name="LblTarifa" xml:space="preserve">
+    <value>Tarifa</value>
+  </data>
+  <data name="LblFactura" xml:space="preserve">
+    <value>Factura</value>
+  </data>
+  <data name="LblSIIDatos" xml:space="preserve">
+    <value>SII-Datos</value>
+  </data>
+  <data name="LblSIIFactura" xml:space="preserve">
+    <value>SII-Factura</value>
+  </data>
+  <data name="LblSIIOperacion" xml:space="preserve">
+    <value>SII-Operación</value>
+  </data>
+  <data name="LblDetallado" xml:space="preserve">
+    <value>Detallado</value>
+  </data>
+  <data name="ErrorBorradoEstadosUsados" xml:space="preserve">
+    <value>No se puede borrar el estado porque ya ha sido utilizado en algún documento.</value>
   </data>
 </root>

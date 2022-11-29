@@ -68,19 +68,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             var configuracionService = new ConfiguracionService(Context, _db);
             var configuracionModel = configuracionService.GetModel();
             var estadoactualObj = estadosService.get(model.fkestados) as EstadosModel;
-            if (model.tipoalbaran!= (int)TipoAlbaran.Devolucion && !string.IsNullOrEmpty(configuracionModel.Estadoalbaranesventastotal) && estadoactualObj.Tipoestado <= TipoEstado.Curso && model.AlbaranesLin.Any() && model.AlbaranesLin.All(f => (f.cantidad?? 0) != 0 && (f.cantidad ?? 0) - (f.cantidadpedida ?? 0) <= 0))
+            if (!(estadoactualObj.Tipomovimiento == Model.Configuracion.TipoMovimiento.Manual))
             {
-                model.fkestados = configuracionModel.Estadoalbaranesventastotal;
-            }
-            else if (model.tipoalbaran == (int)TipoAlbaran.Devolucion && !string.IsNullOrEmpty(configuracionModel.Estadoalbaranesventastotal) && estadoactualObj.Tipoestado <= TipoEstado.Curso && _db.FacturasLin.Any(f => f.empresa == Context.Empresa && f.fkalbaranes == model.id))
-            {
-                model.fkestados = configuracionModel.Estadoalbaranesventastotal;
-            }
+                if (model.tipoalbaran != (int)TipoAlbaran.Devolucion && !string.IsNullOrEmpty(configuracionModel.Estadoalbaranesventastotal) && estadoactualObj.Tipoestado <= TipoEstado.Curso && model.AlbaranesLin.Any() && model.AlbaranesLin.All(f => (f.cantidad ?? 0) != 0 && (f.cantidad ?? 0) - (f.cantidadpedida ?? 0) <= 0))
+                {
+                    model.fkestados = configuracionModel.Estadoalbaranesventastotal;
+                }
+                else if (model.tipoalbaran == (int)TipoAlbaran.Devolucion && !string.IsNullOrEmpty(configuracionModel.Estadoalbaranesventastotal) && estadoactualObj.Tipoestado <= TipoEstado.Curso && _db.FacturasLin.Any(f => f.empresa == Context.Empresa && f.fkalbaranes == model.id))
+                {
+                    model.fkestados = configuracionModel.Estadoalbaranesventastotal;
+                }
 
-            else if (!string.IsNullOrEmpty(configuracionModel.Estadoparcial) && estadoactualObj.Tipoestado <= TipoEstado.Curso &&
-                     model.AlbaranesLin.Any(f => (f.cantidadpedida ?? 0) > 0))
-            {
-                model.fkestados = configuracionModel.Estadoparcial;
+                else if (!string.IsNullOrEmpty(configuracionModel.Estadoparcial) && estadoactualObj.Tipoestado <= TipoEstado.Curso &&
+                         model.AlbaranesLin.Any(f => (f.cantidadpedida ?? 0) > 0))
+                {
+                    model.fkestados = configuracionModel.Estadoparcial;
+                }
             }
             /*
             //ESTE ES EL CASO EN EL QUE EL TIPO DE ESTADO ES CURSO O INTRODUCIDO Y NO SE HA GENERADO EL ALBARAN TODAVIA AL CLIENTE
@@ -181,9 +184,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                     throw new ValidationException(string.Format(General.ErrorCampoObligatorio, RAlbaranes.Importe));
 
                 //if(!FlagActualizarCantidadesFacturadas && model.tipoalbaran != (int)TipoAlbaran.Devolucion)
-                    //VerificarStockLinea(model, item);
+                //VerificarStockLinea(model, item);
 
                 //familiasProductosService.ValidarDimensiones(familiacodigo, item.largo, item.ancho, item.grueso);
+
+                //ang calcular importe neto
+                item.importenetolinea = Math.Round((baseimponible * (1 - ((model.porcentajedescuentocomercial ?? 0) / 100)) * (1 - ((model.porcentajedescuentoprontopago ?? 0) / 100))), (item.decimalesmonedas ?? 2));
             }
             var vector = model.AlbaranesLin.OrderBy(f => f.orden).ToList();
             for (var i = 0; i < vector.Count(); i++)
@@ -313,7 +319,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                 newItem.fktiposiva = item.Key;
                 newItem.porcentajeiva = objIva.porcentajeiva;
                 
-                newItem.brutototal = Math.Round((double)(item.Sum(f => f.importe) - item.Sum(f => f.importedescuento)), decimales.Value);
+                newItem.brutototal = Math.Round((double)(item.Sum(f => f.importe) /*- item.Sum(f => f.importedescuento)*/), decimales.Value);
                 newItem.porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.porcentajedescuentoprontopago = model.porcentajedescuentoprontopago??0;
                 newItem.porcentajedescuentocomercial = model.porcentajedescuentocomercial ?? 0;

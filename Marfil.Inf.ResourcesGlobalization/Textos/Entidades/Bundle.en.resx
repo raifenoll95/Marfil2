@@ -129,4 +129,52 @@
   <data name="Fkzonaalmacendescripcion" xml:space="preserve">
     <value>Zone</value>
   </data>
+  <data name="ErrorLoteUtilizado" xml:space="preserve">
+    <value>Bundle {0} cannot be added to the bundle because it has already been used in another bundl</value>
+  </data>
+  <data name="Empresa" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Bundle</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Fkzonaalmacen" xml:space="preserve">
+    <value>Locate in zone</value>
+  </data>
+  <data name="Fkoperarios" xml:space="preserve">
+    <value>Worker</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Lineas" xml:space="preserve">
+    <value>Bundle composition</value>
+  </data>
+  <data name="LoteDesde" xml:space="preserve">
+    <value>From lot</value>
+  </data>
+  <data name="LoteHasta" xml:space="preserve">
+    <value>To lot</value>
+  </data>
+  <data name="ErrorLotesMismoBloque" xml:space="preserve">
+    <value>Cannot add tables from different lots</value>
+  </data>
+  <data name="ErrorBudleLote" xml:space="preserve">
+    <value>Lot {0} already belongs to another bundle</value>
+  </data>
+  <data name="ErrorBundleLoteUnico" xml:space="preserve">
+    <value>The bundle can only have one lot</value>
+  </data>
+  <data name="ErrorKitLoteUtilizado" xml:space="preserve">
+    <value>Lot {0} already belongs to a Kit</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>Pieces</value>
+  </data>
 </root>

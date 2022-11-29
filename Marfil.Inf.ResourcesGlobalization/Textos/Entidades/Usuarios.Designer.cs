@@ -61,6 +61,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Bloquear series.
+        /// </summary>
+        public static string Bloquearseries {
+            get {
+                return ResourceManager.GetString("Bloquearseries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambiar de almacén.
         /// </summary>
         public static string Cambiaralmacen {
@@ -138,6 +147,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Firma {
             get {
                 return ResourceManager.GetString("Firma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delegación.
+        /// </summary>
+        public static string Fkdelegacion {
+            get {
+                return ResourceManager.GetString("Fkdelegacion", resourceCulture);
             }
         }
         

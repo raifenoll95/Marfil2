@@ -80,6 +80,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(ConfiguracionModel), typeof(ConfiguracionService));
             _servicesTypes.Add(typeof(TiposCuentasModel), typeof(TiposcuentasService));
             _servicesTypes.Add(typeof(InmueblesModel), typeof(InmueblesService));
+            _servicesTypes.Add(typeof(LecturasModel), typeof(LecturasService));
             _servicesTypes.Add(typeof(GuiascontablesModel), typeof(GuiascontablesService));
             _servicesTypes.Add(typeof(TiposRetencionesModel), typeof(TiposRetencionesService));
             _servicesTypes.Add(typeof(TiposIvaModel), typeof(TiposivaService));
@@ -104,6 +105,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(ArticulosTerceroModel), typeof(ArticulosTerceroService));
             _servicesTypes.Add(typeof(ArticulosStockSeguridadModel), typeof(ArticulosStockSeguridadService));
             _servicesTypes.Add(typeof(LogStockSeguridadModel), typeof(LogStockSeguridadService));
+            _servicesTypes.Add(typeof(VerificarContabilidadModel), typeof(VerificarContabilidadService));
             _servicesTypes.Add(typeof(GrupoMaterialesModel), typeof(GrupoMaterialesService));
             _servicesTypes.Add(typeof(ContadoresModel), typeof(ContadoresService));
             _servicesTypes.Add(typeof(ContadoresLotesModel), typeof(ContadoresLotesService));
@@ -172,6 +174,8 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _servicesTypes.Add(typeof(MapeoRemesasModel), typeof(MapeoRemesasService));
             _servicesTypes.Add(typeof(VencimientosModel), typeof(VencimientosService));
             _servicesTypes.Add(typeof(CircuitoTesoreriaCobrosModel), typeof(CircuitosTesoreriaCobrosService));
+            _servicesTypes.Add(typeof(TiposFacturasIvaModel), typeof(TiposFacturasIvaService));
+            _servicesTypes.Add(typeof(RegistroIvaRepercutidoModel), typeof(RegistroIvaRepercutidoService));
             _servicesTypes.Add(typeof(CarteraVencimientosModel), typeof(CarteraVencimientosService));
             _servicesTypes.Add(typeof(RemesasModel), typeof(RemesasService));
             //_servicesTypes.Add(typeof(CarteraModel), typeof(CarteraService));

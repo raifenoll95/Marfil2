@@ -146,13 +146,15 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         $('#_entregastock').show('toggle');
     });
 
-    $scope.Buscarlote = function () {
+    $scope.Buscarlote = function (Fkarticulossalida = $("[name='Fkarticulossalida']").val()) {
         console.log("buscar lote");
         $scope.loading = true;
         var parametros = {
             Fkalmacen: $("[name='Fkalmacen']").val(),
-            FkarticulosDesde: $("[name='Fkarticulossalida']").val(),
-            FkarticulosHasta: $("[name='Fkarticulossalida']").val(),
+            FkarticulosDesde: Fkarticulossalida,
+            FkarticulosHasta: Fkarticulossalida,
+            FkAcabadoDesde: $("[name='FkAcabadoDesde']").val(),
+            FkAcabadoHasta: $("[name='FkAcabadoHasta']").val(),
             Id: $("[name='Loteentrega']").val(),
             Flujo: '0'
         };
@@ -218,9 +220,10 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
 
     eventAggregator.RegisterEvent("Loteentrega-cv", function (ms) {
         eventAggregator.Publish("Fkarticulossalida-Buscar", ms.Fkarticulos);
-        $scope.Buscarlote();
+        $("#Fkarticulossalida").val(ms.Fkarticulos);
+        $scope.Buscarlote(ms.Fkarticulos);
         $scope.Tipopieza = ms.Tipopieza;
-        $scope.Mostrardetalle = ms.Tipopieza != 2;
+        $scope.Mostrardetalle = ms.Tipopieza != 2 && ms.Tipopieza != 1;
         $scope.Cantidad = ms.Cantidad;
 
     });
@@ -255,7 +258,11 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             $scope.Editardescuento = !ms.Articulocomentario;
             $scope.Editarloteautomatico = ms.Fkcontador && ms.Fkcontador != null;
             $scope.Loteautomatico = ms.Fkcontador && ms.Fkcontador != null;
-            $scope.Modificarmedidas = ms.Tipofamilia < 2;
+            $scope.Modificarmedidas = ms.Tipofamilia < 3;
+
+            if ($scope.Modificarmedidas) {
+                $scope.Modificarmedidas = false;
+            }
 
             if (ms.Tipofamilia == 1) {
                 $scope.Cantidad = 1;
@@ -370,6 +377,7 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
         if ($scope.Tipopieza == 0) {
             var campoobligatorio = "Este campo es obligatorio";
             $scope.Fkarticulos = $("#Fkarticulossalida").val();
+            console.log($scope.Fkarticulos);
             if ($scope.Fkarticulos == "" || $scope.Fkarticulos == undefined) {
                 resultado = false;
                 $scope.Fkarticuloserrores = campoobligatorio; NuevaLineaEntregaStockController
@@ -386,15 +394,15 @@ app.controller('EntregaStockCtrl', ['$scope', '$http', '$location', '$window', '
             }
 
             if ($scope.Modificarmedidas && !isNaN($scope.Metros)) {
-                if (!$scope.Largo) {
+                if ($scope.Largo < 0 || $scope.Largo == undefined) {
                     resultado = false;
                     $scope.Largoerrores = campoobligatorio;
                 }
-                if (!$scope.Ancho) {
+                if ($scope.Ancho < 0 || $scope.Ancho == undefined) {
                     resultado = false;
                     $scope.Anchoerrores = campoobligatorio;
                 }
-                if (!$scope.Grueso) {
+                if ($scope.Grueso < 0 || $scope.Grueso == undefined) {
                     resultado = false;
                     $scope.Gruesoerrores = campoobligatorio;
                 }

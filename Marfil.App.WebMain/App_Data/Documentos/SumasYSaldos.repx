@@ -1,16 +1,15 @@
 /// <XRTypeInfo>
 ///   <AssemblyFullName>DevExpress.XtraReports.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</AssemblyFullName>
-///   <AssemblyLocation>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\DevExpress.XtraReports.v16.2\v4.0_16.2.4.0__b88d1754d700e49a\DevExpress.XtraReports.v16.2.dll</AssemblyLocation>
+///   <AssemblyLocation>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\marfilbeta\f4586786\9eb132ee\assembly\dl3\e64e7119\8c6bfd1d_f735d701\DevExpress.XtraReports.v16.2.dll</AssemblyLocation>
 ///   <TypeName>DevExpress.XtraReports.UI.XtraReport</TypeName>
-///   <Localization>es</Localization>
+///   <Localization>en-US</Localization>
 ///   <Version>16.2</Version>
 ///   <Resources>
 ///     <Resource Name="XtraReportSerialization.xtraReport1">
-/// zsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNldAIAAAACAAAAAAAAAFBBRFBBRFBBY+SP5IKZXUMAAAAAAAAAMgEAAD5SAGUAcABvAHIAdAAuAFIAZQBzAHUAbAB0AFMAYwBoAGUAbQBhAFMAZQByAGkAYQBsAGkAegBhAGIAbABlAAAAAAAmYwB1AHMAdABvAG0AUwBxAGwAUQB1AGUAcgB5ADMALgBTAHEAbADPAgAAAcwFUEVSaGRHRlRaWFFnVG1GdFpUMGlVbVZ3YjNKMElqNDhWbWxsZHlCT1lXMWxQU0pEZFdWdWRHRnpJajQ4Um1sbGJH
-/// UWdUbUZ0WlQwaVEzVmxiblJoSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUlrUmxjMk55YVhCamFXOXVJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SWtSbFltVWlJRlI1Y0dVOUlrUmxZMmx0WVd3aUlDOCtQRVpwWld4a0lFNWhiV1U5SWtoaFltVnlJaUJVZVhCbFBTSkVaV05wYldGc0lpQXZQanhHYVdWc1pDQk9ZVzFsUFNKVExrUmxkV1J2Y2lJZ1ZIbHdaVDBpUkdWamFXMWhiQ0lnTHo0OFJtbGxiR1FnVG1GdFpUMGlVeTVCWTNKbFpXUnZjaUlnVkhsd1pUMGlSR1ZqYVcxaGJDSWdMejQ4TDFacFpYYytQRlpwWlhjZ1RtRnRaVDBpUldwbGNtTnBZMmx2Y3lJK1BFWnBaV3hrSUU1aGJXVTlJbVZ0Y0hKbGMyRWlJ
-/// RlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYVdRaUlGUjVjR1U5SWtsdWRETXlJaUF2UGp4R2FXVnNaQ0JPWVcxbFBTSmtaWE5qY21sd1kybHZiaUlnVkhsd1pUMGlVM1J5YVc1bklpQXZQand2Vm1sbGR6NDhWbWxsZHlCT1lXMWxQU0pGYlhCeVpYTmhJajQ4Um1sbGJHUWdUbUZ0WlQwaWFXUWlJRlI1Y0dVOUlsTjBjbWx1WnlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpYm05dFluSmxJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQQzlXYVdWM1Bqd3ZSR0YwWVZObGREND0BrwVTRUxFQ1QgQ3VlbnRhLCBEZXNjcmlwY2lvbiwgRGViZSwgSGFiZXIsIChDQVNFIFdIRU4gU2FsZG8gPj0gMCBUSEVOIFNhbGRvIEVMU0UgTlVMTCBFTkQpIEFTW1MuRGV1
-/// ZG9yXSwgKENBU0UgV0hFTiBTYWxkbyA8IDAgVEhFTiAoU2FsZG8gKiAtMSkgRUxTRSBOVUxMIEVORCkgQVNbUy5BY3JlZWRvcl0gRlJPTSggU0VMRUNUIGMuaWQgQVNbQ3VlbnRhXSwgYy5kZXNjcmlwY2lvbiBBU1tEZXNjcmlwY2lvbl0sIFNVTShDQVNFIFdIRU4gbC5lc2RlYmUgPSAxIFRIRU4gbC5pbXBvcnRlIEVMU0UgbnVsbCBFTkQpIEFTW0RlYmVdLCBTVU0oQ0FTRSBXSEVOIGwuZXNkZWJlID0gLTEgVEhFTiBsLmltcG9ydGUgRUxTRSBudWxsIEVORCkgQVNbSGFiZXJdLCBTVU0oQ0FTRSBXSEVOIGwuZXNkZWJlID0gMSBUSEVOIGwuaW1wb3J0ZSBFTFNFIGwuaW1wb3J0ZSAqIC0xIEVORCkgQVNbU2FsZG9dIEZST00gQ3VlbnRhcyBBUyBjIExFRlQgSk9J
-/// TiBNb3ZzTGluIEFTIGwgT04gYy5lbXByZXNhID0gbC5lbXByZXNhIEFORChjLmlkID0gbC5ma2N1ZW50YXMgT1IgYy5pZCA9IFNVQlNUUklORyhsLmZrY3VlbnRhcywgMSwgYy5uaXZlbCkpIExFRlQgSk9JTiBNb3ZzIEFTIG0gT04gYy5lbXByZXNhID0gbS5lbXByZXNhIEFORCBtLmlkID0gbC5ma21vdnMgR1JPVVAgQlkgYy5lbXByZXNhLCBjLmlkLCBjLmRlc2NyaXBjaW9uKXQ=</Resource>
+/// zsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNldAIAAAACAAAAAAAAAFBBRFBBRFBBY+SP5IKZXUMAAAAAAAAAMgEAAD5SAGUAcABvAHIAdAAuAFIAZQBzAHUAbAB0AFMAYwBoAGUAbQBhAFMAZQByAGkAYQBsAGkAegBhAGIAbABlAAAAAAAmYwB1AHMAdABvAG0AUwBxAGwAUQB1AGUAcgB5ADMALgBTAHEAbAD3AgAAAfQFUEVSaGRHRlRaWFFnVG1GdFpUMGlVbVZ3YjNKMElqNDhWbWxsZHlCT1lXMWxQU0pEZFdWdWRHRnpJajQ4Um1sbGJH
+/// UWdUbUZ0WlQwaVEzVmxiblJoSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUlrUmxjMk55YVhCamFXOXVJaUJVZVhCbFBTSlRkSEpwYm1jaUlDOCtQRVpwWld4a0lFNWhiV1U5SWtSbFltVWlJRlI1Y0dVOUlrUmxZMmx0WVd3aUlDOCtQRVpwWld4a0lFNWhiV1U5SWtoaFltVnlJaUJVZVhCbFBTSkVaV05wYldGc0lpQXZQanhHYVdWc1pDQk9ZVzFsUFNKRVpYVmtiM0lpSUZSNWNHVTlJa1JsWTJsdFlXd2lJQzgrUEVacFpXeGtJRTVoYldVOUlrRmpjbVZsWkc5eUlpQlVlWEJsUFNKRVpXTnBiV0ZzSWlBdlBqeEdhV1ZzWkNCT1lXMWxQU0pPYVhabGJDSWdWSGx3WlQwaVNXNTBNeklpSUM4K1BDOVdhV1YzUGp4V2FXVjNJRTVoYldVOUlrVnFa
+/// WEpqYVdOcGIzTWlQanhHYVdWc1pDQk9ZVzFsUFNKbGJYQnlaWE5oSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltbGtJaUJVZVhCbFBTSkpiblF6TWlJZ0x6NDhSbWxsYkdRZ1RtRnRaVDBpWkdWelkzSnBjR05wYjI0aUlGUjVjR1U5SWxOMGNtbHVaeUlnTHo0OEwxWnBaWGMrUEZacFpYY2dUbUZ0WlQwaVJXMXdjbVZ6WVNJK1BFWnBaV3hrSUU1aGJXVTlJbWxrSWlCVWVYQmxQU0pUZEhKcGJtY2lJQzgrUEVacFpXeGtJRTVoYldVOUltNXZiV0p5WlNJZ1ZIbHdaVDBpVTNSeWFXNW5JaUF2UGp3dlZtbGxkejQ4TDBSaGRHRlRaWFErAYgDc2VsZWN0IG0uZmtjdWVudGFzIGFzIEN1ZW50YSwgYy5kZXNjcmlwY2lvbiBhcyBEZXNjcmlwY2lv
+/// biwgbS5kZWJlIGFzIERlYmUsIG0uaGFiZXIgYXMgSGFiZXIgLChjYXNlIHdoZW4gbS5zYWxkbyA+PSAwIFRIRU4gbS5zYWxkbyBlbHNlIG51bGwgRU5EKSBBUyBEZXVkb3IgLCAoY2FzZSB3aGVuIG0uc2FsZG8gPCAwIFRIRU4obS5zYWxkbyAqIC0xKSBlbHNlIG51bGwgRU5EKSBBUyBBY3JlZWRvciwgYy5uaXZlbCBhcyBOaXZlbCAgZnJvbSBjdWVudGFzIGFzIGMgbGVmdCBqb2luIG1hZXMgYXMgbSBvbiBjLmlkID0gbS5ma2N1ZW50YXMgd2hlcmUgYy5lbXByZXNhID0gQGVtcHJlc2EgYW5kKG0uZmtlamVyY2ljaW8gPSBAZmtlamVyY2ljaW8gb3IgbS5ma2VqZXJjaWNpbyBpcyBudWxsKSA=</Resource>
 ///   </Resources>
 /// </XRTypeInfo>
 namespace XtraReportSerialization {
@@ -61,11 +60,8 @@ namespace XtraReportSerialization {
             DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery1 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
             DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery2 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
             DevExpress.DataAccess.Sql.CustomSqlQuery customSqlQuery3 = new DevExpress.DataAccess.Sql.CustomSqlQuery();
-            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo1 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
-            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo1 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
-            DevExpress.DataAccess.Sql.MasterDetailInfo masterDetailInfo2 = new DevExpress.DataAccess.Sql.MasterDetailInfo();
-            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo2 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
-            DevExpress.DataAccess.Sql.RelationColumnInfo relationColumnInfo3 = new DevExpress.DataAccess.Sql.RelationColumnInfo();
+            DevExpress.DataAccess.Sql.QueryParameter queryParameter1 = new DevExpress.DataAccess.Sql.QueryParameter();
+            DevExpress.DataAccess.Sql.QueryParameter queryParameter2 = new DevExpress.DataAccess.Sql.QueryParameter();
             this.TopMargin1 = new DevExpress.XtraReports.UI.TopMarginBand();
             this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
             this.Detail1 = new DevExpress.XtraReports.UI.DetailBand();
@@ -427,7 +423,7 @@ namespace XtraReportSerialization {
             this.Report.ConnectionName = "Report";
             msSqlConnectionParameters1.AuthorizationType = DevExpress.DataAccess.ConnectionParameters.MsSqlAuthorizationType.SqlServer;
             msSqlConnectionParameters1.DatabaseName = "marfilestable";
-            msSqlConnectionParameters1.Password = "Tot.2020;";
+            msSqlConnectionParameters1.Password = "Tot.2020";
             msSqlConnectionParameters1.ServerName = "192.168.223.210";
             msSqlConnectionParameters1.UserName = "sa";
             this.Report.ConnectionParameters = msSqlConnectionParameters1;
@@ -435,29 +431,21 @@ namespace XtraReportSerialization {
             customSqlQuery1.Name = "Empresa";
             customSqlQuery1.Sql = "SELECT id, nombre FROM Empresas WHERE id = \'0001\'";
             customSqlQuery2.Name = "Ejercicios";
-            customSqlQuery2.Sql = "SELECT empresa, id, descripcion FROM Ejercicios WHERE id = \'26\'";
+            customSqlQuery2.Sql = "SELECT empresa, id, descripcion FROM Ejercicios WHERE id = \'91\'";
             customSqlQuery3.Name = "Cuentas";
+            queryParameter1.Name = "fkejercicio";
+            queryParameter1.Type = typeof(string);
+            queryParameter1.ValueInfo = "91";
+            queryParameter2.Name = "empresa";
+            queryParameter2.Type = typeof(string);
+            queryParameter2.ValueInfo = "0001";
+            customSqlQuery3.Parameters.Add(queryParameter1);
+            customSqlQuery3.Parameters.Add(queryParameter2);
             customSqlQuery3.Sql = resources.GetString("customSqlQuery3.Sql");
             this.Report.Queries.AddRange(new DevExpress.DataAccess.Sql.SqlQuery[] {
                         customSqlQuery1,
                         customSqlQuery2,
                         customSqlQuery3});
-            masterDetailInfo1.DetailQueryName = "Empresa";
-            relationColumnInfo1.NestedKeyColumn = "id";
-            relationColumnInfo1.ParentKeyColumn = "empresa";
-            masterDetailInfo1.KeyColumns.Add(relationColumnInfo1);
-            masterDetailInfo1.MasterQueryName = "Movs";
-            masterDetailInfo2.DetailQueryName = "Ejercicios";
-            relationColumnInfo2.NestedKeyColumn = "empresa";
-            relationColumnInfo2.ParentKeyColumn = "empresa";
-            relationColumnInfo3.NestedKeyColumn = "id";
-            relationColumnInfo3.ParentKeyColumn = "fkejercicio";
-            masterDetailInfo2.KeyColumns.Add(relationColumnInfo2);
-            masterDetailInfo2.KeyColumns.Add(relationColumnInfo3);
-            masterDetailInfo2.MasterQueryName = "Movs";
-            this.Report.Relations.AddRange(new DevExpress.DataAccess.Sql.MasterDetailInfo[] {
-                        masterDetailInfo1,
-                        masterDetailInfo2});
             this.Report.ResultSchemaSerializable = resources.GetString("Report.ResultSchemaSerializable");
             // 
             // FechaInforme

@@ -1,0 +1,148 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model;
+@using Resources
+@model Marfil.Dom.Persistencia.Model.Documentos.Albaranes.AsistenteLecturasModel
+@{
+    var toolbarModel = Model as IToolbar;
+    ViewBag.Title = toolbarModel.Toolbar.Titulo;
+
+    var importarmodel = new ImportarModel();
+}
+
+<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+<script src="@Url.Content("~/components/fuelux/js/wizard.js")"></script>
+<script src="@Url.Content("~/assets/js/src/elements.wizard.js")"></script>
+<script src="@Url.Content("~/Scripts/UserControls/Lecturas/lecturascontroller.js")"></script>
+<div ng-controller="AsistenteLecturasCrtl">
+
+    @Html.HiddenFor(f => Model.Referencia)
+
+    <div id="fuelux-wizard-container">
+        <div>
+            <!-- #section:plugins/fuelux.wizard.steps -->
+            <ul class="steps">
+                <li data-step="1" class="active">
+                    <span class="step">1</span>
+                    <span class="title">Importar Lecturas</span>
+                </li>
+
+                <li data-step="2">
+                    <span class="step">2</span>
+                    <span class="title">Seleccionar Lecturas</span>
+                </li>
+
+                <li data-step="3">
+                    <span class="step">3</span>
+                    <span class="title">Fin</span>
+                </li>
+
+            </ul>
+
+            <!-- /section:plugins/fuelux.wizard.steps -->
+        </div>
+
+        <hr />
+
+        <!-- #section:plugins/fuelux.wizard.container -->
+        <div class="step-content pos-rel">
+            <div class="step-pane" data-step="1">
+                <div>
+                    <h3 class="green center">Importar Lecturas</h3>
+                    @Html.Partial("ImportarLecturas", importarmodel, new ViewDataDictionary { { "referencia", Model.Referencia } })
+                </div>
+            </div>
+
+            <div class="step-pane" data-step="2">
+                <div>
+                    <h3 class="green center">Seleccionar Lecturas</h3>
+                    @Html.Partial("_procesolecturasstep2", Model)
+                </div>
+            </div>
+
+            <div class="step-pane" data-step="3">
+                <div class="center">
+
+                    @Html.Partial("_procesolecturasstep3", Model)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- /section:plugins/fuelux.wizard.container -->
+    </div>
+
+    <hr />
+    <div class="wizard-actions">
+        <!-- #section:plugins/fuelux.wizard.buttons -->
+        <button class="btn btn-prev">
+            <i class="ace-icon fa fa-arrow-left"></i>
+            @General.LblAnterior
+        </button>
+
+        <button class="btn btn-success btn-next" data-last="@General.LblGenerarAlbaran">
+            @General.LblSiguiente
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+
+        <!-- /section:plugins/fuelux.wizard.buttons -->
+    </div>
+
+
+</div>
+
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            var $validation = false;
+            $('#fuelux-wizard-container').ace_wizard().on('actionclicked.fu.wizard', function(e, info) {
+                if (info.step == 1) {
+                    var flag = false;
+
+                    /*if (!$("#step1-form").validate().form()) {
+                        e.preventDefault();
+                    }
+                    else {*/
+                        var data = {
+                            Url: "@Url.Action("AsistenteLecturasApi", "Api")",
+                            campoIdentificador: "Identificador",
+                            IdComponenteasociado: "",
+                            IdFormulariomodal: "",
+                            Titulo: "Lecturas"
+                        };
+
+                        eventAggregator.Publish("_buscarlecturas", data);
+                    //}
+
+                } else if (info.step == 2 && info.direction != "previous") {
+
+                    if (!$("#step2-form").validate().form()) {
+                        e.preventDefault();
+                    }
+
+                } else if (info.step == 3 && info.direction != "previous") {
+                    eventAggregator.Publish("_generarlecturas", data);
+                }
+            });
+
+        });
+    </script>
+
+}
+
+
+@using (Html.BeginForm("GenerarLecturas", "AsistenteLecturas", FormMethod.Post, new { @id = "generarlecturas" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="identificador" value="" />
+    <input type="hidden" name="fecha" value="" />
+    <input type="hidden" name="registros" value="" />
+    <input type="hidden" name="referencia" value="" />
+
+}
+
+
+

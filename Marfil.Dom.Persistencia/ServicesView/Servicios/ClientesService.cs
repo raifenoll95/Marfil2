@@ -117,8 +117,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override string GetSelectPrincipal()
         {
-            var a = string.Format(CuentasService.SelectCuentasTerceros, (int)TiposCuentas.Clientes, Empresa, TiposCuentas.Clientes);
-            return a;
+            //Solo mostrar cleintes de la delegación del usuario
+            var service = FService.Instance.GetService(typeof(CuentasModel), _context) as CuentasService;
+            var delegacion = service.obtenerdelegacionusuario(_context.Id);
+
+            var sql = "";
+
+            //Aplicamos una nueva conción al where de la consuta si hay delegación
+            if (delegacion == "" || delegacion == null)
+            {
+                sql = string.Format(CuentasService.SelectCuentasTercerosDelegacion, (int)TiposCuentas.Clientes, Empresa, TiposCuentas.Clientes);
+            }
+            else
+            {
+                var selectdelegacion = CuentasService.SelectCuentasTercerosDelegacion + " AND cli.fkdelegacion = '{3}'";
+
+                sql = string.Format(selectdelegacion, (int)TiposCuentas.Clientes, Empresa, TiposCuentas.Clientes, delegacion);
+            }
+
+            sql = sql + " ORDER BY c.id ";
+            return sql;
         }
 
 

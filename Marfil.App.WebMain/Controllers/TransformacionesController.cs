@@ -588,6 +588,16 @@ namespace Marfil.App.WebMain.Controllers
                         }
                         item.Total = Math.Round((double)item.Importe * totalMetros, 2);
                         //item.Total = Math.Round((double)(item.Importe * (item.Porcentaje / 100.0)), 2);
+
+                        /*Ago22 - Si el producto de salida=1 elemento y es de tipo bloque  y la unidad de medida del/los producto de entrada es m2. Si y solo si existe en costes adicionales un coste x m3
+                        En ese caso, multiplicamos ese coste por los m3 del bloque (salida) y se reparte entre todos los metros de entrada (que serán tablas o losas o cualquier otro producto que vaya en m2)*/
+                        if (totalMetros == 0)
+                        {
+                            var transfService = new ImputacionCosteservice(ContextService);
+
+                            transfService.CalcularTotalBloqueM3Pantalla(Session[sessionsalida] as List<TransformacionessalidaLinModel>,lineas,item);
+                        }
+
                         model.Add(item);
                         Session[sessioncostes] = model;
                     }
@@ -647,6 +657,16 @@ namespace Marfil.App.WebMain.Controllers
                             }
                         }
                         item.Total = Math.Round((double)item.Importe * totalMetros, 2);
+
+                        /*Ago22 - Si el producto de salida=1 elemento y es de tipo bloque  y la unidad de medida del/los producto de entrada es m2. Si y solo si existe en costes adicionales un coste x m3
+                        En ese caso, multiplicamos ese coste por los m3 del bloque (salida) y se reparte entre todos los metros de entrada (que serán tablas o losas o cualquier otro producto que vaya en m2)*/
+                        if (totalMetros == 0)
+                        {
+                            var transfService = new ImputacionCosteservice(ContextService);
+
+                            transfService.CalcularTotalBloqueM3Pantalla(Session[sessionsalida] as List<TransformacionessalidaLinModel>, lineas, item);
+                        }
+
                     }
 
                     editItem.Tipodocumento = item.Tipodocumento;

@@ -129,7 +129,23 @@
     </div>
 </div>
 
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentascaja, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
 
+            cvcuentas.Name = "Cuentascaja";
+            cvcuentas.Url = Url.Action("CuentasApi", "Api");
+            cvcuentas.CampoIdentificador = "Id"; 
+            cvcuentas.Valor = Model.Cuentascaja;
+            cvcuentas.SoloLectura = isreadonly;
+            cvcuentas.Params = "{\"nivel\":\"4\"}";
+        }
+
+        @Html.Partial("CampoverificacionUI", cvcuentas)
+        @Html.ValidationMessageFor(f => Model.Cuentascaja, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 
 

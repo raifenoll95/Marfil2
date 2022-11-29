@@ -122,7 +122,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar
             model.Metros = UnidadesService.CalculaResultado(unidadesObj, model.Cantidad , model.Largo ?? 0,
                 model.Ancho ?? 0, model.Grueso ?? 0,model.Metros);
 
-            model.Importe = model.Metros * model.Precio;
+            //model.Importe = model.Metros * model.Precio;
 
             return model;
         }

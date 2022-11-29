@@ -118,6 +118,192 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Configuration du logiciel</value>
+    <value>Paramètres de l'application</value>
+  </data>
+  <data name="Fkidioma1" xml:space="preserve">
+    <value>Première langue</value>
+  </data>
+  <data name="Fkidioma2" xml:space="preserve">
+    <value>langue secondaire</value>
+  </data>
+  <data name="Espesorfleje" xml:space="preserve">
+    <value>Épaisseur de la bande (cm)</value>
+  </data>
+  <data name="Espesordisco" xml:space="preserve">
+    <value>Épaisseur du disque (cm)</value>
+  </data>
+  <data name="Formatogrosor" xml:space="preserve">
+    <value>format d'épaisseur</value>
+  </data>
+  <data name="Formatounidad" xml:space="preserve">
+    <value>format unitaire</value>
+  </data>
+  <data name="Gestionarrevisiones" xml:space="preserve">
+    <value>Gérer les avis</value>
+  </data>
+  <data name="VentasUsarCanal" xml:space="preserve">
+    <value>utiliser le canal</value>
+  </data>
+  <data name="VentasCanalObligatorio" xml:space="preserve">
+    <value>canal obligatoire</value>
+  </data>
+  <data name="ComprasUsarCanal" xml:space="preserve">
+    <value>utiliser le canal</value>
+  </data>
+  <data name="ComprasCanalObligatorio" xml:space="preserve">
+    <value>canal obligatoire</value>
+  </data>
+  <data name="DocumentosVentas" xml:space="preserve">
+    <value>documents de vente</value>
+  </data>
+  <data name="DocumentosCompras" xml:space="preserve">
+    <value>documents d'achat</value>
+  </data>
+  <data name="Estadoinicial" xml:space="preserve">
+    <value>doc état initial.</value>
+  </data>
+  <data name="Estadoparcial" xml:space="preserve">
+    <value>Statut de livraison partielle</value>
+  </data>
+  <data name="Estadototal" xml:space="preserve">
+    <value>État de livraison complet</value>
+  </data>
+  <data name="Descontardescuentocomercial" xml:space="preserve">
+    <value>escompte commercial</value>
+  </data>
+  <data name="Descontardescuentoprontopago" xml:space="preserve">
+    <value>escompte pour paiement anticipé</value>
+  </data>
+  <data name="Descontarrecargofinanciero" xml:space="preserve">
+    <value>Remise surtaxe financière F.P.</value>
+  </data>
+  <data name="Fksituacioncomisioncrear" xml:space="preserve">
+    <value>Situation de la commission lors de la création de la facture</value>
+  </data>
+  <data name="Fksituacioncomisionliquidar" xml:space="preserve">
+    <value>Situation lors du règlement des commissions</value>
+  </data>
+  <data name="Estadoentregada" xml:space="preserve">
+    <value>état de livraison</value>
+  </data>
+  <data name="Estadoliberada" xml:space="preserve">
+    <value>état libéré</value>
+  </data>
+  <data name="Margenfacturacompra" xml:space="preserve">
+    <value>Appliquer l'arrondi si diff. fras. prov. et calculé moins de</value>
+  </data>
+  <data name="AlbaranesEstadototal" xml:space="preserve">
+    <value>Statut : Terminé</value>
+  </data>
+  <data name="Materialentradaigualsalida" xml:space="preserve">
+    <value>Matériel de sortie = Matériel d'entrée</value>
+  </data>
+  <data name="Estadofinal" xml:space="preserve">
+    <value>doc état final.</value>
+  </data>
+  <data name="Cancelacionriesgoremesa" xml:space="preserve">
+    <value>Jours d'annulation du risque de versement</value>
+  </data>
+  <data name="Tesoreria" xml:space="preserve">
+    <value>Trésorerie</value>
+  </data>
+  <data name="Contabilidad" xml:space="preserve">
+    <value>Comptabilité</value>
+  </data>
+  <data name="Invertirasiento" xml:space="preserve">
+    <value>Inverser l'écriture lors de l'annulation d'un document de journal</value>
+  </data>
+  <data name="ComentarioCuentasDetalle" xml:space="preserve">
+    <value>Commenter le détail des comptes</value>
+  </data>
+  <data name="ComentarioDebePYG" xml:space="preserve">
+    <value>Commentaire Compte P&amp;L obligatoire</value>
+  </data>
+  <data name="ComentarioExistenciasFinales" xml:space="preserve">
+    <value>Commentaire final sur les actions</value>
+  </data>
+  <data name="ComentarioExistenciasIniciales" xml:space="preserve">
+    <value>Commentaire stock initial</value>
+  </data>
+  <data name="ComentarioHaberPYG" xml:space="preserve">
+    <value>Commentaire Avoir un compte P&amp;L</value>
+  </data>
+  <data name="ComentarioAperturaEjercicio" xml:space="preserve">
+    <value>Commentaire d'ouverture de l'exercice</value>
+  </data>
+  <data name="ComentarioCierreEjercicio" xml:space="preserve">
+    <value>Commentaire de fin d'année</value>
+  </data>
+  <data name="CuentaPYG" xml:space="preserve">
+    <value>Compte de profits et pertes</value>
+  </data>
+  <data name="ComentarioApertura" xml:space="preserve">
+    <value>Commentaire</value>
+  </data>
+  <data name="ComentarioCierre" xml:space="preserve">
+    <value>Commentaire</value>
+  </data>
+  <data name="EstadoEjercicioRevertir" xml:space="preserve">
+    <value>État auquel l'exercice doit être renvoyé</value>
+  </data>
+  <data name="ComentarioAperturaProvisional" xml:space="preserve">
+    <value>Commentaire d'ouverture provisoire</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>du compte</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>jusqu'au compte</value>
+  </data>
+  <data name="CuentaReapertura" xml:space="preserve">
+    <value>compte de réouverture provisoire</value>
+  </data>
+  <data name="PrefijosPrestacionServicios" xml:space="preserve">
+    <value>Préfixe Comptes Prestation de services</value>
+  </data>
+  <data name="CuentaClientesVarios" xml:space="preserve">
+    <value>Compte client multiple</value>
+  </data>
+  <data name="CuentaProveedoresVarios" xml:space="preserve">
+    <value>Compte divers fournisseurs</value>
+  </data>
+  <data name="Sii" xml:space="preserve">
+    <value>SCI</value>
+  </data>
+  <data name="SiiDesc" xml:space="preserve">
+    <value>SII (Fourniture Immédiate d'Information)</value>
+  </data>
+  <data name="SiiUrl" xml:space="preserve">
+    <value>URL de l'environnement de production</value>
+  </data>
+  <data name="FasePruebas" xml:space="preserve">
+    <value>Phase de test</value>
+  </data>
+  <data name="PlazoPresentacion" xml:space="preserve">
+    <value>Période de soumission (jours)</value>
+  </data>
+  <data name="PlazoPresentacion2017" xml:space="preserve">
+    <value>Période de soumission 2017 (jours)</value>
+  </data>
+  <data name="RellenarCeros" xml:space="preserve">
+    <value>Factures émises : remplir avec des zéros no. Fra.</value>
+  </data>
+  <data name="UrlBienesInversion" xml:space="preserve">
+    <value>Biens d'investissement</value>
+  </data>
+  <data name="UrlCobrosMetalico" xml:space="preserve">
+    <value>Encaissements en espèces</value>
+  </data>
+  <data name="UrlFacturasEmitidas" xml:space="preserve">
+    <value>Factures émises</value>
+  </data>
+  <data name="UrlFacturasRecibidas" xml:space="preserve">
+    <value>Factures reçues</value>
+  </data>
+  <data name="UrlPagosIvaCaja" xml:space="preserve">
+    <value>Paiements de TVA en espèces</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>

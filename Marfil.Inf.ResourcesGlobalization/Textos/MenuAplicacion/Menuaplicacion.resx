@@ -604,7 +604,7 @@
     <value>Trans. de acabados en nave</value>
   </data>
   <data name="listadoperdidasyganancias" xml:space="preserve">
-    <value>Listado Pérdidas y Ganancias</value>
+    <value>Cuenta de pérdidas y ganancias</value>
   </data>
   <data name="configurardocumentosguiasbalances" xml:space="preserve">
     <value>Conf. de docs: Perdidas y Ganancias</value>
@@ -635,5 +635,59 @@
   </data>
   <data name="listadostockmaxmin" xml:space="preserve">
     <value>Listado de máximos y mínimos</value>
+  </data>
+  <data name="listadoperdidasygananciasfuncional" xml:space="preserve">
+    <value>Cta. pérdidas y ganancias funcional</value>
+  </data>
+  <data name="listadostockvaloradotarifa" xml:space="preserve">
+    <value>Listado de stock valorado por tarifa</value>
+  </data>
+  <data name="actualizarcostes" xml:space="preserve">
+    <value>Actualización de precios de coste</value>
+  </data>
+  <data name="listadoperdidasygananciasbalanceanual" xml:space="preserve">
+    <value>Balance de situación</value>
+  </data>
+  <data name="comparativaPYG" xml:space="preserve">
+    <value>Cuenta de pérdidas y ganancias.</value>
+  </data>
+  <data name="comparativos" xml:space="preserve">
+    <value>Informes comparativos</value>
+  </data>
+  <data name="comparativaPYGFuncional" xml:space="preserve">
+    <value>Cta. pérdidas y ganancias funcional</value>
+  </data>
+  <data name="comparativaPYGAnalitica" xml:space="preserve">
+    <value>Analítica de pérdidas y ganancias</value>
+  </data>
+  <data name="comparativaPYGBalanceAnual" xml:space="preserve">
+    <value>Balance de situación</value>
+  </data>
+  <data name="tiposfacturasiva" xml:space="preserve">
+    <value>Tipos de facturas</value>
+  </data>
+  <data name="registroivarepercutido" xml:space="preserve">
+    <value>Registro de IVA repercutido</value>
+  </data>
+  <data name="contadoreslotes" xml:space="preserve">
+    <value>Contadores de lotes</value>
+  </data>
+  <data name="configurardocumentosdivisionlotes" xml:space="preserve">
+    <value>Conf. de docs: División de lotes</value>
+  </data>
+  <data name="lecturas" xml:space="preserve">
+    <value>Editar lecturas terminal</value>
+  </data>
+  <data name="headerpedidoscompras" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="headerpresupuestoscompras" xml:space="preserve">
+    <value>Presupuestos</value>
+  </data>
+  <data name="pedidoscompras" xml:space="preserve">
+    <value>Gestión de pedidos</value>
+  </data>
+  <data name="presupuestoscompras" xml:space="preserve">
+    <value>Gestión de presupuestos</value>
   </data>
 </root>

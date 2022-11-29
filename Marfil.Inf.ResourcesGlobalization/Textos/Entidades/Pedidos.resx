@@ -519,4 +519,7 @@
   <data name="FechaInforme" xml:space="preserve">
     <value>Fecha informe</value>
   </data>
+  <data name="Fkseriescontablesremesa" xml:space="preserve">
+    <value>Serie Remesa</value>
+  </data>
 </root>

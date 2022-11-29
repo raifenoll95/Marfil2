@@ -230,7 +230,113 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var comentario = nodo[0].InnerText;
             return comentario;
         }
-        
+
+        public string GetPrefijosPrestacionServicios()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("PrefijosPrestacionServicios");
+            var prefijos = nodo[0].InnerText;
+            return prefijos;
+        }
+
+        public string GetClientesVarios()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("CuentaClientesVarios");
+            if (nodo.Count > 0) {
+                var cuenta = nodo[0].InnerText;
+                return cuenta;
+            }
+            return "";
+        }
+
+        public string GetEstadoFinAlbaranesCompras()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadoalbaranescomprastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public string GetEstadoFinAlbaranesVentas()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadoalbaranesventastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public string GetEstadoFinPedidosVentas()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadopedidosventastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public string GetEstadoFinPresupuestoVentas()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadototal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public string GetEstadoFinPresupuestoCompras()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Estadopresupuestoscomprastotal");
+            var estado = nodo[0].InnerText;
+            return estado;
+        }
+
+        public double GetRelacionBrutoNeto()
+        {
+            XmlDocument doc = new XmlDocument();
+            var datos = _db.Configuracion.FirstOrDefault().xml;
+            doc.LoadXml(datos);
+            XmlElement datosParse = doc.DocumentElement;
+
+            XmlNodeList nodo = datosParse.GetElementsByTagName("Relacionbrutoneto");
+
+            if (nodo.Count > 0)
+            {
+                var relacion = nodo[0].InnerText.Replace('.', ',');
+                var relacionparse = double.Parse(relacion);
+                return relacionparse;
+            }
+
+            return 0;
+        }
+
     }
 
 }

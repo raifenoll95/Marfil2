@@ -12,6 +12,8 @@ using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Resources;
 using RFormasPago = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Formaspago;
+using Marfil.Inf.Genericos;
+
 namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 {
     [Serializable]
@@ -44,6 +46,16 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
             DiasVencimiento = 0;
             PorcentajePago = 0;
         }
+    }
+
+    public enum Tipodocsventaimprimircuenta
+    {
+        [StringValue(typeof(RFormasPago), "Ninguna")]
+        Ninguna,
+        [StringValue(typeof(RFormasPago), "Tercero")]
+        Tercero,
+        [StringValue(typeof(RFormasPago), "Tesoreria")]
+        Tesoreria
     }
 
     public class FormasPagoModel : BaseModel<FormasPagoModel, FormasPago>
@@ -100,6 +112,9 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RFormasPago), Name = "FkGruposformaspago")]
         public string FkGruposformaspago { get; set; }
         public string Gruposformaspago { get; set;}
+
+        [Display(ResourceType = typeof(RFormasPago), Name = "Docsventaimprimircuenta")]
+        public Tipodocsventaimprimircuenta Docsventaimprimircuenta { get; set; }
 
         public IEnumerable<TablasVariasModosPagoModel> ListModosPago { get; set; } 
 

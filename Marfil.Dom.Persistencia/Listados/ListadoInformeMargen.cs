@@ -326,7 +326,7 @@ namespace Marfil.Dom.Persistencia.Listados
                     return sb.ToString();
                 case "2":
                     sb.Append("SELECT i.fkArticulosCod as [Cód. Artículo],i.fkArticulosNom as Descripción,i.lote as Lote,Sum(i.cantidad) as Cantidad,"+
-                        "i.referenciaAlbCompra as [Alb.Compra], Sum(i.metrosCompra) as [Metros Compra], Sum(i.precioTotalCompra) as [Importe Compra],"+
+                        "i.referenciaAlbVenta as [Alb. Venta], Sum(i.metrosCompra) as [Metros Compra], Sum(i.precioTotalCompra) as [Importe Compra],"+
                         "Sum(i.precioTotalCompra) / NULLIF(Sum(i.metrosCompra), 0) as PMC, sum(i.metrosVenta) as [Metros Venta], Sum(i.precioTotalVenta) as [Importe Venta],"+
                         "Sum(i.precioTotalVenta) / NULLIF(sum(i.metrosVenta), 0) as PMV,"+
                         "Sum(i.precioTotalVenta) - Sum(i.precioTotalCompra) as Margen, 100 - ((Sum(i.precioTotalCompra) / NULLIF(Sum(i.precioTotalVenta), 0)) * 100) as [% Margen] "+
@@ -354,7 +354,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 case "1":
                     return " group by i.fkArticulosCod,i.fkArticulosNom order by i.fkArticulosCod";
                 case "2":
-                    return " group by i.fkArticulosCod,i.lote,i.fkArticulosNom,i.referenciaAlbCompra order by i.fkArticulosCod,i.lote";
+                    return " group by i.fkArticulosCod,i.lote,i.fkArticulosNom,i.referenciaAlbVenta order by i.fkArticulosCod,i.lote";
                 case "3":
                     return " group by i.fkClientesCod, i.fkClientesNom order by i.fkClientesCod";
             }

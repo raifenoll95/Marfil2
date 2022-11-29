@@ -31,6 +31,7 @@ using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RFacturasCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.FacturasCompras;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -73,7 +74,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService = new EstadosService(_context,_db);
-            st.List = st.List.OfType<FacturasComprasModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<FacturasComprasModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkproveedores", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<FacturasComprasModel>();
             st.PrimaryColumnns = new[] { "Id" };
@@ -182,9 +200,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var model = obj as FacturasComprasModel;
                 var validation = _validationService as FacturasComprasValidation;
                 validation.EjercicioId = EjercicioId;
-                var contador = ServiceHelper.GetNextId<FacturasCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "FRC"; //Facturas compra
+                var contador = ServiceHelper.GetNextId<FacturasCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<FacturasCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<FacturasCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.FacturasCompras, _context, _db);
                 var newItem = _converterModel.CreatePersitance(obj);
@@ -336,8 +355,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     result.Importetotaldoc = Math.Round(result.Totales.Sum(f => f.Subtotal)??0.0,result.Decimalesmonedas);
                     result.Importefacturaproveedor = result.Importetotaldoc;
                     GenerarVencimientos(result);
-                    create(result);
-                    
+                    //create(result);
+
+                    //  Cambiamos el estado del/los albarán/es
+                    foreach (var item in albaranesreferencia)
+                    {
+                        var albaranEstado = albaranesService.GetByReferencia(item);
+
+                        var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                        albaranEstado.Fkestados = Confservice.GetEstadoFinAlbaranesCompras();
+
+                        var newItem = albaranesService._converterModel.CreatePersitance(albaranEstado);
+                        _db.Set<AlbaranesCompras>().AddOrUpdate(newItem);
+                    }
+
+                    _db.SaveChanges();
                     tran.Complete();
 
                     return result;
@@ -387,13 +419,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         private FacturasComprasLinModel ConvertILineaImportarToPedidoLinModel(int idlinea, ILineaImportar linea)
         {
             var idalbaran = Funciones.Qint(linea.Fkdocumento);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
 
             var albaran =
                 _db.AlbaranesCompras.SingleOrDefault(
                     f =>
                         f.empresa == Empresa && f.id == idalbaran);
             var metros = Math.Round(linea.Metros, linea.Decimalesmedidas);
-            var precio = Math.Round(linea.Precio, linea.Decimalesmonedas);
+            var precio = Math.Round(linea.Precio, empresa.Decimalesprecios ?? 2);
             var bruto = metros*precio;
             var cuotadescuento = Math.Round(bruto*linea.Porcentajedescuento/100.0, linea.Decimalesmonedas);
             var baseimpo = bruto - cuotadescuento;
@@ -522,6 +556,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             result.Fkseries = serie;
             result.Fkestados = appService.GetConfiguracion().Estadofacturascomprasinicial;
+
+            //asignamos el tipo de factura según el proveedor o acreedor
+            if (_db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault() != null)
+            {
+                var tipofactura = _db.Proveedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault().fktipofactura;
+                if (tipofactura != null)
+                {
+                    result.Fktipofactura = tipofactura;
+                }
+            } else if (_db.Acreedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault() != null)
+            {
+                var tipofactura = _db.Acreedores.Where(f => f.empresa == Empresa && f.fkcuentas == presupuesto.Fkproveedores).FirstOrDefault().fktipofactura;
+                if (tipofactura != null)
+                {
+                    result.Fktipofactura = tipofactura;
+                }
+            }
+
             var decimalesmonedas = _db.Monedas.Single(f => f.id == result.Fkmonedas.Value).decimales;
             result.Decimalesmonedas = decimalesmonedas.Value;
             

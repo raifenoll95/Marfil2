@@ -48,6 +48,9 @@ namespace Marfil.Dom.Persistencia
         public string guiaperdidas { get; set; }
         public string cuentasexistencias { get; set; }
         public string cuentaPG { get; set; }
+        public string cuentascaja { get; set; }
+        public Nullable<int> ivasoportado { get; set; }
+        public Nullable<int> ivarepercutido { get; set; }
     
         public virtual Empresas Empresas1 { get; set; }
         public virtual Empresas Empresas2 { get; set; }

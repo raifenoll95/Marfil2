@@ -74,7 +74,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService = new EstadosService(_context,_db);
-            st.List = st.List.OfType<PedidosComprasModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<PedidosComprasModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkproveedores", "Nombrecliente", "Fkestados", "Importebaseimponible" };
             var propiedades = Helpers.Helper.getProperties<PedidosComprasModel>();
             st.PrimaryColumnns = new[] { "Id" };
@@ -163,9 +180,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 var appService= new ApplicationHelper(_context);
                 obj.Fkestados = appService.GetConfiguracion().Estadopedidosventasinicial;
-                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "PEC"; //Pedido compra
+                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
 
                 var newItem = _converterModel.CreatePersitance(obj);
@@ -227,9 +245,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var validation = _validationService as PedidosComprasValidation;
                 validation.EjercicioId = EjercicioId;
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "PEC"; //Pedido compra
+                var contador = ServiceHelper.GetNextId<PedidosCompras>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<PedidosCompras>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.PedidosCompras, _context, _db);

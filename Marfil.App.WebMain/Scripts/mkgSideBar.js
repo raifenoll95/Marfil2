@@ -172,6 +172,7 @@ var mkgSideBar = function () {
             }
             footer += '</ul>';
         }
+        
         newBar.innerHTML = '<div class="msb-container">\n<div class="widget-box widget-color-blue  msb-container-header"><div class="widget-header"><h5 class="color-white  bigger lighter  " ><i class="ace-icon fa fa-user"></i> <span class="bolder">' + this.options.welcomeString + ' ' + this.options.usuario + '</span></h5><br/><small style="margin-left:18px"><a style="color:#ffffff;" href="' + this.options.urlcerrarsesion + '">' + this.options.cerrarsesionString + '</a></small></div></div> ' + (this.options.closeButton ? '<div class="msb-close"></div>' : '') + '\n            <div class="msb-content"></div>\n            <footer>' + footer + '</footer>\n        </div>';
         this.refreshItems();
         document.body.appendChild(newBar);

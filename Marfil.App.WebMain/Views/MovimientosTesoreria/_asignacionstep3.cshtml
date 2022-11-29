@@ -33,7 +33,7 @@
 
 }
 
-<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+@*<script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>**@
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
@@ -50,16 +50,16 @@
         </div>
     </div>
 
-    @*Cobrador, si en las cuentas hay alguna 'C'*@
+    @*Cuenta tesoreria*@
     <div class="form-group">
         @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
-        <div class="col-md-10" id="Cuentas">
+        <div class="col-md-10">
             @{
                 cvcuentastesoreria.Name = "Fkcuentatesoreria";
                 cvcuentastesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
                 cvcuentastesoreria.Valor = Model.Fkcuentatesoreria;
                 cvcuentastesoreria.Titulo = Operarios.Fkcuentatesoreria;
-                cvcuentastesoreria.Obligatorio = false;
+                cvcuentastesoreria.Obligatorio = true;
             }
             @Html.Partial("CampoverificacionUI", cvcuentastesoreria)
 
@@ -195,7 +195,6 @@
 </form>
 
 <script type="text/javascript">
-
     /*$(document).ready(function() {
         cambio();
     });*/
@@ -247,7 +246,6 @@
                 }
             });
         }
-
     });*@
 
 </script>

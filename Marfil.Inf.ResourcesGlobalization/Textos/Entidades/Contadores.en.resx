@@ -151,7 +151,7 @@
     <value>Without reboot</value>
   </data>
   <data name="TipoInicioAnual" xml:space="preserve">
-    <value>Per year</value>
+    <value>Annual</value>
   </data>
   <data name="TipoInicioMensual" xml:space="preserve">
     <value>Per month</value>
@@ -179,5 +179,26 @@
   </data>
   <data name="TipoInicioSemanal" xml:space="preserve">
     <value>Weekly</value>
+  </data>
+  <data name="TipoContadorMultidocumento" xml:space="preserve">
+    <value>multi-document</value>
+  </data>
+  <data name="TipoContadorPrivado" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="ErrorSegmentoObligatorio" xml:space="preserve">
+    <value>It is mandatory to indicate the identifier segment of the counter</value>
+  </data>
+  <data name="ErrorSegmentoMesObligatorio" xml:space="preserve">
+    <value>If the counter is initialized every month</value>
+  </data>
+  <data name="ErrorSegmentoAñoObligatorio" xml:space="preserve">
+    <value>If the counter is initialized every year</value>
+  </data>
+  <data name="ErrorContadorSerieUtilizada" xml:space="preserve">
+    <value>Cannot modify counter because it is assigned to a Document Series</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
   </data>
 </root>

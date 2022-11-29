@@ -32,6 +32,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CarteraVencimientos
 
             DataSource.Queries.Add(mainQuery);
             DataSource.Queries.Add(new CustomSqlQuery("Cuentas", "SELECT * FROM [Cuentas]"));
+            DataSource.Queries.Add(new CustomSqlQuery("CuentasTesoreria", "SELECT * FROM [Cuentas]"));//La duplicamos para utilizarlo en fkcuentastesoreria
             DataSource.Queries.Add(new CustomSqlQuery("Empresas", "SELECT id, nombre, razonsocial, nif, administrador, nifcifadministrador FROM [Empresas]"));
             DataSource.Queries.Add(new CustomSqlQuery("Direcciones", "SELECT empresa, fkentidad, fktipovia, direccion, poblacion, cp, telefono, telefonomovil, email, web FROM [Direcciones]"));
             DataSource.Queries.Add(new CustomSqlQuery("Provincias", "SELECT id, nombre, codigopais FROM [Provincias]"));
@@ -40,6 +41,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CarteraVencimientos
             DataSource.Relations.Add("Remesas", "Cuentas", new[] {
                         new RelationColumnInfo("empresa", "empresa"),
                         new RelationColumnInfo("fkcuentas", "id")});
+
+            DataSource.Relations.Add("Remesas", "CuentasTesoreria", new[] {
+                        new RelationColumnInfo("empresa", "empresa"),
+                        new RelationColumnInfo("fkcuentastesoreria", "id")});
 
             DataSource.Relations.Add("Remesas", "Empresas", new[] {
                         new RelationColumnInfo("empresa", "id")});

@@ -35,6 +35,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.DateTime> fechamodificacionbloqueo { get; set; }
         public Nullable<System.Guid> fkUsuariobloqueo { get; set; }
         public string fkgruposformaspago { get; set; }
+        public Nullable<int> docsventaimprimircuenta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormasPagoLin> FormasPagoLin { get; set; }

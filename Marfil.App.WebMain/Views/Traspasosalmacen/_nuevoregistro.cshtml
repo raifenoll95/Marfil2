@@ -27,7 +27,7 @@
 
 
 <div class="modal fade" id="_entregastock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="EntregaStockCtrl">
-    <div class="modal-dialog modal-lg modal-dialog-fullwidth" role="document" ng-init="init('@Url.Action("BusquedaArticulosEntregaLotesApi","Api")','@Url.Action("AgregarLineas","Traspasosalmacen")','@Url.Action("UltimoprecioApi", "Api")','@((int)TipoDocumentos.Traspasosalmacen)')">
+    <div class="modal-dialog modal-lg modal-dialog-fullwidth" role="document" ng-init="init('@Url.Action("BusquedaArticulosEntregaLotesApi/GetArticulosLotes","Api")','@Url.Action("AgregarLineas","Traspasosalmacen")','@Url.Action("UltimoprecioApi", "Api")','@((int)TipoDocumentos.Traspasosalmacen)')">
         <div class="modal-content modal-content-fullwidth">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -120,4 +120,13 @@
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Stock</value>
   </data>
+  <data name="ErrorIntegridadReferencial" xml:space="preserve">
+    <value>Cannot update part {0} because it has been modified by another user.</value>
+  </data>
+  <data name="LblBuscarLote" xml:space="preserve">
+    <value>Lots search</value>
+  </data>
+  <data name="Diariostock" xml:space="preserve">
+    <value>Stock journal</value>
+  </data>
 </root>

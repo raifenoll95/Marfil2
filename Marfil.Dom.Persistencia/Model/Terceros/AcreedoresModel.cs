@@ -145,6 +145,9 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
         [Display(ResourceType = typeof(RAcreedores), Name = "Fkmonedas")]
         public int Fkmonedas { get; set; }
 
+        [Display(ResourceType = typeof(RAcreedores), Name = "Fktipofactura")]
+        public string Fktipofactura { get; set; }
+
         [Display(ResourceType = typeof(RAcreedores), Name = "Fkregimeniva")]
         public string Fkregimeniva { get; set; }
 

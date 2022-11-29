@@ -136,7 +136,7 @@
     <value>State properties</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Notes</value>
+    <value>Comments</value>
   </data>
   <data name="EnumTodos" xml:space="preserve">
     <value>All documents</value>
@@ -145,7 +145,7 @@
     <value>Purchase packing list</value>
   </data>
   <data name="EnumAlbaranesVentas" xml:space="preserve">
-    <value>Sell packing list</value>
+    <value>Packing list</value>
   </data>
   <data name="EnumAnulado" xml:space="preserve">
     <value>Cancelled</value>
@@ -163,16 +163,16 @@
     <value>Purchase invoice</value>
   </data>
   <data name="EnumFacturasVentas" xml:space="preserve">
-    <value>Sell invoice</value>
+    <value>Sale invoice</value>
   </data>
   <data name="EnumFinalizado" xml:space="preserve">
-    <value>Finished</value>
+    <value>Done</value>
   </data>
   <data name="EnumPedidosCompras" xml:space="preserve">
     <value>Purchase order</value>
   </data>
   <data name="EnumPedidosVentas" xml:space="preserve">
-    <value>Sell order</value>
+    <value>Sales order</value>
   </data>
   <data name="EnumPresupuestosCompras" xml:space="preserve">
     <value>Purchase estimation</value>
@@ -194,5 +194,41 @@
   </data>
   <data name="LblNoPermiteEditar" xml:space="preserve">
     <value>Document edition not allowed</value>
+  </data>
+  <data name="Imputariesgo" xml:space="preserve">
+    <value>Imputes risk</value>
+  </data>
+  <data name="EnumReservas" xml:space="preserve">
+    <value>Reservation</value>
+  </data>
+  <data name="EnumTraspasosalmacen" xml:space="preserve">
+    <value>Warehouse transfers</value>
+  </data>
+  <data name="EnumCampañas" xml:space="preserve">
+    <value>Campaign</value>
+  </data>
+  <data name="EnumCortabloques" xml:space="preserve">
+    <value>Gang-saw</value>
+  </data>
+  <data name="EnumIncidencias" xml:space="preserve">
+    <value>Incidence</value>
+  </data>
+  <data name="EnumInventarios" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="EnumKits" xml:space="preserve">
+    <value>Kit</value>
+  </data>
+  <data name="EnumOportunidades" xml:space="preserve">
+    <value>Chance</value>
+  </data>
+  <data name="EnumProyectos" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="EnumTransformaciones" xml:space="preserve">
+    <value>Transformation</value>
+  </data>
+  <data name="EnumTransformacioneslotes" xml:space="preserve">
+    <value>Finishing transformations</value>
   </data>
 </root>

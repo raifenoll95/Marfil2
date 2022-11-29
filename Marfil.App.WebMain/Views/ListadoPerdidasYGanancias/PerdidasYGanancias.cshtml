@@ -7,7 +7,7 @@
 
     var hayCuentasNoAsignadas = WebHelper.GetApplicationHelper().ExistenCuentasNoAsignadas();
     var filtrosAcumulado = WebHelper.GetApplicationHelper().GetFiltros();
-    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado);
+    var textRecalculo = WebHelper.GetApplicationHelper().TextRecalculoPYG(filtrosAcumulado, false);
     var fechaRecalculoAcumulador = WebHelper.GetApplicationHelper().GetRecalculo();
 
     var listguia = WebHelper.GetApplicationHelper().GetListTipoGuiaCTPG().Select(f => new SelectListItem()
@@ -156,6 +156,7 @@
 
         var data = {
             Ejercicio: document.getElementById('Ejercicio').options[document.getElementById('Ejercicio').selectedIndex].value,
+            Ejercicioanterior: '',
             Guia: document.getElementById('Guia').options[document.getElementById('Guia').selectedIndex].value,
             SinSaldo: document.getElementById('Lineassinsaldo').value,
             Desglosar: document.getElementById('Desglosarniveltres').value

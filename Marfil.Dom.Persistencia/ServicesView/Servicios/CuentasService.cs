@@ -90,12 +90,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
     {
 
         public const string SelectCuentasTerceros =
-            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado] from {2} as cli " +
+            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado]" +
+            " from {2} as cli " +
             " inner join cuentas as c on c.id=cli.fkcuentas and c.empresa=cli.empresa " +
             " left join direcciones as d on d.empresa= c.empresa and d.tipotercero={0} and d.fkentidad=c.id and d.defecto=1 " +
             " left join paises as p on p.valor=d.fkpais " +
             " left join provincias as pr on pr.codigopais= d.fkpais  and pr.id =d.fkprovincia " +
             " where cli.empresa='{1}' ";
+
+        public const string SelectCuentasTercerosDelegacion =
+            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado]" +
+            ", cli.fkdelegacion as [Fkdelegacion] " +
+            " from {2} as cli " +
+            " inner join cuentas as c on c.id=cli.fkcuentas and c.empresa=cli.empresa " +
+            " left join direcciones as d on d.empresa= c.empresa and d.tipotercero={0} and d.fkentidad=c.id and d.defecto=1 " +
+            " left join paises as p on p.valor=d.fkpais " +
+            " left join provincias as pr on pr.codigopais= d.fkpais  and pr.id =d.fkprovincia " +
+            " where cli.empresa='{1}' ";
+
+        public const string SelectCuentasTesoreriaCaja =
+            "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado]" +
+            " from {2} as cli " +
+            " inner join cuentas as c on c.id=cli.fkcuentas and c.empresa=cli.empresa " +
+            " left join direcciones as d on d.empresa= c.empresa and d.tipotercero={0} and d.fkentidad=c.id and d.defecto=1 " +
+            " left join paises as p on p.valor=d.fkpais " +
+            " left join provincias as pr on pr.codigopais= d.fkpais  and pr.id =d.fkprovincia " +
+            " where cli.empresa='{1}' " + 
+            " UNION " +
+            " select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion2 as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado]" +
+            " from cuentas as c " +
+            " left join direcciones as d on d.empresa= c.empresa and d.tipotercero={0} and d.fkentidad=c.id and d.defecto=1 " +
+            " left join paises as p on p.valor=d.fkpais " +
+            " left join provincias as pr on pr.codigopais= d.fkpais  and pr.id =d.fkprovincia " +
+            " where c.empresa='{1}' and c.nivel = 0 and SUBSTRING(c.id,1,4) = '{3}'";
 
         public const string SelectCuentasTercerosPaginado =
             "select c.id as [Fkcuentas],c.descripcion as [Descripcion], c.descripcion as [Razonsocial], c.nif as [Nif], p.descripcion as [Pais], pr.nombre as [Provincia],d.poblacion as [Poblacion],c.bloqueada as [Bloqueado] from {2} as cli " +
@@ -326,8 +353,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public IEnumerable<CuentasBusqueda> GetCuentas(TiposCuentas tipo)
         {
+            var cuentascaja = _db.Empresas.Where(f => f.id == Empresa).Select(f => f.cuentascaja).FirstOrDefault();
+            if (cuentascaja == null) cuentascaja = "";
+
             if (tipo == TiposCuentas.Todas)
                 return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectTodasLasCuentasTerceros, _context.Empresa)).ToList();
+            else if (tipo == TiposCuentas.Clientes)
+                return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectCuentasTercerosDelegacion, (int)tipo, Empresa, tipo)).ToList();
+            else if (tipo == TiposCuentas.Cuentastesoreria)
+                return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectCuentasTesoreriaCaja, (int)tipo, Empresa, tipo, cuentascaja)).ToList();
             else
                 return _db.Database.SqlQuery<CuentasBusqueda>(string.Format(SelectCuentasTerceros, (int)tipo, Empresa, tipo)).ToList();
         }
@@ -1113,6 +1147,52 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             listacuentas.RemoveAll(y => y.SaldoAcreedor == 0 && y.SaldoDeudor == 0);
 
             return listacuentas.OrderByDescending(c => c.SaldoDeudor).ThenBy(n => n.SaldoAcreedor);
+        }
+
+        public string obtenerdelegacionusuario(Guid id)
+        {
+            return _db.Usuarios.Where(f => f.id == id).FirstOrDefault().fkdelegacion;
+        }
+
+        public string GetCuentaCargo1(int inttipofacturaiva, string idtipofactura)
+        {
+            if (string.IsNullOrEmpty(idtipofactura))
+            {
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentacargo1;
+            }
+            else
+            {
+                var idparse = int.Parse(idtipofactura);
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.id == idparse).FirstOrDefault().cuentacargo1;
+            }
+
+            
+        }
+
+        public List<string> GetClientesTipoFacturaCargo(string idtipofactura, string cargo)
+        {
+            if (string.IsNullOrEmpty(idtipofactura))
+            {
+                return _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas.StartsWith(cargo)).Select(x => x.fkcuentas).ToList();
+            }
+            else
+            {
+                return _db.Clientes.Where(f => f.empresa == Empresa && f.fktipofactura == idtipofactura && f.fkcuentas.StartsWith(cargo)).Select(x => x.fkcuentas).ToList();
+            }
+        }
+
+        public string GetCuentaAbono1(int inttipofacturaiva, string idtipofactura)
+        {
+            if (string.IsNullOrEmpty(idtipofactura))
+            {
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.tipofacturadefecto == true).FirstOrDefault().cuentaabono1;
+            }
+            else
+            {
+                var idparse = int.Parse(idtipofactura);
+                return _db.TiposFacturas.Where(f => f.empresa == Empresa && f.tipocircuito == inttipofacturaiva && f.id == idparse).FirstOrDefault().cuentaabono1;
+            }
+                
         }
     }
 }

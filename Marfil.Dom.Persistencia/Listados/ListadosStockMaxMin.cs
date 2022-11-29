@@ -468,7 +468,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
                         GetColumnasAgrupacionAlmacen() +
                         ", sseg.stockseguridad,sseg.stockminimo,sseg.stockmaximo " +
-                        "having CASE WHEN sseg.stockseguridad = 0 THEN(sseg.stockmaximo - sum(s.metros)) ELSE(sseg.stockmaximo - sum(s.cantidaddisponible)) END > 0";
+                        "having CASE WHEN sseg.stockseguridad = 0 THEN(sum(s.metros)) ELSE(sum(s.cantidaddisponible)) END < sseg.stockminimo ";
             }
             else if(Mostrar == "1") {
                 return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
@@ -480,7 +480,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 return " group by s.fkarticulos, a.descripcion,u.codigounidad,u.decimalestotales " +
                         GetColumnasAgrupacionAlmacen() +
                         ", a.stockseguridad,a.stockminimo,a.stockmaximo " +
-                        "having CASE WHEN a.stockseguridad = 0 THEN(a.stockmaximo - sum(s.metros)) ELSE(a.stockmaximo - sum(s.cantidaddisponible)) END > 0";
+                        "having CASE WHEN a.stockseguridad = 0 THEN(sum(s.metros)) ELSE(sum(s.cantidaddisponible)) END < a.stockminimo ";
             }
             else
             {

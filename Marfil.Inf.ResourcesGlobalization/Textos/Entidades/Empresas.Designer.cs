@@ -88,6 +88,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Registro Contable.
+        /// </summary>
+        public static string Contable {
+            get {
+                return ResourceManager.GetString("Contable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Criterio de IVA.
         /// </summary>
         public static string Criterioiva {
@@ -129,6 +138,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string CuentasAnuales {
             get {
                 return ResourceManager.GetString("CuentasAnuales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuentas de caja.
+        /// </summary>
+        public static string Cuentascaja {
+            get {
+                return ResourceManager.GetString("Cuentascaja", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string ErrorCantidadDigitosCuentas {
             get {
                 return ResourceManager.GetString("ErrorCantidadDigitosCuentas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Factura.
+        /// </summary>
+        public static string Factura {
+            get {
+                return ResourceManager.GetString("Factura", resourceCulture);
             }
         }
         
@@ -313,6 +340,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a IVA Repercutido.
+        /// </summary>
+        public static string Ivarepercutido {
+            get {
+                return ResourceManager.GetString("Ivarepercutido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a IVA Soportado.
+        /// </summary>
+        public static string Ivasoportado {
+            get {
+                return ResourceManager.GetString("Ivasoportado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Balances de cuentas.
         /// </summary>
         public static string LblConfiguracionBalance {
@@ -399,6 +444,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Nombre {
             get {
                 return ResourceManager.GetString("Nombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fecha Operación.
+        /// </summary>
+        public static string Operacion {
+            get {
+                return ResourceManager.GetString("Operacion", resourceCulture);
             }
         }
         

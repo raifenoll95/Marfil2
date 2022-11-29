@@ -52,6 +52,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>Previsión</th>
             <th>Documento</th>
             <th>Origen</th>
             <th>Estado</th>
@@ -65,7 +66,8 @@
         @foreach (var item in @Model)
         {
             <tr>
-                <th scope="row">@item.Traza</th>
+                <th scope="row">@item.Referencia</th>
+                <th>@item.Traza</th>
                 <td>@item.Origen</td>
                 <td>@item.Estado</td>
                 <td>@item.Importegiro</td>
@@ -73,12 +75,13 @@
                 <td>@item.Importepagado</td>
                 <td>@item.Situacion</td>
                 <td>
-                        <a class="myButton" align="right" href=@item.urlDocumento target="_blank">
-                            <i class="fa fa-eye">
-                                Ver Previsión
-                            </i>
-                        </a>
+                    <a class="myButton" align="right" href=@item.urlDocumento target="_blank">
+                        <i class="fa fa-eye">
+                            Ver Previsión
+                        </i>
+                    </a>
                 </td>
-            </tr>  }
+            </tr>
+        }
     </tbody>
 </table>

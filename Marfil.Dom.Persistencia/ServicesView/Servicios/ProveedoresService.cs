@@ -759,9 +759,33 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         var bancos = new List<BancosMandatosLinModel>();
                         banco.Id = "-2";
                         banco.Descripcion = row["banconom"].ToString() != "" ? row["banconom"].ToString() : "Banco Principal";
-                        banco.Direccion = row["bancodir"].ToString() + Environment.NewLine + row["bancodir2"].ToString();
+                        if (row["bancodir"] != null && row["bancodi2"] != null)
+                        {
+                            banco.Direccion = row["bancodir"].ToString() + Environment.NewLine + row["bancodi2"].ToString();
+                        }
+                        else if (row["bancodir"] != null && row["bancodi2"] == null)
+                        {
+                            banco.Direccion = row["bancodir"].ToString();
+                        }
+                        else
+                        {
+                            banco.Direccion = "";
+                        }
                         banco.Iban = row["iban"].ToString();
-                        banco.Bic = row["bic"].ToString();
+                        var entidad = banco.Iban.Substring(4, 4);
+                        if (row["bic"].ToString() != "")
+                        {
+                            banco.Bic = row["bic"].ToString();
+                        }
+                        else if(_db.Bancos.Where(f => f.id == entidad).FirstOrDefault() != null)
+                        {
+                            banco.Bic = _db.Bancos.Where(f => f.id == entidad).FirstOrDefault().bic;
+                        }
+                        else
+                        {
+                            errores += fkcuentas + ";" + "El BIC no existe para el banco " + entidad + Environment.NewLine;
+                            continue;
+                        }
                         banco.Fkpaises = GetPaisISO(row["paisiso"].ToString());
                         bancos.Add(banco);
                         proveedor.BancosMandatos.BancosMandatos = bancos;

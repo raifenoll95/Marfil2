@@ -159,6 +159,13 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Formatounidad = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "Relacionbrutoneto")]
+        public double Relacionbrutoneto
+        {
+            get { return Model.Relacionbrutoneto; }
+            set { Model.Relacionbrutoneto = value; }
+        }
+
         //presupuestos
 
         [Display(ResourceType = typeof (RConfiguracion), Name = "Gestionarrevisiones")]
@@ -588,6 +595,13 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.Invertirasiento = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "PrefijosPrestacionServicios")]
+        public string PrefijosPrestacionServicios
+        {
+            get { return Model.PrefijosPrestacionServicios; }
+            set { Model.PrefijosPrestacionServicios = value; }
+        }
+
         [Display(ResourceType = typeof(RConfiguracion), Name = "ComentarioExistenciasIniciales")]
         public string ComentarioExistenciasIniciales
         {
@@ -644,6 +658,91 @@ namespace Marfil.Dom.Persistencia.Model
             set { Model.ComentarioAperturaProvisional = value; }
         }
 
+        [Display(ResourceType = typeof(RConfiguracion), Name = "CuentaProveedoresVarios")]
+        public string CuentaProveedoresVarios
+        {
+            get { return Model.CuentaProveedoresVarios; }
+            set { Model.CuentaProveedoresVarios = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "CuentaClientesVarios")]
+        public string CuentaClientesVarios
+        {
+            get { return Model.CuentaClientesVarios; }
+            set { Model.CuentaClientesVarios = value; }
+        }
+
+        //SII
+        [Display(ResourceType = typeof(RConfiguracion), Name = "FasePruebas")]
+        public bool FasePruebas
+        {
+            get { return Model.FasePruebas; }
+            set { Model.FasePruebas = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "Version")]
+        public string Version
+        {
+            get { return Model.Version; }
+            set { Model.Version = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "PlazoPresentacion")]
+        public int PlazoPresentacion
+        {
+            get { return Model.PlazoPresentacion; }
+            set { Model.PlazoPresentacion = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "PlazoPresentacion2017")]
+        public int PlazoPresentacion2017
+        {
+            get { return Model.PlazoPresentacion2017; }
+            set { Model.PlazoPresentacion2017 = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "RellenarCeros")]
+        public bool RellenarCeros
+        {
+            get { return Model.RellenarCeros; }
+            set { Model.RellenarCeros = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlFacturasEmitidas")]
+        public string UrlFacturasEmitidas
+        {
+            get { return Model.UrlFacturasEmitidas; }
+            set { Model.UrlFacturasEmitidas = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlFacturasRecibidas")]
+        public string UrlFacturasRecibidas
+        {
+            get { return Model.UrlFacturasRecibidas; }
+            set { Model.UrlFacturasRecibidas = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlBienesInversion")]
+        public string UrlBienesInversion
+        {
+            get { return Model.UrlBienesInversion; }
+            set { Model.UrlBienesInversion = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlCobrosMetalico")]
+        public string UrlCobrosMetalico
+        {
+            get { return Model.UrlCobrosMetalico; }
+            set { Model.UrlCobrosMetalico = value; }
+        }
+
+        [Display(ResourceType = typeof(RConfiguracion), Name = "UrlPagosIvaCaja")]
+        public string UrlPagosIvaCaja
+        {
+            get { return Model.UrlPagosIvaCaja; }
+            set { Model.UrlPagosIvaCaja = value; }
+        }
+
         public int Cargadatos { get; set; }
 
         #endregion
@@ -690,7 +789,8 @@ namespace Marfil.Dom.Persistencia.Model
         public double Espesordisco { get; set; }
         public TipoFormatoGrosor Formatogrosor { get; set; }
         public TipoFormatoUnidad Formatounidad { get; set; }
-        
+        public double Relacionbrutoneto { get; set; }
+
         public bool VentasUsarCanal { get; set; }
         public bool VentasCanalObligatorio { get; set; }
 
@@ -768,6 +868,11 @@ namespace Marfil.Dom.Persistencia.Model
         public int Cancelacionriesgoremesa { get; set; }
         public bool Invertirasiento { get; set; }
 
+        public string PrefijosPrestacionServicios { get; set; }
+        public string CuentaProveedoresVarios { get; set; }
+        public string CuentaClientesVarios { get; set; }
+
+
         public string ComentarioExistenciasIniciales { get; set; }
         public string ComentarioExistenciasFinales { get; set; }
         public string ComentarioDebePYG { get; set; }
@@ -776,5 +881,18 @@ namespace Marfil.Dom.Persistencia.Model
         public string ComentarioCierreEjercicio { get; set; }
         public string ComentarioAperturaEjercicio { get; set; }
         public string ComentarioAperturaProvisional { get; set; }
+
+        //SII
+        public bool FasePruebas { get; set; }
+        public string Version { get; set; }
+        public int PlazoPresentacion { get; set; }
+        public int PlazoPresentacion2017 { get; set; }
+        public bool RellenarCeros { get; set; }
+        public string UrlFacturasEmitidas { get; set; }
+        public string UrlFacturasRecibidas { get; set; }
+        public string UrlBienesInversion { get; set; }
+        public string UrlCobrosMetalico { get; set; }
+        public string UrlPagosIvaCaja { get; set; }
+
     }
 }

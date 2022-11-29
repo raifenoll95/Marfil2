@@ -118,24 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Etats</value>
+    <value>Etat</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Etat</value>
+    <value>Condition</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Tipoestado" xml:space="preserve">
-    <value>Propietes de l'etat</value>
+    <value>propriétés d'état</value>
   </data>
   <data name="Notas" xml:space="preserve">
-    <value>Notes</value>
+    <value>Observations</value>
   </data>
   <data name="EnumTodos" xml:space="preserve">
-    <value>Touts les documents</value>
+    <value>Tous les documents</value>
+  </data>
+  <data name="Documento" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Imputariesgo" xml:space="preserve">
+    <value>impute le risque</value>
+  </data>
+  <data name="EnumAlbaranesCompras" xml:space="preserve">
+    <value>Bon de livraison d'achat</value>
+  </data>
+  <data name="EnumAlbaranesVentas" xml:space="preserve">
+    <value>note de vente</value>
+  </data>
+  <data name="EnumAnulado" xml:space="preserve">
+    <value>Annulé</value>
+  </data>
+  <data name="EnumCaducado" xml:space="preserve">
+    <value>Fin du temps</value>
+  </data>
+  <data name="EnumCurso" xml:space="preserve">
+    <value>En cours</value>
+  </data>
+  <data name="EnumDiseno" xml:space="preserve">
+    <value>En conception</value>
+  </data>
+  <data name="EnumFacturasCompras" xml:space="preserve">
+    <value>Facture</value>
+  </data>
+  <data name="EnumFacturasVentas" xml:space="preserve">
+    <value>acte de vente</value>
+  </data>
+  <data name="EnumFinalizado" xml:space="preserve">
+    <value>Finalisé</value>
+  </data>
+  <data name="EnumPedidosCompras" xml:space="preserve">
+    <value>Bon de commande</value>
+  </data>
+  <data name="EnumPedidosVentas" xml:space="preserve">
+    <value>Bon de commande</value>
+  </data>
+  <data name="EnumPresupuestosCompras" xml:space="preserve">
+    <value>Budget d'achat</value>
+  </data>
+  <data name="EnumPresupuestosVentas" xml:space="preserve">
+    <value>estimation des ventes</value>
+  </data>
+  <data name="EnumManual" xml:space="preserve">
+    <value>Manuel</value>
+  </data>
+  <data name="EnumAutomatico" xml:space="preserve">
+    <value>Automatique</value>
+  </data>
+  <data name="Tipomovimiento" xml:space="preserve">
+    <value>Type de gestion</value>
+  </data>
+  <data name="LblPermiteEditar" xml:space="preserve">
+    <value>Permet de modifier le document</value>
+  </data>
+  <data name="LblNoPermiteEditar" xml:space="preserve">
+    <value>Ne permet pas la modification du document</value>
+  </data>
+  <data name="EnumReservas" xml:space="preserve">
+    <value>Réservation</value>
+  </data>
+  <data name="EnumTraspasosalmacen" xml:space="preserve">
+    <value>transferts d'entrepôt</value>
+  </data>
+  <data name="EnumCampañas" xml:space="preserve">
+    <value>Cloche</value>
+  </data>
+  <data name="EnumCortabloques" xml:space="preserve">
+    <value>coupe-bloc</value>
+  </data>
+  <data name="EnumIncidencias" xml:space="preserve">
+    <value>Incidence</value>
+  </data>
+  <data name="EnumInventarios" xml:space="preserve">
+    <value>Inventaire</value>
+  </data>
+  <data name="EnumKits" xml:space="preserve">
+    <value>Trousse</value>
+  </data>
+  <data name="EnumOportunidades" xml:space="preserve">
+    <value>Chance</value>
+  </data>
+  <data name="EnumProyectos" xml:space="preserve">
+    <value>Projet</value>
+  </data>
+  <data name="EnumTransformaciones" xml:space="preserve">
+    <value>Transformation</value>
+  </data>
+  <data name="EnumTransformacioneslotes" xml:space="preserve">
+    <value>transformation de finition</value>
   </data>
 </root>

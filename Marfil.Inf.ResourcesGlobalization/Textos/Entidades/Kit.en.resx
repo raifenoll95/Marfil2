@@ -126,4 +126,61 @@
   <data name="Descripcion" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Empresa" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Fkalmacen" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Fkzonaalmacen" xml:space="preserve">
+    <value>Locate in zone</value>
+  </data>
+  <data name="Fkoperarios" xml:space="preserve">
+    <value>Worker</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Lineas" xml:space="preserve">
+    <value>Kit composition</value>
+  </data>
+  <data name="ErrorLoteUtilizado" xml:space="preserve">
+    <value>Bundle {0} cannot be added to the kit because it has already been used in another kit or b</value>
+  </data>
+  <data name="EnumEnProceso" xml:space="preserve">
+    <value>In process</value>
+  </data>
+  <data name="EnumMontado" xml:space="preserve">
+    <value>Mounted</value>
+  </data>
+  <data name="EnumDesmontado" xml:space="preserve">
+    <value>Unmounted</value>
+  </data>
+  <data name="EnumVendido" xml:space="preserve">
+    <value>Sold out</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="ErrorModificacionKitEstado" xml:space="preserve">
+    <value>Cannot modify a Kit in state {0}</value>
+  </data>
+  <data name="Desmontar" xml:space="preserve">
+    <value>Disassemble</value>
+  </data>
+  <data name="Piezas" xml:space="preserve">
+    <value>Pieces</value>
+  </data>
+  <data name="Pesoneto" xml:space="preserve">
+    <value>Net weight</value>
+  </data>
+  <data name="Pesobruto" xml:space="preserve">
+    <value>Gross weight</value>
+  </data>
 </root>

@@ -165,4 +165,28 @@
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Insurance company</value>
   </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="Diasimpago" xml:space="preserve">
+    <value>Days unpaid</value>
+  </data>
+  <data name="Diasimpagovencimientoprorrogado" xml:space="preserve">
+    <value>Days unpaid Maturity extended</value>
+  </data>
+  <data name="Numeroprorrogas" xml:space="preserve">
+    <value>Number of extensions</value>
+  </data>
+  <data name="Primaanual" xml:space="preserve">
+    <value>Yearly fee</value>
+  </data>
+  <data name="Numerorecibos" xml:space="preserve">
+    <value>Number of receipts</value>
+  </data>
+  <data name="Porcentajecoberturariesgo" xml:space="preserve">
+    <value>% Risk coverage</value>
+  </data>
+  <data name="Numeropoliza" xml:space="preserve">
+    <value>Policy number</value>
+  </data>
 </root>

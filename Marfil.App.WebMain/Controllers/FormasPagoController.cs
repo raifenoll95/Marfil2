@@ -301,7 +301,14 @@ namespace Marfil.App.WebMain.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-
+        [HttpGet]
+        public string CambiarDescripcion(string forma)
+        {
+            using (var service = new FormasPagoService(ContextService))
+            {
+                return service.GetDescripcionFormaPago(forma);
+            }
+        }
 
         #endregion
 

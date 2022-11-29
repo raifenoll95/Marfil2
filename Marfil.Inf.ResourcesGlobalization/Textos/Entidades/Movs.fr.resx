@@ -126,4 +126,190 @@
   <data name="Fkseriescontables" xml:space="preserve">
     <value>Série</value>
   </data>
+  <data name="Fkejercicio" xml:space="preserve">
+    <value>Exercer</value>
+  </data>
+  <data name="Fkcuentas" xml:space="preserve">
+    <value>compte</value>
+  </data>
+  <data name="Orden" xml:space="preserve">
+    <value>Ordre</value>
+  </data>
+  <data name="Esdebe" xml:space="preserve">
+    <value>C'est incontournable</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="TipoDocumento" xml:space="preserve">
+    <value>Type de document</value>
+  </data>
+  <data name="Codigodescripcionasiento" xml:space="preserve">
+    <value>Description du code</value>
+  </data>
+  <data name="Descripcionasiento" xml:space="preserve">
+    <value>description du siège</value>
+  </data>
+  <data name="Vinculo" xml:space="preserve">
+    <value>Lien</value>
+  </data>
+  <data name="Canalcontable" xml:space="preserve">
+    <value>canal comptable</value>
+  </data>
+  <data name="Traza" xml:space="preserve">
+    <value>trace</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Devise</value>
+  </data>
+  <data name="Tipocambio" xml:space="preserve">
+    <value>Taux de change</value>
+  </data>
+  <data name="Fkseccionesanaliticas" xml:space="preserve">
+    <value>section analytique</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="Debe" xml:space="preserve">
+    <value>Devoir</value>
+  </data>
+  <data name="Haber" xml:space="preserve">
+    <value>Avoir</value>
+  </data>
+  <data name="Importemonedadocumento" xml:space="preserve">
+    <value>Montant en devise du document</value>
+  </data>
+  <data name="Codigocomentario" xml:space="preserve">
+    <value>Code Commentaire</value>
+  </data>
+  <data name="Comentario" xml:space="preserve">
+    <value>Commentaire</value>
+  </data>
+  <data name="Conciliado" xml:space="preserve">
+    <value>réconcilié</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Mouvements comptables</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>ComptabilitéMouvement</value>
+  </data>
+  <data name="TipoAsientoNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="TipoAsientoSimulacion" xml:space="preserve">
+    <value>Simulation</value>
+  </data>
+  <data name="TipoAsientoVinculado" xml:space="preserve">
+    <value>Bondir</value>
+  </data>
+  <data name="TipoAsientoAperturaProvisional" xml:space="preserve">
+    <value>ouverture provisoire</value>
+  </data>
+  <data name="TipoAsientoApertura" xml:space="preserve">
+    <value>Ouverture</value>
+  </data>
+  <data name="TipoAsientoRegularizacionExistencias" xml:space="preserve">
+    <value>Régularisation des stocks</value>
+  </data>
+  <data name="TipoAsientoRegularizacionGrupos6y7" xml:space="preserve">
+    <value>Groupes de régularisation 6 et 7</value>
+  </data>
+  <data name="TipoAsientoCierre" xml:space="preserve">
+    <value>Fermeture</value>
+  </data>
+  <data name="Identificadorsegmento" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ReferenciaLibre" xml:space="preserve">
+    <value>référence utilisateur</value>
+  </data>
+  <data name="Bloqueado" xml:space="preserve">
+    <value>fermé à clé</value>
+  </data>
+  <data name="ErrorDescuadreDebeHaber" xml:space="preserve">
+    <value>Montants du solde Débit/Avoir hors solde</value>
+  </data>
+  <data name="TipoAsiento" xml:space="preserve">
+    <value>type de siège</value>
+  </data>
+  <data name="ErrorLongitudCuenta" xml:space="preserve">
+    <value>Chiffres manquants dans le compte</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>partir de la date</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>à ce jour</value>
+  </data>
+  <data name="Saldo" xml:space="preserve">
+    <value>Solde</value>
+  </data>
+  <data name="ErrorFechaEjercicio" xml:space="preserve">
+    <value>La date du document ne correspond pas à la date d'exercice du document</value>
+  </data>
+  <data name="DocumentoDesde" xml:space="preserve">
+    <value>du document</value>
+  </data>
+  <data name="DocumentoHasta" xml:space="preserve">
+    <value>se documenter</value>
+  </data>
+  <data name="SumaAnteriorDebe" xml:space="preserve">
+    <value>au-dessus de la somme doit</value>
+  </data>
+  <data name="SumaAnteriorHaber" xml:space="preserve">
+    <value>Montant précédent à avoir</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>du compte</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>jusqu'au compte</value>
+  </data>
+  <data name="MostrarCuentasSinSaldo" xml:space="preserve">
+    <value>Afficher les comptes sans solde</value>
+  </data>
+  <data name="SaldosAnteriores" xml:space="preserve">
+    <value>soldes précédents</value>
+  </data>
+  <data name="MostrarCuentasSinMovimientos" xml:space="preserve">
+    <value>Afficher les comptes sans mouvements</value>
+  </data>
+  <data name="PorGrupos" xml:space="preserve">
+    <value>Par groupes</value>
+  </data>
+  <data name="PorMayor" xml:space="preserve">
+    <value>De gros</value>
+  </data>
+  <data name="PorNivelCinco" xml:space="preserve">
+    <value>Par niveau 5</value>
+  </data>
+  <data name="PorSubcuenta" xml:space="preserve">
+    <value>Par sous-compte</value>
+  </data>
+  <data name="PorSubgrupos" xml:space="preserve">
+    <value>Par sous-groupes</value>
+  </data>
+  <data name="PorSubmayor" xml:space="preserve">
+    <value>par sous-majeur</value>
+  </data>
+  <data name="FechaInforme" xml:space="preserve">
+    <value>Date du compte rendu</value>
+  </data>
+  <data name="CuentaDesdeTesoreria" xml:space="preserve">
+    <value>Du compte du Trésor</value>
+  </data>
+  <data name="CuentaHastaTesoreria" xml:space="preserve">
+    <value>Jusqu'au compte du trésor</value>
+  </data>
+  <data name="FechaDesdeVencimiento" xml:space="preserve">
+    <value>A partir de la date de péremption</value>
+  </data>
+  <data name="FechaHastaVencimiento" xml:space="preserve">
+    <value>Jusqu'à la date d'expiration</value>
+  </data>
+  <data name="FormaPago" xml:space="preserve">
+    <value>Mode de paiement</value>
+  </data>
 </root>

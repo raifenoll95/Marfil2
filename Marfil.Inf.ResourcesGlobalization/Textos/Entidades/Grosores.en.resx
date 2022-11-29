@@ -153,4 +153,13 @@
   <data name="LblParaEspesorDisco" xml:space="preserve">
     <value>For a thickness of disc of &lt;strong&gt;{0}&lt;/strong&gt; cm</value>
   </data>
+  <data name="Coficientecortabloques" xml:space="preserve">
+    <value>Saw blocks coefficient</value>
+  </data>
+  <data name="Coeficientetelares" xml:space="preserve">
+    <value>Gang-saw blocks coefficient</value>
+  </data>
+  <data name="LblParaEspesorFleje" xml:space="preserve">
+    <value>for a strip thickness of &lt;strong&gt;{0}&lt;/strong&gt; cm</value>
+  </data>
 </root>

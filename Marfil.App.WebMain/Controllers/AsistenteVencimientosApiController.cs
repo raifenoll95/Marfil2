@@ -45,7 +45,7 @@ namespace Marfil.App.WebMain.Controllers
                             new ColumnDefinition() { field = "Traza", displayName = "Doc.", visible = true ,width=150},
                             new ColumnDefinition() { field = "FechaStrfactura", displayName = "Fecha Factura", visible = true,width=200},
                             new ColumnDefinition() { field = "FechaStrvencimiento", displayName = "Fecha Vencimiento", visible = true,width = 200},
-                            new ColumnDefinition() { field = "Importegiro", displayName = "Importe", visible = true,width = 100},
+                            new ColumnDefinition() { field = "SImportegiro", displayName = "Importe", visible = true,width = 100},
                             new ColumnDefinition() { field = "FormaPago", displayName = "Forma de pago", visible = true,width = 450}
                         }
                     };

@@ -1,0 +1,332 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Resources
+
+@model TiposFacturasIvaModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var isNuevo = !isreadonly && !iseditable;
+    var campoverificacioncargo = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var campoverificacionabono = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+
+    //var listaimportecuentacargo2 = Enum.GetValues(typeof(TipoImporte))
+    //                    .Cast<TipoImporte>()
+    //                    .Where(e => e == TipoImporte.Importecuentacargo2 || e == TipoImporte.Importe2masimporte3 || e == TipoImporte.Importe2menosimporte3)
+    //                    .Select(e => new SelectListItem
+    //                    {
+    //                        Value = ((int)e).ToString(),
+    //                        Text = e.ToString()
+    //                    });
+
+    //var listaimportecuentaabono2 = Enum.GetValues(typeof(TipoImporte))
+    //                    .Cast<TipoImporte>()
+    //                    .Where(e => e == TipoImporte.Importecuentaabono2 || e == TipoImporte.Importe2masimporte6 || e == TipoImporte.Importe2menosimporte6)
+    //                    .Select(e => new SelectListItem
+    //                    {
+    //                        Value = ((int)e).ToString(),
+    //                        Text = e.ToString()
+    //                    });
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+<script src="~/Scripts/Helper/ControllerHelper.js"></script>
+
+<div class="form-group">
+    <h3><b class="col-md-1"></b></h3>
+    <h3><b class="col-md-2">CUENTA</b></h3>
+    <h3><b class="col-md-2">IMPORTE</b></h3>
+    <h3><b class="col-md-2">FÓRMULA</b></h3>
+    <h3><b class="col-md-4">COMENTARIO</b></h3>
+</div>
+
+@*Cta Cargo 1*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentacargo1, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Cuentacargo1, isreadonly ? (object)new { @aria_label = "Cuent", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Importecuentacargo1", Model.Importecuentacargo1, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Importecuentacargo1, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Formulacargo1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-5">
+        @Html.TextBoxFor(f => Model.Desccuentacargo1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+@*Cta Cargo 2*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentacargo2, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipocuenta", Model.Tipocuenta, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipocuenta, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Importecuentacargo2", Model.Importecuentacargo2, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Importecuentacargo2, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Formulacargo2, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-5">
+        @Html.TextBoxFor(f => Model.Desccuentacargo2, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-1">
+    </div>
+    <div id="cargo2" class="col-md-2">
+        @{
+            campoverificacioncargo.Name = "Cuentacargo2";
+            campoverificacioncargo.Url = Url.Action("CuentasApi", "Api");
+            campoverificacioncargo.Valor = Model.Cuentacargo2;
+            campoverificacioncargo.Titulo = Clientes.TituloEntidadSingular;
+            campoverificacioncargo.SoloLectura = isreadonly;
+            campoverificacioncargo.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacioncargo)
+    </div>
+</div>
+
+@*Cta relacionado Cargo*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentacargo3, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipocuenta3", Model.Tipocuenta3, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipocuenta3, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Importecuentacargo3", Model.Importecuentacargo3, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Importecuentacargo3, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Formulacargo3, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-5">
+        @Html.TextBoxFor(f => Model.Desccuentacargo3, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-1">
+    </div>
+    <div id="cargo3" class="col-md-2">
+        @{
+            campoverificacioncargo.Name = "Cuentacargo3";
+            campoverificacioncargo.Url = Url.Action("CuentasApi", "Api");
+            campoverificacioncargo.Valor = Model.Cuentacargo3;
+            campoverificacioncargo.Titulo = Clientes.TituloEntidadSingular;
+            campoverificacioncargo.SoloLectura = isreadonly;
+            campoverificacioncargo.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacioncargo)
+    </div>
+</div>
+
+@*Cta Abono 1*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentaabono1, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Cuentaabono1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Importecuentaabono1", Model.Importecuentaabono1, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Importecuentaabono1, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Formulaabono1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-5">
+        @Html.TextBoxFor(f => Model.Desccuentaabono1, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+@*Cta Abono 2*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentaabono2, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipoabono2", Model.Tipoabono2, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipoabono2, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Importecuentaabono2", Model.Importecuentaabono2, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Importecuentaabono2, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Formulaabono2, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-5">
+        @Html.TextBoxFor(f => Model.Desccuentaabono2, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-1">
+    </div>
+    <div id="abono2" class="col-md-2">
+        @{
+            campoverificacionabono.Name = "Cuentaabono2";
+            campoverificacionabono.Url = Url.Action("CuentasApi", "Api");
+            campoverificacionabono.Valor = Model.Cuentaabono2;
+            campoverificacionabono.Titulo = Clientes.TituloEntidadSingular;
+            campoverificacionabono.SoloLectura = isreadonly;
+            campoverificacionabono.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacionabono)
+    </div>
+</div>
+
+@*Cta relacionado Abono*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentaabono3, new { @class = "control-label col-md-1" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Tipoabono3", Model.Tipoabono3, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Tipoabono3, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Importecuentaabono3", Model.Importecuentaabono3, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Importecuentaabono3, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Formulaabono3, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+    <div class="col-md-5">
+        @Html.TextBoxFor(f => Model.Desccuentaabono3, isreadonly ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-1">
+    </div>
+    <div id="abono3" class="col-md-2">
+        @{
+            campoverificacionabono.Name = "Cuentaabono3";
+            campoverificacionabono.Url = Url.Action("CuentasApi", "Api");
+            campoverificacionabono.Valor = Model.Cuentaabono3;
+            campoverificacionabono.Titulo = Clientes.TituloEntidadSingular;
+            campoverificacionabono.SoloLectura = isreadonly;
+            campoverificacionabono.Obligatorio = false;
+        }
+        @Html.Partial("CampoverificacionUI", campoverificacionabono)
+    </div>
+</div>
+
+<p style="border: 2px solid #3e9efe; padding: 10px; background-color: aliceblue; color: black; font-family: arial,helvetica; font-size: 14px; font-weight: normal;">
+
+    <b>*NE*</b>    Número de entrada al registro IVA&nbsp;&nbsp;| &nbsp;&nbsp;<b>*FR*</b>    Fecha de Registro&nbsp;&nbsp;|&nbsp;&nbsp;<b>*NF*</b>    Número de Factura&nbsp;&nbsp;|&nbsp;&nbsp;<b>*FF*</b>    Fecha de factura<br />
+    <b>*CA*</b>    Cuenta de abono &nbsp;&nbsp;|&nbsp;&nbsp;<b>*CC*</b>    Cuenta de cargo&nbsp;&nbsp;|&nbsp;&nbsp;<b>*DA*</b>    Descripción cuenta de abono&nbsp;&nbsp;|&nbsp;&nbsp;<b>*DC*</b>    Descripción cuenta de cargo<br />
+
+</p>
+
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+
+<script type="text/javascript">
+    window.onload = init;
+
+    function init() {
+        //Comprobamos los tipos de cuenta para verificar si se muestran o no los div de las cuentas.
+
+        var tipocargo2 = document.getElementById('Tipocuenta').options[document.getElementById('Tipocuenta').selectedIndex].value;
+        console.log('tipocargo2 - ' + tipocargo2);
+        if (tipocargo2 == 3) {
+            document.getElementById("cargo2").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("cargo2").style.visibility = 'hidden';
+        }
+
+        var tipocargo3 = document.getElementById('Tipocuenta3').options[document.getElementById('Tipocuenta3').selectedIndex].value;
+        console.log('tipocargo3 - ' + tipocargo3);
+        if (tipocargo3 == 3) {
+            document.getElementById("cargo3").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("cargo3").style.visibility = 'hidden';
+        }
+
+        var tipoabono2 = document.getElementById('Tipoabono2').options[document.getElementById('Tipoabono2').selectedIndex].value;
+        console.log('tipoabono2 - ' + tipoabono2);
+        if (tipoabono2 == 3) {
+            document.getElementById("abono2").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("abono2").style.visibility = 'hidden';
+        }
+
+        var tipoabono3 = document.getElementById('Tipoabono3').options[document.getElementById('Tipoabono3').selectedIndex].value;
+        console.log('tipoabono3 - ' + tipoabono3);
+        if (tipoabono3 == 3) {
+            document.getElementById("abono3").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("abono3").style.visibility = 'hidden';
+        }
+    }
+
+    $("#Tipocuenta").on('change', function () {
+        var value = document.getElementById('Tipocuenta').options[document.getElementById('Tipocuenta').selectedIndex].value;
+        if (value == 3) {
+            document.getElementById("cargo2").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("cargo2").style.visibility = 'hidden';
+        }
+    });
+
+
+    $("#Tipocuenta3").on('change', function () {
+        var value = document.getElementById('Tipocuenta3').options[document.getElementById('Tipocuenta3').selectedIndex].value;
+        if (value == 3) {
+            document.getElementById("cargo3").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("cargo3").style.visibility = 'hidden';
+        }
+    });
+
+    $("#Tipoabono2").on('change', function () {
+        var value = document.getElementById('Tipoabono2').options[document.getElementById('Tipoabono2').selectedIndex].value;
+        if (value == 3) {
+            document.getElementById("abono2").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("abono2").style.visibility = 'hidden';
+        }
+    });
+
+    $("#Tipoabono3").on('change', function () {
+        var value = document.getElementById('Tipoabono3').options[document.getElementById('Tipoabono3').selectedIndex].value;
+        if (value == 3) {
+            document.getElementById("abono3").style.visibility = 'visible';
+        } else {
+            //$('#Cuentacargo2').val('');
+            document.getElementById("abono3").style.visibility = 'hidden';
+        }
+    });
+</script>

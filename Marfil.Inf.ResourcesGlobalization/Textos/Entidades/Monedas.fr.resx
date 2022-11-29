@@ -118,21 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Monnaie</value>
+    <value>pièces de monnaie</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="Abreviatura" xml:space="preserve">
     <value>Abréviation</value>
   </data>
   <data name="Activado" xml:space="preserve">
-    <value>Active</value>
+    <value>Activé</value>
   </data>
   <data name="FechaModificacion" xml:space="preserve">
-    <value>Derniere modification</value>
+    <value>Date de modification</value>
+  </data>
+  <data name="Decimales" xml:space="preserve">
+    <value>Décimales</value>
+  </data>
+  <data name="CambioMonedaBase" xml:space="preserve">
+    <value>passer à la devise de base</value>
+  </data>
+  <data name="CambioMonedaAdicional" xml:space="preserve">
+    <value>Passer à une devise supplémentaire</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>Utilisateur</value>
   </data>
 </root>

@@ -216,6 +216,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
         [Display(ResourceType = typeof(RFacturas), Name = "Importetotaldoc")]
         public double? Importetotaldoc { get; set; }
 
+        [Display(ResourceType = typeof(RFacturas), Name = "Importetotaldoc")]
+        public string SImportetotaldoc
+        {
+            get { return (Importetotaldoc ?? 0.0).ToString("N", CultureInfo.CreateSpecificCulture("es-ES")); }
+            set { Importetotaldoc = Funciones.Qdouble(value); }
+        }
+
         [Display(ResourceType = typeof(RFacturas), Name = "Importetotalmonedabase")]
         public double? Importetotalmonedabase { get; set; }
 
@@ -254,6 +261,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
         [Required]
         [Display(ResourceType = typeof(RFacturas), Name = "Fkregimeniva")]
         public string Fkregimeniva { get; set; }
+
+        [Display(ResourceType = typeof(RFacturas), Name = "Fktipofactura")]
+        public string Fktipofactura { get; set; }
 
         [Display(ResourceType = typeof(RFacturas), Name = "Fktiposretenciones")]
         public string Fktiposretenciones { get; set; }
@@ -718,7 +728,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
         [Display(ResourceType = typeof(RFacturas), Name = "Pesobruto")]
         public double? Pesobruto { get; set; }
 
-        [MaxLength(2,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(15,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RFacturas), Name = "Bundle")]
         public string Bundle { get; set; }
 

@@ -7,6 +7,9 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System.Collections.Generic;
 using System;
+using Marfil.Dom.Persistencia.ServicesView;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 {
@@ -27,10 +30,13 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
             var mainQuery = new CustomSqlQuery("ReportGuiasBalances", "Select * from ReportGuiasBalances");
             var mainQuery2 = new CustomSqlQuery("ReportAnaliticaGuiasBalances", "Select * from ReportAnaliticaGuiasBalances");
+            var mainQuery3 = new CustomSqlQuery("ReportGuiasBalancesFuncional", "Select * from ReportGuiasBalancesFuncional");
+            var mainQuery4 = new CustomSqlQuery("ReportGuiasBalancesBalanceAnual", "Select * from ReportGuiasBalancesBalanceAnual");
 
             if (dictionary != null)
             {
                 var Ejercicio = dictionary["Ejercicio"].ToString();
+                var Ejercicioanterior = dictionary["Ejercicioanterior"].ToString();
                 var Guia = dictionary["Guia"].ToString();
                 var SinSaldo = dictionary["SinSaldo"].ToString();
                 var Desglosar = dictionary["Desglosar"].ToString();
@@ -42,6 +48,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 ValoresParametros.Add("EMPRESA", user.Empresa);
                 ValoresParametros.Add("EJERCICIO", DBNull.Value);
                 ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+                ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+                ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
                 ValoresParametros.Add("GUIA", DBNull.Value);
                 ValoresParametros.Add("SIN_SALDO", DBNull.Value);
                 ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
@@ -57,6 +65,26 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                         ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                     }
                     ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                    //Pasar el parámetro para se pueda usar bien en el Report
+                    /*using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), user) as GuiasBalancesService)
+                    {
+                        Ejercicio = service.EjercicioParametro(paramEjercicio[0]);
+                    }*/
+
+                    //flag = true;
+                }
+
+                if (!string.IsNullOrEmpty(Ejercicioanterior))
+                {
+                    /*if (flag)
+                        sb.Append(" AND ");*/
+                    var paramEjercicio = Ejercicioanterior.Split('-');
+                    if (paramEjercicio.Length > 1)
+                    {
+                        ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                    }
+                    ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
 
                     //flag = true;
                 }
@@ -78,6 +106,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 {
                     mainQuery.Sql += "where saldo <> 0 or saldo is null";
                     mainQuery2.Sql += "where saldo <> 0 or saldo is null";
+                    mainQuery3.Sql += "where saldo <> 0 or saldo is null";
+                    mainQuery4.Sql += "where saldo <> 0 or saldo is null";
 
                     ValoresParametros["SIN_SALDO"] = false;
 
@@ -101,6 +131,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadas", "SELECT * FROM CuentasNoAsignadas"));
             DataSource.Queries.Add(new CustomSqlQuery("ReportAnaliticaGuiasBalancesLineas", "SELECT * FROM ReportAnaliticaGuiasBalancesLineas"));
             DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasAnalitica", "SELECT * FROM CuentasNoAsignadasAnalitica"));
+            DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineasFuncional", "SELECT * FROM ReportGuiasBalancesLineasFuncional"));
+            DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasFuncional", "SELECT * FROM CuentasNoAsignadasFuncional"));
+            DataSource.Queries.Add(new CustomSqlQuery("ReportGuiasBalancesLineasBalanceAnual", "SELECT * FROM ReportGuiasBalancesLineasBalanceAnual"));
+            DataSource.Queries.Add(new CustomSqlQuery("CuentasNoAsignadasBalanceAnual", "SELECT * FROM CuentasNoAsignadasBalanceAnual"));
+
+            DataSource.Queries.Add(new CustomSqlQuery("Ejercicios", "SELECT empresa, id, descripcion, descripcioncorta FROM Ejercicios WHERE id = '" + user.Ejercicio + "'"));
 
             DataSource.Queries.Add(mainQuery);
 
@@ -120,12 +156,30 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 new RelationColumnInfo("orden", "orden")
             });
 
+            DataSource.Queries.Add(mainQuery3);
+
+            DataSource.Relations.Add("ReportGuiasBalancesFuncional", "ReportGuiasBalancesLineasFuncional", new[] {
+                new RelationColumnInfo("Id", "GuiasBalancesId"),
+                new RelationColumnInfo("InformeId", "InformeId"),
+                new RelationColumnInfo("GuiaId", "GuiaId"),
+                new RelationColumnInfo("orden", "orden")
+            });
+
+            DataSource.Queries.Add(mainQuery4);
+
+            DataSource.Relations.Add("ReportGuiasBalancesBalanceAnual", "ReportGuiasBalancesLineasBalanceAnual", new[] {
+                new RelationColumnInfo("Id", "GuiasBalancesId"),
+                new RelationColumnInfo("InformeId", "InformeId"),
+                new RelationColumnInfo("GuiaId", "GuiaId"),
+                new RelationColumnInfo("orden", "orden")
+            });
 
             DataSource.RebuildResultSchema();           
              
         }
 
         //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalances y Líneas con los filtros indicados
+        //Este proceso se hace con un botón desde la pantalla ahora, se mantiene aquí este ejemplo por si acaso
         private void ExecuteProcedure(string baseDatos, Dictionary<string, object> parametros)
         {
             var dbconnection = "";

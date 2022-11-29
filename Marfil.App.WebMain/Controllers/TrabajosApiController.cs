@@ -30,9 +30,19 @@ namespace Marfil.App.WebMain.Controllers
             
             using (var service = FService.Instance.GetService(typeof(TrabajosModel),ContextService)  as TrabajosService)
             {
-                
+                var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
+                var tipotrabajo = nvc["tipotrabajo"];
+
                 var vector = service.GetAll<TrabajosModel>();
-               
+
+                if (tipotrabajo != null && tipotrabajo == "0")
+                {
+                   vector = vector.Where(f => f.Tipotrabajo == TipoTrabajo.Aserrado);
+                }
+                else if(tipotrabajo != null && tipotrabajo == "1")
+                {
+                   vector = vector.Where(f => f.Tipotrabajo == TipoTrabajo.Elaborado);
+                }        
 
                 var result = new ResultBusquedas<TrabajosModel>()
                 {

@@ -324,24 +324,39 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AsistenteLecturasController.cs" />
+    <Compile Include="Controllers\ActualizarCostesController.cs" />
     <Compile Include="Controllers\ArticulosStockSeguridadController.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteCuentasController.cs" />
+    <Compile Include="Controllers\AsistenteLecturasApiController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
     <Compile Include="Controllers\AsistenteAperturaProvisionalApiController.cs" />
     <Compile Include="Controllers\AsistenteRegularizacionExistenciasApiController.cs" />
     <Compile Include="Controllers\AsistenteRegularizacionCierreAperturaApiController.cs" />
     <Compile Include="Controllers\AsistenteRegularizacionGruposApiController.cs" />
+    <Compile Include="Controllers\ComparativaPerdidasYGananciasAnaliticaController.cs" />
+    <Compile Include="Controllers\ComparativaPerdidasYGananciasBalanceAnualController.cs" />
+    <Compile Include="Controllers\ComparativaPerdidasYGananciasController.cs" />
+    <Compile Include="Controllers\ComparativaPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\CuadernosBancariosController.cs" />
+    <Compile Include="Controllers\InmueblesApiController.cs" />
+    <Compile Include="Controllers\LecturasController.cs" />
+    <Compile Include="Controllers\RegistroIvaFacturasApiController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasAnaliticaController.cs" />
+    <Compile Include="Controllers\ListadoCuentasNoAsignadasBalanceAnualController.cs" />
     <Compile Include="Controllers\ListadoCuentasNoAsignadasController.cs" />
     <Compile Include="Controllers\AnaliticaPerdidasYGananciasController.cs" />
+    <Compile Include="Controllers\ListadoCuentasNoAsignadasFuncionalController.cs" />
+    <Compile Include="Controllers\ListadoPerdidasYGananciasBalanceAnualController.cs" />
     <Compile Include="Controllers\ListadoPerdidasYGananciasController.cs" />
     <Compile Include="Controllers\ListadoInformeMargenController.cs" />
+    <Compile Include="Controllers\ListadoPerdidasYGananciasFuncionalController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\FacturasApiController.cs" />
+    <Compile Include="Controllers\ListadosStockValoradoTarifaController.cs" />
     <Compile Include="Controllers\LogStockSeguridadController.cs" />
     <Compile Include="Controllers\PreciosEspecialesController.cs" />
     <Compile Include="Controllers\PresupuestosAsistenteApiController.cs" />
@@ -362,6 +377,7 @@
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
     <Compile Include="Controllers\ReferenciasDocumentosRelacionadosFacturasApiController.cs" />
+    <Compile Include="Controllers\RegistroIvaRepercutidoController.cs" />
     <Compile Include="Controllers\RegularizacionAperturaProvisionalController.cs" />
     <Compile Include="Controllers\RegularizacionCierreAperturaController.cs" />
     <Compile Include="Controllers\RegularizacionExistenciasController.cs" />
@@ -370,6 +386,8 @@
     <Compile Include="Controllers\RemesasController.cs" />
     <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
+    <Compile Include="Controllers\TiposFacturasIvaApiController.cs" />
+    <Compile Include="Controllers\TiposFacturasIvaController.cs" />
     <Compile Include="Controllers\TransformacioneslotesnaveController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
@@ -613,6 +631,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\VencimientosApiController.cs" />
+    <Compile Include="Controllers\VerificarContabilidadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -668,6 +687,27 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\DatosDefecto\GuiasContables\1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\10.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\9.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\8.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\7.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\6.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\5.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\DatosDefecto\RegimenIVA\4.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\DatosDefecto\RegimenIVA\1.xml">
@@ -1730,100 +1770,20 @@
     <Content Include="App_Data\Otros\unidades.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Documentos\Albaranes.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\AlbaranesPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\Facturas.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\FacturasPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\Pedidos.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\PedidosPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\Presupuestos.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\PresupuestosPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\AlbaranesCompra.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\AlbaranesCompraPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="App_Data\Otros\almacen.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\Documentos\FacturasCompras.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Documentos\FacturasComprasPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\PedidosCompras.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\PedidosComprasPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\PresupuestosCompras.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\PresupuestosComprasPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\BundleEtiquetas.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\KitEtiquetas.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="App_Data\Otros\contadoreslotes.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\TraspasosDefecto.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\Documentos\InventariosDefecto.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Documentos\Reservas.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\Documentos\ReservasPie.repx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\App_Data\Documentos\Albaranes.repx" />
-    <Content Include="bin\App_Data\Documentos\AlbaranesCompra.repx" />
-    <Content Include="bin\App_Data\Documentos\AlbaranesCompraPie.repx" />
-    <Content Include="bin\App_Data\Documentos\AlbaranesPie.repx" />
-    <Content Include="bin\App_Data\Documentos\BundleEtiquetas.repx" />
-    <Content Include="bin\App_Data\Documentos\Facturas.repx" />
     <Content Include="bin\App_Data\Documentos\FacturasCompras.repx" />
-    <Content Include="bin\App_Data\Documentos\FacturasComprasPie.repx" />
-    <Content Include="bin\App_Data\Documentos\FacturasPie.repx" />
     <Content Include="bin\App_Data\Documentos\InventariosDefecto.repx" />
-    <Content Include="bin\App_Data\Documentos\KitEtiquetas.repx" />
-    <Content Include="bin\App_Data\Documentos\Pedidos.repx" />
-    <Content Include="bin\App_Data\Documentos\PedidosCompras.repx" />
-    <Content Include="bin\App_Data\Documentos\PedidosComprasPie.repx" />
-    <Content Include="bin\App_Data\Documentos\PedidosPie.repx" />
-    <Content Include="bin\App_Data\Documentos\Presupuestos.repx" />
-    <Content Include="bin\App_Data\Documentos\PresupuestosCompras.repx" />
-    <Content Include="bin\App_Data\Documentos\PresupuestosComprasPie.repx" />
-    <Content Include="bin\App_Data\Documentos\PresupuestosPie.repx" />
-    <Content Include="bin\App_Data\Documentos\Reservas.repx" />
-    <Content Include="bin\App_Data\Documentos\ReservasPie.repx" />
-    <Content Include="bin\App_Data\Documentos\TraspasosDefecto.repx" />
     <Content Include="bin\App_Data\Otros\almacen.csv" />
     <Content Include="bin\App_Data\Otros\bancos.csv" />
     <Content Include="bin\App_Data\Otros\contadores.csv" />
@@ -1879,32 +1839,9 @@
     <Content Include="App_Data\TablasVarias\tiposdocumentoscontables.csv" />
     <Content Include="App_Data\TablasVarias\tiposfacturasSII.csv" />
     <Content Include="App_Data\TablasVarias\tiposubicacion.csv" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasAgrupado.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasListadoEtiquetas.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasLoteAgrupado.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasLoteDetallado.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasSinAgrupar.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasTallerSinValorar.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesComprasTallerValorado.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesLoteAgrupado.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesLoteDetallado.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesTallerSinValorar.repx" />
-    <Content Include="App_Data\Documentos\AlbaranesTallerValorado.repx" />
-    <Content Include="App_Data\Documentos\BalancePedidosPorDocumento.repx" />
-    <Content Include="App_Data\Documentos\BalancePedidosPorPedidos.repx" />
     <Content Include="App_Data\Documentos\BalancePedidosPorProducto.repx" />
     <Content Include="App_Data\Documentos\DiarioContable.repx" />
     <Content Include="App_Data\Documentos\Mayor.repx" />
-    <Content Include="App_Data\Documentos\PedidosComprasSinValorar.repx" />
-    <Content Include="App_Data\Documentos\PedidosComprasTaller.repx" />
-    <Content Include="App_Data\Documentos\PedidosComprasValorado.repx" />
-    <Content Include="App_Data\Documentos\PedidosSinValorar.repx" />
-    <Content Include="App_Data\Documentos\PedidosTaller.repx" />
-    <Content Include="App_Data\Documentos\PedidosValorado.repx" />
-    <Content Include="App_Data\Documentos\PresupuestosComprasMedidas.repx" />
-    <Content Include="App_Data\Documentos\PresupuestosComprasMetros.repx" />
-    <Content Include="App_Data\Documentos\PresupuestosMedidas.repx" />
-    <Content Include="App_Data\Documentos\PresupuestosMetros.repx" />
     <Content Include="App_Data\Documentos\SumasYSaldos.repx" />
     <Content Include="App_Data\Documentos\ArticuloAgrupado.repx" />
     <Content Include="App_Data\Documentos\ArticuloDetallado.repx" />
@@ -1955,6 +1892,113 @@
     <Content Include="App_Data\Otros\seriescontables.csv" />
     <Content Include="App_Data\Otros\guiasbalanceslineas.csv" />
     <Compile Include="Controllers\ListadosStockMaxMinController.cs" />
+    <Content Include="App_Data\Otros\tiposfacturas.csv" />
+    <Content Include="App_Data\Documentos\Albaran - Documento de Transporte.repx" />
+    <Content Include="App_Data\Documentos\Albaran Compra Medidas Detallado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Compra Medidas Detallado Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Compra Medidas Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Compra Metros Detallado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Compra Metros Detallado Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Compra Metros Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Medidas Detallado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Medidas Detallado Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Medidas Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Metros STD.repx" />
+    <Content Include="App_Data\Documentos\Albaran Metros Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\CabAlbCom.repx" />
+    <Content Include="App_Data\Documentos\CabAlbVent.repx" />
+    <Content Include="App_Data\Documentos\CabDivLot.repx" />
+    <Content Include="App_Data\Documentos\CabFacVen.repx" />
+    <Content Include="App_Data\Documentos\CabGesTra.repx" />
+    <Content Include="App_Data\Documentos\CabListPed.repx" />
+    <Content Include="App_Data\Documentos\CabPedCom.repx" />
+    <Content Include="App_Data\Documentos\CabPedRes.repx" />
+    <Content Include="App_Data\Documentos\CabPedVent.repx" />
+    <Content Include="App_Data\Documentos\CabPresCom.repx" />
+    <Content Include="App_Data\Documentos\CabPresVenta.repx" />
+    <Content Include="App_Data\Documentos\CabTraAca.repx" />
+    <Content Include="App_Data\Documentos\CabTraAlm.repx" />
+    <Content Include="App_Data\Documentos\Componentes.repx" />
+    <Content Include="App_Data\Documentos\Division de Lotes.repx" />
+    <Content Include="App_Data\Documentos\Documento de Transporte STD.repx" />
+    <Content Include="App_Data\Documentos\Documento Traspaso Agrupado STD.repx" />
+    <Content Include="App_Data\Documentos\Documento Traspaso STD.repx" />
+    <Content Include="App_Data\Documentos\Documento.repx" />
+    <Content Include="App_Data\Documentos\Etiq 49x133 mm Logo Vertical Remedida STD.repx" />
+    <Content Include="App_Data\Documentos\Etiqueta 49x133 mm Logo Vertical STD.repx" />
+    <Content Include="App_Data\Documentos\Etiqueta 49x133 mm Troquelada STD.repx" />
+    <Content Include="App_Data\Documentos\Etiquetas Bundle STD.repx" />
+    <Content Include="App_Data\Documentos\Etiquetas Kit Lote STD.repx" />
+    <Content Include="App_Data\Documentos\Etiquetas Kit STD.repx" />
+    <Content Include="App_Data\Documentos\Etiquetas STD.repx" />
+    <Content Include="App_Data\Documentos\Etiquetas Transformaciones STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Medidas Contenedor STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Medidas Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Metros Contenedor Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Metros Contenedor STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Metros Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Factura Metros STD.repx" />
+    <Content Include="App_Data\Documentos\Gestion de transformacion STD.repx" />
+    <Content Include="App_Data\Documentos\Listado etiquetas STD.repx" />
+    <Content Include="App_Data\Documentos\Packing List Compras STD.repx" />
+    <Content Include="App_Data\Documentos\Packing List Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Packing List STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Compras Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Compras Metros STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Compras No Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Medidas Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Medidas No Valorado STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Metros Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Pedido Metros STD.repx" />
+    <Content Include="App_Data\Documentos\Pie.repx" />
+    <Content Include="App_Data\Documentos\PieAlbCom.repx" />
+    <Content Include="App_Data\Documentos\PieAlbVent.repx" />
+    <Content Include="App_Data\Documentos\PieDivLot.repx" />
+    <Content Include="App_Data\Documentos\PieFacVen.repx" />
+    <Content Include="App_Data\Documentos\PieGesTra.repx" />
+    <Content Include="App_Data\Documentos\PieIngAlbVent.repx" />
+    <Content Include="App_Data\Documentos\PieIngFacVen.repx" />
+    <Content Include="App_Data\Documentos\PieIngPedRes.repx" />
+    <Content Include="App_Data\Documentos\PieIngPedVent.repx" />
+    <Content Include="App_Data\Documentos\PieIngPresVenta.repx" />
+    <Content Include="App_Data\Documentos\PieListPed.repx" />
+    <Content Include="App_Data\Documentos\PiePedCom.repx" />
+    <Content Include="App_Data\Documentos\PiePedRes.repx" />
+    <Content Include="App_Data\Documentos\PiePedVent.repx" />
+    <Content Include="App_Data\Documentos\PiePresCom.repx" />
+    <Content Include="App_Data\Documentos\PiePresVenta.repx" />
+    <Content Include="App_Data\Documentos\PieTraAca.repx" />
+    <Content Include="App_Data\Documentos\PieTraAlm.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Compras Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Compras Metros STD.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Medidas Componentes STD.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Medidas Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Metros Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Presupuesto Metros STD.repx" />
+    <Content Include="App_Data\Documentos\Producto.repx" />
+    <Content Include="App_Data\Documentos\Relacion Remesa STD.repx" />
+    <Content Include="App_Data\Documentos\Reserva Medidas Detallado STD.repx" />
+    <Content Include="App_Data\Documentos\Reserva Medidas Ingles STD.repx" />
+    <Content Include="App_Data\Documentos\Reserva Medidas STD.repx" />
+    <Content Include="App_Data\Documentos\TotalAlbCom.repx" />
+    <Content Include="App_Data\Documentos\TotalAlbVent.repx" />
+    <Content Include="App_Data\Documentos\TotalFacVen.repx" />
+    <Content Include="App_Data\Documentos\TotalIngAlbVent.repx" />
+    <Content Include="App_Data\Documentos\TotalIngFacVen.repx" />
+    <Content Include="App_Data\Documentos\TotalIngPedRes.repx" />
+    <Content Include="App_Data\Documentos\TotalIngPedVent.repx" />
+    <Content Include="App_Data\Documentos\TotalIngPresVenta.repx" />
+    <Content Include="App_Data\Documentos\TotalPedCom.repx" />
+    <Content Include="App_Data\Documentos\TotalPedRes.repx" />
+    <Content Include="App_Data\Documentos\TotalPedVent.repx" />
+    <Content Include="App_Data\Documentos\TotalPresCom.repx" />
+    <Content Include="App_Data\Documentos\TotalPresVenta.repx" />
+    <Content Include="App_Data\Documentos\Transformacion de acabado STD - Agrupado.repx" />
+    <Content Include="App_Data\Documentos\TransformacionesDefecto.repx" />
     <None Include="Properties\PublishProfiles\192.168.223.210 - MarfilBeta.pubxml" />
     <None Include="Properties\PublishProfiles\Azure MarfilNet.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml">
@@ -2502,6 +2546,7 @@
     <Content Include="Scripts\UserControls\Contactos\ContactosController.js" />
     <Content Include="Scripts\UserControls\Designer\SavedialogController.js" />
     <Content Include="Scripts\UserControls\Direcciones\DireccionesController.js" />
+    <Content Include="Scripts\UserControls\Lecturas\lecturascontroller.js" />
     <Content Include="Scripts\UserControls\Oportunidades\OportunidadesController.js" />
     <Content Include="Scripts\UserControls\Pedidos\pedidoscomprascontroller.js" />
     <Content Include="Scripts\UserControls\Facturas\facturarcontroller.js" />
@@ -3660,6 +3705,48 @@
     <Content Include="Views\LogStockSeguridad\Index.cshtml" />
     <Content Include="Views\Almacenes\_Movsarticulosstockseguridadalmacen.cshtml" />
     <Content Include="Views\ListadosStockMaxMin\StockMaxMin.cshtml" />
+    <Content Include="Views\ListadoPerdidasYGananciasFuncional\PerdidasYGananciasFuncional.cshtml" />
+    <Content Include="Views\ListadoCuentasNoAsignadasFuncional\CuentasNoAsignadasFuncional.cshtml" />
+    <Content Include="Views\VerificarContabilidad\Index.cshtml" />
+    <Content Include="Views\ListadosStockValoradoTarifa\GeneralValoradoTarifa.cshtml" />
+    <Content Include="Views\ActualizarCostes\ActualizarCostes.cshtml" />
+    <Content Include="Views\ListadoPerdidasYGananciasBalanceAnual\PerdidasYGananciasBalanceAnual.cshtml" />
+    <Content Include="Views\ListadoCuentasNoAsignadasBalanceAnual\CuentasNoAsignadasBalanceAnual.cshtml" />
+    <Content Include="Views\ComparativaPerdidasYGanancias\ComparativaPYG.cshtml" />
+    <Content Include="Views\ComparativaPerdidasYGananciasFuncional\ComparativaPYGFuncional.cshtml" />
+    <Content Include="Views\ComparativaPerdidasYGananciasAnalitica\ComparativaPYGAnalitica.cshtml" />
+    <Content Include="Views\ComparativaPerdidasYGananciasBalanceAnual\ComparativaPYGBalanceAnual.cshtml" />
+    <Content Include="Views\TiposFacturasIva\_asiento.cshtml" />
+    <Content Include="Views\TiposFacturasIva\_circuito.cshtml" />
+    <Content Include="Views\TiposFacturasIva\_general.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Create.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Delete.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Details.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Edit.cshtml" />
+    <Content Include="Views\TiposFacturasIva\Index.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Index.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Create.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Delete.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Details.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\Edit.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_registro.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_general.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_factura.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_desglose.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_totales.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_totalespie.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_siidatos.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_siifactura.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_rectificadas.cshtml" />
+    <Content Include="Views\RegistroIvaRepercutido\_siioperacion.cshtml" />
+    <Content Include="Views\Importar\ImportarLecturas.cshtml" />
+    <Content Include="Views\AsistenteLecturas\AsistenteLecturas.cshtml" />
+    <Content Include="Views\AsistenteLecturas\ImportarLecturas.cshtml" />
+    <Content Include="Views\AsistenteLecturas\_procesolecturasstep2.cshtml" />
+    <Content Include="Views\AsistenteLecturas\_procesolecturasstep3.cshtml" />
+    <Content Include="Views\Lecturas\Index.cshtml" />
+    <Content Include="Views\Lecturas\Delete.cshtml" />
+    <Content Include="Views\Configuracion\_sii.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -3775,6 +3862,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local.en.resx" />
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local.fr.resx" />
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local_en.en.resx" />
+    <EmbeddedResource Include="App_Data\App_GlobalResources\Local_en.fr.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

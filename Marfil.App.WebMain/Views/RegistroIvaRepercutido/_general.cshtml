@@ -1,0 +1,500 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Documentos.Facturas
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+
+    var cvregimen = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
+    var cvseriecontableIVP = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
+    var cvtipofactura = FCampoverificacion.Instance.GetModel<TiposFacturasIvaModel>(WebHelper.ContextService);
+    var cvcuenta = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+
+    var listperiodo = WebHelper.GetApplicationHelper().GetListPeriodoRegistroIva().Select(f => new SelectListItem()
+    {
+        Text = f.Text,
+        Value = f.Value,
+
+    }).ToList();
+
+    if (isNuevo)
+    {
+
+        if (listperiodo.Count > 4)
+        {
+            var mes = Model.Fecharegistro.Month;
+            Model.Periodo = listperiodo[mes - 1].Value;
+
+        }
+        else
+        {
+            var mes = Model.Fecharegistro.Month;
+
+            if (mes <= 3)
+            {
+                Model.Periodo = listperiodo[0].Value;
+            }
+            else if (mes > 3 && mes <= 6)
+            {
+                Model.Periodo = listperiodo[1].Value;
+            }
+            else if (mes > 6 && mes <= 9)
+            {
+                Model.Periodo = listperiodo[2].Value;
+            }
+            else if (mes > 9 && mes <= 12)
+            {
+                Model.Periodo = listperiodo[3].Value;
+            }
+
+        }
+
+    }
+
+    if (iseditable)
+    {
+        //WebHelper.GetApplicationHelper().GetConfiguracion();
+        ((Marfil.App.WebMain.Controllers.RegistroIvaRepercutidoController)this.ViewContext.Controller).GetIvaTerceroEditable(Model.Cuentacliente);
+    }
+
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
+@Html.HiddenFor(f => Model.Fechaaltaregistro)
+@Html.HiddenFor(f => Model.Fkusuarioalta)
+
+@*Origen documento*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Origendoc, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownList("Origendoc", Model.Origendoc, (object)new { @disabled = "disabled", @class = "form-control" })
+        @Html.ValidationMessageFor(f => Model.Origendoc, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Tipo Factura
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipofactura, new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="Tipofacturacampo">
+            @{
+
+                cvtipofactura.Name = "Tipofactura";
+                cvtipofactura.Url = Url.Action("TiposFacturasIvaApi", "Api");
+                cvtipofactura.Valor = Model.Tipofactura?.ToString();
+                cvtipofactura.Params = "{\"tipotercero\":\"1\"}";
+                cvtipofactura.SoloLectura = isreadonly;
+                cvtipofactura.Autofocus = true;
+                cvtipofactura.Obligatorio = true;
+
+            }
+
+            @Html.Partial("CampoverificacionUI", cvtipofactura)
+            @Html.ValidationMessageFor(f => Model.Tipofactura, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+@if (isNuevo)
+{
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvseriecontableIVP.Name = "Fkseriescontables";
+                cvseriecontableIVP.Url = Url.Action("SeriesContablesApi", "Api");
+                cvseriecontableIVP.Valor = Model.Fkseriescontables;
+                cvseriecontableIVP.Params = "{\"tipodocumento\":\"IVR\"}";
+                cvseriecontableIVP.SoloLectura = isreadonly;
+                //cvseriecontableIVP.Autofocus = true;
+                cvseriecontableIVP.Obligatorio = false;
+                cvseriecontableIVP.Configuracion.OcultarTexto = false;
+            }
+            @Html.Partial("CampoverificacionUI", cvseriecontableIVP)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+else
+{
+    @Html.HiddenFor(f => Model.Fkseriescontables)
+    @Html.HiddenFor(f => Model.Identificadorsegmento)
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        <div class="col-md-12"></div>
+        <div class="col-md-6 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+
+@*Fechas*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fecharegistro, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fecharegistro)
+    </div>
+
+    @Html.LabelFor(f => Model.Fechafactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechafactura)
+    </div>
+
+    @Html.LabelFor(f => Model.Fechaoperacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fechaoperacion)
+    </div>
+</div>
+
+@*Periodo y Núm. Factura cliente*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Periodo, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.DropDownListFor(f => Model.Periodo, listperiodo, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Periodo, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Numfacturacliente, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @Html.TextBoxFor(f => Model.Numfacturacliente, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Numfacturacliente, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Cuenta cliente/acreedor*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cuentacliente, new { @class = "control-label col-md-2" })
+    <div class="col-md-10" id="inputcuentacliente">
+        @{
+            cvcuenta.Name = "Cuentacliente";
+            cvcuenta.Url = Url.Action("CuentasTiposClientesExclusiveApi", "Api");
+            cvcuenta.Valor = Model.Cuentacliente;
+            cvcuenta.CampoIdentificador = "Fkcuentas";
+            //cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"cliente\"}";
+            //cvcuenta.ControlesAsociados = "[ { \"idfacturaiva\":\"Tipofactura\" , \"regimeniva\":\"Fkregimeniva\" } ]";
+            cvcuenta.Titulo = Clientes.TituloEntidadSingular;
+            cvcuenta.SoloLectura = isreadonly;
+            cvcuenta.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvcuenta)
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-2 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Cuentacliente, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Cuenta ventas/servicios
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cuentaventas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuenta.Name = "Cuentaventas";
+                cvcuenta.Url = Url.Action("CuentasApi", "Api");
+                cvcuenta.Valor = Model.Cuentaventas;
+                cvcuenta.Params = "{\"tipofacturaiva\":\"1\" , \"cuenta\":\"ventas\"}";
+                cvcuenta.ControlesAsociados = "[ { \"idfacturaiva\":\"Tipofactura\" } ]";
+                cvcuenta.Titulo = Clientes.TituloEntidadSingular;
+                cvcuenta.SoloLectura = isreadonly;
+                cvcuenta.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuenta)
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Cuentaventas, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+@*Régimen IVA*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Tipofactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-4" id="Tipofacturacampo">
+        @{
+
+            cvtipofactura.Name = "Tipofactura";
+            cvtipofactura.Url = Url.Action("TiposFacturasIvaApi", "Api");
+            cvtipofactura.Valor = Model.Tipofactura?.ToString();
+            cvtipofactura.Params = "{\"tipotercero\":\"1\"}";
+            cvtipofactura.SoloLectura = isreadonly;
+            cvtipofactura.Autofocus = false;
+            cvtipofactura.Obligatorio = true;
+
+        }
+
+        @Html.Partial("CampoverificacionUI", cvtipofactura)
+        @Html.ValidationMessageFor(f => Model.Tipofactura, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
+    <div class="col-md-4">
+        @{
+            cvregimen.Name = "Fkregimeniva";
+            cvregimen.Url = Url.Action("RegimenIvaApi", "Api");
+            cvregimen.Valor = Model.Fkregimeniva;
+            cvregimen.SoloLectura = isreadonly;
+            cvregimen.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvregimen)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@{
+    if (isNuevo || iseditable)
+    {
+        <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+    }
+}
+
+
+<script type="text/javascript">
+
+    $("#Cuentacliente").on('change', function () {
+
+        var cuenta = $("#Cuentacliente").val();
+        //var regimen = $("#Fkregimeniva").val();
+
+        if (cuenta != "" || cuenta != null) {
+            $.ajax({
+                url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    var datos = $.parseJSON(data);
+
+                    if (datos.tipofacturacliente != "" || datos.tipofacturacliente != null) {
+                        eventAggregator.Publish("Tipofactura-Buscar", datos.tipofacturacliente);
+                    }
+                    if (datos.regimentipofactura == "" || datos.regimentipofactura == null) {
+                        eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimentercero);
+                    }
+                    if (datos.tiporetencionescliente != "" && datos.tiporetencionescliente != null) {
+                        eventAggregator.Publish("Fktiporetencion-Buscar", datos.tiporetencionescliente);
+
+                        //Insertamos el porcentaje de rentención
+                        var tipo = $("#Fktiporetencion").val();
+                        $.ajax({
+                            url: '@Url.Action("GetPorcentajeRetencion", "RegistroIvaRepercutido")',
+                            dataType: "text",
+                            type: "GET",
+                            data: { tipo },
+                            async: false,
+                            success: function (data) {
+                                var datos = $.parseJSON(data);
+                                $("#Porcentajeretencion").val(datos.porcentajeretencion);
+                                if (datos.inmueble == true) {
+                                    $("#inmuebles").show();
+                                } else {
+                                    $("#inmuebles").hide();
+                                }
+                            }
+                        });
+                    }
+
+                    $("#Nombrecontraparte").val(datos.cuentaDescripcion);
+                    $("#Tipoidentificacion").val(datos.identificacion);
+                    $("#Codigopais").val(datos.pais);
+                    $("#Nifcontraparte").val(datos.nif);
+                    $("#Identificacion").val(datos.nif);
+                    $("#Tipoidentificacionotro").val(datos.tiponif);
+                    $("#Clavetipofactura").val(datos.clavetipofactura);
+                    $("#Claveregimenespecial").val(datos.regimenespecial);
+                    $("#Tipooperacion").val(datos.tipooperacion);
+
+                    /*if (data.essujetanoexenta == "True") {
+                        $("#Sujetanoexenta").is(':checked');
+                    }
+                    $("#Invsujetopasivo").val(datos.invsujetopasivo);
+
+                    if (data.essujetaexenta == "True") {
+                        $("#Sujetaexenta").is(':checked');
+                    }
+                    if (data.esnosujeta == "True") {
+                        $("#NoSujeta").is(':checked');
+                    }*/
+                }
+            });
+        }
+
+    });
+
+    $('#inputcuentacliente').on('DOMSubtreeModified', function () {
+
+        var cuenta = $("#Cuentacliente").val();
+        //var regimen = $("#Fkregimeniva").val();
+
+         if (cuenta != "" || cuenta != null) {
+            $.ajax({
+                url: '@Url.Action("GetIvaTercero", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                data: { cuenta },
+                success: function (data) {
+                    var datos = $.parseJSON(data);
+
+                    if (datos.tipofacturacliente != "" || datos.tipofacturacliente != null) {
+                        eventAggregator.Publish("Tipofactura-Buscar", datos.tipofacturacliente);
+                    }
+                    if (datos.regimentipofactura == "" || datos.regimentipofactura == null) {
+                        eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimentercero);
+                    }
+                    if (datos.tiporetencionescliente != "" && datos.tiporetencionescliente != null) {
+                        eventAggregator.Publish("Fktiporetencion-Buscar", datos.tiporetencionescliente);
+
+                        //Insertamos el porcentaje de rentención
+                        var tipo = $("#Fktiporetencion").val();
+                        $.ajax({
+                            url: '@Url.Action("GetPorcentajeRetencion", "RegistroIvaRepercutido")',
+                            dataType: "text",
+                            type: "GET",
+                            data: { tipo },
+                            async: false,
+                            success: function (data) {
+                                var datos = $.parseJSON(data);
+                                $("#Porcentajeretencion").val(datos.porcentajeretencion);
+                                if (datos.inmueble == true) {
+                                    $("#inmuebles").show();
+                                } else {
+                                    $("#inmuebles").hide();
+                                }
+                            }
+                        });
+                    }
+
+                    $("#Nombrecontraparte").val(datos.cuentaDescripcion);
+                    $("#Tipoidentificacion").val(datos.identificacion);
+                    $("#Codigopais").val(datos.pais);
+                    $("#Nifcontraparte").val(datos.nif);
+                    $("#Identificacion").val(datos.nif);
+                    $("#Tipoidentificacionotro").val(datos.tiponif);
+                    $("#Clavetipofactura").val(datos.clavetipofactura);
+                    $("#Claveregimenespecial").val(datos.regimenespecial);
+                    $("#Tipooperacion").val(datos.tipooperacion);
+
+                    /*if (data.essujetanoexenta == "True") {
+                        $("#Sujetanoexenta").is(':checked');
+                    }
+                    $("#Invsujetopasivo").val(datos.invsujetopasivo);
+
+                    if (data.essujetaexenta == "True") {
+                        $("#Sujetaexenta").is(':checked');
+                    }
+                    if (data.esnosujeta == "True") {
+                        $("#NoSujeta").is(':checked');
+                    }*/
+                }
+            });
+        }
+    });
+
+    $('#Tipofactura').on('change', function () {
+
+        var tipo = $("#Tipofactura").val();
+
+        if (tipo != "" && tipo != null) {
+            $.ajax({
+                url: '@Url.Action("GetRegimenIva", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                data: { tipo },
+                success: function (data) {
+                    var datos = $.parseJSON(data);
+                    if (datos.regimen != "" && datos.regimen != null) {
+                        eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimen);
+                    }
+                    //$("#Fkregimeniva").val(data);
+
+                    if (datos.esbieninversion == true) {
+                        $("#Bieninversion").prop('checked', true);
+                    }
+                }
+            });
+        }
+    });
+
+    $('#Tipofacturacampo').on('DOMSubtreeModified', function () {
+
+        var tipo = $("#Tipofactura").val();
+
+        if (tipo != "" && tipo != null) {
+            $.ajax({
+                url: '@Url.Action("GetRegimenIva", "RegistroIvaRepercutido")',
+                dataType: "text",
+                type: "GET",
+                data: { tipo },
+                success: function (data) {
+                    var datos = $.parseJSON(data);
+                    if (datos.regimen != "" && datos.regimen != null) {
+                        eventAggregator.Publish("Fkregimeniva-Buscar", datos.regimen);
+                    }
+                    //$("#Fkregimeniva").val(data);
+
+                    if (datos.esbieninversion == true) {
+                        $("#Bieninversion").prop('checked', true);
+                    }
+                }
+            });
+        }
+     });
+
+    $("#Fechafactura").on('change', function () {
+       var Fechafactura = this.value;
+       var Fechaoperacion = $("#Fechaoperacion").val();
+
+        $.ajax({
+            url: '@Url.Action("ModificarPeriodo", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { Fechafactura, Fechaoperacion },
+            success: function (data) {
+                $("#Periodo").val(data);
+            }
+        })
+   });
+
+    $("#Fechaoperacion").on('change', function () {
+        var Fechafactura = $("#Fechafactura").val();
+        var Fechaoperacion = this.value;
+
+        $.ajax({
+            url: '@Url.Action("ModificarPeriodo", "RegistroIvaRepercutido")',
+            dataType: "text",
+            type: "GET",
+            data: { Fechafactura, Fechaoperacion },
+            success: function (data) {
+                $("#Periodo").val(data);
+            }
+        })
+    });
+
+</script>

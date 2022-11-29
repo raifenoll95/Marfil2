@@ -248,8 +248,6 @@ namespace Marfil.App.WebMain.Controllers
 
         #endregion
 
-        #region Api
-
         [Authorize]
         public ActionResult CuentasCliente()
         {
@@ -319,7 +317,7 @@ namespace Marfil.App.WebMain.Controllers
             return Redirect(returnurl);
         }
 
-        #endregion
+
 
         #region Helpers
 

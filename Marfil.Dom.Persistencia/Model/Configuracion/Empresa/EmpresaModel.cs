@@ -32,6 +32,22 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
         Mensual   
     }
 
+    public enum IvaRepercutido
+    {
+        [StringValue(typeof(REmpresas), "Factura")]
+        Factura,
+        [StringValue(typeof(REmpresas), "Operacion")]
+        Operacion
+    }
+
+    public enum IvaSoportado
+    {
+        [StringValue(typeof(REmpresas), "Contable")]
+        Contable,
+        [StringValue(typeof(REmpresas), "Operacion")]
+        Operacion
+    }
+
     public class EmpresaModel : BaseModel<EmpresaModel, Empresas>
     {
         #region Members
@@ -101,6 +117,12 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
         [Display(ResourceType = typeof(REmpresas), Name = "Liquidacioniva")]
         public LiquidacionIva Liquidacioniva { get; set; }
 
+        [Display(ResourceType = typeof(REmpresas), Name = "Ivasoportado")]
+        public IvaSoportado Ivasoportado { get; set; }
+
+        [Display(ResourceType = typeof(REmpresas), Name = "Ivarepercutido")]
+        public IvaRepercutido Ivarepercutido { get; set; }
+
         //Contabilidad
         [Required]
         [Display(ResourceType = typeof(REmpresas), Name = "FkMonedaBase")]
@@ -128,6 +150,9 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
 
         [Display(ResourceType = typeof(REmpresas), Name = "CuentaPG")]
         public string CuentaPG { get; set; }
+
+        [Display(ResourceType = typeof(REmpresas), Name = "Cuentascaja")]
+        public string Cuentascaja { get; set; }
 
         [Display(ResourceType = typeof(REmpresas), Name = "GuiaAnuales")]
         public string GuiaAnuales { get; set; }

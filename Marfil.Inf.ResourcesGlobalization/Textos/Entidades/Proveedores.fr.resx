@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Proveedores</value>
+    <value>Fournisseurs</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Fkidiomas" xml:space="preserve">
-    <value>Langue principel</value>
+    <value>Première langue</value>
   </data>
   <data name="Nif" xml:space="preserve">
-    <value>Id fiscal</value>
+    <value>Nif/Cif</value>
   </data>
   <data name="Pais" xml:space="preserve">
-    <value>Pay</value>
+    <value>Pays</value>
   </data>
   <data name="Provincia" xml:space="preserve">
     <value>Province</value>
@@ -142,9 +142,108 @@
     <value>Ville</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Fournisseur</value>
+    <value>Le fournisseur</value>
   </data>
   <data name="PrevisionPagosPeriodicos" xml:space="preserve">
-    <value>Provision pour paiements périodiques. Concilier avec</value>
+    <value>Prévision des paiements périodiques. Concilier avec :</value>
+  </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Raison sociale</value>
+  </data>
+  <data name="Fkfamiliaproveedor" xml:space="preserve">
+    <value>famille fournisseur</value>
+  </data>
+  <data name="Fkzonaproveedor" xml:space="preserve">
+    <value>espace fournisseur</value>
+  </data>
+  <data name="Fktipoempresa" xml:space="preserve">
+    <value>Type d'entreprise</value>
+  </data>
+  <data name="Fkunidadnegocio" xml:space="preserve">
+    <value>Unité d'affaires</value>
+  </data>
+  <data name="Fkincoterm" xml:space="preserve">
+    <value>incoterm</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Devise</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="Fkgruposiva" xml:space="preserve">
+    <value>Groupes TVA</value>
+  </data>
+  <data name="Criterioiva" xml:space="preserve">
+    <value>Critères TVA</value>
+  </data>
+  <data name="Fktiposretencion" xml:space="preserve">
+    <value>Type de retenue</value>
+  </data>
+  <data name="Fktransportistahabitual" xml:space="preserve">
+    <value>transporteur régulier</value>
+  </data>
+  <data name="Tipodeportes" xml:space="preserve">
+    <value>Type d'expédition</value>
+  </data>
+  <data name="Cuentatesoreria" xml:space="preserve">
+    <value>Compt. Trésorerie</value>
+  </data>
+  <data name="Fkformaspago" xml:space="preserve">
+    <value>Mode de paiement</value>
+  </data>
+  <data name="Descuentoprontopago" xml:space="preserve">
+    <value>% Remise pour paiement rapide</value>
+  </data>
+  <data name="Descuentocomercial" xml:space="preserve">
+    <value>% Remises commerciales</value>
+  </data>
+  <data name="Diafijopago1" xml:space="preserve">
+    <value>Paiement à jour fixe 1</value>
+  </data>
+  <data name="Diafijopago2" xml:space="preserve">
+    <value>Paiement à jour fixe 2</value>
+  </data>
+  <data name="Periodonopagodesde" xml:space="preserve">
+    <value>Délai de non-paiement du</value>
+  </data>
+  <data name="Periodonopagohasta" xml:space="preserve">
+    <value>Délai de non-paiement jusqu'au</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Tarifa" xml:space="preserve">
+    <value>Évaluer</value>
+  </data>
+  <data name="CriterioIVADevengo" xml:space="preserve">
+    <value>régularisation</value>
+  </data>
+  <data name="CriterioIVACaja" xml:space="preserve">
+    <value>Caisse</value>
+  </data>
+  <data name="TipoportesPagados" xml:space="preserve">
+    <value>payé</value>
+  </data>
+  <data name="TipoportesDebidos" xml:space="preserve">
+    <value>exigible</value>
+  </data>
+  <data name="LblMensajeTipoCuenta" xml:space="preserve">
+    <value>Aucun type de compte n'a été défini pour les fournisseurs.</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="Facturacion" xml:space="preserve">
+    <value>Facturation</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>Paiements</value>
+  </data>
+  <data name="Fkcriteriosagrupacion" xml:space="preserve">
+    <value>Critères de regroupement</value>
+  </data>
+  <data name="Fktipofactura" xml:space="preserve">
+    <value>Type de facture habituel</value>
   </data>
 </root>

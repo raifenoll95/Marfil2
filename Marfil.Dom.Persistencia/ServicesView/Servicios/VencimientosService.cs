@@ -14,6 +14,7 @@ using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using System.Globalization;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -40,7 +41,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     model.Importeasignado = 0;
                 }
 
-                if (_db.Vencimientos.Any())
+                if (_db.Vencimientos.Where(f => f.empresa == Empresa).Any())
                 {
                     model.Id = _db.Vencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
                 }
@@ -159,7 +160,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Append(" select v.*, cuen.Descripcion as Descripcioncuenta ");
             result.Append(" from Vencimientos as v ");
             result.AppendFormat(" left join Cuentas as cuen on cuen.id = v.fkcuentas and cuen.empresa ='{0}' ", _context.Empresa);
-            result.AppendFormat(" where v.tipo = 0 and v.empresa ='{0}' ", _context.Empresa);
+            result.AppendFormat(" where v.tipo = 0 and v.empresa ='{0}' order by referencia desc", _context.Empresa);
 
             return result.ToString();
         }
@@ -210,7 +211,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             result.Append(" select v.*, cuen.Descripcion as Descripcioncuenta ");
             result.Append(" from Vencimientos as v ");
             result.AppendFormat(" left join Cuentas as cuen on cuen.id = v.fkcuentas and cuen.empresa ='{0}' ", _context.Empresa);
-            result.AppendFormat(" where v.tipo = 1 and v.empresa ='{0}' ", _context.Empresa);
+            result.AppendFormat(" where v.tipo = 1 and v.empresa ='{0}' order by referencia desc", _context.Empresa);
 
             return result.ToString();
         }
@@ -221,6 +222,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var lineas = _db.PrevisionesCartera.Where(f => f.empresa == Empresa && f.codvencimiento == model.Id.Value).ToList();
             var serviceCartera = new CarteraVencimientosService(_context);
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             foreach (var linea in lineas)
             {
@@ -230,7 +235,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Id = linea.codcartera,
                     Referencia = cartera.referencia,
                     Fkcuentas = cartera.fkcuentas,
-                    Importegiro = Math.Round(cartera.importegiro.Value, 2),
+                    Importegiro = Math.Round(cartera.importegiro.Value, monedaObj.Decimales),
                     Fechavencimiento = cartera.fechavencimiento,
                     Fecha = cartera.fecha,
                     Situacion = cartera.situacion,
@@ -249,9 +254,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var newtipoasignacion = Int32.Parse(tipoasignacion);
             var situacion = newtipoasignacion == 0 ? "X" : "Y";
 
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
             //Vencimientos con estado Inicial, pendiente de cobro o de pago y que aun tengan cantidad por asignar
             var posiblesvencimientos = _db.Vencimientos.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas && f.tipo == newtipoasignacion
-                && f.situacion == situacion && ((f.importegiro - f.importeasignado) > 0)).
+                && f.situacion == situacion
+                //&& ((f.importegiro - f.importeasignado) > 0)).
+                && ((f.importegiro - f.importeasignado) > 0 || (f.importegiro < 0 && f.importeasignado == 0))).//OCT 2022 - Cambio para mostrar también las cantidades negativas
                 OrderByDescending(f => f.fechavencimiento).OrderByDescending(f => f.importegiro).ToList();
 
             //Tenemos que sacar todos los vencimientos
@@ -265,7 +277,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Traza = vencimiento.traza,
                     FechaStrfactura = vencimiento.fechafactura.ToString().Split(' ')[0],
                     FechaStrvencimiento = vencimiento.fechavencimiento.ToString().Split(' ')[0],
-                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value, 2),
+                    Importegiro = Math.Round(vencimiento.importegiro.Value - vencimiento.importeasignado.Value, monedaObj.Decimales),
                     Fkformaspago = vencimiento.fkformaspago,
                     FormaPago = formapago,
                     Fkcuentatesoreria = vencimiento.fkcuentatesoreria
@@ -285,9 +297,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var idcircuito = Int32.Parse(circuito);
 
             var situacionInicialCircuito = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id == idcircuito).Select(f => f.situacioninicial).SingleOrDefault() ?? "";
+            var situacionFinalCircuito = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id == idcircuito).Select(f => f.situacionfinal).SingleOrDefault() ?? "";
             var situacioninicialcobros = _db.SituacionesTesoreria.Where(f => f.valorinicialcobros == true).Select(f => f.cod).SingleOrDefault() ?? "";
             var situacioninicialpagos = _db.SituacionesTesoreria.Where(f => f.valorinicialpagos == true).Select(f => f.cod).SingleOrDefault() ?? "";
-            var idformaspagos = _db.FormasPago.Where(f => f.fkgruposformaspago == fkmodospago).Select(f => f.id).ToList();
+            var idformaspagos = fkmodospago != "" && fkmodospago != null && fkmodospago != "null" ? _db.FormasPago.Where(f => f.fkgruposformaspago == fkmodospago).Select(f => f.id).ToList() : _db.FormasPago.Select(f => f.id).ToList();
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             List<GridAsistenteMovimientosTesoreriaModel> registros = new List<GridAsistenteMovimientosTesoreriaModel>();
 
@@ -335,7 +353,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fkcuentas = venc.fkcuentas,
                         FkcuentasDescripcion = descripcioncuenta,
                         Fechavencimiento = venc.fechavencimiento.ToString().Split(' ')[0],
-                        Importegiro = Math.Round((double)(venc.importegiro - venc.importeasignado), 2),
+                        Importegiro = Math.Round((double)(venc.importegiro - venc.importeasignado), monedaObj.Decimales),
                         ImporteAsignado = venc.importeasignado,
                         Situacion = venc.situacion,
                         Fkformaspago = formapago,
@@ -407,12 +425,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fkcuentas = venc.fkcuentas,
                         FkcuentasDescripcion = descripcioncuenta,
                         Fechavencimiento = venc.fechavencimiento.ToString().Split(' ')[0],
-                        Importegiro = Math.Round((double)venc.importegiro, 2),
+                        Importegiro = Math.Round((double)venc.importegiro, monedaObj.Decimales),
                         ImporteAsignado = null,
                         Situacion = venc.situacion,
                         Fkformaspago = formapago,
                         FkcuentaTesoreria = venc.fkcuentastesoreria,
-                        Fkseriescontables = venc.fkseriescontables
+                        Fkseriescontables = venc.fkseriescontables,
+                        ReferenciaRemesa = venc.referenciaremesa
                     });
                 }
 
@@ -436,12 +455,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var idcircuito = Int32.Parse(model.Circuitotesoreria);
             var circuito = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id == idcircuito).Single();
+            var idejercicio = int.Parse(_context.Ejercicio);
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             CarteraVencimientosModel cartera = new CarteraVencimientosModel(_context);
             cartera.Empresa = Empresa;
             cartera.Tipovencimiento = model.Tipo == "0" ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
-            cartera.Fkseriescontables = model.Tipo == "0" ? _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").Select(f => f.id).SingleOrDefault() :
-                _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").Select(f => f.id).SingleOrDefault();
+            cartera.Fkseriescontables = model.Tipo == "0" ? _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == idejercicio).Select(f => f.fkseriescontablesCRC).SingleOrDefault() :
+                _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == idejercicio).Select(f => f.fkseriescontablesCRP).SingleOrDefault();
             cartera.Situacion = circuito.situacionfinal;
             cartera.Fkcuentas = model.Fkcuentas;
             cartera.Importegiro = double.Parse(model.ImportePantalla3, CultureInfo.InvariantCulture);
@@ -449,7 +474,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var vencimientoModel = get(vencimientos[0]) as VencimientosModel;
             cartera.Traza = vencimientoModel.Traza; //Num Doc. *NF*
-            cartera.Fkformaspago = vencimientoModel.Fkformaspago;
+            cartera.Fkformaspago = int.Parse(model.Fkformaspago);
             cartera.Fkcuentastesoreria = model.Fkcuentatesoreria;
             cartera.Fechavencimiento = DateTime.Parse(model.FechaVencimiento);
             cartera.Fechacreacion = DateTime.Now;
@@ -461,6 +486,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //Asignar importes completos
             if (String.IsNullOrEmpty(model.Importe))
             {
+                List<VencimientosModel> previsionesAuxiliares = new List<VencimientosModel>();
+
                 if (circuito.asientocontable.Value)
                 {
                     generarAsientoContable(model, true, idcircuito, vencimientos);
@@ -479,7 +506,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Imputado = vencimiento.Importegiro - vencimiento.Importeasignado
                     });
 
-                    editarSituacionPrevision(vencimiento, model, circuito.situacionfinal, null);
+                    editarSituacionPrevisionAsignacionCartera(vencimiento, model, circuito.situacionfinal, null);
+
+                    previsionesAuxiliares.Add(vencimiento);
+                }
+
+                //Actualizar Previsiones
+                foreach (var auxiliar in previsionesAuxiliares)
+                {
+                    edit(auxiliar);
                 }
 
                 serviceCarteraVencimientos.create(cartera);
@@ -487,22 +522,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             else
             {
-                var importeaux = double.Parse(model.Importe, CultureInfo.InvariantCulture);
+                var importeaux = Math.Round(double.Parse(model.Importe, CultureInfo.InvariantCulture),monedaObj.Decimales);
                 List<VencimientosModel> previsionesAuxiliares = new List<VencimientosModel>();
 
                 foreach (var vencimientoId in vencimientos)
                 {
                     //Quedan previsiones por cubrir
-                    if (importeaux > 0)
+                    if (Math.Round(importeaux, monedaObj.Decimales) > 0)
                     {
                         var vencimiento = get(vencimientoId) as VencimientosModel;
-                        var restante = vencimiento.Importegiro - vencimiento.Importeasignado;
+                        var restante = Math.Round(vencimiento.Importegiro.Value - vencimiento.Importeasignado.Value,monedaObj.Decimales);
 
                         //El importe cubre lo que queda de asignado
-                        if (importeaux >= (restante))
+                        if ((Math.Round(importeaux, monedaObj.Decimales) >= (restante)))
                         {
-                            editarSituacionPrevision(vencimiento, model, circuito.situacionfinal, null);
-                            importeaux = importeaux - restante.Value;
+                            editarSituacionPrevisionAsignacionCartera(vencimiento, model, circuito.situacionfinal, null);
+                            importeaux = Math.Round(importeaux, monedaObj.Decimales) - Math.Round(restante,monedaObj.Decimales);
 
                             cartera.LineasCartera.Add(new PrevisionesCarteraModel(_context)
                             {
@@ -515,8 +550,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         else
                         {
                             vencimiento.Situacion = model.Tipo == "0" ? "X" : "Y";
-                            vencimiento.Importeasignado = vencimiento.Importeasignado + importeaux;
+                            vencimiento.Importeasignado = vencimiento.Importeasignado + Math.Round(importeaux, monedaObj.Decimales);
                             vencimiento.Estado = TipoEstado.CubiertoParcial;
+
+                            if (circuito.situacionfinal.Equals("P"))
+                            {
+                                if (vencimiento.Importepagado != null)
+                                {
+                                    vencimiento.Importepagado = vencimiento.Importepagado + Math.Round(importeaux, monedaObj.Decimales);
+                                }
+                                else
+                                {
+                                    vencimiento.Importepagado = Math.Round(importeaux, monedaObj.Decimales);
+                                }
+                                                               
+                            }
 
                             cartera.LineasCartera.Add(new PrevisionesCarteraModel(_context)
                             {
@@ -525,12 +573,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                                 Imputado = importeaux
                             });
 
-                            importeaux = importeaux - vencimiento.Importeasignado.Value;
+                            importeaux = Math.Round(importeaux, monedaObj.Decimales) - Math.Round(vencimiento.Importeasignado.Value,monedaObj.Decimales);
                         }
 
                         previsionesAuxiliares.Add(vencimiento);
                         //edit(vencimiento);
                     }
+                }
+
+                //Si el importe indicado es superior a los registros punteados
+                if (Math.Round(importeaux,monedaObj.Decimales) > 0)
+                {
+                    throw new ValidationException("El importe indicado es mayor que los registros punteados");
                 }
 
                 //--------------------!!!!!!Explicacion¡¡¡¡¡¡¡------------------
@@ -543,7 +597,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     idVencimientosAuxiliares.Add(v.Id.ToString());
                 }
                 generarAsientoContable(model, true, idcircuito, idVencimientosAuxiliares);
-
 
                 //Actualizar Previsiones
                 foreach (var auxiliar in previsionesAuxiliares)
@@ -569,7 +622,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             cartera.Situacion = nuevasituacion;
             cartera.Traza = registro.Traza; //Num Doc. *NF*
             cartera.Fkcuentas = registro.Fkcuentas;
-            cartera.Importegiro = registro.Importegiro;
+            cartera.Importegiro = registro.Importegiro - registro.Importeasignado;
             cartera.Comentario = !String.IsNullOrEmpty(model.Comentario) ? model.Comentario : registro.Comentario;
             cartera.Fkformaspago = registro.Fkformaspago;
             cartera.Fkcuentastesoreria = !String.IsNullOrEmpty(model.Fkcuentatesoreria) ? model.Fkcuentatesoreria : registro.Fkcuentatesoreria;
@@ -593,6 +646,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     cartera.Fechapago = DateTime.Parse(model.FechaPago);
                 }
+                else
+                {
+                    cartera.Fechapago = DateTime.Parse(model.FechaContable); 
+                }
             }
 
             if ((bool)esRemesable)
@@ -611,6 +668,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (!String.IsNullOrEmpty(model.Fecharemesa))
                 {
                     cartera.Fecharemesa = DateTime.Parse(model.Fecharemesa);
+                }
+                else
+                {
+                    cartera.Fecharemesa = DateTime.Today;
                 }
             }
 
@@ -700,7 +761,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         //Editar Prevision: Situacion, Estado, Importe Asignado, (Pagado y fechapago si es P)
-        public void editarSituacionPrevision(VencimientosModel registro, StAsistenteTesoreria model, string situacion, double? impagado)
+        public void editarSituacionPrevisionAsignacionCartera(VencimientosModel registro, StAsistenteTesoreria model, string situacion, double? impagado)
         {
             registro.Importeasignado = registro.Importegiro;
             registro.Estado = TipoEstado.Total;
@@ -713,10 +774,58 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     registro.Fechapago = DateTime.Parse(model.FechaPago);
                 }
+                else
+                {
+                    registro.Fechapago = DateTime.Parse(model.FechaContable); 
+                }
             }
 
             if (situacion.Equals("I")) //-> Prevision de 100 con dos registros en cartera de 40 y 60. El de 40 pasa a impagado. 100 - 40 = 60
             {
+                registro.Importepagado = registro.Importepagado - impagado;
+            }
+
+            //edit(registro);
+        }
+
+        public void editarSituacionPrevision(VencimientosModel registro, StAsistenteTesoreria model, string situacion, double? impagado, bool anularremesa)
+        {
+            registro.Importeasignado = registro.Importegiro;
+            registro.Estado = TipoEstado.Total;
+
+            if (situacion.Equals("P"))
+            {
+                registro.Situacion = situacion;
+                registro.Importepagado = registro.Importegiro;
+                if (!String.IsNullOrEmpty(model.FechaPago))
+                {
+                    registro.Fechapago = DateTime.Parse(model.FechaPago);
+                }
+                else
+                {
+                    registro.Fechapago = DateTime.Parse(model.FechaContable); 
+                }
+            } 
+
+            //Si vuelve a una situación inicial o se anula la remesa se resta el importe de la previsión
+            var esinicial = _db.SituacionesTesoreria.Where(f => f.cod == situacion).FirstOrDefault().valorinicialcobros.Value || _db.SituacionesTesoreria.Where(f => f.cod == situacion).FirstOrDefault().valorinicialpagos.Value;
+            if (esinicial || anularremesa)
+            {
+                registro.Situacion = "C";
+                registro.Importepagado = registro.Importepagado - impagado < 0 ? 0 : registro.Importepagado - impagado;
+                if (!String.IsNullOrEmpty(model.FechaPago))
+                {
+                    registro.Fechapago = DateTime.Parse(model.FechaPago);
+                }
+                else
+                {
+                    registro.Fechapago = DateTime.Parse(model.FechaContable); 
+                }
+            }
+
+            if (situacion.Equals("I")) //-> Prevision de 100 con dos registros en cartera de 40 y 60. El de 40 pasa a impagado. 100 - 40 = 60
+            {
+                registro.Situacion = situacion;
                 registro.Importepagado = registro.Importepagado - impagado;
             }
 
@@ -733,9 +842,36 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             if (situacion.Equals("P"))
             {
+                foreach (var registro in cartera.LineasPrevisiones)
+                {
+                    var totalregcartera = registro.LineasCartera.Count();
+
+                    if (totalregcartera > 1)
+                    {
+                        foreach (var lin in registro.LineasCartera)
+                        {
+                            if (cartera.Importegiro == lin.Importegiro)
+                            {
+                                registro.Importepagado = (registro.Importepagado ?? 0) + lin.Imputadoaux;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        registro.Importepagado = (registro.Importepagado ?? 0) + cartera.Importegiro;
+                    }
+
+                    edit(registro);
+
+                }
+
                 if (!String.IsNullOrEmpty(model.FechaPago))
                 {
                     cartera.Fechapago = DateTime.Parse(model.FechaPago);
+                }
+                else
+                {
+                    cartera.Fechapago = DateTime.Parse(model.FechaContable);
                 }
             }
 
@@ -746,7 +882,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 cartera.Fecharemesa = null;
             }
 
-            if ((bool)esRemesable)
+            if ((bool)esRemesable && (fkseriescontablesremesa != null && fkseriescontablesremesa != ""))
             {
                 cartera.Fkseriescontablesremesa = fkseriescontablesremesa;
 
@@ -758,14 +894,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     {
                         cartera.Fecharemesa = DateTime.Parse(model.Fecharemesa);
                     }
+                    else
+                    {
+                        cartera.Fecharemesa = DateTime.Today;
+                    }
                     carteraService.create(CrearRegistroRemesa(cartera, model, situacion, cartera.Fkseriescontablesremesa, identificadorsegmentoremesa, cartera.Referenciaremesa, cartera.Referencia));
                 }
             }
 
-            foreach (var registro in cartera.LineasPrevisiones)
+            //No cambiamos la situación de la previsión hasta que todos registros de cartera estén pagados
+            /*foreach (var registro in cartera.LineasPrevisiones)
             {
                 editarSituacionPrevision(registro, model, situacion, cartera.Importegiro); //En caso de Impagado -> restarle al Pagado total de la prevision, el importe de ese registro en cartera
-            }
+            }*/
 
             carteraService.edit(cartera);
         }
@@ -805,8 +946,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var referenciaremesa = "";
                 var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
 
+                var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+                var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+                var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+                var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
                 //Asignamos referencia remesa
-                if ((bool)esRemesable && circuito.anularremesa == false)
+                if ((bool)esRemesable && circuito.anularremesa == false && model.Fkseriescontables != null)
                 {
                     fkseriescontablesremesa = model.Fkseriescontables;
                     var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa);
@@ -817,15 +963,51 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var prevision in registros)
                 {
                     var registro = get(prevision) as VencimientosModel;
-                    registro.Importegiro = Math.Round((double)registro.Importegiro, 2);
+                    registro.Importegiro = Math.Round((double)registro.Importegiro, monedaObj.Decimales);
+                    registro.Importeasignado = Math.Round((double)registro.Importeasignado, monedaObj.Decimales);
                     serviceCarteraVencimientos.create(CrearRegistroCartera(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa));
 
-                    if ((bool)esRemesable)
+                    if ((bool)esRemesable && fkseriescontablesremesa != "")
                     {
                         serviceCarteraVencimientos.create(CrearRegistroRemesa(registro, model, circuito.situacionfinal, fkseriescontablesremesa, identificadorsegmentoremesa, referenciaremesa, ""));
                     }
 
-                    editarSituacionPrevision(registro, model, circuito.situacionfinal, null);
+                    //Sumamos al importe asignado e importe pagado a lo que ya había
+                    var asignadoact = registro.Importegiro - registro.Importeasignado;
+                    registro.Importeasignado = registro.Importeasignado + asignadoact;
+                    registro.Importepagado = (registro.Importepagado ?? 0) + asignadoact;
+                    edit(registro);
+
+                    //Comprobamos que al menos el total está asignado
+                    if (registro.Importeasignado == registro.Importegiro)
+                    {
+                        //Ya está todo asignado asi que se pasa a situación de cartera
+                        if (circuito.situacioninicial == situacioninicialcobros && !registro.Situacion.Equals("C"))
+                        {
+                            registro.Situacion = "C";
+                            registro.Estado = TipoEstado.Total;
+                            edit(registro);
+                        }
+                        else if (circuito.situacioninicial == situacioninicialpagos && !registro.Situacion.Equals("G"))
+                        {
+                            registro.Situacion = "G";
+                            registro.Estado = TipoEstado.Total;
+                            edit(registro);
+                        }                  
+
+                        //registros de cartera relacionados
+                        var Idpagosencartera = _db.PrevisionesCartera.Where(f => f.empresa == Empresa && f.codvencimiento == registro.Id).Select(x => x.codcartera).ToList();
+                        //si esos registros están en la situación final
+                        var registroscarterapagados = _db.CarteraVencimientos.Where(f => f.empresa == Empresa && f.situacion == circuito.situacionfinal && Idpagosencartera.Contains(f.id)).ToList();
+
+                        //Si todos los registros de cartera están en situación final, la previsón entonces también
+                        if (Idpagosencartera.Count() == registroscarterapagados.Count())
+                        {
+                            editarSituacionPrevision(registro, model, circuito.situacionfinal, null, circuito.anularremesa.Value); //En caso de Impagado -> restarle al Pagado total de la prevision, el importe de ese registro en cartera
+                            //editarSituacionPrevision(registro, model, circuito.situacionfinal, null);
+                        }
+                    }
+
                 }
             }
 
@@ -839,8 +1021,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var identificadorsegmentoremesa = "";
                 var referenciaremesa = "";
                 var esRemesable = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().remesable;
+                var esinicial = _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().valorinicialcobros.Value || _db.SituacionesTesoreria.Where(f => f.cod == circuito.situacionfinal).FirstOrDefault().valorinicialpagos.Value;
+
+                var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+                var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+                var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+                var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
+
                 //Asignamos referencia remesa
-                if ((bool)esRemesable && circuito.anularremesa == false)
+                if ((bool)esRemesable && circuito.anularremesa == false && model.Fkseriescontables != null)
                 {
                     fkseriescontablesremesa = model.Fkseriescontables;
                     var contador = ServiceHelper.GetNextIdContableMovimientosTesoreria<Remesas>(_db, Empresa, fkseriescontablesremesa);
@@ -851,7 +1040,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var id in registros)
                 {
                     var carteraModel = carteraService.get(id) as CarteraVencimientosModel;
-                    carteraModel.Importegiro = Math.Round((double)carteraModel.Importegiro, 2);
+                    carteraModel.Importegiro = Math.Round((double)carteraModel.Importegiro, monedaObj.Decimales);
                     var referenciaRemesa = carteraModel.Referenciaremesa;
                     editarSituacionCartera(carteraModel, model, circuito.situacionfinal, circuito.anularremesa, fkseriescontablesremesa, referenciaremesa, identificadorsegmentoremesa, esprevision);
                     if ((bool)circuito.anularremesa)
@@ -860,7 +1049,31 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         var remesaModel = remesaService.getModel(remesaid) as RemesasModel;
                         editarEstadoRemesa(remesaModel, model, circuito.situacionfinal);
                     }
+                    else if (!(bool)circuito.anularremesa && situacionInicialCircuito.Equals("R"))
+                    {
+                        var remesaid = _db.Remesas.Where(f => f.empresa == Empresa && f.referenciaremesa == referenciaRemesa && f.referencia == carteraModel.Referencia && f.estado == 0).FirstOrDefault().id;
+                        var remesaModel = remesaService.getModel(remesaid) as RemesasModel;
+                        editarSituacionCarteraRemesa(remesaModel, model, circuito.situacionfinal);
+                    }
 
+                    foreach (var registro in carteraModel.LineasPrevisiones)
+                    {
+                        //Comprobamos que al menos el total está asignado
+                        if(registro.Importeasignado == registro.Importegiro)
+                        {
+                            //registros de cartera relacionados
+                            var Idpagosencartera = _db.PrevisionesCartera.Where(f => f.empresa == Empresa && f.codvencimiento == registro.Id).Select(x => x.codcartera).ToList();
+                            //si esos registros están en la situación final
+                            var registroscarterapagados = _db.CarteraVencimientos.Where(f => f.empresa == Empresa && f.situacion == circuito.situacionfinal && Idpagosencartera.Contains(f.id)).ToList();
+
+                            //Si todos los registros de cartera están en situación final o se cambia a una situación inicial, la previsón también
+                            if ((Idpagosencartera.Count() == registroscarterapagados.Count()) || esinicial || circuito.anularremesa.Value)
+                            {
+                                editarSituacionPrevision(registro, model, circuito.situacionfinal, carteraModel.Importegiro, circuito.anularremesa.Value); //En caso de Impagado -> restarle al Pagado total de la prevision, el importe de ese registro en cartera
+                            }                           
+                        }
+                        
+                    }
                 }
             }
         }
@@ -870,6 +1083,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var remesaService = new RemesasService(_context);
 
             remesaModel.Estado = TipoEstadoRemesa.Anulada;
+            remesaModel.Situacion = situacionfinal;
+
+            remesaService.edit(remesaModel);
+        }
+
+        private void editarSituacionCarteraRemesa(RemesasModel remesaModel, StAsistenteTesoreria model, string situacionfinal)
+        {
+            var remesaService = new RemesasService(_context);
+
+            remesaModel.Situacion = situacionfinal;
 
             remesaService.edit(remesaModel);
         }
@@ -882,7 +1105,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             MovsModel documento = new FModel().GetModel<MovsModel>(_context);
             var appService = new ApplicationHelper(_context);
             documento.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "AST").Select(f => f.id).SingleOrDefault() ?? "";
-            documento.Fecha = DateTime.Now;
+            documento.Fecha = DateTime.Parse(model.FechaContable);
             documento.Tipoasiento = "F1"; //Por defecto, Normal
             var coddescripcion = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id == idcircuito).Select(f => f.codigodescripcionasiento).SingleOrDefault() ?? "";
             documento.Codigodescripcionasiento = coddescripcion;
@@ -1037,7 +1260,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             else if (nombrecuenta.Contains("C"))
             {
-                cuentatercero = String.Concat(nombrecuenta.Split('C')[0], cuentatesoreria.Substring(nombrecuenta.Split('C')[0].Length));
+                if(cuentatesoreria != "" && cuentatesoreria != null)
+                {
+                    cuentatercero = String.Concat(nombrecuenta.Split('C')[0], cuentatesoreria.Substring(nombrecuenta.Split('C')[0].Length));
+                }
+                else
+                {
+                    throw new ValidationException("El campo Cuenta de tesorería debe completarse");
+                }
+
             }
 
             return cuentatercero;
@@ -1047,6 +1278,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public List<MovsLinModel> generarLineasTipoLineaPunteada(bool debe, MovsModel documento, string cuenta, string descripcioncuenta, List<String> registros, bool esprevision, StAsistenteTesoreria model, TipoImporte tipo)
         {
             var serviceCartera = new CarteraVencimientosService(_context);
+            double? importe = 0;
+            double? totalvencimientos = 0;
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             foreach (var registro in registros)
             {
@@ -1055,7 +1293,29 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var vencimiento = get(registro) as VencimientosModel;
                     string cuentatercero = getFullNameCuenta(esprevision, registro, cuenta, model.Fkcuentatesoreria);
 
-                    documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, vencimiento.Importegiro,
+                    if (String.IsNullOrEmpty(model.Importe))
+                    {
+                        importe = Math.Round((double)(vencimiento.Importegiro - vencimiento.Importeasignado), monedaObj.Decimales);
+                    }
+                    else
+                    {
+                        if (registros.Count() == 1)// si solo hay un registro
+                        {
+                            importe = double.Parse(model.Importe, CultureInfo.InvariantCulture);
+                        }
+                        else if(registro == registros[registros.Count() - 1]) //Si es el último
+                        {
+                            importe = Math.Round((double)(double.Parse(model.Importe, CultureInfo.InvariantCulture) - totalvencimientos), monedaObj.Decimales);
+                        }
+                        else
+                        {
+                            importe = Math.Round((double)(vencimiento.Importegiro - vencimiento.Importeasignado), monedaObj.Decimales);
+                            totalvencimientos = totalvencimientos + importe;
+                        }
+                        
+                    }
+
+                    documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, importe,
                                 getComentario(tipo, registro, vencimiento.Fkcuentas, descripcioncuenta, model, registros, esprevision)));
                 }
 
@@ -1074,17 +1334,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         }
 
         //Calcular el importe de las lineas punteadas
-        public double? importeLineasPunteadas(List<String> registros, bool esprevision)
+        public double? importeLineasPunteadas(List<String> registros, bool esprevision, StAsistenteTesoreria model)
         {
             var serviceCartera = new CarteraVencimientosService(_context);
             double? importe = 0;
+
+            var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), _context);
+            var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), _context);
+            var empresa = serviceEmpresa.get(_context.Empresa) as EmpresaModel;
+            var monedaObj = serviceMonedas.get(empresa.FkMonedaBase) as MonedasModel;
 
             if (esprevision)
             {
                 foreach (var registro in registros)
                 {
                     var vencimientoModel = get(registro) as VencimientosModel;
-                    importe = importe + vencimientoModel.Importegiro;
+                    if (String.IsNullOrEmpty(model.Importe))
+                    {
+                        importe = Math.Round((double)(importe + (vencimientoModel.Importegiro - vencimientoModel.Importeasignado)), monedaObj.Decimales);
+                    }
+                    else
+                    {
+                        importe = double.Parse(model.Importe, CultureInfo.InvariantCulture);
+                    }
+                    
                 }
             }
 
@@ -1093,7 +1366,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 foreach (var registro in registros)
                 {
                     var carteraModel = serviceCartera.get(registro) as CarteraVencimientosModel;
-                    importe = importe + carteraModel.Importegiro;
+                    importe = Math.Round((double)(importe + carteraModel.Importegiro),monedaObj.Decimales);
                 }
             }
 
@@ -1105,7 +1378,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             string cuentatercero = getFullNameCuenta(esprevision, registros[0], cuenta, model.Fkcuentatesoreria); //Le pasamos el primero, no tiene sentido un importe y multiples cuentas
 
-            documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, importeLineasPunteadas(registros, esprevision),
+            documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, importeLineasPunteadas(registros, esprevision, model),
                     getComentario(tipo, null, null, descripcioncuenta, model, registros, esprevision)));
 
             return documento.Lineas;
@@ -1115,7 +1388,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             if (!String.IsNullOrEmpty(otroimporte))
             {
-                var importe = importeLineasPunteadas(registros, esprevision) - Convert.ToDouble(otroimporte);
+                var importe = importeLineasPunteadas(registros, esprevision, model) - Convert.ToDouble(otroimporte);
                 string cuentatercero = getFullNameCuenta(esprevision, registros[0], cuenta, model.Fkcuentatesoreria); //Le pasamos el primero, no tiene sentido un importe y multiples cuentas
 
                 documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, Convert.ToDouble(importe),
@@ -1129,7 +1402,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             if (!String.IsNullOrEmpty(otroimporte))
             {
-                var importe = importeLineasPunteadas(registros, esprevision) + Convert.ToDouble(otroimporte);
+                var importe = importeLineasPunteadas(registros, esprevision, model) + Convert.ToDouble(otroimporte);
                 string cuentatercero = getFullNameCuenta(esprevision, registros[0], cuenta, model.Fkcuentatesoreria); //Le pasamos el primero, no tiene sentido un importe y multiples cuentas
 
                 documento.Lineas.Add(generarDebeOHaber(debe, cuentatercero, Convert.ToDouble(importe),
@@ -1162,7 +1435,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 if (comentario.Contains("*CO*") && !String.IsNullOrEmpty(model.Fkcuentatesoreria))
                 {
-                    comentario = comentario.Replace("*CO*", model.Fkcuentatesoreria);
+                    var banco = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == model.Fkcuentatesoreria).FirstOrDefault().descripcion;
+                    comentario = comentario.Replace("*CO*", banco);
                 }
 
                 //Tipo Importe 1
@@ -1213,6 +1487,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var cuentaabono = !String.IsNullOrEmpty(circuito.cuentaabono1) ? circuito.cuentaabono1 : !String.IsNullOrEmpty(circuito.cuentaabono2) ? circuito.cuentaabono2 : circuito.cuentaabonorel;
                     var descuenta = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuentaabono).Select(f => f.descripcion).SingleOrDefault() ?? "";
                     comentario = comentario.Replace("*DA*", descuenta.ToString());
+                }
+
+                //Descripcion Cta Cargo
+                if (comentario.Contains("*DC*"))
+                {
+                    /*var cuentacargo = !String.IsNullOrEmpty(circuito.cuentacargo1) ? circuito.cuentacargo1 : !String.IsNullOrEmpty(circuito.cuentacargo2) ? circuito.cuentacargo2 : circuito.cuentacargorel;
+                    var descuenta = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuentacargo).Select(f => f.descripcion).SingleOrDefault() ?? "";*/
+                    var cuentaregistro = "";
+                    if (esprevision)
+                    {
+                        var prevision = get(id) as VencimientosModel;
+                        cuentaregistro = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == prevision.Fkcuentas).Select(f => f.descripcion).SingleOrDefault() ?? "";
+                    }
+
+                    else
+                    {
+                        var cartera = serviceCartera.get(id) as CarteraVencimientosModel;
+                        cuentaregistro = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cartera.Fkcuentas).Select(f => f.descripcion).SingleOrDefault() ?? "";
+                    }
+                    comentario = comentario.Replace("*DC*", cuentaregistro);
                 }
 
                 //Tipo Importe 1. Num factura
@@ -1273,6 +1567,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     var desc = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == cuenta).Select(f => f.descripcion).SingleOrDefault() ?? "";
                     comentario = comentario.Replace("*DT*", desc.ToString());
+                }
+
+                //Código remesa
+                if (comentario.Contains("*RM*") && !esprevision)
+                {
+                    var rem = "";
+                    foreach (var item in registros)
+                    {
+                        var vencimientosModel = serviceCartera.get(item) as CarteraVencimientosModel;
+                        if (rem == "")
+                        {
+                            rem = vencimientosModel.Referenciaremesa ?? "";
+                        } 
+                        else if (rem != vencimientosModel.Referenciaremesa)
+                        {
+                            rem = rem + " | " + vencimientosModel.Referenciaremesa ?? "";
+                        }
+                        
+                    }
+
+                    comentario = comentario.Replace("*RM*", rem ?? "");
                 }
             }
 

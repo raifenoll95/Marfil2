@@ -118,12 +118,78 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Comtes</value>
+    <value>comptes</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Prenom</value>
+    <value>nom</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Descripcion2" xml:space="preserve">
+    <value>Raison sociale</value>
+  </data>
+  <data name="Nivel" xml:space="preserve">
+    <value>Niveau</value>
+  </data>
+  <data name="Tiposcuentas" xml:space="preserve">
+    <value>Type de compte</value>
+  </data>
+  <data name="FkPais" xml:space="preserve">
+    <value>Pays</value>
+  </data>
+  <data name="Nifrequired" xml:space="preserve">
+    <value>Identifiant fiscal obligatoire</value>
+  </data>
+  <data name="Nif" xml:space="preserve">
+    <value>NIF/CAF</value>
+  </data>
+  <data name="Contrapartida" xml:space="preserve">
+    <value>contrepartie habituelle</value>
+  </data>
+  <data name="ContrapartidaDescripcion" xml:space="preserve">
+    <value>contrepartie habituelle</value>
+  </data>
+  <data name="BloqueoModel" xml:space="preserve">
+    <value>Blocage</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>Utilisateur</value>
+  </data>
+  <data name="FechaModificacion" xml:space="preserve">
+    <value>Date de modification</value>
+  </data>
+  <data name="DescripcionLarga" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="LblCuentasContrapartida" xml:space="preserve">
+    <value>Comptes correspondants</value>
+  </data>
+  <data name="ErrorBorrado" xml:space="preserve">
+    <value>Le compte ne peut pas être supprimé car il existe des sous-comptes associés</value>
+  </data>
+  <data name="ErrorCuentaExistente" xml:space="preserve">
+    <value>Un compte existe déjà avec le code : {0}</value>
+  </data>
+  <data name="ErrorOperacionTipoCuenta" xml:space="preserve">
+    <value>Ce compte doit être supprimé de la maintenance {0}.</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>du compte</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>jusqu'au compte</value>
+  </data>
+  <data name="FechaAltaCuentaDesde" xml:space="preserve">
+    <value>A partir de la date de sortie</value>
+  </data>
+  <data name="FechaAltaCuentaHasta" xml:space="preserve">
+    <value>Jusqu'à la date de sortie</value>
   </data>
 </root>

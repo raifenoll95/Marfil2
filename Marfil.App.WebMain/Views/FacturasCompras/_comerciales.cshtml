@@ -15,12 +15,18 @@
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
+    var cvtipofactura = FCampoverificacion.Instance.GetModel<TiposFacturasIvaModel>(WebHelper.ContextService);
     var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
     var cvregimen = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
     var cvretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
-   
+
+    if (Model.Fktipofactura == "" || Model.Fktipofactura == null)
+    {
+        Model.Fktipofactura = WebHelper.GetApplicationHelper().GetTipoFacturaProveedores(Model.Fkproveedores);
+    }
+
 }
 <div class="form-group">
     @Html.LabelFor(f => Model.Fkformaspago, new {@class = "control-label col-md-2"})
@@ -92,15 +98,23 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Cobradoview, new { @class = "control-label col-md-2" })
-    <div class="col-md-2">
-        @Html.CheckBoxFor(f => Model.Cobradoview, isreadonly ? (object)new {  @disabled = "disabled" } : (object)new {  })
+    @Html.LabelFor(f => Model.Fktipofactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvtipofactura.Name = "Fktipofactura";
+            cvtipofactura.Url = Url.Action("TiposFacturasIvaApi", "Api");
+            cvtipofactura.Valor = Model.Fktipofactura;
+            cvtipofactura.Params = "{\"tipotercero\":\"0\"}";
+            cvtipofactura.SoloLectura = isreadonly;
+            cvtipofactura.Obligatorio = true;
+        }
+        @Html.Partial("CampoverificacionUI", cvtipofactura)
 
     </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Fktipofactura, "", new { @class = "text-danger" })
+    </div>
 </div>
-
-
-
 
 <div class="form-group">
     @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
@@ -139,22 +153,31 @@
 </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            <div class="input-group">
-                @Html.TextBoxFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
-                <span class="input-group-addon">%</span>
-            </div>
-        </div>
-
-
-        @Html.LabelFor(f => Model.Criterioiva, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.EnumDropDownListFor(f => Model.Criterioiva, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
-            @Html.ValidationMessageFor(f => Model.Criterioiva, "", new { @class = "text-danger" })
+<div class="form-group">
+    @Html.LabelFor(f => Model.Porcentajeretencion, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        <div class="input-group">
+            @Html.TextBoxFor(f => Model.Porcentajeretencion, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+            <span class="input-group-addon">%</span>
         </div>
     </div>
+
+
+    @Html.LabelFor(f => Model.Criterioiva, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EnumDropDownListFor(f => Model.Criterioiva, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Criterioiva, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Cobradoview, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(f => Model.Cobradoview, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { })
+
+        </div>
+    </div>
+</div>
 
 
 

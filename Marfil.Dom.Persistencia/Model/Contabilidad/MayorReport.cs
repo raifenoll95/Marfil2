@@ -6,6 +6,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System.Collections.Generic;
 using System;
 using DevExpress.XtraReports;
+using System.Linq;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 {
@@ -47,6 +48,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 var cuentaHasta = dictionary["CuentaHasta"].ToString();
                 var fechaDesde = dictionary["FechaDesde"];
                 var fechaHasta = dictionary["FechaHasta"];
+
+                var db = MarfilEntities.ConnectToSqlServer(user.BaseDatos);
+                var idEjercicio = Convert.ToInt32(user.Ejercicio);
+                var inicioejercicio = db.Ejercicios.Where(f => f.empresa == user.Empresa && f.id == idEjercicio).Select(f => f.desde).SingleOrDefault().ToString();
+
                 var saldosAnteriores = Convert.ToBoolean(dictionary["SaldosAnteriores"]);
                 var mostrarcuentassinSaldo = Convert.ToBoolean(dictionary["MostrarCuentasSinSaldo"]);
                 // var fechaInforme = dictionary["FechaInforme"];
@@ -90,53 +96,56 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 }
 
                 if (!mostrarcuentassinSaldo)
-                {                    
+                {
                     mainQuery.Sql += " AND maes.saldo <> 0";
                 }
 
                 mainQuery.Sql += ")";
 
-                if (saldosAnteriores)
+                //if (saldosAnteriores)
+
+                mainQuery.Sql += " UNION ALL";
+                //ValoresParametros.Add("inicioejercicio", InicioEjercicio.Value);
+                var desgloseinicio = inicioejercicio.ToString().Split('/', ' ');
+                inicioejercicio = desgloseinicio[2] + "-" + desgloseinicio[1] + "-" + desgloseinicio[0];
+                mainQuery.Parameters.Add(new QueryParameter("inicioejercicio", typeof(DateTime), inicioejercicio));
+                mainQuery.Sql += " (SELECT (c.id + ' ' + c.descripcion) AS [Cuenta]," +
+                    " NULL AS [Fecha], 'SUMA ANTERIOR' AS [Doc.]," +
+                    " NULL AS [Comentario]," +
+                    " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE 0 END)) AS [Debe]," +
+                    " SUM((CASE WHEN l.esdebe = -1 THEN l.importe ELSE 0 END)) AS [Haber]," +
+                    " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE (l.importe * -1) END)) AS [Diferencia]," +
+                    " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE (l.importe * -1) END)) AS [Saldo]," +
+                    " 0 AS [Orden]" +
+                    " FROM Cuentas AS c" +
+                    " LEFT JOIN MovsLin AS l ON c.id = l.fkcuentas AND c.empresa = l.empresa " +
+                    " LEFT JOIN Movs AS m ON m.id = l.fkmovs AND c.empresa = m.empresa " +
+                    "inner join maes on maes.empresa = l.empresa and maes.fkejercicio = m.fkejercicio and maes.fkcuentas = c.id" +
+                    " WHERE c.nivel = 0 AND c.empresa='" + user.Empresa + "'" +
+                    " AND (m.fkseriescontables = @serie OR m.fkseriescontables IS NULL)";
+
+                if (!string.IsNullOrEmpty(cuentaDesde))
                 {
-                    mainQuery.Sql += " UNION ALL";
-                    //ValoresParametros.Add("inicioejercicio", InicioEjercicio.Value);
-                    mainQuery.Sql += " (SELECT (c.id + ' ' + c.descripcion) AS [Cuenta]," +
-                        " NULL AS [Fecha], 'SUMA ANTERIOR' AS [Doc.]," +
-                        " NULL AS [Comentario]," +
-                        " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE 0 END)) AS [Debe]," +
-                        " SUM((CASE WHEN l.esdebe = -1 THEN l.importe ELSE 0 END)) AS [Haber]," +
-                        " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE (l.importe * -1) END)) AS [Diferencia]," + 
-                        " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE (l.importe * -1) END)) AS [Saldo]," +
-                        " 0 AS [Orden]" +
-                        " FROM Cuentas AS c" +
-                        " LEFT JOIN MovsLin AS l ON c.id = l.fkcuentas AND c.empresa = l.empresa " +
-                        " LEFT JOIN Movs AS m ON m.id = l.fkmovs AND c.empresa = m.empresa " +
-                        "inner join maes on maes.empresa = l.empresa and maes.fkejercicio = m.fkejercicio and maes.fkcuentas = c.id" + 
-                        " WHERE c.nivel = 0 AND c.empresa='" + user.Empresa + "'" +
-                        " AND (m.fkseriescontables = @serie OR m.fkseriescontables IS NULL)";
-
-                    if (!string.IsNullOrEmpty(cuentaDesde))
-                    {
-                        mainQuery.Sql += " AND c.id>=@cuentaDesde";
-                    }
-
-                    if (!string.IsNullOrEmpty(cuentaHasta))
-                    {
-                        mainQuery.Sql += " AND c.id<=@cuentaHasta";
-                    }
-
-                    mainQuery.Sql += " AND ((m.Fecha<@fechadesde) OR m.fecha IS NULL and m.fkejercicio = '" + user.Ejercicio + "')";
-                    if (!mostrarcuentassinSaldo)
-                    {
-                        mainQuery.Sql += " AND ";
-                        mainQuery.Sql += "maes.saldo <> 0";
-                    }
-                    mainQuery.Sql += " GROUP BY c.id, c.descripcion)";
+                    mainQuery.Sql += " AND c.id>=@cuentaDesde";
                 }
+
+                if (!string.IsNullOrEmpty(cuentaHasta))
+                {
+                    mainQuery.Sql += " AND c.id<=@cuentaHasta";
+                }
+
+                mainQuery.Sql += " AND ((m.Fecha>=@inicioejercicio AND m.Fecha<@fechadesde) OR m.fecha IS NULL and m.fkejercicio = '" + user.Ejercicio + "')";
+                if (!mostrarcuentassinSaldo)
+                {
+                    mainQuery.Sql += " AND ";
+                    mainQuery.Sql += "maes.saldo <> 0";
+                }
+                mainQuery.Sql += " GROUP BY c.id, c.descripcion)";
 
                 mainQuery.Sql += ")t";
 
-            }else
+            }
+            else
             {
                 mainQuery.Sql += "))t";
             }

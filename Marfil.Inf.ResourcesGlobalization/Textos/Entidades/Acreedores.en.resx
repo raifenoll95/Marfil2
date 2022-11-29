@@ -130,7 +130,7 @@
     <value>Main language</value>
   </data>
   <data name="LblMensajeTipoCuenta" xml:space="preserve">
-    <value>There is not a type of account for acreedores</value>
+    <value>There is not a type of account for creditors</value>
   </data>
   <data name="Clasificacion" xml:space="preserve">
     <value>Clasification</value>
@@ -139,10 +139,10 @@
     <value>Payments</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
-    <value>Town</value>
+    <value>City</value>
   </data>
   <data name="Provincia" xml:space="preserve">
-    <value>Province</value>
+    <value>State</value>
   </data>
   <data name="Nif" xml:space="preserve">
     <value>Id Number</value>
@@ -154,6 +154,96 @@
     <value>Crediter</value>
   </data>
   <data name="PrevisionPagosPeriodicos" xml:space="preserve">
-    <value>Provision for periodic payments. Conciliate with </value>
+    <value>Provision for periodic payments. Conciliate with</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Fkgruposiva" xml:space="preserve">
+    <value>VAT groups</value>
+  </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="Fkfamiliaacreedor" xml:space="preserve">
+    <value>Suppliers line</value>
+  </data>
+  <data name="Fkzonaacreedor" xml:space="preserve">
+    <value>Supplier zone</value>
+  </data>
+  <data name="Fktipoempresa" xml:space="preserve">
+    <value>Company type</value>
+  </data>
+  <data name="Fkunidadnegocio" xml:space="preserve">
+    <value>Business unit</value>
+  </data>
+  <data name="Fkincoterm" xml:space="preserve">
+    <value>Incoterm</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>VAT group</value>
+  </data>
+  <data name="Criterioiva" xml:space="preserve">
+    <value>VAT criteria</value>
+  </data>
+  <data name="Fktiposretencion" xml:space="preserve">
+    <value>Withhold code</value>
+  </data>
+  <data name="Fktransportistahabitual" xml:space="preserve">
+    <value>Default carrier</value>
+  </data>
+  <data name="Tipodeportes" xml:space="preserve">
+    <value>Type of shipping</value>
+  </data>
+  <data name="Cuentatesoreria" xml:space="preserve">
+    <value>Treasury account</value>
+  </data>
+  <data name="Fkformaspago" xml:space="preserve">
+    <value>Payment method</value>
+  </data>
+  <data name="Descuentoprontopago" xml:space="preserve">
+    <value>Cash discount %</value>
+  </data>
+  <data name="Descuentocomercial" xml:space="preserve">
+    <value>Commercial discount %</value>
+  </data>
+  <data name="Diafijopago1" xml:space="preserve">
+    <value>Payment day 1</value>
+  </data>
+  <data name="Diafijopago2" xml:space="preserve">
+    <value>Payment day 2</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Tarifa" xml:space="preserve">
+    <value>Price list</value>
+  </data>
+  <data name="CriterioIVADevengo" xml:space="preserve">
+    <value>Accrual</value>
+  </data>
+  <data name="CriterioIVACaja" xml:space="preserve">
+    <value>Box</value>
+  </data>
+  <data name="TipoportesPagados" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="TipoportesDebidos" xml:space="preserve">
+    <value>Due</value>
+  </data>
+  <data name="Facturacion" xml:space="preserve">
+    <value>Invoicing</value>
+  </data>
+  <data name="Fkcriteriosagrupacion" xml:space="preserve">
+    <value>Grouping criteria</value>
+  </data>
+  <data name="Fktipofactura" xml:space="preserve">
+    <value>Default invoice</value>
+  </data>
+  <data name="Periodonopagodesde" xml:space="preserve">
+    <value>Non-payment period from</value>
+  </data>
+  <data name="Periodonopagohasta" xml:space="preserve">
+    <value>Non-payment period until</value>
   </data>
 </root>

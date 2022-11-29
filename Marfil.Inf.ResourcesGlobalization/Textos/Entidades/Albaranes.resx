@@ -499,7 +499,7 @@
     <value>Sección</value>
   </data>
   <data name="Bundle" xml:space="preserve">
-    <value>Bundle</value>
+    <value>Bundles / Kit</value>
   </data>
   <data name="Pesobruto" xml:space="preserve">
     <value>Peso bruto</value>
@@ -809,5 +809,11 @@
   </data>
   <data name="Remolque" xml:space="preserve">
     <value>Remolque</value>
+  </data>
+  <data name="AsistenteLecturas" xml:space="preserve">
+    <value>Asistente de inserción de lecturas</value>
+  </data>
+  <data name="GenerarLecturas" xml:space="preserve">
+    <value>Insertar lecturas</value>
   </data>
 </root>

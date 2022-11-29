@@ -501,7 +501,7 @@ namespace Marfil.App.WebMain.Controllers
                 Texto = General.LblCambiarEstado,
                 Url = "#",
                 Desactivado = true,
-                Items = estados.Select(f => new ToolbarActionModel()
+                Items = estados.Where(f => f.Tipomovimiento != TipoMovimiento.Automatico).Select(f => new ToolbarActionModel()
                 {
                     Url = Url.Action("CambiarEstado", "Reservasstock", new { documentoReferencia = objModel.Id, estadoNuevo = f.CampoId, returnUrl = Url.Action("Edit", "Reservasstock", new { id = objModel.Id }) }),
                     Texto = f.Descripcion

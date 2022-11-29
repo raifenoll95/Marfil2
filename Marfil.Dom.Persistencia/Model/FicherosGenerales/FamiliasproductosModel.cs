@@ -213,17 +213,26 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RArticulos), Name = "Lotefraccionable")]
         public bool Lotefraccionable { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Existenciasminimasmetros")]
-        public double? Existenciasminimasmetros { get; set; }
+        /* [Display(ResourceType = typeof(RArticulos), Name = "Existenciasminimasmetros")]
+         public double? Existenciasminimasmetros { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Existenciasmaximasmetros")]
-        public double? Existenciasmaximasmetros { get; set; }
+         [Display(ResourceType = typeof(RArticulos), Name = "Existenciasmaximasmetros")]
+         public double? Existenciasmaximasmetros { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Existenciasminimasunidades")]
-        public double? Existenciasminimasunidades { get; set; }
+         [Display(ResourceType = typeof(RArticulos), Name = "Existenciasminimasunidades")]
+         public double? Existenciasminimasunidades { get; set; }
 
-        [Display(ResourceType = typeof(RArticulos), Name = "Existenciasmaximasunidades")]
-        public double? Existenciasmaximasunidades { get; set; }
+         [Display(ResourceType = typeof(RArticulos), Name = "Existenciasmaximasunidades")]
+         public double? Existenciasmaximasunidades { get; set; }*/
+
+        [Display(ResourceType = typeof(RArticulos), Name = "Stockminimo")]
+        public double? Stockminimo { get; set; }
+
+        [Display(ResourceType = typeof(RArticulos), Name = "Stockmaximo")]
+        public double? Stockmaximo { get; set; }
+
+        [Display(ResourceType = typeof(RArticulos), Name = "Stockseguridad")]
+        public TipoStockSeguridad Stockseguridad { get; set; }
 
         [Display(ResourceType = typeof(RArticulos), Name = "Web")]
         public bool Web { get; set; }

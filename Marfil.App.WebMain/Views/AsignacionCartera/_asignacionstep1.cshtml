@@ -22,75 +22,75 @@
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
 
-    <form class="form-horizontal" id="step1-form">
+<form class="form-horizontal" id="step1-form">
 
-        <br />
+    <br />
 
-        @*Tipo*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.Tipo, new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.EnumDropDownList("Tipo", Model.Tipo, (object)new { @class = "tipo-select", @style = "width: 350px;" })
-                @Html.ValidationMessageFor(f => Model.Tipo, "", new { @class = "text-danger" })
-            </div>
+    @*Tipo*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Tipo, new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EnumDropDownList("Tipo", Model.Tipo, (object)new { @class = "tipo-select", @style = "width: 350px;" })
+            @Html.ValidationMessageFor(f => Model.Tipo, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        @*CircuitosTesoreria*@
-        <div id="cuenta1" class="form-group cuentaa1" onblur="myFunction()">
-            @Html.LabelFor(f => Model.Circuitotesoreria, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    cvcircuitos.Name = "Circuitotesoreria";
-                    cvcircuitos.Url = Url.Action("CircuitosTesoreriaApi", "Api");
-                    cvcircuitos.Valor = Model.Circuitotesoreria;
-                    cvcircuitos.Titulo = "Circuitos de tesorería";
-                    cvcircuitos.Params = "{\"soloinicialescobropago\":\"" + "1" + "\"}";
-                    cvcircuitos.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
-                    cvcircuitos.Obligatorio = true;
-                }
-                @Html.Partial("CampoverificacionUI", cvcircuitos)
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.Circuitotesoreria, "", new { @class = "text-danger", @onchange = "onchangeeventcargo1();" })
-            </div>
+    @*CircuitosTesoreria*@
+    <div id="cuenta1" class="form-group cuentaa1" onblur="myFunction()">
+        @Html.LabelFor(f => Model.Circuitotesoreria, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcircuitos.Name = "Circuitotesoreria";
+                cvcircuitos.Url = Url.Action("CircuitosTesoreriaApi", "Api");
+                cvcircuitos.Valor = Model.Circuitotesoreria;
+                cvcircuitos.Titulo = "Circuitos de tesorería";
+                cvcircuitos.Params = "{\"soloinicialescobropago\":\"" + "1" + "\"}";
+                cvcircuitos.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
+                cvcircuitos.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvcircuitos)
         </div>
-
-        @*Fkcuentas*@
-        <div id="cuenta1" class="form-group cuentaa1">
-            @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    cvcuentas.Name = "Fkcuentas";
-                    cvcuentas.Url = Url.Action("AsistenteAsignacionVencimientosApi", "Api");
-                    cvcuentas.Valor = Model.Fkcuentas;
-                    cvcuentas.Titulo = "Terceros";
-                    cvcuentas.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
-                    cvcuentas.Obligatorio = true;
-                }
-                @Html.Partial("CampoverificacionUI", cvcuentas)
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                @Html.ValidationMessageFor(f => Model.Fkcuentas, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Circuitotesoreria, "", new { @class = "text-danger", @onchange = "onchangeeventcargo1();" })
         </div>
+    </div>
 
-        @*Importe*@
-        <div class="form-group">
-            @Html.LabelFor(f => Model.Importe, new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.TextBoxFor(f => Model.Importe, new { @class = "form-control" })
-            </div>
+    @*Fkcuentas*@
+    <div id="cuenta1" class="form-group cuentaa1">
+        @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvcuentas.Name = "Fkcuentas";
+                cvcuentas.Url = Url.Action("AsistenteAsignacionVencimientosApi", "Api");
+                cvcuentas.Valor = Model.Fkcuentas;
+                cvcuentas.Titulo = "Terceros";
+                cvcuentas.ControlesAsociados = "[ { \"tipoasignacion\":\"Tipo\" } ]";
+                cvcuentas.Obligatorio = true;
+            }
+            @Html.Partial("CampoverificacionUI", cvcuentas)
         </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkcuentas, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-        @*Fecha*@
+    @*Importe*@
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Importe, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Importe, new { @class = "form-control" })
+        </div>
+    </div>
+
+    @*Fecha
         <div class="form-group">
             @Html.LabelFor(f => Model.FechaContable, new { @class = "control-label col-md-2" })
             <div class="col-md-2">
                 @Html.EditorFor(f => Model.FechaContable)
             </div>
-        </div>   
+        </div>   *@
 
-        <div class="form-group col-md-4" align="right">
-            <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
-        </div>
-    </form>
+    <div class="form-group col-md-4" align="right">
+        <span class="field-validation-valid text-danger" id="campposvacioserror"></span>
+    </div>
+</form>

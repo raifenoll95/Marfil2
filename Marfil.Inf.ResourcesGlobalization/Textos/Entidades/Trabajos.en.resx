@@ -123,4 +123,61 @@
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Job</value>
   </data>
+  <data name="Fkarticulofacturable" xml:space="preserve">
+    <value>Billable item</value>
+  </data>
+  <data name="Fkacabadofinal" xml:space="preserve">
+    <value>Final finish</value>
+  </data>
+  <data name="Fkacabadoinicial" xml:space="preserve">
+    <value>Initial finish</value>
+  </data>
+  <data name="Tipoimputacion" xml:space="preserve">
+    <value>Account assignment type</value>
+  </data>
+  <data name="Tipotrabajo" xml:space="preserve">
+    <value>Type of job</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Aserrado" xml:space="preserve">
+    <value>Sawn</value>
+  </data>
+  <data name="Elaborado" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="M3" xml:space="preserve">
+    <value>M3</value>
+  </data>
+  <data name="M2Real" xml:space="preserve">
+    <value>actual m2</value>
+  </data>
+  <data name="M2Peso" xml:space="preserve">
+    <value>M2 Weight</value>
+  </data>
+  <data name="PrecioReferencia" xml:space="preserve">
+    <value>Reference price</value>
+  </data>
+  <data name="Precio" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Año" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="ErrorFormatoAño" xml:space="preserve">
+    <value>The year must be a 4-digit number</value>
+  </data>
+  <data name="ErrorPrecio" xml:space="preserve">
+    <value>The price field must have a value between 0 and 9/999/999.99</value>
+  </data>
+  <data name="ErrorRangoCapacidad" xml:space="preserve">
+    <value>The capacity field must have a value between 0 and 9/999.99</value>
+  </data>
+  <data name="ErrorRangoFecha" xml:space="preserve">
+    <value>The date must be a year within the range 2000-2100</value>
+  </data>
 </root>

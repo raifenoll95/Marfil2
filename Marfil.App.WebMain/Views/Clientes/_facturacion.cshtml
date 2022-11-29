@@ -6,21 +6,28 @@
 @using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 @using Marfil.Dom.Persistencia.Model.Iva;
 @using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+@using Marfil.Dom.Persistencia.ServicesView;
 @model Marfil.Dom.Persistencia.Model.Terceros.ClientesModel
 @{
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var cvmonedas = FCampoverificacion.Instance.GetModel<MonedasModel>(WebHelper.ContextService);
+    var cvtipofactura = FCampoverificacion.Instance.GetModel<TiposFacturasIvaModel>(WebHelper.ContextService);
     var cvregimeniva = FCampoverificacion.Instance.GetModel<RegimenIvaModel>(WebHelper.ContextService);
     var cvgruposiva = FCampoverificacion.Instance.GetModel<GruposIvaModel>(WebHelper.ContextService);
     var cvcuentas = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvtiposretencion = FCampoverificacion.Instance.GetModel<TiposRetencionesModel>(WebHelper.ContextService);
-    var criteriosagrupacionlist = WebHelper.GetApplicationHelper().GetListCriteriosagrupacion().Select(f => new SelectListItem() { Value=f.Id,Text=f.Nombre }).ToList();
-    criteriosagrupacionlist.Insert(0,new SelectListItem() {Value="",Text=""});
+    var criteriosagrupacionlist = WebHelper.GetApplicationHelper().GetListCriteriosagrupacion().Select(f => new SelectListItem() { Value = f.Id, Text = f.Nombre }).ToList();
+    criteriosagrupacionlist.Insert(0, new SelectListItem() { Value = "", Text = "" });
+
+    if (Model.Fktipofactura == "" || Model.Fktipofactura == null)
+    {
+        Model.Fktipofactura = WebHelper.GetApplicationHelper().GetTipoFacturaDefectoRepercutido();
+    }
 
 }
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Fkmonedas, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Fkmonedas, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
 
@@ -32,12 +39,31 @@
         }
 
         @Html.Partial("CampoverificacionUI", cvmonedas)
-        @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Fkmonedas, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Fkregimeniva, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Fktipofactura, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+
+            cvtipofactura.Name = "Fktipofactura";
+            cvtipofactura.Url = Url.Action("TiposFacturasIvaApi", "Api");
+            cvtipofactura.Valor = Model.Fktipofactura?.ToString();
+            cvtipofactura.Params = "{\"tipotercero\":\"1\"}";
+            cvtipofactura.SoloLectura = isreadonly;
+            cvtipofactura.Obligatorio = true;
+
+        }
+
+        @Html.Partial("CampoverificacionUI", cvtipofactura)
+        @Html.ValidationMessageFor(f => Model.Fktipofactura, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkregimeniva, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
 
@@ -46,16 +72,16 @@
             cvregimeniva.Valor = Model.Fkregimeniva?.ToString();
             cvregimeniva.SoloLectura = isreadonly;
             cvregimeniva.Obligatorio = true;
-            
+
         }
 
         @Html.Partial("CampoverificacionUI", cvregimeniva)
-        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Fkregimeniva, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Fkgruposiva, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Fkgruposiva, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
 
@@ -66,16 +92,16 @@
         }
 
         @Html.Partial("CampoverificacionUI", cvgruposiva)
-        @Html.ValidationMessageFor(f => Model.Fkgruposiva, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Fkgruposiva, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Criterioiva, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Criterioiva, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.HiddenFor(f=>Model.Criterioiva)
-        @Html.EnumDropDownListFor(f => Model.Criterioiva, (object) new {@class = "form-control",  @disabled = "disabled"})
-        @Html.ValidationMessageFor(f => Model.Criterioiva, "", new {@class = "text-danger"})
+        @Html.HiddenFor(f => Model.Criterioiva)
+        @Html.EnumDropDownListFor(f => Model.Criterioiva, (object)new { @class = "form-control", @disabled = "disabled" })
+        @Html.ValidationMessageFor(f => Model.Criterioiva, "", new { @class = "text-danger" })
     </div>
 </div>
 
@@ -112,15 +138,15 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Tipodeportes, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Tipodeportes, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.EnumDropDownListFor(f => Model.Tipodeportes, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
-        @Html.ValidationMessageFor(f => Model.Tipodeportes, "", new {@class = "text-danger"})
+        @Html.EnumDropDownListFor(f => Model.Tipodeportes, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Tipodeportes, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(f => Model.Cuentatesoreria, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Cuentatesoreria, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @{
 
@@ -128,11 +154,11 @@
             cvcuentas.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
             cvcuentas.Valor = Model.Cuentatesoreria;
             cvcuentas.SoloLectura = isreadonly;
-            cvcuentas.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Cuentastesoreria + "\"}";
+            cvcuentas.Params = "{\"tipocuenta\":\"" + (int)TiposCuentas.Cuentastesoreria + "\"}";
         }
 
         @Html.Partial("CampoverificacionUI", cvcuentas)
-        @Html.ValidationMessageFor(f => Model.Cuentatesoreria, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Cuentatesoreria, "", new { @class = "text-danger" })
     </div>
 </div>
 

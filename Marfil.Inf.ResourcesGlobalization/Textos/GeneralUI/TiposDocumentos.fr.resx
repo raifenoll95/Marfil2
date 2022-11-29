@@ -118,6 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EnumPresupuestosVentas" xml:space="preserve">
-    <value>Estimation de la vente</value>
+    <value>budget de vente</value>
+  </data>
+  <data name="EnumPedidosVentas" xml:space="preserve">
+    <value>commandes</value>
+  </data>
+  <data name="EnumAlbaranesVentas" xml:space="preserve">
+    <value>reçus de vente</value>
+  </data>
+  <data name="EnumFacturasVentas" xml:space="preserve">
+    <value>factures des ventes</value>
+  </data>
+  <data name="EnumPresupuestosCompras" xml:space="preserve">
+    <value>budget d'achat</value>
+  </data>
+  <data name="EnumPedidosCompras" xml:space="preserve">
+    <value>Acheter en ligne</value>
+  </data>
+  <data name="EnumAlbaranesCompras" xml:space="preserve">
+    <value>Bons de livraison d'achat</value>
+  </data>
+  <data name="EnumFacturasCompras" xml:space="preserve">
+    <value>Factures d'achat</value>
+  </data>
+  <data name="EnumReservas" xml:space="preserve">
+    <value>réserves de stock</value>
+  </data>
+  <data name="EnumTraspasos" xml:space="preserve">
+    <value>transferts d'entrepôt</value>
+  </data>
+  <data name="EnumEntradasVarias" xml:space="preserve">
+    <value>diverses entrées</value>
+  </data>
+  <data name="EnumSalidasVarias" xml:space="preserve">
+    <value>diverses sorties</value>
   </data>
 </root>

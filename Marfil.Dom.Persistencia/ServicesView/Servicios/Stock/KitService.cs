@@ -107,9 +107,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
             var modelview = obj as KitModel;
             modelview.Estado = modelview.Lineas.Any() ? EstadoKit.Montado : EstadoKit.EnProceso;
             //Calculo ID
-            var contador = ServiceHelper.GetNextId<Kit>(_db, Empresa, modelview.Fkseries);
+            var tipodocumento = "KIT"; //Kit
+            var contador = ServiceHelper.GetNextId<Kit>(_db, Empresa, modelview.Fkseries, tipodocumento);
             var identificadorsegmento = "";
-            modelview.Referencia = ServiceHelper.GetReference<Kit>(_db, modelview.Empresa, modelview.Fkseries, contador, modelview.Fechadocumento, out identificadorsegmento);
+            modelview.Referencia = ServiceHelper.GetReference<Kit>(_db, modelview.Empresa, modelview.Fkseries, tipodocumento, contador, modelview.Fechadocumento, out identificadorsegmento);
             modelview.Identificadorsegmento = identificadorsegmento;
 
             base.create(obj);
@@ -135,6 +136,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
             _flagDesmontar = true;
             var model = get(id) as KitModel;
             model.Estado=EstadoKit.Desmontado;
+
+            model.Lineas.Clear();
+
+            edit(model);
+        }
+
+        public void Vendido(string id)
+        {
+            _flagDesmontar = true;
+            var model = get(id) as KitModel;
+            model.Estado = EstadoKit.Vendido;
+
             edit(model);
         }
     }

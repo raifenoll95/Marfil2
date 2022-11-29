@@ -129,6 +129,9 @@
   <data name="Fecha" xml:space="preserve">
     <value>Fecha Doc.</value>
   </data>
+  <data name="Fecharotura" xml:space="preserve">
+    <value>Fecha de rotura</value>
+  </data>
   <data name="Pedidooptimo" xml:space="preserve">
     <value>Pedido óptimo</value>
   </data>

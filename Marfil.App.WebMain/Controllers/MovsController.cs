@@ -41,7 +41,7 @@ namespace Marfil.App.WebMain.Controllers
     {
         private const string session = "_movslin_";
         //private const string sessiontotales = "_movstotales_";
-        
+
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -72,7 +72,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             if (TempData["errors"] != null)
                 ModelState.AddModelError("", TempData["errors"].ToString());
-            
+
             try
             {
                 //Si ya se ha comenzado el proceso de cierre no se permite crear asientos nuevos
@@ -112,8 +112,8 @@ namespace Marfil.App.WebMain.Controllers
                 var fmodel = new FModel();
                 var newmodel = fmodel.GetModel<MovsModel>(ContextService);
                 model.Lineas = Session[session] as List<MovsLinModel>;
-              //  model.Totales = Session[sessiontotales] as List<MovsTotalesModel>;
-        //        model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
+                //  model.Totales = Session[sessiontotales] as List<MovsTotalesModel>;
+                //        model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
                 if (ModelState.IsValid)
                 {
 
@@ -158,7 +158,7 @@ namespace Marfil.App.WebMain.Controllers
                     return HttpNotFound();
                 }
                 Session[session] = ((MovsModel)model).Lineas;
-              //  Session[sessiontotales] = ((MovsModel)model).Totales;
+                //  Session[sessiontotales] = ((MovsModel)model).Totales;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                 return View(model);
             }
@@ -175,8 +175,8 @@ namespace Marfil.App.WebMain.Controllers
                 var fmodel = new FModel();
                 var newmodel = fmodel.GetModel<MovsModel>(ContextService);
                 model.Lineas = Session[session] as List<MovsLinModel>;
-              //  model.Totales = Session[sessiontotales] as List<MovsTotalesModel>;
-          //      model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
+                //  model.Totales = Session[sessiontotales] as List<MovsTotalesModel>;
+                //      model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
                 if (ModelState.IsValid)
                 {
                     using (var gestionService = createService(model))
@@ -219,7 +219,7 @@ namespace Marfil.App.WebMain.Controllers
                     return HttpNotFound();
                 }
                 Session[session] = ((MovsModel)model).Lineas;
-          //      Session[sessiontotales] = ((MovsModel)model).Totales;
+                //      Session[sessiontotales] = ((MovsModel)model).Totales;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 ViewBag.ReadOnly = true;
                 return View(model);
@@ -238,7 +238,7 @@ namespace Marfil.App.WebMain.Controllers
                     var model = gestionService.get(id) as MovsModel;
                     if (model.Tipoasiento == "R1" || model.Tipoasiento == "R2" || model.Tipoasiento == "R3" || model.Tipoasiento == "R4" || model.Tipoasiento == "R5")
                     {
-                        throw new ValidationException("No se puedo borrar manualmente un asiento de tipo automático que no se de apertura");
+                        throw new ValidationException("No se puedo borrar manualmente un asiento de tipo automático que no sea de apertura");
                     }
                 }*/
                 return base.DeleteConfirmed(id);
@@ -248,7 +248,7 @@ namespace Marfil.App.WebMain.Controllers
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
                 return RedirectToAction("Index", "Movs");
             }
-            
+
         }
 
 
@@ -264,12 +264,12 @@ namespace Marfil.App.WebMain.Controllers
             return PartialView("_Movslin", model);
         }
 
-          [ValidateInput(false)]
-          public ActionResult MovsLin()
-          {
-              var model = Session[session] as List<MovsLinModel>;
-              return PartialView("_Movslin", model);
-          }
+        [ValidateInput(false)]
+        public ActionResult MovsLin()
+        {
+            var model = Session[session] as List<MovsLinModel>;
+            return PartialView("_Movslin", model);
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult MovsLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] MovsLinModel item)
@@ -280,7 +280,7 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
                     var max = model.Any() ? model.Max(f => f.Id) : 0;
-                    item.Id = max + 1;                    
+                    item.Id = max + 1;
                     var moneda = Funciones.Qnull(Request.Params["fkmonedas"]);
 
                     var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), ContextService);
@@ -297,26 +297,26 @@ namespace Marfil.App.WebMain.Controllers
                         //{
                         var monedaObj = serviceMonedas.get(moneda) as MonedasModel;
 
-                        item.Esdebe =(short)(item.Haber.HasValue && item.Haber !=0 ? -1 : 1 );
+                        item.Esdebe = (short)(item.Haber.HasValue && item.Haber != 0 ? -1 : 1);
                         if (item.Esdebe == -1)
-                                {
-                                    item.Importe = Decimal.Round(item.Haber ?? 0, monedaObj.Decimales);
-                                }
+                        {
+                            item.Importe = Decimal.Round(item.Haber ?? 0, monedaObj.Decimales);
+                        }
                         else
-                                {
-                                    item.Importe = Decimal.Round(item.Debe ?? 0, monedaObj.Decimales);
-                                }
+                        {
+                            item.Importe = Decimal.Round(item.Debe ?? 0, monedaObj.Decimales);
+                        }
 
-                            
-                            model.Add(item);
 
-                            Session[session] = model;
-                           // var service = FService.Instance.GetService(typeof(MovsModel), ContextService) as MovsService;
-                           // Session[sessiontotales] = service.Recalculartotales(model, monedaObj.Decimales);
+                        model.Add(item);
 
-                    
+                        Session[session] = model;
+                        // var service = FService.Instance.GetService(typeof(MovsModel), ContextService) as MovsService;
+                        // Session[sessiontotales] = service.Recalculartotales(model, monedaObj.Decimales);
 
-                       // }
+
+
+                        // }
 
                     }
                     else
@@ -374,19 +374,19 @@ namespace Marfil.App.WebMain.Controllers
 
                     if (item.Esdebe == -1)
                     {
-                        editItem.Importe = Decimal.Round(item.Haber ?? 0,  item.Decimalesmonedas??0);
+                        editItem.Importe = Decimal.Round(item.Haber ?? 0, item.Decimalesmonedas ?? 0);
                     }
                     else
                     {
-                        editItem.Importe = Decimal.Round(item.Debe ?? 0, item.Decimalesmonedas??0);
+                        editItem.Importe = Decimal.Round(item.Debe ?? 0, item.Decimalesmonedas ?? 0);
                     }
 
                     //editItem.Esdebe = editItem.Esdebe;
                     //editItem.Importe = Decimal.Round(item.Importe , monedaObj.Decimales);
                     editItem.Decimalesmonedas = item.Decimalesmonedas;
- 
+
                     editItem.Importemonedadocumento = item.Importemonedadocumento;
-                    editItem.Conciliado =item.Conciliado;
+                    editItem.Conciliado = item.Conciliado;
                     // var service = FService.Instance.GetService(typeof(MovsModel), ContextService) as MovsService;
                     // Session[sessiontotales] = service.Recalculartotales(model,  monedaObj.Decimales);
 
@@ -419,7 +419,7 @@ namespace Marfil.App.WebMain.Controllers
             return PartialView("_Movslin", model);
         }
 
-        
+
 
         // GET: api/Supercuentas/5
         public void MovsRefresh()
@@ -427,10 +427,10 @@ namespace Marfil.App.WebMain.Controllers
             var model = Session[session] as List<MovsLinModel>;
             var decimales = model.FirstOrDefault()?.Decimalesmonedas ?? 0;
             var service = FService.Instance.GetService(typeof(MovsModel), ContextService) as MovsService;
-            
-            var lineas = service.RecalculaLineas(model,  decimales);
+
+            var lineas = service.RecalculaLineas(model, decimales);
             Session[session] = lineas.ToList();
-           // Session[sessiontotales] = service.Recalculartotales(lineas,  decimales);
+            // Session[sessiontotales] = service.Recalculartotales(lineas,  decimales);
 
 
 
@@ -446,9 +446,9 @@ namespace Marfil.App.WebMain.Controllers
             var result = base.EditToolbar(service, model).ToList();
             result.Add(new ToolbarSeparatorModel());
             result.Add(new ToolbarSeparatorModel());
-  //          result.Add(CreateComboImprimir(objModel));
-  
-    //        result.Add(CreateComboEstados(objModel));
+            //          result.Add(CreateComboImprimir(objModel));
+
+            //        result.Add(CreateComboEstados(objModel));
             return result;
         }
 
@@ -477,8 +477,8 @@ namespace Marfil.App.WebMain.Controllers
             var result = base.VerToolbar(service, model).ToList();
             result.Add(new ToolbarSeparatorModel());
 
-   //         result.Add(CreateComboImprimir(objModel));
-          
+            //         result.Add(CreateComboImprimir(objModel));
+
             return result;
         }
 
@@ -502,7 +502,7 @@ namespace Marfil.App.WebMain.Controllers
         #endregion
 
         #region AsistenteImportación
-        
+
         public ActionResult AsistenteMovs()
         {
             return View(new AsistenteMovsModel()
@@ -523,7 +523,7 @@ namespace Marfil.App.WebMain.Controllers
                 if (file != null && file.ContentLength > 0)
                 {
                     if (file.FileName.ToLower().EndsWith(".csv"))
-                    {                        
+                    {
                         var service = FService.Instance.GetService(typeof(MovsModel), ContextService) as MovsService;
                         StreamReader sr = new StreamReader(file.InputStream, Encoding.UTF8);
                         StringBuilder sb = new StringBuilder();
@@ -531,7 +531,7 @@ namespace Marfil.App.WebMain.Controllers
                         DataRow dr;
                         string s;
                         int j = 0;
-                        
+
                         dt.Columns.Add("Referencia");
                         dt.Columns.Add("Fecha");
                         dt.Columns.Add("Esdebe");
@@ -547,17 +547,17 @@ namespace Marfil.App.WebMain.Controllers
                             {
                                 //Ignorar cabecera                    
                                 if (j > 0 || !model.Cabecera)
-                                {                                    
+                                {
                                     string[] str = s.Split(delimitador);
                                     dr = dt.NewRow();
-                                   
-                                    for (int i = 0; i < dt.Columns.Count; i++ )
+
+                                    for (int i = 0; i < dt.Columns.Count; i++)
                                     {
                                         try
                                         {
                                             dr[dt.Columns[i]] = str[i].Replace("\"", string.Empty).ToString() ?? string.Empty;
                                         }
-                                        catch(Exception ex)
+                                        catch (Exception ex)
                                         {
                                             ModelState.AddModelError("File", General.ErrorDelimitadorFormato);
                                             return View("AsistenteMovs", model);
@@ -571,7 +571,7 @@ namespace Marfil.App.WebMain.Controllers
                         try
                         {
                             idPeticion = service.CrearPeticionImportacion(ContextService);
-                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, model.Seriecontable.ToString(), idPeticion, token));                            
+                            HostingEnvironment.QueueBackgroundWorkItem(async token => await GetAsync(dt, model.Seriecontable.ToString(), idPeticion, token));
                             //service.Importar(dt, model.Seriecontable.ToString(), ContextService);
                             sr.Close();
                         }
@@ -589,11 +589,11 @@ namespace Marfil.App.WebMain.Controllers
 
                         //TempData["Success"] = "Importado correctamente!";
                         TempData["Success"] = "Ejecutando, proceso con id = " + idPeticion.ToString() + ", para comprobar su ejecución ir al menú de peticiones asíncronas";
-                        return RedirectToAction("AsistenteMovs", "Movs");                        
+                        return RedirectToAction("AsistenteMovs", "Movs");
                     }
                     else
                     {
-                        ModelState.AddModelError("File", General.ErrorFormatoFichero);                        
+                        ModelState.AddModelError("File", General.ErrorFormatoFichero);
                     }
                 }
                 else
@@ -602,7 +602,7 @@ namespace Marfil.App.WebMain.Controllers
                 }
             }
 
-            return View("AsistenteMovs",model);
+            return View("AsistenteMovs", model);
         }
 
         private async Task GetAsync(DataTable dt, string serie, int idPeticion, CancellationToken cancellationToken)
@@ -612,14 +612,14 @@ namespace Marfil.App.WebMain.Controllers
                 cancellationToken.ThrowIfCancellationRequested();
 
                 using (var service = FService.Instance.GetService(typeof(MovsModel), ContextService) as MovsService)
-                {                    
-                    await Task.Run(() => service.Importar(dt, serie, idPeticion, ContextService));                                       
+                {
+                    await Task.Run(() => service.Importar(dt, serie, idPeticion, ContextService));
                     return;
                 }
 
             }
             catch (TaskCanceledException tce)
-            {                
+            {
 
             }
             catch (Exception ex)
@@ -633,7 +633,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #endregion
 
-        public ActionResult Contabilizar(int IdFactura, string NombreTipo, string returnUrl)
+        public ActionResult Contabilizar(int IdFactura, string NombreTipo, string TipoFactura, string returnUrl)
         {
             Type tipo = Helper.GetTypeFromFullName(NombreTipo);
             var model = Helper.fModel.GetModel<MovsModel>(ContextService);
@@ -644,8 +644,16 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     serviceFactura.Empresa = ContextService.Empresa;
                     var Factura = serviceFactura.get(IdFactura.ToString()) as IDocument;
+
+                    //debe tener indicada la factura el tipo de factura
+                    if (TipoFactura == null || TipoFactura == "")
+                    {
+                        throw new ValidationException("La factura debe tener indicada el campo Tipo Factura de la pestaña Comerciales");
+                    }
+
                     service.EjercicioId = ContextService.Ejercicio;
-                    model= service.Contabilizar(Factura);
+                    model = service.Contabilizar(Factura);
+                    TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                 }
             }
             catch (Exception ex)
@@ -654,7 +662,7 @@ namespace Marfil.App.WebMain.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Details", "Movs", new { id = model.Id });
-        }        
+        }
 
         protected override IGestionService createService(IModelView model)
         {

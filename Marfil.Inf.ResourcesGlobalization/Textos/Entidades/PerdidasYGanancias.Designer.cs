@@ -79,6 +79,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ejercicio actual.
+        /// </summary>
+        public static string Ejercicioactual {
+            get {
+                return ResourceManager.GetString("Ejercicioactual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ejercicio anterior.
+        /// </summary>
+        public static string Ejercicioanterior {
+            get {
+                return ResourceManager.GetString("Ejercicioanterior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Guía.
         /// </summary>
         public static string Guia {

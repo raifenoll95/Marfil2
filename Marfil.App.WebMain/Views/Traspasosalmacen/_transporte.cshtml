@@ -71,24 +71,28 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(f => Model.Matricula, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(f => Model.Matricula, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
-            @Html.TextBoxFor(f => Model.Matricula, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+            @Html.TextBoxFor(f => Model.Matricula, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(f => Model.Remolque, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(f => Model.Remolque, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
         </div>
         <div class="col-md-12"></div>
-
         <div class="col-md-2 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Matricula, "", new {@class = "text-danger"})
+            @Html.ValidationMessageFor(f => Model.Matricula, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(f => Model.Remolque, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(f => Model.Fkoperariostransporte, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(f => Model.Fkoperadortransporte, new {@class = "control-label col-md-2"})
         <div class="col-md-10">
             @{
-                campoverificacion.Name = "Fkoperariostransporte";
+                campoverificacion.Name = "Fkoperadortransporte";
                 campoverificacion.Url = Url.Action("CuentasTiposTercerosExclusiveApi", "Api");
-                campoverificacion.Valor = Model.Fkoperariostransporte;
+                campoverificacion.Valor = Model.Fkoperadortransporte;
                 campoverificacion.Titulo = "Operador de transporte";
                 campoverificacion.SoloLectura = isreadonly;
                 campoverificacion.Params = "{\"tipocuenta\":\"" + (int) TiposCuentas.Transportistas + "\"}";
@@ -96,7 +100,7 @@
             @Html.Partial("CampoverificacionUI", campoverificacion)
         </div>
         <div class="col-md-10 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Fkoperariostransporte, "", new {@class = "text-danger"})
+            @Html.ValidationMessageFor(f => Model.Fkoperadortransporte, "", new {@class = "text-danger"})
         </div>
     </div>
 

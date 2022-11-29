@@ -121,6 +121,84 @@
     <value>Clients</value>
   </data>
   <data name="TiposCuentasOperarios" xml:space="preserve">
-    <value>Employées</value>
+    <value>les opérateurs</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Types de compte</value>
+  </data>
+  <data name="TiposCuentasProveedores" xml:space="preserve">
+    <value>Fournisseurs</value>
+  </data>
+  <data name="TiposCuentasAcreedores" xml:space="preserve">
+    <value>créanciers</value>
+  </data>
+  <data name="TiposCuentasCobradores" xml:space="preserve">
+    <value>comptes du trésor</value>
+  </data>
+  <data name="TiposCuentasTransportistas" xml:space="preserve">
+    <value>transporteurs</value>
+  </data>
+  <data name="TiposCuentasAgentes" xml:space="preserve">
+    <value>agents</value>
+  </data>
+  <data name="TiposCuentasAseguradoras" xml:space="preserve">
+    <value>les compagnies d'assurance</value>
+  </data>
+  <data name="Cuenta" xml:space="preserve">
+    <value>Code de compte</value>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>La description</value>
+  </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Type de compte</value>
+  </data>
+  <data name="CadenaTipocuenta" xml:space="preserve">
+    <value>Type de compte</value>
+  </data>
+  <data name="DescripcionCuenta" xml:space="preserve">
+    <value>compte</value>
+  </data>
+  <data name="Nifobligatorio" xml:space="preserve">
+    <value>Nif/Cif obligatoire</value>
+  </data>
+  <data name="CuentasAsociadas" xml:space="preserve">
+    <value>Comptes associés</value>
+  </data>
+  <data name="ErrorUpdateTipoCuenta" xml:space="preserve">
+    <value>Impossible de modifier le compte car des enregistrements associés de type {0} existent</value>
+  </data>
+  <data name="ErrorCuentaDuplicada" xml:space="preserve">
+    <value>Le compte {0} est dupliqué</value>
+  </data>
+  <data name="ErrorCuentaLoop" xml:space="preserve">
+    <value>Le compte {0} est automatiquement généré dans un autre type de compte et pourrait générer des boucles</value>
+  </data>
+  <data name="ErrorCuentaLoopEncontrado" xml:space="preserve">
+    <value>Boucle trouvée avec le nombre {0}</value>
+  </data>
+  <data name="ErrorBorrar" xml:space="preserve">
+    <value>Le type de compte actuel est introuvable car des enregistrements lui sont associés</value>
+  </data>
+  <data name="TiposCuentasGeneral" xml:space="preserve">
+    <value>Compte général</value>
+  </data>
+  <data name="TiposCuentasComerciales" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="TiposCuentasProspectos" xml:space="preserve">
+    <value>perspectives</value>
+  </data>
+  <data name="CategoriasCuentasContables" xml:space="preserve">
+    <value>comptables</value>
+  </data>
+  <data name="CategoriasCuentasExtracontables" xml:space="preserve">
+    <value>Hors bilan</value>
+  </data>
+  <data name="Categoria" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="ErrorInicioCuentaExtracontable" xml:space="preserve">
+    <value>Les comptes hors bilan doivent commencer par une lettre</value>
   </data>
 </root>

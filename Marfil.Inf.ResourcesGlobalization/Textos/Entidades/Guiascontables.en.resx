@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Contable guide</value>
+    <value>Contable guides</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -131,5 +131,26 @@
   </data>
   <data name="LblCuentasguias" xml:space="preserve">
     <value>Account by TAX</value>
+  </data>
+  <data name="Fkcuentascompras" xml:space="preserve">
+    <value>purchase account</value>
+  </data>
+  <data name="Fkcuentasventas" xml:space="preserve">
+    <value>sales account</value>
+  </data>
+  <data name="Fkcuentasdevolucioncompras" xml:space="preserve">
+    <value>Purchase returns account</value>
+  </data>
+  <data name="Fkcuentasdevolucionventas" xml:space="preserve">
+    <value>sales return account</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>VAT group</value>
+  </data>
+  <data name="ErrorRegimenIvaDuplicado" xml:space="preserve">
+    <value>The VAT regime cannot be duplicated</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Default</value>
   </data>
 </root>

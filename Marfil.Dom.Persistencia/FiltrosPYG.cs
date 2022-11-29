@@ -20,5 +20,7 @@ namespace Marfil.Dom.Persistencia
         public int fkejercicio { get; set; }
         public string guia { get; set; }
         public Nullable<System.DateTime> fechaCalculo { get; set; }
+        public string usuario_ant { get; set; }
+        public Nullable<int> fkejercicio_ant { get; set; }
     }
 }

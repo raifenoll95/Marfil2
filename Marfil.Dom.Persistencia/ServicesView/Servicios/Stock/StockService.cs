@@ -421,7 +421,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                     f.loteid == model.Loteid);
                     _db.Stockhistorico.Remove(piezaAntigua); //Eliminamos la antigua
                     historicoitem = _db.Stockhistorico.Create(); //Creamos una nueva
-                }                
+
+                    //Sumamos los de la PiezaAntigua para no perder los costes de anteriores trabajos
+                    historicoitem.costeadicionalmaterial = Math.Round((double)((historicoitem.costeadicionalmaterial ?? 0) + piezaAntigua.costeadicionalmaterial ?? 0), decimalesmonedas);
+                    historicoitem.costeadicionalportes = Math.Round((double)((historicoitem.costeadicionalportes ?? 0) + piezaAntigua.costeadicionalportes ?? 0), decimalesmonedas);
+                    historicoitem.costeadicionalotro = Math.Round((double)((historicoitem.costeadicionalotro ?? 0) + piezaAntigua.costeadicionalotro ?? 0), decimalesmonedas);
+                    historicoitem.costeacicionalvariable = Math.Round((double)((historicoitem.costeacicionalvariable ?? 0) + piezaAntigua.costeacicionalvariable ?? 0), decimalesmonedas);
+                }
             }
 
             else

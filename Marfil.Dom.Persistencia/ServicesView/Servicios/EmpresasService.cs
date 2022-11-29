@@ -443,6 +443,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 EliminarContadoresLotes(model.Id);
                 EliminarSeries(model.Id);
                 EliminarSeriesContables(model.Id);
+                EliminarTiposFacturas(model.Id);
                 EliminarGruposIva(model.Id);
                 EliminarTiposIva(model.Id);
                 EliminarRegimenIva(model.Id);
@@ -453,6 +454,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 base.delete(obj);
 
                 tran.Complete();
+            }
+        }
+
+        private void EliminarTiposFacturas(string empresa)
+        {
+            var newContext = new ContextLogin()
+            {
+                BaseDatos = _context.BaseDatos,
+                Empresa = empresa,
+                Id = _context.Id,
+                RoleId = _context.RoleId
+            };
+
+            var service = new TiposFacturasIvaService(newContext, _db);
+            var list = service.getAll().OfType<TiposFacturasIvaModel>();
+
+            foreach (var item in list.Where(f => f.Empresa == empresa))
+            {
+
+                service.delete(item);
             }
         }
 
@@ -883,6 +904,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 return (int.Parse(_db.Empresas.Max(f => f.id)) + 1).ToString().PadLeft(4, '0');
             }
             return "0001";
+        }
+
+        public int GetLiquidacionIva(string empresa)
+        {
+            return (int)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().liquidacioniva;
+        }
+
+        public int GetFechaLiquidacionIvaRepercutido(string empresa)
+        {
+            return (int)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().ivarepercutido;
+        }
+
+        public TipoCriterioIva GetCriterioIVA(string empresa)
+        {
+            return (TipoCriterioIva)_db.Empresas.Where(f => f.id == empresa).FirstOrDefault().criterioiva;
         }
 
         #endregion

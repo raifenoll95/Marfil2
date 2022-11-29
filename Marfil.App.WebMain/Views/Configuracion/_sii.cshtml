@@ -1,0 +1,65 @@
+﻿
+@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@model Marfil.Dom.Persistencia.Model.ConfiguracionModel
+
+
+<h4>@Configuracionaplicacion.SiiDesc</h4>
+<div class="form-group">
+    @Html.LabelFor(f => Model.FasePruebas, new { @class = "control-label col-md-4" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.FasePruebas)
+    </div>
+    @Html.LabelFor(f => Model.RellenarCeros, new { @class = "control-label col-md-4" })
+    <div class="col-md-1">
+        @Html.CheckBoxFor(f => Model.RellenarCeros)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Version, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.Version, new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.PlazoPresentacion, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.PlazoPresentacion, new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(f => Model.PlazoPresentacion2017, new { @class = "control-label col-md-2" })
+    <div class="col-md-1">
+        @Html.TextBoxFor(f => Model.PlazoPresentacion2017, new { @class = "form-control" })
+    </div>
+</div>
+
+<br />
+<h4>@Configuracionaplicacion.SiiUrl</h4>
+<div class="form-group">
+    @Html.LabelFor(f => Model.UrlFacturasEmitidas, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(f => Model.UrlFacturasEmitidas, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.UrlFacturasRecibidas, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(f => Model.UrlFacturasRecibidas, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.UrlBienesInversion, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(f => Model.UrlBienesInversion, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.UrlCobrosMetalico, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(f => Model.UrlCobrosMetalico, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.UrlPagosIvaCaja, new { @class = "control-label col-md-2" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(f => Model.UrlPagosIvaCaja, new { @class = "form-control" })
+    </div>
+</div>

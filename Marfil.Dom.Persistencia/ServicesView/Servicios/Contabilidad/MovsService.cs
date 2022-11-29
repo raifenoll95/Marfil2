@@ -22,7 +22,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Validation;
 using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RMovs = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Movs;
-
+using RFacturas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Facturas;
 
 using System.Collections;
 using System.Globalization;
@@ -1041,7 +1041,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var tipoAsientoDefecto = "F4";
 
             //guia contable defecto
-            string GuiaContDef = _db.Guiascontables.Where(g=> g.defecto ).FirstOrDefault()?.id;
+            string GuiaContDef = _db.Guiascontables.Where(g=> g.empresa == Empresa && g.defecto ).FirstOrDefault()?.id;
 
             //comentarios defecto
             var configuracionService = new ConfiguracionService(_context, _db);
@@ -1060,7 +1060,32 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             //Factura de venta
             if (factura is FacturasModel)
             {
-                var facturaVenta = factura as FacturasModel;                
+                var facturaVenta = factura as FacturasModel;
+
+                //Comprobamos si la forma de pago y el mandato es correcto - Jul2022 Problema en el cambio de forma de pago
+                var _converterModel = FConverterModel.Instance.CreateConverterModelService<FacturasModel, Facturas>(_context, _db, Empresa);
+                var newItem = _converterModel.CreatePersitance(facturaVenta);
+                //var validationFactura = new FacturasValidation(_context, _db);
+                //validationFactura.ValidarGrabar(newItem);
+                var formapagoobj = _db.FormasPago.Single(f => f.id == newItem.fkformaspago);
+                if (formapagoobj.mandato.HasValue && formapagoobj.mandato.Value && string.IsNullOrEmpty(newItem.fkbancosmandatos))
+                {
+                    var mandato = _db.BancosMandatos.SingleOrDefault(
+                        f => f.fkcuentas == newItem.fkclientes && f.defecto == true && !string.IsNullOrEmpty(f.idmandato));
+                    var vector = newItem.fkestados.Split('-');
+                    var tipoestado = Funciones.Qint(vector[0]);
+                    var idestado = vector[1];
+                    var estadoObj = _db.Estados.Single(f => f.documento == tipoestado && f.id == idestado);
+                    if (mandato == null && estadoObj.tipoestado == (int)Model.Configuracion.TipoEstado.Finalizado)
+                    {
+                        throw new ValidationException(RFacturas.ErrorFormaPagoMandatoRequerido);
+                    }
+                    else
+                    {
+                        throw new ValidationException(RFacturas.WarningFormaPagoMandatoRequerido);
+                    }
+                }
+
 
                 short EsDevolucion = facturaVenta.Importebaseimponible > 0 ? (short)1 : (short)-1;
                 documento.Fecha = facturaVenta.Fechadocumento;
@@ -1177,6 +1202,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         linea.Importe += (decimal)Math.Abs(linFacTot.Cuotaiva.Value);
                     }             
                 }
+
+                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), documento.Decimalesmonedas);
+                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), documento.Decimalesmonedas);
+
+                if (totaldebe - totalhaber != 0)
+                    throw new ValidationException(RMovs.ErrorDescuadreDebeHaber);
 
                 //Nuevos Vencimientos y Pagos
                 var vencimientosService = new VencimientosService(_context);
@@ -1333,6 +1364,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         }                    
                     }
                 }
+
+                var totaldebe = Math.Round(documento.Lineas.Where(f => f.Esdebe == 1).Sum(f => f.Importe), documento.Decimalesmonedas);
+                var totalhaber = Math.Round(documento.Lineas.Where(f => f.Esdebe == -1).Sum(f => f.Importe), documento.Decimalesmonedas);
+
+                if (totaldebe - totalhaber != 0)
+                    throw new ValidationException(RMovs.ErrorDescuadreDebeHaber);
 
                 //Nuevos Vencimientos y Pagos
                 var vencimientosService = new VencimientosService(_context);

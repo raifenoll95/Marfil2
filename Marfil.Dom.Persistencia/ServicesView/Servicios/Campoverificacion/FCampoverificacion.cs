@@ -349,9 +349,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
                 Longitud = "5",
                 Tipo = "0"
 
-           };
+            };
 
-            if(typeof(T)==typeof(GruposIvaModel)) return new CampoverificacionModel()
+            if (typeof(T) == typeof(TiposFacturasIvaModel)) return new CampoverificacionModel()
+            {
+                CampoIdentificador = "Id",
+                CampoDescripcion = "Descripcion",
+                Titulo = "Tipos facturas de IVA",
+                Longitud = "5",
+                Tipo = ""
+
+            };
+
+            if (typeof(T)==typeof(GruposIvaModel)) return new CampoverificacionModel()
             {
                 CampoIdentificador = "Id",
                 CampoDescripcion = "Descripcion",

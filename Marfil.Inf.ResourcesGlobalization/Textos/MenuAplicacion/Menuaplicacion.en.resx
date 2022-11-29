@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ficheros" xml:space="preserve">
-    <value>Files</value>
+    <value>Common files</value>
   </data>
   <data name="unidades" xml:space="preserve">
     <value>Units</value>
@@ -136,13 +136,13 @@
     <value>Generic tables</value>
   </data>
   <data name="regimeniva" xml:space="preserve">
-    <value>TAX</value>
+    <value>VAT group</value>
   </data>
   <data name="puertos" xml:space="preserve">
-    <value>Docks</value>
+    <value>Ports</value>
   </data>
   <data name="provincias" xml:space="preserve">
-    <value>Provinces</value>
+    <value>States</value>
   </data>
   <data name="proveedores" xml:space="preserve">
     <value>Providers</value>
@@ -154,10 +154,10 @@
     <value>TAX groups</value>
   </data>
   <data name="cambiosmonedas" xml:space="preserve">
-    <value>Management of foreign currency changes</value>
+    <value>Currency changes management</value>
   </data>
   <data name="mantformaspago" xml:space="preserve">
-    <value>Paymenth methods</value>
+    <value>Payment methods</value>
   </data>
   <data name="cuentas" xml:space="preserve">
     <value>Accounts</value>
@@ -184,7 +184,7 @@
     <value>Workers</value>
   </data>
   <data name="clientes" xml:space="preserve">
-    <value>Clients</value>
+    <value>Customers</value>
   </data>
   <data name="produccion" xml:space="preserve">
     <value>Management</value>
@@ -202,7 +202,7 @@
     <value>Families</value>
   </data>
   <data name="productos" xml:space="preserve">
-    <value>Articles</value>
+    <value>Items</value>
   </data>
   <data name="materiales" xml:space="preserve">
     <value>Materials</value>
@@ -211,7 +211,7 @@
     <value>Characteristics</value>
   </data>
   <data name="articulos" xml:space="preserve">
-    <value>Articles</value>
+    <value>Items</value>
   </data>
   <data name="contadores" xml:space="preserve">
     <value>Document Counters</value>
@@ -220,13 +220,13 @@
     <value>Series</value>
   </data>
   <data name="listado" xml:space="preserve">
-    <value>Lists</value>
+    <value>Reports</value>
   </data>
   <data name="comerciales" xml:space="preserve">
-    <value>Commercial agents</value>
+    <value>Commercial agent</value>
   </data>
   <data name="tarifas" xml:space="preserve">
-    <value>Rates</value>
+    <value>Price list</value>
   </data>
   <data name="headerpresupuestos" xml:space="preserve">
     <value>Estimations</value>
@@ -235,13 +235,13 @@
     <value>Management of estimations</value>
   </data>
   <data name="listadogeneralpresupuestos" xml:space="preserve">
-    <value>General list</value>
+    <value>Master report</value>
   </data>
   <data name="compras" xml:space="preserve">
     <value>Purchases</value>
   </data>
   <data name="ventas" xml:space="preserve">
-    <value>Sells</value>
+    <value>Sales</value>
   </data>
   <data name="listadodetalladopresupuestos" xml:space="preserve">
     <value>Detailed list</value>
@@ -259,7 +259,7 @@
     <value>Management of orders</value>
   </data>
   <data name="listadogeneralpedidos" xml:space="preserve">
-    <value>General list</value>
+    <value>Master report</value>
   </data>
   <data name="listadodetalladopedidos" xml:space="preserve">
     <value>Detailed list</value>
@@ -268,22 +268,22 @@
     <value>Docuements states</value>
   </data>
   <data name="headeralbaranes" xml:space="preserve">
-    <value>Packing lists</value>
+    <value>Delivery sheets</value>
   </data>
   <data name="albaranes" xml:space="preserve">
     <value>Management of packing lists</value>
   </data>
   <data name="listadogeneralalbaranes" xml:space="preserve">
-    <value>General list</value>
+    <value>Master report</value>
   </data>
   <data name="listadodetalladoalbaranes" xml:space="preserve">
     <value>Detailed list</value>
   </data>
   <data name="obras" xml:space="preserve">
-    <value>Constructions</value>
+    <value>Projects</value>
   </data>
   <data name="criteriosagrupacion" xml:space="preserve">
-    <value>Groups criteria</value>
+    <value>Grouping criteria</value>
   </data>
   <data name="headerfacturas" xml:space="preserve">
     <value>Invoices</value>
@@ -292,7 +292,7 @@
     <value>Invoice management</value>
   </data>
   <data name="listadogeneralfacturas" xml:space="preserve">
-    <value>General list</value>
+    <value>Master report</value>
   </data>
   <data name="listadodetalladofacturas" xml:space="preserve">
     <value>Detailed list</value>
@@ -313,10 +313,10 @@
     <value>Stores management</value>
   </data>
   <data name="listadostock" xml:space="preserve">
-    <value>Stock list</value>
+    <value>Stock report</value>
   </data>
   <data name="lotes" xml:space="preserve">
-    <value />
+    <value>Lots control center</value>
   </data>
   <data name="listadosbundles" xml:space="preserve">
     <value>Bundle list</value>
@@ -325,7 +325,7 @@
     <value>Kit list</value>
   </data>
   <data name="seccionesanaliticas" xml:space="preserve">
-    <value>Analytical sections</value>
+    <value>Analitic sections</value>
   </data>
   <data name="seriescontables" xml:space="preserve">
     <value>Accounting series</value>
@@ -334,12 +334,360 @@
     <value>Document series</value>
   </data>
   <data name="listadostockvalorado" xml:space="preserve">
-    <value>Stock list valued</value>
+    <value>Stockreport valued</value>
   </data>
   <data name="movs" xml:space="preserve">
     <value>Accounting journal</value>
   </data>
   <data name="listadodiariocontable" xml:space="preserve">
     <value>Accounting journal</value>
+  </data>
+  <data name="acreedores" xml:space="preserve">
+    <value>Crediters</value>
+  </data>
+  <data name="cuentastesoreria" xml:space="preserve">
+    <value>Company treasury accounts</value>
+  </data>
+  <data name="albaranesdevolucion" xml:space="preserve">
+    <value>Returns management</value>
+  </data>
+  <data name="procesofacturacion" xml:space="preserve">
+    <value>Invoincing wizard</value>
+  </data>
+  <data name="listadoproductospresupuestos" xml:space="preserve">
+    <value>Products in quotations</value>
+  </data>
+  <data name="listadoproductospedidos" xml:space="preserve">
+    <value>Products on Orders</value>
+  </data>
+  <data name="listadoproductosalbaranes" xml:space="preserve">
+    <value>Products in delivery notes</value>
+  </data>
+  <data name="listadoproductosfacturas" xml:space="preserve">
+    <value>Products on Invoices</value>
+  </data>
+  <data name="listadoterceros" xml:space="preserve">
+    <value>Third Party Report</value>
+  </data>
+  <data name="listadoarticulos" xml:space="preserve">
+    <value>Items report</value>
+  </data>
+  <data name="headercomisiones" xml:space="preserve">
+    <value>Commission management</value>
+  </data>
+  <data name="listadoscomision" xml:space="preserve">
+    <value>commission report</value>
+  </data>
+  <data name="listadostockalbaranes" xml:space="preserve">
+    <value>Warehouse entries report</value>
+  </data>
+  <data name="recepcionesstock" xml:space="preserve">
+    <value>Stock entry</value>
+  </data>
+  <data name="cambioubicacion" xml:space="preserve">
+    <value>Move lot from zone</value>
+  </data>
+  <data name="kit" xml:space="preserve">
+    <value>kit management</value>
+  </data>
+  <data name="bundle" xml:space="preserve">
+    <value>Bundle management</value>
+  </data>
+  <data name="incidencias" xml:space="preserve">
+    <value>Management of incidents</value>
+  </data>
+  <data name="configurardocumentoskit" xml:space="preserve">
+    <value>Document Set: Kits</value>
+  </data>
+  <data name="configurardocumentosbundle" xml:space="preserve">
+    <value>Document Set: Bundles</value>
+  </data>
+  <data name="facturascompras" xml:space="preserve">
+    <value>Invoice management</value>
+  </data>
+  <data name="asistenteremedir" xml:space="preserve">
+    <value>Lots editing assistant</value>
+  </data>
+  <data name="diariostock" xml:space="preserve">
+    <value>Stock journal</value>
+  </data>
+  <data name="entregasstock" xml:space="preserve">
+    <value>Stock delivery management</value>
+  </data>
+  <data name="reservas" xml:space="preserve">
+    <value>Management of reservations</value>
+  </data>
+  <data name="traspasosalmacen" xml:space="preserve">
+    <value>Management of warehouse transfers</value>
+  </data>
+  <data name="configurardocumentostraspasos" xml:space="preserve">
+    <value>Document setup: transfers</value>
+  </data>
+  <data name="configurardocumentospedidos" xml:space="preserve">
+    <value>Document Setup: Orders</value>
+  </data>
+  <data name="configurardocumentosreservas" xml:space="preserve">
+    <value>Document Conf.: Reservations</value>
+  </data>
+  <data name="inventarios" xml:space="preserve">
+    <value>Inventory management</value>
+  </data>
+  <data name="configurardocumentosinventarios" xml:space="preserve">
+    <value>Document Setup: Inventories</value>
+  </data>
+  <data name="albaranescompras" xml:space="preserve">
+    <value>Non stock delivery</value>
+  </data>
+  <data name="asistentepedidoscompras" xml:space="preserve">
+    <value>Wizard: Generate Purchase Orders</value>
+  </data>
+  <data name="transformaciones" xml:space="preserve">
+    <value>Transformation Management</value>
+  </data>
+  <data name="configurardocumentostransformaciones" xml:space="preserve">
+    <value>Docs Setup: Transformations</value>
+  </data>
+  <data name="listadoreservasmaterial" xml:space="preserve">
+    <value>Reserved materials report</value>
+  </data>
+  <data name="listadostockdisponible" xml:space="preserve">
+    <value>Available stocksreport</value>
+  </data>
+  <data name="trabajos" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="transformacioneslotes" xml:space="preserve">
+    <value>Finishing transformations</value>
+  </data>
+  <data name="entradasvarias" xml:space="preserve">
+    <value>Input varies</value>
+  </data>
+  <data name="salidasvarias" xml:space="preserve">
+    <value>Several outputs</value>
+  </data>
+  <data name="listadolotes" xml:space="preserve">
+    <value>Lots report</value>
+  </data>
+  <data name="tareas" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="listadosstocksalidas" xml:space="preserve">
+    <value>Deliveries report</value>
+  </data>
+  <data name="municipios" xml:space="preserve">
+    <value>Municipalities</value>
+  </data>
+  <data name="configurardocumentosdiario" xml:space="preserve">
+    <value>Document Setup: Accounting journal</value>
+  </data>
+  <data name="listadomayor" xml:space="preserve">
+    <value>Higher</value>
+  </data>
+  <data name="listadobalancesumasysaldos" xml:space="preserve">
+    <value>Balance amounts and balances</value>
+  </data>
+  <data name="configurardocumentosmayor" xml:space="preserve">
+    <value>Document Conf.: Accounting ledger</value>
+  </data>
+  <data name="configurardocumentossumas" xml:space="preserve">
+    <value>Document Conf.: Sums and Balances</value>
+  </data>
+  <data name="configurardocumentosbalancepedidos" xml:space="preserve">
+    <value>Conf. Doc. Balance Orders</value>
+  </data>
+  <data name="listadosbalancepedidos" xml:space="preserve">
+    <value>Balance Orders report</value>
+  </data>
+  <data name="imagenlote" xml:space="preserve">
+    <value>Lots image management</value>
+  </data>
+  <data name="CRM" xml:space="preserve">
+    <value>CRM</value>
+  </data>
+  <data name="oportunidades" xml:space="preserve">
+    <value>Opportunities</value>
+  </data>
+  <data name="configurardocumentoslistadomargen" xml:space="preserve">
+    <value>Conf. Doc. Margin</value>
+  </data>
+  <data name="seguimientos" xml:space="preserve">
+    <value>Follow</value>
+  </data>
+  <data name="listadomargen" xml:space="preserve">
+    <value>Margin Report</value>
+  </data>
+  <data name="campañas" xml:space="preserve">
+    <value>Campaign</value>
+  </data>
+  <data name="incidenciascrm" xml:space="preserve">
+    <value>Incidences</value>
+  </data>
+  <data name="proyectos" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="listadocrm" xml:space="preserve">
+    <value>CRM listing</value>
+  </data>
+  <data name="costesvariablesperiodo" xml:space="preserve">
+    <value>Variable cost period</value>
+  </data>
+  <data name="divisionlotes" xml:space="preserve">
+    <value>Lot split management</value>
+  </data>
+  <data name="grupomateriales" xml:space="preserve">
+    <value>Materials Groups</value>
+  </data>
+  <data name="imputacioncostes" xml:space="preserve">
+    <value>Lots allocation Costs</value>
+  </data>
+  <data name="consultavisual" xml:space="preserve">
+    <value>Visual query</value>
+  </data>
+  <data name="situacionestesoreria" xml:space="preserve">
+    <value>Treasury Situations</value>
+  </data>
+  <data name="tesoreria" xml:space="preserve">
+    <value>Treasury</value>
+  </data>
+  <data name="vencimientosventa" xml:space="preserve">
+    <value>Collection forecast</value>
+  </data>
+  <data name="vencimientoscompra" xml:space="preserve">
+    <value>Projected Payments</value>
+  </data>
+  <data name="circuitotesoreriacobros" xml:space="preserve">
+    <value>Treasury circuits</value>
+  </data>
+  <data name="carteravencimientos" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
+  <data name="asignacioncartera" xml:space="preserve">
+    <value>Allocation of accounting portfolio</value>
+  </data>
+  <data name="movimientostesoreria" xml:space="preserve">
+    <value>Treasury registers</value>
+  </data>
+  <data name="configurardocumentoscartera" xml:space="preserve">
+    <value>Document Setup: Portfolio</value>
+  </data>
+  <data name="listadoguiasbalances" xml:space="preserve">
+    <value>Balance Guides</value>
+  </data>
+  <data name="listadosacomuladorperiodos" xml:space="preserve">
+    <value>Period accumulator</value>
+  </data>
+  <data name="listadosconsultatesoreria" xml:space="preserve">
+    <value>Treasury inquiry report</value>
+  </data>
+  <data name="configurardocumentostransformacionesacabados" xml:space="preserve">
+    <value>Docs Setup: Finishing Transformations</value>
+  </data>
+  <data name="inmuebles" xml:space="preserve">
+    <value>Estate</value>
+  </data>
+  <data name="preciosespeciales" xml:space="preserve">
+    <value>Special prices</value>
+  </data>
+  <data name="listadoinformemargen" xml:space="preserve">
+    <value>Margin Report</value>
+  </data>
+  <data name="cuadernosBancarios" xml:space="preserve">
+    <value>Bank Notebooks</value>
+  </data>
+  <data name="remesas" xml:space="preserve">
+    <value>Remittances</value>
+  </data>
+  <data name="configurardocumentosremesa" xml:space="preserve">
+    <value>Document Setup: Collection</value>
+  </data>
+  <data name="transformacioneslotesnave" xml:space="preserve">
+    <value>Trans. of ship finishes</value>
+  </data>
+  <data name="listadoperdidasyganancias" xml:space="preserve">
+    <value>Profit and loss account</value>
+  </data>
+  <data name="configurardocumentosguiasbalances" xml:space="preserve">
+    <value>Docs Conf.: Profit and Loss</value>
+  </data>
+  <data name="cierreycuentas" xml:space="preserve">
+    <value>Close and annual results</value>
+  </data>
+  <data name="regularizacionexistencias" xml:space="preserve">
+    <value>Regularization of stocks</value>
+  </data>
+  <data name="regularizaciongrupos" xml:space="preserve">
+    <value>Regularization of groups 6 and 7</value>
+  </data>
+  <data name="regularizacioncierreapertura" xml:space="preserve">
+    <value>Close and opening</value>
+  </data>
+  <data name="regularizacionrevertirestado" xml:space="preserve">
+    <value>Revert exercise status</value>
+  </data>
+  <data name="aperturaprovisional" xml:space="preserve">
+    <value>Provisional accounting opening</value>
+  </data>
+  <data name="analiticaperdidasyganancias" xml:space="preserve">
+    <value>Profit and Loss Analytics</value>
+  </data>
+  <data name="logstockseguridad" xml:space="preserve">
+    <value>Daily stock breaks</value>
+  </data>
+  <data name="listadostockmaxmin" xml:space="preserve">
+    <value>List of maximums and minimums</value>
+  </data>
+  <data name="listadoperdidasygananciasfuncional" xml:space="preserve">
+    <value>Acct. functional profit and loss</value>
+  </data>
+  <data name="listadostockvaloradotarifa" xml:space="preserve">
+    <value>Stock valued by rate report</value>
+  </data>
+  <data name="actualizarcostes" xml:space="preserve">
+    <value>Cost price update</value>
+  </data>
+  <data name="listadoperdidasygananciasbalanceanual" xml:space="preserve">
+    <value>balance sheet</value>
+  </data>
+  <data name="comparativaPYG" xml:space="preserve">
+    <value>Profit and loss account.</value>
+  </data>
+  <data name="comparativos" xml:space="preserve">
+    <value>Comparative reports</value>
+  </data>
+  <data name="comparativaPYGFuncional" xml:space="preserve">
+    <value>Acct. functional profit and loss</value>
+  </data>
+  <data name="comparativaPYGAnalitica" xml:space="preserve">
+    <value>Profit and Loss Analytics</value>
+  </data>
+  <data name="comparativaPYGBalanceAnual" xml:space="preserve">
+    <value>balance sheet</value>
+  </data>
+  <data name="tiposfacturasiva" xml:space="preserve">
+    <value>Types of invoices</value>
+  </data>
+  <data name="registroivarepercutido" xml:space="preserve">
+    <value>Output VAT registration</value>
+  </data>
+  <data name="contadoreslotes" xml:space="preserve">
+    <value>Lots counters</value>
+  </data>
+  <data name="configurardocumentosdivisionlotes" xml:space="preserve">
+    <value>Docs Setup: Lots Split</value>
+  </data>
+  <data name="lecturas" xml:space="preserve">
+    <value>Edit terminal readings</value>
+  </data>
+  <data name="headerpedidoscompras" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="headerpresupuestoscompras" xml:space="preserve">
+    <value>Estimations</value>
+  </data>
+  <data name="pedidoscompras" xml:space="preserve">
+    <value>Management of orders</value>
+  </data>
+  <data name="presupuestoscompras" xml:space="preserve">
+    <value>Management of estimations</value>
   </data>
 </root>

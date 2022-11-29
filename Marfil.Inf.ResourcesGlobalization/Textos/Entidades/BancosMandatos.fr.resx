@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Banques/Mandatées</value>
+    <value>Banques et mandats</value>
   </data>
   <data name="Fkprovincias" xml:space="preserve">
     <value>Province</value>
@@ -127,25 +127,25 @@
     <value>Ville</value>
   </data>
   <data name="Fkpaises" xml:space="preserve">
-    <value>Pay</value>
+    <value>Pays</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
   </data>
   <data name="TiposBancosMandatosBanco" xml:space="preserve">
     <value>Banque</value>
   </data>
   <data name="TipoBancosMandatosMandato" xml:space="preserve">
-    <value>Mandate</value>
+    <value>Mandat</value>
   </data>
   <data name="TipoSecuenciaSepaPeriodico" xml:space="preserve">
-    <value>Periodique</value>
+    <value>Un journal</value>
   </data>
   <data name="TipoSecuenciaSepaUnico" xml:space="preserve">
     <value>Unique</value>
@@ -154,6 +154,111 @@
     <value>Banques</value>
   </data>
   <data name="Mandatos" xml:space="preserve">
-    <value>Mandates</value>
+    <value>mandats</value>
+  </data>
+  <data name="Iban" xml:space="preserve">
+    <value>ALLAIENT</value>
+  </data>
+  <data name="Bic" xml:space="preserve">
+    <value>BIC</value>
+  </data>
+  <data name="Sufijoacreedor" xml:space="preserve">
+    <value>suffixe du créancier</value>
+  </data>
+  <data name="Contratoconfirmig" xml:space="preserve">
+    <value>contrat de confirmation</value>
+  </data>
+  <data name="Contadorconfirming" xml:space="preserve">
+    <value>compteur confirmant</value>
+  </data>
+  <data name="Direccion" xml:space="preserve">
+    <value>adresse</value>
+  </data>
+  <data name="Cpostal" xml:space="preserve">
+    <value>C. Zip</value>
+  </data>
+  <data name="Telefonobanco" xml:space="preserve">
+    <value>téléphone bancaire</value>
+  </data>
+  <data name="Personacontacto" xml:space="preserve">
+    <value>Personne de contact</value>
+  </data>
+  <data name="Idmandato" xml:space="preserve">
+    <value>ID de mandat</value>
+  </data>
+  <data name="Idacreedor" xml:space="preserve">
+    <value>ID du créancier</value>
+  </data>
+  <data name="Tiposecuenciasepa" xml:space="preserve">
+    <value>Séquence SEPA</value>
+  </data>
+  <data name="Tipoadeudo" xml:space="preserve">
+    <value>Type de débit</value>
+  </data>
+  <data name="Importemandato" xml:space="preserve">
+    <value>montant du mandat</value>
+  </data>
+  <data name="Recibosmandato" xml:space="preserve">
+    <value>reçus obligatoires</value>
+  </data>
+  <data name="Importelimiterecibo" xml:space="preserve">
+    <value>Montant limite de réception</value>
+  </data>
+  <data name="Fechafirma" xml:space="preserve">
+    <value>Date de la signature</value>
+  </data>
+  <data name="Fechaexpiracion" xml:space="preserve">
+    <value>Date d'expiration</value>
+  </data>
+  <data name="Fechaultimaremesa" xml:space="preserve">
+    <value>Date du dernier envoi</value>
+  </data>
+  <data name="Importeremesados" xml:space="preserve">
+    <value>montant du versement</value>
+  </data>
+  <data name="Recibosremesados" xml:space="preserve">
+    <value>reçus de remise</value>
+  </data>
+  <data name="Devolvera" xml:space="preserve">
+    <value>retourner à</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Defecto" xml:space="preserve">
+    <value>Défaut</value>
+  </data>
+  <data name="Finalizado" xml:space="preserve">
+    <value>Finalisé</value>
+  </data>
+  <data name="Esquema" xml:space="preserve">
+    <value>Schème</value>
+  </data>
+  <data name="TipoAdeudoPrimerAdeudoRecurrente" xml:space="preserve">
+    <value>Premier débit récurrent</value>
+  </data>
+  <data name="TipoAdeudoAdeudoRecurrente" xml:space="preserve">
+    <value>débit récurrent</value>
+  </data>
+  <data name="TipoAdeudoUltimoAdeudoRecurrente" xml:space="preserve">
+    <value>Dernier débit récurrent</value>
+  </data>
+  <data name="TipoAdeudoUnico" xml:space="preserve">
+    <value>Unique</value>
+  </data>
+  <data name="DatosBanco" xml:space="preserve">
+    <value>coordonnées bancaires</value>
+  </data>
+  <data name="Remesas" xml:space="preserve">
+    <value>envois de fonds</value>
+  </data>
+  <data name="Bloqueado" xml:space="preserve">
+    <value>fermé à clé</value>
+  </data>
+  <data name="Riesgonacional" xml:space="preserve">
+    <value>risque national</value>
+  </data>
+  <data name="Riesgoextranjero" xml:space="preserve">
+    <value>risque étranger</value>
   </data>
 </root>

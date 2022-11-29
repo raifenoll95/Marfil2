@@ -313,6 +313,12 @@
     <Compile Include="CuentasNoAsignadasAnalitica.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CuentasNoAsignadasBalanceAnual.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CuentasNoAsignadasFuncional.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cuentastesoreria.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -380,6 +386,12 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FiltrosPYG.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FiltrosPYGBalanceAnual.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FiltrosPYGFuncional.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FormasPago.cs">
@@ -457,6 +469,9 @@
     <Compile Include="KitLin.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lecturas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ListadoStockValorado.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -464,17 +479,25 @@
     <Compile Include="Listados\Base\IListResultView.cs" />
     <Compile Include="Listados\Base\ListadoResultado.cs" />
     <Compile Include="Listados\Base\ListadosModel.cs" />
+    <Compile Include="Listados\ComparativaPerdidasYGanancias.cs" />
+    <Compile Include="Listados\ComparativaPerdidasYGananciasAnalitica.cs" />
+    <Compile Include="Listados\ComparativaPerdidasYGananciasBalanceAnual.cs" />
+    <Compile Include="Listados\ComparativaPerdidasYGananciasFuncional.cs" />
     <Compile Include="Listados\FListadosModel.cs" />
     <Compile Include="Listados\ListadoAcumuladorPeriodos.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />
     <Compile Include="Listados\ListadoCuentasNoAsignadasAnalitica.cs" />
     <Compile Include="Listados\ListadoCuentasNoAsignadas.cs" />
+    <Compile Include="Listados\ListadoCuentasNoAsignadasBalanceAnual.cs" />
+    <Compile Include="Listados\ListadoCuentasNoAsignadasFuncional.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
     <Compile Include="Listados\ListadoInformeMargen.cs" />
     <Compile Include="Listados\ListadoMargen.cs" />
     <Compile Include="Listados\AnaliticaPerdidasYGanancias.cs" />
     <Compile Include="Listados\ListadoPerdidasYGanancias.cs" />
+    <Compile Include="Listados\ListadoPerdidasYGananciasBalanceAnual.cs" />
+    <Compile Include="Listados\ListadoPerdidasYGananciasFuncional.cs" />
     <Compile Include="Listados\ListadosConsultaTesoreria.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
     <Compile Include="Listados\ListadosMayor.cs" />
@@ -513,6 +536,7 @@
     <Compile Include="Listados\ListadosPedidos.cs" />
     <Compile Include="Listados\ListadosPresupuestos.cs" />
     <Compile Include="Listados\ListadosStockValorado.cs" />
+    <Compile Include="Listados\ListadosStockValoradoTarifa.cs" />
     <Compile Include="Listados\ListadosTerceros.cs" />
     <Compile Include="Listados\ListadosProductosAlbaranes.cs" />
     <Compile Include="Listados\ListadosProductosPedidos.cs" />
@@ -584,6 +608,7 @@
     <Compile Include="Model\CRM\OportunidadesModel.cs" />
     <Compile Include="Model\CRM\SeguimientosModel.cs" />
     <Compile Include="Model\CuadernosBancariosModel.cs" />
+    <Compile Include="Model\Documentos\Albaranes\AsistenteLecturasModel.cs" />
     <Compile Include="Model\Documentos\CarteraVencimientos\CarteraVencimientosReport.cs" />
     <Compile Include="Model\Documentos\CarteraVencimientos\RemesaReport.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\AsistenteMovimientosTesoreriaModel.cs" />
@@ -594,6 +619,7 @@
     <Compile Include="Model\Documentos\CobrosYPagos\CircuitosTesoreriaCobrosModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosModel.cs" />
     <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesModel.cs" />
+    <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesReport.cs" />
     <Compile Include="Model\Documentos\FacturasCompras\FacturasDuaValidation.cs" />
     <Compile Include="Model\Documentos\GrupoMateriales\GrupoMaterialesModel.cs" />
     <Compile Include="Model\Documentos\InformeMargenModel.cs" />
@@ -705,6 +731,7 @@
     <Compile Include="Model\FicherosGenerales\PuertosModel.cs" />
     <Compile Include="Model\FicherosGenerales\SeccionesanaliticasModel.cs" />
     <Compile Include="Model\FicherosGenerales\TarifasModel.cs" />
+    <Compile Include="Model\FicherosGenerales\VerificarContabilidadModel.cs" />
     <Compile Include="Model\Ficheros\CarpetasModel.cs" />
     <Compile Include="Model\Ficheros\FicherosModel.cs" />
     <Compile Include="Model\Ficheros\GaleriaFicherosModel.cs" />
@@ -715,11 +742,14 @@
     <Compile Include="Model\Interfaces\ILineasDocumentosBusquedaMovil.cs" />
     <Compile Include="Model\Iva\GruposIvaModel.cs" />
     <Compile Include="Model\Iva\RegimenIvaModel.cs" />
+    <Compile Include="Model\Iva\RegistroIvaRepercutidoModel.cs" />
+    <Compile Include="Model\Iva\TiposFacturasIvaModel.cs" />
     <Compile Include="Model\Iva\TiposRetencionesModel.cs" />
     <Compile Include="Model\Iva\TiposIvaModel.cs" />
     <Compile Include="Model\FModel.cs" />
     <Compile Include="Model\HeaderModel.cs" />
     <Compile Include="Listados\ListadosBalancePedidos.cs" />
+    <Compile Include="Model\LecturasModel.cs" />
     <Compile Include="Model\ListIndexModel.cs" />
     <Compile Include="Model\MapeoRemesasModel.cs" />
     <Compile Include="Model\Mobile\BaseParam.cs" />
@@ -728,6 +758,7 @@
     <Compile Include="Model\PeticionesAsincronasModel.cs" />
     <Compile Include="Model\RolesModel.cs" />
     <Compile Include="Model\RootModel.cs" />
+    <Compile Include="Model\Stock\ActualizarCostesModel.cs" />
     <Compile Include="Model\Stock\AsistenteRemedirStockModel.cs" />
     <Compile Include="Model\Stock\CambioUbicacionModel.cs" />
     <Compile Include="Model\Stock\BundleModel.cs" />
@@ -862,6 +893,15 @@
     <Compile Include="RegimenIva.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RegistroIVARepercutido.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroIVARepercutidoRectificadas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroIVARepercutidoTotales.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Remesas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -874,7 +914,19 @@
     <Compile Include="ReportGuiasBalances.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReportGuiasBalancesBalanceAnual.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportGuiasBalancesFuncional.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReportGuiasBalancesLineas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportGuiasBalancesLineasBalanceAnual.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportGuiasBalancesLineasFuncional.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Reservasstock.cs">
@@ -921,6 +973,7 @@
     <Compile Include="ServicesView\Interfaces\IMobileTercerosService.cs" />
     <Compile Include="ServicesView\Interfaces\IMovimientosAlmacen.cs" />
     <Compile Include="ServicesView\Interfaces\IValidationService.cs" />
+    <Compile Include="ServicesView\Servicios\ActualizarCostesService.cs" />
     <Compile Include="ServicesView\Servicios\ArticulosStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\ArticulosTerceroService.cs" />
     <Compile Include="ServicesView\Servicios\Cartera\VencimientosService.cs" />
@@ -937,10 +990,13 @@
     <Compile Include="ServicesView\Servicios\Converter\CuadernosBancariosConverterServices.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\InmueblesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\LecturasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\LogStockSeguridadConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\PreciosEspecialesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\RegistroIvaRepercutidoConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\RemesasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\TiposFacturasIvaConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TransformacioneslotesnaveConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
@@ -965,22 +1021,29 @@
     <Compile Include="ServicesView\Servicios\Converter\TareasConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TrabajosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\TransformacioneslotesConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\VerificarContabilidadConverterService.cs" />
     <Compile Include="ServicesView\Servicios\CostesVariablesPeriodoService.cs" />
     <Compile Include="ServicesView\Servicios\CuadernosBancariosService.cs" />
     <Compile Include="ServicesView\Servicios\InmueblesService.cs" />
+    <Compile Include="ServicesView\Servicios\LecturasService.cs" />
     <Compile Include="ServicesView\Servicios\LogStockSeguridadService.cs" />
     <Compile Include="ServicesView\Servicios\MapeoRemesasService.cs" />
     <Compile Include="ServicesView\Servicios\PreciosEspecialesService.cs" />
+    <Compile Include="ServicesView\Servicios\RegistroIvaRepercutidoService.cs" />
     <Compile Include="ServicesView\Servicios\RemesasService.cs" />
     <Compile Include="ServicesView\Servicios\Startup\CircuitosTesoreriaStartup.cs" />
+    <Compile Include="ServicesView\Servicios\TiposFacturasIvaService.cs" />
     <Compile Include="ServicesView\Servicios\TransformacioneslotesnaveService.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CuadernosBancariosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\InmueblesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\LecturasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\PreciosEspecialesValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\RegistroIvaRepercutidoValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\RemesasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\TiposFacturasIvaValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\TransformacioneslotesnaveValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />
@@ -1305,6 +1368,7 @@
     <Compile Include="ServicesView\Servicios\Validation\TransportistasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\UnidadesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\UsuariosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\VerificarContabilidadService.cs" />
     <Compile Include="SituacionesTesoreria.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -1348,6 +1412,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TiposcuentasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TiposFacturas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TiposIva.cs">
@@ -1414,6 +1481,9 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Vencimientos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VerificarContabilidad.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

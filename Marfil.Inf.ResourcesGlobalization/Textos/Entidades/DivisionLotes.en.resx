@@ -121,6 +121,18 @@
     <value>In</value>
   </data>
   <data name="Salida" xml:space="preserve">
-    <value>Out</value>
+    <value>Output</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Lot Division</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>Division</value>
+  </data>
+  <data name="ErrorLineasObligatorias" xml:space="preserve">
+    <value>It is mandatory to indicate at least one line in {0}</value>
+  </data>
+  <data name="ErrorRepartoImporte" xml:space="preserve">
+    <value>The type of distribution by amount is not allowed</value>
   </data>
 </root>

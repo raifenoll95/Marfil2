@@ -274,7 +274,7 @@
                 IdFormulariomodal: "BusquedaGlobal",
                 Url: '@Url.Action("ArticulosApi","Api")',
                 Titulo: "Busqueda de artículos",
-                Params: "{\"nivel\":\"0\"}"
+                Params: "{\"flujo\":\"3\"}"
             };
             eventAggregator.Publish("_lanzarbusqueda", obj);
         }

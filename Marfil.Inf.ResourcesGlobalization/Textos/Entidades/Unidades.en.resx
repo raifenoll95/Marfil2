@@ -183,4 +183,10 @@
   <data name="TipoStockFormulasTotal" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="TiposStockUnitario" xml:space="preserve">
+    <value>Unitary</value>
+  </data>
+  <data name="TiposStockLote" xml:space="preserve">
+    <value>Lot</value>
+  </data>
 </root>

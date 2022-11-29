@@ -18,13 +18,13 @@ using Resources;
 namespace Marfil.Dom.Persistencia.Listados
 {
 
-    public class ListadosMayor: ListadosModel
+    public class ListadosMayor : ListadosModel
     {
 
         #region CTR
 
         public ListadosMayor()
-        {            
+        {
         }
 
         public ListadosMayor(IContextService context) : base(context)
@@ -35,7 +35,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 var idEjercicio = Convert.ToInt32(context.Ejercicio);
                 InicioEjercicio = db.Ejercicios.Where(f => f.empresa == context.Empresa && f.id == idEjercicio).Select(f => f.desde).SingleOrDefault();
                 FechaInforme = DateTime.Today;
-            }                
+            }
         }
 
         #endregion
@@ -72,7 +72,7 @@ namespace Marfil.Dom.Persistencia.Listados
         public DateTime? InicioEjercicio { get; set; }
 
         [Display(ResourceType = typeof(RMovs), Name = "MostrarCuentasSinSaldo")]
-        public bool MostrarCuentasSinSaldo { get; set; }        
+        public bool MostrarCuentasSinSaldo { get; set; }
 
         #endregion Propierties
 
@@ -133,49 +133,49 @@ namespace Marfil.Dom.Persistencia.Listados
             //}
 
             if (!MostrarCuentasSinSaldo)
-            {                
-                sb.Append(" AND ");                                
-                sb.Append(" Saldo IS NOT NULL ");                
+            {
+                sb.Append(" AND ");
+                sb.Append(" Saldo IS NOT NULL ");
             }
 
             sb.Append(")");
 
-            if(SaldosAnteriores)
+            //if(SaldosAnteriores)
+
+            sb.Append(" UNION ALL");
+            ValoresParametros.Add("inicioejercicio", InicioEjercicio.Value);
+            sb.Append(" (SELECT (c.id + ' ' + c.descripcion) AS [Cuenta]," +
+                " NULL AS [Fecha], 'SUMA ANTERIOR' AS [Doc.]," +
+                " NULL AS [Comentario]," +
+                " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE 0 END)) AS [Debe]," +
+                " SUM((CASE WHEN l.esdebe = -1 THEN l.importe ELSE 0 END)) AS [Haber]," +
+                " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE (l.importe * -1) END)) AS [Saldo]," +
+                " 0 AS [Orden]" +
+                " FROM Cuentas AS c" +
+                " LEFT JOIN MovsLin AS l ON c.id = l.fkcuentas AND c.empresa = l.empresa " +
+                " LEFT JOIN Movs AS m ON m.id = l.fkmovs AND c.empresa = m.empresa " +
+                "inner join maes on maes.empresa = l.empresa and maes.fkejercicio = m.fkejercicio and maes.fkcuentas = c.id" +
+                " WHERE c.nivel = 0 AND c.empresa='" + Empresa + "'" +
+                " AND (m.fkseriescontables = @fkserie OR m.fkseriescontables IS NULL)");
+
+            if (!string.IsNullOrEmpty(CuentaDesde))
             {
-                sb.Append(" UNION ALL");
-                ValoresParametros.Add("inicioejercicio", InicioEjercicio.Value);
-                sb.Append(" (SELECT (c.id + ' ' + c.descripcion) AS [Cuenta]," +
-                    " NULL AS [Fecha], 'SUMA ANTERIOR' AS [Doc.]," +
-                    " NULL AS [Comentario]," +
-                    " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE 0 END)) AS [Debe]," +
-                    " SUM((CASE WHEN l.esdebe = -1 THEN l.importe ELSE 0 END)) AS [Haber]," +
-                    " SUM((CASE WHEN l.esdebe = 1 THEN l.importe ELSE (l.importe * -1) END)) AS [Saldo]," +
-                    " 0 AS [Orden]" +
-                    " FROM Cuentas AS c" +
-                    " LEFT JOIN MovsLin AS l ON c.id = l.fkcuentas AND c.empresa = l.empresa " +
-                    " LEFT JOIN Movs AS m ON m.id = l.fkmovs AND c.empresa = m.empresa " +
-                    "inner join maes on maes.empresa = l.empresa and maes.fkejercicio = m.fkejercicio and maes.fkcuentas = c.id" +
-                    " WHERE c.nivel = 0 AND c.empresa='" + Empresa + "'" +
-                    " AND (m.fkseriescontables = @fkserie OR m.fkseriescontables IS NULL)");
-
-                if (!string.IsNullOrEmpty(CuentaDesde))
-                {
-                    sb.Append(" AND c.id>=@cuentaDesde");
-                }
-
-                if (!string.IsNullOrEmpty(CuentaHasta))
-                {
-                    sb.Append(" AND c.id<=@cuentaHasta");
-                }
-
-                sb.Append(" AND ((m.Fecha>=@inicioejercicio AND m.Fecha<@fechadesde) OR m.fecha IS NULL)");
-                if (!MostrarCuentasSinSaldo)
-                {
-                    sb.Append(" AND ");
-                    sb.Append(" Saldo IS NOT NULL ");
-                }
-                sb.Append(" GROUP BY c.id, c.descripcion)");
+                sb.Append(" AND c.id>=@cuentaDesde");
             }
+
+            if (!string.IsNullOrEmpty(CuentaHasta))
+            {
+                sb.Append(" AND c.id<=@cuentaHasta");
+            }
+
+            sb.Append(" AND ((m.Fecha>=@inicioejercicio AND m.Fecha<@fechadesde) OR m.fecha IS NULL)");
+            if (!MostrarCuentasSinSaldo)
+            {
+                sb.Append(" AND ");
+                sb.Append(" Saldo IS NOT NULL ");
+            }
+            sb.Append(" GROUP BY c.id, c.descripcion)");
+
 
             sb.Append(")t");
 

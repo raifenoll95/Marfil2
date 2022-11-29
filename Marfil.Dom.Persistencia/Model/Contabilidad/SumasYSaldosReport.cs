@@ -34,8 +34,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Name = "Report";
 
             var mainQuery = new CustomSqlQuery("Cuentas", "select m.fkcuentas as Cuenta, c.descripcion as Descripcion, m.debe as Debe, m.haber as Haber ," +
-                                                "(case when m.saldo >= 0 THEN m.saldo else null END) AS Deudor ," +
-                                                "(case when m.saldo < 0 THEN(m.saldo * -1) else null END) AS Acreedor from cuentas as c left join maes as m on c.id = m.fkcuentas " +
+                                                "(case when m.saldo >= 0 THEN m.saldo else null END) AS Deudor , " +
+                                                "(case when m.saldo < 0 THEN(m.saldo * -1) else null END) AS Acreedor, " +
+                                                "c.nivel as Nivel  " +
+                                                "from cuentas as c left join maes as m on c.id = m.fkcuentas " +
                                                 "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) ");
 
             mainQuery.Parameters.Add(new QueryParameter("fkejercicio", typeof(string), user.Ejercicio));
@@ -62,7 +64,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                 int digitos = Funciones.Qint(empresaModel.DigitosCuentas).Value;
 
                 CuentaDesde = (CuentaDesde + "00000000000000000000000000000000000").Substring(0, digitos);
-                CuentaHasta = (CuentaHasta + "00000000000000000000000000000000000").Substring(0, digitos);
+                CuentaHasta = (CuentaHasta + "99999999999999999999999999999999999").Substring(0, digitos);
 
                 var cuentaDesdeAux1 = CuentaDesde.ToString().Substring(0, 1);
                 var cuentaDesdeAux2 = CuentaDesde.ToString().Substring(0, 2);
@@ -161,7 +163,6 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
                 mainQuery.Sql += (")");
 
-
                 //En caso de que el usuario quiera mostrar cuentas sin saldo, se mostraran las de con saldo y la de sin saldo
                 if (!MostrarCuentasSinSaldo)
                 {
@@ -173,6 +174,82 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
                     mainQuery.Sql += ("AND (m.id is not null)");
 
+                }
+
+                if (PorSubcuenta)
+                {
+                    mainQuery.Sql += (" UNION select '99999999', 'Suma total nivel 0', " +
+                        "SUM(case when c.nivel = 0 then debe end) as SumDebeNivel0, SUM(case when c.nivel = 0 then haber end) as SumHaberNivel0, " +
+                        "SUM(case when c.nivel = 0 and m.saldo >= 0 then m.saldo else null end) as SumDeudorNivel0, " +
+                        "SUM(case when c.nivel = 0 and  m.saldo < 0 then(m.saldo * -1) else null end) as SumAcreedorNivel0, 0 " +
+                        "from cuentas as c " +
+                        "left join maes as m on c.id = m.fkcuentas " +
+                        "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) " +
+                        "AND( " +
+                        "((c.id = '" + cuentaDesdeAux1 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 1)) " +
+                        "    or((c.id = '" + cuentaDesdeAux2 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 2)) " +
+                        "    or((c.id = '" + cuentaDesdeAux3 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 3)) " +
+                        "    or((c.id = '" + cuentaDesdeAux4 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 4)) " +
+                        "    or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 0) " +
+                        ") ");
+                }
+                else if (PorSubmayor)
+                {
+                    mainQuery.Sql += (" UNION select '99999999', 'Suma total nivel 4', " +
+                        "SUM(case when c.nivel = 4 then debe end) as SumDebeNivel4, SUM(case when c.nivel = 4 then haber end) as SumHaberNivel4, " +
+                        "SUM(case when c.nivel = 4 and m.saldo >= 0 then m.saldo else null end) as SumDeudorNivel4, " +
+                        "SUM(case when c.nivel = 4 and  m.saldo < 0 then(m.saldo * -1) else null end) as SumAcreedorNivel4, 4 " +
+                        "from cuentas as c " +
+                        "left join maes as m on c.id = m.fkcuentas " +
+                        "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) " +
+                        "AND( " +
+                        "((c.id = '" + cuentaDesdeAux1 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 1)) " +
+                        "    or((c.id = '" + cuentaDesdeAux2 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 2)) " +
+                        "    or((c.id = '" + cuentaDesdeAux3 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 3)) " +
+                        "    or((c.id = '" + cuentaDesdeAux4 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 4)) " +
+                        ") ");
+                }
+                else if (PorMayor)
+                {
+                    mainQuery.Sql += (" UNION select '99999999', 'Suma total nivel 3', " +
+                        "SUM(case when c.nivel = 3 then debe end) as SumDebeNivel3, SUM(case when c.nivel = 3 then haber end) as SumHaberNivel3, " +
+                        "SUM(case when c.nivel = 3 and m.saldo >= 0 then m.saldo else null end) as SumDeudorNivel3, " +
+                        "SUM(case when c.nivel = 3 and  m.saldo < 0 then(m.saldo * -1) else null end) as SumAcreedorNivel3, 3 " +
+                        "from cuentas as c " +
+                        "left join maes as m on c.id = m.fkcuentas " +
+                        "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) " +
+                        "AND( " +
+                        "((c.id = '" + cuentaDesdeAux1 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 1)) " +
+                        "    or((c.id = '" + cuentaDesdeAux2 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 2)) " +
+                        "    or((c.id = '" + cuentaDesdeAux3 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 3)) " +
+                        ") ");
+                }
+                else if (PorSubgrupos)
+                {
+                    mainQuery.Sql += (" UNION select '99999999', 'Suma total nivel 2', " +
+                        "SUM(case when c.nivel = 2 then debe end) as SumDebeNivel2, SUM(case when c.nivel = 2 then haber end) as SumHaberNivel2, " +
+                        "SUM(case when c.nivel = 2 and m.saldo >= 0 then m.saldo else null end) as SumDeudorNivel2, " +
+                        "SUM(case when c.nivel = 2 and  m.saldo < 0 then(m.saldo * -1) else null end) as SumAcreedorNivel2, 2 " +
+                        "from cuentas as c " +
+                        "left join maes as m on c.id = m.fkcuentas " +
+                        "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) " +
+                        "AND( " +
+                        "((c.id = '" + cuentaDesdeAux1 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 1)) " +
+                        "    or((c.id = '" + cuentaDesdeAux2 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 2)) " +
+                        ") ");
+                }
+                else if (PorGrupos)
+                {
+                    mainQuery.Sql += (" UNION select '99999999', 'Suma total nivel 1', " +
+                        "SUM(case when c.nivel = 1 then debe end) as SumDebeNivel1, SUM(case when c.nivel = 1 then haber end) as SumHaberNivel1, " +
+                        "SUM(case when c.nivel = 1 and m.saldo >= 0 then m.saldo else null end) as SumDeudorNivel1, " +
+                        "SUM(case when c.nivel = 1 and  m.saldo < 0 then(m.saldo * -1) else null end) as SumAcreedorNivel1, 1 " +
+                        "from cuentas as c " +
+                        "left join maes as m on c.id = m.fkcuentas " +
+                        "where c.empresa = @empresa and(m.fkejercicio = @fkejercicio or m.fkejercicio is null) " +
+                        "AND( " +
+                        "((c.id = '" + cuentaDesdeAux1 + "') or(c.id >= '" + CuentaDesde + "' and c.id <= '" + CuentaHasta + "' and c.nivel = 1)) " +
+                        ") ");
                 }
             }
 

@@ -64,9 +64,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var model = obj as InventariosModel;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Inventarios>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "INV"; //Inventarios
+                var contador = ServiceHelper.GetNextId<Inventarios>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Inventarios>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Inventarios>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 base.create(obj);

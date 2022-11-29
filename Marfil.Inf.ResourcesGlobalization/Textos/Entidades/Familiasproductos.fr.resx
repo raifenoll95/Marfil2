@@ -121,18 +121,150 @@
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Descripcionabreviada" xml:space="preserve">
-    <value>Description courtée</value>
+    <value>Brève description</value>
   </data>
   <data name="TipoFamiliaGeneral" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="TipoFamiliaBloque" xml:space="preserve">
-    <value>Bloque</value>
+    <value>Bloquer</value>
   </data>
   <data name="TipoFamiliaTabla" xml:space="preserve">
     <value>Table</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Familles de produits</value>
+  </data>
+  <data name="Fkcontador" xml:space="preserve">
+    <value>Compteur</value>
+  </data>
+  <data name="Fkguiascontables" xml:space="preserve">
+    <value>guide comptable</value>
+  </data>
+  <data name="Tipofamilia" xml:space="preserve">
+    <value>type de famille</value>
+  </data>
+  <data name="Gestionstock" xml:space="preserve">
+    <value>Gestion de stock</value>
+  </data>
+  <data name="Articulonegocio" xml:space="preserve">
+    <value>C'est un article d'affaires</value>
+  </data>
+  <data name="Fkunidadesmedida" xml:space="preserve">
+    <value>Unités de mesure</value>
+  </data>
+  <data name="Descripcionabreviadagenerada" xml:space="preserve">
+    <value>Brève description de la génération</value>
+  </data>
+  <data name="Descripcion2generada" xml:space="preserve">
+    <value>Description secondaire de la génération</value>
+  </data>
+  <data name="Descripcion1generada" xml:space="preserve">
+    <value>descriptif génération</value>
+  </data>
+  <data name="Descripcionarticulofamiliamaterial" xml:space="preserve">
+    <value>Inclure la description de la famille de matériaux</value>
+  </data>
+  <data name="Descripcionarticuloacabado" xml:space="preserve">
+    <value>Inclure la description terminée</value>
+  </data>
+  <data name="Descripcionarticulogrosor" xml:space="preserve">
+    <value>inclure l'épaisseur de la description</value>
+  </data>
+  <data name="Descripcionarticulocaracteristica" xml:space="preserve">
+    <value>Inclure la description de la fonctionnalité</value>
+  </data>
+  <data name="Descripcionarticulomaterial" xml:space="preserve">
+    <value>Inclure la description du matériel</value>
+  </data>
+  <data name="Descripionarticulofamilia" xml:space="preserve">
+    <value>Inclure la description de la famille</value>
+  </data>
+  <data name="Validaracabado" xml:space="preserve">
+    <value>valider la finition</value>
+  </data>
+  <data name="Validargrosor" xml:space="preserve">
+    <value>valider l'épaisseur</value>
+  </data>
+  <data name="Validarcaracteristica" xml:space="preserve">
+    <value>valider la fonctionnalité</value>
+  </data>
+  <data name="Validarmaterial" xml:space="preserve">
+    <value>valider le matériel</value>
+  </data>
+  <data name="Editargrueso" xml:space="preserve">
+    <value>permet d'éditer grossièrement</value>
+  </data>
+  <data name="Editarancho" xml:space="preserve">
+    <value>Permet de modifier la largeur</value>
+  </data>
+  <data name="Editarlargo" xml:space="preserve">
+    <value>Permet de modifier la longueur</value>
+  </data>
+  <data name="PartesDescripcionFamilia" xml:space="preserve">
+    <value>Famille</value>
+  </data>
+  <data name="PartesDescripcionMaterial" xml:space="preserve">
+    <value>Matériel</value>
+  </data>
+  <data name="PartesDescripcionCaracteristica" xml:space="preserve">
+    <value>Caractéristique</value>
+  </data>
+  <data name="PartesDescripcionGrosor" xml:space="preserve">
+    <value>Grosseur</value>
+  </data>
+  <data name="PartesDescripcionAcabado" xml:space="preserve">
+    <value>Finir</value>
+  </data>
+  <data name="PartesDescripcionFamiliamaterial" xml:space="preserve">
+    <value>famille de matériaux</value>
+  </data>
+  <data name="Fkgruposiva" xml:space="preserve">
+    <value>Groupe TVA</value>
+  </data>
+  <data name="ErrorContadorGestionStock" xml:space="preserve">
+    <value>Un compteur ne peut pas être affecté à une famille qui n'a pas de gestion de stock/lot</value>
+  </data>
+  <data name="TipoLibreTabla" xml:space="preserve">
+    <value>Libre</value>
+  </data>
+  <data name="ErrorAncho" xml:space="preserve">
+    <value>La valeur de la largeur de l'article {0} doit être comprise entre {1} et {2}</value>
+  </data>
+  <data name="ErrorGrueso" xml:space="preserve">
+    <value>La valeur brute de l'article {0} doit être comprise entre {1} et {2}</value>
+  </data>
+  <data name="ErrorLargo" xml:space="preserve">
+    <value>La valeur longue de l'article {0} doit être comprise entre {1} et {2}</value>
+  </data>
+  <data name="ValidarDimensiones" xml:space="preserve">
+    <value>Valider les dimensions</value>
+  </data>
+  <data name="MinLargo" xml:space="preserve">
+    <value>longueur minimale</value>
+  </data>
+  <data name="MaxLargo" xml:space="preserve">
+    <value>Maximale longue</value>
+  </data>
+  <data name="MinAncho" xml:space="preserve">
+    <value>largeur minimale</value>
+  </data>
+  <data name="MaxAncho" xml:space="preserve">
+    <value>largeur maximale</value>
+  </data>
+  <data name="MinGrueso" xml:space="preserve">
+    <value>épaisseur minimale</value>
+  </data>
+  <data name="MaxGrueso" xml:space="preserve">
+    <value>épaisseur maximale</value>
+  </data>
+  <data name="Consumibles" xml:space="preserve">
+    <value>consommables</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>classement des articles</value>
   </data>
 </root>

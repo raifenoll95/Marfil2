@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Rate</value>
+    <value>Price list</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -151,25 +151,25 @@
     <value>Valid to</value>
   </data>
   <data name="Ivaincluido" xml:space="preserve">
-    <value>TAX included</value>
+    <value>VAT included</value>
   </data>
   <data name="Observaciones" xml:space="preserve">
-    <value>Notes</value>
+    <value>Comments</value>
   </data>
   <data name="Precioautomaticobase" xml:space="preserve">
     <value>Base price</value>
   </data>
   <data name="Precioautomaticoporcentajebase" xml:space="preserve">
-    <value>% base price</value>
+    <value>% Base price</value>
   </data>
   <data name="Precioautomaticoporcentajefijo" xml:space="preserve">
     <value>Constant</value>
   </data>
   <data name="Precioautomaticofkfamiliasproductosdesde" xml:space="preserve">
-    <value>From family</value>
+    <value>Family from</value>
   </data>
   <data name="Precioautomaticofkfamiliasproductoshasta" xml:space="preserve">
-    <value>To family</value>
+    <value>Family to</value>
   </data>
   <data name="Precioautomaticofkmaterialesdesde" xml:space="preserve">
     <value>Material from</value>
@@ -178,13 +178,13 @@
     <value>Material to</value>
   </data>
   <data name="Fkarticulos" xml:space="preserve">
-    <value>Cod. Article</value>
+    <value>Item code</value>
   </data>
   <data name="Fkarticulosdescripcion" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="Fkarticuloscodigounidad" xml:space="preserve">
-    <value>Unidades</value>
+    <value>Unit</value>
   </data>
   <data name="Precio" xml:space="preserve">
     <value>Price</value>
@@ -202,30 +202,33 @@
     <value>Buy</value>
   </data>
   <data name="TipoFlujoVenta" xml:space="preserve">
-    <value>Sell</value>
+    <value>Sale</value>
   </data>
   <data name="ErrorLineasExistentes" xml:space="preserve">
     <value>Is not possible to remove the rate because there are data associate to it</value>
   </data>
   <data name="LblCalculoprecio" xml:space="preserve">
-    <value>Calculate rates</value>
+    <value>Price calculation sets</value>
   </data>
   <data name="Lbllistadotarifas" xml:space="preserve">
-    <value>Articles</value>
+    <value>Items</value>
   </data>
   <data name="LblFormula" xml:space="preserve">
     <value>Formule</value>
   </data>
   <data name="Coste" xml:space="preserve">
-    <value>Cost+</value>
+    <value>Cost</value>
   </data>
   <data name="Preciominimoventa" xml:space="preserve">
     <value>Minimum price</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
-    <value>Rate</value>
+    <value>Price list</value>
   </data>
   <data name="Unidades" xml:space="preserve">
-    <value>UM</value>
+    <value>MU</value>
+  </data>
+  <data name="Valorarcomponentes" xml:space="preserve">
+    <value>Assess components</value>
   </data>
 </root>

@@ -47,7 +47,6 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         }
 
         #region Propiedades
-        [Required]
         public string Empresa { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBLineas), Name = "Id")]
@@ -122,7 +121,6 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
 
         public override string DisplayName => "Guias Balances";
 
-        [Required]
         public string Empresa { get; set; }
 
         public int Id { get; set; }

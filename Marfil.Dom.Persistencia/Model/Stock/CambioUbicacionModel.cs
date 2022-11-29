@@ -47,6 +47,6 @@ namespace Marfil.Dom.Persistencia.Model.Stock
         
             _toolbar = new ToolbarCambioUbicacionModel();
         
-    }
+        }
     }
 }

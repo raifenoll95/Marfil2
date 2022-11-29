@@ -80,7 +80,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var st = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var estadosService = new EstadosService(_context,_db);
-            st.List = st.List.OfType<AlbaranesModel>().OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
+
+            //Comprobamos si el usuario tiene el bloqueo de series
+            List<string> seriesrol;
+            var tienebloqueo = _db.Usuarios.Where(f => f.id == _context.Id).FirstOrDefault().bloquearseries;
+
+            //Si tiene comprobamos el grupo de usuarios y a que series corresponden
+            if (tienebloqueo == true)
+            {
+                //Comprobamos el rol de usuario para mostrar las series que le correspondan al usuario
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa && (f.fkgruposusuarios == _context.RoleId.ToString() || f.fkgruposusuarios == null || f.fkgruposusuarios == "")).Select(x => x.id).ToList();
+            }
+            //Si no tiene bloqueo se ven todas las series
+            else
+            {
+                seriesrol = _db.Series.Where(f => f.empresa == _context.Empresa).Select(x => x.id).ToList();
+            }
+
+            st.List = st.List.OfType<AlbaranesModel>().Where(s => seriesrol.Contains(s.Fkseries)).OrderByDescending(f => f.Fechadocumento).ThenByDescending(f => f.Referencia);
             var propiedadesVisibles = new[] { "Referencia", "Fechadocumento", "Fkclientes", "Nombrecliente", "Fkestados", "Importebaseimponible", "Tipoalbaran" };
             var propiedades = Helpers.Helper.getProperties<AlbaranesModel>();
             st.PrimaryColumnns = new[] { "Id" };
@@ -127,7 +144,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result;
         }
 
-        public IEnumerable<AlbaranesTotalesModel> Recalculartotales(IEnumerable<AlbaranesLinModel> model, double descuentopp, double descuentocomercial, double portes, int decimalesmoneda)
+        public IEnumerable<AlbaranesTotalesModel> Recalculartotales(IEnumerable<AlbaranesLinModel> model, double descuentopp, double descuentocomercial, double portes, int decimalesmoneda, bool esimportado)
         {
             var result = new List<AlbaranesTotalesModel>();
 
@@ -140,7 +157,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = Math.Round((item.Sum(f => f.Importe) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = Math.Round((item.Sum(f => f.Importe)) ?? 0, decimalesmoneda);
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;
@@ -156,6 +173,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             return result;
+        }
+
+        public int Recalcularpeso(AlbaranesModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
+            }
+
+            return pesototal;
         }
 
         public AlbaranesModel Clonar(string id)
@@ -177,9 +209,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     item.Cantidadpedida = 0;
                 }
                 obj.Fkestados = _appService.GetConfiguracion().Estadoalbaranesventasinicial;
-                var contador = ServiceHelper.GetNextId<Albaranes>(_db, Empresa, obj.Fkseries);
+                var tipodocumento = "ALB";//Albaran de venta
+                var contador = ServiceHelper.GetNextId<Albaranes>(_db, Empresa, obj.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                obj.Referencia = ServiceHelper.GetReference<Albaranes>(_db, obj.Empresa, obj.Fkseries, contador, obj.Fechadocumento.Value, out identificadorsegmento);
+                obj.Referencia = ServiceHelper.GetReference<Albaranes>(_db, obj.Empresa, obj.Fkseries, tipodocumento, contador, obj.Fechadocumento.Value, out identificadorsegmento);
                 obj.Identificadorsegmento = identificadorsegmento;
                 var newItem = _converterModel.CreatePersitance(obj);
                 if (_validationService.ValidarGrabar(newItem))
@@ -267,9 +300,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
 
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Albaranes>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "ALB";//Albaran de venta
+                var contador = ServiceHelper.GetNextId<Albaranes>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Albaranes>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Albaranes>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
 
                 //Obtener el pais del cliente (tercero)
@@ -326,6 +360,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 //fin actualizar precios
 
+                //Se calcula el peso del material en el documento
+                if (model.Pesobruto <= 0 || model.Pesobruto == null)
+                {
+                    var ConfService = new ConfiguracionService(_context, _db);
+                    var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                    model.Pesobruto = Recalcularpeso(model);
+                    model.Pesoneto = Math.Round((double)(model.Pesobruto - (model.Pesobruto * relacionbrutoneto / 100)), 2);
+                }
+
+                //Cambiar el Kit/Bundel a Vendido si procede
+                ComprobarEstadoKitBundle(model.Lineas);
+
                 base.create(obj);                
                 
                 ModificarCantidadesPedidasPedidos(obj as AlbaranesModel);
@@ -364,6 +410,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
                         {
                             editado.Clientepais = service.GetListPaises().Where(f => f.Valor == cuenta.FkPais).Select(f => f.Descripcion).SingleOrDefault();
+                        }
+
+                        //Se calcula el peso del material en el documento
+                        if (editado.Pesobruto <= 0 || editado.Pesobruto == null)
+                        {
+                            var ConfService = new ConfiguracionService(_context, _db);
+                            var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                            editado.Pesobruto = Recalcularpeso(editado);
+                            editado.Pesoneto = Math.Round((double)(editado.Pesobruto - (editado.Pesobruto * relacionbrutoneto / 100)), 2);
                         }
 
                         base.edit(obj);
@@ -523,23 +578,37 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public virtual AlbaranesModel ImportarPedido(PedidosModel presupuesto)
         {
-            //calcular serie asociada
-            if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
+            using (var tran = Marfil.Inf.Genericos.Helper.TransactionScopeBuilder.CreateTransactionObject())
             {
-                var result = Helper.fModel.GetModel<AlbaranesModel>(_context);
-                result.Importado = true;
-                ImportarCabecera(presupuesto, result);
-                var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
-                result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
-                EstablecerSerie(presupuesto.Fkseries, result);
+                //calcular serie asociada
+                if (presupuesto.Lineas.Any(f => (f.Cantidad ?? 0) - (f.Cantidadpedida ?? 0) > 0))
+                {
+                    var result = Helper.fModel.GetModel<AlbaranesModel>(_context);
+                    result.Importado = true;
+                    ImportarCabecera(presupuesto, result);
+                    var maxId = result.Lineas.Any() ? result.Lineas.Max(f => f.Id) : 0;
+                    result.Lineas.AddRange(ImportarLineas(maxId, ConvertLineasModelToILineas(presupuesto.Id.ToString(), presupuesto.Referencia, presupuesto.Lineas)));
+                    EstablecerSerie(presupuesto.Fkseries, result);
 
-                //recalculo importes lineas y totales
-                RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
-                result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
-                    result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
-                    result.Decimalesmonedas).ToList();
+                    //recalculo importes lineas y totales
+                    RecalculaLineas(result.Lineas, result.Porcentajedescuentoprontopago ?? 0, result.Porcentajedescuentocomercial ?? 0, result.Fkregimeniva, result.Importeportes ?? 0, result.Decimalesmonedas);
+                    result.Totales = Recalculartotales(result.Lineas, result.Porcentajedescuentoprontopago ?? 0,
+                        result.Porcentajedescuentocomercial ?? 0, result.Importeportes ?? 0,
+                        result.Decimalesmonedas, true).ToList();
 
-                return result;
+                    //  Cambiamos el estado del pedido
+                    var Confservice = FService.Instance.GetService(typeof(ConfiguracionModel), _context) as ConfiguracionService;
+                    var pedidosService = FService.Instance.GetService(typeof(PedidosModel), _context) as PedidosService;
+                    presupuesto.Fkestados = Confservice.GetEstadoFinPedidosVentas();
+
+                    var newItem = pedidosService._converterModel.CreatePersitance(presupuesto);
+                    _db.Set<Pedidos>().AddOrUpdate(newItem);
+
+                    _db.SaveChanges();
+                    tran.Complete();
+
+                    return result;
+                }
             }
 
             throw new ValidationException(RAlbaranes.ErrorSinCantidadPendiente);
@@ -686,6 +755,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
             }
 
+            //Calcular peso
+            result.Pesobruto = result.Peso;
+            var ConfService = new ConfiguracionService(_context, _db);
+            var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+            result.Pesoneto = Math.Round((double)(result.Pesobruto - (result.Pesobruto * relacionbrutoneto / 100)), 2);
+
             result.Fechadocumento = DateTime.Now;
             result.Fkestados = _appService.GetConfiguracion().Estadoalbaranesventasinicial;
         }
@@ -774,6 +849,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             }
             _db.SaveChanges();
+        }
+
+        private void ComprobarEstadoKitBundle(List<AlbaranesLinModel> lineas)
+        {
+            var kitbundle = new List<string>();
+            var KitService = new KitService(_context, _db);
+            var BundleService = new BundleService(_context, _db);
+
+            //Obtenemos los kits o Bundles
+            foreach (var item in lineas)
+            {
+                if (!kitbundle.Exists(f => f == item.Bundle))
+                {
+                    kitbundle.Add(item.Bundle);
+                }
+            }
+
+            //Actualizamos los estados a 'Vendido' 
+            foreach (var item in kitbundle)
+            {
+                if (_db.Kit.Where(f => f.referencia == item).FirstOrDefault() != null)
+                {
+                    KitService.Vendido(_db.Kit.Where(f => f.empresa == Empresa && f.referencia == item).FirstOrDefault().id.ToString());
+                }
+                else if (_db.Bundle.Where(f => f.lote + f.id == item).FirstOrDefault() != null)
+                {
+                    BundleService.Vendido(_db.Bundle.Where(f => f.empresa == Empresa && f.lote + f.id == item).Select(x=> x.lote + ";" + x.id).FirstOrDefault());
+                }
+            }
         }
 
         #endregion
@@ -882,7 +986,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 Porcentajeiva = tiposivaObj.PorcentajeIva,
                 Porcentajerecargoequivalencia = tiposivaObj.PorcentajeRecargoEquivalencia,
                 Canal = model.Canal
-
             }
              );
 
@@ -921,11 +1024,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         ? stockactualService.GetArticuloPorLoteOCodigo(
                             string.Format("{0}{1}", linea.Lote, Funciones.RellenaCod(linea.Loteid, 3)), model.Fkalmacen,
                             Empresa) as MovimientosstockModel : null;
-                    if (model.Modificarmedidas)
+                    //Se permite la modificación de medidas pero no es un Bundle / KIT, si no aplica las medidas del primer artículo a todos.
+                    if (model.Modificarmedidas && string.IsNullOrEmpty(linea.Bundle))
                     {
-                        ancho = model.Ancho;
-                        largo = model.Largo;
-                        grueso = model.Grueso;
+                        ancho = model.Ancho == 0 ? ancho : model.Ancho;
+                        largo = model.Largo == 0 ? largo : model.Largo;
+                        grueso = model.Grueso == 0 ? grueso : model.Grueso;
                     }
                     else
                     {
@@ -938,11 +1042,42 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         throw new ValidationException(string.Format("La cantidad indicada para el lote {0} es superior a la que hay en el stock actual", string.Format("{0}{1}", linea.Lote, Funciones.RellenaCod(linea.Loteid, 3))));
                     var unidadesObj = unidadesService.get(familiaObj.Fkunidadesmedida) as UnidadesModel;
                     var tiposivaObj = tiposivaService.get(articuloObj.Fktiposiva) as TiposIvaModel;
-                    var metros = UnidadesService.CalculaResultado(unidadesObj, articuloObj.Lotefraccionable ? model.Cantidad :linea.Cantidad, largo, ancho, grueso, model.Metros);
+                    //var metros = UnidadesService.CalculaResultado(unidadesObj, articuloObj.Lotefraccionable ? model.Cantidad :linea.Cantidad, largo, ancho, grueso, model.Metros);
+                    var metros = UnidadesService.CalculaResultado(unidadesObj, linea.Cantidad, largo, ancho, grueso, model.Metros);
                     linea.Metros = metros;
+
+                    // Asignar importe según tarifa del cliente si es un KIT
+                    if (!string.IsNullOrEmpty(linea.Bundle))
+                    {
+                        /*var seriekit = _db.Series.Where(f => f.empresa == Empresa && f.tipodocumento == TipoDocumentos.Kit.ToString()).FirstOrDefault().id;
+
+                        if (linea.Bundle.Substring(0, seriekit.Length).Equals(seriekit))
+                        {*/
+                        var tarifacli = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == model.Fkcuenta).FirstOrDefault().fktarifas;
+                        model.Precio = (double)_db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifacli && f.fkarticulos == linea.Fkarticulos).FirstOrDefault().precio;
+                        //}
+                    }
+
                     var bruto = linea.Metros * model.Precio;
                     var importedescuento = Math.Round(((bruto) * model.Descuento / 100.0), model.Decimalesmonedas);
                     var total = bruto - importedescuento;
+
+                    var cantidad = 0.0;
+                    if (articuloObj.Lotefraccionable)
+                    {
+                        if (linea.Cantidad > model.Cantidad)
+                        {
+                            cantidad = linea.Cantidad;
+                        }
+                        else
+                        {
+                            cantidad = model.Cantidad;
+                        }
+                    }
+                    else
+                    {
+                        cantidad = linea.Cantidad;
+                    }
 
                     listado.Add(new AlbaranesLinModel()
                     {
@@ -953,7 +1088,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Lote = linea.Lote,
                         Tabla = Funciones.Qint(linea.Loteid),
                         Tblnum = Funciones.Qint(linea.Loteid),
-                        Cantidad = articuloObj.Lotefraccionable ? model.Cantidad : linea.Cantidad,
+                        Cantidad = cantidad,
                         Largo = largo,
                         Ancho = ancho,
                         Grueso = grueso,
@@ -968,7 +1103,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Fktiposiva = tiposivaObj.Id,
                         Porcentajeiva = tiposivaObj.PorcentajeIva,
                         Porcentajerecargoequivalencia = tiposivaObj.PorcentajeRecargoEquivalencia,
-                        Bundle = model.Tipopieza == TipoPieza.Bundle ? model.Lote.Replace(linea.Lote, string.Empty) : string.Empty,
+                        Bundle = linea.Bundle,//model.Tipopieza == TipoPieza.Bundle ? model.Lote.Replace(linea.Lote, string.Empty) : string.Empty,
                         Caja = model.Caja,
                         Canal = model.Canal,
                         Flagidentifier = Guid.NewGuid()

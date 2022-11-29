@@ -118,6 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TipoComisionAgentes" xml:space="preserve">
-    <value>Agents</value>
+    <value>agents</value>
+  </data>
+  <data name="TipoComisionComerciales" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="TituloListado" xml:space="preserve">
+    <value>liste des commissions</value>
+  </data>
+  <data name="Cuenta" xml:space="preserve">
+    <value>compte</value>
   </data>
 </root>

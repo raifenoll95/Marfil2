@@ -97,6 +97,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Fecha de rotura.
+        /// </summary>
+        public static string Fecharotura {
+            get {
+                return ResourceManager.GetString("Fecharotura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Pedido óptimo.
         /// </summary>
         public static string Pedidooptimo {

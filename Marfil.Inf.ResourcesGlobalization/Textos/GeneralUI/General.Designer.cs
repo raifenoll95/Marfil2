@@ -376,6 +376,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se puede borrar el estado porque ya ha sido utilizado en algún documento..
+        /// </summary>
+        public static string ErrorBorradoEstadosUsados {
+            get {
+                return ResourceManager.GetString("ErrorBorradoEstadosUsados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se puede borrar la unidade de medida porque ya ha sido utilizada en algún artículo..
         /// </summary>
         public static string ErrorBorradoUnidadesUsadas {
@@ -1249,6 +1258,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Detalle.
+        /// </summary>
+        public static string LblDetalle {
+            get {
+                return ResourceManager.GetString("LblDetalle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Diario contable.
         /// </summary>
         public static string LblDiarioContable {
@@ -1398,6 +1416,15 @@ namespace Resources {
         public static string LblExportarClassic {
             get {
                 return ResourceManager.GetString("LblExportarClassic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Factura.
+        /// </summary>
+        public static string LblFactura {
+            get {
+                return ResourceManager.GetString("LblFactura", resourceCulture);
             }
         }
         
@@ -2212,11 +2239,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a SII-Datos.
+        /// </summary>
+        public static string LblSIIDatos {
+            get {
+                return ResourceManager.GetString("LblSIIDatos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SII-Factura.
+        /// </summary>
+        public static string LblSIIFactura {
+            get {
+                return ResourceManager.GetString("LblSIIFactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SII-Operación.
+        /// </summary>
+        public static string LblSIIOperacion {
+            get {
+                return ResourceManager.GetString("LblSIIOperacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sin Desglosar.
         /// </summary>
         public static string LblSinDesglose {
             get {
                 return ResourceManager.GetString("LblSinDesglose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tarifa.
+        /// </summary>
+        public static string LblTarifa {
+            get {
+                return ResourceManager.GetString("LblTarifa", resourceCulture);
             }
         }
         
@@ -2415,6 +2478,15 @@ namespace Resources {
         public static string LblVer {
             get {
                 return ResourceManager.GetString("LblVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a VerificarContabilidad.
+        /// </summary>
+        public static string LblVerificar {
+            get {
+                return ResourceManager.GetString("LblVerificar", resourceCulture);
             }
         }
         

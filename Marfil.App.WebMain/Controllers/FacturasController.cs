@@ -83,7 +83,7 @@ namespace Marfil.App.WebMain.Controllers
                 { 
                     var vector = albaranesreferencia.Split(';');
                     model = service.ImportarAlbaranes(serie, fecha, vector);
-                    TempData[Constantes.VariableMensajeWarning] = service.WarningList.Any() ? string.Join("<br/>", service.WarningList) : string.Empty;
+                    //TempData[Constantes.VariableMensajeWarning] = service.WarningList.Any() ? string.Join("<br/>", service.WarningList) : string.Empty;
                 }
             }
             catch (Exception ex)
@@ -92,8 +92,18 @@ namespace Marfil.App.WebMain.Controllers
                 return Redirect(returnUrl);
             }
 
+            //Creamos la factura para evitar sobreescribir os datos
+            using (var gestionService = createService(model))
+            {
 
-            return RedirectToAction("Edit", "Facturas", new { id = model.Id });
+                gestionService.create(model);
+                TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+
+                //Redireccionamos a la ventana de edición
+                return RedirectToAction("Edit", "Facturas", new { id = model.Id });
+            }
+
+            //return RedirectToAction("Edit", "Facturas", new { id = model.Id });
         }
 
         public ActionResult RedirigirAlbaran(string id)
@@ -856,7 +866,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     Icono = "fa fa-gear",
                     Texto = General.LblContabilizar,
-                    Url = Url.Action("Contabilizar", "Movs", new { IdFactura = objModel.Id, NombreTipo = typeof(FacturasModel).ToString(), returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
+                    Url = Url.Action("Contabilizar", "Movs", new { IdFactura = objModel.Id, NombreTipo = typeof(FacturasModel).ToString(), TipoFactura = objModel.Fktipofactura, returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
                 });
                 result.Add(new ToolbarSeparatorModel());
             }

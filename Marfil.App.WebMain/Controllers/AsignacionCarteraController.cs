@@ -7,6 +7,7 @@ using Marfil.App.WebMain.Misc;
 using Resources;
 using System.Linq;
 using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Dom.Persistencia.Helpers;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -82,6 +83,7 @@ namespace Marfil.App.WebMain.Controllers
             {
                 TempData[Constantes.VariableMensajeWarning] = ex.Message;
             }
+            
             return RedirectToAction("AsistenteAsignacionCartera");
         }
 

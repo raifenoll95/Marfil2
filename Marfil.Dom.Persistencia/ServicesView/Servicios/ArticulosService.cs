@@ -102,6 +102,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     model.Clasificacion = "";
                 }
 
+                if (model.Stockmaximo == null && model.Stockminimo == null)
+                {
+                    if (_db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockseguridad).FirstOrDefault() != null)
+                    {
+                        model.Stockseguridad = (TipoStockSeguridad)_db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockseguridad).SingleOrDefault();
+                    }
+                    
+                    model.Stockminimo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockminimo).SingleOrDefault() ?? 0;
+                    model.Stockmaximo = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.id == numeroFamilia).Select(f => f.stockmaximo).SingleOrDefault() ?? 0;
+                }
+
                 DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.Articulos, _context, _db);
 
                 foreach (var tercero in model.ArticulosTercero)
@@ -183,7 +194,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 if (tarifa == null)
                 {
                     tarifa = _db.TarifasLin.Create();
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.empresa = model.Empresa;
                     tarifa.fktarifas = item.Id;
                     tarifa.fkarticulos = model.Id;
@@ -193,7 +204,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else
                 {
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.precio = model.Articulocomentariovista ? 0 : item.Precio;
                 }
 
@@ -215,7 +226,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     tarifa = _db.TarifasLin.Create();
                     tarifa.empresa = model.Empresa;
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.fktarifas = item.Id;
                     tarifa.fkarticulos = model.Id;
                     tarifa.descuento = item.Descuento;
@@ -224,7 +235,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
                 else
                 {
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.descuento = item.Descuento;
                     tarifa.precio = model.Articulocomentariovista ? 0 : item.Precio;
                 }
@@ -255,7 +266,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     tarifa.empresa = model.Empresa;
                     tarifa.fktarifas = item.id;
-                    tarifa.Unidades = model.Fkunidades;
+                    tarifa.unidades = model.Fkunidades;
                     tarifa.fkarticulos = model.Id;
                     tarifa.descuento = 0;
                     tarifa.precio = model.Articulocomentariovista ? 0 : CalcularPrecio(item, model);
@@ -303,7 +314,55 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public ArticulosModel GetArticulo(string id)
         {
 
-            return _converterModel.GetModelView(_db.Articulos.Single(f => f.empresa == Empresa && f.id == id)) as ArticulosModel;
+            var articulo = _converterModel.GetModelView(_db.Articulos.Single(f => f.empresa == Empresa && f.id == id)) as ArticulosModel;
+
+            foreach (var item in articulo.TarifasSistemaCompra)
+            {
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
+                
+            }
+
+            foreach (var item in articulo.TarifasSistemaVenta)
+            {
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
+            }
+
+            foreach (var item in articulo.TarifasSistemaEspecial)
+            {
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
+            }
+
+            foreach (var item in articulo.TarifasEspecificasCompras.Lineas)
+            {
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
+            }
+
+            foreach (var item in articulo.TarifasEspecificasVentas.Lineas)
+            {
+                if (_db.TarifasLin.SingleOrDefault(f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id) != null)
+                {
+                    item.Precio = (double)_db.TarifasLin.SingleOrDefault(
+                    f => f.empresa == Empresa && f.fktarifas == item.Id && f.fkarticulos == articulo.Id).precio;
+                }
+            }
+
+            return articulo;
         }
 
         public ArticulosDocumentosModel GetArticulo(string id, string fkcuenta, string fkmonedas, string fkregimeniva, TipoFlujo flujo = TipoFlujo.Venta)
@@ -340,7 +399,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var cliente = serviceClientes.get(fkcuenta) as ClientesModel;
                     idioma = cliente.Fkidiomas;
                 }
-
+                else if (fkcuenta.StartsWith("PROS"))
+                {
+                    var serviceProspectos = FService.Instance.GetService(typeof(ProspectosModel), _context, _db) as ProspectosService;
+                    var prospecto = serviceProspectos.get(fkcuenta) as ProspectosModel;
+                    idioma = prospecto.Fkidiomas;
+                }
                 else
                 {
                     if (fkcuenta.StartsWith("40"))
@@ -419,6 +483,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.Append(" when '100'  then gi.fktiposivasinrecargo");
                 sb.Append(" when '010'  then gi.fktiposivaconrecargo");
                 sb.Append(" when '001'  then gi.fktiposivaexentoiva");
+                sb.Append(" else gi.fktiposivasinrecargo");
                 sb.Append(" end");
                 sb.Append(" from GruposIvaLin as gi where gi.empresa = a.empresa and gi.fkgruposiva = a.fkgruposiva and gi.desde <= getdate() order by gi.desde desc)");
                 sb.AppendFormat(" where a.empresa = '{0}' and a.id='{1}' and (a.categoria=0 or a.categoria=1)", Empresa, id);
@@ -443,6 +508,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 sb.Append(" when '100'  then gi.fktiposivasinrecargo");
                 sb.Append(" when '010'  then gi.fktiposivaconrecargo");
                 sb.Append(" when '001'  then gi.fktiposivaexentoiva");
+                sb.Append(" else gi.fktiposivasinrecargo");
                 sb.Append(" end");
                 sb.Append(" from GruposIvaLin as gi where gi.empresa = a.empresa and gi.fkgruposiva = a.fkgruposiva and gi.desde <= getdate() order by gi.desde desc)");
                 sb.AppendFormat(" where a.empresa = '{0}' and a.id='{1}' and (a.categoria=0 or a.categoria=2)", Empresa, id);
@@ -557,7 +623,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             sb.Append(" left join Caracteristicaslin as cp on cp.empresa=art.empresa and cp.fkcaracteristicas=SUBSTRING(art.id,0,3) AND cp.id=SUBSTRING(art.id,6,2) ");
             sb.Append(" left join Grosores as gp on gp.empresa = art.empresa and gp.id=SUBSTRING(art.id,8,2) ");
             sb.Append(" left join Acabados as ap on ap.empresa = art.empresa and ap.id=SUBSTRING(art.id,10,2) ");
-            sb.AppendFormat(" Where art.empresa=@empresa and (art.categoria=0 or art.categoria={0})", (int)flujo);
+            if ((int)flujo == 3)
+            {
+                sb.AppendFormat(" Where art.empresa=@empresa ");//Todas las categorías
+            }
+            else
+            {
+                sb.AppendFormat(" Where art.empresa=@empresa and (art.categoria=0 or art.categoria={0})", (int)flujo);
+            }
+            
 
             var a = sb.ToString();
 
@@ -724,21 +798,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     /*articulo.Existenciasminimasmetros = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     articulo.Existenciasmaximasmetros = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));*/
 
-                    if (row["ExistenciasMinimasUnidades"].ToString() != "" || row["ExistenciasMaximasUnidades"].ToString() != "")
+                    if (row["ExistenciasMinimasMetros"].ToString() != "" || row["ExistenciasMaximasMetros"].ToString() != "")
+                    {
+                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
+                        articulo.Stockminimo = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                        articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
+                    }              
+                    else if (row["ExistenciasMinimasUnidades"].ToString() != "" || row["ExistenciasMaximasUnidades"].ToString() != "")
                     {
                         articulo.Stockseguridad = TipoStockSeguridad.Piezas;
                         articulo.Stockminimo = double.Parse(row["ExistenciasMinimasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                         articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasUnidades"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
                     }
-                    else if (row["ExistenciasMinimasMetros"].ToString() != "" || row["ExistenciasMaximasMetros"].ToString() != "")
-                    {
-                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
-                        articulo.Stockminimo = double.Parse(row["ExistenciasMinimasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                        articulo.Stockmaximo = double.Parse(row["ExistenciasMaximasMetros"].ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("es-ES"));
-                    }
                     else
                     {
-                        articulo.Stockseguridad = TipoStockSeguridad.Piezas;
+                        articulo.Stockseguridad = TipoStockSeguridad.Metros;
                         articulo.Stockminimo = 0;
                         articulo.Stockmaximo = 0;
                     }

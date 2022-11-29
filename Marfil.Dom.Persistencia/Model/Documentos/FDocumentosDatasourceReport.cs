@@ -24,6 +24,7 @@ using Marfil.Dom.Persistencia.Helpers;
 using Newtonsoft.Json;
 using Marfil.Dom.Persistencia.Model.Documentos.Margen;
 using Marfil.Dom.Persistencia.Model.Documentos.CarteraVencimientos;
+using Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos
 {
@@ -103,6 +104,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos
             else if (tipo == TipoDocumentoImpresion.Remesa)
             {
                 return new RemesaReport(user, primarykey);
+            }
+            else if (tipo == TipoDocumentoImpresion.DivisionLotes)
+            {
+                return new DivisionLotesReport(user, primarykey);
             }
             else if (tipo == TipoDocumentoImpresion.Asientos)
             {

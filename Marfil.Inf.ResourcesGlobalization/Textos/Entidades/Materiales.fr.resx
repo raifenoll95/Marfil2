@@ -118,21 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Matériels</value>
+    <value>Matériaux</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Descripcionabreviada" xml:space="preserve">
-    <value>Description courtee</value>
+    <value>Brève description</value>
   </data>
   <data name="Codigovariedad" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Variedadestajos" xml:space="preserve">
-    <value>Variétés/Balafres</value>
+    <value>Variétés/tranches</value>
+  </data>
+  <data name="Fkfamiliasmateriales" xml:space="preserve">
+    <value>famille de matériaux</value>
+  </data>
+  <data name="Fkgruposmateriales" xml:space="preserve">
+    <value>groupe de matériaux</value>
+  </data>
+  <data name="Dureza" xml:space="preserve">
+    <value>Dureté</value>
   </data>
 </root>

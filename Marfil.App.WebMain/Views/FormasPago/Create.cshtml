@@ -23,7 +23,7 @@
     @Html.AntiForgeryToken()
     <input type="hidden" name="mantenimiento" value="@ViewBag.Mantenimiento" />
     <div class="form-horizontal">
-        
+
 
         <div class="form-group">
             @Html.LabelFor(f => ((FormasPagoModel)Model).Id, new { @class = "control-label col-md-2" })
@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(f => ((FormasPagoModel)Model).Nombre, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(f => ((FormasPagoModel)Model).Nombre,new { @class = "form-control", @autofocus = "" })
+                @Html.TextBoxFor(f => ((FormasPagoModel)Model).Nombre, new { @class = "form-control", @autofocus = "" })
                 @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -69,7 +69,7 @@
             <div class="col-md-3">
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBoxFor(f => ((FormasPagoModel) Model).ExcluirFestivos)
+                        @Html.CheckBoxFor(f => ((FormasPagoModel)Model).ExcluirFestivos)
                         <span class="lbl">Excluir vencimientos en festivos</span>
                     </label>
                 </div>
@@ -86,7 +86,7 @@
         <div class="form-group">
             @Html.LabelFor(f => ((FormasPagoModel)Model).FkGruposformaspago, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(f => ((FormasPagoModel)Model).FkGruposformaspago, gruposPago.Select(f=>new SelectListItem() {Value = f.Valor,Text=f.Descripcion}), new { @class = "form-control" })
+                @Html.DropDownListFor(f => ((FormasPagoModel)Model).FkGruposformaspago, gruposPago.Select(f => new SelectListItem() { Value = f.Valor, Text = f.Descripcion }), new { @class = "form-control" })
                 @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).FkGruposformaspago, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -102,34 +102,45 @@
                     }
                 </select>
             </div>
-            <div class="col-md-10 col-md-offset-2">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Efectivo, new { @class = "optionCheck" })
-                        <span class="lbl">@General.LblEfectivo</span>
-                    </label>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <div class="col-md-5 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Efectivo, new { @class = "optionCheck" })
+                            <span class="lbl">@General.LblEfectivo</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Remesable, new { @class = "optionCheck" })
-                        <span class="lbl">@General.LblRemesable</span>
-                    </label>
+                <div class="col-md-5 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Remesable, new { @class = "optionCheck" })
+                            <span class="lbl">@General.LblRemesable</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-10 col-md-offset-2">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Mandato, new { @class = "optionCheck" })
-                        <span class="lbl">@General.LblMandatoRequerido</span>
-                    </label>
+                <div class="col-md-4 col-md-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(f => ((FormasPagoModel)Model).Mandato, new { @class = "optionCheck" })
+                            <span class="lbl">@General.LblMandatoRequerido</span>
+                        </label>
+                    </div>
+                </div>
+
+                @Html.LabelFor(f => ((FormasPagoModel)Model).Docsventaimprimircuenta, new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EnumDropDownList("Docsventaimprimircuenta", ((FormasPagoModel)Model).Docsventaimprimircuenta, (object)new { @class = "form-control" })
+                    @Html.ValidationMessageFor(f => ((FormasPagoModel)Model).Docsventaimprimircuenta, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
-                <span class="fa-2x"> @General.LblVencimientos
+                <span class="fa-2x">
+                    @General.LblVencimientos
                 </span>
                 <span class="pull-right">
                     <a class="btn btn-success btn-sm" href="javascript:CreateRow(); ">
@@ -137,7 +148,7 @@
                         @General.BtnNuevoRegistro
                     </a>
                 </span>
-                
+
             </div>
             <div class="col-md-10 col-md-offset-2">
                 @Html.Partial("FormasPagoLin", ((FormasPagoModel)Model).Lineas)
@@ -152,9 +163,9 @@
             </div>
         </div>
     </div>
-}
+        }
 
-<script type="text/javascript">
+        <script type="text/javascript">
     function onSelectChange(combo) {
         var vector = [
             @{
@@ -187,16 +198,16 @@
             }
         }
     }
-</script>
+        </script>
 
-@section GridView
+        @section GridView
 {
-    @Html.DevExpress().GetStyleSheets(
-    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
-)
-    @Html.DevExpress().GetScripts(
-    new Script { ExtensionSuite = ExtensionSuite.GridView },
-    new Script { ExtensionSuite = ExtensionSuite.Editors }
-)
+            @Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+        )
+            @Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.GridView },
+            new Script { ExtensionSuite = ExtensionSuite.Editors }
+        )
 
-}
+        }

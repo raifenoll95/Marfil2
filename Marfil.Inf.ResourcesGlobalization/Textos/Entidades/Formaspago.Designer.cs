@@ -70,6 +70,18 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+<<<<<<< HEAD
+=======
+        ///   Busca una cadena traducida similar a Docs. Venta imprimir cuenta.
+        /// </summary>
+        public static string Docsventaimprimircuenta {
+            get {
+                return ResourceManager.GetString("Docsventaimprimircuenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+>>>>>>> AlejandroMarfil
         ///   Busca una cadena traducida similar a Editable.
         /// </summary>
         public static string Editable {
@@ -142,6 +154,18 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+<<<<<<< HEAD
+=======
+        ///   Busca una cadena traducida similar a Ninguna (En blanco).
+        /// </summary>
+        public static string Ninguna {
+            get {
+                return ResourceManager.GetString("Ninguna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+>>>>>>> AlejandroMarfil
         ///   Busca una cadena traducida similar a Nombre.
         /// </summary>
         public static string Nombre {
@@ -196,6 +220,27 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+<<<<<<< HEAD
+=======
+        ///   Busca una cadena traducida similar a Cuenta del tercero.
+        /// </summary>
+        public static string Tercero {
+            get {
+                return ResourceManager.GetString("Tercero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta tesorería empresa.
+        /// </summary>
+        public static string Tesoreria {
+            get {
+                return ResourceManager.GetString("Tesoreria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+>>>>>>> AlejandroMarfil
         ///   Busca una cadena traducida similar a Formas de pago.
         /// </summary>
         public static string TituloEntidad {

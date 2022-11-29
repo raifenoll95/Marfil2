@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Type accounts</value>
+    <value>Account types</value>
   </data>
   <data name="TiposCuentasClientes" xml:space="preserve">
-    <value>Clients</value>
+    <value>Customers</value>
   </data>
   <data name="TiposCuentasProveedores" xml:space="preserve">
-    <value>Suppliers</value>
+    <value>Providers</value>
   </data>
   <data name="TiposCuentasAgentes" xml:space="preserve">
     <value>Agents</value>
   </data>
   <data name="Cuenta" xml:space="preserve">
-    <value>Account</value>
+    <value>Account code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
     <value>Description</value>
@@ -157,13 +157,13 @@
     <value>The account {0} is duplicated</value>
   </data>
   <data name="ErrorCuentaLoop" xml:space="preserve">
-    <value>The account {0} is already generated in another type of account and it could create some problems</value>
+    <value>The account {0} is already generated in another type of account and it could create some p</value>
   </data>
   <data name="ErrorCuentaLoopEncontrado" xml:space="preserve">
     <value>A loop has been found in the account {0}</value>
   </data>
   <data name="ErrorBorrar" xml:space="preserve">
-    <value>It is not possible to delete the current type of account because there are entities linked to it</value>
+    <value>It is not possible to delete the current type of account because there are entities linked</value>
   </data>
   <data name="TiposCuentasOperarios" xml:space="preserve">
     <value>Workers</value>
@@ -172,6 +172,33 @@
     <value>General account</value>
   </data>
   <data name="TiposCuentasComerciales" xml:space="preserve">
-    <value>Commercial agents</value>
+    <value>Commercial agent</value>
+  </data>
+  <data name="TiposCuentasAcreedores" xml:space="preserve">
+    <value>Crediters</value>
+  </data>
+  <data name="TiposCuentasCobradores" xml:space="preserve">
+    <value>Company treasury accounts</value>
+  </data>
+  <data name="TiposCuentasTransportistas" xml:space="preserve">
+    <value>Transporters</value>
+  </data>
+  <data name="TiposCuentasAseguradoras" xml:space="preserve">
+    <value>Assurance companies</value>
+  </data>
+  <data name="TiposCuentasProspectos" xml:space="preserve">
+    <value>Prospects</value>
+  </data>
+  <data name="CategoriasCuentasContables" xml:space="preserve">
+    <value>Accountants</value>
+  </data>
+  <data name="CategoriasCuentasExtracontables" xml:space="preserve">
+    <value>Off-balance sheet</value>
+  </data>
+  <data name="Categoria" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="ErrorInicioCuentaExtracontable" xml:space="preserve">
+    <value>Off-balance accounts must start with a letter</value>
   </data>
 </root>

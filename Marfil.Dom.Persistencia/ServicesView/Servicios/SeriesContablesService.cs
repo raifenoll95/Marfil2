@@ -109,16 +109,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             List<SeriesContablesModel> series = new List<SeriesContablesModel>();
 
-            if(tipo == "0")
+            if (tipo == "0" || tipo == "CRC")
+            {
+                series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRC").
+                    Select(f => new SeriesContablesModel() { Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion }).ToList());
+            }
+            else if (tipo == "X")
             {
                 series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRC").
                     Select(f => new SeriesContablesModel() { Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion }).ToList());
             }
-
+            else if (tipo == "1" || tipo == "CRP")
+            {
+                series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "CRP").
+                    Select(f => new SeriesContablesModel() { Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion }).ToList());
+            }
+            else if (tipo == "Y")
+            {
+                series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRP").
+                    Select(f => new SeriesContablesModel() { Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion }).ToList());
+            }
             else
             {
-               series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRP").
-                    Select(f => new SeriesContablesModel() {Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion}).ToList());
+                series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == tipo).
+                    Select(f => new SeriesContablesModel() { Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion }).ToList());
             }
 
             return series;            

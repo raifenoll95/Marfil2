@@ -54,6 +54,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Cuentas), typeof(CuentasConverterService));
             _converterServicesTypes.Add(typeof(Tiposcuentas), typeof(TiposcuentasConverterService));
             _converterServicesTypes.Add(typeof(Inmuebles), typeof(InmueblesConverterService));
+            _converterServicesTypes.Add(typeof(Lecturas), typeof(LecturasConverterService));
             _converterServicesTypes.Add(typeof(Unidades), typeof(UnidadesConverterService));
             _converterServicesTypes.Add(typeof(Direcciones), typeof(DireccionesConverterService));
             _converterServicesTypes.Add(typeof(Contactos), typeof(ContactosConverterService));
@@ -66,6 +67,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Caracteristicas), typeof(CaracteristicasConverterService));
             _converterServicesTypes.Add(typeof(Articulos), typeof(ArticulosConverterService));
             _converterServicesTypes.Add(typeof(LogStockSeguridad), typeof(LogStockSeguridadConverterService));
+            _converterServicesTypes.Add(typeof(VerificarContabilidad), typeof(VerificarContabilidadConverterService));
             _converterServicesTypes.Add(typeof(Contadores), typeof(ContadoresConverterService));
             _converterServicesTypes.Add(typeof(ContadoresLotes), typeof(ContadoresLotesConverterService));
             _converterServicesTypes.Add(typeof(Series), typeof(SeriesConverterService));
@@ -128,6 +130,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(CuadernosBancarios), typeof(CuadernosBancariosConverterServices));
             _converterServicesTypes.Add(typeof(Vencimientos), typeof(VencimientosConverterService));
             _converterServicesTypes.Add(typeof(CircuitosTesoreriaCobros), typeof(CircuitosTesoreriaConverterCobrosConverterService));
+            _converterServicesTypes.Add(typeof(TiposFacturas), typeof(TiposFacturasIvaConverterService));
             _converterServicesTypes.Add(typeof(CarteraVencimientos), typeof(CarteraVencimientosConverterService));
             _converterServicesTypes.Add(typeof(Remesas), typeof(RemesasConverterService));
             _converterServicesTypes.Add(typeof(Oportunidades), typeof(OportunidadesConverterService));
@@ -138,6 +141,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(IncidenciasCRM), typeof(IncidenciasCRMConverterService));
             _converterServicesTypes.Add(typeof(PeticionesAsincronas), typeof(PeticionesAsincronasConverterModel));
             _converterServicesTypes.Add(typeof(CostesVariablesPeriodo), typeof(CostesVariablesPeriodoConverterService));
+            _converterServicesTypes.Add(typeof(RegistroIVARepercutido), typeof(RegistroIvaRepercutidoConverterService));
         }
 
         public IConverterModelService<TView, TPersistance> CreateConverterModelService<TView, TPersistance>(IContextService context, MarfilEntities db,string empresa) where TPersistance : class where TView: class

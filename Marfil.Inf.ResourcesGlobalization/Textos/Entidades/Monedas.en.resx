@@ -141,4 +141,10 @@
   <data name="Usuario" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="CambioMonedaBase" xml:space="preserve">
+    <value>Base currency change</value>
+  </data>
+  <data name="CambioMonedaAdicional" xml:space="preserve">
+    <value>Additional currecncy change</value>
+  </data>
 </root>

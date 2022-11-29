@@ -13,7 +13,6 @@ using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.BusquedasMovil;
 using Marfil.Inf.Genericos.Helper;
-using RAlbaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes;
 using Marfil.Dom.ControlsUI.BusquedaTerceros;
 using Marfil.Dom.Persistencia.Model.Documentos.Pedidos;
 using Marfil.Dom.Persistencia.Model.Documentos.Reservasstock;
@@ -25,8 +24,6 @@ using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using static DevExpress.CodeParser.CodeStyle.Formatting.Rules;
 using System.Data.Entity.Migrations;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
@@ -126,6 +123,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         log.empresa = Empresa;
                         log.codarticulo = articulo;
                         log.descripcionarticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().descripcion;
+                        log.fecharotura = DateTime.Today;
                         log.fecha = (DateTime)model.Fechadocumento;
                         log.documento = model.Referencia;
                         log.codigounidad = "";
@@ -176,6 +174,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     log.empresa = Empresa;
                     log.codarticulo = articulo;
                     log.descripcionarticulo = _db.Articulos.Where(f => f.empresa == Empresa && f.id == articulo).FirstOrDefault().descripcion;
+                    log.fecharotura = DateTime.Today;
                     log.fecha = (DateTime)model.Fechadocumento;
                     log.documento = model.Referencia;
                     log.codigounidad = "";
@@ -194,11 +193,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return haystockdisponible;
         }
 
+        public int Recalcularpeso(ReservasstockModel model)
+        {
+            var articuloservice = FService.Instance.GetService(typeof(ArticulosModel), _context) as ArticulosService;
+            var pesototal = 0;
+
+            foreach (var item in model.Lineas)
+            {
+                var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
+
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
+            }
+
+            return pesototal;
+        }
+
         public override void create(IModelView obj)
         {
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
                 var model = obj as AlbaranesModel;
+
+                //Se calcula el peso del material en el documento
+                if (model.Pesobruto <= 0)
+                {
+                    var ConfService = new ConfiguracionService(_context, _db);
+                    var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                    model.Pesobruto = Recalcularpeso(model);
+                    model.Pesoneto = Math.Round((double)(model.Pesobruto - (model.Pesobruto * relacionbrutoneto / 100)), 2);
+                }
 
                 base.create(obj);
 
@@ -276,6 +299,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 else
                 {
+                    //Se calcula el peso del material en el documento
+                    if (editado.Pesobruto <= 0)
+                    {
+                        var ConfService = new ConfiguracionService(_context, _db);
+                        var relacionbrutoneto = ConfService.GetRelacionBrutoNeto();
+                        editado.Pesobruto = Recalcularpeso(editado);
+                        editado.Pesoneto = Math.Round((double)(editado.Pesobruto - (editado.Pesobruto * relacionbrutoneto / 100)), 2);
+                    }
+
                     base.edit(obj);
                     //ActualizarStock(original, editado);
                     GenerarMovimientosLineas(original.Lineas, original, TipoOperacionService.EliminarEntregaStock);
@@ -442,6 +474,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     Grueso = linea.Grueso ?? 0,
                     Fkunidadesmedida = linea.Fkunidades,
                     Metros = linea.Metros ?? 0,
+                    Bundle = linea.Bundle,
                     Decimalesmedidas = linea.Decimalesmedidas
                 });
                 resultado.Lineas= CrearNuevasLineas(resultado.Lineas, item);
@@ -455,7 +488,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 elem.Fkpedidos = reservaModel.Id;
             }
 
-            Recalculartotales(resultado.Lineas, resultado.Porcentajedescuentoprontopago ?? 0, resultado.Porcentajedescuentocomercial ?? 0, resultado.Costeportes ?? 0, resultado.Decimalesmonedas);
+            Recalculartotales(resultado.Lineas, resultado.Porcentajedescuentoprontopago ?? 0, resultado.Porcentajedescuentocomercial ?? 0, resultado.Costeportes ?? 0, resultado.Decimalesmonedas,true);
             resultado.Modo=ModoAlbaran.Constock;
             return resultado;
         }
@@ -943,6 +976,63 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
             }
+        }
+
+        public List<AlbaranesLinModel> GetLecturas(string identificador)
+        {
+            using (var service = FService.Instance.GetService(typeof(LecturasModel), _context) as LecturasService)
+            {
+                var lecturas = _db.Lecturas.Where(f => f.identificador == identificador && f.usuario == Usuarioid).Select(x => new { x.lote, x.cantidad }).ToList();
+                var lineas = new List<AlbaranesLinModel>();
+
+                foreach (var item in lecturas)
+                {
+                    var lote = item.lote.Substring(0,item.lote.Length - 3);
+                    var pieza = item.lote.Substring(item.lote.Length - 2);
+                    var tablaid = pieza.Substring(0,1) != "0" ? pieza : pieza.Substring(1,1);
+                    var stock = _db.Stockactual.Where(f => f.empresa == Empresa && f.lote == lote && f.loteid == tablaid).FirstOrDefault();
+
+                    if (stock != null)
+                    {
+                        var linea = new AlbaranesLinModel();
+
+                        linea.Fkarticulos = stock.fkarticulos;
+                        linea.Descripcion = _db.Articulos.Where(f => f.empresa == Empresa && f.id == stock.fkarticulos).FirstOrDefault().descripcion;
+                        linea.Lote = stock.lote;
+                        linea.Tabla = int.Parse(stock.loteid);
+                        linea.Cantidad = item.cantidad;
+                        linea.Ancho = stock.ancho;
+                        linea.Largo = stock.largo;
+                        linea.Grueso = stock.grueso;
+                        linea.Metros = stock.metros;
+                        linea.Fktiposiva = "021";//IVA estandar
+                        linea.Porcentajeiva = 21;
+                        linea.Fkunidades = stock.fkunidadesmedida;
+
+                        lineas.Add(linea);
+                    }
+                }
+
+                service.ActualizarLecturas(identificador);
+
+                return lineas;
+            }
+        }
+
+
+        public double GetTarifa(string articulo, string fkclientes)
+        {
+            var tipotarifa = _db.Clientes.Where(f => f.empresa == Empresa && f.fkcuentas == fkclientes).FirstOrDefault().fktarifas;
+
+            if (string.IsNullOrEmpty(tipotarifa))
+            {
+                throw new ValidationException("El cliente " + fkclientes + " debe tener asignada una tarifa");
+            }
+
+            var precio = _db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tipotarifa && f.fkarticulos == articulo).FirstOrDefault().precio;
+
+            return (double)precio;
+
         }
         #endregion
 

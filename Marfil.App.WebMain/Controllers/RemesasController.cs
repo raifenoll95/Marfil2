@@ -44,7 +44,7 @@ namespace Marfil.App.WebMain.Controllers
             MenuName = "Remesas";
             var permisos = appService.GetPermisosMenu("Remesas");
             IsActivado = permisos.IsActivado;
-            CanCrear = permisos.CanCrear;
+            CanCrear = false;
             CanModificar = false;
             CanEliminar = false;
         }

@@ -129,10 +129,44 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 validation.EjercicioId = EjercicioId;
                 RepartirCostesLineas(model.Lineasentrada, model.Costes);
 
+                //Repartir coste trabajo aserrado
+                var trabajoservice = new TrabajosService(_context, _db);
+
+                var familiassalida = model.Lineassalida.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+                var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+                if (familiassalida.Except(familiasM2).Count() == 0) //M2 - Aserrado 
+                {
+                    var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
+                    if (!String.IsNullOrEmpty(id))
+                    {
+                        var trabajo = trabajoservice.get(id) as TrabajosModel;
+                        //Cambiamos el precio solo para poder usarlo posteriormente, no lo guardamos
+                        trabajo.Precio = (double)(trabajo.Precio * model.Lineassalida.Sum(f => f.Metros));
+
+                        RepartirTrabajoLineas(model.Lineasentrada, trabajo);
+                    }
+                    
+                }
+                else //M3 - Aserrado
+                {
+                    var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
+                    if (!String.IsNullOrEmpty(id))
+                    {
+                        var trabajo = trabajoservice.get(id) as TrabajosModel;
+                        //Cambiamos el precio solo para poder usarlo posteriormente, no lo guardamos
+                        trabajo.Precio = (double)(trabajo.Precio * model.Lineassalida.Sum(f => f.Metros));
+
+                        RepartirTrabajoLineas(model.Lineasentrada, trabajo);
+                    }
+                }
+                //Repartir coste trabajo
+
                 //Calculo ID
-                var contador = ServiceHelper.GetNextId<Transformaciones>(_db, Empresa, model.Fkseries);
+                var tipodocumento = "TRF"; //Transformaciones
+                var contador = ServiceHelper.GetNextId<Transformaciones>(_db, Empresa, model.Fkseries, tipodocumento);
                 var identificadorsegmento = "";
-                model.Referencia = ServiceHelper.GetReference<Transformaciones>(_db, model.Empresa, model.Fkseries, contador, model.Fechadocumento.Value, out identificadorsegmento);
+                model.Referencia = ServiceHelper.GetReference<Transformaciones>(_db, model.Empresa, model.Fkseries, tipodocumento, contador, model.Fechadocumento.Value, out identificadorsegmento);
                 model.Identificadorsegmento = identificadorsegmento;
                 //CalcularPrecioPiezasEntrada(model.Lineasentrada, model.Lineassalida.Sum(f => f.Precio * f.Metros) ?? 0);
                 //ModificarLotesLineas(model);
@@ -163,6 +197,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     //CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => f.Precio * f.Metros) ?? 0);
                     RepartirCostesLineas(editado.Lineasentrada, editado.Costes,original.Costes);
                     //ModificarLotesLineas(editado);
+
+                    //Repartir coste trabajo aserrado
+                    var trabajoservice = new TrabajosService(_context, _db);
+
+                    var familiassalida = editado.Lineassalida.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+                    var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+                    if (familiassalida.Except(familiasM2).Count() == 0) //M2 - Aserrado 
+                    {
+                        var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
+                        if (!String.IsNullOrEmpty(id))
+                        {
+                            var trabajo = trabajoservice.get(id) as TrabajosModel;
+                            //Cambiamos el precio solo para poder usarlo posteriormente, no lo guardamos
+                            trabajo.Precio = (double)(trabajo.Precio * editado.Lineassalida.Sum(f => f.Metros));
+
+                            RepartirTrabajoLineas(editado.Lineasentrada, trabajo);
+                        }
+
+                    }
+                    else //M3 - Aserrado
+                    {
+                        var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
+                        if (!String.IsNullOrEmpty(id))
+                        {
+                            var trabajo = trabajoservice.get(id) as TrabajosModel;
+                            //Cambiamos el precio solo para poder usarlo posteriormente, no lo guardamos
+                            trabajo.Precio = (double)(trabajo.Precio * editado.Lineassalida.Sum(f => f.Metros));
+
+                            RepartirTrabajoLineas(editado.Lineasentrada, trabajo);
+                        }
+                    }
+                    //Repartir coste trabajo
 
                     base.edit(obj);
 
@@ -600,6 +667,43 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         }
 
+        private void RepartirTrabajoLineas(List<TransformacionesentradaLinModel> lineas, TrabajosModel trabajo)
+        {
+            /*foreach (var item in lineas)
+            {
+                item.Costeadicionalmaterial = 0;
+                item.Costeadicionalotro = 0;
+                item.Costeadicionalportes = 0;
+                item.Costeadicionalvariable = 0;
+                item.Flagidentifier = Guid.NewGuid();
+            }*/
+
+            TipoReparto tiporeparto = trabajo.Tipoimputacion == TipoImputacion.M2Real || trabajo.Tipoimputacion == TipoImputacion.M3 ? TipoReparto.Metros : TipoReparto.Peso;
+            var costeTotal = trabajo.Precio;
+
+            var costeUnidad = 0.0;
+
+            if (tiporeparto == TipoReparto.Metros)
+            {
+                var d = costeTotal / lineas.Sum(f => f.Metros);
+                if (d != null)
+                    costeUnidad = (double)d;
+            }
+            else if (tiporeparto == TipoReparto.Peso)
+            {
+                var d = costeTotal / lineas.Sum(f => (f.Largo * f.Ancho * f.Grueso));
+                if (d != null)
+                    costeUnidad = (double)d;
+                //var unidadesService = FService.Instance.GetService(typeof(UnidadesModel), _context, _db) as UnidadesService;
+                //var d = costeTotal / lineas.Sum(f => ModeloNegocioFunciones.CalculaEquivalentePeso(((UnidadesModel)unidadesService.get(f.Fkunidades)).Formula == TipoStockFormulas.Superficie,f.Metros ?? 0, f.Grueso ?? 0));
+                //if (d != null)
+                //    costeUnidad = (double)d;
+            }
+
+            RepartirCosteTrabajoEnLinea(lineas, tiporeparto, costeTotal, costeUnidad);
+
+        }
+
         private bool SonIgualesCostesOriginalEditado(List<TransformacionesCostesadicionalesModel> costes,
             List<TransformacionesCostesadicionalesModel> costesOriginal)
         {
@@ -736,6 +840,55 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 
             }
         }
+
+        private void RepartirCosteTrabajoEnLinea(List<TransformacionesentradaLinModel> lineas, TipoReparto reparto, double costeTotal, double costeUnidad)
+        {
+            foreach (var item in lineas)
+            {
+                item.Flagidentifier = Guid.NewGuid();
+                var costeLineas = 0.0;
+                if (reparto == TipoReparto.Cantidad)
+                {
+                    var d = item.Cantidad * costeUnidad;
+                    if (d != null) costeLineas = (double)d;
+                }
+                else if (reparto == TipoReparto.Importe)
+                {
+                    throw new ValidationException(RTransformaciones.ErrorRepartoImporte);
+                }
+                else if (reparto == TipoReparto.Metros)
+                {
+                    var d = item.Metros * costeUnidad;
+                    if (d != null) costeLineas = (double)d;
+                }
+                else if (reparto == TipoReparto.Peso)
+                {
+                    var d = item.Largo * item.Ancho * item.Grueso * costeUnidad;
+                    if (d != null) costeLineas = (double)d;
+
+                    //var unidadesService = FService.Instance.GetService(typeof(UnidadesModel), _context, _db) as UnidadesService;
+                    //var d = ModeloNegocioFunciones.CalculaEquivalentePeso(((UnidadesModel)unidadesService.get(item.Fkunidades)).Formula == TipoStockFormulas.Superficie,item.Metros ?? 0, item.Grueso ?? 0) * costeUnidad;
+                    //if (d != null) costeLineas = (double)d;
+                }
+
+                costeLineas = Math.Round(costeLineas, item.Decimalesmonedas ?? 2);
+
+                item.Costeadicionalvariable += costeLineas;
+                costeTotal -= costeLineas;
+            }
+            //Esto lo hacemos para asegurarnos de que los costes cuadran con lo que se debe asignar ya que puede haber problemas de redondeos
+            if (costeTotal != 0)
+            {
+                var ultimaLinea = lineas.LastOrDefault();
+                if (ultimaLinea != null)
+                {
+                    costeTotal = Math.Round(costeTotal, ultimaLinea.Decimalesmonedas ?? 2);
+
+                    ultimaLinea.Costeadicionalvariable += costeTotal;
+                }
+            }
+        }
+
 
         #endregion
 
@@ -1155,10 +1308,49 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private void FinalizarStock(TransformacionesModel original, TransformacionesModel editado)
         {
-            var lotesService =new LotesService(_context);
+            var lotesService = new LotesService(_context);
             CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(f.Lote, f.Tabla.ToString()).Costeneto) ?? 0);
             //CalcularPrecioPiezasEntrada(editado.Lineasentrada, editado.Lineassalida.Sum(f => lotesService.GetByReferencia(string.Format("{0}{1}",f.Lote,f.Tabla)).Costeneto) ?? 0);
+
+            /*Ago22 - Si el producto de salida=1 elemento y es de tipo bloque  y la unidad de medida del/los producto de entrada es m2. Si y solo si existe en costes adicionales un coste x m3
+            En ese caso, multiplicamos ese coste por los m3 del bloque (salida) y se reparte entre todos los metros de entrada (que serán tablas o losas o cualquier otro producto que vaya en m2)*/
+            //CalcularTotalBloqueM3(editado); - Lo hemosCambiado al controlador para que antualice las pantallas con el total
+            /*Ago22*/
+
             RepartirCostesLineas(editado.Lineasentrada, editado.Costes, original.Costes);
+
+            //Repartir coste trabajo aserrado
+            var trabajoservice = new TrabajosService(_context, _db);
+
+            var familiassalida = editado.Lineassalida.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+            var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+            if (familiassalida.Except(familiasM2).Count() == 0) //M2 - Aserrado 
+            {
+                var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 1).Select(x => x.id).FirstOrDefault();
+                if (!String.IsNullOrEmpty(id))
+                {
+                    var trabajo = trabajoservice.get(id) as TrabajosModel;
+                    //Cambiamos el precio solo para poder usarlo posteriormente, no lo guardamos
+                    trabajo.Precio = (double)(trabajo.Precio * editado.Lineassalida.Sum(f => f.Metros));
+
+                    RepartirTrabajoLineas(editado.Lineasentrada, trabajo);
+                }
+
+            }
+            else //M3 - Aserrado
+            {
+                var id = _db.Trabajos.Where(f => f.empresa == Empresa && f.tipotrabajo == 0 && f.tipoimputacion == 0).Select(x => x.id).FirstOrDefault();
+                if (!String.IsNullOrEmpty(id))
+                {
+                    var trabajo = trabajoservice.get(id) as TrabajosModel;
+                    //Cambiamos el precio solo para poder usarlo posteriormente, no lo guardamos
+                    trabajo.Precio = (double)(trabajo.Precio * editado.Lineassalida.Sum(f => f.Metros));
+
+                    RepartirTrabajoLineas(editado.Lineasentrada, trabajo);
+                }
+            }
+            //Repartir coste trabajo
 
             ModificarLotesLineas(editado);
 
@@ -1175,6 +1367,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             GenerarMovimientosLineasEntrada(list, editado, TipoOperacionService.InsertarTransformacionEntradaStock);
 
+        }
+
+        public void CalcularTotalBloqueM3(TransformacionesModel editado)
+        {
+            var codBloq = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.descripcion.Equals("BLOQUES")).FirstOrDefault().id;
+            if (editado.Lineassalida.Count == 1 && editado.Lineassalida.FirstOrDefault().Fkarticulos.Substring(0, 2) == codBloq)
+            {
+                var familiasentrada = editado.Lineasentrada.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+                var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+                if (familiasentrada.Except(familiasM2).Count() == 0 && editado.Costes.Where(f => f.Tipodocumento == TipoCosteAdicional.Costexm3).Count() > 0)
+                {
+                    foreach (var item in editado.Costes.Where(f => f.Tipodocumento == TipoCosteAdicional.Costexm3))
+                    {
+                        item.Total = item.Importe * editado.Lineassalida.FirstOrDefault().Metros;
+                    }
+                }
+            }
+        }
+
+        public void CalcularTotalBloqueM3Pantalla(List<TransformacionessalidaLinModel> lineassalida, List<TransformacionesentradaLinModel> lineasentrada, TransformacionesCostesadicionalesModel coste)
+        {
+            var codBloq = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.descripcion.Equals("BLOQUES")).FirstOrDefault().id;
+            if (lineassalida.Count == 1 && lineassalida.FirstOrDefault().Fkarticulos.Substring(0, 2) == codBloq)
+            {
+                var familiasentrada = lineasentrada.GroupBy(elem => elem.Fkarticulos).Select(group => group.First().Fkarticulos.Substring(0, 2)).ToList();
+                var familiasM2 = _db.Familiasproductos.Where(f => f.empresa == Empresa && f.fkunidadesmedida == "02").Select(x => x.id).ToList();
+
+                if (familiasentrada.Except(familiasM2).Count() == 0 && coste.Tipodocumento == TipoCosteAdicional.Costexm3)
+                {
+                    coste.Total = coste.Importe * lineassalida.FirstOrDefault().Metros;
+                }
+            }
         }
 
         private async Task FinalizarStockAsync(TransformacionesModel original, TransformacionesModel editado)

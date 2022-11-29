@@ -41,6 +41,8 @@ namespace Marfil.Dom.Persistencia
         public string codigoclienteusuario { get; set; }
         public Nullable<bool> operario { get; set; }
         public string codigooperariousuario { get; set; }
+        public Nullable<bool> bloquearseries { get; set; }
+        public string fkdelegacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AppPermisos> AppPermisos { get; set; }

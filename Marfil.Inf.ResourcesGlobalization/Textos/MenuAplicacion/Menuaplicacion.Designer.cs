@@ -79,6 +79,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Actualización de precios de coste.
+        /// </summary>
+        public static string actualizarcostes {
+            get {
+                return ResourceManager.GetString("actualizarcostes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Agentes.
         /// </summary>
         public static string agentes {
@@ -295,6 +304,51 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias..
+        /// </summary>
+        public static string comparativaPYG {
+            get {
+                return ResourceManager.GetString("comparativaPYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Analítica de pérdidas y ganancias.
+        /// </summary>
+        public static string comparativaPYGAnalitica {
+            get {
+                return ResourceManager.GetString("comparativaPYGAnalitica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Balance de situación.
+        /// </summary>
+        public static string comparativaPYGBalanceAnual {
+            get {
+                return ResourceManager.GetString("comparativaPYGBalanceAnual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cta. pérdidas y ganancias funcional.
+        /// </summary>
+        public static string comparativaPYGFuncional {
+            get {
+                return ResourceManager.GetString("comparativaPYGFuncional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Informes comparativos.
+        /// </summary>
+        public static string comparativos {
+            get {
+                return ResourceManager.GetString("comparativos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Compras.
         /// </summary>
         public static string compras {
@@ -354,6 +408,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string configurardocumentosdiario {
             get {
                 return ResourceManager.GetString("configurardocumentosdiario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Conf. de docs: División de lotes.
+        /// </summary>
+        public static string configurardocumentosdivisionlotes {
+            get {
+                return ResourceManager.GetString("configurardocumentosdivisionlotes", resourceCulture);
             }
         }
         
@@ -489,6 +552,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string contadores {
             get {
                 return ResourceManager.GetString("contadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contadores de lotes.
+        /// </summary>
+        public static string contadoreslotes {
+            get {
+                return ResourceManager.GetString("contadoreslotes", resourceCulture);
             }
         }
         
@@ -709,11 +781,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Pedidos.
+        /// </summary>
+        public static string headerpedidoscompras {
+            get {
+                return ResourceManager.GetString("headerpedidoscompras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Presupuestos.
         /// </summary>
         public static string headerpresupuestos {
             get {
                 return ResourceManager.GetString("headerpresupuestos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Presupuestos.
+        /// </summary>
+        public static string headerpresupuestoscompras {
+            get {
+                return ResourceManager.GetString("headerpresupuestoscompras", resourceCulture);
             }
         }
         
@@ -777,6 +867,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string kit {
             get {
                 return ResourceManager.GetString("kit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Editar lecturas terminal.
+        /// </summary>
+        public static string lecturas {
+            get {
+                return ResourceManager.GetString("lecturas", resourceCulture);
             }
         }
         
@@ -943,11 +1042,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Listado Pérdidas y Ganancias.
+        ///   Busca una cadena traducida similar a Cuenta de pérdidas y ganancias.
         /// </summary>
         public static string listadoperdidasyganancias {
             get {
                 return ResourceManager.GetString("listadoperdidasyganancias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Balance de situación.
+        /// </summary>
+        public static string listadoperdidasygananciasbalanceanual {
+            get {
+                return ResourceManager.GetString("listadoperdidasygananciasbalanceanual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cta. pérdidas y ganancias funcional.
+        /// </summary>
+        public static string listadoperdidasygananciasfuncional {
+            get {
+                return ResourceManager.GetString("listadoperdidasygananciasfuncional", resourceCulture);
             }
         }
         
@@ -1105,6 +1222,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listado de stock valorado por tarifa.
+        /// </summary>
+        public static string listadostockvaloradotarifa {
+            get {
+                return ResourceManager.GetString("listadostockvaloradotarifa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Listado de terceros.
         /// </summary>
         public static string listadoterceros {
@@ -1231,6 +1357,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Gestión de pedidos.
+        /// </summary>
+        public static string pedidoscompras {
+            get {
+                return ResourceManager.GetString("pedidoscompras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Precios Especiales.
         /// </summary>
         public static string preciosespeciales {
@@ -1245,6 +1380,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string presupuestos {
             get {
                 return ResourceManager.GetString("presupuestos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gestión de presupuestos.
+        /// </summary>
+        public static string presupuestoscompras {
+            get {
+                return ResourceManager.GetString("presupuestoscompras", resourceCulture);
             }
         }
         
@@ -1335,6 +1479,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string regimeniva {
             get {
                 return ResourceManager.GetString("regimeniva", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Registro de IVA repercutido.
+        /// </summary>
+        public static string registroivarepercutido {
+            get {
+                return ResourceManager.GetString("registroivarepercutido", resourceCulture);
             }
         }
         
@@ -1515,6 +1668,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string tiposcuentas {
             get {
                 return ResourceManager.GetString("tiposcuentas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tipos de facturas.
+        /// </summary>
+        public static string tiposfacturasiva {
+            get {
+                return ResourceManager.GetString("tiposfacturasiva", resourceCulture);
             }
         }
         

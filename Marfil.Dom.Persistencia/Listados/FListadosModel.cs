@@ -98,6 +98,7 @@ namespace Marfil.Dom.Persistencia.Listados
 
         //stock valorado
         public const string StockGeneralValorado = "GeneralValorado";
+        public const string StockGeneralValoradoTarifa = "GeneralValoradoTarifa";
         public const string StockAgrupadoArticuloValorado = "StockAgrupadoArticuloValorado";
         public const string StockAgrupadoArticuloLoteValorado = "StockAgrupadoArticuloLoteValorado";
         public const string StockAgrupadoArticuloLoteMedidasValorado = "StockAgrupadoArticuloLoteMedidasValorado";
@@ -125,8 +126,16 @@ namespace Marfil.Dom.Persistencia.Listados
         public const string ConsultaTesoreria = "ConsultaTesoreria";
         public const string PerdidasYGanancias = "PerdidasYGanancias";
         public const string AnaliticaPerdidasYGanancias = "AnaliticaPerdidasYGanancias";
+        public const string PerdidasYGananciasFuncional = "PerdidasYGananciasFuncional";
+        public const string PerdidasYGananciasBalanceAnual = "PerdidasYGananciasBalanceAnual";
         public const string CuentasNoAsignadas = "CuentasNoAsignadas";
         public const string CuentasNoAsignadasAnalitica = "CuentasNoAsignadasAnalitica";
+        public const string CuentasNoAsignadasFuncional = "CuentasNoAsignadasFuncional";
+        public const string CuentasNoAsignadasBalanceAnual = "CuentasNoAsignadasBalanceAnual";
+        public const string ComparativaPYG = "ComparativaPYG";
+        public const string ComparativaPYGFuncional = "ComparativaPYGFuncional";
+        public const string ComparativaPYGAnalitica = "ComparativaPYGAnalitica";
+        public const string ComparativaPYGBalanceAnual = "ComparativaPYGBalanceAnual";
 
         // CRM
         public const string ListadoCrm = "ListadoCrm";
@@ -180,6 +189,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(StockGeneral, typeof(ListadosStock));            
             _dictionary.Add(StockAgrupadoDisponibleArticulo, typeof(ListadosStockDisponible));
             _dictionary.Add(StockGeneralValorado, typeof(ListadosStockValorado));
+            _dictionary.Add(StockGeneralValoradoTarifa, typeof(ListadosStockValoradoTarifa));
             _dictionary.Add(StockSalidas, typeof(ListadosStockSalidas));
             _dictionary.Add(StockMaxMin, typeof(ListadosStockMaxMin));
 
@@ -195,8 +205,16 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(ConsultaTesoreria, typeof(ListadosConsultaTesoreria));
             _dictionary.Add(PerdidasYGanancias, typeof(ListadoPerdidasYGanancias));
             _dictionary.Add(AnaliticaPerdidasYGanancias, typeof(AnaliticaPerdidasYGanancias));
+            _dictionary.Add(PerdidasYGananciasFuncional, typeof(ListadoPerdidasYGananciasFuncional));
+            _dictionary.Add(PerdidasYGananciasBalanceAnual, typeof(ListadoPerdidasYGananciasBalanceAnual));
             _dictionary.Add(CuentasNoAsignadas, typeof(ListadoCuentasNoAsignadas));
             _dictionary.Add(CuentasNoAsignadasAnalitica, typeof(ListadoCuentasNoAsignadasAnalitica));
+            _dictionary.Add(CuentasNoAsignadasFuncional, typeof(ListadoCuentasNoAsignadasFuncional));
+            _dictionary.Add(CuentasNoAsignadasBalanceAnual, typeof(ListadoCuentasNoAsignadasBalanceAnual));
+            _dictionary.Add(ComparativaPYG, typeof(ComparativaPerdidasYGanancias));
+            _dictionary.Add(ComparativaPYGFuncional, typeof(ComparativaPerdidasYGananciasFuncional));
+            _dictionary.Add(ComparativaPYGAnalitica, typeof(ComparativaPerdidasYGananciasAnalitica));
+            _dictionary.Add(ComparativaPYGBalanceAnual, typeof(ComparativaPerdidasYGananciasBalanceAnual));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));
@@ -246,6 +264,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(StockGeneral, "ListadosStock");            
             _dictionaryController.Add(StockAgrupadoDisponibleArticulo, "ListadosStockDisponible");
             _dictionaryController.Add(StockGeneralValorado, "ListadosStockValorado");
+            _dictionaryController.Add(StockGeneralValoradoTarifa, "ListadosStockValoradoTarifa");
             _dictionaryController.Add(StockSalidas, "ListadosStockSalidas");
             _dictionaryController.Add(StockMaxMin, "ListadosStockMaxMin");
 
@@ -260,8 +279,16 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(ConsultaTesoreria, "ListadosConsultaTesoreria");
             _dictionaryController.Add(PerdidasYGanancias, "ListadoPerdidasYGanancias");
             _dictionaryController.Add(AnaliticaPerdidasYGanancias, "AnaliticaPerdidasYGanancias");
+            _dictionaryController.Add(PerdidasYGananciasFuncional, "ListadoPerdidasYGananciasFuncional");
+            _dictionaryController.Add(PerdidasYGananciasBalanceAnual, "ListadoPerdidasYGananciasBalanceAnual");
             _dictionaryController.Add(CuentasNoAsignadas, "ListadoCuentasNoAsignadas");
             _dictionaryController.Add(CuentasNoAsignadasAnalitica, "ListadoCuentasNoAsignadasAnlaitica");
+            _dictionaryController.Add(CuentasNoAsignadasFuncional, "ListadoCuentasNoAsignadasFuncional");
+            _dictionaryController.Add(CuentasNoAsignadasBalanceAnual, "ListadoCuentasNoAsignadasBalanceAnual");
+            _dictionaryController.Add(ComparativaPYG, "ComparativaPYG");
+            _dictionaryController.Add(ComparativaPYGFuncional, "ComparativaPYGFuncional");
+            _dictionaryController.Add(ComparativaPYGAnalitica, "ComparativaPYGAnalitica");
+            _dictionaryController.Add(ComparativaPYGBalanceAnual, "ComparativaPYGBalanceAnual");
 
             // CRM
             _dictionaryController.Add(ListadoCrm, "ListadoCrm");

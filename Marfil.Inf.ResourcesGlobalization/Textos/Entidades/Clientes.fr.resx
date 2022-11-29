@@ -118,27 +118,186 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Cliéntele</value>
+    <value>Clients</value>
   </data>
   <data name="Fkcuentas" xml:space="preserve">
-    <value>Comte</value>
+    <value>compte</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Fkidiomas" xml:space="preserve">
-    <value>Langue principel</value>
+    <value>Première langue</value>
   </data>
   <data name="Nif" xml:space="preserve">
-    <value>Id fiscal</value>
+    <value>Nif/Cif</value>
   </data>
   <data name="Pais" xml:space="preserve">
-    <value>Pay</value>
+    <value>Pays</value>
   </data>
   <data name="Provincia" xml:space="preserve">
     <value>Province</value>
   </data>
   <data name="Poblacion" xml:space="preserve">
     <value>Ville</value>
+  </data>
+  <data name="RazonSocial" xml:space="preserve">
+    <value>Raison sociale</value>
+  </data>
+  <data name="Fkfamiliacliente" xml:space="preserve">
+    <value>famille cliente</value>
+  </data>
+  <data name="Fkzonacliente" xml:space="preserve">
+    <value>Espace clients</value>
+  </data>
+  <data name="Fktipoempresa" xml:space="preserve">
+    <value>Type d'entreprise</value>
+  </data>
+  <data name="Fkunidadnegocio" xml:space="preserve">
+    <value>Unité d'affaires</value>
+  </data>
+  <data name="Fkincoterm" xml:space="preserve">
+    <value>incoterm</value>
+  </data>
+  <data name="Fkmonedas" xml:space="preserve">
+    <value>Devise</value>
+  </data>
+  <data name="Fkregimeniva" xml:space="preserve">
+    <value>Régime TVA</value>
+  </data>
+  <data name="Fkgruposiva" xml:space="preserve">
+    <value>Groupes TVA</value>
+  </data>
+  <data name="Criterioiva" xml:space="preserve">
+    <value>Critères TVA</value>
+  </data>
+  <data name="Fktiposretencion" xml:space="preserve">
+    <value>Type de retenue</value>
+  </data>
+  <data name="Fktransportistahabitual" xml:space="preserve">
+    <value>transporteur régulier</value>
+  </data>
+  <data name="Tipodeportes" xml:space="preserve">
+    <value>Type d'expédition</value>
+  </data>
+  <data name="Cuentatesoreria" xml:space="preserve">
+    <value>Compt. Trésorerie</value>
+  </data>
+  <data name="Fkformaspago" xml:space="preserve">
+    <value>Mode de paiement</value>
+  </data>
+  <data name="Descuentoprontopago" xml:space="preserve">
+    <value>% Remise pour paiement rapide</value>
+  </data>
+  <data name="Descuentocomercial" xml:space="preserve">
+    <value>% Remises commerciales</value>
+  </data>
+  <data name="Diafijopago1" xml:space="preserve">
+    <value>Paiement à jour fixe 1</value>
+  </data>
+  <data name="Diafijopago2" xml:space="preserve">
+    <value>Paiement à jour fixe 2</value>
+  </data>
+  <data name="Periodonopagodesde" xml:space="preserve">
+    <value>Délai de non-paiement du</value>
+  </data>
+  <data name="Periodonopagohasta" xml:space="preserve">
+    <value>Délai de non-paiement jusqu'au</value>
+  </data>
+  <data name="Notas" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Tarifa" xml:space="preserve">
+    <value>Évaluer</value>
+  </data>
+  <data name="CriterioIVADevengo" xml:space="preserve">
+    <value>régularisation</value>
+  </data>
+  <data name="CriterioIVACaja" xml:space="preserve">
+    <value>Caisse</value>
+  </data>
+  <data name="TipoportesPagados" xml:space="preserve">
+    <value>payé</value>
+  </data>
+  <data name="TipoportesDebidos" xml:space="preserve">
+    <value>exigible</value>
+  </data>
+  <data name="LblMensajeTipoCuenta" xml:space="preserve">
+    <value>Aucun type de compte n'a été défini pour les clients.</value>
+  </data>
+  <data name="Clasificacion" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="Facturacion" xml:space="preserve">
+    <value>Facturation</value>
+  </data>
+  <data name="Cobros" xml:space="preserve">
+    <value>collections</value>
+  </data>
+  <data name="Numerocopiasfactura" xml:space="preserve">
+    <value>Nombre de copies de la facture</value>
+  </data>
+  <data name="Ventas" xml:space="preserve">
+    <value>Ventes</value>
+  </data>
+  <data name="Fkcuentasagente" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="Fkcuentascomercial" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="Perteneceagrupo" xml:space="preserve">
+    <value>appartient au groupe</value>
+  </data>
+  <data name="Tipotarifa" xml:space="preserve">
+    <value>Type de taux</value>
+  </data>
+  <data name="Fkcuentasaseguradoras" xml:space="preserve">
+    <value>Compagnie d'assurance</value>
+  </data>
+  <data name="Suplemento" xml:space="preserve">
+    <value>Supplément</value>
+  </data>
+  <data name="Porcentajeriesgocomercial" xml:space="preserve">
+    <value>% de risque commercial</value>
+  </data>
+  <data name="Riesgoconcedidoempresa" xml:space="preserve">
+    <value>Entreprise à risques accordés</value>
+  </data>
+  <data name="Riesgosolicitado" xml:space="preserve">
+    <value>risque demandé</value>
+  </data>
+  <data name="Riesgoaseguradora" xml:space="preserve">
+    <value>risque d'assurance</value>
+  </data>
+  <data name="Fechaclasificacion" xml:space="preserve">
+    <value>Date de classement</value>
+  </data>
+  <data name="Fechaultimasolicitud" xml:space="preserve">
+    <value>Date de la dernière demande</value>
+  </data>
+  <data name="Diascondecidos" xml:space="preserve">
+    <value>jours concédés</value>
+  </data>
+  <data name="Porcentajeriesgopolitico" xml:space="preserve">
+    <value>% Risque politique</value>
+  </data>
+  <data name="FechaAlta" xml:space="preserve">
+    <value>Date de sortie</value>
+  </data>
+  <data name="DescripcionHasta" xml:space="preserve">
+    <value>description vers le haut</value>
+  </data>
+  <data name="DescripcionDesde" xml:space="preserve">
+    <value>Descriptif de</value>
+  </data>
+  <data name="TituloEntidadSingular" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="Fktipofactura" xml:space="preserve">
+    <value>Type de facture habituel</value>
+  </data>
+  <data name="Fkdelegacion" xml:space="preserve">
+    <value>Délégation</value>
   </data>
 </root>

@@ -19,6 +19,14 @@ namespace Marfil.Dom.Persistencia.Model.Iva
         Especie
     }
 
+    public enum TipoRetencionSobre
+    {
+        [StringValue(typeof(RTiposRetenciones), "BaseImponible")]
+        BaseImponible,
+        [StringValue(typeof(RTiposRetenciones), "TotalFactura")]
+        TotalFactura
+    }
+
     public class TiposRetencionesModel : BaseModel<TiposRetencionesModel, Tiposretenciones>
     {
         #region Propierties
@@ -49,6 +57,13 @@ namespace Marfil.Dom.Persistencia.Model.Iva
 
         [Display(ResourceType = typeof(RTiposRetenciones), Name = "Tiporendimiento")]
         public TipoRendimiento? Tiporendimiento { get; set; }
+
+        [Display(ResourceType = typeof(RTiposRetenciones), Name = "Inmueble")]
+        public bool Inmueble { get; set; }
+
+        [Display(ResourceType = typeof(RTiposRetenciones), Name = "RetencionSobre")]
+        public TipoRetencionSobre RetencionSobre { get; set; }
+
 
         public string CuentaRecargoDescripcion { get; set; }
 

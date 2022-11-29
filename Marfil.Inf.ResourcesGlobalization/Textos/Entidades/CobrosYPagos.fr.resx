@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>prévisions de collecte</value>
+  </data>
+  <data name="Empresa" xml:space="preserve">
+    <value>Entreprise</value>
+  </data>
+  <data name="Fkfacturas" xml:space="preserve">
+    <value>Doc.</value>
+  </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Origen" xml:space="preserve">
+    <value>Origine</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>Créé par</value>
+  </data>
+  <data name="Fkcuentas" xml:space="preserve">
+    <value>compte</value>
+  </data>
+  <data name="Fechacreacion" xml:space="preserve">
+    <value>date d'expiration de l'enregistrement</value>
+  </data>
+  <data name="Fechafactura" xml:space="preserve">
+    <value>Date de facture</value>
+  </data>
+  <data name="Fecharegistrofactura" xml:space="preserve">
+    <value>Date d'enregistrement de la facture</value>
+  </data>
+  <data name="Fechavencimiento" xml:space="preserve">
+    <value>Date d'expiration</value>
+  </data>
+  <data name="Fechadescuento" xml:space="preserve">
+    <value>date de remise</value>
+  </data>
+  <data name="Fechapago" xml:space="preserve">
+    <value>Date de paiement</value>
+  </data>
+  <data name="Monedagiro" xml:space="preserve">
+    <value>devise d'expiration</value>
+  </data>
+  <data name="Importegiro" xml:space="preserve">
+    <value>Montant à l'échéance</value>
+  </data>
+  <data name="Cambioaplicado" xml:space="preserve">
+    <value>changement appliqué</value>
+  </data>
+  <data name="Monedafactura" xml:space="preserve">
+    <value>devise de facturation</value>
+  </data>
+  <data name="Importefactura" xml:space="preserve">
+    <value>Facture Imp.</value>
+  </data>
+  <data name="Fkcuentastesoreria" xml:space="preserve">
+    <value>Compt. Trésorerie</value>
+  </data>
+  <data name="Mandato" xml:space="preserve">
+    <value>Mandat</value>
+  </data>
+  <data name="Importeasignado" xml:space="preserve">
+    <value>attribué</value>
+  </data>
+  <data name="Importepagado" xml:space="preserve">
+    <value>Payé</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="Situación" xml:space="preserve">
+    <value>Situation</value>
+  </data>
+  <data name="Comentario" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Cobros" xml:space="preserve">
+    <value>collections</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>Paiements</value>
+  </data>
+  <data name="RegIVA" xml:space="preserve">
+    <value>Rég. T.V.A.</value>
+  </data>
+  <data name="FacturaCompra" xml:space="preserve">
+    <value>Facture</value>
+  </data>
+  <data name="FacturaVenta" xml:space="preserve">
+    <value>acte de vente</value>
+  </data>
+  <data name="FacturaConciliada" xml:space="preserve">
+    <value>facture rapprochée</value>
+  </data>
+  <data name="ConciliarAsiento" xml:space="preserve">
+    <value>entrée rapprochée</value>
+  </data>
+  <data name="Inicial" xml:space="preserve">
+    <value>Initial</value>
+  </data>
+  <data name="Cubierto" xml:space="preserve">
+    <value>partiellement couvert</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>entièrement couvert</value>
+  </data>
+  <data name="Pagado" xml:space="preserve">
+    <value>PAYÉ</value>
+  </data>
+  <data name="TituloEntidad2" xml:space="preserve">
+    <value>Paiements projetés</value>
+  </data>
+  <data name="Monedabase" xml:space="preserve">
+    <value>devise de base</value>
+  </data>
+  <data name="urlDocumento" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="EntradaManual" xml:space="preserve">
+    <value>Saisie manuelle</value>
+  </data>
+  <data name="TituloCartera" xml:space="preserve">
+    <value>Sac</value>
+  </data>
+  <data name="AsistenteAsignacionCartera" xml:space="preserve">
+    <value>Assistant d'allocation de portefeuille</value>
+  </data>
+  <data name="AsignarCartera" xml:space="preserve">
+    <value>répartition du portefeuille</value>
+  </data>
+  <data name="Circuitotesoreria" xml:space="preserve">
+    <value>circuit de trésorerie</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="SituacionFinal" xml:space="preserve">
+    <value>Situation</value>
+  </data>
+  <data name="CuentaTesoreria" xml:space="preserve">
+    <value>Compt. Trésorerie</value>
+  </data>
+  <data name="FechaContable" xml:space="preserve">
+    <value>Date comptable</value>
+  </data>
+  <data name="Letra" xml:space="preserve">
+    <value>numéro de chèque/facture</value>
+  </data>
+  <data name="Banco" xml:space="preserve">
+    <value>banque tirée</value>
+  </data>
+  <data name="Fkseries" xml:space="preserve">
+    <value>Série</value>
+  </data>
+  <data name="FechaCreacionCartera" xml:space="preserve">
+    <value>Date d'inscription</value>
+  </data>
+  <data name="Idvencimiento" xml:space="preserve">
+    <value>Prévoir</value>
+  </data>
+  <data name="Idcartera" xml:space="preserve">
+    <value>en portefeuille</value>
+  </data>
+  <data name="FkcuentasDescripcion" xml:space="preserve">
+    <value>nom</value>
+  </data>
+  <data name="Cartera" xml:space="preserve">
+    <value>Sac</value>
+  </data>
+  <data name="PAGARE/CHEQUE ENVIADO" xml:space="preserve">
+    <value>PAIEMENT/CHEQUE ENVOYE</value>
+  </data>
+  <data name="IMPAGADO" xml:space="preserve">
+    <value>NON PAYÉ</value>
+  </data>
+  <data name="REMESA" xml:space="preserve">
+    <value>CONSIGNATION</value>
+  </data>
+  <data name="PENDIENTE DE COBRO" xml:space="preserve">
+    <value>COLLECTE EN COURS</value>
+  </data>
+  <data name="PENDIENTE DE PAGO" xml:space="preserve">
+    <value>EXCEPTIONNEL</value>
+  </data>
+  <data name="AsistenteMovimientosTesoreria" xml:space="preserve">
+    <value>Assistante mouvements de trésorerie</value>
+  </data>
+  <data name="MovimientosTesoreria" xml:space="preserve">
+    <value>mouvements de trésorerie</value>
+  </data>
+  <data name="Importe2Importe3" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="Importe2Importe6" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="FechaPagoActualizar" xml:space="preserve">
+    <value>Mettre à jour la date de paiement</value>
+  </data>
+  <data name="CuentaTesoreriaCobrador" xml:space="preserve">
+    <value>Agent de recouvrement</value>
+  </data>
+  <data name="Fecharemesa" xml:space="preserve">
+    <value>date de versement</value>
+  </data>
+  <data name="Cuentacargo2" xml:space="preserve">
+    <value>Frais de compte 2</value>
+  </data>
+  <data name="Cuentaabono2" xml:space="preserve">
+    <value>Compte d'abonnement 2</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>Depuis l'expiration</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>Jusqu'à l'expiration</value>
+  </data>
+  <data name="Fkmodospago" xml:space="preserve">
+    <value>groupe de paiement</value>
+  </data>
+  <data name="Referenciaremesa" xml:space="preserve">
+    <value>Consignation</value>
+  </data>
+  <data name="Giroimporte" xml:space="preserve">
+    <value>Montant à l'échéance</value>
+  </data>
+  <data name="Asignadoimporte" xml:space="preserve">
+    <value>attribué</value>
+  </data>
+  <data name="Pagadoimporte" xml:space="preserve">
+    <value>Payé</value>
+  </data>
+  <data name="TituloEntidadCartera" xml:space="preserve">
+    <value>Sac</value>
+  </data>
+  <data name="TituloRemesa" xml:space="preserve">
+    <value>Consignation</value>
+  </data>
+  <data name="DescripcionCuenta" xml:space="preserve">
+    <value>Description du compte</value>
+  </data>
+  <data name="Cuadernos" xml:space="preserve">
+    <value>Cahier de banque</value>
+  </data>
+  <data name="Ruta" xml:space="preserve">
+    <value>Chemin pour enregistrer le fichier, par défaut C:\tmp</value>
+  </data>
+  <data name="ImporteRemesa" xml:space="preserve">
+    <value>Montant du versement</value>
+  </data>
+  <data name="NumeroDocumentos" xml:space="preserve">
+    <value>Nbre Documents</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Référence de remise</value>
+  </data>
+  <data name="Anulada" xml:space="preserve">
+    <value>Annulé</value>
+  </data>
+  <data name="Valida" xml:space="preserve">
+    <value>Valide</value>
+  </data>
+  <data name="Generada" xml:space="preserve">
+    <value>généré</value>
+  </data>
+  <data name="AsistenteRegularizacionExistencias" xml:space="preserve">
+    <value>Assistant d'ajustement des stocks</value>
+  </data>
+  <data name="GenerarRegularizacionExistencias" xml:space="preserve">
+    <value>Générer la régularisation</value>
+  </data>
+  <data name="ComentarioExistenciasFinales" xml:space="preserve">
+    <value>Commentaire final sur les actions</value>
+  </data>
+  <data name="ComentarioExistenciasIniciales" xml:space="preserve">
+    <value>Commentaire stock initial</value>
+  </data>
+  <data name="Fecharegularizacion" xml:space="preserve">
+    <value>date de régularisation</value>
+  </data>
+  <data name="AsistenteRegularizacionGrupos" xml:space="preserve">
+    <value>Assistante régularisation des groupes 6 et 7</value>
+  </data>
+  <data name="Fechaapertura" xml:space="preserve">
+    <value>Date d'ouverture</value>
+  </data>
+  <data name="Fechacierre" xml:space="preserve">
+    <value>Date de clôture</value>
+  </data>
+  <data name="AsistenteRegularizacionCierreApertura" xml:space="preserve">
+    <value>Assistant fermeture/ouverture</value>
+  </data>
+  <data name="AsistenteRevertirEjercicio" xml:space="preserve">
+    <value>Assistant Rétablir l'état d'arrêt</value>
+  </data>
+  <data name="CierreApertura" xml:space="preserve">
+    <value>Clôture et ouverture de l'exercice</value>
+  </data>
+  <data name="RevertirEstado" xml:space="preserve">
+    <value>Rétablir l'état de fermeture</value>
+  </data>
+  <data name="AperturaProvisional" xml:space="preserve">
+    <value>ouverture provisoire</value>
+  </data>
+  <data name="AsistenteAperturaProvisional" xml:space="preserve">
+    <value>assistant d'ouverture provisoire</value>
+  </data>
+  <data name="CuentaDesde" xml:space="preserve">
+    <value>Du compte</value>
+  </data>
+  <data name="CuentaHasta" xml:space="preserve">
+    <value>Jusqu'au compte</value>
+  </data>
+  <data name="CuentaReapertura" xml:space="preserve">
+    <value>compte de réouverture provisoire</value>
+  </data>
+</root>

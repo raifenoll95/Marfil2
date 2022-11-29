@@ -118,27 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Fkid_direccion" xml:space="preserve">
-    <value>Direction du contat</value>
+    <value>Adresse de contact</value>
   </data>
   <data name="Nifcif" xml:space="preserve">
-    <value>Id</value>
+    <value>Nif/Cif</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
   </data>
   <data name="Telefonomovil" xml:space="preserve">
-    <value>Movile</value>
+    <value>Mobile</value>
   </data>
   <data name="Telefono" xml:space="preserve">
-    <value>Telephone</value>
+    <value>Téléphone</value>
   </data>
   <data name="Fkidioma" xml:space="preserve">
-    <value>Langue</value>
+    <value>langage</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
+  </data>
+  <data name="TituloEntidad" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="Fktipocontacto" xml:space="preserve">
+    <value>Type de contact</value>
+  </data>
+  <data name="Fkcargoempresa" xml:space="preserve">
+    <value>Position dans l'entreprise</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="ErrorNifObligatorioCargoEmpresa" xml:space="preserve">
+    <value>Le champ Nif/Cif est obligatoire pour le poste actuel de l'entreprise</value>
   </data>
 </root>

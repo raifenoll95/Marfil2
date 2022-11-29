@@ -1,0 +1,72 @@
+﻿@using Marfil.App.WebMain.Misc
+@using Marfil.Dom.Persistencia.Model.Iva
+@using Resources
+
+@model RegistroIvaRepercutidoModel
+@{        
+    //Si está Aceptada de base no se puede editar nada
+    if (Model.Estado == TipoEstadoEnvio.Correcto)
+    {
+        ViewData["operacion"] = false;
+        ViewData["readonly"] = true;
+    }
+
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null ? (bool)ViewData["operacion"] : false;
+    var isNuevo = !isreadonly && !iseditable;
+}
+
+<script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
+<script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
+<script src="~/Scripts/Helper/ControllerHelper.js"></script>
+
+@Html.HiddenFor(f => Model.Empresa)
+@Html.HiddenFor(f => Model.Id)
+
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
+            <li><a data-toggle="tab" href="#factura">@General.LblFactura</a></li>
+            <li><a data-toggle="tab" href="#detalle">@General.LblDetalle</a></li>
+            <li><a data-toggle="tab" href="#siidatos">@General.LblSIIDatos</a></li>
+            <li><a data-toggle="tab" href="#siifactura">@General.LblSIIFactura</a></li>
+            @*Ahora se permite varios tipos de IVA en las líneas*@
+            @*<li><a data-toggle="tab" href="#siioperacion">@General.LblSIIOperacion</a></li>*@
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
+        <div id="factura" class="tab-pane fade margin-bottom">
+            @Html.Partial("_factura", Model)
+        </div>
+        <div id="detalle" class="tab-pane fade margin-bottom">
+            @Html.Partial("_desglose", Model)
+        </div>
+        <div id="siidatos" class="tab-pane fade margin-bottom">
+            @Html.Partial("_siidatos", Model)
+        </div>
+        <div id="siifactura" class="tab-pane fade margin-bottom">
+            @Html.Partial("_siifactura", Model)
+        </div>
+        @*Ahora se permite varios tipos de IVA en las líneas*@
+        @*<div id="siioperacion" class="tab-pane fade margin-bottom">
+            @Html.Partial("_siioperacion", Model)
+        </div>*@ 
+    </div>
+
+
+    @{
+        if (isNuevo || iseditable)
+        {
+            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+        }
+    }
+
+<script>
+
+</script>

@@ -33,21 +33,27 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Queries.Add(new CustomSqlQuery("clientes", string.Format("SELECT c.*,d.direccion as [Direccioncliente],d.poblacion as [Poblacioncliente],d.cp as [Cpcliente],d.telefono as [Telefonocliente] FROM [Clientes] as c left join direcciones as d on d.empresa=c.empresa and d.tipotercero={0} and d.fkentidad=c.fkcuentas", (int)TiposCuentas.Clientes)));
 
             // EMPRESA
-            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas] FROM [Empresas] as e left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id"));
+            DataSource.Queries.Add(new CustomSqlQuery("empresa", "SELECT e.*,d.direccion as [Direccionempresa],d.poblacion as [Poblacionempresa],d.cp as [Cpempresa],d.telefono as [Telefonoempresa], d.email as [Email], d.web as [Web], d.notas as [Notas], d.defecto as [Defecto], d.tipotercero as [TipoTercero], " +
+                "d.fkprovincia as [codProvincia], p.nombre as [nombreProvincia], d.fkpais as [codPais], pa.Descripcion as [nombrePais] " +
+                "FROM [Empresas] as e " +
+                "left join direcciones as d on d.empresa=e.id and d.tipotercero=-1 and d.fkentidad=e.id " +
+                "left join Provincias as p on p.id = d.fkprovincia and p.codigopais = d.fkpais " +
+                "left join Paises as pa on pa.valor = d.fkpais and pa.Valor = d.fkpais"));
+
             DataSource.Queries.Add(mainQuery);
 
             // ALBARANESLIN
             DataSource.Queries.Add(new CustomSqlQuery("Albaraneslin", "SELECT al.*, (al.ancho * 100) AS ancho_cm, (al.largo * 100) AS largo_cm, (al.grueso * 100) AS grueso_cm, u.textocorto as [Unidadesdescripcion], ar.descripcion2 FROM [AlbaranesLin] as al" +
                                                                       " inner join Familiasproductos as fp on fp.empresa=al.empresa and fp.id=substring(al.fkarticulos,0,3)" +
                                                                       " left join unidades as u on fp.fkunidadesmedida=u.id" +
-                                                                      " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id"));
+                                                                      " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id and al.empresa = ar.empresa"));
 
             // ALBARANESLIN AGRUPADO
             DataSource.Queries.Add(new CustomSqlQuery("AlbaraneslinAgrupado", "SELECT al.empresa, al.fkalbaranes, al.descripcion, ar.descripcion2, caja, bundle, lote, SUM(cantidad) AS cantidad, al.largo, al.ancho, al.grueso, SUM(metros) AS metros, precio, SUM(importe) AS importe, u.textocorto AS [Unidadesdescripcion]" +
                                                                               " FROM AlbaranesLin AS al" +
                                                                               " INNER JOIN Familiasproductos AS fp ON fp.empresa = al.empresa AND fp.id = substring(al.fkarticulos,0,3)" +
                                                                               " LEFT JOIN unidades AS u ON fp.fkunidadesmedida = u.id" +
-                                                                              " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id" +
+                                                                              " LEFT JOIN Articulos AS ar ON al.fkarticulos = ar.id and al.empresa = ar.empresa" +
                                                                               " GROUP BY al.empresa, fkalbaranes, al.descripcion, ar.descripcion2, caja, bundle, lote, al.largo, al.ancho, al.grueso, precio, u.textocorto" +
                                                                               " ORDER BY descripcion, caja, bundle"));
 
@@ -69,6 +75,22 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
             // PUERTOS
             DataSource.Queries.Add(new CustomSqlQuery("Puertos", "SELECT * FROM Puertos"));
+
+            // TRANSPORTISTAS
+            DataSource.Queries.Add(new CustomSqlQuery("Transportistas", "select t.*, c.descripcion,c.nif,d.*,p.nombre as NombreProvincia,pa.Descripcion as NombrePais " +
+                " from Transportistas as t " +
+                " LEFT JOIN Cuentas AS c ON t.empresa = c.empresa and t.fkcuentas = c.id " +
+                " LEFT JOIN Direcciones AS d ON c.empresa =  d.empresa and c.id =  d.fkentidad " +
+                " LEFT JOIN Paises AS pa ON pa.valor = d.fkpais " +
+                " LEFT JOIN Provincias AS p ON p.id = d.fkprovincia and p.codigopais = d.fkpais "));
+
+            // OPERADOR TRANSPORTISTAS
+            DataSource.Queries.Add(new CustomSqlQuery("OperadorTransportistas", "select t.*, c.descripcion,c.nif,d.*,p.nombre as NombreProvincia,pa.Descripcion as NombrePais " +
+                " from Transportistas as t " +
+                " LEFT JOIN Cuentas AS c ON t.empresa = c.empresa and t.fkcuentas = c.id " +
+                " LEFT JOIN Direcciones AS d ON c.empresa =  d.empresa and c.id =  d.fkentidad " +
+                " LEFT JOIN Paises AS pa ON pa.valor = d.fkpais " +
+                " LEFT JOIN Provincias AS p ON p.id = d.fkprovincia and p.codigopais = d.fkpais "));
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,6 +133,15 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
             DataSource.Relations.Add("Albaranes", "empresa", new[] {
                     new RelationColumnInfo("empresa", "id")});
 
+            // ALBARANES <-> TRANSPORTISTAS
+            DataSource.Relations.Add("Albaranes", "Transportistas", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fktransportista", "fkcuentas")});
+
+            // ALBARANES <-> OPERADOR TRANSPORTISTAS
+            DataSource.Relations.Add("Albaranes", "OperadorTransportistas", new[] {
+                    new RelationColumnInfo("empresa", "empresa"),
+                    new RelationColumnInfo("fkoperadortransporte", "fkcuentas")});
 
             // FACTURAS <-> PUERTOS
             DataSource.Relations.Add("Albaranes", "Puertos", new[] {

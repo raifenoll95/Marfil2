@@ -33,8 +33,8 @@ namespace Marfil.App.WebMain.Controllers
 
 
 
-            using (var serviceTiposcuentas =FService.Instance.GetService(typeof(TiposCuentasModel), ContextService))
-                {
+            using (var serviceTiposcuentas = FService.Instance.GetService(typeof(TiposCuentasModel), ContextService))
+            {
                 ViewBag.ExisteTipoCuenta = serviceTiposcuentas.exists(((int)TiposCuentas.Clientes).ToString());
             }
 
@@ -66,7 +66,7 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
                     var modelview = Helper.fModel.GetModel<ClientesModel>(ContextService);
-                    
+
                     using (var gestionService = createService(model))
                     {
                         gestionService.create(model);
@@ -108,7 +108,7 @@ namespace Marfil.App.WebMain.Controllers
         [Authorize]
         public override ActionResult Exists(string id)
         {
-            
+
             var modelview = Helper.fModel.GetModel<ClientesModel>(ContextService);
             using (var service = createService(modelview) as ClientesService)
             {

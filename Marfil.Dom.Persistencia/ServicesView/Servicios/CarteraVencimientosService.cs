@@ -86,7 +86,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     var model = obj as RemesasModel;
 
-                    if (_db.Remesas.Any())
+                    if (_db.Remesas.Where(f => f.empresa == Empresa).Any())
                     {
                         model.Id = _db.Remesas.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
                     }
@@ -136,7 +136,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     var model = obj as CarteraVencimientosModel;
 
-                    if (_db.CarteraVencimientos.Any())
+                    if (_db.CarteraVencimientos.Where(f => f.empresa == Empresa).Any())
                     {
                         model.Id = _db.CarteraVencimientos.Where(f => f.empresa == Empresa).Select(f => f.id).Max() + 1;
                     }

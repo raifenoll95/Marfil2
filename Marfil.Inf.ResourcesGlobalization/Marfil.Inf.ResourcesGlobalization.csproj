@@ -78,6 +78,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Acabados.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\ActualizacionCostes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ActualizacionCostes.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Agentes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -423,6 +428,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PerdidasYGanancias.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\RegistroIvaRepercutido.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegistroIvaRepercutido.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Seguimientos.Designer.cs">
       <DependentUpon>Seguimientos.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -543,6 +553,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tiposcuentas.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\TiposFacturasIva.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposFacturasIva.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Tiposiva.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -656,6 +671,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Acabados.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ActualizacionCostes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ActualizacionCostes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ActualizacionCostes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ActualizacionCostes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Agentes.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Agentes.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Agentes.resx">
@@ -689,14 +710,19 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\ArticulosComponentes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ArticulosComponentes.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\ArticulosComponentes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArticulosComponentes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ArticulosStockSeguiridad.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ArticulosStockSeguiridad.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\ArticulosStockSeguiridad.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArticulosStockSeguiridad.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ArticulosTercero.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ArticulosTercero.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\ArticulosTercero.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArticulosTercero.Designer.cs</LastGenOutput>
@@ -725,6 +751,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Bundle.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Campañas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Campañas.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Campañas.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Campañas.Designer.cs</LastGenOutput>
@@ -735,8 +763,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Caracteristicas.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\CircuitosTesoreria.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CircuitosTesoreria.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Clientes.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Clientes.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CobrosYPagos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CobrosYPagos.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\CobrosYPagos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CobrosYPagos.Designer.cs</LastGenOutput>
@@ -773,6 +805,7 @@
       <LastGenOutput>Contadores.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\CostesVariablesPeriodo.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CostesVariablesPeriodo.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\CostesVariablesPeriodo.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CostesVariablesPeriodo.Designer.cs</LastGenOutput>
@@ -783,6 +816,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Criteriosagrupacion.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\CRM.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CRM.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CuadernosBancarios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\CuadernosBancarios.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Cuentas.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Cuentas.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Cuentas.resx">
@@ -802,6 +839,7 @@
       <LastGenOutput>Direcciones.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\DivisionLotes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\DivisionLotes.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\DivisionLotes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DivisionLotes.Designer.cs</LastGenOutput>
@@ -873,6 +911,7 @@
       <LastGenOutput>Grosores.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\GrupoMateriales.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\GrupoMateriales.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\GrupoMateriales.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GrupoMateriales.Designer.cs</LastGenOutput>
@@ -889,10 +928,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Gruposusuarios.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalances.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalances.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\GuiasBalances.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GuiasBalances.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalancesLineas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalancesLineas.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\GuiasBalancesLineas.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GuiasBalancesLineas.Designer.cs</LastGenOutput>
@@ -903,6 +946,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Guiascontables.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ImputacionCostes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ImputacionCostes.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\ImputacionCostes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ImputacionCostes.Designer.cs</LastGenOutput>
@@ -913,10 +958,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Incidencias.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\InformeMargen.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\InformeMargen.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\InformeMargen.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InformeMargen.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Inmuebles.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Inmuebles.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Inmuebles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Inmuebles.Designer.cs</LastGenOutput>
@@ -933,6 +982,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Kit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoAcomuladoPeriodos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ListadoAcomuladoPeriodos.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\ListadoAcomuladoPeriodos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ListadoAcomuladoPeriodos.Designer.cs</LastGenOutput>
@@ -943,15 +994,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ListadoComisiones.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoMovs.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\ListadoMovs.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\ListadoMovs.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ListadoMovs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\LogStockSeguridad.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\LogStockSeguridad.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\LogStockSeguridad.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LogStockSeguridad.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Maes.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Maes.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Maes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Maes.Designer.cs</LastGenOutput>
@@ -987,6 +1043,8 @@
       <LastGenOutput>Movs.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Municipios.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Municipios.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Municipios.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Municipios.Designer.cs</LastGenOutput>
@@ -1007,6 +1065,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Clientes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PerdidasYGanancias.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PerdidasYGanancias.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PeticionesAsincronas.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PeticionesAsincronas.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\PeticionesAsincronas.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PeticionesAsincronas.Designer.cs</LastGenOutput>
@@ -1019,6 +1081,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CircuitosTesoreria.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\PreciosEspeciales.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\PreciosEspeciales.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\PreciosEspeciales.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PreciosEspeciales.Designer.cs</LastGenOutput>
@@ -1031,6 +1095,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PerdidasYGanancias.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\RegistroIvaRepercutido.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\RegistroIvaRepercutido.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\RegistroIvaRepercutido.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistroIvaRepercutido.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Seguimientos.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Seguimientos.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Seguimientos.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Seguimientos.Designer.cs</LastGenOutput>
@@ -1108,10 +1180,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Reservas.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SeguimientosCorreo.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SeguimientosCorreo.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\SeguimientosCorreo.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SeguimientosCorreo.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\SituacionesTesoreria.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\SituacionesTesoreria.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\SituacionesTesoreria.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SituacionesTesoreria.Designer.cs</LastGenOutput>
@@ -1131,7 +1207,7 @@
     <EmbeddedResource Include="Textos\Entidades\SeccionesAnaliticas.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\SeccionesAnaliticas.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\SeccionesAnaliticas.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SeccionesAnaliticas.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Series.en.resx" />
@@ -1170,6 +1246,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tiposcuentas.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\TiposFacturasIva.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\TiposFacturasIva.fr.resx" />
+    <EmbeddedResource Include="Textos\Entidades\TiposFacturasIva.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposFacturasIva.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Tiposiva.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Tiposiva.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Tiposiva.resx">
@@ -1200,6 +1282,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Transformacioneslotes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\Transformacioneslotesnave.en.resx" />
+    <EmbeddedResource Include="Textos\Entidades\Transformacioneslotesnave.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Transformacioneslotesnave.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Transformacioneslotesnave.Designer.cs</LastGenOutput>
@@ -1246,6 +1330,8 @@
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\GeneralUI\TiposAsientosContables.en.resx" />
+    <EmbeddedResource Include="Textos\GeneralUI\TiposAsientosContables.fr.resx" />
     <EmbeddedResource Include="Textos\GeneralUI\TiposAsientosContables.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TiposAsientosContables.Designer.cs</LastGenOutput>
@@ -1257,6 +1343,7 @@
       <LastGenOutput>TiposDocumentos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentosContables.en.resx" />
+    <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentosContables.fr.resx" />
     <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentosContables.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TiposDocumentosContables.Designer.cs</LastGenOutput>
@@ -1266,6 +1353,7 @@
       <LastGenOutput>Login.en.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Login\Login.fr.resx" />
     <EmbeddedResource Include="Textos\Login\Login.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Login.Designer.cs</LastGenOutput>
@@ -1282,6 +1370,7 @@
       <LastGenOutput>Unobtrusive.en.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Unobtrusive\Unobtrusive.fr.resx" />
     <EmbeddedResource Include="Unobtrusive\Unobtrusive.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Unobtrusive.Designer.cs</LastGenOutput>

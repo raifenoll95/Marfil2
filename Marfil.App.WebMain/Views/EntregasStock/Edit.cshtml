@@ -108,7 +108,7 @@
         function CallGenerarContenedores() {
             var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
             var columnas = @Html.Raw(JsonConvert.SerializeObject(columnsAsignarContenedores));
-  
+
             GenerarContenedores(values, columnas, "@Url.Action("AsignarContenedores","EntregasStock")", "@modelview.Id");
         }
 </script>

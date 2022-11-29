@@ -308,7 +308,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var result =
                 _db.Diariostock.Where(f => f.empresa == _context.Empresa && f.lote == lote && f.loteid == loteid && f.fkarticulos == fkarticulo)
                     .ToList();
-           return result.Select(f=>new StLotesDocumentosRelacionados { Referencia = f.Documentoreferencia, Tipodocumento =(TipoOperacionService?)f.tipooperacion }).Distinct().ToList();
+
+           return result.Select(f=>new StLotesDocumentosRelacionados { Referencia = f.Documentoreferencia, Tipodocumento =(TipoOperacionService?)f.tipooperacion, 
+               Clientereserva = _db.Reservasstock.Where(x => x.empresa == _context.Empresa && x.referencia == f.Documentoreferencia).Select(y => y.fkclientes+" - "+y.nombrecliente).FirstOrDefault() ?? ""
+           }).Distinct().ToList();
         }
 
         #endregion

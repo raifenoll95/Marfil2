@@ -499,7 +499,7 @@
     <value>Sección</value>
   </data>
   <data name="Bundle" xml:space="preserve">
-    <value>Bundle</value>
+    <value>Bundles / Kit</value>
   </data>
   <data name="Pesobruto" xml:space="preserve">
     <value>Peso bruto</value>
@@ -731,5 +731,8 @@
   </data>
   <data name="Dua" xml:space="preserve">
     <value>Núm. DUA</value>
+  </data>
+  <data name="Fktipofactura" xml:space="preserve">
+    <value>Tipo de factura</value>
   </data>
 </root>

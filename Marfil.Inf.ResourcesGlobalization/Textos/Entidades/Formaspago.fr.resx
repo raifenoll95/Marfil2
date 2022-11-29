@@ -118,24 +118,69 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Mode de paiement</value>
+    <value>Modes de paiement</value>
   </data>
   <data name="FkGruposformaspago" xml:space="preserve">
     <value>Groupe</value>
   </data>
   <data name="ModoPago" xml:space="preserve">
-    <value>Mode de paiement</value>
+    <value>Méthodes de payement</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Nombre" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="Nombre2" xml:space="preserve">
-    <value>Nom</value>
+    <value>nom</value>
   </data>
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Mode de paiement</value>
+  </data>
+  <data name="ExcluirFestivos" xml:space="preserve">
+    <value>Exclure les expirations les jours fériés</value>
+  </data>
+  <data name="RecargoFinanciero" xml:space="preserve">
+    <value>Supplément financier sur la commission</value>
+  </data>
+  <data name="ImprimirVencimientoFacturas" xml:space="preserve">
+    <value>Imprimer les dates d'échéance sur les factures</value>
+  </data>
+  <data name="DiasVencimiento" xml:space="preserve">
+    <value>Jours d'expiration</value>
+  </data>
+  <data name="PorcentajePago" xml:space="preserve">
+    <value>pourcentage de paiement</value>
+  </data>
+  <data name="ErrorSumaPorcentajes" xml:space="preserve">
+    <value>En cas d'indication de pourcentages dans les échéances, leur somme totale doit être de 100 %</value>
+  </data>
+  <data name="Valorinicial" xml:space="preserve">
+    <value>Valeur initiale</value>
+  </data>
+  <data name="Instruccion" xml:space="preserve">
+    <value>Instruction</value>
+  </data>
+  <data name="Remesa" xml:space="preserve">
+    <value>Consignation</value>
+  </data>
+  <data name="Riesgo" xml:space="preserve">
+    <value>Risque</value>
+  </data>
+  <data name="Editable" xml:space="preserve">
+    <value>modifiable</value>
+  </data>
+  <data name="Docsventaimprimircuenta" xml:space="preserve">
+    <value>docs. facture d'impression de vente</value>
+  </data>
+  <data name="Ninguna" xml:space="preserve">
+    <value>Aucun (vide)</value>
+  </data>
+  <data name="Tercero" xml:space="preserve">
+    <value>compte tiers</value>
+  </data>
+  <data name="Tesoreria" xml:space="preserve">
+    <value>compte de trésorerie de l'entreprise</value>
   </data>
 </root>

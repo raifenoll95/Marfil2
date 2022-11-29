@@ -105,11 +105,11 @@
 
             @Html.LabelFor(f => Model.Pesoneto, new { @class = "control-label col-md-2" })
             <div class="col-md-2">
-                @Html.TextBoxFor(f => Model.Pesoneto, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+                @Html.TextBoxFor(f => Model.Pesoneto, (object)new { @class = "form-control", @readonly = "readonly" })
             </div>
             @Html.LabelFor(f => Model.Pesobruto, new { @class = "control-label col-md-2" })
             <div class="col-md-2">
-                @Html.TextBoxFor(f => Model.Pesobruto, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+                @Html.TextBoxFor(f => Model.Pesobruto, (object)new { @class = "form-control", @readonly = "readonly" })
             </div>
             <div class="col-md-12"></div>
 

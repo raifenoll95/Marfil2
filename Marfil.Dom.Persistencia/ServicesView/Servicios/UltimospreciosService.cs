@@ -146,6 +146,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     columnaclaveajena = "pedidoscompras";
                     tercero = "proveedores";
                     break;
+                case TipoDocumentos.Reservas:
+                    tablacabecera = "reservasstock";
+                    tablalineas = "reservasstocklin";
+                    columnaclaveajena = tablacabecera;
+                    break;
             }
 
             sb.AppendLine(string.Format("Select p.referencia as [Referencia],Sum(pl.cantidad) as [Cantidad],pl.precio as [Precio],p.porcentajedescuentocomercial as [DtoCial],pl.porcentajedescuento as [DtoLin],p.porcentajedescuentoprontopago as [DtoPP],p.fechadocumento as [Fecha],Sum(pl.Metros) as [Metros], m.descripcion as [Moneda]  from {0} as pl", tablalineas));

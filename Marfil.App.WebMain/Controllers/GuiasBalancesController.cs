@@ -70,6 +70,9 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var guiasBalancesService = new GuiasBalancesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos)))
                     {
+                        //Metemos la empresa, porque pese a que en la tabla no existe, el modelo que se hizo al comienzo de este proyecto, sí.
+                        model.Empresa = Empresa;
+
                         if (ModelState.IsValid)
                         {
                             model.Lineas = Session[session] as List<GuiasBalancesLineasModel>;
@@ -209,6 +212,9 @@ namespace Marfil.App.WebMain.Controllers
         public ActionResult GuiasBalancesLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
         {
             var model = Session[session] as List<GuiasBalancesLineasModel>;
+            //Metemos la empresa, porque pese a que en la tabla no existe, el modelo que se hizo al comienzo de este proyecto, sí.
+            item.Empresa = Empresa;
+
             try
             {
                 if (ModelState.IsValid && !model.Any(f => item.Id == f.Id))
@@ -298,6 +304,34 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         [HttpGet]
+        public bool CuentasNoAsignadasFuncional()
+        {
+            var cuentas = false;
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                cuentas = service.HayCuentasNoAsignadasFuncional();
+            }
+
+            return cuentas;
+
+
+        }
+
+        public bool CuentasNoAsignadasBalanceAnual()
+        {
+            var cuentas = false;
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                cuentas = service.HayCuentasNoAsignadasBalanceAnual();
+            }
+
+            return cuentas;
+
+
+        }
+
+
+        [HttpGet]
         public string GuiaInforme()
         {
             var Guia = "0";
@@ -316,7 +350,28 @@ namespace Marfil.App.WebMain.Controllers
 
         }
 
-        public void Calculo(string Ejercicio, string Guia, string SinSaldo, string Desglosar)
+        [HttpGet]
+        public string GuiaBalanceAnual()
+        {
+            var Guia = "0";
+            var intGuia = 0;
+
+            using (var service = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService) as GuiasBalancesService)
+            {
+                Guia = service.GuiaBalanceAnual();
+
+                //Diferencia de empezar el listado en 0
+                //intGuia = int.Parse(Guia) + 1;
+                //Guia = intGuia.ToString();
+            }
+
+            return Guia;
+
+        }
+
+        #region Pérdidas y ganancias
+
+        public void Calculo(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
         {
             Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
 
@@ -326,6 +381,8 @@ namespace Marfil.App.WebMain.Controllers
             ValoresParametros.Add("EMPRESA", Empresa);
             ValoresParametros.Add("EJERCICIO", DBNull.Value);
             ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
             ValoresParametros.Add("GUIA", DBNull.Value);
             ValoresParametros.Add("SIN_SALDO", DBNull.Value);
             ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
@@ -340,6 +397,20 @@ namespace Marfil.App.WebMain.Controllers
                     ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                 }
                 ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioant))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioant.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
 
                 //flag = true;
             }
@@ -385,7 +456,10 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
 
-        public void CalculoAnalitica(string Ejercicio, string Guia, string SinSaldo, string Desglosar)
+        #endregion
+
+        #region Pérdidas y ganancias analítica
+        public void CalculoAnalitica(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
         {
             Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
 
@@ -395,6 +469,8 @@ namespace Marfil.App.WebMain.Controllers
             ValoresParametros.Add("EMPRESA", Empresa);
             ValoresParametros.Add("EJERCICIO", DBNull.Value);
             ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
             ValoresParametros.Add("GUIA", DBNull.Value);
             ValoresParametros.Add("SIN_SALDO", DBNull.Value);
             ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
@@ -409,6 +485,20 @@ namespace Marfil.App.WebMain.Controllers
                     ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
                 }
                 ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioant))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioant.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
 
                 //flag = true;
             }
@@ -453,5 +543,185 @@ namespace Marfil.App.WebMain.Controllers
                 con.Close();
             }
         }
+
+        #endregion
+
+        #region Pérdidas y ganancias funcional
+
+        public void CalculoFuncional(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
+        {
+            Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
+
+            ValoresParametros.Clear();
+
+            //Inicializar los parámetros a NULL porque siempre tiene que llegar un valor
+            ValoresParametros.Add("EMPRESA", Empresa);
+            ValoresParametros.Add("EJERCICIO", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
+            ValoresParametros.Add("GUIA", DBNull.Value);
+            ValoresParametros.Add("SIN_SALDO", DBNull.Value);
+            ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
+
+            if (!string.IsNullOrEmpty(Ejercicio))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicio.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioant))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioant.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Guia))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+
+                //En la tabla el orden empieza en 0. se resta uno al valor.
+                var valorguia = int.Parse(Guia) - 1;
+
+                ValoresParametros["GUIA"] = valorguia.ToString();
+
+                //flag = true;
+            }
+
+            ExecuteProcedureFuncional(ContextService.BaseDatos, ValoresParametros);
+        }
+
+        //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalancesFuncional y Líneas con los filtros indicados
+        private void ExecuteProcedureFuncional(string baseDatos, Dictionary<string, object> parametros)
+        {
+            var dbconnection = "";
+            using (var db = MarfilEntities.ConnectToSqlServer(baseDatos))
+            {
+                dbconnection = db.Database.Connection.ConnectionString;
+            }
+            using (var con = new SqlConnection(dbconnection))
+            {
+                con.Open();
+                using (var cmd = new SqlCommand("CARGAR_GUIASFUNCIONAL", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    foreach (var item in parametros)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        #endregion
+
+        #region Pérdidas y ganancias balance anual
+
+        public void CalculoBalanceAnual(string Ejercicio, string Ejercicioant, string Guia, string SinSaldo, string Desglosar)
+        {
+            Dictionary<string, object> ValoresParametros = new Dictionary<string, object>();
+
+            ValoresParametros.Clear();
+
+            //Inicializar los parámetros a NULL porque siempre tiene que llegar un valor
+            ValoresParametros.Add("EMPRESA", Empresa);
+            ValoresParametros.Add("EJERCICIO", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO", DBNull.Value);
+            ValoresParametros.Add("EJERCICIO_ANT", DBNull.Value);
+            ValoresParametros.Add("USUARIO_ACUMULADO_ANT", DBNull.Value);
+            ValoresParametros.Add("GUIA", DBNull.Value);
+            ValoresParametros.Add("SIN_SALDO", DBNull.Value);
+            ValoresParametros.Add("NIVEL_TRES", DBNull.Value);
+
+            if (!string.IsNullOrEmpty(Ejercicio))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicio.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Ejercicioant))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+                var paramEjercicio = Ejercicioant.Split('-');
+                if (paramEjercicio.Length > 1)
+                {
+                    ValoresParametros["USUARIO_ACUMULADO_ANT"] = paramEjercicio[1];
+                }
+                ValoresParametros["EJERCICIO_ANT"] = paramEjercicio[0];
+
+                //flag = true;
+            }
+
+            if (!string.IsNullOrEmpty(Guia))
+            {
+                /*if (flag)
+                    sb.Append(" AND ");*/
+
+                //En la tabla el orden empieza en 0. se resta uno al valor.
+                var valorguia = int.Parse(Guia) - 1;
+
+                ValoresParametros["GUIA"] = valorguia.ToString();
+
+                //flag = true;
+            }
+
+            ExecuteProcedureBalanceAnual(ContextService.BaseDatos, ValoresParametros);
+        }
+
+        //Ejecutamos el procedimiento almacenado en BBDD para carga las tablas ReportGuiasBalancesBalanceAnual y Líneas con los filtros indicados
+        private void ExecuteProcedureBalanceAnual(string baseDatos, Dictionary<string, object> parametros)
+        {
+            var dbconnection = "";
+            using (var db = MarfilEntities.ConnectToSqlServer(baseDatos))
+            {
+                dbconnection = db.Database.Connection.ConnectionString;
+            }
+            using (var con = new SqlConnection(dbconnection))
+            {
+                con.Open();
+                using (var cmd = new SqlCommand("CARGAR_GUIASBALANCEANUAL", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    foreach (var item in parametros)
+                    {
+                        cmd.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        #endregion
     }
 }

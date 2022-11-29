@@ -38,7 +38,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Caracteristicas> Caracteristicas { get; set; }
         public virtual DbSet<CaracteristicasLin> CaracteristicasLin { get; set; }
         public virtual DbSet<Carpetas> Carpetas { get; set; }
-        public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<Comerciales> Comerciales { get; set; }
         public virtual DbSet<Configuracion> Configuracion { get; set; }
         public virtual DbSet<Contactos> Contactos { get; set; }
@@ -94,11 +93,8 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Tiposcuentas> Tiposcuentas { get; set; }
         public virtual DbSet<TiposcuentasLin> TiposcuentasLin { get; set; }
         public virtual DbSet<TiposIva> TiposIva { get; set; }
-        public virtual DbSet<Tiposretenciones> Tiposretenciones { get; set; }
         public virtual DbSet<Transportistas> Transportistas { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
-        public virtual DbSet<Acreedores> Acreedores { get; set; }
-        public virtual DbSet<Proveedores> Proveedores { get; set; }
         public virtual DbSet<Reservasstock> Reservasstock { get; set; }
         public virtual DbSet<ReservasstockLin> ReservasstockLin { get; set; }
         public virtual DbSet<ReservasstockTotales> ReservasstockTotales { get; set; }
@@ -216,6 +212,24 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<ReportAnaliticaGuiasBalancesLineas> ReportAnaliticaGuiasBalancesLineas { get; set; }
         public virtual DbSet<ArticulosStockSeguridad> ArticulosStockSeguridad { get; set; }
         public virtual DbSet<LogStockSeguridad> LogStockSeguridad { get; set; }
+        public virtual DbSet<FiltrosPYGFuncional> FiltrosPYGFuncional { get; set; }
+        public virtual DbSet<ReportGuiasBalancesFuncional> ReportGuiasBalancesFuncional { get; set; }
+        public virtual DbSet<ReportGuiasBalancesLineasFuncional> ReportGuiasBalancesLineasFuncional { get; set; }
+        public virtual DbSet<CuentasNoAsignadasFuncional> CuentasNoAsignadasFuncional { get; set; }
+        public virtual DbSet<VerificarContabilidad> VerificarContabilidad { get; set; }
+        public virtual DbSet<CuentasNoAsignadasBalanceAnual> CuentasNoAsignadasBalanceAnual { get; set; }
+        public virtual DbSet<FiltrosPYGBalanceAnual> FiltrosPYGBalanceAnual { get; set; }
+        public virtual DbSet<ReportGuiasBalancesBalanceAnual> ReportGuiasBalancesBalanceAnual { get; set; }
+        public virtual DbSet<ReportGuiasBalancesLineasBalanceAnual> ReportGuiasBalancesLineasBalanceAnual { get; set; }
+        public virtual DbSet<TiposFacturas> TiposFacturas { get; set; }
+        public virtual DbSet<Proveedores> Proveedores { get; set; }
+        public virtual DbSet<Acreedores> Acreedores { get; set; }
+        public virtual DbSet<Clientes> Clientes { get; set; }
+        public virtual DbSet<Lecturas> Lecturas { get; set; }
+        public virtual DbSet<Tiposretenciones> Tiposretenciones { get; set; }
+        public virtual DbSet<RegistroIVARepercutido> RegistroIVARepercutido { get; set; }
+        public virtual DbSet<RegistroIVARepercutidoRectificadas> RegistroIVARepercutidoRectificadas { get; set; }
+        public virtual DbSet<RegistroIVARepercutidoTotales> RegistroIVARepercutidoTotales { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

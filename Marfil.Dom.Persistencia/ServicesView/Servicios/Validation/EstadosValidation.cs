@@ -24,7 +24,35 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             if (string.IsNullOrEmpty(model.descripcion))
                 throw new ValidationException(string.Format(General.ErrorCampoObligatorio, REstados.Descripcion));
 
+            if (ExisteEnAlgunDocumentos(model))
+                throw new ValidationException(General.ErrorBorradoEstadosUsados);
+
             return base.ValidarGrabar(model);
+        }
+
+        public override bool ValidarBorrar(Estados model)
+        {
+            if (ExisteEnAlgunDocumentos(model))
+                throw new ValidationException(General.ErrorBorradoEstadosUsados);
+
+            return base.ValidarBorrar(model);
+        }
+
+        private bool ExisteEnAlgunDocumentos(Estados model)
+        {
+
+
+            return _db.Presupuestos.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.Pedidos.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.Albaranes.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.Facturas.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.PresupuestosCompras.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.PedidosCompras.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.AlbaranesCompras.Any(f => f.fkestados == (model.documento + "-" + model.id)) ||
+                   _db.FacturasCompras.Any(f => f.fkestados == (model.documento + "-" + model.id));
+
+
+
         }
     }
 }

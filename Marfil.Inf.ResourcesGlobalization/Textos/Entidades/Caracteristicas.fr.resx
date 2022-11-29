@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Caractéristiques</value>
+    <value>Caractéristique</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Description</value>
+    <value>La description</value>
   </data>
   <data name="Descripcionabreviada" xml:space="preserve">
-    <value>Description courte</value>
+    <value>Brève description</value>
   </data>
   <data name="Variacion" xml:space="preserve">
     <value>Variation</value>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TituloEntidad" xml:space="preserve">
-    <value>Tax year</value>
+    <value>Accounting year</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Code</value>
@@ -143,5 +143,53 @@
   </data>
   <data name="Gestion" xml:space="preserve">
     <value>Management</value>
+  </data>
+  <data name="Contabilidadcerradahasta" xml:space="preserve">
+    <value>Accounting closed until</value>
+  </data>
+  <data name="Registroivacerradohasta" xml:space="preserve">
+    <value>VAT closed until</value>
+  </data>
+  <data name="Criterioiva" xml:space="preserve">
+    <value>VAT criteria</value>
+  </data>
+  <data name="FkseriescontablesAST" xml:space="preserve">
+    <value>Accounting series</value>
+  </data>
+  <data name="FkseriescontablesIVS" xml:space="preserve">
+    <value>supported VAT</value>
+  </data>
+  <data name="FkseriescontablesIVP" xml:space="preserve">
+    <value>Output VAT</value>
+  </data>
+  <data name="FkseriescontablesPRC" xml:space="preserve">
+    <value>Forecast of charges</value>
+  </data>
+  <data name="FkseriescontablesPRP" xml:space="preserve">
+    <value>Projected payments</value>
+  </data>
+  <data name="FkseriescontablesINM" xml:space="preserve">
+    <value>Immobilized</value>
+  </data>
+  <data name="FkseriescontablesCRC" xml:space="preserve">
+    <value>Collection portfolio</value>
+  </data>
+  <data name="FkseriescontablesCRP" xml:space="preserve">
+    <value>Payment portfolio</value>
+  </data>
+  <data name="FkseriescontablesREM" xml:space="preserve">
+    <value>Remittance management</value>
+  </data>
+  <data name="EstadoEjercicioAbierto" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="EstadoEjercicioCerrado" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="EstadoEjercicioExistencias" xml:space="preserve">
+    <value>Regularization Stocks</value>
+  </data>
+  <data name="EstadoEjercicioGrupos" xml:space="preserve">
+    <value>Regularization Groups 6 and 7</value>
   </data>
 </root>

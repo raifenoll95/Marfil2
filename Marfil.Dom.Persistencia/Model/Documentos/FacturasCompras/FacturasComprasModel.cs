@@ -261,6 +261,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras
         [Display(ResourceType = typeof(RFacturasCompras), Name = "Fkregimeniva")]
         public string Fkregimeniva { get; set; }
 
+        [Display(ResourceType = typeof(RFacturasCompras), Name = "Fktipofactura")]
+        public string Fktipofactura { get; set; }
+
         [Display(ResourceType = typeof(RFacturasCompras), Name = "Fktiposretenciones")]
         public string Fktiposretenciones { get; set; }
 
