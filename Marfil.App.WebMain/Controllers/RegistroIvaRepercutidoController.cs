@@ -473,9 +473,23 @@ namespace Marfil.App.WebMain.Controllers
             return JsonConvert.SerializeObject(data);
         }
 
-        public string GetIvaTercero(string cuenta, string regimen)
+        public void GetIvaTerceroEditable(string cuenta)
         {
-            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));          
+            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var TiposFacturaservice = new TiposFacturasIvaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var tipoiva = service.GetIvaTercero(cuenta);
+            var tipoivaporcentaje = service.GetPorcentajeIvaTercero(tipoiva);
+            var tipoivaporcentajerecargo = service.GetPorcentajeRecargoTercero(tipoiva);
+
+            Session["tipoivatercero"] = tipoiva;
+            Session["porcentajetipoivatercero"] = tipoivaporcentaje;
+            Session["porcentajerecargotercero"] = tipoivaporcentajerecargo;
+        }
+
+        public string GetIvaTercero(string cuenta)
+        {
+            var service = new TiposRetencionesService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var TiposFacturaservice = new TiposFacturasIvaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var tipoiva = service.GetIvaTercero(cuenta);
             var tipoivaporcentaje = service.GetPorcentajeIvaTercero(tipoiva);
             var tipoivaporcentajerecargo = service.GetPorcentajeRecargoTercero(tipoiva);
@@ -489,6 +503,8 @@ namespace Marfil.App.WebMain.Controllers
 
             var regimenService = new RegimenivaService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
             var configuracionService = new ConfiguracionService(ContextService, MarfilEntities.ConnectToSqlServer(ContextService.BaseDatos));
+            var tipofacturacliente = "";
+            var regimentipofactura = "";
             var regimentercero = "";
             var clavetipofactura = "";
             var regimenespecial = "";
@@ -513,7 +529,9 @@ namespace Marfil.App.WebMain.Controllers
             }
             else
             {
-                if (string.IsNullOrEmpty(regimen))
+                tipofacturacliente = service.GetTipoFacturaCliente(cuenta);
+                regimentipofactura = TiposFacturaservice.GetRegimenivaRepercutido(ContextService.Empresa, tipofacturacliente);
+                if (string.IsNullOrEmpty(regimentipofactura))
                 {
                     regimentercero = service.GetRegimenivaTercero(cuenta);
                     clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimentercero);
@@ -554,19 +572,19 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 else
                 {
-                    clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimen);
-                    regimenespecial = regimenService.GetRegimenEspecialEmitida(regimen);
+                    clavetipofactura = regimenService.GetClaveTipoFacturaEmitida(regimentipofactura);
+                    regimenespecial = regimenService.GetRegimenEspecialEmitida(regimentipofactura);
                     if (prefijos.Contains(cuenta.Substring(0, 3)))
                     {
                         tipooperacion = "2";//Prestación de servicios
                     }
                     else
                     {
-                        if (GetOperacionUE(regimen))
+                        if (GetOperacionUE(regimentipofactura))
                         {
                             tipooperacion = "1";//Entrega de bienes
                         }
-                        else if (GetExportacion(regimen))
+                        else if (GetExportacion(regimentipofactura))
                         {
                             tipooperacion = "1";//Entrega de bienes
                         }
@@ -618,6 +636,8 @@ namespace Marfil.App.WebMain.Controllers
 
             var data = new
             {
+                tipofacturacliente = tipofacturacliente,
+                regimentipofactura = regimentipofactura,
                 regimentercero = regimentercero,
                 cuentaDescripcion = cuentaDescripcion,
                 identificacion = identificacion,
@@ -669,7 +689,7 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         public bool GetOperacionUE(string regimen)
-        {           
+        {
             if (string.IsNullOrEmpty(regimen))
             {
                 return false;

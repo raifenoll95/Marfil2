@@ -202,7 +202,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
 
-                pesototal = (int)(item.Metros * articulo.Kilosud ?? 0);
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
             }
 
             return pesototal;

@@ -326,9 +326,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             XmlElement datosParse = doc.DocumentElement;
 
             XmlNodeList nodo = datosParse.GetElementsByTagName("Relacionbrutoneto");
-            var relacion = nodo[0].InnerText.Replace('.',',');
-            var relacionparse = double.Parse(relacion);
-            return relacionparse;
+
+            if (nodo.Count > 0)
+            {
+                var relacion = nodo[0].InnerText.Replace('.', ',');
+                var relacionparse = double.Parse(relacion);
+                return relacionparse;
+            }
+
+            return 0;
         }
 
     }

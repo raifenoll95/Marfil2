@@ -184,7 +184,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var articulo = articuloservice.get(item.Fkarticulos) as ArticulosModel;
 
-                pesototal = (int)(item.Metros * articulo.Kilosud ?? 0);
+                pesototal += (int)(item.Metros * articulo.Kilosud ?? 0);
             }
 
             return pesototal;
@@ -1060,7 +1060,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     var bruto = linea.Metros * model.Precio;
                     var importedescuento = Math.Round(((bruto) * model.Descuento / 100.0), model.Decimalesmonedas);
-                    var total = bruto - importedescuento;                  
+                    var total = bruto - importedescuento;
+
+                    var cantidad = 0.0;
+                    if (articuloObj.Lotefraccionable)
+                    {
+                        if (linea.Cantidad > model.Cantidad)
+                        {
+                            cantidad = linea.Cantidad;
+                        }
+                        else
+                        {
+                            cantidad = model.Cantidad;
+                        }
+                    }
+                    else
+                    {
+                        cantidad = linea.Cantidad;
+                    }
 
                     listado.Add(new AlbaranesLinModel()
                     {
@@ -1071,7 +1088,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         Lote = linea.Lote,
                         Tabla = Funciones.Qint(linea.Loteid),
                         Tblnum = Funciones.Qint(linea.Loteid),
-                        Cantidad = articuloObj.Lotefraccionable ? model.Cantidad : linea.Cantidad,
+                        Cantidad = cantidad,
                         Largo = largo,
                         Ancho = ancho,
                         Grueso = grueso,

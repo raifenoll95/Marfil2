@@ -126,6 +126,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return tipofactura;
         }
 
+        public string GetRegimenivaTipoFactura(string tipofactura)
+        {
+            var idparse = int.Parse(tipofactura);
+            var regimen = "";
+            if (_db.TiposFacturas.Where(f => f.empresa == Empresa && f.id == idparse).FirstOrDefault() != null)
+            {
+                regimen = _db.TiposFacturas.Where(f => f.empresa == Empresa && f.id == idparse).FirstOrDefault().regimeniva;
+            }
+
+            return regimen;
+        }
+
         public string GetPorcentajeIvaTercero(string tipoiva)
         {
             if (_db.TiposIva.Where(f => f.empresa == Empresa && f.id == tipoiva).FirstOrDefault() != null)
